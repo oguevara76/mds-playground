@@ -1,0 +1,49 @@
+/*
+ * ═══════════════════════════════════════════════════════════════════
+ * MDS TOKEN OVERRIDE — Ejemplo de fichero CSS generado desde Figma
+ *
+ * Copia este fichero, ajusta los valores con los tokens de tu tema
+ * y súbelo al playground para ver los cambios en tiempo real.
+ *
+ * Todos los custom properties corresponden 1:1 con las variables
+ * internas de PrimeNG v17+
+ * ═══════════════════════════════════════════════════════════════════
+ */
+
+:root {
+  /* ── Paleta primaria — sustituye por el color de tu marca ── */
+  --p-primary-50:    #fef3ee;
+  --p-primary-100:   #fde0c8;
+  --p-primary-200:   #f9bc92;
+  --p-primary-300:   #f4955c;
+  --p-primary-400:   #ef7036;
+  --p-primary-500:   #e8511a;
+  --p-primary-600:   #c93d10;
+  --p-primary-700:   #a32d0e;
+  --p-primary-800:   #7d2010;
+  --p-primary-900:   #5a1810;
+
+  /* Color base que usa el sistema (apunta al step que prefieras) */
+  --p-primary-color:      var(--p-primary-600);
+  --p-primary-color-text: #ffffff;
+
+  /* ── Colores semánticos (ajusta a tu paleta de estado) ── */
+  --p-success-color: #1a7f4b;
+  --p-success-bg:    #d6f4e4;
+  --p-warning-color: #8a6200;
+  --p-warning-bg:    #fff0c0;
+  --p-danger-color:  #b91c1c;
+  --p-danger-bg:     #fee2e2;
+  --p-info-color:    #1d4ed8;
+  --p-info-bg:       #dbeafe;
+
+  /* ── Tipografía ── */
+  /* --p-font-family: 'Tu fuente', sans-serif; */
+
+  /* ── Border radius ── */
+  /* --p-border-radius:    4px;  */  /* más cuadrado */
+  /* --p-border-radius:    12px; */  /* más redondeado */
+
+  /* ── Transiciones ── */
+  /* --p-transition-duration: 120ms; */
+}

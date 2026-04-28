@@ -1,0 +1,117 @@
+/* ═══════════════════════════════════════════════════════════════════
+   MDS PLAYGROUND — PrimeNG Token Defaults
+   Basado en PrimeNG v17 CSS Custom Properties
+   Los ficheros CSS subidos por el usuario sobreescriben estas variables
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Primary palette (MDS Indra default: #1d7162) ── */
+  --p-primary-50:  #e8f5f2;
+  --p-primary-100: #c3e5de;
+  --p-primary-200: #9dd4c8;
+  --p-primary-300: #77c3b2;
+  --p-primary-400: #51b29c;
+  --p-primary-500: #2b9f8a;
+  --p-primary-600: #1d7162;
+  --p-primary-700: #155248;
+  --p-primary-800: #0d332e;
+  --p-primary-900: #061514;
+
+  --p-primary-color: var(--p-primary-600);
+  --p-primary-color-text: #ffffff;
+
+  /* ── Surface palette ── */
+  --p-surface-0:   #ffffff;
+  --p-surface-50:  #f8fafb;
+  --p-surface-100: #f1f3f5;
+  --p-surface-200: #e9ecef;
+  --p-surface-300: #dee2e6;
+  --p-surface-400: #ced4da;
+  --p-surface-500: #adb5bd;
+  --p-surface-600: #6c757d;
+  --p-surface-700: #495057;
+  --p-surface-800: #343a40;
+  --p-surface-900: #212529;
+
+  /* ── Semantic colors ── */
+  --p-success-color:     #22863a;
+  --p-success-bg:        #dcf5e1;
+  --p-warning-color:     #946500;
+  --p-warning-bg:        #fff3c4;
+  --p-danger-color:      #c0392b;
+  --p-danger-bg:         #fde8e8;
+  --p-info-color:        #1565c0;
+  --p-info-bg:           #e3f2fd;
+  --p-secondary-color:   #6c757d;
+  --p-secondary-bg:      #f1f3f5;
+
+  /* ── Typography ── */
+  --p-font-family: 'DM Sans', system-ui, sans-serif;
+  --p-font-size:   14px;
+
+  /* ── Border radius ── */
+  --p-border-radius:    6px;
+  --p-border-radius-sm: 4px;
+  --p-border-radius-lg: 10px;
+  --p-border-radius-xl: 16px;
+
+  /* ── Transitions ── */
+  --p-transition-duration: 180ms;
+
+  /* ── Focus ── */
+  --p-focus-ring: 0 0 0 3px color-mix(in srgb, var(--p-primary-color) 35%, transparent);
+
+  /* ── Shadows ── */
+  --p-shadow-1: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.08);
+  --p-shadow-2: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.06);
+
+  /* ── Input specific ── */
+  --p-input-border-color:    var(--p-surface-300);
+  --p-input-bg:              var(--p-surface-0);
+  --p-input-color:           var(--p-surface-800);
+  --p-input-placeholder:     var(--p-surface-400);
+  --p-input-focus-border:    var(--p-primary-color);
+
+  /* ── Component backgrounds ── */
+  --p-content-bg:            var(--p-surface-0);
+  --p-content-border:        var(--p-surface-200);
+  --p-content-color:         var(--p-surface-800);
+
+  /* ── App shell ── */
+  --app-bg:         #f4f6f8;
+  --sidebar-bg:     #ffffff;
+  --sidebar-border: var(--p-surface-200);
+  --topbar-bg:      #ffffff;
+  --topbar-border:  var(--p-surface-200);
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+  --p-surface-0:   #1e2125;
+  --p-surface-50:  #25292e;
+  --p-surface-100: #2e3338;
+  --p-surface-200: #383d42;
+  --p-surface-300: #454a50;
+  --p-surface-400: #6c757d;
+  --p-surface-500: #adb5bd;
+  --p-surface-600: #ced4da;
+  --p-surface-700: #dee2e6;
+  --p-surface-800: #e9ecef;
+  --p-surface-900: #f8f9fa;
+
+  --p-input-bg:    var(--p-surface-100);
+  --p-content-bg:  var(--p-surface-50);
+  --p-content-border: var(--p-surface-200);
+
+  --p-success-bg:  rgba(34,134,58,.18);
+  --p-warning-bg:  rgba(148,101,0,.18);
+  --p-danger-bg:   rgba(192,57,43,.18);
+  --p-info-bg:     rgba(21,101,192,.18);
+  --p-secondary-bg: var(--p-surface-100);
+
+  --app-bg:         #15181c;
+  --sidebar-bg:     var(--p-surface-0);
+  --sidebar-border: var(--p-surface-200);
+  --topbar-bg:      var(--p-surface-0);
+  --topbar-border:  var(--p-surface-200);
+}
