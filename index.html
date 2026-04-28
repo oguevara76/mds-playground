@@ -123,65 +123,318 @@
       </div>
 
       <div class="tab-panel" id="tab-button-catalog">
+
+        <!-- ══ BUTTON ══ -->
         <section class="preview-section">
-          <h3 class="section-title">Button components</h3>
-          <div class="catalog-preview">
-            <h4 class="catalog-preview-title">Variantes</h4>
-            <div class="component-row">
+          <h3 class="section-title">Button</h3>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Severidad</p>
+            <div class="btn-row">
               <button class="p-button p-button-primary">Primary</button>
               <button class="p-button p-button-secondary">Secondary</button>
+              <button class="p-button p-button-contrast">Contrast</button>
               <button class="p-button p-button-danger">Danger</button>
-              <button class="p-button p-button-success">Success</button>
-              <button class="p-button p-button-warning">Warning</button>
-              <button class="p-button p-button-outlined">Outlined</button>
-              <button class="p-button p-button-text">Text</button>
-            </div>
-            <h4 class="catalog-preview-title">Iconos y estados</h4>
-            <div class="component-row">
-              <button class="p-button p-button-primary"><i class="pi pi-check"></i> Confirmar</button>
-              <button class="p-button p-button-secondary"><i class="pi pi-cog"></i> Configurar</button>
-              <button class="p-button p-button-outlined"><i class="pi pi-download"></i> Descargar</button>
-              <button class="p-button p-button-primary p-button-sm"><i class="pi pi-plus"></i> Small</button>
-              <button class="p-button p-button-primary p-button-lg">Large</button>
-              <button class="p-button p-button-primary p-button-rounded"><i class="pi pi-heart"></i> Rounded</button>
-              <button class="p-button p-button-primary" disabled>Disabled</button>
-              <button class="p-button p-button-primary"><i class="pi pi-spin pi-spinner"></i> Loading</button>
             </div>
           </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Outlined</p>
+            <div class="btn-row">
+              <button class="p-button p-button-primary p-button-outlined">Primary</button>
+              <button class="p-button p-button-secondary p-button-outlined">Secondary</button>
+              <button class="p-button p-button-contrast p-button-outlined">Contrast</button>
+              <button class="p-button p-button-danger p-button-outlined">Danger</button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Text</p>
+            <div class="btn-row">
+              <button class="p-button p-button-primary p-button-text">Primary</button>
+              <button class="p-button p-button-secondary p-button-text">Secondary</button>
+              <button class="p-button p-button-contrast p-button-text">Contrast</button>
+              <button class="p-button p-button-danger p-button-text">Danger</button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Raised</p>
+            <div class="btn-row">
+              <button class="p-button p-button-primary p-button-raised">Primary</button>
+              <button class="p-button p-button-secondary p-button-raised">Secondary</button>
+              <button class="p-button p-button-contrast p-button-raised">Contrast</button>
+              <button class="p-button p-button-danger p-button-raised">Danger</button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Raised Text</p>
+            <div class="btn-row">
+              <button class="p-button p-button-primary p-button-raised p-button-text">Primary</button>
+              <button class="p-button p-button-secondary p-button-raised p-button-text">Secondary</button>
+              <button class="p-button p-button-contrast p-button-raised p-button-text">Contrast</button>
+              <button class="p-button p-button-danger p-button-raised p-button-text">Danger</button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Rounded</p>
+            <div class="btn-row">
+              <button class="p-button p-button-primary p-button-rounded">Primary</button>
+              <button class="p-button p-button-secondary p-button-rounded">Secondary</button>
+              <button class="p-button p-button-contrast p-button-rounded">Contrast</button>
+              <button class="p-button p-button-danger p-button-rounded">Danger</button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Rounded Outlined</p>
+            <div class="btn-row">
+              <button class="p-button p-button-primary p-button-rounded p-button-outlined">Primary</button>
+              <button class="p-button p-button-secondary p-button-rounded p-button-outlined">Secondary</button>
+              <button class="p-button p-button-contrast p-button-rounded p-button-outlined">Contrast</button>
+              <button class="p-button p-button-danger p-button-rounded p-button-outlined">Danger</button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Con icono</p>
+            <div class="btn-row">
+              <button class="p-button p-button-primary"><i class="pi pi-check"></i> Confirmar</button>
+              <button class="p-button p-button-secondary"><i class="pi pi-cog"></i> Configurar</button>
+              <button class="p-button p-button-contrast"><i class="pi pi-lock"></i> Acceder</button>
+              <button class="p-button p-button-danger">Eliminar <i class="pi pi-trash"></i></button>
+              <button class="p-button p-button-primary p-button-outlined"><i class="pi pi-download"></i> Descargar</button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Solo icono</p>
+            <div class="btn-row" style="align-items:center">
+              <button class="p-button p-button-primary p-button-icon-only" title="Confirmar"><i class="pi pi-check"></i></button>
+              <button class="p-button p-button-secondary p-button-icon-only" title="Configurar"><i class="pi pi-cog"></i></button>
+              <button class="p-button p-button-contrast p-button-icon-only" title="Acceder"><i class="pi pi-lock"></i></button>
+              <button class="p-button p-button-danger p-button-icon-only" title="Eliminar"><i class="pi pi-trash"></i></button>
+              <button class="p-button p-button-primary p-button-icon-only p-button-rounded" title="Añadir"><i class="pi pi-plus"></i></button>
+              <button class="p-button p-button-secondary p-button-icon-only p-button-rounded" title="Buscar"><i class="pi pi-search"></i></button>
+              <button class="p-button p-button-contrast p-button-icon-only p-button-rounded" title="Acceder"><i class="pi pi-lock"></i></button>
+              <button class="p-button p-button-outlined p-button-icon-only p-button-rounded" title="Compartir"><i class="pi pi-share-alt"></i></button>
+              <button class="p-button p-button-text p-button-icon-only p-button-rounded" title="Favorito"><i class="pi pi-heart"></i></button>
+              <button class="p-button p-button-danger p-button-icon-only p-button-rounded" title="Borrar"><i class="pi pi-trash"></i></button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Tamaños</p>
+            <div class="btn-row" style="align-items:center">
+              <button class="p-button p-button-primary p-button-sm">Small</button>
+              <button class="p-button p-button-primary">Normal</button>
+              <button class="p-button p-button-primary p-button-lg">Large</button>
+              <button class="p-button p-button-primary p-button-outlined p-button-sm"><i class="pi pi-download"></i> Small</button>
+              <button class="p-button p-button-primary p-button-outlined"><i class="pi pi-download"></i> Normal</button>
+              <button class="p-button p-button-primary p-button-outlined p-button-lg"><i class="pi pi-download"></i> Large</button>
+              <button class="p-button p-button-primary p-button-icon-only p-button-rounded p-button-sm"><i class="pi pi-plus"></i></button>
+              <button class="p-button p-button-primary p-button-icon-only p-button-rounded"><i class="pi pi-plus"></i></button>
+              <button class="p-button p-button-primary p-button-icon-only p-button-rounded p-button-lg"><i class="pi pi-plus"></i></button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Estados</p>
+            <div class="btn-row">
+              <button class="p-button p-button-primary">Normal</button>
+              <button class="p-button p-button-primary" disabled>Disabled</button>
+              <button class="p-button p-button-primary p-button-loading"><i class="pi pi-spin pi-spinner"></i> Loading</button>
+              <button class="p-button p-button-primary p-button-outlined" disabled>Outlined Disabled</button>
+              <button class="p-button p-button-primary p-button-text" disabled>Text Disabled</button>
+              <button class="p-button p-button-danger" disabled>Danger Disabled</button>
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Link</p>
+            <div class="btn-row">
+              <button class="p-button p-button-link">Enlace a acción</button>
+              <button class="p-button p-button-link"><i class="pi pi-external-link"></i> Ver documentación</button>
+              <button class="p-button p-button-link" disabled>Disabled Link</button>
+            </div>
+          </div>
+
           <div class="catalog-grid" id="catalog-button"></div>
         </section>
+
+        <!-- ══ SPLITBUTTON ══ -->
+        <section class="preview-section">
+          <h3 class="section-title">SplitButton</h3>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Severidad</p>
+            <div class="btn-row" style="flex-wrap:wrap;gap:12px">
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Guardar</button>
+                <button class="p-button p-button-primary p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-secondary p-splitbutton-defaultbutton"><i class="pi pi-cog"></i> Configurar</button>
+                <button class="p-button p-button-secondary p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-success p-splitbutton-defaultbutton"><i class="pi pi-check"></i> Aprobar</button>
+                <button class="p-button p-button-success p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-info p-splitbutton-defaultbutton"><i class="pi pi-info-circle"></i> Info</button>
+                <button class="p-button p-button-info p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-warning p-splitbutton-defaultbutton"><i class="pi pi-exclamation-triangle"></i> Aviso</button>
+                <button class="p-button p-button-warning p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-danger p-splitbutton-defaultbutton"><i class="pi pi-trash"></i> Eliminar</button>
+                <button class="p-button p-button-danger p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Outlined</p>
+            <div class="btn-row" style="flex-wrap:wrap;gap:12px">
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-primary p-button-outlined p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Guardar</button>
+                <button class="p-button p-button-primary p-button-outlined p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-success p-button-outlined p-splitbutton-defaultbutton"><i class="pi pi-check"></i> Aprobar</button>
+                <button class="p-button p-button-success p-button-outlined p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-danger p-button-outlined p-splitbutton-defaultbutton"><i class="pi pi-trash"></i> Eliminar</button>
+                <button class="p-button p-button-danger p-button-outlined p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Tamaños</p>
+            <div class="btn-row" style="align-items:center;gap:12px">
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-primary p-button-sm p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Small</button>
+                <button class="p-button p-button-primary p-button-sm p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Normal</button>
+                <button class="p-button p-button-primary p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-primary p-button-lg p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Large</button>
+                <button class="p-button p-button-primary p-button-lg p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Menú desplegado</p>
+            <div class="btn-row" style="gap:48px;flex-wrap:wrap;align-items:flex-start;padding-bottom:160px">
+
+              <div style="position:relative;display:inline-flex;flex-direction:column;gap:0">
+                <div class="p-splitbutton">
+                  <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Guardar</button>
+                  <button class="p-button p-button-primary p-splitbutton-menubutton is-open"><i class="pi pi-chevron-up"></i></button>
+                </div>
+                <div class="p-splitbutton-panel">
+                  <button class="p-splitbutton-item is-active"><i class="pi pi-save"></i> Guardar</button>
+                  <button class="p-splitbutton-item"><i class="pi pi-save"></i> Guardar como borrador</button>
+                  <div class="p-splitbutton-separator"></div>
+                  <button class="p-splitbutton-item"><i class="pi pi-send"></i> Guardar y enviar</button>
+                  <button class="p-splitbutton-item"><i class="pi pi-copy"></i> Duplicar</button>
+                </div>
+              </div>
+
+              <div style="position:relative;display:inline-flex;flex-direction:column;gap:0">
+                <div class="p-splitbutton">
+                  <button class="p-button p-button-outlined p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-download"></i> Exportar</button>
+                  <button class="p-button p-button-outlined p-button-primary p-splitbutton-menubutton"><i class="pi pi-chevron-up"></i></button>
+                </div>
+                <div class="p-splitbutton-panel">
+                  <button class="p-splitbutton-item"><i class="pi pi-file-excel"></i> Excel (.xlsx)</button>
+                  <button class="p-splitbutton-item is-active"><i class="pi pi-file-pdf"></i> PDF</button>
+                  <button class="p-splitbutton-item"><i class="pi pi-file"></i> CSV</button>
+                  <div class="p-splitbutton-separator"></div>
+                  <button class="p-splitbutton-item"><i class="pi pi-print"></i> Imprimir</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Rounded</p>
+            <div class="btn-row" style="gap:12px">
+
+              <div class="p-splitbutton" style="border-radius:999px">
+                <button class="p-button p-button-primary p-button-rounded p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Guardar</button>
+                <button class="p-button p-button-primary p-button-rounded p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton" style="border-radius:999px">
+                <button class="p-button p-button-success p-button-rounded p-splitbutton-defaultbutton"><i class="pi pi-check"></i> Aprobar</button>
+                <button class="p-button p-button-success p-button-rounded p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton" style="border-radius:999px">
+                <button class="p-button p-button-danger p-button-rounded p-splitbutton-defaultbutton"><i class="pi pi-trash"></i> Eliminar</button>
+                <button class="p-button p-button-danger p-button-rounded p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="btn-section">
+            <p class="btn-section-title">Estados</p>
+            <div class="btn-row" style="gap:12px">
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Normal</button>
+                <button class="p-button p-button-primary p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton" style="opacity:.45;cursor:not-allowed;pointer-events:none">
+                <button class="p-button p-button-primary p-splitbutton-defaultbutton" disabled><i class="pi pi-save"></i> Disabled</button>
+                <button class="p-button p-button-primary p-splitbutton-menubutton" disabled><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+              <div class="p-splitbutton">
+                <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-spin pi-spinner"></i> Loading</button>
+                <button class="p-button p-button-primary p-splitbutton-menubutton" disabled><i class="pi pi-chevron-down"></i></button>
+              </div>
+
+            </div>
+          </div>
+
+        </section>
+
       </div>
 
       <div class="tab-panel" id="tab-form-catalog">
         <section class="preview-section">
           <h3 class="section-title">Form components</h3>
-          <div class="catalog-preview">
-            <div class="input-grid">
-              <div class="p-field">
-                <label class="p-label">InputText</label>
-                <input type="text" class="p-inputtext" placeholder="Texto de ejemplo" />
-              </div>
-              <div class="p-field">
-                <label class="p-label">InputNumber</label>
-                <input type="number" class="p-inputtext" placeholder="100" />
-              </div>
-              <div class="p-field">
-                <label class="p-label">Select</label>
-                <div class="p-dropdown">
-                  <select class="p-dropdown-select">
-                    <option>Selecciona opción</option>
-                    <option>Opción A</option>
-                    <option>Opción B</option>
-                  </select>
-                  <i class="pi pi-chevron-down p-dropdown-arrow"></i>
-                </div>
-              </div>
-              <div class="p-field">
-                <label class="p-label">Password</label>
-                <input type="password" class="p-inputtext" placeholder="••••••••" />
-              </div>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-form"></div>
         </section>
       </div>
@@ -189,18 +442,6 @@
       <div class="tab-panel" id="tab-data-catalog">
         <section class="preview-section">
           <h3 class="section-title">Data components</h3>
-          <div class="catalog-preview">
-            <table class="p-datatable">
-              <thead>
-                <tr><th>Componente</th><th>Tipo</th><th>Estado</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>DataView</td><td>Listado</td><td><span class="p-tag p-tag-success">Activo</span></td></tr>
-                <tr><td>Table</td><td>Tabular</td><td><span class="p-tag p-tag-secondary">Preview</span></td></tr>
-                <tr><td>TreeTable</td><td>Jerárquico</td><td><span class="p-tag p-tag-warning">Beta</span></td></tr>
-              </tbody>
-            </table>
-          </div>
           <div class="catalog-grid" id="catalog-data"></div>
         </section>
       </div>
@@ -208,16 +449,6 @@
       <div class="tab-panel" id="tab-panel-catalog">
         <section class="preview-section">
           <h3 class="section-title">Panel components</h3>
-          <div class="catalog-preview">
-            <div class="cards-grid">
-              <div class="p-card">
-                <div class="p-card-body"><h4>Card</h4><p>Contenedor de contenido con header/body/footer.</p></div>
-              </div>
-              <div class="p-card">
-                <div class="p-card-body"><h4>Accordion / Tabs</h4><p>Estructuras por secciones colapsables y pestañas.</p></div>
-              </div>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-panel"></div>
         </section>
       </div>
@@ -225,17 +456,6 @@
       <div class="tab-panel" id="tab-overlay-catalog">
         <section class="preview-section">
           <h3 class="section-title">Overlay components</h3>
-          <div class="catalog-preview">
-            <div class="component-row" style="margin-bottom:12px">
-              <button class="p-button p-button-primary">Dialog</button>
-              <button class="p-button p-button-outlined">ConfirmPopup</button>
-              <button class="p-button p-button-secondary" title="Tooltip de ejemplo">Tooltip</button>
-            </div>
-            <div class="p-dialog">
-              <div class="p-dialog-header"><span>Overlay Preview</span><button class="p-dialog-close"><i class="pi pi-times"></i></button></div>
-              <div class="p-dialog-content"><p>Estructura visual de componentes superpuestos de PrimeNG.</p></div>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-overlay"></div>
         </section>
       </div>
@@ -243,13 +463,6 @@
       <div class="tab-panel" id="tab-file-catalog">
         <section class="preview-section">
           <h3 class="section-title">File components</h3>
-          <div class="catalog-preview">
-            <div class="upload-zone" style="max-width:520px">
-              <div class="upload-icon"><i class="pi pi-upload"></i></div>
-              <p class="upload-text">FileUpload</p>
-              <p class="upload-sub">Selecciona o arrastra un fichero</p>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-file"></div>
         </section>
       </div>
@@ -257,22 +470,6 @@
       <div class="tab-panel" id="tab-menu-catalog">
         <section class="preview-section">
           <h3 class="section-title">Menu components</h3>
-          <div class="catalog-preview">
-            <div class="component-row" style="margin-bottom:12px">
-              <span class="p-tag p-tag-secondary">Home</span>
-              <i class="pi pi-angle-right"></i>
-              <span class="p-tag p-tag-primary">Menu</span>
-            </div>
-            <div class="layout-preview-frame">
-              <header class="demo-header">
-                <nav class="demo-nav">
-                  <a href="#" class="demo-nav-link active">Menubar</a>
-                  <a href="#" class="demo-nav-link">MegaMenu</a>
-                  <a href="#" class="demo-nav-link">PanelMenu</a>
-                </nav>
-              </header>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-menu"></div>
         </section>
       </div>
@@ -280,14 +477,6 @@
       <div class="tab-panel" id="tab-chart-catalog">
         <section class="preview-section">
           <h3 class="section-title">Chart components</h3>
-          <div class="catalog-preview">
-            <div class="layout-preview-frame" style="padding:16px">
-              <div class="stat-row"><span class="stat-label">Ene</span><span class="stat-value">40</span></div>
-              <div class="stat-row"><span class="stat-label">Feb</span><span class="stat-value">58</span></div>
-              <div class="stat-row"><span class="stat-label">Mar</span><span class="stat-value">76</span></div>
-              <div class="progress-bar-wrap" style="margin-top:12px"><div class="progress-bar" style="width:76%"></div></div>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-chart"></div>
         </section>
       </div>
@@ -295,12 +484,6 @@
       <div class="tab-panel" id="tab-messages-catalog">
         <section class="preview-section">
           <h3 class="section-title">Messages components</h3>
-          <div class="catalog-preview">
-            <div class="messages-stack">
-              <div class="p-message p-message-success"><i class="pi pi-check-circle"></i><div><strong>Message</strong><p>Feedback persistente.</p></div></div>
-              <div class="p-message p-message-info"><i class="pi pi-info-circle"></i><div><strong>Toast</strong><p>Notificación temporal.</p></div></div>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-messages"></div>
         </section>
       </div>
@@ -308,13 +491,6 @@
       <div class="tab-panel" id="tab-media-catalog">
         <section class="preview-section">
           <h3 class="section-title">Media components</h3>
-          <div class="catalog-preview">
-            <div class="cards-grid">
-              <div class="p-card"><div class="p-card-body"><h4>Carousel</h4><p>Desplazamiento horizontal de items.</p></div></div>
-              <div class="p-card"><div class="p-card-body"><h4>Galleria</h4><p>Galería con miniaturas.</p></div></div>
-              <div class="p-card"><div class="p-card-body"><h4>ImageCompare</h4><p>Comparador visual entre dos imágenes.</p></div></div>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-media"></div>
         </section>
       </div>
@@ -322,15 +498,6 @@
       <div class="tab-panel" id="tab-misc-catalog">
         <section class="preview-section">
           <h3 class="section-title">Misc components</h3>
-          <div class="catalog-preview">
-            <div class="component-row">
-              <div class="avatar-circle">UI</div>
-              <span class="p-badge p-badge-primary">Badge</span>
-              <div class="p-chip"><span>Chip</span><i class="pi pi-times"></i></div>
-              <span class="p-tag p-tag-success">Tag</span>
-              <button class="p-button p-button-secondary p-button-sm"><i class="pi pi-spin pi-spinner"></i> Spinner</button>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-misc"></div>
         </section>
       </div>
@@ -338,15 +505,6 @@
       <div class="tab-panel" id="tab-utilities-catalog">
         <section class="preview-section">
           <h3 class="section-title">Utilities components</h3>
-          <div class="catalog-preview">
-            <div class="filter-bar">
-              <div class="p-input-icon-left" style="flex:1">
-                <i class="pi pi-search"></i>
-                <input type="text" class="p-inputtext" placeholder="FilterService aplicado en lista..." />
-              </div>
-              <button class="p-button p-button-primary"><i class="pi pi-filter"></i> Filtrar</button>
-            </div>
-          </div>
           <div class="catalog-grid" id="catalog-utilities"></div>
         </section>
       </div>

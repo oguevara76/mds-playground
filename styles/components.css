@@ -92,6 +92,304 @@
   cursor: not-allowed;
 }
 
+/* ── Button: Contrast severity ── */
+.p-button-contrast {
+  background: var(--p-surface-950, #0a0a0a);
+  border-color: var(--p-surface-950, #0a0a0a);
+  color: var(--p-surface-0, #fff);
+}
+.p-button-contrast:hover { background: var(--p-surface-800, #1f1f1f); border-color: var(--p-surface-800, #1f1f1f); }
+
+.p-button-contrast.p-button-outlined {
+  background: transparent; border-color: var(--p-surface-950, #0a0a0a); color: var(--p-surface-950, #0a0a0a);
+}
+.p-button-contrast.p-button-outlined:hover { background: var(--p-surface-100); }
+
+.p-button-contrast.p-button-text {
+  color: var(--p-surface-950, #0a0a0a); background: transparent; border-color: transparent;
+}
+.p-button-contrast.p-button-text:hover { background: var(--p-surface-100); }
+
+/* ── Button: Info / Help severities ── */
+.p-button-info {
+  background: var(--p-info-color, #3b82f6);
+  border-color: var(--p-info-color, #3b82f6);
+  color: #fff;
+}
+.p-button-info:hover { background: #2563eb; border-color: #2563eb; }
+
+.p-button-help {
+  background: #8b5cf6;
+  border-color: #8b5cf6;
+  color: #fff;
+}
+.p-button-help:hover { background: #7c3aed; border-color: #7c3aed; }
+
+/* ── Button: Raised ── */
+.p-button-raised {
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+/* ── Button: Outlined per severity ── */
+.p-button-success.p-button-outlined {
+  background: transparent; border-color: var(--p-success-color); color: var(--p-success-color);
+}
+.p-button-success.p-button-outlined:hover { background: var(--p-success-bg); }
+
+.p-button-info.p-button-outlined {
+  background: transparent; border-color: var(--p-info-color, #3b82f6); color: var(--p-info-color, #3b82f6);
+}
+.p-button-info.p-button-outlined:hover { background: rgba(59,130,246,.08); }
+
+.p-button-warning.p-button-outlined {
+  background: transparent; border-color: var(--p-warning-color); color: var(--p-warning-color);
+}
+.p-button-warning.p-button-outlined:hover { background: var(--p-warning-bg); }
+
+.p-button-help.p-button-outlined {
+  background: transparent; border-color: #8b5cf6; color: #8b5cf6;
+}
+.p-button-help.p-button-outlined:hover { background: rgba(139,92,246,.08); }
+
+.p-button-danger.p-button-outlined {
+  background: transparent; border-color: var(--p-danger-color); color: var(--p-danger-color);
+}
+.p-button-danger.p-button-outlined:hover { background: var(--p-danger-bg); }
+
+.p-button-secondary.p-button-outlined {
+  background: transparent; border-color: var(--p-surface-400); color: var(--p-surface-600);
+}
+.p-button-secondary.p-button-outlined:hover { background: var(--p-surface-100); }
+
+/* ── Button: Text per severity ── */
+.p-button-success.p-button-text  { color: var(--p-success-color); background: transparent; border-color: transparent; }
+.p-button-success.p-button-text:hover  { background: var(--p-success-bg); }
+.p-button-info.p-button-text     { color: var(--p-info-color, #3b82f6); background: transparent; border-color: transparent; }
+.p-button-info.p-button-text:hover     { background: rgba(59,130,246,.08); }
+.p-button-warning.p-button-text  { color: var(--p-warning-color); background: transparent; border-color: transparent; }
+.p-button-warning.p-button-text:hover  { background: var(--p-warning-bg); }
+.p-button-help.p-button-text     { color: #8b5cf6; background: transparent; border-color: transparent; }
+.p-button-help.p-button-text:hover     { background: rgba(139,92,246,.08); }
+.p-button-danger.p-button-text   { color: var(--p-danger-color); background: transparent; border-color: transparent; }
+.p-button-danger.p-button-text:hover   { background: var(--p-danger-bg); }
+.p-button-secondary.p-button-text { color: var(--p-surface-600); background: transparent; border-color: transparent; }
+.p-button-secondary.p-button-text:hover { background: var(--p-surface-100); }
+.p-button-primary.p-button-text   { color: var(--p-primary-color); background: transparent; border-color: transparent; }
+.p-button-primary.p-button-text:hover   { background: color-mix(in srgb, var(--p-primary-color) 8%, transparent); }
+
+/* ── Button: Outlined primary (override generic) ── */
+.p-button-primary.p-button-outlined {
+  background: transparent; border-color: var(--p-primary-color); color: var(--p-primary-color);
+}
+.p-button-primary.p-button-outlined:hover { background: color-mix(in srgb, var(--p-primary-color) 8%, transparent); }
+
+/* ── Button: Icon-only ── */
+.p-button-icon-only {
+  padding: 8px;
+  width: 38px;
+  justify-content: center;
+}
+.p-button-icon-only.p-button-sm { padding: 5px; width: 30px; }
+.p-button-icon-only.p-button-lg { padding: 11px; width: 46px; }
+
+/* ── Button: Link ── */
+.p-button-link {
+  background: transparent;
+  border-color: transparent;
+  color: var(--p-primary-color);
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.p-button-link:hover { background: transparent; color: var(--p-primary-700); text-decoration: underline; }
+
+/* ─────────────────────────────── SpeedDial ─────────────────────────────── */
+.speeddial-showcase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 56px 48px;
+  padding: 32px 0 24px;
+  align-items: flex-end;
+}
+.speeddial-demo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.speeddial-demo-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--p-surface-400);
+}
+/* Base speeddial layout */
+.p-speeddial {
+  display: inline-flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+.p-speeddial-up    { flex-direction: column-reverse; }
+.p-speeddial-down  { flex-direction: column; }
+.p-speeddial-left  { flex-direction: row-reverse; align-items: center; }
+.p-speeddial-right { flex-direction: row; align-items: center; }
+
+.p-speeddial-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 10px;
+  list-style: none;
+}
+.p-speeddial-up .p-speeddial-list    { flex-direction: column; padding: 0 0 10px; }
+.p-speeddial-down .p-speeddial-list  { flex-direction: column; padding: 10px 0 0; }
+.p-speeddial-left .p-speeddial-list  { flex-direction: row; padding: 0 10px 0 0; }
+.p-speeddial-right .p-speeddial-list { flex-direction: row; padding: 0 0 0 10px; }
+
+.p-speeddial-action {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--p-content-bg);
+  border: 1px solid var(--p-content-border);
+  color: var(--p-content-color);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  font-size: 14px;
+  transition: background var(--p-transition-duration), box-shadow var(--p-transition-duration);
+}
+.p-speeddial-action:hover {
+  background: var(--p-surface-100);
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+}
+.p-speeddial-action.p-speeddial-action-primary {
+  background: var(--p-primary-color);
+  border-color: var(--p-primary-color);
+  color: var(--p-primary-color-text);
+}
+
+.p-speeddial-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--p-primary-color);
+  border: none;
+  color: var(--p-primary-color-text);
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  transition: background var(--p-transition-duration), transform var(--p-transition-duration);
+  flex-shrink: 0;
+}
+.p-speeddial-button:hover { background: var(--p-primary-700); }
+.p-speeddial-button.is-open { background: var(--p-surface-600); }
+.p-speeddial-button.is-open .pi-plus { display: none; }
+
+/* Radial / semicircle variant */
+.speeddial-radial-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+.speeddial-radial-center {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.speeddial-radial-item {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  transform-origin: center;
+}
+.speeddial-radial-item:nth-child(1) { transform: rotate(-90deg) translateX(-70px) rotate(90deg); }
+.speeddial-radial-item:nth-child(2) { transform: rotate(-45deg) translateX(-70px) rotate(45deg); }
+.speeddial-radial-item:nth-child(3) { transform: rotate(0deg) translateX(-70px); }
+.speeddial-radial-item:nth-child(4) { transform: rotate(45deg) translateX(-70px) rotate(-45deg); }
+
+/* ─────────────────────────────── SplitButton ─────────────────────────────── */
+.p-splitbutton {
+  display: inline-flex;
+  position: relative;
+  border-radius: var(--p-border-radius);
+}
+.p-splitbutton-defaultbutton {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-right-width: 0 !important;
+}
+.p-splitbutton-menubutton {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  border-left: 1px solid rgba(255,255,255,0.25) !important;
+}
+.p-splitbutton-menubutton.p-button-outlined,
+.p-splitbutton-menubutton.p-button-text {
+  border-left-color: currentColor !important;
+  opacity: .6;
+}
+.p-splitbutton-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 190px;
+  background: var(--p-content-bg);
+  border: 1px solid var(--p-content-border);
+  border-radius: var(--p-border-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,.14);
+  z-index: 10;
+  overflow: hidden;
+  font-family: var(--p-font-family);
+}
+.p-splitbutton-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  color: var(--p-content-color);
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition: background var(--p-transition-duration);
+}
+.p-splitbutton-item:hover { background: var(--p-surface-50); }
+.p-splitbutton-item.is-active {
+  background: color-mix(in srgb, var(--p-primary-color) 10%, transparent);
+  color: var(--p-primary-color);
+}
+.p-splitbutton-separator { height: 1px; background: var(--p-content-border); margin: 4px 0; }
+
+/* ── Catalog section helpers ── */
+.btn-section { margin-bottom: 32px; }
+.btn-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--p-surface-400);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--p-content-border);
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
 /* ── Badges ── */
 .p-badge {
   display: inline-flex;
