@@ -145,9 +145,10 @@
 
       const valEl = document.createElement('span');
       valEl.className = 'token-value';
+      const normalized = val.startsWith('#') ? val.toUpperCase() : val;
       const display = t.name === '--p-font-family'
         ? (val.split(',')[0].replace(/['"]/g, '').trim() || '—')
-        : (val.length > 18 ? val.slice(0, 18) + '…' : (val || '—'));
+        : (normalized.length > 18 ? normalized.slice(0, 18) + '…' : (normalized || '—'));
       valEl.textContent = display;
 
       row.appendChild(nameEl);
