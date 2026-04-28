@@ -8,7 +8,7 @@ html, body {
   height: 100%;
   font-family: var(--p-font-family);
   font-size: var(--p-font-size);
-  background: #fff;
+  background: var(--topbar-bg);
   color: var(--p-surface-800);
   transition: background .25s, color .25s;
 }
@@ -65,7 +65,7 @@ html, body {
 .brand-name {
   font-size: 20px;
   font-weight: 700;
-  color: #121722;
+  color: var(--p-surface-800);
   letter-spacing: -.01em;
   line-height: 1;
 }
