@@ -24,8 +24,10 @@
   <!-- ═══════════════════════════ TOPBAR ═══════════════════════════ -->
   <header class="topbar">
     <div class="topbar-brand">
-      <div class="brand-icon">M</div>
-      <span class="brand-name">MDS <span class="brand-sub">Playground</span></span>
+      <div class="brand-mark" aria-hidden="true">
+        <i class="pi pi-sparkles"></i>
+      </div>
+      <span class="brand-name">MDS | Playground</span>
     </div>
     <nav class="topbar-nav">
       <a href="#" class="nav-link active">Preview</a>
@@ -33,8 +35,9 @@
       <a href="https://primeng.org/button" target="_blank" class="nav-link">PrimeNG Docs ↗</a>
     </nav>
     <div class="topbar-actions">
-      <button class="btn-icon" id="toggle-theme" title="Toggle dark/light">
+      <button class="theme-switch" id="toggle-theme" title="Cambiar modo">
         <i class="pi pi-moon"></i>
+        <span>Dark</span>
       </button>
       <button class="btn-ghost" id="reset-btn">Reset CSS</button>
     </div>
@@ -96,24 +99,6 @@
         </div>
       </div>
 
-      <div class="sidebar-divider"></div>
-
-      <div class="sidebar-section">
-        <p class="sidebar-label">Variante de tema</p>
-        <div class="radio-group">
-          <label class="radio-opt">
-            <input type="radio" name="variant" value="light" checked /> Light
-          </label>
-          <label class="radio-opt">
-            <input type="radio" name="variant" value="dark" /> Dark
-          </label>
-        </div>
-      </div>
-
-      <div class="sidebar-footer">
-        <p>MDS · Indra · PrimeNG v17</p>
-      </div>
-
     </aside>
 
     <!-- ─── MAIN PREVIEW ─── -->
@@ -121,10 +106,18 @@
 
       <!-- Tabs de sección -->
       <div class="preview-tabs">
-        <button class="preview-tab active" data-tab="components">Componentes</button>
-        <button class="preview-tab" data-tab="forms">Formularios</button>
-        <button class="preview-tab" data-tab="dashboard">Dashboard</button>
-        <button class="preview-tab" data-tab="layouts">Layouts</button>
+        <button class="preview-tab active" data-tab="components">Button</button>
+        <button class="preview-tab" data-tab="forms">Form</button>
+        <button class="preview-tab" data-tab="dashboard">Data</button>
+        <button class="preview-tab" data-tab="layouts">Panel</button>
+        <button class="preview-tab" data-tab="overlay">Overlay</button>
+        <button class="preview-tab" data-tab="file">File</button>
+        <button class="preview-tab" data-tab="menu">Menu</button>
+        <button class="preview-tab" data-tab="chart">Chart</button>
+        <button class="preview-tab" data-tab="messages">Messages</button>
+        <button class="preview-tab" data-tab="media">Media</button>
+        <button class="preview-tab" data-tab="misc">Misc</button>
+        <button class="preview-tab" data-tab="utilities">Utilities</button>
       </div>
 
       <!-- ══ TAB: COMPONENTES ══ -->
@@ -636,6 +629,163 @@
                 <button class="p-button p-button-danger">Eliminar</button>
               </div>
             </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══ TAB: OVERLAY ══ -->
+      <div class="tab-panel" id="tab-overlay">
+        <section class="preview-section">
+          <h3 class="section-title">ConfirmDialog, ConfirmPopup, Dialog, Drawer, DynamicDialog, Popover, Tooltip</h3>
+          <div class="component-row" style="margin-bottom:14px">
+            <button class="p-button p-button-primary">ConfirmDialog</button>
+            <button class="p-button p-button-outlined">ConfirmPopup</button>
+            <button class="p-button p-button-secondary">DynamicDialog</button>
+            <button class="p-button p-button-text" title="Tooltip: acción contextual">Tooltip Trigger</button>
+          </div>
+          <div class="layout-preview-frame" style="padding:16px">
+            <div class="p-dialog" style="max-width:560px">
+              <div class="p-dialog-header">
+                <span>Dialog / Popover demo</span>
+                <button class="p-dialog-close"><i class="pi pi-times"></i></button>
+              </div>
+              <div class="p-dialog-content">
+                <p>Este bloque representa comportamiento visual de Dialog y Popover con acciones de confirmación.</p>
+              </div>
+              <div class="p-dialog-footer">
+                <button class="p-button p-button-text">Cancelar</button>
+                <button class="p-button p-button-primary">Aceptar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══ TAB: FILE ══ -->
+      <div class="tab-panel" id="tab-file">
+        <section class="preview-section">
+          <h3 class="section-title">Upload</h3>
+          <div class="upload-zone" style="max-width:520px">
+            <div class="upload-icon"><i class="pi pi-upload"></i></div>
+            <p class="upload-text">Sube tus assets para el playground</p>
+            <p class="upload-sub">PNG, SVG o JSON de tokens</p>
+          </div>
+          <div class="component-row" style="margin-top:14px">
+            <button class="p-button p-button-primary"><i class="pi pi-upload"></i> Seleccionar archivo</button>
+            <button class="p-button p-button-outlined"><i class="pi pi-cloud-upload"></i> Cargar</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══ TAB: MENU ══ -->
+      <div class="tab-panel" id="tab-menu">
+        <section class="preview-section">
+          <h3 class="section-title">Breadcrumb, Menu, Menubar, MegaMenu, PanelMenu, TieredMenu, ContextMenu, Dock</h3>
+          <div class="component-row" style="margin-bottom:14px">
+            <span class="p-tag p-tag-secondary">Inicio</span>
+            <i class="pi pi-angle-right"></i>
+            <span class="p-tag p-tag-secondary">Componentes</span>
+            <i class="pi pi-angle-right"></i>
+            <span class="p-tag p-tag-primary">Menu</span>
+          </div>
+          <div class="layout-preview-frame">
+            <header class="demo-header">
+              <nav class="demo-nav">
+                <a href="#" class="demo-nav-link active">Menubar</a>
+                <a href="#" class="demo-nav-link">MegaMenu</a>
+                <a href="#" class="demo-nav-link">PanelMenu</a>
+                <a href="#" class="demo-nav-link">TieredMenu</a>
+              </nav>
+            </header>
+          </div>
+          <div class="component-row" style="margin-top:14px">
+            <button class="p-button p-button-sm p-button-text"><i class="pi pi-home"></i> Dock</button>
+            <button class="p-button p-button-sm p-button-text"><i class="pi pi-folder"></i> ContextMenu</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══ TAB: CHART ══ -->
+      <div class="tab-panel" id="tab-chart">
+        <section class="preview-section">
+          <h3 class="section-title">Chart.js</h3>
+          <div class="layout-preview-frame" style="padding:18px">
+            <div class="stat-row"><span class="stat-label">Ene</span><span class="stat-value">42</span></div>
+            <div class="stat-row"><span class="stat-label">Feb</span><span class="stat-value">61</span></div>
+            <div class="stat-row"><span class="stat-label">Mar</span><span class="stat-value">55</span></div>
+            <div class="stat-row"><span class="stat-label">Abr</span><span class="stat-value">78</span></div>
+            <div class="progress-bar-wrap" style="margin-top:14px"><div class="progress-bar" style="width:78%"></div></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══ TAB: MESSAGES ══ -->
+      <div class="tab-panel" id="tab-messages">
+        <section class="preview-section">
+          <h3 class="section-title">Message &amp; Toast</h3>
+          <div class="messages-stack">
+            <div class="p-message p-message-success"><i class="pi pi-check-circle"></i><div><strong>Message success</strong><p>Componente de feedback persistente.</p></div></div>
+            <div class="p-message p-message-info"><i class="pi pi-info-circle"></i><div><strong>Message info</strong><p>Ideal para notas de estado global.</p></div></div>
+          </div>
+          <div class="component-row" style="margin-top:12px">
+            <button class="p-button p-button-primary p-button-sm"><i class="pi pi-bell"></i> Disparar Toast</button>
+            <button class="p-button p-button-outlined p-button-sm">Limpiar</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══ TAB: MEDIA ══ -->
+      <div class="tab-panel" id="tab-media">
+        <section class="preview-section">
+          <h3 class="section-title">Carousel, Galleria, Image, ImageCompare</h3>
+          <div class="cards-grid">
+            <div class="p-card"><div class="p-card-body"><h4>Carousel</h4><p>Vista paginada de elementos visuales.</p></div></div>
+            <div class="p-card"><div class="p-card-body"><h4>Galleria</h4><p>Galería con miniaturas y navegación.</p></div></div>
+            <div class="p-card"><div class="p-card-body"><h4>Image / ImageCompare</h4><p>Render de imagen con comparador lado a lado.</p></div></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══ TAB: MISC ══ -->
+      <div class="tab-panel" id="tab-misc">
+        <section class="preview-section">
+          <h3 class="section-title">Avatar, Badge, Chip, ProgressBar, ProgressSpinner, Skeleton, Tag, Terminal y más</h3>
+          <div class="component-row" style="margin-bottom:14px">
+            <div class="avatar-circle">PG</div>
+            <span class="p-badge p-badge-primary">Badge</span>
+            <div class="p-chip"><span>Chip</span><i class="pi pi-times"></i></div>
+            <span class="p-tag p-tag-success">Tag</span>
+          </div>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width:62%"></div></div>
+          <div class="component-row" style="margin-top:14px">
+            <button class="p-button p-button-secondary p-button-sm"><i class="pi pi-spin pi-spinner"></i> ProgressSpinner</button>
+            <button class="p-button p-button-outlined p-button-sm">Skeleton</button>
+            <button class="p-button p-button-text p-button-sm">Ripple / FocusTrap</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ══ TAB: UTILITIES ══ -->
+      <div class="tab-panel" id="tab-utilities">
+        <section class="preview-section">
+          <h3 class="section-title">FilterService</h3>
+          <div class="filter-bar">
+            <div class="p-input-icon-left" style="flex:1">
+              <i class="pi pi-search"></i>
+              <input type="text" class="p-inputtext" placeholder="FilterService: filtra por nombre de componente..." />
+            </div>
+            <button class="p-button p-button-primary"><i class="pi pi-filter"></i> Filtrar</button>
+            <button class="p-button p-button-outlined">Reset</button>
+          </div>
+          <div class="table-card" style="margin-top:14px">
+            <table class="p-datatable">
+              <thead><tr><th>Componente</th><th>Categoría</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr><td>Button</td><td>Button</td><td><span class="p-tag p-tag-success">Match</span></td></tr>
+                <tr><td>Dialog</td><td>Overlay</td><td><span class="p-tag p-tag-secondary">Result</span></td></tr>
+                <tr><td>DataTable</td><td>Data</td><td><span class="p-tag p-tag-secondary">Result</span></td></tr>
+              </tbody>
+            </table>
           </div>
         </section>
       </div>

@@ -31,32 +31,20 @@
 
   /* ── Dark / Light mode ── */
   let isDark = false;
+  function syncThemeSwitchLabel() {
+    const label = toggleTheme.querySelector('span');
+    if (label) label.textContent = isDark ? 'Light' : 'Dark';
+  }
+
   toggleTheme.addEventListener('click', () => {
     isDark = !isDark;
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     toggleTheme.innerHTML = isDark
-      ? '<i class="pi pi-sun"></i>'
-      : '<i class="pi pi-moon"></i>';
-
-    // Also sync the preview-tab variant radios
-    document.querySelectorAll('input[name="variant"]').forEach(r => {
-      r.checked = (r.value === (isDark ? 'dark' : 'light'));
-    });
+      ? '<i class="pi pi-sun"></i><span>Light</span>'
+      : '<i class="pi pi-moon"></i><span>Dark</span>';
 
     refreshColorStrip();
     refreshTokenGrid();
-  });
-
-  document.querySelectorAll('input[name="variant"]').forEach(r => {
-    r.addEventListener('change', () => {
-      isDark = r.value === 'dark';
-      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-      toggleTheme.innerHTML = isDark
-        ? '<i class="pi pi-sun"></i>'
-        : '<i class="pi pi-moon"></i>';
-      refreshColorStrip();
-      refreshTokenGrid();
-    });
   });
 
   /* ── CSS file upload ── */
@@ -245,5 +233,6 @@
   /* ── Init ── */
   refreshTokenGrid();
   refreshColorStrip();
+  syncThemeSwitchLabel();
 
 })();
