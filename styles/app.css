@@ -159,7 +159,7 @@ html, body {
   flex-direction: column;
 }
 
-.sidebar-section { padding: 20px; }
+.sidebar-section { padding: 12px 16px; }
 .sidebar-label {
   font-size: 11px;
   font-weight: 600;
@@ -261,32 +261,53 @@ html, body {
   border: 1px solid rgba(0,0,0,.08);
   flex-shrink: 0;
 }
+.token-swatch-font {
+  background: var(--p-surface-0);
+  border-color: var(--p-surface-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--p-surface-500);
+  letter-spacing: -.01em;
+}
 .token-name { color: var(--p-surface-500); font-family: 'DM Mono', monospace; flex: 1; }
 .token-value { color: var(--p-surface-600); font-family: 'DM Mono', monospace; font-size: 11px; }
 
 /* Color strip */
 .color-strip {
-  display: flex;
-  gap: 3px;
-  border-radius: var(--p-border-radius);
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
 }
 .color-swatch {
-  flex: 1;
-  height: 36px;
+  border-radius: 6px;
+  padding: 6px 6px 5px;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: flex-end;
-  padding-bottom: 3px;
+  gap: 1px;
+  color: rgba(0, 0, 0, 0.65);
 }
-.color-swatch span {
+.color-swatch.is-dark { color: rgba(255, 255, 255, 0.85); }
+.color-swatch-base {
+  outline: 1px solid var(--p-primary-color);
+  outline-offset: 1px;
+}
+.swatch-step {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: monospace;
+  line-height: 1.2;
+}
+.swatch-hex {
   font-size: 9px;
-  color: rgba(255,255,255,.7);
-  font-weight: 600;
-  font-family: 'DM Mono', monospace;
+  font-family: monospace;
+  line-height: 1.2;
+  opacity: 0.8;
 }
-.active-swatch span { color: #fff; font-weight: 700; font-size: 9px; }
 
 /* Radio group */
 .radio-group { display: flex; gap: 16px; }
@@ -636,10 +657,17 @@ html, body {
 .mini-label { font-size: 11px; color: var(--p-surface-400); margin-top: 2px; }
 
 /* Scrollbar styling */
-::-webkit-scrollbar { width: 6px; }
+/* Scrollbar — oculto por defecto, visible en sidebar al interactuar */
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--p-surface-300); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--p-surface-400); }
+::-webkit-scrollbar-thumb { background: transparent; border-radius: 3px; transition: background .2s; }
+
+.sidebar:hover::-webkit-scrollbar-thumb,
+.sidebar:focus-within::-webkit-scrollbar-thumb { background: var(--p-surface-300); }
+.sidebar::-webkit-scrollbar-thumb:hover { background: var(--p-surface-400); }
+
+[data-theme="dark"] .sidebar:hover::-webkit-scrollbar-thumb,
+[data-theme="dark"] .sidebar:focus-within::-webkit-scrollbar-thumb { background: var(--p-surface-600); }
 
 /* ─── DARK MODE overrides ───────────────────────────────────────────── */
 [data-theme="dark"] .brand-name {

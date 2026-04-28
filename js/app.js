@@ -14,7 +14,6 @@
   const tokenGrid      = document.getElementById('token-grid');
   const colorStrip     = document.getElementById('color-strip');
   const toggleTheme    = document.getElementById('toggle-theme');
-  const resetBtn       = document.getElementById('reset-btn');
   const previewArea    = document.getElementById('preview-area');
 
   /* ── Tabs ── */
@@ -79,16 +78,6 @@
     refreshTokenGrid();
   });
 
-  resetBtn.addEventListener('click', () => {
-    userTheme.textContent = '';
-    fileStatus.style.display = 'none';
-    uploadZone.style.display = '';
-    fileInput.value = '';
-    showToast('Tokens restaurados al tema MDS por defecto', 'info');
-    refreshColorStrip();
-    refreshTokenGrid();
-  });
-
   function loadCSSFile(file) {
     const reader = new FileReader();
     reader.onload = e => {
@@ -119,14 +108,10 @@
 
   /* ── Token inspector ── */
   const WATCH_TOKENS = [
-    { name: '--p-primary-color',   label: 'primary' },
-    { name: '--p-primary-50',      label: 'primary-50' },
-    { name: '--p-primary-300',     label: 'primary-300' },
-    { name: '--p-success-color',   label: 'success' },
-    { name: '--p-warning-color',   label: 'warning' },
-    { name: '--p-danger-color',    label: 'danger' },
-    { name: '--p-border-radius',   label: 'radius' },
-    { name: '--p-font-family',     label: 'font' },
+    { name: '--p-primary-color', label: 'primary' },
+    { name: '--p-primary-50',    label: 'primary-50' },
+    { name: '--p-primary-900',   label: 'primary-900' },
+    { name: '--p-font-family',   label: 'font' },
   ];
 
   function getCSSVar(name) {
@@ -144,12 +129,15 @@
       const row = document.createElement('div');
       row.className = 'token-row';
 
-      if (isColor(val) || val.startsWith('var(')) {
-        const swatch = document.createElement('div');
+      const swatch = document.createElement('div');
+      if (t.name === '--p-font-family') {
+        swatch.className = 'token-swatch token-swatch-font';
+        swatch.textContent = 'Aa';
+      } else {
         swatch.className = 'token-swatch';
         swatch.style.background = val || '#ccc';
-        row.appendChild(swatch);
       }
+      row.appendChild(swatch);
 
       const nameEl = document.createElement('span');
       nameEl.className = 'token-name';
@@ -157,7 +145,10 @@
 
       const valEl = document.createElement('span');
       valEl.className = 'token-value';
-      valEl.textContent = val.length > 18 ? val.slice(0, 18) + '…' : (val || '—');
+      const display = t.name === '--p-font-family'
+        ? (val.split(',')[0].replace(/['"]/g, '').trim() || '—')
+        : (val.length > 18 ? val.slice(0, 18) + '…' : (val || '—'));
+      valEl.textContent = display;
 
       row.appendChild(nameEl);
       row.appendChild(valEl);
@@ -165,21 +156,42 @@
     });
   }
 
+  function resolveColor(key) {
+    const el = document.createElement('div');
+    el.style.cssText = 'position:absolute;opacity:0;pointer-events:none;background:var(' + key + ')';
+    document.body.appendChild(el);
+    const rgb = getComputedStyle(el).backgroundColor;
+    document.body.removeChild(el);
+    return rgb;
+  }
+
+  function rgbToHex(rgb) {
+    const m = rgb.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/);
+    if (!m) return '';
+    return [m[1], m[2], m[3]].map(n => parseInt(n).toString(16).padStart(2, '0')).join('').toUpperCase();
+  }
+
+  function isDarkColor(rgb) {
+    const m = rgb.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/);
+    if (!m) return false;
+    return (0.299 * m[1] + 0.587 * m[2] + 0.114 * m[3]) / 255 < 0.5;
+  }
+
   function refreshColorStrip() {
-    const swatches = colorStrip.querySelectorAll('.color-swatch');
-    const keys = [
-      '--p-primary-50',
-      '--p-primary-100',
-      '--p-primary-200',
-      '--p-primary-300',
-      '--p-primary-400',
-      '--p-primary-500',
-      '--p-primary-600',
-      '--p-primary-700',
-      '--p-primary-color',
-    ];
-    swatches.forEach((sw, i) => {
-      sw.style.background = `var(${keys[i]})`;
+    colorStrip.querySelectorAll('.color-swatch').forEach(sw => {
+      const key = sw.dataset.key;
+      const step = sw.dataset.step;
+      if (!key) return;
+
+      const rgb = resolveColor(key);
+      const hex = rgbToHex(rgb);
+      const dark = isDarkColor(rgb);
+
+      sw.style.background = `var(${key})`;
+      sw.classList.toggle('is-dark', dark);
+      sw.innerHTML =
+        '<span class="swatch-step">' + step + '</span>' +
+        '<span class="swatch-hex">' + hex + '</span>';
     });
   }
 
