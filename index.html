@@ -26,17 +26,29 @@
   <!-- ═══════════════════════════ TOPBAR ═══════════════════════════ -->
   <header class="topbar">
     <div class="topbar-brand">
-      <div class="brand-mark" aria-hidden="true">
-        <i data-lucide="layout-template"></i>
-      </div>
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
+        <rect width="40" height="40" rx="12" fill="url(#brand-gradient)"/>
+        <g clip-path="url(#brand-clip)">
+          <path d="M22.9178 19.2693C22.7616 19.4255 22.6738 19.6375 22.6738 19.8584C22.6738 20.0794 22.7616 20.2913 22.9178 20.4476L24.8978 22.4284C25.0541 22.5846 25.266 22.6724 25.487 22.6724C25.708 22.6724 25.9199 22.5846 26.0762 22.4284L28.057 20.4476C28.2132 20.2913 28.301 20.0794 28.301 19.8584C28.301 19.6375 28.2132 19.4255 28.057 19.2693L26.0762 17.2884C25.9199 17.1322 25.708 17.0444 25.487 17.0444C25.266 17.0444 25.0541 17.1322 24.8978 17.2884L22.9178 19.2693Z" stroke="white" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M11.8846 19.2693C11.7284 19.4255 11.6406 19.6375 11.6406 19.8584C11.6406 20.0794 11.7284 20.2913 11.8846 20.4476L13.8654 22.4284C14.0217 22.5846 14.2336 22.6724 14.4546 22.6724C14.6756 22.6724 14.8875 22.5846 15.0438 22.4284L17.0246 20.4476C17.1808 20.2913 17.2686 20.0794 17.2686 19.8584C17.2686 19.6375 17.1808 19.4255 17.0246 19.2693L15.0438 17.2884C14.8875 17.1322 14.6756 17.0444 14.4546 17.0444C14.2336 17.0444 14.0217 17.1322 13.8654 17.2884L11.8846 19.2693Z" stroke="white" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17.4007 24.785C17.3232 24.8624 17.2617 24.9543 17.2198 25.0555C17.1778 25.1567 17.1562 25.2651 17.1562 25.3746C17.1562 25.4841 17.1778 25.5926 17.2198 25.6937C17.2617 25.7949 17.3232 25.8868 17.4007 25.9642L19.3815 27.9442C19.5378 28.1004 19.7497 28.1882 19.9707 28.1882C20.1916 28.1882 20.4035 28.1004 20.5598 27.9442L22.5407 25.9642C22.6181 25.8868 22.6796 25.7949 22.7215 25.6937C22.7635 25.5926 22.7851 25.4841 22.7851 25.3746C22.7851 25.2651 22.7635 25.1567 22.7215 25.0555C22.6796 24.9543 22.6181 24.8624 22.5407 24.785L20.5598 22.805C20.4035 22.6488 20.1916 22.561 19.9707 22.561C19.7497 22.561 19.5378 22.6488 19.3815 22.805L17.4007 24.785Z" stroke="white" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17.4002 13.7534C17.244 13.9097 17.1562 14.1216 17.1562 14.3426C17.1562 14.5635 17.244 14.7754 17.4002 14.9317L19.3811 16.9117C19.5373 17.0679 19.7493 17.1557 19.9702 17.1557C20.1912 17.1557 20.4031 17.0679 20.5594 16.9117L22.5402 14.9317C22.6965 14.7754 22.7842 14.5635 22.7842 14.3426C22.7842 14.1216 22.6965 13.9097 22.5402 13.7534L20.5594 11.7726C20.4031 11.6163 20.1912 11.5286 19.9702 11.5286C19.7493 11.5286 19.5373 11.6163 19.3811 11.7726L17.4002 13.7534Z" stroke="white" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <defs>
+          <linearGradient id="brand-gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#1FADA2"/><stop offset="1" stop-color="#17B0CF"/>
+          </linearGradient>
+          <clipPath id="brand-clip">
+            <rect width="20" height="20" fill="white" transform="translate(9.9707 9.8584)"/>
+          </clipPath>
+        </defs>
+      </svg>
       <span class="brand-name">MDS | Playground</span>
     </div>
-    <nav class="topbar-nav">
-      <a href="#" class="nav-link active">Preview</a>
-      <a href="#" class="nav-link">Tokens</a>
-      <a href="https://primeng.org/button" target="_blank" class="nav-link">PrimeNG Docs ↗</a>
-    </nav>
+    <nav class="topbar-nav"></nav>
     <div class="topbar-actions">
+      <a href="#" class="nav-link">Tokens</a>
+      <a href="https://primeng.org/installation" target="_blank" class="nav-link" style="margin-right:12px">PrimeNG Docs ↗</a>
       <button class="theme-switch" id="toggle-theme" title="Cambiar modo">
         <i class="pi pi-moon"></i>
         <span>Dark</span>

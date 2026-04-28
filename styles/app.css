@@ -30,7 +30,7 @@ html, body {
 .topbar-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-shrink: 0;
 }
 .brand-mark {
@@ -63,11 +63,11 @@ html, body {
 }
 .brand-icon.small { width: 24px; height: 24px; font-size: 12px; border-radius: 5px; }
 .brand-name {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--p-surface-800);
-  letter-spacing: -.01em;
-  line-height: 1;
+  letter-spacing: -0.45px;
+  line-height: 28px;
 }
 .brand-sub { font-weight: 400; opacity: .5; }
 
