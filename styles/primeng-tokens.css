@@ -1,117 +1,186 @@
 /* ═══════════════════════════════════════════════════════════════════
-   MDS PLAYGROUND — PrimeNG Token Defaults
-   Basado en PrimeNG v17 CSS Custom Properties
-   Los ficheros CSS subidos por el usuario sobreescriben estas variables
+   MDS PLAYGROUND — Design Tokens
+   Generado a partir de figma-export.json (MDS Core)
+   Colección: Primitives + Semantics (Light / Dark) + Components
    ═══════════════════════════════════════════════════════════════════ */
 
+/* ─── LIGHT MODE (default) ─────────────────────────────────────────── */
 :root {
-  /* ── Primary palette (MDS Indra default: #1d7162) ── */
-  --p-primary-50:  #e8f5f2;
-  --p-primary-100: #c3e5de;
-  --p-primary-200: #9dd4c8;
-  --p-primary-300: #77c3b2;
-  --p-primary-400: #51b29c;
-  --p-primary-500: #2b9f8a;
-  --p-primary-600: #1d7162;
-  --p-primary-700: #155248;
-  --p-primary-800: #0d332e;
-  --p-primary-900: #061514;
 
-  --p-primary-color: var(--p-primary-600);
-  --p-primary-color-text: #ffffff;
+  /* ── Primary palette — MDS Core teal (#00778a) ── */
+  --p-primary-50:  #dbf8ff;
+  --p-primary-100: #b7f1ff;
+  --p-primary-200: #80dcf0;
+  --p-primary-300: #66c1d6;
+  --p-primary-400: #4ba8bc;
+  --p-primary-500: #2e8fa3;
+  --p-primary-600: #00778a;
+  --p-primary-700: #006072;
+  --p-primary-800: #00495b;
+  --p-primary-900: #001e30;
+  --p-primary-950: #000911;
 
-  /* ── Surface palette ── */
+  --p-primary-color:        #00778a;  /* primary-color · Light */
+  --p-primary-color-text:   #ffffff;  /* primary-contrast-color */
+  --p-primary-hover-color:  #006072;  /* primary-hover-color · Light */
+  --p-primary-active-color: #00495b;  /* primary-active-color · Light */
+
+  /* ── Surface palette — Zinc-based ── */
   --p-surface-0:   #ffffff;
-  --p-surface-50:  #f8fafb;
-  --p-surface-100: #f1f3f5;
-  --p-surface-200: #e9ecef;
-  --p-surface-300: #dee2e6;
-  --p-surface-400: #ced4da;
-  --p-surface-500: #adb5bd;
-  --p-surface-600: #6c757d;
-  --p-surface-700: #495057;
-  --p-surface-800: #343a40;
-  --p-surface-900: #212529;
+  --p-surface-50:  #fafafa;
+  --p-surface-100: #f4f4f5;
+  --p-surface-200: #e4e4e7;
+  --p-surface-300: #d4d4d8;
+  --p-surface-400: #a1a1aa;
+  --p-surface-500: #71717a;
+  --p-surface-600: #3f3f46;
+  --p-surface-700: #27272a;
+  --p-surface-800: #18181b;
+  --p-surface-900: #09090b;
+  --p-surface-950: #020203;
 
-  /* ── Semantic colors ── */
-  --p-success-color:     #22863a;
-  --p-success-bg:        #dcf5e1;
-  --p-warning-color:     #946500;
-  --p-warning-bg:        #fff3c4;
-  --p-danger-color:      #c0392b;
-  --p-danger-bg:         #fde8e8;
-  --p-info-color:        #1565c0;
-  --p-info-bg:           #e3f2fd;
-  --p-secondary-color:   #6c757d;
-  --p-secondary-bg:      #f1f3f5;
+  /* ── Feedback: Success ── */
+  --p-success-color: #008752;   /* feedback-success-medium · Light */
+  --p-success-bg:    #e5fff3;   /* feedback-success-minimal · Light */
+  --p-success-subtle: #abffd6;  /* feedback-success-subtle · Light */
+
+  /* ── Feedback: Danger ── */
+  --p-danger-color: #d2222b;    /* feedback-danger-medium · Light */
+  --p-danger-bg:    #ffeeeb;    /* feedback-danger-minimal · Light */
+  --p-danger-subtle: #ffcbc1;   /* feedback-danger-subtle · Light */
+
+  /* ── Feedback: Info ── */
+  --p-info-color: #0073b4;      /* feedback-info-medium · Light */
+  --p-info-bg:    #e5fbff;      /* feedback-info-minimal · Light */
+
+  /* ── Feedback: Warning ── */
+  --p-warning-color: #9c6900;   /* feedback-warn-medium · Light */
+  --p-warning-bg:    #fff8db;   /* feedback-warn-minimal · Light */
+
+  /* ── Feedback: Help ── */
+  --p-help-color: #9333ea;      /* feedback-help-medium · Light */
+  --p-help-bg:    #faf5ff;      /* feedback-help-minimal · Light */
+
+  /* ── Secondary / neutral ── */
+  --p-secondary-color: #71717a; /* surface-500 */
+  --p-secondary-bg:    #f4f4f5; /* surface-100 */
 
   /* ── Typography ── */
-  --p-font-family: 'DM Sans', system-ui, sans-serif;
+  --p-font-family: 'Inter', system-ui, sans-serif;
   --p-font-size:   14px;
 
-  /* ── Border radius ── */
-  --p-border-radius:    6px;
-  --p-border-radius-sm: 4px;
-  --p-border-radius-lg: 10px;
-  --p-border-radius-xl: 16px;
+  /* ── Border radius (border-radius-* · Semantics) ── */
+  --p-border-radius:      6px;   /* border-radius-md  */
+  --p-border-radius-sm:   4px;   /* border-radius-sm  */
+  --p-border-radius-lg:   8px;   /* border-radius-lg  */
+  --p-border-radius-xl:   12px;  /* border-radius-xl  */
+  --p-border-radius-pill: 999px; /* border-radius-pill */
 
   /* ── Transitions ── */
   --p-transition-duration: 180ms;
 
-  /* ── Focus ── */
-  --p-focus-ring: 0 0 0 3px color-mix(in srgb, var(--p-primary-color) 35%, transparent);
+  /* ── Focus ring ── */
+  --p-focus-ring-width:  2px;
+  --p-focus-ring-style:  solid;
+  --p-focus-ring-color:  var(--p-primary-color);
+  --p-focus-ring-offset: 1px;
 
   /* ── Shadows ── */
-  --p-shadow-1: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.08);
-  --p-shadow-2: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.06);
+  --p-shadow-1: 0 1px 2px rgba(18, 18, 23, 0.05);           /* form-field-shadow */
+  --p-shadow-2: 0 4px 8px rgba(2, 5, 10, 0.04);             /* message-info-shadow */
 
-  /* ── Input specific ── */
-  --p-input-border-color:    var(--p-surface-300);
-  --p-input-bg:              var(--p-surface-0);
-  --p-input-color:           var(--p-surface-800);
-  --p-input-placeholder:     var(--p-surface-400);
-  --p-input-focus-border:    var(--p-primary-color);
+  /* ── Input ── */
+  --p-input-border-color:   var(--p-surface-300);
+  --p-input-bg:             var(--p-surface-0);
+  --p-input-color:          var(--p-surface-800);
+  --p-input-placeholder:    var(--p-surface-400);
+  --p-input-focus-border:   var(--p-primary-color);
 
-  /* ── Component backgrounds ── */
-  --p-content-bg:            var(--p-surface-0);
-  --p-content-border:        var(--p-surface-200);
-  --p-content-color:         var(--p-surface-800);
+  /* ── Content / component backgrounds ── */
+  --p-content-bg:     var(--p-surface-0);
+  --p-content-border: var(--p-surface-200);
+  --p-content-color:  var(--p-surface-800);
 
   /* ── App shell ── */
-  --app-bg:         #f4f6f8;
-  --sidebar-bg:     #ffffff;
-  --sidebar-border: var(--p-surface-200);
-  --topbar-bg:      #ffffff;
-  --topbar-border:  var(--p-surface-200);
-}
-
-/* Dark mode */
-[data-theme="dark"] {
-  --p-surface-0:   #1e2125;
-  --p-surface-50:  #25292e;
-  --p-surface-100: #2e3338;
-  --p-surface-200: #383d42;
-  --p-surface-300: #454a50;
-  --p-surface-400: #6c757d;
-  --p-surface-500: #adb5bd;
-  --p-surface-600: #ced4da;
-  --p-surface-700: #dee2e6;
-  --p-surface-800: #e9ecef;
-  --p-surface-900: #f8f9fa;
-
-  --p-input-bg:    var(--p-surface-100);
-  --p-content-bg:  var(--p-surface-50);
-  --p-content-border: var(--p-surface-200);
-
-  --p-success-bg:  rgba(34,134,58,.18);
-  --p-warning-bg:  rgba(148,101,0,.18);
-  --p-danger-bg:   rgba(192,57,43,.18);
-  --p-info-bg:     rgba(21,101,192,.18);
-  --p-secondary-bg: var(--p-surface-100);
-
-  --app-bg:         #15181c;
+  --app-bg:         var(--p-surface-50);
   --sidebar-bg:     var(--p-surface-0);
   --sidebar-border: var(--p-surface-200);
   --topbar-bg:      var(--p-surface-0);
   --topbar-border:  var(--p-surface-200);
+}
+
+
+/* ─── DARK MODE ─────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+
+  /* Primary (paleta invertida para dark) */
+  --p-primary-50:  #000911;
+  --p-primary-100: #001e30;
+  --p-primary-200: #00495b;
+  --p-primary-300: #006072;
+  --p-primary-400: #00778a;
+  --p-primary-500: #2e8fa3;
+  --p-primary-600: #4ba8bc;
+  --p-primary-700: #66c1d6;
+  --p-primary-800: #80dcf0;
+  --p-primary-900: #b7f1ff;
+  --p-primary-950: #dbf8ff;
+
+  --p-primary-color:        #4ba8bc;  /* primary-color · Dark */
+  --p-primary-hover-color:  #2e8fa3;  /* primary-hover-color · Dark */
+  --p-primary-active-color: #00778a;  /* primary-active-color · Dark */
+
+  /* Surface (valores dark para 600–950) */
+  --p-surface-600: #52525b;
+  --p-surface-700: #3f3f46;
+  --p-surface-800: #27272a;
+  --p-surface-900: #18181b;
+  --p-surface-950: #09090b;
+
+  /* Feedback dark */
+  --p-success-color:  #10b981;
+  --p-success-bg:     rgba(16, 185, 129, 0.12);
+  --p-success-subtle: rgba(16, 185, 129, 0.20);
+
+  --p-danger-color:   #ff615c;
+  --p-danger-bg:      rgba(255, 97, 92, 0.12);
+  --p-danger-subtle:  rgba(255, 97, 92, 0.20);
+
+  --p-info-color:     #0ea5e9;
+  --p-info-bg:        rgba(14, 165, 233, 0.12);
+
+  --p-warning-color:  #cf9a00;
+  --p-warning-bg:     rgba(207, 154, 0, 0.12);
+
+  --p-help-color:     #c084fc;
+  --p-help-bg:        rgba(168, 85, 247, 0.12);
+
+  --p-secondary-color: #a1a1aa;
+  --p-secondary-bg:    var(--p-surface-700);
+
+  /* Focus ring color adapts via primary-color */
+
+  /* Input */
+  --p-input-border-color:  var(--p-surface-600);
+  --p-input-bg:            var(--p-surface-700);
+  --p-input-color:         var(--p-surface-100);
+  --p-input-placeholder:   var(--p-surface-500);
+  --p-input-focus-border:  var(--p-primary-color);
+
+  /* Content */
+  --p-content-bg:     var(--p-surface-800);
+  --p-content-border: var(--p-surface-700);
+  --p-content-color:  var(--p-surface-100);
+
+  /* App shell — color único para toda la interfaz */
+  --p-surface-base-dark: #18181b;
+  --app-bg:         var(--p-surface-base-dark);
+  --sidebar-bg:     var(--p-surface-base-dark);
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --topbar-bg:      var(--p-surface-base-dark);
+  --topbar-border:  rgba(255, 255, 255, 0.06);
+
+  /* Content (componentes, cards, dialogs) — elevación mínima */
+  --p-content-bg:     #202020;
+  --p-content-border: rgba(255, 255, 255, 0.06);
 }

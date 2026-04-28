@@ -8,9 +8,10 @@
 
   <!-- PrimeIcons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeicons@6.0.1/primeicons.css" />
-  <!-- Google Fonts: DM Sans + DM Mono -->
+  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
 
   <link rel="stylesheet" href="styles/primeng-tokens.css" />
   <link rel="stylesheet" href="styles/components.css" />
@@ -40,7 +41,6 @@
         <i class="pi pi-moon"></i>
         <span>Dark</span>
       </button>
-      <button class="btn-ghost" id="reset-btn">Reset CSS</button>
     </div>
   </header>
 
@@ -261,498 +261,79 @@
             </div>
           </div>
 
-          <div class="catalog-grid" id="catalog-button"></div>
         </section>
 
-        <!-- ══ SPLITBUTTON ══ -->
-        <section class="preview-section">
-          <h3 class="section-title">SplitButton</h3>
-
-          <div class="btn-section">
-            <p class="btn-section-title">Severidad</p>
-            <div class="btn-row" style="flex-wrap:wrap;gap:12px">
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Guardar</button>
-                <button class="p-button p-button-primary p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-secondary p-splitbutton-defaultbutton"><i class="pi pi-cog"></i> Configurar</button>
-                <button class="p-button p-button-secondary p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-success p-splitbutton-defaultbutton"><i class="pi pi-check"></i> Aprobar</button>
-                <button class="p-button p-button-success p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-info p-splitbutton-defaultbutton"><i class="pi pi-info-circle"></i> Info</button>
-                <button class="p-button p-button-info p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-warning p-splitbutton-defaultbutton"><i class="pi pi-exclamation-triangle"></i> Aviso</button>
-                <button class="p-button p-button-warning p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-danger p-splitbutton-defaultbutton"><i class="pi pi-trash"></i> Eliminar</button>
-                <button class="p-button p-button-danger p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="btn-section">
-            <p class="btn-section-title">Outlined</p>
-            <div class="btn-row" style="flex-wrap:wrap;gap:12px">
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-primary p-button-outlined p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Guardar</button>
-                <button class="p-button p-button-primary p-button-outlined p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-success p-button-outlined p-splitbutton-defaultbutton"><i class="pi pi-check"></i> Aprobar</button>
-                <button class="p-button p-button-success p-button-outlined p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-danger p-button-outlined p-splitbutton-defaultbutton"><i class="pi pi-trash"></i> Eliminar</button>
-                <button class="p-button p-button-danger p-button-outlined p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="btn-section">
-            <p class="btn-section-title">Tamaños</p>
-            <div class="btn-row" style="align-items:center;gap:12px">
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-primary p-button-sm p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Small</button>
-                <button class="p-button p-button-primary p-button-sm p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Normal</button>
-                <button class="p-button p-button-primary p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-primary p-button-lg p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Large</button>
-                <button class="p-button p-button-primary p-button-lg p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="btn-section">
-            <p class="btn-section-title">Menú desplegado</p>
-            <div class="btn-row" style="gap:48px;flex-wrap:wrap;align-items:flex-start;padding-bottom:160px">
-
-              <div style="position:relative;display:inline-flex;flex-direction:column;gap:0">
-                <div class="p-splitbutton">
-                  <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Guardar</button>
-                  <button class="p-button p-button-primary p-splitbutton-menubutton is-open"><i class="pi pi-chevron-up"></i></button>
-                </div>
-                <div class="p-splitbutton-panel">
-                  <button class="p-splitbutton-item is-active"><i class="pi pi-save"></i> Guardar</button>
-                  <button class="p-splitbutton-item"><i class="pi pi-save"></i> Guardar como borrador</button>
-                  <div class="p-splitbutton-separator"></div>
-                  <button class="p-splitbutton-item"><i class="pi pi-send"></i> Guardar y enviar</button>
-                  <button class="p-splitbutton-item"><i class="pi pi-copy"></i> Duplicar</button>
-                </div>
-              </div>
-
-              <div style="position:relative;display:inline-flex;flex-direction:column;gap:0">
-                <div class="p-splitbutton">
-                  <button class="p-button p-button-outlined p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-download"></i> Exportar</button>
-                  <button class="p-button p-button-outlined p-button-primary p-splitbutton-menubutton"><i class="pi pi-chevron-up"></i></button>
-                </div>
-                <div class="p-splitbutton-panel">
-                  <button class="p-splitbutton-item"><i class="pi pi-file-excel"></i> Excel (.xlsx)</button>
-                  <button class="p-splitbutton-item is-active"><i class="pi pi-file-pdf"></i> PDF</button>
-                  <button class="p-splitbutton-item"><i class="pi pi-file"></i> CSV</button>
-                  <div class="p-splitbutton-separator"></div>
-                  <button class="p-splitbutton-item"><i class="pi pi-print"></i> Imprimir</button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="btn-section">
-            <p class="btn-section-title">Rounded</p>
-            <div class="btn-row" style="gap:12px">
-
-              <div class="p-splitbutton" style="border-radius:999px">
-                <button class="p-button p-button-primary p-button-rounded p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Guardar</button>
-                <button class="p-button p-button-primary p-button-rounded p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton" style="border-radius:999px">
-                <button class="p-button p-button-success p-button-rounded p-splitbutton-defaultbutton"><i class="pi pi-check"></i> Aprobar</button>
-                <button class="p-button p-button-success p-button-rounded p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton" style="border-radius:999px">
-                <button class="p-button p-button-danger p-button-rounded p-splitbutton-defaultbutton"><i class="pi pi-trash"></i> Eliminar</button>
-                <button class="p-button p-button-danger p-button-rounded p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="btn-section">
-            <p class="btn-section-title">Estados</p>
-            <div class="btn-row" style="gap:12px">
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-save"></i> Normal</button>
-                <button class="p-button p-button-primary p-splitbutton-menubutton"><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton" style="opacity:.45;cursor:not-allowed;pointer-events:none">
-                <button class="p-button p-button-primary p-splitbutton-defaultbutton" disabled><i class="pi pi-save"></i> Disabled</button>
-                <button class="p-button p-button-primary p-splitbutton-menubutton" disabled><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-              <div class="p-splitbutton">
-                <button class="p-button p-button-primary p-splitbutton-defaultbutton"><i class="pi pi-spin pi-spinner"></i> Loading</button>
-                <button class="p-button p-button-primary p-splitbutton-menubutton" disabled><i class="pi pi-chevron-down"></i></button>
-              </div>
-
-            </div>
-          </div>
-
-        </section>
 
       </div>
 
       <div class="tab-panel" id="tab-form-catalog">
         <section class="preview-section">
           <h3 class="section-title">Form components</h3>
-          <div class="catalog-grid" id="catalog-form"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-data-catalog">
         <section class="preview-section">
           <h3 class="section-title">Data components</h3>
-          <div class="catalog-grid" id="catalog-data"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-panel-catalog">
         <section class="preview-section">
           <h3 class="section-title">Panel components</h3>
-          <div class="catalog-grid" id="catalog-panel"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-overlay-catalog">
         <section class="preview-section">
           <h3 class="section-title">Overlay components</h3>
-          <div class="catalog-grid" id="catalog-overlay"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-file-catalog">
         <section class="preview-section">
           <h3 class="section-title">File components</h3>
-          <div class="catalog-grid" id="catalog-file"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-menu-catalog">
         <section class="preview-section">
           <h3 class="section-title">Menu components</h3>
-          <div class="catalog-grid" id="catalog-menu"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-chart-catalog">
         <section class="preview-section">
           <h3 class="section-title">Chart components</h3>
-          <div class="catalog-grid" id="catalog-chart"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-messages-catalog">
         <section class="preview-section">
           <h3 class="section-title">Messages components</h3>
-          <div class="catalog-grid" id="catalog-messages"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-media-catalog">
         <section class="preview-section">
           <h3 class="section-title">Media components</h3>
-          <div class="catalog-grid" id="catalog-media"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-misc-catalog">
         <section class="preview-section">
           <h3 class="section-title">Misc components</h3>
-          <div class="catalog-grid" id="catalog-misc"></div>
         </section>
       </div>
 
       <div class="tab-panel" id="tab-utilities-catalog">
         <section class="preview-section">
           <h3 class="section-title">Utilities components</h3>
-          <div class="catalog-grid" id="catalog-utilities"></div>
         </section>
       </div>
 
       <!-- ══ TAB: COMPONENTES ══ -->
       <div class="tab-panel active" id="tab-components">
-
-        <!-- Buttons -->
-        <section class="preview-section">
-          <h3 class="section-title">Buttons</h3>
-          <div class="component-row">
-            <button class="p-button p-button-primary">Primary</button>
-            <button class="p-button p-button-secondary">Secondary</button>
-            <button class="p-button p-button-outlined">Outlined</button>
-            <button class="p-button p-button-text">Text</button>
-            <button class="p-button p-button-danger">Danger</button>
-            <button class="p-button p-button-success">Success</button>
-            <button class="p-button p-button-warning">Warning</button>
-          </div>
-          <div class="component-row" style="margin-top:10px">
-            <button class="p-button p-button-primary p-button-sm">Small</button>
-            <button class="p-button p-button-primary">Medium</button>
-            <button class="p-button p-button-primary p-button-lg">Large</button>
-            <button class="p-button p-button-primary p-button-rounded">Rounded</button>
-            <button class="p-button p-button-primary" disabled>Disabled</button>
-            <button class="p-button p-button-primary p-button-loading">
-              <i class="pi pi-spin pi-spinner"></i> Loading
-            </button>
-          </div>
-        </section>
-
-        <!-- Badges & Tags -->
-        <section class="preview-section">
-          <h3 class="section-title">Badges &amp; Tags</h3>
-          <div class="component-row">
-            <span class="p-badge p-badge-primary">Primary</span>
-            <span class="p-badge p-badge-success">Success</span>
-            <span class="p-badge p-badge-warning">Warning</span>
-            <span class="p-badge p-badge-danger">Danger</span>
-            <span class="p-badge p-badge-info">Info</span>
-            <span class="p-badge p-badge-secondary">Secondary</span>
-          </div>
-          <div class="component-row" style="margin-top:10px">
-            <span class="p-tag p-tag-primary"><i class="pi pi-check"></i> Completado</span>
-            <span class="p-tag p-tag-warning"><i class="pi pi-clock"></i> Pendiente</span>
-            <span class="p-tag p-tag-danger"><i class="pi pi-times"></i> Error</span>
-            <span class="p-tag p-tag-secondary">Borrador</span>
-          </div>
-        </section>
-
-        <!-- Inputs -->
-        <section class="preview-section">
-          <h3 class="section-title">Inputs</h3>
-          <div class="input-grid">
-            <div class="p-field">
-              <label class="p-label">Nombre</label>
-              <input type="text" class="p-inputtext" placeholder="Introduce tu nombre" />
-            </div>
-            <div class="p-field">
-              <label class="p-label">Email</label>
-              <div class="p-input-icon-left">
-                <i class="pi pi-envelope"></i>
-                <input type="email" class="p-inputtext" placeholder="email@indra.es" />
-              </div>
-            </div>
-            <div class="p-field">
-              <label class="p-label">Password</label>
-              <input type="password" class="p-inputtext p-invalid" placeholder="••••••••" />
-              <small class="p-error">Campo requerido</small>
-            </div>
-            <div class="p-field">
-              <label class="p-label">Buscar</label>
-              <div class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input type="text" class="p-inputtext" placeholder="Buscar componentes..." />
-              </div>
-            </div>
-            <div class="p-field p-field-full">
-              <label class="p-label">Descripción</label>
-              <textarea class="p-inputtextarea" rows="3" placeholder="Describe el componente..."></textarea>
-            </div>
-          </div>
-        </section>
-
-        <!-- Selects / Dropdowns -->
-        <section class="preview-section">
-          <h3 class="section-title">Selects</h3>
-          <div class="input-grid">
-            <div class="p-field">
-              <label class="p-label">Rol</label>
-              <div class="p-dropdown">
-                <select class="p-dropdown-select">
-                  <option>Selecciona un rol</option>
-                  <option>Administrador</option>
-                  <option>Editor</option>
-                  <option>Viewer</option>
-                </select>
-                <i class="pi pi-chevron-down p-dropdown-arrow"></i>
-              </div>
-            </div>
-            <div class="p-field">
-              <label class="p-label">Estado</label>
-              <div class="p-dropdown">
-                <select class="p-dropdown-select">
-                  <option>Activo</option>
-                  <option>Inactivo</option>
-                  <option>Pendiente</option>
-                </select>
-                <i class="pi pi-chevron-down p-dropdown-arrow"></i>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Checkboxes & Radios & Toggles -->
-        <section class="preview-section">
-          <h3 class="section-title">Checkboxes, Radios &amp; Toggles</h3>
-          <div class="component-row" style="flex-wrap:wrap;gap:20px">
-            <label class="p-checkbox-wrap">
-              <span class="p-checkbox p-checkbox-checked"><i class="pi pi-check"></i></span>
-              <span>Opción seleccionada</span>
-            </label>
-            <label class="p-checkbox-wrap">
-              <span class="p-checkbox"></span>
-              <span>Sin seleccionar</span>
-            </label>
-            <label class="p-checkbox-wrap">
-              <span class="p-checkbox p-checkbox-indeterminate"><i class="pi pi-minus"></i></span>
-              <span>Indeterminado</span>
-            </label>
-            <label class="p-radio-wrap">
-              <span class="p-radio p-radio-checked"><span class="p-radio-dot"></span></span>
-              <span>Seleccionado</span>
-            </label>
-            <label class="p-radio-wrap">
-              <span class="p-radio"></span>
-              <span>No seleccionado</span>
-            </label>
-            <label class="p-toggle-wrap">
-              <span class="p-toggle p-toggle-on"><span class="p-toggle-knob"></span></span>
-              <span>Activo</span>
-            </label>
-            <label class="p-toggle-wrap">
-              <span class="p-toggle"><span class="p-toggle-knob"></span></span>
-              <span>Inactivo</span>
-            </label>
-          </div>
-        </section>
-
-        <!-- Cards -->
-        <section class="preview-section">
-          <h3 class="section-title">Cards</h3>
-          <div class="cards-grid">
-            <div class="p-card">
-              <div class="p-card-header">
-                <span class="p-badge p-badge-success">Activo</span>
-              </div>
-              <div class="p-card-body">
-                <h4>Componente Button</h4>
-                <p>El componente Button de MDS soporta múltiples variantes, tamaños y estados visuales.</p>
-              </div>
-              <div class="p-card-footer">
-                <button class="p-button p-button-primary p-button-sm">Ver docs</button>
-                <button class="p-button p-button-text p-button-sm">Ignorar</button>
-              </div>
-            </div>
-            <div class="p-card p-card-elevated">
-              <div class="p-card-header">
-                <div class="card-icon-wrap"><i class="pi pi-chart-bar"></i></div>
-                <span class="p-badge p-badge-warning">Beta</span>
-              </div>
-              <div class="p-card-body">
-                <h4>DataTable</h4>
-                <p>Tabla de datos con sorting, filtros y paginación. Integrada con el DS de tokens.</p>
-              </div>
-              <div class="p-card-footer">
-                <button class="p-button p-button-outlined p-button-sm">Ver en Figma</button>
-              </div>
-            </div>
-            <div class="p-card">
-              <div class="p-card-body">
-                <div class="stat-row">
-                  <span class="stat-label">Total componentes</span>
-                  <span class="stat-value">292</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Documentados</span>
-                  <span class="stat-value" style="color:var(--p-success-color)">147</span>
-                </div>
-                <div class="stat-row">
-                  <span class="stat-label">Pendientes</span>
-                  <span class="stat-value" style="color:var(--p-warning-color)">145</span>
-                </div>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" style="width:50%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Messages / Alerts -->
-        <section class="preview-section">
-          <h3 class="section-title">Messages &amp; Alerts</h3>
-          <div class="messages-stack">
-            <div class="p-message p-message-success">
-              <i class="pi pi-check-circle"></i>
-              <div>
-                <strong>Operación completada</strong>
-                <p>Los cambios se han guardado correctamente en el sistema.</p>
-              </div>
-            </div>
-            <div class="p-message p-message-warn">
-              <i class="pi pi-exclamation-triangle"></i>
-              <div>
-                <strong>Atención</strong>
-                <p>Esta acción es irreversible. Verifica los datos antes de continuar.</p>
-              </div>
-            </div>
-            <div class="p-message p-message-error">
-              <i class="pi pi-times-circle"></i>
-              <div>
-                <strong>Error de validación</strong>
-                <p>El campo email no tiene un formato válido.</p>
-              </div>
-            </div>
-            <div class="p-message p-message-info">
-              <i class="pi pi-info-circle"></i>
-              <div>
-                <strong>Información</strong>
-                <p>Hay una nueva versión de MDS disponible. Actualiza tu dependencia.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Chips -->
-        <section class="preview-section">
-          <h3 class="section-title">Chips</h3>
-          <div class="component-row">
-            <div class="p-chip"><i class="pi pi-user"></i><span>Usuario</span></div>
-            <div class="p-chip p-chip-primary"><span>Diseño</span><i class="pi pi-times"></i></div>
-            <div class="p-chip"><span>Angular</span><i class="pi pi-times"></i></div>
-            <div class="p-chip"><span>PrimeNG</span><i class="pi pi-times"></i></div>
-            <div class="p-chip p-chip-primary"><span>Accesibilidad</span></div>
-          </div>
-        </section>
-
       </div>
 
       <!-- ══ TAB: FORMULARIOS ══ -->

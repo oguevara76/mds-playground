@@ -8,8 +8,8 @@ html, body {
   height: 100%;
   font-family: var(--p-font-family);
   font-size: var(--p-font-size);
-  background: var(--topbar-bg);
-  color: var(--p-surface-800);
+  background: var(--app-bg);
+  color: var(--p-content-color);
   transition: background .25s, color .25s;
 }
 
@@ -114,12 +114,14 @@ html, body {
   border: 1px solid var(--p-surface-300);
   border-radius: 999px;
   cursor: pointer;
-  color: var(--p-surface-700);
+  font-family: var(--p-font-family);
+  color: var(--p-surface-600);
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 12px;
   font-weight: 600;
+  transition: all var(--p-transition-duration);
 }
 .theme-switch:hover {
   border-color: var(--p-primary-color);
@@ -128,7 +130,7 @@ html, body {
 .btn-ghost {
   padding: 5px 14px;
   background: none;
-  border: 1px solid var(--p-surface-200);
+  border: 1px solid var(--p-surface-300);
   border-radius: var(--p-border-radius);
   cursor: pointer;
   font-family: var(--p-font-family);
@@ -137,7 +139,7 @@ html, body {
   color: var(--p-surface-600);
   transition: all var(--p-transition-duration);
 }
-.btn-ghost:hover { background: var(--p-surface-100); border-color: var(--p-surface-300); }
+.btn-ghost:hover { background: var(--p-surface-100); border-color: var(--p-surface-400); color: var(--p-surface-700); }
 
 /* ── Main layout ── */
 .layout {
@@ -638,3 +640,36 @@ html, body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--p-surface-300); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--p-surface-400); }
+
+/* ─── DARK MODE overrides ───────────────────────────────────────────── */
+[data-theme="dark"] .brand-name {
+  color: var(--p-surface-0);
+}
+
+[data-theme="dark"] .preview-tab {
+  color: var(--p-surface-300);
+  border-color: var(--p-surface-600);
+}
+[data-theme="dark"] .preview-tab:hover {
+  color: var(--p-surface-0);
+  border-color: var(--p-surface-400);
+}
+
+[data-theme="dark"] .theme-switch {
+  color: var(--p-surface-300);
+  border-color: var(--p-surface-600);
+}
+[data-theme="dark"] .theme-switch:hover {
+  color: var(--p-primary-color);
+  border-color: var(--p-primary-color);
+}
+
+[data-theme="dark"] .btn-ghost {
+  color: var(--p-surface-300);
+  border-color: var(--p-surface-600);
+}
+[data-theme="dark"] .btn-ghost:hover {
+  background: var(--p-surface-700);
+  border-color: var(--p-surface-500);
+  color: var(--p-surface-100);
+}

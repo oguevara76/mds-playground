@@ -22,9 +22,21 @@
 }
 
 .p-button:focus-visible {
-  outline: none;
-  box-shadow: var(--p-focus-ring);
+  outline: var(--p-focus-ring-width) var(--p-focus-ring-style) var(--p-focus-ring-color);
+  outline-offset: var(--p-focus-ring-offset);
 }
+
+/* Focus ring color per severity — inherited by :focus-visible */
+.p-button-primary   { --p-focus-ring-color: var(--p-primary-color); }
+.p-button-secondary { --p-focus-ring-color: var(--p-secondary-color); }
+.p-button-contrast  { --p-focus-ring-color: var(--p-surface-800); }
+.p-button-danger    { --p-focus-ring-color: var(--p-danger-color); }
+.p-button-success   { --p-focus-ring-color: var(--p-success-color); }
+.p-button-info      { --p-focus-ring-color: var(--p-info-color); }
+.p-button-warning   { --p-focus-ring-color: var(--p-warning-color); }
+.p-button-help      { --p-focus-ring-color: var(--p-help-color); }
+
+[data-theme="dark"] .p-button-contrast { --p-focus-ring-color: var(--p-surface-0); }
 
 .p-button-primary {
   background: var(--p-primary-color);
@@ -32,8 +44,8 @@
   color: var(--p-primary-color-text);
 }
 .p-button-primary:hover {
-  background: var(--p-primary-700);
-  border-color: var(--p-primary-700);
+  background: var(--p-primary-hover-color);
+  border-color: var(--p-primary-hover-color);
 }
 
 .p-button-secondary {
@@ -92,23 +104,63 @@
   cursor: not-allowed;
 }
 
+/* ── Button: Active (pressed) ── */
+.p-button:active:not(:disabled) { transform: scale(0.97); }
+
+.p-button-primary:active:not(:disabled)  { background: var(--p-primary-active-color); border-color: var(--p-primary-active-color); }
+.p-button-secondary:active:not(:disabled) { background: var(--p-surface-300); border-color: var(--p-surface-300); }
+.p-button-contrast:active:not(:disabled)  { background: var(--p-surface-700, #3f3f3f); border-color: var(--p-surface-700, #3f3f3f); }
+.p-button-danger:active:not(:disabled)    { background: #922b21; border-color: #922b21; }
+
+.p-button-primary.p-button-outlined:active:not(:disabled)  { background: color-mix(in srgb, var(--p-primary-color) 16%, transparent); }
+.p-button-secondary.p-button-outlined:active:not(:disabled) { background: var(--p-surface-200); }
+.p-button-contrast.p-button-outlined:active:not(:disabled)  { background: var(--p-surface-200); }
+.p-button-danger.p-button-outlined:active:not(:disabled)    { background: color-mix(in srgb, var(--p-danger-color) 16%, transparent); }
+
+.p-button-primary.p-button-text:active:not(:disabled)  { background: color-mix(in srgb, var(--p-primary-color) 16%, transparent); }
+.p-button-secondary.p-button-text:active:not(:disabled) { background: var(--p-surface-200); }
+.p-button-contrast.p-button-text:active:not(:disabled)  { background: var(--p-surface-200); }
+.p-button-danger.p-button-text:active:not(:disabled)    { background: color-mix(in srgb, var(--p-danger-color) 16%, transparent); }
+
 /* ── Button: Contrast severity ── */
 .p-button-contrast {
-  background: var(--p-surface-950, #0a0a0a);
-  border-color: var(--p-surface-950, #0a0a0a);
-  color: var(--p-surface-0, #fff);
+  background: var(--p-surface-900);
+  border-color: var(--p-surface-900);
+  color: var(--p-surface-0);
 }
-.p-button-contrast:hover { background: var(--p-surface-800, #1f1f1f); border-color: var(--p-surface-800, #1f1f1f); }
+.p-button-contrast:hover { background: var(--p-surface-700); border-color: var(--p-surface-700); }
 
 .p-button-contrast.p-button-outlined {
-  background: transparent; border-color: var(--p-surface-950, #0a0a0a); color: var(--p-surface-950, #0a0a0a);
+  background: transparent; border-color: var(--p-surface-900); color: var(--p-surface-900);
 }
 .p-button-contrast.p-button-outlined:hover { background: var(--p-surface-100); }
 
 .p-button-contrast.p-button-text {
-  color: var(--p-surface-950, #0a0a0a); background: transparent; border-color: transparent;
+  color: var(--p-surface-900); background: transparent; border-color: transparent;
 }
 .p-button-contrast.p-button-text:hover { background: var(--p-surface-100); }
+
+/* Contrast en dark mode: fondo claro sobre contexto oscuro */
+[data-theme="dark"] .p-button-contrast {
+  background: var(--p-surface-0);
+  border-color: var(--p-surface-0);
+  color: var(--p-surface-900);
+}
+[data-theme="dark"] .p-button-contrast:hover {
+  background: var(--p-surface-200);
+  border-color: var(--p-surface-200);
+}
+[data-theme="dark"] .p-button-contrast.p-button-outlined {
+  background: transparent; border-color: var(--p-surface-0); color: var(--p-surface-0);
+}
+[data-theme="dark"] .p-button-contrast.p-button-outlined:hover { background: var(--p-surface-700); }
+[data-theme="dark"] .p-button-contrast.p-button-text {
+  color: var(--p-surface-0); background: transparent; border-color: transparent;
+}
+[data-theme="dark"] .p-button-contrast.p-button-text:hover { background: var(--p-surface-700); }
+[data-theme="dark"] .p-button-contrast:active:not(:disabled) {
+  background: var(--p-surface-300); border-color: var(--p-surface-300); color: var(--p-surface-900);
+}
 
 /* ── Button: Info / Help severities ── */
 .p-button-info {

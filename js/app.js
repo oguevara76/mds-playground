@@ -16,139 +16,6 @@
   const toggleTheme    = document.getElementById('toggle-theme');
   const resetBtn       = document.getElementById('reset-btn');
   const previewArea    = document.getElementById('preview-area');
-  const CATALOGS = {
-    button: [
-      { name: 'Button', link: '/button' },
-      { name: 'SpeedDial', link: '/speeddial' },
-      { name: 'SplitButton', link: '/splitbutton' }
-    ],
-    form: [
-      { name: 'AutoComplete', link: '/autocomplete' },
-      { name: 'CascadeSelect', link: '/cascadeselect' },
-      { name: 'Checkbox', link: '/checkbox' },
-      { name: 'ColorPicker', link: '/colorpicker' },
-      { name: 'DatePicker', link: '/datepicker' },
-      { name: 'Editor', link: '/editor' },
-      { name: 'FloatLabel', link: '/floatlabel' },
-      { name: 'IconField', link: '/iconfield' },
-      { name: 'IftaLabel', link: '/iftalabel' },
-      { name: 'InputGroup', link: '/inputgroup' },
-      { name: 'InputMask', link: '/inputmask' },
-      { name: 'InputNumber', link: '/inputnumber' },
-      { name: 'InputOtp', link: '/inputotp' },
-      { name: 'InputText', link: '/inputtext' },
-      { name: 'KeyFilter', link: '/keyfilter' },
-      { name: 'Knob', link: '/knob' },
-      { name: 'Listbox', link: '/listbox' },
-      { name: 'MultiSelect', link: '/multiselect' },
-      { name: 'Password', link: '/password' },
-      { name: 'RadioButton', link: '/radiobutton' },
-      { name: 'Rating', link: '/rating' },
-      { name: 'Select', link: '/select' },
-      { name: 'SelectButton', link: '/selectbutton' },
-      { name: 'Slider', link: '/slider' },
-      { name: 'Textarea', link: '/textarea' },
-      { name: 'ToggleButton', link: '/togglebutton' },
-      { name: 'ToggleSwitch', link: '/toggleswitch' },
-      { name: 'TreeSelect', link: '/treeselect' }
-    ],
-    data: [
-      { name: 'DataView', link: '/dataview' },
-      { name: 'OrderList', link: '/orderlist' },
-      { name: 'OrgChart', link: '/organizationchart' },
-      { name: 'Paginator', link: '/paginator' },
-      { name: 'PickList', link: '/picklist' },
-      { name: 'Table', link: '/table' },
-      { name: 'Timeline', link: '/timeline' },
-      { name: 'Tree', link: '/tree' },
-      { name: 'TreeTable', link: '/treetable' },
-      { name: 'VirtualScroller', link: '/virtualscroller' }
-    ],
-    panel: [
-      { name: 'Accordion', link: '/accordion' },
-      { name: 'Card', link: '/card' },
-      { name: 'Divider', link: '/divider' },
-      { name: 'Fieldset', link: '/fieldset' },
-      { name: 'Panel', link: '/panel' },
-      { name: 'ScrollPanel', link: '/scrollpanel' },
-      { name: 'Splitter', link: '/splitter' },
-      { name: 'Stepper', link: '/stepper' },
-      { name: 'Tabs', link: '/tabs' },
-      { name: 'Toolbar', link: '/toolbar' }
-    ],
-    overlay: [
-      { name: 'ConfirmDialog', link: '/confirmdialog' },
-      { name: 'ConfirmPopup', link: '/confirmpopup' },
-      { name: 'Dialog', link: '/dialog' },
-      { name: 'Drawer', link: '/drawer' },
-      { name: 'DynamicDialog', link: '/dynamicdialog' },
-      { name: 'Popover', link: '/popover' },
-      { name: 'Tooltip', link: '/tooltip' }
-    ],
-    file: [{ name: 'Upload', link: '/fileupload' }],
-    menu: [
-      { name: 'Breadcrumb', link: '/breadcrumb' },
-      { name: 'ContextMenu', link: '/contextmenu' },
-      { name: 'Dock', link: '/dock' },
-      { name: 'Menu', link: '/menu' },
-      { name: 'Menubar', link: '/menubar' },
-      { name: 'MegaMenu', link: '/megamenu' },
-      { name: 'PanelMenu', link: '/panelmenu' },
-      { name: 'TieredMenu', link: '/tieredmenu' }
-    ],
-    chart: [{ name: 'Chart.js', link: '/chart' }],
-    messages: [
-      { name: 'Message', link: '/message' },
-      { name: 'Toast', link: '/toast' }
-    ],
-    media: [
-      { name: 'Carousel', link: '/carousel' },
-      { name: 'Galleria', link: '/galleria' },
-      { name: 'Image', link: '/image' },
-      { name: 'ImageCompare', link: '/imagecompare' }
-    ],
-    misc: [
-      { name: 'AnimateOnScroll', link: '/animateonscroll' },
-      { name: 'AutoFocus', link: '/autofocus' },
-      { name: 'Avatar', link: '/avatar' },
-      { name: 'Badge', link: '/badge' },
-      { name: 'Bind', link: '/bind' },
-      { name: 'BlockUI', link: '/blockui' },
-      { name: 'Chip', link: '/chip' },
-      { name: 'ClassNames', link: '/classnames' },
-      { name: 'FocusTrap', link: '/focustrap' },
-      { name: 'Fluid', link: '/fluid' },
-      { name: 'Inplace', link: '/inplace' },
-      { name: 'MeterGroup', link: '/metergroup' },
-      { name: 'ProgressBar', link: '/progressbar' },
-      { name: 'ProgressSpinner', link: '/progressspinner' },
-      { name: 'Ripple', link: '/ripple' },
-      { name: 'ScrollTop', link: '/scrolltop' },
-      { name: 'Skeleton', link: '/skeleton' },
-      { name: 'StyleClass', link: '/styleclass' },
-      { name: 'Tag', link: '/tag' },
-      { name: 'Terminal', link: '/terminal' }
-    ],
-    utilities: [{ name: 'FilterService', link: '/filterservice' }]
-  };
-
-  function renderCatalog(categoryKey) {
-    const mount = document.getElementById(`catalog-${categoryKey}`);
-    if (!mount) return;
-
-    const items = CATALOGS[categoryKey] || [];
-    mount.innerHTML = '';
-
-    items.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'catalog-card';
-      card.innerHTML = `
-        <span class="catalog-name">${item.name}</span>
-        <a class="catalog-link" href="https://primeng.org${item.link}" target="_blank" rel="noreferrer noopener">Docs</a>
-      `;
-      mount.appendChild(card);
-    });
-  }
 
   /* ── Tabs ── */
   document.querySelectorAll('.preview-tab').forEach(tab => {
@@ -363,10 +230,54 @@
   `;
   document.head.appendChild(toastStyles);
 
+  /* ── SplitButton interactivity ── */
+  function closeAllSplitPanels() {
+    document.querySelectorAll('.p-splitbutton').forEach(sb => {
+      const panel   = sb.querySelector('.p-splitbutton-panel');
+      const menuBtn = sb.querySelector('.p-splitbutton-menubutton');
+      if (panel) panel.hidden = true;
+      setChevron(menuBtn, false);
+    });
+  }
+
+  function setChevron(btn, open) {
+    if (!btn) return;
+    const icon = btn.querySelector('.pi');
+    if (!icon) return;
+    icon.classList.toggle('pi-chevron-up',   open);
+    icon.classList.toggle('pi-chevron-down', !open);
+  }
+
+  function initSplitButtons() {
+    document.querySelectorAll('.p-splitbutton').forEach(sb => {
+      const menuBtn = sb.querySelector('.p-splitbutton-menubutton');
+      const panel   = sb.querySelector('.p-splitbutton-panel');
+      if (!menuBtn || !panel) return;
+
+      panel.hidden = true;
+
+      menuBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const wasOpen = !panel.hidden;
+        closeAllSplitPanels();
+        if (!wasOpen) {
+          panel.hidden = false;
+          setChevron(menuBtn, true);
+        }
+      });
+
+      sb.querySelector('.p-splitbutton-panel')?.addEventListener('click', e => {
+        e.stopPropagation();
+      });
+    });
+
+    document.addEventListener('click', closeAllSplitPanels);
+  }
+
   /* ── Init ── */
-  Object.keys(CATALOGS).forEach(renderCatalog);
   refreshTokenGrid();
   refreshColorStrip();
   syncThemeSwitchLabel();
+  initSplitButtons();
 
 })();
