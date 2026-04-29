@@ -709,9 +709,9 @@ html, body {
   flex-direction: column;
   gap: 16px;
 }
-.pv-row { display: grid; gap: 14px; }
-.pv-3col { grid-template-columns: repeat(3, 1fr); }
-.pv-2col { grid-template-columns: repeat(2, 1fr); }
+.pv-row { display: grid; gap: 14px; justify-content: start; }
+.pv-3col { grid-template-columns: repeat(auto-fill, 300px); }
+.pv-2col { grid-template-columns: repeat(auto-fill, 460px); }
 
 /* Hero cards */
 .pv-hero {
@@ -745,7 +745,7 @@ html, body {
 }
 .pv-hero-img {
   width: calc(100% - 20px);
-  height: 180px;
+  height: 320px;
   object-fit: cover;
   border-radius: var(--p-border-radius);
   margin: 10px 10px 0;
@@ -754,7 +754,7 @@ html, body {
   z-index: 1;
 }
 .pv-hero-content {
-  padding: 10px 16px 18px;
+  padding: 12px 16px 18px;
   flex: 1;
   display: flex;
   align-items: flex-end;
@@ -766,6 +766,13 @@ html, body {
   font-weight: 800;
   color: var(--p-primary-900);
   line-height: 1.2;
+  margin: 0 0 4px;
+}
+.pv-hero-subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--p-primary-700);
+  line-height: 1.4;
   margin: 0;
 }
 
@@ -882,3 +889,195 @@ html, body {
 .pv-hint { font-size: 11px; color: var(--p-surface-400); margin: 0 0 10px; }
 .pv-form-divider { border: none; border-top: 1px solid var(--p-content-border); margin: 14px 0; }
 .pv-form-actions { display: flex; gap: 8px; margin-top: 14px; }
+
+/* ── Schedule card ── */
+.pv-schedule-date {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--p-content-color);
+  margin: 0 0 14px;
+}
+.pv-schedule-list { display: flex; flex-direction: column; gap: 10px; }
+.pv-schedule-item {
+  border-radius: var(--p-border-radius);
+  overflow: hidden;
+}
+.pv-sched-teal  { background: #ccfbf1; }
+.pv-sched-green { background: #dcfce7; }
+.pv-sched-cyan  { background: #cffafe; }
+[data-theme="dark"] .pv-sched-teal  { background: rgba(20,184,166,.25); }
+[data-theme="dark"] .pv-sched-green { background: rgba(34,197,94,.20); }
+[data-theme="dark"] .pv-sched-cyan  { background: rgba(6,182,212,.20); }
+.pv-schedule-body { padding: 12px 14px; }
+.pv-schedule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pv-schedule-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--p-content-color);
+  margin: 0;
+}
+.pv-schedule-time {
+  font-size: 12px;
+  color: var(--p-surface-600);
+  margin: 2px 0 8px;
+}
+.pv-schedule-menu {
+  font-size: 14px;
+  color: var(--p-surface-400);
+  cursor: pointer;
+}
+.pv-avatar-group { display: flex; gap: -4px; }
+.pv-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  margin-left: -6px;
+}
+.pv-avatar:first-child { margin-left: 0; }
+
+/* ── Jobs card ── */
+.pv-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.pv-icon-btn { width: 28px !important; height: 28px !important; }
+.pv-job-list { display: flex; flex-direction: column; gap: 14px; }
+.pv-job-item { display: flex; gap: 12px; align-items: flex-start; }
+.pv-job-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--p-border-radius);
+  background: var(--p-surface-100);
+  border: 1px solid var(--p-content-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--p-content-color);
+  flex-shrink: 0;
+}
+.pv-job-logo-netflix { background: #000; color: #e50914; }
+.pv-job-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.pv-job-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--p-content-color);
+  margin: 0;
+  line-height: 1.4;
+}
+.pv-job-type { font-size: 11px; color: var(--p-surface-400); margin: 0; }
+.pv-job-tag { font-size: 11px !important; border-radius: 999px !important; width: fit-content; }
+
+/* ── Top Products card ── */
+.pv-product-list { display: flex; flex-direction: column; }
+.pv-product-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--p-content-border);
+}
+.pv-product-item:last-child { border-bottom: none; }
+.pv-product-img {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--p-border-radius);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.pv-product-info { flex: 1; }
+.pv-product-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--p-content-color);
+  margin: 0 0 3px;
+}
+.pv-stars { font-size: 13px; color: #22c55e; line-height: 1; }
+.pv-star-empty { color: var(--p-surface-300); }
+.pv-product-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--p-content-color);
+}
+
+/* ── Recent Sales (full width) ── */
+.pv-1col { grid-template-columns: 928px; }
+.pv-sales-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.pv-sales-actions { display: flex; align-items: center; gap: 10px; }
+.pv-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.pv-search-icon {
+  position: absolute;
+  left: 10px;
+  font-size: 13px;
+  color: var(--p-surface-400);
+  pointer-events: none;
+}
+.pv-search-input { padding-left: 30px !important; height: 36px; }
+.pv-sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.pv-sales-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--p-content-color);
+  border-bottom: 1px solid var(--p-content-border);
+  white-space: nowrap;
+}
+.pv-sales-table td {
+  padding: 12px 12px;
+  color: var(--p-content-color);
+  border-bottom: 1px solid var(--p-content-border);
+}
+.pv-sales-table tbody tr:last-child td { border-bottom: none; }
+.pv-sort-icon { font-size: 10px; color: var(--p-surface-400); margin-left: 4px; }
+.pv-status-tag { font-size: 10px !important; font-weight: 700 !important; letter-spacing: .04em; }
+.pv-view-btn { width: 32px !important; height: 32px !important; }
+.pv-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 14px;
+}
+.pv-page-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  font-size: 13px;
+  font-family: var(--p-font-family);
+  color: var(--p-content-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+.pv-page-btn:hover { background: var(--p-surface-100); }
+.pv-page-active {
+  background: var(--p-primary-color) !important;
+  color: #fff !important;
+}

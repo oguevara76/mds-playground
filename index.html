@@ -344,16 +344,54 @@
       <div class="tab-panel active" id="tab-components">
         <div class="pv-grid">
 
-          <!-- ── ROW 1: Hero + Bar chart + Hero ── -->
+          <!-- ── ROW 1: Schedule + Bar chart + Jobs ── -->
           <div class="pv-row pv-3col">
 
-            <div class="pv-hero pv-hero-1">
-              <img class="pv-hero-img" src="https://picsum.photos/id/1025/400/220" alt="" />
-              <div class="pv-hero-content">
-                <h2 class="pv-hero-title">Track your expenses</h2>
+            <!-- Schedule card -->
+            <div class="p-card">
+              <h3 class="pv-schedule-date">Wednesday, April 29</h3>
+              <div class="pv-schedule-list">
+                <div class="pv-schedule-item pv-sched-teal">
+                  <div class="pv-schedule-body">
+                    <div class="pv-schedule-row">
+                      <p class="pv-schedule-title">Design system meeting</p>
+                      <i class="pi pi-ellipsis-v pv-schedule-menu"></i>
+                    </div>
+                    <p class="pv-schedule-time">9 - 10 AM</p>
+                    <div class="pv-avatar-group">
+                      <img class="pv-avatar" src="https://picsum.photos/id/1005/32/32" alt="" />
+                      <img class="pv-avatar" src="https://picsum.photos/id/1011/32/32" alt="" />
+                      <img class="pv-avatar" src="https://picsum.photos/id/1012/32/32" alt="" />
+                      <img class="pv-avatar" src="https://picsum.photos/id/1025/32/32" alt="" />
+                    </div>
+                  </div>
+                </div>
+                <div class="pv-schedule-item pv-sched-green">
+                  <div class="pv-schedule-body">
+                    <div class="pv-schedule-row">
+                      <p class="pv-schedule-title">Lunch</p>
+                      <i class="pi pi-ellipsis-v pv-schedule-menu"></i>
+                    </div>
+                    <p class="pv-schedule-time">1 - 2 PM</p>
+                  </div>
+                </div>
+                <div class="pv-schedule-item pv-sched-cyan">
+                  <div class="pv-schedule-body">
+                    <div class="pv-schedule-row">
+                      <p class="pv-schedule-title">Design review</p>
+                      <i class="pi pi-ellipsis-v pv-schedule-menu"></i>
+                    </div>
+                    <p class="pv-schedule-time">3 - 4 PM</p>
+                    <div class="pv-avatar-group">
+                      <img class="pv-avatar" src="https://picsum.photos/id/1005/32/32" alt="" />
+                      <img class="pv-avatar" src="https://picsum.photos/id/1025/32/32" alt="" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
+            <!-- Bar chart card -->
             <div class="p-card pv-chart-card">
               <p class="pv-label">Expenses</p>
               <div class="pv-stat-num">$12,543</div>
@@ -376,16 +414,45 @@
               </div>
             </div>
 
-            <div class="pv-hero pv-hero-2">
-              <img class="pv-hero-img" src="https://picsum.photos/id/1074/400/220" alt="" />
-              <div class="pv-hero-content">
-                <h2 class="pv-hero-title">Gain control</h2>
+            <!-- Jobs card -->
+            <div class="p-card">
+              <div class="pv-card-header">
+                <p class="pv-label">Jobs</p>
+                <button class="p-button p-button-secondary p-button-icon-only p-button-rounded p-button-text pv-icon-btn"><i class="pi pi-arrow-up-right"></i></button>
+              </div>
+              <div class="pv-job-list">
+                <div class="pv-job-item">
+                  <div class="pv-job-logo"><i class="pi pi-apple" style="font-size:18px"></i></div>
+                  <div class="pv-job-info">
+                    <p class="pv-job-title">Senior Software Engineer — Laravel &amp; MySQL</p>
+                    <p class="pv-job-type">Part-time</p>
+                    <span class="p-tag p-tag-success pv-job-tag">Remote</span>
+                  </div>
+                </div>
+                <div class="pv-job-item">
+                  <div class="pv-job-logo pv-job-logo-airbnb">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C8 8 4 11 4 15a8 8 0 0016 0c0-4-4-7-8-13zm0 19a6 6 0 01-6-6c0-3 3-6 6-11 3 5 6 8 6 11a6 6 0 01-6 6z"/></svg>
+                  </div>
+                  <div class="pv-job-info">
+                    <p class="pv-job-title">Lead Product Designer — Figma, Shape-up</p>
+                    <p class="pv-job-type">Full-time</p>
+                    <span class="p-tag p-tag-secondary pv-job-tag">Hybrid</span>
+                  </div>
+                </div>
+                <div class="pv-job-item">
+                  <div class="pv-job-logo pv-job-logo-netflix">N</div>
+                  <div class="pv-job-info">
+                    <p class="pv-job-title">Senior Frontend Developer — Vue.js in Amsterdam</p>
+                    <p class="pv-job-type">Part-time</p>
+                    <span class="p-tag p-tag-contrast pv-job-tag">On-site</span>
+                  </div>
+                </div>
               </div>
             </div>
 
           </div>
 
-          <!-- ── ROW 2: Donut + Hero + Blog ── -->
+          <!-- ── ROW 2: Donut + Top Products + Blog ── -->
           <div class="pv-row pv-3col">
 
             <div class="p-card">
@@ -407,36 +474,59 @@
               </div>
             </div>
 
-            <div class="pv-hero pv-hero-3">
-              <img class="pv-hero-img" src="https://picsum.photos/id/1066/400/220" alt="" />
-              <div class="pv-hero-content">
-                <h2 class="pv-hero-title">Create budgets</h2>
+            <!-- Top Products card -->
+            <div class="p-card">
+              <p class="pv-label">Top Products</p>
+              <div class="pv-product-list">
+                <div class="pv-product-item">
+                  <img class="pv-product-img" src="https://picsum.photos/id/28/60/60" alt="" />
+                  <div class="pv-product-info">
+                    <p class="pv-product-name">Bamboo Watch</p>
+                    <div class="pv-stars">★★★★★</div>
+                  </div>
+                  <span class="pv-product-price">$65</span>
+                </div>
+                <div class="pv-product-item">
+                  <img class="pv-product-img" src="https://picsum.photos/id/48/60/60" alt="" />
+                  <div class="pv-product-info">
+                    <p class="pv-product-name">Black Watch</p>
+                    <div class="pv-stars">★★★★<span class="pv-star-empty">★</span></div>
+                  </div>
+                  <span class="pv-product-price">$72</span>
+                </div>
+                <div class="pv-product-item">
+                  <img class="pv-product-img" src="https://picsum.photos/id/119/60/60" alt="" />
+                  <div class="pv-product-info">
+                    <p class="pv-product-name">Blue Band</p>
+                    <div class="pv-stars">★★★<span class="pv-star-empty">★★</span></div>
+                  </div>
+                  <span class="pv-product-price">$79</span>
+                </div>
+                <div class="pv-product-item">
+                  <img class="pv-product-img" src="https://picsum.photos/id/84/60/60" alt="" />
+                  <div class="pv-product-info">
+                    <p class="pv-product-name">Blue T-Shirt</p>
+                    <div class="pv-stars">★★★★★</div>
+                  </div>
+                  <span class="pv-product-price">$29</span>
+                </div>
+                <div class="pv-product-item">
+                  <img class="pv-product-img" src="https://picsum.photos/id/106/60/60" alt="" />
+                  <div class="pv-product-info">
+                    <p class="pv-product-name">Bracelet</p>
+                    <div class="pv-stars">★★★★<span class="pv-star-empty">★</span></div>
+                  </div>
+                  <span class="pv-product-price">$15</span>
+                </div>
               </div>
             </div>
 
-            <div class="p-card">
-              <p class="pv-label">Blog</p>
-              <div class="pv-blog-list">
-                <div class="pv-blog-item">
-                  <img class="pv-blog-thumb" src="https://picsum.photos/id/1/80/80" alt="" />
-                  <div class="pv-blog-info">
-                    <p class="pv-blog-title">Productivity Hacks for Life on the Road</p>
-                    <span class="p-tag p-tag-secondary">Work</span>
-                  </div>
-                </div>
-                <div class="pv-blog-item">
-                  <img class="pv-blog-thumb" src="https://picsum.photos/id/26/80/80" alt="" />
-                  <div class="pv-blog-info">
-                    <p class="pv-blog-title">The Ultimate Digital Nomad Toolkit</p>
-                    <span class="p-tag p-tag-primary">Travel</span>
-                  </div>
-                </div>
-                <div class="pv-blog-item">
-                  <img class="pv-blog-thumb" src="https://picsum.photos/id/60/80/80" alt="" />
-                  <div class="pv-blog-info">
-                    <p class="pv-blog-title">Design in Cross-Functional Teams</p>
-                    <span class="p-tag p-tag-success">Design</span>
-                  </div>
+            <div class="pv-hero pv-hero-1">
+              <img class="pv-hero-img" src="https://picsum.photos/id/1066/400/220" alt="" />
+              <div class="pv-hero-content">
+                <div>
+                  <h2 class="pv-hero-title">Create budgets</h2>
+                  <p class="pv-hero-subtitle">Take control of your monthly expenses and savings goals</p>
                 </div>
               </div>
             </div>
@@ -534,6 +624,83 @@
             </div>
 
           </div>
+
+          <!-- ── ROW 4: Recent Sales (full width) ── -->
+          <div class="pv-row pv-1col">
+
+            <div class="p-card">
+              <div class="pv-sales-header">
+                <h3 class="pv-form-title">Recent Sales</h3>
+                <div class="pv-sales-actions">
+                  <div class="pv-search-wrap">
+                    <i class="pi pi-search pv-search-icon"></i>
+                    <input class="p-inputtext pv-search-input" placeholder="Search" />
+                  </div>
+                  <button class="p-button p-button-primary p-button-icon-only p-button-rounded"><i class="pi pi-upload"></i></button>
+                </div>
+              </div>
+              <div class="p-datatable">
+                <table class="pv-sales-table">
+                  <thead>
+                    <tr>
+                      <th>Name <i class="pi pi-sort-alt pv-sort-icon"></i></th>
+                      <th>Category <i class="pi pi-sort-alt pv-sort-icon"></i></th>
+                      <th>Price <i class="pi pi-sort-alt pv-sort-icon"></i></th>
+                      <th>Status <i class="pi pi-sort-alt pv-sort-icon"></i></th>
+                      <th>View</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Bamboo Watch</td>
+                      <td>Accessories</td>
+                      <td>$65.00</td>
+                      <td><span class="p-tag p-tag-success pv-status-tag">INSTOCK</span></td>
+                      <td><button class="p-button p-button-outlined p-button-icon-only p-button-rounded p-button-success pv-view-btn"><i class="pi pi-search"></i></button></td>
+                    </tr>
+                    <tr>
+                      <td>Black Watch</td>
+                      <td>Accessories</td>
+                      <td>$72.00</td>
+                      <td><span class="p-tag p-tag-success pv-status-tag">INSTOCK</span></td>
+                      <td><button class="p-button p-button-outlined p-button-icon-only p-button-rounded p-button-success pv-view-btn"><i class="pi pi-search"></i></button></td>
+                    </tr>
+                    <tr>
+                      <td>Blue Band</td>
+                      <td>Fitness</td>
+                      <td>$79.00</td>
+                      <td><span class="p-tag p-tag-warning pv-status-tag">LOWSTOCK</span></td>
+                      <td><button class="p-button p-button-outlined p-button-icon-only p-button-rounded p-button-success pv-view-btn"><i class="pi pi-search"></i></button></td>
+                    </tr>
+                    <tr>
+                      <td>Blue T-Shirt</td>
+                      <td>Clothing</td>
+                      <td>$29.00</td>
+                      <td><span class="p-tag p-tag-success pv-status-tag">INSTOCK</span></td>
+                      <td><button class="p-button p-button-outlined p-button-icon-only p-button-rounded p-button-success pv-view-btn"><i class="pi pi-search"></i></button></td>
+                    </tr>
+                    <tr>
+                      <td>Bracelet</td>
+                      <td>Accessories</td>
+                      <td>$15.00</td>
+                      <td><span class="p-tag p-tag-success pv-status-tag">INSTOCK</span></td>
+                      <td><button class="p-button p-button-outlined p-button-icon-only p-button-rounded p-button-success pv-view-btn"><i class="pi pi-search"></i></button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="pv-pagination">
+                <button class="pv-page-btn"><i class="pi pi-angle-double-left"></i></button>
+                <button class="pv-page-btn"><i class="pi pi-angle-left"></i></button>
+                <button class="pv-page-btn pv-page-active">1</button>
+                <button class="pv-page-btn">2</button>
+                <button class="pv-page-btn"><i class="pi pi-angle-right"></i></button>
+                <button class="pv-page-btn"><i class="pi pi-angle-double-right"></i></button>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
 
