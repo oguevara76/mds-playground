@@ -808,7 +808,7 @@ html, body {
 }
 .pv-hero-img {
   width: calc(100% - 20px);
-  height: 320px;
+  height: 370px;
   object-fit: cover;
   border-radius: var(--p-border-radius);
   margin: 10px 10px 0;
