@@ -393,24 +393,50 @@
 
             <!-- Bar chart card -->
             <div class="p-card pv-chart-card">
-              <p class="pv-label">Expenses</p>
-              <div class="pv-stat-num">$12,543</div>
-              <svg class="pv-bar-svg" viewBox="0 0 280 110" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10"  y="35"  width="15" height="75" rx="3" fill="var(--p-primary-500)"/>
-                <rect x="27"  y="65"  width="15" height="45" rx="3" fill="var(--p-primary-300)"/>
-                <rect x="57"  y="55"  width="15" height="55" rx="3" fill="var(--p-primary-500)"/>
-                <rect x="74"  y="72"  width="15" height="38" rx="3" fill="var(--p-primary-300)"/>
-                <rect x="104" y="90"  width="15" height="20" rx="3" fill="var(--p-primary-500)"/>
-                <rect x="121" y="60"  width="15" height="50" rx="3" fill="var(--p-primary-300)"/>
-                <rect x="151" y="22"  width="15" height="88" rx="3" fill="var(--p-primary-500)"/>
-                <rect x="168" y="75"  width="15" height="35" rx="3" fill="var(--p-primary-300)"/>
-                <rect x="198" y="8"   width="15" height="102" rx="3" fill="var(--p-primary-500)"/>
-                <rect x="215" y="38"  width="15" height="72" rx="3" fill="var(--p-primary-300)"/>
-                <rect x="245" y="58"  width="15" height="52" rx="3" fill="var(--p-primary-500)"/>
-                <rect x="262" y="74"  width="15" height="36" rx="3" fill="var(--p-primary-300)"/>
+              <div class="pv-chart-header">
+                <div>
+                  <p class="pv-label">Expenses</p>
+                  <div class="pv-stat-num">$12,543</div>
+                </div>
+                <div class="pv-chart-legend">
+                  <span class="pv-chart-legend-item"><span class="pv-chart-legend-dot" style="background:var(--p-primary-500)"></span>Actual</span>
+                  <span class="pv-chart-legend-item"><span class="pv-chart-legend-dot" style="background:var(--p-primary-300)"></span>Target</span>
+                </div>
+              </div>
+              <svg class="pv-bar-svg" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10"  y="51"  width="15" height="109" rx="3" fill="var(--p-primary-500)"/>
+                <rect x="27"  y="95"  width="15" height="65"  rx="3" fill="var(--p-primary-300)"/>
+                <rect x="57"  y="80"  width="15" height="80"  rx="3" fill="var(--p-primary-500)"/>
+                <rect x="74"  y="105" width="15" height="55"  rx="3" fill="var(--p-primary-300)"/>
+                <rect x="104" y="131" width="15" height="29"  rx="3" fill="var(--p-primary-500)"/>
+                <rect x="121" y="87"  width="15" height="73"  rx="3" fill="var(--p-primary-300)"/>
+                <rect x="151" y="32"  width="15" height="128" rx="3" fill="var(--p-primary-500)"/>
+                <rect x="168" y="109" width="15" height="51"  rx="3" fill="var(--p-primary-300)"/>
+                <rect x="198" y="12"  width="15" height="148" rx="3" fill="var(--p-primary-500)"/>
+                <rect x="215" y="55"  width="15" height="105" rx="3" fill="var(--p-primary-300)"/>
+                <rect x="245" y="84"  width="15" height="76"  rx="3" fill="var(--p-primary-500)"/>
+                <rect x="262" y="108" width="15" height="52"  rx="3" fill="var(--p-primary-300)"/>
               </svg>
               <div class="pv-month-labels">
                 <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+              </div>
+              <div class="pv-chart-stats">
+                <div class="pv-chart-stat">
+                  <p class="pv-label">Promedio</p>
+                  <p class="pv-chart-stat-val">$2,090</p>
+                </div>
+                <div class="pv-chart-stat">
+                  <p class="pv-label">Máximo</p>
+                  <p class="pv-chart-stat-val">$3,840</p>
+                </div>
+                <div class="pv-chart-stat">
+                  <p class="pv-label">Mínimo</p>
+                  <p class="pv-chart-stat-val">$980</p>
+                </div>
+                <div class="pv-chart-stat">
+                  <p class="pv-label">Tendencia</p>
+                  <p class="pv-chart-stat-val" style="color:var(--p-danger-color)">↑ 8%</p>
+                </div>
               </div>
             </div>
 
@@ -456,21 +482,64 @@
           <div class="pv-row pv-3col">
 
             <div class="p-card">
-              <p class="pv-label">Expenses</p>
+              <div class="pv-card-header" style="margin-bottom:0">
+                <div>
+                  <p class="pv-label">Expenses</p>
+                  <div class="pv-stat-num" style="margin-bottom:0">$14,919</div>
+                </div>
+                <span class="p-tag p-tag-danger" style="height:fit-content;border-radius:999px">↑ 12%</span>
+              </div>
+              <p class="pv-sub" style="margin-bottom:10px">vs $13,312 last month</p>
               <div class="pv-donut-wrap">
                 <svg class="pv-donut-svg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="var(--p-primary-200)" stroke-width="20" transform="rotate(-90 70 70)" stroke-dasharray="109 218" stroke-dashoffset="0"/>
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="var(--p-primary-400)" stroke-width="20" transform="rotate(-90 70 70)" stroke-dasharray="109 218" stroke-dashoffset="-109"/>
-                  <circle cx="70" cy="70" r="52" fill="none" stroke="var(--p-primary-600)" stroke-width="20" transform="rotate(-90 70 70)" stroke-dasharray="109 218" stroke-dashoffset="-218"/>
+                  <circle cx="70" cy="70" r="52" fill="none" stroke="var(--p-primary-100)" stroke-width="20" transform="rotate(-90 70 70)" stroke-dasharray="32 295"/>
+                  <circle cx="70" cy="70" r="52" fill="none" stroke="var(--p-primary-200)" stroke-width="20" transform="rotate(-90 70 70)" stroke-dasharray="79 295" stroke-dashoffset="-32"/>
+                  <circle cx="70" cy="70" r="52" fill="none" stroke="var(--p-primary-400)" stroke-width="20" transform="rotate(-90 70 70)" stroke-dasharray="94 295" stroke-dashoffset="-111"/>
+                  <circle cx="70" cy="70" r="52" fill="none" stroke="var(--p-primary-600)" stroke-width="20" transform="rotate(-90 70 70)" stroke-dasharray="90 295" stroke-dashoffset="-205"/>
                 </svg>
                 <div class="pv-donut-center">
                   <span class="pv-donut-value">$&nbsp;14,919</span>
                 </div>
               </div>
               <div class="pv-legend">
-                <div class="pv-legend-row"><span class="pv-dot" style="background:var(--p-primary-200)"></span><span class="pv-legend-label">Groceries</span><span class="pv-legend-val">$ 4,973</span></div>
-                <div class="pv-legend-row"><span class="pv-dot" style="background:var(--p-primary-400)"></span><span class="pv-legend-label">Household</span><span class="pv-legend-val">$ 4,973</span></div>
-                <div class="pv-legend-row"><span class="pv-dot" style="background:var(--p-primary-600)"></span><span class="pv-legend-label">Travel</span><span class="pv-legend-val">$ 4,973</span></div>
+                <div class="pv-legend-row">
+                  <span class="pv-dot" style="background:var(--p-primary-100)"></span>
+                  <span class="pv-legend-label">Transport</span>
+                  <div class="pv-legend-bar"><div class="pv-legend-bar-fill" style="width:16%;background:var(--p-primary-100)"></div></div>
+                  <span class="pv-legend-val">$ 1,608</span>
+                </div>
+                <div class="pv-legend-row">
+                  <span class="pv-dot" style="background:var(--p-primary-200)"></span>
+                  <span class="pv-legend-label">Groceries</span>
+                  <div class="pv-legend-bar"><div class="pv-legend-bar-fill" style="width:40%;background:var(--p-primary-200)"></div></div>
+                  <span class="pv-legend-val">$ 3,974</span>
+                </div>
+                <div class="pv-legend-row">
+                  <span class="pv-dot" style="background:var(--p-primary-400)"></span>
+                  <span class="pv-legend-label">Household</span>
+                  <div class="pv-legend-bar"><div class="pv-legend-bar-fill" style="width:47%;background:var(--p-primary-400)"></div></div>
+                  <span class="pv-legend-val">$ 4,737</span>
+                </div>
+                <div class="pv-legend-row">
+                  <span class="pv-dot" style="background:var(--p-primary-600)"></span>
+                  <span class="pv-legend-label">Travel</span>
+                  <div class="pv-legend-bar"><div class="pv-legend-bar-fill" style="width:45%;background:var(--p-primary-600)"></div></div>
+                  <span class="pv-legend-val">$ 4,600</span>
+                </div>
+              </div>
+              <div class="pv-donut-footer">
+                <div class="pv-donut-stat">
+                  <p class="pv-label">Avg mensual</p>
+                  <p class="pv-donut-stat-val">$1,243</p>
+                </div>
+                <div class="pv-donut-stat">
+                  <p class="pv-label">Categorías</p>
+                  <p class="pv-donut-stat-val">4</p>
+                </div>
+                <div class="pv-donut-stat">
+                  <p class="pv-label">Mayor gasto</p>
+                  <p class="pv-donut-stat-val">Household</p>
+                </div>
               </div>
             </div>
 
@@ -541,7 +610,7 @@
                 <div class="pv-kpi-left">
                   <p class="pv-label">Income</p>
                   <div class="pv-stat-num pv-stat-lg">$15,989</div>
-                  <p class="pv-sub">$18,871 last period</p>
+                  <p class="pv-sub">↓ $2,882 vs last period</p>
                 </div>
                 <svg class="pv-sparkline" viewBox="0 0 120 42" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0,6 C15,8 30,14 50,18 C70,22 90,24 120,26 L120,42 L0,42 Z" fill="var(--p-primary-50)"/>
@@ -552,7 +621,7 @@
                 <div class="pv-kpi-left">
                   <p class="pv-label">Expenses</p>
                   <div class="pv-stat-num pv-stat-lg">$12,543</div>
-                  <p class="pv-sub">$10,221 last period</p>
+                  <p class="pv-sub">↑ $2,322 vs last period</p>
                 </div>
                 <svg class="pv-sparkline" viewBox="0 0 120 42" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0,28 C20,25 40,20 60,16 C80,12 100,8 120,5 L120,42 L0,42 Z" fill="var(--p-primary-50)"/>
@@ -563,11 +632,33 @@
                 <div class="pv-kpi-left">
                   <p class="pv-label">Savings</p>
                   <div class="pv-stat-num pv-stat-lg">$5,210</div>
-                  <p class="pv-sub">$10,221 last period</p>
+                  <p class="pv-sub">↓ $5,011 vs last period</p>
                 </div>
                 <svg class="pv-sparkline" viewBox="0 0 120 42" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0,10 C20,14 35,26 55,30 C75,26 95,16 120,8 L120,42 L0,42 Z" fill="var(--p-primary-50)"/>
                   <path d="M0,10 C20,14 35,26 55,30 C75,26 95,16 120,8" fill="none" stroke="var(--p-primary-color)" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <div class="p-card pv-kpi-card">
+                <div class="pv-kpi-left">
+                  <p class="pv-label">Balance</p>
+                  <div class="pv-stat-num pv-stat-lg">$3,446</div>
+                  <p class="pv-sub">↑ $1,204 vs last period</p>
+                </div>
+                <svg class="pv-sparkline" viewBox="0 0 120 42" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0,30 C15,28 30,22 45,18 C60,14 75,10 90,8 C100,7 110,6 120,4 L120,42 L0,42 Z" fill="var(--p-primary-50)"/>
+                  <path d="M0,30 C15,28 30,22 45,18 C60,14 75,10 90,8 C100,7 110,6 120,4" fill="none" stroke="var(--p-primary-color)" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <div class="p-card pv-kpi-card">
+                <div class="pv-kpi-left">
+                  <p class="pv-label">Investments</p>
+                  <div class="pv-stat-num pv-stat-lg">$48,720</div>
+                  <p class="pv-sub">↑ $3,560 vs last period</p>
+                </div>
+                <svg class="pv-sparkline" viewBox="0 0 120 42" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0,36 C10,34 20,30 35,24 C50,18 60,20 75,14 C90,8 105,6 120,3 L120,42 L0,42 Z" fill="var(--p-primary-50)"/>
+                  <path d="M0,36 C10,34 20,30 35,24 C50,18 60,20 75,14 C90,8 105,6 120,3" fill="none" stroke="var(--p-primary-color)" stroke-width="1.5"/>
                 </svg>
               </div>
             </div>
