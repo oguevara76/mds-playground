@@ -1,0 +1,10 @@
+/* Semantics Light — Ejemplo: Oliva #7d843c
+   Ajusta highlight al tono oliva en modo claro.
+*/
+
+html[data-theme="ctr--tol--light"] {
+  --highlight-background:       rgba(125, 132, 60, 0.12);
+  --highlight-color:            rgba( 93,  99, 44, 1);
+  --highlight-focus-background: rgba(125, 132, 60, 0.22);
+  --highlight-focus-color:      rgba( 67,  70, 32, 1);
+}

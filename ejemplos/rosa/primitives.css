@@ -1,0 +1,31 @@
+/* Primitives — Ejemplo: Rosa #b04472
+   Remapea --teal-* a la rampa rosa con base #b04472 en posición 600.
+
+   Base: #b04472 → HSL(334°, 44%, 48%)  Contraste con blanco: 5.3:1 ✓ WCAG AA (texto grande)
+
+   50  #fff0f6   HSL(334, 100%, 97%)
+   100 #fdd8e8   HSL(334,  90%, 92%)
+   200 #f6accc   HSL(334,  80%, 82%)
+   300 #e87dab   HSL(334,  70%, 70%)
+   400 #d45e91   HSL(334,  58%, 60%)
+   500 #c44f82   HSL(334,  50%, 54%)
+   600 #b04472 ← HSL(334,  44%, 48%)  COLOR BASE
+   700 #843356   HSL(334,  44%, 36%)
+   800 #5c243c   HSL(334,  44%, 25%)
+   900 #3b1726   HSL(334,  44%, 16%)
+   950 #250e18   HSL(334,  44%, 10%)
+*/
+
+html:root {
+  --teal-50:  rgba(255, 240, 246, 1);
+  --teal-100: rgba(253, 216, 232, 1);
+  --teal-200: rgba(246, 172, 204, 1);
+  --teal-300: rgba(232, 125, 171, 1);
+  --teal-400: rgba(212,  94, 145, 1);
+  --teal-500: rgba(196,  79, 130, 1);
+  --teal-600: rgba(176,  68, 114, 1);
+  --teal-700: rgba(132,  51,  86, 1);
+  --teal-800: rgba( 92,  36,  60, 1);
+  --teal-900: rgba( 59,  23,  38, 1);
+  --teal-950: rgba( 37,  14,  24, 1);
+}

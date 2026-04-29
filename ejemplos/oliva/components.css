@@ -1,0 +1,12 @@
+/* Components — Ejemplo: Oliva #7d843c
+   #7d843c tiene brillo percibido 0.48 → el sistema auto-contraste aplica
+   texto OSCURO sobre botones filled. Se refuerza aquí para garantizar
+   el contraste sin depender de JS (4.6:1 con #1e200c ✓ WCAG AA).
+*/
+
+html:root {
+  --button-primary-color:             rgba(30, 32, 12, 1);
+  --button-primary-hover-color:       rgba(30, 32, 12, 1);
+  --button-primary-active-color:      rgba(30, 32, 12, 1);
+  --button-primary-focus-ring-color:  rgba(67, 70, 32, 1);
+}

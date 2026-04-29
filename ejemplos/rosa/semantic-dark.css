@@ -1,0 +1,11 @@
+/* Semantics Dark — Ejemplo: Rosa #b04472
+   En dark mode el primary usa --teal-400 (#d45e91), tono más claro
+   de la rampa rosa — visible sobre fondos oscuros.
+*/
+
+html[data-theme="ctr--tol--dark"] {
+  --highlight-background:       rgba(212, 94, 145, 0.15);
+  --highlight-color:            rgba(232, 125, 171, 1);
+  --highlight-focus-background: rgba(212, 94, 145, 0.25);
+  --highlight-focus-color:      rgba(246, 172, 204, 1);
+}

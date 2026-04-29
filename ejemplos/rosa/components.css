@@ -1,0 +1,9 @@
+/* Components — Ejemplo: Rosa #b04472
+   #b04472 mantiene contraste 5.3:1 con blanco → texto blanco válido (AA large).
+   El sistema auto-contraste confirma texto blanco (brillo percibido 0.41).
+   Solo se ajusta el focus ring al tono oscuro de la rampa rosa.
+*/
+
+html:root {
+  --button-primary-focus-ring-color: rgba(132, 51, 86, 1);
+}

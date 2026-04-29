@@ -1,0 +1,10 @@
+/* Semantics Light — Ejemplo: Rosa #b04472
+   Ajusta highlight al tono rosa en modo claro.
+*/
+
+html[data-theme="ctr--tol--light"] {
+  --highlight-background:       rgba(176, 68, 114, 0.12);
+  --highlight-color:            rgba(132, 51,  86, 1);
+  --highlight-focus-background: rgba(176, 68, 114, 0.22);
+  --highlight-focus-color:      rgba( 92, 36,  60, 1);
+}

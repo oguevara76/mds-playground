@@ -1,0 +1,11 @@
+/* Semantics Dark — Ejemplo: Oliva #7d843c
+   En dark mode el primary usa --teal-400 (#bdc761), tono más claro
+   de la rampa oliva — visible sobre fondos oscuros.
+*/
+
+html[data-theme="ctr--tol--dark"] {
+  --highlight-background:       rgba(189, 199, 97, 0.15);
+  --highlight-color:            rgba(212, 221, 136, 1);
+  --highlight-focus-background: rgba(189, 199, 97, 0.25);
+  --highlight-focus-color:      rgba(233, 239, 179, 1);
+}
