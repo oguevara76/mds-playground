@@ -13,13 +13,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
 
+  <!-- MDS Core — fuente de verdad permanente, en orden de cascada -->
+  <link rel="stylesheet" href="styles/mds-primitives.css" />
+  <link rel="stylesheet" href="styles/mds-semantic-light.css" />
+  <link rel="stylesheet" href="styles/mds-semantic-dark.css" />
+  <link rel="stylesheet" href="styles/mds-components.css" />
+
+  <!-- Playground bridge + componentes + layout -->
   <link rel="stylesheet" href="styles/primeng-tokens.css" />
   <link rel="stylesheet" href="styles/components.css" />
   <link rel="stylesheet" href="styles/app.css" />
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Dynamic user CSS injection slot -->
-  <style id="user-theme-override"></style>
+  <!-- Dynamic CSS injection slots — cascade order: primitives → semantic → components -->
+  <style id="user-primitives"></style>
+  <style id="user-semantic-light"></style>
+  <style id="user-semantic-dark"></style>
+  <style id="user-components"></style>
 </head>
 <body>
 
@@ -63,21 +73,24 @@
     <aside class="sidebar">
 
       <div class="sidebar-section">
-        <div class="upload-zone" id="upload-zone">
-          <div class="upload-icon"><i class="pi pi-upload"></i></div>
-          <p class="upload-text">Arrastra tu <strong>.css</strong> aquí</p>
-          <p class="upload-sub">o haz click para seleccionar el fichero que va a sobreescribir los tokens core</p>
-          <input type="file" id="css-file-input" accept=".css" />
+        <div class="sidebar-label-row" id="files-header" hidden>
+          <p class="sidebar-label" id="files-label">Colecciones adjuntas</p>
+          <button class="lf-remove-all" id="remove-all-files" title="Eliminar todos los ficheros">
+            <i class="pi pi-trash"></i> Limpiar
+          </button>
         </div>
 
-        <div class="file-status" id="file-status" style="display:none">
-          <div class="file-status-inner">
-            <i class="pi pi-check-circle" style="color:var(--p-success-color)"></i>
-            <span id="file-name">tokens.css</span>
-            <button class="remove-file" id="remove-file" title="Quitar">
-              <i class="pi pi-times"></i>
-            </button>
-          </div>
+        <ul class="loaded-files" id="loaded-files" hidden></ul>
+        <div class="upload-warning" id="upload-warning" hidden>
+          <i class="pi pi-exclamation-triangle"></i>
+          <span id="upload-warning-text"></span>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+          <div class="upload-icon"><i class="pi pi-upload"></i></div>
+          <p class="upload-text">Arrastra tus <strong>.css</strong> aquí</p>
+          <p class="upload-sub">El sistema detecta el tipo de cada fichero y sobreescribe las variables core</p>
+          <input type="file" id="css-file-input" accept=".css" multiple />
         </div>
       </div>
 

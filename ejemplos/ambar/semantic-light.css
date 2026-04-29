@@ -1,0 +1,11 @@
+/* Semantics Light — Ejemplo: Ámbar #786008
+   #786008 tiene contraste 6:1 con blanco → texto de botones en blanco es válido.
+   Solo se ajusta el highlight para alinearlo con la gama ámbar.
+*/
+
+html[data-theme="ctr--tol--light"] {
+  --highlight-background:       rgba(120, 96, 8, 0.12);
+  --highlight-color:            rgba(85, 68, 7, 1);
+  --highlight-focus-background: rgba(120, 96, 8, 0.22);
+  --highlight-focus-color:      rgba(60, 47, 6, 1);
+}

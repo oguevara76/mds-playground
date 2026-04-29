@@ -1,0 +1,8 @@
+/* Components — Ejemplo: Ámbar #786008
+   #786008 es suficientemente oscuro para mantener texto blanco en botones filled.
+   Solo se ajusta el focus ring al tono oscuro de la rampa ámbar.
+*/
+
+html:root {
+  --button-primary-focus-ring-color: rgba(85, 68, 7, 1);
+}

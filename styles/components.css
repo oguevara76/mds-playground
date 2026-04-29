@@ -36,204 +36,254 @@
 .p-button-warning   { --p-focus-ring-color: var(--p-warning-color); }
 .p-button-help      { --p-focus-ring-color: var(--p-help-color); }
 
-[data-theme="dark"] .p-button-contrast { --p-focus-ring-color: var(--p-surface-0); }
+[data-theme="ctr--tol--dark"] .p-button-contrast { --p-focus-ring-color: var(--p-surface-0); }
 
+/* ── Dark mode overrides ── */
+[data-theme="ctr--tol--dark"] .p-card-body p {
+  color: var(--p-surface-300);
+}
+[data-theme="ctr--tol--dark"] .card-icon-wrap {
+  background: color-mix(in srgb, var(--p-primary-color) 20%, transparent);
+  color: var(--p-primary-color);
+}
+[data-theme="ctr--tol--dark"] .p-chip {
+  color: var(--p-surface-200);
+  border-color: var(--p-surface-600);
+}
+[data-theme="ctr--tol--dark"] .p-label {
+  color: var(--p-surface-400);
+}
+[data-theme="ctr--tol--dark"] .p-datatable tr:hover td {
+  background: rgba(255, 255, 255, 0.04);
+}
+[data-theme="ctr--tol--dark"] .p-dialog-content {
+  color: var(--p-surface-300);
+}
+
+/* ── Filled: Primary ── */
 .p-button-primary {
-  background: var(--p-primary-color);
-  border-color: var(--p-primary-color);
-  color: var(--p-primary-color-text);
+  background:   var(--p-button-primary-background);
+  border-color: var(--p-button-primary-border-color);
+  color:        var(--p-button-primary-color);
 }
 .p-button-primary:hover {
-  background: var(--p-primary-hover-color);
-  border-color: var(--p-primary-hover-color);
+  background:   var(--p-button-primary-hover-background);
+  border-color: var(--p-button-primary-hover-border-color);
+}
+.p-button-primary:active:not(:disabled) {
+  background:   var(--p-button-primary-active-background);
+  border-color: var(--p-button-primary-active-border-color);
 }
 
+/* ── Filled: Secondary ── */
 .p-button-secondary {
-  background: var(--p-secondary-bg);
-  border-color: var(--p-surface-300);
-  color: var(--p-surface-700);
+  background:   var(--p-button-secondary-background);
+  border-color: var(--p-button-secondary-border-color);
+  color:        var(--p-button-secondary-color);
 }
-.p-button-secondary:hover {
-  background: var(--p-surface-200);
-}
-
-.p-button-outlined {
-  background: transparent;
-  border-color: var(--p-primary-color);
-  color: var(--p-primary-color);
-}
-.p-button-outlined:hover {
-  background: var(--p-primary-50);
+.p-button-secondary:hover   { background: var(--p-button-secondary-hover-background); }
+.p-button-secondary:active:not(:disabled) {
+  background: var(--p-button-secondary-active-background);
+  border-color: var(--p-button-secondary-active-background);
 }
 
-.p-button-text {
-  background: transparent;
-  border-color: transparent;
-  color: var(--p-primary-color);
+/* ── Filled: Contrast ── */
+.p-button-contrast {
+  background:   var(--p-button-contrast-background);
+  border-color: var(--p-button-contrast-border-color);
+  color:        var(--p-button-contrast-color);
 }
-.p-button-text:hover {
-  background: var(--p-primary-50);
+.p-button-contrast:hover {
+  background:   var(--p-button-contrast-hover-background);
+  border-color: var(--p-button-contrast-hover-background);
+}
+.p-button-contrast:active:not(:disabled) {
+  background:   var(--p-button-contrast-active-background);
+  border-color: var(--p-button-contrast-active-background);
 }
 
+/* ── Filled: Danger ── */
 .p-button-danger {
-  background: var(--p-danger-color);
-  border-color: var(--p-danger-color);
-  color: #fff;
+  background:   var(--p-button-danger-background);
+  border-color: var(--p-button-danger-border-color);
+  color:        var(--p-button-danger-color);
 }
 .p-button-danger:hover {
-  background: #a93226;
+  background:   var(--p-button-danger-hover-background);
+  border-color: var(--p-button-danger-hover-background);
+}
+.p-button-danger:active:not(:disabled) {
+  background:   var(--p-button-danger-active-background);
+  border-color: var(--p-button-danger-active-background);
 }
 
+/* ── Filled: Success ── */
 .p-button-success {
-  background: var(--p-success-color);
-  border-color: var(--p-success-color);
-  color: #fff;
+  background:   var(--p-button-success-background);
+  border-color: var(--p-button-success-border-color);
+  color:        var(--p-button-success-color);
 }
+.p-button-success:hover {
+  background:   var(--p-button-success-hover-background);
+  border-color: var(--p-button-success-hover-background);
+}
+
+/* ── Filled: Warning ── */
 .p-button-warning {
-  background: var(--p-warning-color);
-  border-color: var(--p-warning-color);
-  color: #fff;
+  background:   var(--p-button-warning-background);
+  border-color: var(--p-button-warning-border-color);
+  color:        var(--p-button-warning-color);
 }
+.p-button-warning:hover {
+  background:   var(--p-button-warning-hover-background);
+  border-color: var(--p-button-warning-hover-background);
+}
+
+/* ── Filled: Info ── */
+.p-button-info {
+  background:   var(--p-button-info-background);
+  border-color: var(--p-button-info-border-color);
+  color:        var(--p-button-info-color);
+}
+.p-button-info:hover {
+  background:   var(--p-button-info-hover-background);
+  border-color: var(--p-button-info-hover-background);
+}
+
+/* ── Filled: Help ── */
+.p-button-help {
+  background:   var(--p-button-help-background);
+  border-color: var(--p-button-help-border-color);
+  color:        var(--p-button-help-color);
+}
+.p-button-help:hover {
+  background:   var(--p-button-help-hover-background);
+  border-color: var(--p-button-help-hover-background);
+}
+
+/* ── Outlined: Primary ── */
+.p-button-outlined,
+.p-button-primary.p-button-outlined {
+  background:   transparent;
+  border-color: var(--p-button-outlined-primary-border-color);
+  color:        var(--p-button-outlined-primary-color);
+}
+.p-button-outlined:hover,
+.p-button-primary.p-button-outlined:hover { background: var(--p-button-outlined-primary-hover-background); }
+.p-button-primary.p-button-outlined:active:not(:disabled) { background: var(--p-button-outlined-primary-active-background); }
+
+/* ── Outlined: Secondary ── */
+.p-button-secondary.p-button-outlined {
+  background:   transparent;
+  border-color: var(--p-button-outlined-secondary-border-color);
+  color:        var(--p-button-outlined-secondary-color);
+}
+.p-button-secondary.p-button-outlined:hover   { background: var(--p-button-outlined-secondary-hover-background); }
+.p-button-secondary.p-button-outlined:active:not(:disabled) { background: var(--p-button-outlined-secondary-active-background); }
+
+/* ── Outlined: Contrast ── */
+.p-button-contrast.p-button-outlined {
+  background:   transparent;
+  border-color: var(--p-button-outlined-contrast-border-color);
+  color:        var(--p-button-outlined-contrast-color);
+}
+.p-button-contrast.p-button-outlined:hover   { background: var(--p-button-outlined-contrast-hover-background); }
+.p-button-contrast.p-button-outlined:active:not(:disabled) { background: var(--p-button-outlined-contrast-active-background); }
+
+/* ── Outlined: Danger ── */
+.p-button-danger.p-button-outlined {
+  background:   transparent;
+  border-color: var(--p-button-outlined-danger-border-color);
+  color:        var(--p-button-outlined-danger-color);
+}
+.p-button-danger.p-button-outlined:hover   { background: var(--p-button-outlined-danger-hover-background); }
+.p-button-danger.p-button-outlined:active:not(:disabled) { background: var(--p-button-outlined-danger-active-background); }
+
+/* ── Outlined: Success ── */
+.p-button-success.p-button-outlined {
+  background:   transparent;
+  border-color: var(--p-button-outlined-success-border-color);
+  color:        var(--p-button-outlined-success-color);
+}
+.p-button-success.p-button-outlined:hover { background: var(--p-button-outlined-success-hover-background); }
+
+/* ── Outlined: Warning ── */
+.p-button-warning.p-button-outlined {
+  background:   transparent;
+  border-color: var(--p-button-outlined-warning-border-color);
+  color:        var(--p-button-outlined-warning-color);
+}
+.p-button-warning.p-button-outlined:hover { background: var(--p-button-outlined-warning-hover-background); }
+
+/* ── Outlined: Info ── */
+.p-button-info.p-button-outlined {
+  background:   transparent;
+  border-color: var(--p-button-outlined-info-border-color);
+  color:        var(--p-button-outlined-info-color);
+}
+.p-button-info.p-button-outlined:hover { background: var(--p-button-outlined-info-hover-background); }
+
+/* ── Outlined: Help ── */
+.p-button-help.p-button-outlined {
+  background:   transparent;
+  border-color: var(--p-button-outlined-help-border-color);
+  color:        var(--p-button-outlined-help-color);
+}
+.p-button-help.p-button-outlined:hover { background: var(--p-button-outlined-help-hover-background); }
+
+/* ── Text: Primary ── */
+.p-button-text,
+.p-button-primary.p-button-text {
+  background:   transparent;
+  border-color: transparent;
+  color:        var(--p-button-text-primary-color);
+}
+.p-button-text:hover,
+.p-button-primary.p-button-text:hover  { background: var(--p-button-text-primary-hover-background); }
+.p-button-primary.p-button-text:active:not(:disabled) { background: var(--p-button-text-primary-active-background); }
+
+/* ── Text: Secondary ── */
+.p-button-secondary.p-button-text {
+  background: transparent; border-color: transparent;
+  color: var(--p-button-text-secondary-color);
+}
+.p-button-secondary.p-button-text:hover   { background: var(--p-button-text-secondary-hover-background); }
+.p-button-secondary.p-button-text:active:not(:disabled) { background: var(--p-button-text-secondary-active-background); }
+
+/* ── Text: Contrast ── */
+.p-button-contrast.p-button-text {
+  background: transparent; border-color: transparent;
+  color: var(--p-button-text-contrast-color);
+}
+.p-button-contrast.p-button-text:hover   { background: var(--p-button-text-contrast-hover-background); }
+.p-button-contrast.p-button-text:active:not(:disabled) { background: var(--p-button-text-contrast-active-background); }
+
+/* ── Text: Danger ── */
+.p-button-danger.p-button-text {
+  background: transparent; border-color: transparent;
+  color: var(--p-button-text-danger-color);
+}
+.p-button-danger.p-button-text:hover   { background: var(--p-button-text-danger-hover-background); }
+.p-button-danger.p-button-text:active:not(:disabled) { background: var(--p-button-text-danger-active-background); }
+
+/* ── Text: Success / Warning / Info / Help ── */
+.p-button-success.p-button-text  { background: transparent; border-color: transparent; color: var(--p-button-text-success-color); }
+.p-button-success.p-button-text:hover  { background: var(--p-button-text-success-hover-background); }
+.p-button-warning.p-button-text  { background: transparent; border-color: transparent; color: var(--p-button-text-warning-color); }
+.p-button-warning.p-button-text:hover  { background: var(--p-button-text-warning-hover-background); }
+.p-button-info.p-button-text     { background: transparent; border-color: transparent; color: var(--p-button-text-info-color); }
+.p-button-info.p-button-text:hover     { background: var(--p-button-text-info-hover-background); }
+.p-button-help.p-button-text     { background: transparent; border-color: transparent; color: var(--p-button-text-help-color); }
+.p-button-help.p-button-text:hover     { background: var(--p-button-text-help-hover-background); }
+
+/* ── Raised ── */
+.p-button-raised { box-shadow: var(--p-button-raised-shadow); }
 
 .p-button-sm { padding: 5px 12px; font-size: 13px; }
 .p-button-lg { padding: 11px 22px; font-size: 15px; }
 .p-button-rounded { border-radius: 999px; }
 
-.p-button:disabled {
-  opacity: .45;
-  cursor: not-allowed;
-}
-
-/* ── Button: Active (pressed) ── */
-.p-button:active:not(:disabled) { }
-
-.p-button-primary:active:not(:disabled)  { background: var(--p-primary-active-color); border-color: var(--p-primary-active-color); }
-.p-button-secondary:active:not(:disabled) { background: var(--p-surface-300); border-color: var(--p-surface-300); }
-.p-button-contrast:active:not(:disabled)  { background: var(--p-surface-700, #3f3f3f); border-color: var(--p-surface-700, #3f3f3f); }
-.p-button-danger:active:not(:disabled)    { background: #922b21; border-color: #922b21; }
-
-.p-button-primary.p-button-outlined:active:not(:disabled)  { background: color-mix(in srgb, var(--p-primary-color) 16%, transparent); }
-.p-button-secondary.p-button-outlined:active:not(:disabled) { background: var(--p-surface-200); }
-.p-button-contrast.p-button-outlined:active:not(:disabled)  { background: var(--p-surface-200); }
-.p-button-danger.p-button-outlined:active:not(:disabled)    { background: color-mix(in srgb, var(--p-danger-color) 16%, transparent); }
-
-.p-button-primary.p-button-text:active:not(:disabled)  { background: color-mix(in srgb, var(--p-primary-color) 16%, transparent); }
-.p-button-secondary.p-button-text:active:not(:disabled) { background: var(--p-surface-200); }
-.p-button-contrast.p-button-text:active:not(:disabled)  { background: var(--p-surface-200); }
-.p-button-danger.p-button-text:active:not(:disabled)    { background: color-mix(in srgb, var(--p-danger-color) 16%, transparent); }
-
-/* ── Button: Contrast severity ── */
-.p-button-contrast {
-  background: var(--p-surface-900);
-  border-color: var(--p-surface-900);
-  color: var(--p-surface-0);
-}
-.p-button-contrast:hover { background: var(--p-surface-700); border-color: var(--p-surface-700); }
-
-.p-button-contrast.p-button-outlined {
-  background: transparent; border-color: var(--p-surface-900); color: var(--p-surface-900);
-}
-.p-button-contrast.p-button-outlined:hover { background: var(--p-surface-100); }
-
-.p-button-contrast.p-button-text {
-  color: var(--p-surface-900); background: transparent; border-color: transparent;
-}
-.p-button-contrast.p-button-text:hover { background: var(--p-surface-100); }
-
-/* Contrast en dark mode: fondo claro sobre contexto oscuro */
-[data-theme="dark"] .p-button-contrast {
-  background: var(--p-surface-0);
-  border-color: var(--p-surface-0);
-  color: var(--p-surface-900);
-}
-[data-theme="dark"] .p-button-contrast:hover {
-  background: var(--p-surface-200);
-  border-color: var(--p-surface-200);
-}
-[data-theme="dark"] .p-button-contrast.p-button-outlined {
-  background: transparent; border-color: var(--p-surface-0); color: var(--p-surface-0);
-}
-[data-theme="dark"] .p-button-contrast.p-button-outlined:hover { background: var(--p-surface-700); }
-[data-theme="dark"] .p-button-contrast.p-button-text {
-  color: var(--p-surface-0); background: transparent; border-color: transparent;
-}
-[data-theme="dark"] .p-button-contrast.p-button-text:hover { background: var(--p-surface-700); }
-[data-theme="dark"] .p-button-contrast:active:not(:disabled) {
-  background: var(--p-surface-300); border-color: var(--p-surface-300); color: var(--p-surface-900);
-}
-
-/* ── Button: Info / Help severities ── */
-.p-button-info {
-  background: var(--p-info-color, #3b82f6);
-  border-color: var(--p-info-color, #3b82f6);
-  color: #fff;
-}
-.p-button-info:hover { background: #2563eb; border-color: #2563eb; }
-
-.p-button-help {
-  background: #8b5cf6;
-  border-color: #8b5cf6;
-  color: #fff;
-}
-.p-button-help:hover { background: #7c3aed; border-color: #7c3aed; }
-
-/* ── Button: Raised ── */
-.p-button-raised {
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-}
-
-/* ── Button: Outlined per severity ── */
-.p-button-success.p-button-outlined {
-  background: transparent; border-color: var(--p-success-color); color: var(--p-success-color);
-}
-.p-button-success.p-button-outlined:hover { background: var(--p-success-bg); }
-
-.p-button-info.p-button-outlined {
-  background: transparent; border-color: var(--p-info-color, #3b82f6); color: var(--p-info-color, #3b82f6);
-}
-.p-button-info.p-button-outlined:hover { background: rgba(59,130,246,.08); }
-
-.p-button-warning.p-button-outlined {
-  background: transparent; border-color: var(--p-warning-color); color: var(--p-warning-color);
-}
-.p-button-warning.p-button-outlined:hover { background: var(--p-warning-bg); }
-
-.p-button-help.p-button-outlined {
-  background: transparent; border-color: #8b5cf6; color: #8b5cf6;
-}
-.p-button-help.p-button-outlined:hover { background: rgba(139,92,246,.08); }
-
-.p-button-danger.p-button-outlined {
-  background: transparent; border-color: var(--p-danger-color); color: var(--p-danger-color);
-}
-.p-button-danger.p-button-outlined:hover { background: var(--p-danger-bg); }
-
-.p-button-secondary.p-button-outlined {
-  background: transparent; border-color: var(--p-surface-400); color: var(--p-surface-600);
-}
-.p-button-secondary.p-button-outlined:hover { background: var(--p-surface-100); }
-
-/* ── Button: Text per severity ── */
-.p-button-success.p-button-text  { color: var(--p-success-color); background: transparent; border-color: transparent; }
-.p-button-success.p-button-text:hover  { background: var(--p-success-bg); }
-.p-button-info.p-button-text     { color: var(--p-info-color, #3b82f6); background: transparent; border-color: transparent; }
-.p-button-info.p-button-text:hover     { background: rgba(59,130,246,.08); }
-.p-button-warning.p-button-text  { color: var(--p-warning-color); background: transparent; border-color: transparent; }
-.p-button-warning.p-button-text:hover  { background: var(--p-warning-bg); }
-.p-button-help.p-button-text     { color: #8b5cf6; background: transparent; border-color: transparent; }
-.p-button-help.p-button-text:hover     { background: rgba(139,92,246,.08); }
-.p-button-danger.p-button-text   { color: var(--p-danger-color); background: transparent; border-color: transparent; }
-.p-button-danger.p-button-text:hover   { background: var(--p-danger-bg); }
-.p-button-secondary.p-button-text { color: var(--p-surface-600); background: transparent; border-color: transparent; }
-.p-button-secondary.p-button-text:hover { background: var(--p-surface-100); }
-.p-button-primary.p-button-text   { color: var(--p-primary-color); background: transparent; border-color: transparent; }
-.p-button-primary.p-button-text:hover   { background: color-mix(in srgb, var(--p-primary-color) 8%, transparent); }
-
-/* ── Button: Outlined primary (override generic) ── */
-.p-button-primary.p-button-outlined {
-  background: transparent; border-color: var(--p-primary-color); color: var(--p-primary-color);
-}
-.p-button-primary.p-button-outlined:hover { background: color-mix(in srgb, var(--p-primary-color) 8%, transparent); }
+.p-button:disabled { opacity: .45; cursor: not-allowed; }
 
 /* ── Button: Icon-only ── */
 .p-button-icon-only {
@@ -476,6 +526,7 @@
 .p-tag-warning   { background: var(--p-warning-bg); color: var(--p-warning-color); }
 .p-tag-danger    { background: var(--p-danger-bg);  color: var(--p-danger-color); }
 .p-tag-secondary { background: var(--p-secondary-bg); color: var(--p-secondary-color); }
+.p-tag-contrast  { background: var(--p-surface-800); color: var(--p-surface-100); }
 
 /* ── Inputs ── */
 .p-inputtext {
@@ -599,13 +650,13 @@
 .p-checkbox-checked {
   background: var(--p-primary-color);
   border-color: var(--p-primary-color);
-  color: #fff;
+  color: var(--p-primary-color-text, #fff);
 }
 .p-checkbox-checked .pi { font-size: 11px; }
 .p-checkbox-indeterminate {
   background: var(--p-primary-color);
   border-color: var(--p-primary-color);
-  color: #fff;
+  color: var(--p-primary-color-text, #fff);
 }
 .p-checkbox-indeterminate .pi { font-size: 11px; }
 

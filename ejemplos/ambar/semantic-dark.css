@@ -1,0 +1,12 @@
+/* Semantics Dark — Ejemplo: Ámbar #786008
+   En dark mode el primary usa --teal-400 (#f8cc2a), el tono más claro
+   de la rampa ámbar — visible sobre fondos oscuros.
+   El contraste usa --surface-900 (oscuro) definido en el MDS base.
+*/
+
+html[data-theme="ctr--tol--dark"] {
+  --highlight-background:       rgba(248, 204, 42, 0.15);
+  --highlight-color:            rgba(252, 220, 105, 1);
+  --highlight-focus-background: rgba(248, 204, 42, 0.25);
+  --highlight-focus-color:      rgba(254, 234, 164, 1);
+}
