@@ -63,7 +63,7 @@
       const m   = rgb.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/);
       if (!m) return '';
       const lum  = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
-      const text = lum > 0.45 ? '#111111' : '#ffffff';
+      const text = lum > 0.55 ? '#111111' : '#ffffff';
       const ring = text === '#ffffff' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.35)';
       return `html[data-theme="${theme}"] {
         --p-primary-color-text:            ${text};

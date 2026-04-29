@@ -419,7 +419,7 @@ html, body {
 }
 .preview-tab:hover { color: var(--p-surface-700); border-color: var(--p-surface-500); }
 .preview-tab.active {
-  color: var(--p-primary-color-text, #fff);
+  color: var(--p-button-primary-color);
   background: var(--p-primary-color);
   border-color: var(--p-primary-color);
 }
@@ -744,6 +744,11 @@ html, body {
 [data-theme="ctr--tol--dark"] .preview-tab:hover {
   color: var(--p-surface-0);
   border-color: var(--p-surface-400);
+}
+[data-theme="ctr--tol--dark"] .preview-tab.active {
+  color: var(--p-button-primary-color);
+  background: var(--p-primary-color);
+  border-color: var(--p-primary-color);
 }
 
 [data-theme="ctr--tol--dark"] .theme-switch {
