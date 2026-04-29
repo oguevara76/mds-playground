@@ -52,12 +52,34 @@
   /* ── Auto-contraste del color primario ── */
   /* Detecta si el primary actual es claro u oscuro y ajusta el texto sobre él */
   function autoContrastPrimary() {
-    const rgb = resolveColor('--p-primary-color');
-    const m   = rgb.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/);
-    if (!m) return;
+    const html    = document.documentElement;
+    const current = html.getAttribute('data-theme') || 'ctr--tol--light';
 
-    const lum  = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
-    const text = lum > 0.45 ? '#111111' : '#ffffff';
+    /* Lee el primary para cada tema cambiando data-theme de forma síncrona
+       (sin repintado visual hasta que el JS termina) y calcula la regla. */
+    const buildRule = (theme) => {
+      html.setAttribute('data-theme', theme);
+      const rgb = resolveColor('--p-primary-color');
+      const m   = rgb.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/);
+      if (!m) return '';
+      const lum  = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
+      const text = lum > 0.45 ? '#111111' : '#ffffff';
+      const ring = text === '#ffffff' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.35)';
+      return `html[data-theme="${theme}"] {
+        --p-primary-color-text:            ${text};
+        --button-primary-color:            ${text};
+        --button-primary-hover-color:      ${text};
+        --button-primary-active-color:     ${text};
+        --p-button-primary-color:          ${text};
+        --button-primary-focus-ring-color: ${ring};
+      }`;
+    };
+
+    const lightRule = buildRule('ctr--tol--light');
+    const darkRule  = buildRule('ctr--tol--dark');
+
+    /* Restaurar el tema real antes de escribir el estilo */
+    html.setAttribute('data-theme', current);
 
     let el = document.getElementById('auto-contrast');
     if (!el) {
@@ -65,17 +87,7 @@
       el.id = 'auto-contrast';
       document.head.appendChild(el);
     }
-    /* Usar el mismo selector del theme activo para igualar especificidad */
-    const themeAttr = document.documentElement.getAttribute('data-theme') || 'ctr--tol--light';
-    el.textContent = `
-      html[data-theme="${themeAttr}"] {
-        --p-primary-color-text:                      ${text};
-        --button-primary-color:                      ${text};
-        --button-primary-hover-color:                ${text};
-        --button-primary-active-color:               ${text};
-        --p-button-primary-color:                    ${text};
-        --button-primary-focus-ring-color:           ${text === '#ffffff' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.35)'};
-      }`;
+    el.textContent = lightRule + '\n' + darkRule;
   }
 
   function syncToggleState() {

@@ -419,7 +419,7 @@ html, body {
 }
 .preview-tab:hover { color: var(--p-surface-700); border-color: var(--p-surface-500); }
 .preview-tab.active {
-  color: #fff;
+  color: var(--p-primary-color-text, #fff);
   background: var(--p-primary-color);
   border-color: var(--p-primary-color);
 }
