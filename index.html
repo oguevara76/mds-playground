@@ -35,7 +35,7 @@
 
   <!-- ═══════════════════════════ TOPBAR ═══════════════════════════ -->
   <header class="topbar">
-    <div class="topbar-brand">
+    <a href="#" class="topbar-brand" id="logo-home" title="Ir al inicio">
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
         <rect width="40" height="40" rx="12" fill="url(#brand-gradient)"/>
         <g clip-path="url(#brand-clip)">
@@ -54,10 +54,10 @@
         </defs>
       </svg>
       <span class="brand-name">MDS | Playground</span>
-    </div>
+    </a>
     <nav class="topbar-nav"></nav>
     <div class="topbar-actions">
-      <a href="#" class="nav-link">Tokens</a>
+      <a href="#" class="nav-link" id="nav-tokens">Tokens</a>
       <a href="https://primeng.org/installation" target="_blank" class="nav-link" style="margin-right:12px">PrimeNG Docs ↗</a>
       <button class="theme-switch" id="toggle-theme" title="Cambiar modo">
         <i class="pi pi-moon"></i>
@@ -1238,6 +1238,34 @@
             </table>
           </div>
         </section>
+      </div>
+
+      <!-- ─── TOKENS VIEW ─── -->
+      <div id="tokens-view" hidden>
+        <div class="tv-layout">
+          <div class="tv-main">
+            <div class="tv-toolbar">
+              <div class="tv-search-wrap" id="tv-search-wrap">
+                <i class="pi pi-search tv-search-icon"></i>
+                <input type="text" id="tv-search" class="tv-search" placeholder="Buscar token…" autocomplete="off" />
+                <button class="tv-search-clear" id="tv-search-clear" hidden>
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+              <span class="tv-count" id="tv-count"></span>
+              <div class="tv-view-toggle">
+                <button class="tv-view-btn tv-view-btn-on" id="tv-btn-list">
+                  <i class="pi pi-list"></i> Lista
+                </button>
+                <button class="tv-view-btn" id="tv-btn-map">
+                  <i class="pi pi-share-alt"></i> Mapa
+                </button>
+              </div>
+            </div>
+            <div class="tv-content" id="tv-content"></div>
+            <div class="tv-map-area" id="tv-map-area" hidden></div>
+          </div>
+        </div>
       </div>
 
     </main>
