@@ -1635,6 +1635,7 @@ html, body {
    TOKENS — ACCORDION LIST
    ═══════════════════════════════════════════════════════════════════ */
 
+/* ── Section accordion (top level: Primitivos / Semánticos / Componentes) ── */
 .tva {
   border-bottom: 1px solid var(--p-surface-200);
 }
@@ -1644,18 +1645,20 @@ html, body {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 11px 16px 11px 12px;
+  gap: 10px;
+  padding: 14px 18px 14px 14px;
   cursor: pointer;
   user-select: none;
   background: var(--p-surface-50);
-  border-radius: 0;
   transition: background var(--p-transition-duration);
+  position: sticky;
+  top: 0;
+  z-index: 5;
 }
 .tva-summary::-webkit-details-marker { display: none; }
-[data-theme="ctr--tol--dark"] .tva-summary { background: var(--p-surface-800); }
+[data-theme="ctr--tol--dark"] .tva-summary { background: var(--p-surface-900); }
 .tva-summary:hover { background: var(--p-surface-100); }
-[data-theme="ctr--tol--dark"] .tva-summary:hover { background: rgba(255,255,255,.06); }
+[data-theme="ctr--tol--dark"] .tva-summary:hover { background: rgba(255,255,255,.05); }
 
 .tva-chev {
   font-size: 10px;
@@ -1665,18 +1668,27 @@ html, body {
 }
 .tva[open] .tva-chev { transform: rotate(90deg); }
 
-/* Collection color accent on left border */
-.tva-prim .tva-summary { border-left: 3px solid #f59e0b; }
-.tva-sem  .tva-summary { border-left: 3px solid #6366f1; }
-.tva-comp .tva-summary { border-left: 3px solid #0ea5e9; }
+/* Section color accent — thick left stripe on the summary */
+.tva-prim .tva-summary { border-left: 4px solid #f59e0b; padding-left: 12px; }
+.tva-sem  .tva-summary { border-left: 4px solid #6366f1; padding-left: 12px; }
+.tva-comp .tva-summary { border-left: 4px solid #0ea5e9; padding-left: 12px; }
 
 .tva-glabel {
-  font-size: 12.5px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--p-surface-700);
   flex: 1;
+  letter-spacing: .01em;
 }
-[data-theme="ctr--tol--dark"] .tva-glabel { color: var(--p-surface-200); }
+[data-theme="ctr--tol--dark"] .tva-glabel { color: var(--p-surface-100); }
+
+/* Tinted label for each section type */
+.tva-prim .tva-glabel { color: #92400e; }
+.tva-sem  .tva-glabel { color: #3730a3; }
+.tva-comp .tva-glabel { color: #0369a1; }
+[data-theme="ctr--tol--dark"] .tva-prim .tva-glabel { color: #fbbf24; }
+[data-theme="ctr--tol--dark"] .tva-sem  .tva-glabel { color: #818cf8; }
+[data-theme="ctr--tol--dark"] .tva-comp .tva-glabel { color: #38bdf8; }
 
 .tva-badge {
   font-size: 11px;
@@ -1684,16 +1696,91 @@ html, body {
   color: var(--p-surface-400);
   background: var(--p-surface-200);
   border-radius: 999px;
-  padding: 1px 7px;
+  padding: 2px 8px;
   flex-shrink: 0;
 }
-[data-theme="ctr--tol--dark"] .tva-badge { background: var(--p-surface-700); color: var(--p-surface-400); }
+[data-theme="ctr--tol--dark"] .tva-badge { background: var(--p-surface-700); color: var(--p-surface-300); }
 
-.tva-body { padding: 2px 0 6px; }
+.tva-body { padding: 0; }
+
+/* ── Sub-group block inside each section ── */
+.tva-subgroup {
+  border-top: 1px solid var(--p-surface-100);
+}
+.tva-subgroup:first-child { border-top: none; }
+[data-theme="ctr--tol--dark"] .tva-subgroup { border-color: var(--p-surface-700); }
+
+.tva-sg-hdr {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--p-surface-500);
+  background: var(--p-surface-50);
+  border-bottom: 1px solid var(--p-surface-100);
+  position: sticky;
+  top: 49px;   /* below the section summary (sticky) */
+  z-index: 4;
+}
+[data-theme="ctr--tol--dark"] .tva-sg-hdr {
+  background: var(--p-surface-800);
+  color: var(--p-surface-400);
+  border-color: var(--p-surface-700);
+}
+
+/* Icon in sub-group header inherits colour */
+.tva-sg-hdr .pi { font-size: 11px; }
+
+.tva-sg-count {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--p-surface-400);
+  background: var(--p-surface-100);
+  padding: 1px 7px;
+  border-radius: 999px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+[data-theme="ctr--tol--dark"] .tva-sg-count { background: var(--p-surface-700); }
+
+/* Light sub-group — warm amber tint */
+.tva-sg-light .tva-sg-hdr {
+  color: #92400e;
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+.tva-sg-light .tva-sg-hdr .pi { color: #d97706; }
+.tva-sg-light .tva-sg-count { background: #fef3c7; color: #92400e; }
+[data-theme="ctr--tol--dark"] .tva-sg-light .tva-sg-hdr {
+  color: #fbbf24;
+  background: rgba(251,191,36,.07);
+  border-color: rgba(251,191,36,.18);
+}
+[data-theme="ctr--tol--dark"] .tva-sg-light .tva-sg-count { background: rgba(251,191,36,.12); color: #fbbf24; }
+
+/* Dark sub-group — cool indigo tint */
+.tva-sg-dark .tva-sg-hdr {
+  color: #3730a3;
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+.tva-sg-dark .tva-sg-hdr .pi { color: #6366f1; }
+.tva-sg-dark .tva-sg-count { background: #e0e7ff; color: #3730a3; }
+[data-theme="ctr--tol--dark"] .tva-sg-dark .tva-sg-hdr {
+  color: #818cf8;
+  background: rgba(99,102,241,.07);
+  border-color: rgba(99,102,241,.18);
+}
+[data-theme="ctr--tol--dark"] .tva-sg-dark .tva-sg-count { background: rgba(99,102,241,.12); color: #818cf8; }
 
 /* ── Token row ── */
 .tva-row {
-  padding: 0 16px 0 16px;
+  padding: 0 16px;
   border-bottom: 1px solid var(--p-surface-100);
 }
 .tva-row:last-child { border-bottom: none; }

@@ -8,12 +8,12 @@
 .p-button {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
+  gap: var(--p-button-gap);
+  padding: var(--p-button-padding-y) var(--p-button-padding-x);
   font-family: var(--p-font-family);
-  font-size: var(--p-font-size);
+  font-size: var(--p-button-font-size);
   font-weight: 500;
-  border-radius: var(--p-border-radius);
+  border-radius: var(--p-button-border-radius);
   border: 1.5px solid transparent;
   cursor: pointer;
   transition: background var(--p-transition-duration), border-color var(--p-transition-duration), color var(--p-transition-duration), box-shadow var(--p-transition-duration);
@@ -279,20 +279,20 @@
 /* ── Raised ── */
 .p-button-raised { box-shadow: var(--p-button-raised-shadow); }
 
-.p-button-sm { padding: 5px 12px; font-size: 13px; }
-.p-button-lg { padding: 11px 22px; font-size: 15px; }
+.p-button-sm { padding: var(--p-button-sm-padding-y) var(--p-button-sm-padding-x); font-size: var(--p-button-sm-font-size); }
+.p-button-lg { padding: var(--p-button-lg-padding-y) var(--p-button-lg-padding-x); font-size: var(--p-button-lg-font-size); }
 .p-button-rounded { border-radius: 999px; }
 
 .p-button:disabled { opacity: .45; cursor: not-allowed; }
 
 /* ── Button: Icon-only ── */
 .p-button-icon-only {
-  padding: 8px;
-  width: 38px;
+  padding: var(--p-button-padding-y);
+  width: var(--p-button-icon-only-width);
   justify-content: center;
 }
-.p-button-icon-only.p-button-sm { padding: 5px; width: 30px; }
-.p-button-icon-only.p-button-lg { padding: 11px; width: 46px; }
+.p-button-icon-only.p-button-sm { padding: var(--p-button-sm-padding-y); width: var(--p-button-icon-only-width-sm); }
+.p-button-icon-only.p-button-lg { padding: var(--p-button-lg-padding-y); width: var(--p-button-icon-only-width-lg); }
 
 /* ── Button: Link ── */
 .p-button-link {
@@ -446,7 +446,7 @@
   min-width: 190px;
   background: var(--p-content-bg);
   border: 1px solid var(--p-content-border);
-  border-radius: var(--p-border-radius);
+  border-radius: var(--p-splitbutton-panel-border-radius);
   box-shadow: 0 8px 24px rgba(0,0,0,.14);
   z-index: 10;
   overflow: hidden;
@@ -455,8 +455,8 @@
 .p-splitbutton-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 16px;
+  gap: var(--p-splitbutton-item-gap);
+  padding: var(--p-splitbutton-item-padding-y) var(--p-splitbutton-item-padding-x);
   font-size: 13.5px;
   color: var(--p-content-color);
   cursor: pointer;
@@ -496,10 +496,10 @@
 .p-badge {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: var(--p-badge-padding-y) var(--p-badge-padding-x);
+  border-radius: var(--p-badge-border-radius);
+  font-size: var(--p-badge-font-size);
+  font-weight: var(--p-badge-font-weight);
   font-family: var(--p-font-family);
   letter-spacing: .01em;
 }
@@ -514,11 +514,11 @@
 .p-tag {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 10px;
-  border-radius: var(--p-border-radius-sm);
-  font-size: 12px;
-  font-weight: 500;
+  gap: var(--p-tag-gap);
+  padding: var(--p-tag-padding-y) var(--p-tag-padding-x);
+  border-radius: var(--p-tag-border-radius);
+  font-size: var(--p-tag-font-size);
+  font-weight: var(--p-tag-font-weight);
   font-family: var(--p-font-family);
 }
 .p-tag-primary   { background: color-mix(in srgb, var(--p-primary-color) 12%, transparent); color: var(--p-primary-700); }
@@ -531,11 +531,11 @@
 /* ── Inputs ── */
 .p-inputtext {
   width: 100%;
-  padding: 8px 12px;
+  padding: var(--p-input-padding-y) var(--p-input-padding-x);
   font-family: var(--p-font-family);
   font-size: var(--p-font-size);
   border: 1.5px solid var(--p-input-border-color);
-  border-radius: var(--p-border-radius);
+  border-radius: var(--p-input-border-radius);
   background: var(--p-input-bg);
   color: var(--p-input-color);
   transition: border-color var(--p-transition-duration), box-shadow var(--p-transition-duration);
@@ -553,11 +553,11 @@
 
 .p-inputtextarea {
   width: 100%;
-  padding: 8px 12px;
+  padding: var(--p-input-padding-y) var(--p-input-padding-x);
   font-family: var(--p-font-family);
   font-size: var(--p-font-size);
   border: 1.5px solid var(--p-input-border-color);
-  border-radius: var(--p-border-radius);
+  border-radius: var(--p-input-border-radius);
   background: var(--p-input-bg);
   color: var(--p-input-color);
   outline: none;
@@ -596,11 +596,11 @@
 }
 .p-dropdown-select {
   width: 100%;
-  padding: 8px 32px 8px 12px;
+  padding: var(--p-input-padding-y) 32px var(--p-input-padding-y) var(--p-input-padding-x);
   font-family: var(--p-font-family);
   font-size: var(--p-font-size);
   border: 1.5px solid var(--p-input-border-color);
-  border-radius: var(--p-border-radius);
+  border-radius: var(--p-input-border-radius);
   background: var(--p-input-bg);
   color: var(--p-input-color);
   outline: none;
@@ -729,11 +729,11 @@
 .p-card {
   background: var(--p-content-bg);
   border: 1px solid var(--p-content-border);
-  border-radius: var(--p-border-radius-lg);
-  padding: 20px;
+  border-radius: var(--p-card-border-radius);
+  padding: var(--p-card-padding);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--p-card-gap);
 }
 .p-card-elevated {
   box-shadow: var(--p-shadow-2);
@@ -778,9 +778,9 @@
 .p-message {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: var(--p-border-radius);
+  gap: var(--p-message-gap);
+  padding: var(--p-message-padding);
+  border-radius: var(--p-message-border-radius);
   font-family: var(--p-font-family);
   font-size: 13px;
 }
@@ -801,9 +801,9 @@
 .p-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 999px;
+  gap: var(--p-chip-gap);
+  padding: var(--p-chip-padding-y) var(--p-chip-padding-x);
+  border-radius: var(--p-chip-border-radius);
   background: var(--p-secondary-bg);
   color: var(--p-surface-700);
   font-family: var(--p-font-family);
@@ -838,7 +838,7 @@
   font-size: 13px;
 }
 .p-datatable th {
-  padding: 10px 14px;
+  padding: var(--p-datatable-th-padding-y) var(--p-datatable-th-padding-x);
   text-align: left;
   font-weight: 600;
   font-size: 12px;
@@ -849,7 +849,7 @@
   white-space: nowrap;
 }
 .p-datatable td {
-  padding: 11px 14px;
+  padding: var(--p-datatable-td-padding-y) var(--p-datatable-td-padding-x);
   border-bottom: 1px solid var(--p-content-border);
   color: var(--p-content-color);
   vertical-align: middle;
@@ -860,7 +860,7 @@
 /* ── Dialog ── */
 .p-dialog {
   background: var(--p-content-bg);
-  border-radius: var(--p-border-radius-lg);
+  border-radius: var(--p-dialog-border-radius);
   box-shadow: 0 20px 60px rgba(0,0,0,.3);
   min-width: 360px;
   max-width: 480px;
@@ -871,7 +871,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: var(--p-dialog-header-padding);
   font-weight: 600;
   font-size: 15px;
   color: var(--p-content-color);
@@ -888,7 +888,7 @@
 }
 .p-dialog-close:hover { background: var(--p-surface-100); }
 .p-dialog-content {
-  padding: 20px;
+  padding: var(--p-dialog-content-padding);
   color: var(--p-surface-600);
   font-size: 14px;
   line-height: 1.6;
@@ -896,7 +896,7 @@
 .p-dialog-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  padding: 12px 20px;
+  gap: var(--p-dialog-footer-gap);
+  padding: var(--p-dialog-footer-padding-y) var(--p-dialog-footer-padding-x);
   border-top: 1px solid var(--p-content-border);
 }

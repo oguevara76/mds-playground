@@ -258,6 +258,101 @@
   --p-button-raised-shadow: var(--button-raised-shadow,
     0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
   );
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Button spacing & sizing
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-button-padding-x:        var(--button-padding-x,    var(--form-field-padding-x,    16px));
+  --p-button-padding-y:        var(--button-padding-y,    var(--form-field-padding-y,     8px));
+  --p-button-sm-padding-x:     var(--button-sm-padding-x, var(--form-field-sm-padding-x, 10px));
+  --p-button-sm-padding-y:     var(--button-sm-padding-y, var(--form-field-sm-padding-y,  5px));
+  --p-button-lg-padding-x:     var(--button-lg-padding-x, var(--form-field-lg-padding-x, 22px));
+  --p-button-lg-padding-y:     var(--button-lg-padding-y, var(--form-field-lg-padding-y, 11px));
+  --p-button-gap:              var(--button-gap,           var(--dimension-spacing-x6,     6px));
+  --p-button-border-radius:    var(--button-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+  --p-button-icon-only-width:  var(--button-icon-only-width, var(--dimension-spacing-x32, 38px));
+  --p-button-icon-only-width-sm: var(--dimension-spacing-x28, 30px);
+  --p-button-icon-only-width-lg: var(--dimension-spacing-x42, 46px);
+  --p-button-font-size:        var(--p-font-size);
+  --p-button-sm-font-size:     var(--button-sm-font-size, var(--form-field-sm-font-size,  13px));
+  --p-button-lg-font-size:     var(--button-lg-font-size, var(--form-field-lg-font-size,  15px));
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Input / Form field sizing
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-input-padding-x:        var(--inputtext-padding-x, var(--form-field-padding-x,    12px));
+  --p-input-padding-y:        var(--inputtext-padding-y, var(--form-field-padding-y,     8px));
+  --p-input-border-radius:    var(--inputtext-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+  --p-focus-ring:             0 0 0 var(--p-focus-ring-width) color-mix(in srgb, var(--p-focus-ring-color) 30%, transparent);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Card
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-card-padding:           var(--card-body-padding,  var(--dimension-spacing-x20, 20px));
+  --p-card-gap:               var(--card-body-gap,      var(--dimension-spacing-x12, 12px));
+  --p-card-border-radius:     var(--card-border-radius, var(--border-radius-xl, var(--p-border-radius-xl)));
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Tag
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-tag-padding-y:          var(--dimension-spacing-x4,  3px);
+  --p-tag-padding-x:          var(--dimension-spacing-x10, 10px);
+  --p-tag-gap:                var(--tag-gap, var(--dimension-spacing-x4, 4px));
+  --p-tag-border-radius:      var(--tag-border-radius, var(--content-border-radius, var(--p-border-radius-sm)));
+  --p-tag-font-size:          var(--tag-font-size, 12px);
+  --p-tag-font-weight:        var(--tag-font-weight, 500);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Badge
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-badge-padding-x:        var(--dimension-spacing-x8,  8px);
+  --p-badge-padding-y:        2px;
+  --p-badge-border-radius:    var(--badge-border-radius, var(--border-radius-sm, var(--p-border-radius-sm)));
+  --p-badge-font-size:        var(--badge-font-size, 12px);
+  --p-badge-font-weight:      var(--badge-font-weight, 600);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Chip
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-chip-padding-x:         var(--chip-padding-x, var(--dimension-spacing-x12, 12px));
+  --p-chip-padding-y:         var(--chip-padding-y, var(--dimension-spacing-x6,   4px));
+  --p-chip-gap:               var(--chip-gap,       var(--dimension-spacing-x8,   6px));
+  --p-chip-border-radius:     var(--chip-border-radius, var(--border-radius-pill,  999px));
+  --p-chip-font-size:         var(--p-font-size);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Message
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-message-padding:        var(--dimension-spacing-x14, 14px) var(--dimension-spacing-x16, 16px);
+  --p-message-gap:            var(--message-content-gap, var(--dimension-spacing-x12, 12px));
+  --p-message-border-radius:  var(--message-border-radius, var(--content-border-radius, var(--p-border-radius)));
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Dialog
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-dialog-border-radius:        var(--dialog-border-radius, var(--overlay-modal-border-radius, var(--p-border-radius-xl)));
+  --p-dialog-header-padding:       var(--dialog-header-padding, var(--overlay-modal-padding, 20px));
+  --p-dialog-header-gap:           var(--dialog-header-gap, var(--dimension-spacing-x8, 8px));
+  --p-dialog-content-padding:      var(--overlay-modal-padding, 20px);
+  --p-dialog-footer-padding-x:     var(--overlay-modal-padding, 20px);
+  --p-dialog-footer-padding-y:     var(--dimension-spacing-x12, 12px);
+  --p-dialog-footer-gap:           var(--dialog-footer-gap, var(--dimension-spacing-x8, 8px));
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — DataTable
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-datatable-th-padding-x:      var(--dimension-spacing-x14, 14px);
+  --p-datatable-th-padding-y:      var(--dimension-spacing-x10, 10px);
+  --p-datatable-td-padding-x:      var(--dimension-spacing-x14, 14px);
+  --p-datatable-td-padding-y:      var(--dimension-spacing-x10, 10px);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — SplitButton panel
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-splitbutton-panel-border-radius: var(--overlay-select-border-radius, var(--p-border-radius));
+  --p-splitbutton-item-padding-x:      var(--dimension-spacing-x16, 16px);
+  --p-splitbutton-item-padding-y:      var(--dimension-spacing-x8,   9px);
+  --p-splitbutton-item-gap:            var(--dimension-spacing-x10,  10px);
 }
 
 
