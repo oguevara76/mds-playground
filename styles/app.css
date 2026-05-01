@@ -1997,6 +1997,90 @@ html, body {
 }
 [data-theme="ctr--tol--dark"] .vv-hint { color: var(--p-surface-500); }
 
+/* ── Map search bar ── */
+.vv-msearch-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--p-surface-0);
+  border: 1px solid var(--p-surface-200);
+  border-radius: 6px;
+  padding: 3px 8px 3px 9px;
+  min-width: 200px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.vv-msearch-wrap:focus-within {
+  border-color: var(--p-primary-color);
+  box-shadow: 0 0 0 2px rgba(75,168,188,.15);
+}
+[data-theme="ctr--tol--dark"] .vv-msearch-wrap {
+  background: var(--p-surface-900);
+  border-color: var(--p-surface-700);
+}
+[data-theme="ctr--tol--dark"] .vv-msearch-wrap:focus-within {
+  border-color: var(--p-primary-color);
+  box-shadow: 0 0 0 2px rgba(75,168,188,.2);
+}
+.vv-msearch-icon {
+  font-size: 11px;
+  color: var(--p-surface-400);
+  flex-shrink: 0;
+}
+.vv-msearch-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 12px;
+  color: var(--p-surface-700);
+  flex: 1;
+  min-width: 0;
+  /* hide the native "×" clear button — we have our own */
+  -webkit-appearance: none;
+}
+.vv-msearch-input::-webkit-search-cancel-button { display: none; }
+[data-theme="ctr--tol--dark"] .vv-msearch-input { color: var(--p-surface-200); }
+.vv-msearch-input::placeholder { color: var(--p-surface-400); }
+.vv-msearch-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--p-surface-400);
+  font-size: 11px;
+  padding: 0 1px;
+  line-height: 1;
+  flex-shrink: 0;
+  border-radius: 3px;
+  transition: color .12s, background .12s;
+}
+.vv-msearch-clear:hover {
+  color: var(--p-surface-700);
+  background: var(--p-surface-100);
+}
+[data-theme="ctr--tol--dark"] .vv-msearch-clear:hover {
+  color: var(--p-surface-200);
+  background: var(--p-surface-700);
+}
+
+/* ── Search highlight in map ── */
+/* When search is active (and no click-selection overrides), dim non-matching rows */
+.vv-world[data-search]:not([data-sel]) .vv-row {
+  opacity: 0.13;
+  transition: opacity .15s;
+}
+.vv-world[data-search]:not([data-sel]) .vv-row[data-smatch] {
+  opacity: 1;
+  background: rgba(251,191,36,.12);
+  border-radius: 4px;
+}
+[data-theme="ctr--tol--dark"] .vv-world[data-search]:not([data-sel]) .vv-row[data-smatch] {
+  background: rgba(251,191,36,.09);
+}
+/* Glow on matched connection dots */
+.vv-world[data-search]:not([data-sel]) .vv-row[data-smatch] .vv-dot-l,
+.vv-world[data-search]:not([data-sel]) .vv-row[data-smatch] .vv-dot-r {
+  box-shadow: 0 0 0 3px rgba(251,191,36,.4);
+}
+
 /* ── Infinite canvas ── */
 .vv-canvas {
   position: relative;
@@ -2233,16 +2317,24 @@ html, body {
   overflow: visible;
 }
 
-/* ── Panel variant that sizes to content (no fixed width/height) ── */
+/* ── Panel variant: prim / sem (wider) ── */
 .vv-panel-fit {
-  /* Inherits .vv-panel base styles but overrides width */
   width: 290px;
+}
+
+/* ── Panel variant: individual component panels (narrower, 3-column grid) ── */
+.vv-panel-comp {
+  width: 215px;
+}
+/* Truncate long component variable names inside the narrow panels */
+.vv-panel-comp .vv-name {
+  max-width: 118px;
 }
 
 /* Smaller header for per-component panels */
 .vv-phdr-sm {
   font-size: 10.5px;
-  padding: 7px 14px 6px;
+  padding: 7px 12px 6px;
 }
 
 /* ── Selection: dim everything, brighten only the highlighted chain ── */

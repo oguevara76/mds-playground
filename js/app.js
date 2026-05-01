@@ -1058,10 +1058,18 @@
   const VV_ZOOM_MIN = 0.2, VV_ZOOM_MAX = 2.5, VV_ZOOM_STEP = 0.12;
 
   /* Panel position store (world coords, persist across re-renders) */
+  /* Default world-space positions for the three main columns.
+     Primitivos | ← 260 px gap → | Semánticos | ← 260 px gap → | Componentes grid
+     (gap is measured between right edge of one panel and left edge of the next) */
+  const VV_DEFAULT_POS = {
+    prim: { x: 40,  y: 40 },
+    sem:  { x: 590, y: 40 },   // 590-(40+290) = 260 px gap after prim
+    comp: { x: 1140, y: 40 },  // 1140-(590+290) = 260 px gap after sem
+  };
   const vvPosStore = {
-    prim: { x: 20,  y: 20 },
-    sem:  { x: 400, y: 20 },
-    comp: { x: 780, y: 20 },
+    prim: { ...VV_DEFAULT_POS.prim },
+    sem:  { ...VV_DEFAULT_POS.sem  },
+    comp: { ...VV_DEFAULT_POS.comp },
   };
 
   /* Per-component-panel positions — key: 'comp-button', 'comp-accordion', etc.
@@ -1069,25 +1077,61 @@
      so user-dragged positions survive theme switches and search refreshes. */
   const vvCompPosStore = new Map();
 
-  /* Lay out component panels in a 2-column masonry grid (shortest-column first). */
-  function computeCompGridPositions(compGroups, baseX, baseY) {
-    const COLS    = 2;
-    const COL_W   = 290;
-    const COL_GAP = 14;   // horizontal gap between the two columns
-    const ROW_GAP = 10;   // vertical gap between panels in the same column
-    const HDR_H   = 36;   // estimated panel header height
-    const ROW_H   = 32;   // estimated per-token row height
-    const PAD_B   = 8;    // bottom padding inside each panel body
+  /* Component panel layout constants */
+  const COMP_PANEL_W   = 215;
+  const COMP_PANEL_GAP = 60;   // horizontal gap between columns
+  const COMP_ROW_GAP   = 40;   // vertical gap between stacked panels (enforced by vvRestack)
+  const COMP_COLS      = 10;
 
-    const colH = [0, 0];  // cumulative height per column
+  /* Assigns each panel to a column (round-robin across 10 cols).
+     Only x and col are meaningful here; the real y values are set by vvRestack()
+     after the DOM is rendered and actual heights are measurable.             */
+  function computeCompGridPositions(compGroups, baseX, baseY) {
+    const colTokenCount = Array(COMP_COLS).fill(0); // use token count as proxy for height
 
     return compGroups.map(([, tokens]) => {
-      /* Place in the column with less accumulated height */
-      const col = colH[0] <= colH[1] ? 0 : 1;
-      const pos = { x: baseX + col * (COL_W + COL_GAP), y: baseY + colH[col] };
-      colH[col] += HDR_H + tokens.length * ROW_H + PAD_B + ROW_GAP;
-      return pos;
+      /* Place in the column with fewest tokens so far (balances heights) */
+      const col = colTokenCount.indexOf(Math.min(...colTokenCount));
+      colTokenCount[col] += tokens.length;
+      return {
+        x:   baseX + col * (COMP_PANEL_W + COMP_PANEL_GAP),
+        y:   baseY,   // placeholder — vvRestack() sets the real y
+        col,
+      };
     });
+  }
+
+  /* After the DOM is painted, measure each comp panel's real offsetHeight and
+     restack every column so the gap between panels is exactly COMP_ROW_GAP.  */
+  function vvRestack() {
+    /* Group panel elements by their assigned column */
+    const cols = new Map(); // col → [{ key, el }]
+
+    document.querySelectorAll('#vv-canvas .vv-panel-comp').forEach(el => {
+      const hdr = el.querySelector('[data-drag]');
+      if (!hdr) return;
+      const key    = hdr.dataset.drag;
+      const stored = vvCompPosStore.get(key);
+      if (!stored || stored.col === undefined) return;
+      if (!cols.has(stored.col)) cols.set(stored.col, []);
+      cols.get(stored.col).push({ key, el });
+    });
+
+    /* Restack each column top-to-bottom using real heights */
+    cols.forEach(panels => {
+      /* Keep panels in the order they were inserted (top → bottom) */
+      panels.sort((a, b) => (vvCompPosStore.get(a.key)?.y ?? 0) - (vvCompPosStore.get(b.key)?.y ?? 0));
+
+      let y = vvPosStore.comp.y;
+      panels.forEach(({ key, el }) => {
+        const stored = vvCompPosStore.get(key);
+        vvCompPosStore.set(key, { ...stored, y });
+        el.style.top = y + 'px';
+        y += el.offsetHeight + COMP_ROW_GAP;
+      });
+    });
+
+    requestAnimationFrame(vvDrawLines);
   }
 
   /* Active map interaction state */
@@ -1095,6 +1139,7 @@
   let vvConnData        = { semRefMap: new Map(), compRefMap: new Map(), primSet: new Set(), semSet: new Set() };
   let vvSelectedVar     = null;   // currently selected variable name (or null)
   let vvClickSuppressed = false;  // set true after a drag so the click event is ignored
+  let vvMapSearchQuery  = '';     // current map-search string (persists across re-renders)
 
   function renderTvMap() {
     const sections = buildSections();
@@ -1200,7 +1245,7 @@
       if (!vvCompPosStore.has(storeKey)) vvCompPosStore.set(storeKey, gridPos[i]);
       const pos  = vvCompPosStore.get(storeKey);
       const body = tokens.map(t => mkRow(t, 'comp', compRefMap.get(t.name) ?? null, null)).join('');
-      return `<div class="vv-panel vv-panel-fit" id="vv-comp-${safeId}" style="left:${pos.x}px;top:${pos.y}px">
+      return `<div class="vv-panel vv-panel-comp" id="vv-comp-${safeId}" style="left:${pos.x}px;top:${pos.y}px">
         <div class="vv-phdr vv-phdr-sm" data-drag="comp-${safeId}">
           ${grpLabel}<span class="vv-pc">${tokens.length}</span>
         </div>
@@ -1221,11 +1266,22 @@
           <button class="vv-zbtn" id="vv-zoom-in" title="Acercar">+</button>
         </div>
         <button class="vv-zbtn vv-reset" id="vv-zoom-reset" title="Restablecer vista">↺ Reset</button>
-        <span class="vv-hint">Scroll = zoom · Arrastra fondo/panel = mover · Clic variable = seleccionar</span>
+        <div class="vv-msearch-wrap" id="vv-msearch-wrap">
+          <i class="pi pi-search vv-msearch-icon"></i>
+          <input class="vv-msearch-input" id="vv-msearch"
+            type="search" placeholder="Buscar variable…" autocomplete="off"
+            value="${vvMapSearchQuery.replace(/"/g, '&quot;')}">
+          <button class="vv-msearch-clear" id="vv-msearch-clear"
+            title="Limpiar"${vvMapSearchQuery ? '' : ' hidden'}>✕</button>
+        </div>
+        <span class="vv-hint">Scroll = zoom · Arrastra panel = mover · Clic = seleccionar</span>
       </div>
       <div class="vv-canvas" id="vv-canvas">
         <div class="vv-world" id="vv-world" style="transform:translate(${vvPan.x}px,${vvPan.y}px) scale(${vvZoom});transform-origin:0 0;">
-          <svg id="vv-svg" style="position:absolute;top:0;left:0;pointer-events:none;z-index:1;overflow:visible;" width="1" height="1"></svg>
+          <!-- bg SVG: default/dimmed lines, sits BEHIND the panels -->
+          <svg id="vv-svg-bg" style="position:absolute;top:0;left:0;pointer-events:none;z-index:1;overflow:visible;" width="1" height="1"></svg>
+          <!-- fg SVG: highlighted lines (selection / search), sits IN FRONT of panels -->
+          <svg id="vv-svg-fg" style="position:absolute;top:0;left:0;pointer-events:none;z-index:50;overflow:visible;" width="1" height="1"></svg>
 
           <!-- Primitivos: only prims referenced by at least one semantic -->
           <div class="vv-panel vv-panel-fit" id="vv-prim" style="left:${pp.x}px;top:${pp.y}px">
@@ -1254,7 +1310,10 @@
     vvSelectedVar = null;
 
     initVvInteract();
-    requestAnimationFrame(() => requestAnimationFrame(vvDrawLines));
+    /* Two rAF ticks: first lets the browser paint, second measures real heights */
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      vvRestack();   // restack with actual offsetHeights → exact 40 px gaps
+    }));
   }
 
   /* ── Apply world transform ── */
@@ -1281,8 +1340,15 @@
       applyVvTransform(); requestAnimationFrame(vvDrawLines);
     });
     document.getElementById('vv-zoom-reset')?.addEventListener('click', () => {
+      /* Reset zoom + pan */
       vvZoom = 1; vvPan = { x: 40, y: 40 };
-      applyVvTransform(); requestAnimationFrame(vvDrawLines);
+      /* Reset all panel positions to the default grid layout */
+      vvPosStore.prim = { ...VV_DEFAULT_POS.prim };
+      vvPosStore.sem  = { ...VV_DEFAULT_POS.sem  };
+      vvPosStore.comp = { ...VV_DEFAULT_POS.comp };
+      vvCompPosStore.clear();
+      /* Re-render so comp panels are repositioned from scratch */
+      renderTvMap();
     });
 
     /* ── Scroll-wheel zoom centred on cursor ── */
@@ -1380,18 +1446,71 @@
         vvDeselect();
       }
     });
+
+    /* ── Map search: highlight rows whose var name matches the query ── */
+    const msInput = document.getElementById('vv-msearch');
+    const msClear = document.getElementById('vv-msearch-clear');
+    if (msInput) {
+      /* Re-apply persisted search state on every render */
+      if (vvMapSearchQuery) applyVvSearch(vvMapSearchQuery);
+
+      msInput.addEventListener('input', () => {
+        vvMapSearchQuery = msInput.value.trim();
+        msClear.hidden   = !vvMapSearchQuery;
+        applyVvSearch(vvMapSearchQuery);
+      });
+      msClear.addEventListener('click', () => {
+        msInput.value    = '';
+        vvMapSearchQuery = '';
+        msClear.hidden   = true;
+        applyVvSearch('');
+        msInput.focus();
+      });
+      /* Escape key clears the search */
+      msInput.addEventListener('keydown', e => {
+        if (e.key === 'Escape') msClear.click();
+      });
+    }
   }
 
-  /* ── Draw bezier connection lines in world-coordinate SVG ── */
-  /* Uses vvSelectedVar to dim/highlight when a variable is selected.        */
+  /* ── Apply map-search highlighting (query = '' clears it) ── */
+  function applyVvSearch(q) {
+    const world = document.getElementById('vv-world');
+    if (!world) return;
+    const lq = q.toLowerCase();
+    if (!lq) {
+      world.removeAttribute('data-search');
+      world.querySelectorAll('[data-smatch]').forEach(el => el.removeAttribute('data-smatch'));
+    } else {
+      world.setAttribute('data-search', '1');
+      world.querySelectorAll('[data-var]').forEach(row => {
+        row.toggleAttribute('data-smatch', row.dataset.var.toLowerCase().includes(lq));
+      });
+    }
+    requestAnimationFrame(vvDrawLines);
+  }
+
+  /* ── Draw bezier connection lines ──────────────────────────────────────────
+     Two SVG layers:
+       #vv-svg-bg  (z-index 1)  — default/dimmed lines, behind panels
+       #vv-svg-fg  (z-index 50) — highlighted lines (selection / search), in front
+     ─────────────────────────────────────────────────────────────────────── */
   function vvDrawLines() {
-    const svg    = document.getElementById('vv-svg');
+    const svgBg  = document.getElementById('vv-svg-bg');
+    const svgFg  = document.getElementById('vv-svg-fg');
     const canvas = document.getElementById('vv-canvas');
-    if (!svg || !canvas) return;
+    if (!svgBg || !svgFg || !canvas) return;
 
     const canvasR = canvas.getBoundingClientRect();
     const hlVars  = vvSelectedVar ? vvBuildHlSet(vvSelectedVar) : null;
     const hasSel  = !!hlVars;
+
+    /* Search mode: collect matched var names */
+    const world = document.getElementById('vv-world');
+    const hasSearch  = !hasSel && world?.hasAttribute('data-search');
+    const searchHits = hasSearch
+      ? new Set([...world.querySelectorAll('[data-var][data-smatch]')].map(el => el.dataset.var))
+      : null;
 
     function toWorld(cx, cy) {
       return {
@@ -1408,7 +1527,8 @@
     const rdMap = {};
     document.querySelectorAll('#vv-canvas .vv-dot-r[data-sdot]').forEach(d => { rdMap[d.dataset.sdot] = d; });
 
-    let paths = '';
+    let bgPaths = '', fgPaths = '';
+
     document.querySelectorAll('#vv-canvas .vv-dot-l[data-cref]').forEach(cd => {
       const sd = rdMap[cd.dataset.cref];
       if (!sd) return;
@@ -1424,29 +1544,51 @@
       const dstVar = cd.closest('[data-var]')?.dataset.var ?? null;
       const isHl   = hasSel && hlVars.has(srcVar) && dstVar && hlVars.has(dstVar);
 
-      const p1  = dotWorld(sd);
-      const p2  = dotWorld(cd);
-      const dx  = Math.abs(p2.x - p1.x) * 0.45;
-      const d   = `M${p1.x},${p1.y} C${p1.x+dx},${p1.y} ${p2.x-dx},${p2.y} ${p2.x},${p2.y}`;
+      const p1 = dotWorld(sd);
+      const p2 = dotWorld(cd);
+      const dx = Math.abs(p2.x - p1.x) * 0.45;
+      const d  = `M${p1.x},${p1.y} C${p1.x+dx},${p1.y} ${p2.x-dx},${p2.y} ${p2.x},${p2.y}`;
 
-      let col, width;
+      let col, width, isFg = false;
+
       if (hasSel) {
+        /* Click-selection mode */
         if (isHl) {
-          /* Highlighted: teal for prim→sem, blue for sem→comp */
           col   = p1.x < p2.x ? 'rgba(20,184,166,.95)' : 'rgba(59,130,246,.95)';
           width = 2.5;
+          isFg  = true;   // highlighted → foreground (above panels)
         } else {
           col   = 'rgba(150,150,150,.08)';
           width = 1;
+          isFg  = false;  // dimmed → background
+        }
+      } else if (searchHits) {
+        /* Search mode */
+        const srcHit = searchHits.has(srcVar);
+        const dstHit = dstVar && searchHits.has(dstVar);
+        if (srcHit || dstHit) {
+          col   = 'rgba(251,191,36,.9)';
+          width = 2;
+          isFg  = true;   // matched → foreground
+        } else {
+          col   = 'rgba(150,150,150,.07)';
+          width = 1;
+          isFg  = false;  // unmatched → background
         }
       } else {
+        /* Default state: all lines go behind panels */
         col   = p1.x < p2.x ? 'rgba(20,184,166,.35)' : 'rgba(59,130,246,.35)';
         width = 1.4;
+        isFg  = false;
       }
-      paths += `<path d="${d}" fill="none" stroke="${col}" stroke-width="${width}" stroke-linecap="round"/>`;
+
+      const path = `<path d="${d}" fill="none" stroke="${col}" stroke-width="${width}" stroke-linecap="round"/>`;
+      if (isFg) fgPaths += path;
+      else      bgPaths += path;
     });
 
-    svg.innerHTML = `<g>${paths}</g>`;
+    svgBg.innerHTML = `<g>${bgPaths}</g>`;
+    svgFg.innerHTML = `<g>${fgPaths}</g>`;
   }
 
   /* ── Build the set of variables in a selection chain ── */
