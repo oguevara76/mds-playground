@@ -20,7 +20,10 @@
   document.querySelectorAll('.preview-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.preview-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => {
+        p.classList.remove('active');
+        p.hidden = false; /* clear any hidden attr left by showTokensView */
+      });
       tab.classList.add('active');
       const panel = document.getElementById('tab-' + tab.dataset.tab);
       if (panel) panel.classList.add('active');
@@ -179,6 +182,7 @@
         const slot = detectSlot(css);
         loadedSlots[slot] = { fileName: file.name, css };
         injectSlot(slot, css);
+        invalidateMdsCache(); /* uploaded file may override core vars — force re-parse */
         renderFileList();
         validateSlots();
         syncToggleState();
@@ -589,7 +593,9 @@
     tvIsActive = true;
     tokensView.hidden = false;
     previewTabsEl.hidden = true;
-    document.querySelectorAll('.tab-panel').forEach(p => { p.hidden = true; });
+    /* Use class removal — never touch .hidden on individual panels
+       so the CSS-based .active system keeps working when we return */
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     navTokensLink.classList.add('active');
     renderTvList(tvSearch.value);
   }
@@ -598,17 +604,22 @@
     tvIsActive = false;
     tokensView.hidden = true;
     previewTabsEl.hidden = false;
+    /* Restore active class on the currently selected tab's panel */
     const activeTab = document.querySelector('.preview-tab.active');
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.hidden = false;
+      p.classList.remove('active');
+    });
     if (activeTab) {
       const panel = document.getElementById('tab-' + activeTab.dataset.tab);
-      if (panel) panel.hidden = false;
+      if (panel) panel.classList.add('active');
     }
     navTokensLink.classList.remove('active');
   }
 
   navTokensLink.addEventListener('click', e => {
     e.preventDefault();
-    if (!tokensView.hidden) { hideTokensView(); return; }
+    if (tvIsActive) return; // ya estamos en la vista, no hacer nada
     showTokensView();
   });
 
@@ -642,17 +653,31 @@
 
   /* ── Palette label from a primitive variable name ── */
   function primPalette(name) {
-    const m = name.match(/^--p-([\w]+)/);
+    /* Dimension tokens (spacing/radius) get their own group */
+    if (/^--dimension-spacing/.test(name)) return 'Spacing';
+    if (/^--dimension-radius/.test(name))  return 'Radius';
+    /* Strip optional --p- prefix, then read first word segment */
+    const n = name.startsWith('--p-') ? name.slice(4) : name.slice(2);
+    const m = n.match(/^([\w]+)/);
     if (!m) return 'Otros';
+    const key = m[1].toLowerCase();
     const LABELS = {
-      primary:'Primary', surface:'Surface', gray:'Gray', grey:'Grey',
-      slate:'Slate', zinc:'Zinc', neutral:'Neutral', stone:'Stone',
+      primary:'Primary', surface:'Surface',
+      gray:'Gray', grey:'Grey', slate:'Slate', zinc:'Zinc',
+      neutral:'Neutral', stone:'Stone',
       red:'Red', orange:'Orange', amber:'Amber', yellow:'Yellow',
       lime:'Lime', green:'Green', emerald:'Emerald', teal:'Teal',
       cyan:'Cyan', sky:'Sky', blue:'Blue', indigo:'Indigo',
       violet:'Violet', purple:'Purple', fuchsia:'Fuchsia', pink:'Pink', rose:'Rose',
     };
-    return LABELS[m[1]] || (m[1][0].toUpperCase() + m[1].slice(1));
+    return LABELS[key] || (key[0].toUpperCase() + key.slice(1));
+  }
+
+  /* ── Extract the first var() reference from a CSS value string ── */
+  function extractVarRef(value) {
+    if (!value) return null;
+    const m = (value + '').match(/var\((--[\w-]+)/);
+    return m ? m[1] : null;
   }
 
   /* ── Component label from a component variable name ── */
@@ -671,14 +696,22 @@
   }
 
   /* ── Group an array of {name,value} into sub-groups by palette ── */
+  /* Color palettes come first; non-color groups (Spacing, Radius) are always last. */
+  const PALETTE_TAIL = new Set(['Spacing', 'Radius']);
   function groupByPalette(vars) {
     const map = new Map();
     vars.forEach(({ name, value }) => {
       const pal = primPalette(name);
       if (!map.has(pal)) map.set(pal, []);
-      map.get(pal).push({ name, label: name.replace(/^--/, ''), type: inferTokenType(value) });
+      map.get(pal).push({ name, label: name.replace(/^--/, ''), type: inferTokenType(value), value });
     });
-    return Array.from(map.entries()).map(([label, tokens]) => ({ label, tokens }));
+    return Array.from(map.entries())
+      .sort(([a], [b]) => {
+        const aT = PALETTE_TAIL.has(a) ? 1 : 0;
+        const bT = PALETTE_TAIL.has(b) ? 1 : 0;
+        return aT - bT; // color groups keep insertion order; tail groups sink to end
+      })
+      .map(([label, tokens]) => ({ label, tokens }));
   }
 
   /* ── Group an array of {name,value} into sub-groups by component ── */
@@ -687,34 +720,74 @@
     vars.forEach(({ name, value }) => {
       const comp = compLabel(name);
       if (!map.has(comp)) map.set(comp, []);
-      map.get(comp).push({ name, label: name.replace(/^--/, ''), type: inferTokenType(value) });
+      map.get(comp).push({ name, label: name.replace(/^--/, ''), type: inferTokenType(value), value });
     });
     return Array.from(map.entries()).map(([label, tokens]) => ({ label, tokens }));
   }
 
-  /* ── Read CSS custom properties from all document stylesheets, bucketed by selector context ── */
-  function readDocumentVarsByContext() {
-    const root = [], light = [], dark = [];
-    const seen = { root: new Set(), light: new Set(), dark: new Set() };
+  /* ── MDS core variables — sourced from the pre-parsed mds-vars-data.js catalogue.
+     MDS_VARS is a global injected by that script (loaded before app.js in index.html).
+     We clone it once on first call and cache the result. ── */
+  let mdsVarsCache = null;
+
+  function readMdsCoreVars() {
+    if (mdsVarsCache) return mdsVarsCache;
+
+    /* Primary: use the embedded catalogue (always synchronous, works on file://) */
+    if (typeof MDS_VARS !== 'undefined' &&
+        (MDS_VARS.prim.length || MDS_VARS.light.length || MDS_VARS.dark.length || MDS_VARS.comp.length)) {
+      mdsVarsCache = {
+        prim:  MDS_VARS.prim.slice(),
+        light: MDS_VARS.light.slice(),
+        dark:  MDS_VARS.dark.slice(),
+        comp:  MDS_VARS.comp.slice(),
+      };
+      return mdsVarsCache;
+    }
+
+    /* Fallback: try sheet.cssRules (same-origin HTTP dev server) */
+    const buckets = { prim: [], light: [], dark: [], comp: [] };
+    const seen    = { prim: new Set(), light: new Set(), dark: new Set(), comp: new Set() };
     for (const sheet of document.styleSheets) {
       try {
+        const href = (sheet.href || '').toLowerCase();
+        let bKey = null;
+        if      (href.includes('mds-primitives'))     bKey = 'prim';
+        else if (href.includes('mds-semantic-light')) bKey = 'light';
+        else if (href.includes('mds-semantic-dark'))  bKey = 'dark';
+        else if (href.includes('mds-components'))     bKey = 'comp';
+        else continue;
         for (const rule of sheet.cssRules) {
-          const text = rule.cssText || '';
-          let bucket, seenSet;
-          if (text.includes('ctr--tol--light'))    { bucket = light; seenSet = seen.light; }
-          else if (text.includes('ctr--tol--dark')) { bucket = dark;  seenSet = seen.dark;  }
-          else                                       { bucket = root;  seenSet = seen.root;  }
-          const re = /(--[\w-]+)\s*:\s*([^;}\n]+)/g;
+          const txt = rule.cssText || '';
+          const re  = /(--[\w-]+)\s*:\s*([^;}\n]+)/g;
           let m;
-          while ((m = re.exec(text)) !== null) {
+          while ((m = re.exec(txt)) !== null) {
             const name = m[1].trim(), value = m[2].trim();
-            if (!seenSet.has(name)) { seenSet.add(name); bucket.push({ name, value }); }
+            if (!seen[bKey].has(name)) { seen[bKey].add(name); buckets[bKey].push({ name, value }); }
           }
         }
-      } catch(e) { /* skip CORS-protected sheets */ }
+      } catch (e) {}
     }
-    return { root, light, dark };
+    const total = buckets.prim.length + buckets.light.length + buckets.dark.length + buckets.comp.length;
+    if (total > 0) { mdsVarsCache = buckets; return buckets; }
+
+    return { prim: [], light: [], dark: [], comp: [] };
   }
+
+  /* Parse all --var: value pairs out of a raw CSS string (used for uploaded files) */
+  function parseCssVarsText(text) {
+    const re = /(--[\w-]+)\s*:\s*([^;}\n]+)/g;
+    const seen = new Set(), vars = [];
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const name = m[1].trim(), value = m[2].trim();
+      if (!seen.has(name)) { seen.add(name); vars.push({ name, value }); }
+    }
+    return vars;
+  }
+
+  /* Invalidate cache when user uploads custom CSS so next read re-evaluates */
+  function invalidateMdsCache() { mdsVarsCache = null; }
 
   /* ── Batch-resolve token colors in a specific theme context ── */
   function batchResolve(tokens, theme) {
@@ -743,31 +816,54 @@
     return hasAnyFile ? buildSectionsFromSlots() : buildSectionsFromDocument();
   }
 
+  /* Merge an uploaded CSS string's variable overrides into a base var array.
+     All variables from base are preserved; uploaded values replace matching ones;
+     any new names in the upload are appended at the end. */
+  function mergeUploadedVars(base, uploadedCss) {
+    const overrides = new Map(parseCssVarsText(uploadedCss).map(v => [v.name, v.value]));
+    const merged    = base.map(v => overrides.has(v.name) ? { name: v.name, value: overrides.get(v.name) } : v);
+    const baseNames = new Set(merged.map(v => v.name));
+    parseCssVarsText(uploadedCss).forEach(v => { if (!baseNames.has(v.name)) merged.push(v); });
+    return merged;
+  }
+
   function buildSectionsFromSlots() {
+    /* Always start from the full MDS_VARS catalogue so every variable is visible.
+       Uploaded files only override the *values* of matching variables. */
+    const base     = readMdsCoreVars();
     const sections = [];
 
     /* ── Primitivos ── */
-    if (loadedSlots.primitives) {
-      const vars      = parseCssVars(loadedSlots.primitives.css);
+    {
+      const vars      = loadedSlots.primitives
+        ? mergeUploadedVars(base.prim, loadedSlots.primitives.css)
+        : base.prim.slice();
       const subGroups = groupByPalette(vars);
       if (subGroups.length) sections.push({ id:'primitivos', label:'Primitivos', cls:'tva-prim', subGroups });
     }
 
-    /* ── Semánticos (light + dark as sub-groups) ── */
-    const semSubs = [];
-    ['semantic-light', 'semantic-dark'].forEach(slot => {
-      if (!loadedSlots[slot]) return;
-      const vars  = parseCssVars(loadedSlots[slot].css);
-      const mode  = slot === 'semantic-light' ? 'light' : 'dark';
-      const theme = slot === 'semantic-light' ? 'ctr--tol--light' : 'ctr--tol--dark';
-      const tokens = vars.map(({ name, value }) => ({ name, label: name.replace(/^--/, ''), type: inferTokenType(value) }));
-      semSubs.push({ label: mode === 'light' ? 'Light' : 'Dark', mode, theme, tokens });
-    });
-    if (semSubs.length) sections.push({ id:'semanticos', label:'Semánticos', cls:'tva-sem', subGroups: semSubs });
+    /* ── Semánticos — only the active mode ── */
+    const semSubs   = [];
+    const activeSlot  = isDark ? 'semantic-dark'  : 'semantic-light';
+    const activeMode  = isDark ? 'dark'            : 'light';
+    const activeTheme = isDark ? 'ctr--tol--dark'  : 'ctr--tol--light';
+    {
+      const baseVars = (isDark ? base.dark : base.light).slice();
+      const vars     = loadedSlots[activeSlot]
+        ? mergeUploadedVars(baseVars, loadedSlots[activeSlot].css)
+        : baseVars;
+      if (vars.length) {
+        const tokens = vars.map(({ name, value }) => ({ name, label: name.replace(/^--/, ''), type: inferTokenType(value), value }));
+        semSubs.push({ label: activeMode === 'light' ? 'Light' : 'Dark', mode: activeMode, theme: activeTheme, tokens });
+      }
+    }
+    if (semSubs.length) sections.push({ id:'semanticos', label: isDark ? 'Semánticos - Dark' : 'Semánticos - Light', cls:'tva-sem', subGroups: semSubs });
 
     /* ── Componentes ── */
-    if (loadedSlots.components) {
-      const vars      = parseCssVars(loadedSlots.components.css);
+    {
+      const vars      = loadedSlots.components
+        ? mergeUploadedVars(base.comp, loadedSlots.components.css)
+        : base.comp.slice();
       const subGroups = groupByComponent(vars);
       if (subGroups.length) sections.push({ id:'componentes', label:'Componentes', cls:'tva-comp', subGroups });
     }
@@ -776,40 +872,32 @@
   }
 
   function buildSectionsFromDocument() {
-    const { root, light, dark } = readDocumentVarsByContext();
-
-    /* Split root vars: raw-color-value → primitive, comp pattern → component, rest → semantic light */
-    const primVars  = root.filter(v => !isCompVar(v.name) && isRawColor(v.value));
-    const compRootV = root.filter(v => isCompVar(v.name));
-    const semRoot   = root.filter(v => !isCompVar(v.name) && !isRawColor(v.value));
+    const { prim, light, dark, comp } = readMdsCoreVars();
+    const total = prim.length + light.length + dark.length + comp.length;
+    if (!total) return buildFallbackSections();
 
     const sections = [];
 
-    /* Primitivos */
-    const primSubs = groupByPalette(primVars);
+    /* Primitivos — grouped by palette */
+    const primSubs = groupByPalette(prim);
     if (primSubs.length) sections.push({ id:'primitivos', label:'Primitivos', cls:'tva-prim', subGroups: primSubs });
 
-    /* Semánticos */
+    /* Semánticos — only the active mode */
     const semSubs = [];
-    const lightVars = [
-      ...semRoot.map(({ name, value }) => ({ name, label: name.replace(/^--/, ''), type: inferTokenType(value) })),
-      ...light.filter(v => !isCompVar(v.name)).map(({ name, value }) => ({ name, label: name.replace(/^--/, ''), type: inferTokenType(value) })),
-    ];
-    if (lightVars.length) semSubs.push({ label:'Light', mode:'light', theme:'ctr--tol--light', tokens: lightVars });
-    const darkVars = dark.filter(v => !isCompVar(v.name)).map(({ name, value }) => ({ name, label: name.replace(/^--/, ''), type: inferTokenType(value) }));
-    if (darkVars.length) semSubs.push({ label:'Dark', mode:'dark', theme:'ctr--tol--dark', tokens: darkVars });
-    if (semSubs.length) sections.push({ id:'semanticos', label:'Semánticos', cls:'tva-sem', subGroups: semSubs });
+    const activeSemData  = isDark ? dark  : light;
+    const activeSemMode  = isDark ? 'dark'           : 'light';
+    const activeSemTheme = isDark ? 'ctr--tol--dark' : 'ctr--tol--light';
+    if (activeSemData.length) {
+      const tokens = activeSemData.map(({ name, value }) => ({ name, label: name.replace(/^--/, ''), type: inferTokenType(value), value }));
+      semSubs.push({ label: activeSemMode === 'light' ? 'Light' : 'Dark', mode: activeSemMode, theme: activeSemTheme, tokens });
+    }
+    if (semSubs.length) sections.push({ id:'semanticos', label: isDark ? 'Semánticos - Dark' : 'Semánticos - Light', cls:'tva-sem', subGroups: semSubs });
 
-    /* Componentes */
-    const compAll = [
-      ...compRootV,
-      ...light.filter(v => isCompVar(v.name)),
-      ...dark.filter(v => isCompVar(v.name)),
-    ];
-    const compSubs = groupByComponent(compAll);
+    /* Componentes — grouped by component name */
+    const compSubs = groupByComponent(comp);
     if (compSubs.length) sections.push({ id:'componentes', label:'Componentes', cls:'tva-comp', subGroups: compSubs });
 
-    return sections.length ? sections : buildFallbackSections();
+    return sections;
   }
 
   function buildFallbackSections() {
@@ -832,21 +920,22 @@
 
   function renderTokenRow(t, sec, hl, resolved) {
     let sw = '', val = '';
+    /* Value column always shows the raw CSS reference (var(--x) or literal) */
+    val = t.value || '—';
     if (t.type === 'color') {
+      /* Swatch: use batch-resolved hex for accurate theme color, else var(--name) */
       const r   = resolved ? resolved[t.name] : null;
       const rgb = r ? r.rgb : resolveColor(t.name);
       const hex = r ? r.hex : rgbToHex(rgb);
       const dk  = r ? r.dk  : isDarkColor(rgb);
-      /* Use inline hex for resolved (theme-accurate), live var() for current-context tokens */
       const bg  = (r && hex) ? '#' + hex : `var(${t.name})`;
-      sw  = `<span class="tva-sw${dk ? ' dk' : ''}" style="background:${bg}"></span>`;
-      val = hex ? '#' + hex : (getCSSVar(t.name) || '—');
+      sw = `<span class="tva-sw${dk ? ' dk' : ''}" style="background:${bg}"></span>`;
     } else {
-      const r = resolved ? resolved[t.name] : null;
-      let v = r ? r.text : (getCSSVar(t.name) || '—');
-      if (!r && t.name === '--p-font-family') v = v.split(',')[0].replace(/['"]/g, '').trim();
-      sw  = `<span class="tva-sw tva-sw-text">Aa</span>`;
-      val = v;
+      /* Dimension / spacing / radius tokens get a ruler mark; typography keeps "Aa" */
+      const isDim = /dimension|spacing|radius/i.test(t.name);
+      sw = isDim
+        ? `<span class="tva-sw tva-sw-dim"></span>`
+        : `<span class="tva-sw tva-sw-text">Aa</span>`;
     }
 
     let meta = '';
@@ -898,13 +987,14 @@
         const resolved = sg.theme ? batchResolve(sg.tokens, sg.theme) : null;
         const rowsHtml = sg.tokens.map(t => renderTokenRow(t, sec, hl, resolved)).join('');
 
+        /* Semantic sub-groups (sg.mode set) skip the inner band — the mode
+           label is already in the section title ("Semánticos - Light / Dark"). */
         const mCls  = sg.mode ? ` tva-sg-${sg.mode}` : '';
-        const mIcon = sg.mode === 'light' ? '<i class="pi pi-sun"></i>'
-                    : sg.mode === 'dark'  ? '<i class="pi pi-moon"></i>' : '';
+        const hdrHtml = sg.mode ? '' :
+          `<div class="tva-sg-hdr">${sg.label}<span class="tva-sg-count">${sg.tokens.length}</span></div>`;
 
         return `<div class="tva-subgroup${mCls}">
-          <div class="tva-sg-hdr">${mIcon}${sg.label}<span class="tva-sg-count">${sg.tokens.length}</span></div>
-          ${rowsHtml}
+          ${hdrHtml}${rowsHtml}
         </div>`;
       }).join('');
 
@@ -958,157 +1048,464 @@
     renderTvMap();
   });
 
-  /* ── Variable Visualizer map renderer ── */
+  /* ════════════════════════════════════════════════════════════
+     VARIABLE VISUALIZER MAP
+     ════════════════════════════════════════════════════════════ */
 
-  /* Panel position store — persists drag positions between re-renders */
+  /* Zoom + pan state (persists across re-renders) */
+  let vvZoom = 1;
+  let vvPan  = { x: 40, y: 40 };
+  const VV_ZOOM_MIN = 0.2, VV_ZOOM_MAX = 2.5, VV_ZOOM_STEP = 0.12;
+
+  /* Panel position store (world coords, persist across re-renders) */
   const vvPosStore = {
-    left:  { x: 40,  y: 40 },
-    right: { x: 420, y: 40 },
+    prim: { x: 20,  y: 20 },
+    sem:  { x: 400, y: 20 },
+    comp: { x: 780, y: 20 },
   };
 
+  /* Per-component-panel positions — key: 'comp-button', 'comp-accordion', etc.
+     Populated with a grid layout on first render; preserved across re-renders
+     so user-dragged positions survive theme switches and search refreshes. */
+  const vvCompPosStore = new Map();
+
+  /* Lay out component panels in a 2-column masonry grid (shortest-column first). */
+  function computeCompGridPositions(compGroups, baseX, baseY) {
+    const COLS    = 2;
+    const COL_W   = 290;
+    const COL_GAP = 14;   // horizontal gap between the two columns
+    const ROW_GAP = 10;   // vertical gap between panels in the same column
+    const HDR_H   = 36;   // estimated panel header height
+    const ROW_H   = 32;   // estimated per-token row height
+    const PAD_B   = 8;    // bottom padding inside each panel body
+
+    const colH = [0, 0];  // cumulative height per column
+
+    return compGroups.map(([, tokens]) => {
+      /* Place in the column with less accumulated height */
+      const col = colH[0] <= colH[1] ? 0 : 1;
+      const pos = { x: baseX + col * (COL_W + COL_GAP), y: baseY + colH[col] };
+      colH[col] += HDR_H + tokens.length * ROW_H + PAD_B + ROW_GAP;
+      return pos;
+    });
+  }
+
+  /* Active map interaction state */
+  let vvInteraction     = null;   // { type:'drag'|'pan', ... }
+  let vvConnData        = { semRefMap: new Map(), compRefMap: new Map(), primSet: new Set(), semSet: new Set() };
+  let vvSelectedVar     = null;   // currently selected variable name (or null)
+  let vvClickSuppressed = false;  // set true after a drag so the click event is ignored
+
   function renderTvMap() {
-    const theme = document.documentElement.getAttribute('data-theme') || '';
-    const mode  = theme.includes('dark') ? 'Dark' : 'Light';
+    const sections = buildSections();
+    const primSec  = sections.find(s => s.id === 'primitivos');
+    const semSec   = sections.find(s => s.id === 'semanticos');
+    const compSec  = sections.find(s => s.id === 'componentes');
 
-    /* ── Left panel: semantic tokens ── */
-    let lastGroup = null;
-    const leftRows = VV_SEM.map(t => {
-      let sep = '';
-      if (t.group !== lastGroup) {
-        sep = `<div class="vv-gsep">${t.group}</div>`;
-        lastGroup = t.group;
+    /* ── Flatten all vars ── */
+    const allPrimVars = primSec ? primSec.subGroups.flatMap(sg => sg.tokens) : [];
+    const allSemVars  = semSec  ? semSec.subGroups.flatMap(sg => sg.tokens)  : [];
+    const allCompVars = compSec ? compSec.subGroups.flatMap(sg => sg.tokens) : [];
+    const semTheme    = semSec?.subGroups[0]?.theme ?? null;
+
+    const primSet = new Set(allPrimVars.map(t => t.name));
+    const semSet  = new Set(allSemVars.map(t => t.name));
+
+    /* ── Build connection maps ── */
+    /* sem → prim: first var() ref that points to a known primitive */
+    const semRefMap  = new Map(); // semName → primName
+    allSemVars.forEach(t => {
+      const ref = extractVarRef(t.value);
+      if (ref && primSet.has(ref)) semRefMap.set(t.name, ref);
+    });
+    /* comp → sem or prim */
+    const compRefMap = new Map(); // compVarName → refName
+    allCompVars.forEach(t => {
+      const ref = extractVarRef(t.value);
+      if (ref && (semSet.has(ref) || primSet.has(ref))) compRefMap.set(t.name, ref);
+    });
+
+    /* ── Persist connection data for selection logic ── */
+    vvConnData = { semRefMap, compRefMap, primSet, semSet };
+
+    /* ── Filter to connected vars only ── */
+    const connPrimNames = new Set(semRefMap.values());
+    const connSemNames  = new Set([
+      ...semRefMap.keys(),
+      ...[...compRefMap.values()].filter(r => semSet.has(r)),
+    ]);
+    const filteredPrims = allPrimVars.filter(t => connPrimNames.has(t.name));
+    const filteredSems  = allSemVars.filter(t => connSemNames.has(t.name));
+    const filteredComps = allCompVars.filter(t => compRefMap.has(t.name));
+
+    /* ── Color resolution for semantics ── */
+    const semResolved = semTheme ? batchResolve(filteredSems, semTheme) : null;
+
+    /* ── Group connected comp vars by component label ── */
+    const compGroupMap = new Map();
+    filteredComps.forEach(t => {
+      const grp = compLabel(t.name);
+      if (!compGroupMap.has(grp)) compGroupMap.set(grp, []);
+      compGroupMap.get(grp).push(t);
+    });
+    const compGroups = [...compGroupMap.entries()]; // [[label, tokens[]], ...]
+
+    /* ── Swatch helper (same logic as list view) ── */
+    function swHtml(name, type, resolvedMap) {
+      if (type === 'color') {
+        const r   = resolvedMap ? resolvedMap[name] : null;
+        const rgb = r ? null : resolveColor(name);
+        const hex = r ? r.hex : rgbToHex(rgb || '');
+        const dk  = r ? r.dk  : isDarkColor(rgb || '');
+        const bg  = hex ? '#' + hex : `var(${name})`;
+        return `<span class="vv-sw${dk ? ' dk' : ''}" style="background:${bg}"></span>`;
       }
-      let sw = '', val = '';
-      if (t.type === 'color') {
-        const rgb = resolveColor(t.name);
-        const hex = rgbToHex(rgb);
-        const dk  = isDarkColor(rgb);
-        sw  = `<span class="vv-sw${dk ? ' dk' : ''}" style="background:var(${t.name})"></span>`;
-        val = hex ? '#' + hex : '—';
-      } else {
-        let v = getCSSVar(t.name) || '—';
-        if (t.name === '--p-font-family') v = v.split(',')[0].replace(/['"]/g, '').trim();
-        sw  = `<span class="vv-sw vv-sw-text">Aa</span>`;
-        val = v;
-      }
-      return `${sep}<div class="vv-row">
-        ${sw}
-        <div class="vv-info"><span class="vv-name">${t.label}</span><span class="vv-val">${val}</span></div>
-        <span class="vv-dot vv-dot-r" data-sdot="${t.name}"></span>
+      const isDim = /dimension|spacing|radius/i.test(name);
+      return isDim
+        ? `<span class="vv-sw vv-sw-dim"></span>`
+        : `<span class="vv-sw vv-sw-text">Aa</span>`;
+    }
+
+    /* ── Row builder: data-var + data-vtype for selection ── */
+    function mkRow(t, vtype, leftRef, resolvedMap) {
+      const sw = swHtml(t.name, t.type, resolvedMap);
+      const ld = leftRef
+        ? `<span class="vv-dot vv-dot-l" data-cref="${leftRef}"></span>`
+        : `<span class="vv-dot-sp"></span>`;
+      const rd = vtype !== 'comp'
+        ? `<span class="vv-dot vv-dot-r" data-sdot="${t.name}"></span>`
+        : '';
+      return `<div class="vv-row" data-var="${t.name}" data-vtype="${vtype}">
+        ${ld}${sw}<span class="vv-name">${t.label.replace(/^p-/, '')}</span>${rd}
       </div>`;
-    }).join('');
+    }
 
-    /* ── Right panel: component usages ── */
-    const rightRows = VV_COMP.map(c => {
-      const semT = VV_SEM.find(s => s.name === c.semRef);
-      let sw = '';
-      if (semT && semT.type === 'color') {
-        const rgb = resolveColor(c.semRef);
-        const dk  = isDarkColor(rgb);
-        sw = `<span class="vv-sw${dk ? ' dk' : ''}" style="background:var(${c.semRef})"></span>`;
-      } else {
-        sw = `<span class="vv-sw vv-sw-text">Aa</span>`;
-      }
-      return `<div class="vv-row">
-        <span class="vv-dot vv-dot-l" data-cdot="${c.id}" data-cref="${c.semRef}"></span>
-        ${sw}
-        <div class="vv-info">
-          <span class="vv-name">${c.label}</span>
-          <span class="vv-val">${c.semRef.replace('--', '')}</span>
+    /* ── Primitivos panel body (only connected prims) ── */
+    const primBody = filteredPrims.length
+      ? filteredPrims.map(t => mkRow(t, 'prim', null, null)).join('')
+      : '<p class="vv-empty">Sin conexiones</p>';
+
+    /* ── Semánticos panel body (only connected sems) ── */
+    const semBody = filteredSems.length
+      ? filteredSems.map(t => mkRow(t, 'sem', semRefMap.get(t.name) ?? null, semResolved)).join('')
+      : '<p class="vv-empty">Sin conexiones</p>';
+
+    /* ── Component panels: one box per component, individually positioned ── */
+    /* Compute grid layout for panels not yet positioned by the user */
+    const gridPos = computeCompGridPositions(compGroups, vvPosStore.comp.x, vvPosStore.comp.y);
+    const compPanelsHtml = compGroups.map(([grpLabel, tokens], i) => {
+      const safeId   = grpLabel.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      const storeKey = 'comp-' + safeId;
+      /* First render for this panel → assign grid position */
+      if (!vvCompPosStore.has(storeKey)) vvCompPosStore.set(storeKey, gridPos[i]);
+      const pos  = vvCompPosStore.get(storeKey);
+      const body = tokens.map(t => mkRow(t, 'comp', compRefMap.get(t.name) ?? null, null)).join('');
+      return `<div class="vv-panel vv-panel-fit" id="vv-comp-${safeId}" style="left:${pos.x}px;top:${pos.y}px">
+        <div class="vv-phdr vv-phdr-sm" data-drag="comp-${safeId}">
+          ${grpLabel}<span class="vv-pc">${tokens.length}</span>
         </div>
+        <div class="vv-pbody-fit">${body}</div>
       </div>`;
     }).join('');
 
-    const lp = vvPosStore.left;
-    const rp = vvPosStore.right;
+    /* ── Layout positions ── */
+    const pp = vvPosStore.prim;
+    const sp = vvPosStore.sem;
 
+    /* ── Render ── */
     tvMapArea.innerHTML = `
-      <div class="vv-canvas" id="vv-canvas">
-        <svg class="vv-svg" id="vv-svg" overflow="visible"></svg>
-        <div class="vv-panel" id="vv-left" style="left:${lp.x}px;top:${lp.y}px">
-          <div class="vv-phdr" data-drag="left">
-            <i class="pi pi-sliders-h"></i> Semánticos <small>${mode}</small>
-          </div>
-          ${leftRows}
+      <div class="vv-toolbar" id="vv-toolbar">
+        <div class="vv-zoom-group">
+          <button class="vv-zbtn" id="vv-zoom-out" title="Alejar">−</button>
+          <span class="vv-zlabel" id="vv-zlabel">${Math.round(vvZoom * 100)}%</span>
+          <button class="vv-zbtn" id="vv-zoom-in" title="Acercar">+</button>
         </div>
-        <div class="vv-panel" id="vv-right" style="left:${rp.x}px;top:${rp.y}px">
-          <div class="vv-phdr" data-drag="right">
-            <i class="pi pi-th-large"></i> Componentes
+        <button class="vv-zbtn vv-reset" id="vv-zoom-reset" title="Restablecer vista">↺ Reset</button>
+        <span class="vv-hint">Scroll = zoom · Arrastra fondo/panel = mover · Clic variable = seleccionar</span>
+      </div>
+      <div class="vv-canvas" id="vv-canvas">
+        <div class="vv-world" id="vv-world" style="transform:translate(${vvPan.x}px,${vvPan.y}px) scale(${vvZoom});transform-origin:0 0;">
+          <svg id="vv-svg" style="position:absolute;top:0;left:0;pointer-events:none;z-index:1;overflow:visible;" width="1" height="1"></svg>
+
+          <!-- Primitivos: only prims referenced by at least one semantic -->
+          <div class="vv-panel vv-panel-fit" id="vv-prim" style="left:${pp.x}px;top:${pp.y}px">
+            <div class="vv-phdr" data-drag="prim">
+              <i class="pi pi-box"></i> Primitivos
+              <span class="vv-pc">${filteredPrims.length}</span>
+            </div>
+            <div class="vv-pbody-fit">${primBody}</div>
           </div>
-          ${rightRows}
+
+          <!-- Semánticos: only sems that reference a prim or are referenced by a comp -->
+          <div class="vv-panel vv-panel-fit" id="vv-sem" style="left:${sp.x}px;top:${sp.y}px">
+            <div class="vv-phdr" data-drag="sem">
+              <i class="pi pi-sliders-h"></i> Semánticos
+              <span class="vv-pc">${filteredSems.length}</span>
+            </div>
+            <div class="vv-pbody-fit">${semBody}</div>
+          </div>
+
+          <!-- Component panels: each one is absolutely positioned and individually draggable -->
+          ${compPanelsHtml}
         </div>
       </div>`;
 
-    initVvDrag();
+    /* Reset selection on every re-render */
+    vvSelectedVar = null;
+
+    initVvInteract();
     requestAnimationFrame(() => requestAnimationFrame(vvDrawLines));
   }
 
-  /* ── Drag interaction ── */
-  function initVvDrag() {
+  /* ── Apply world transform ── */
+  function applyVvTransform() {
+    const world = document.getElementById('vv-world');
+    if (!world) return;
+    world.style.transform = `translate(${vvPan.x}px,${vvPan.y}px) scale(${vvZoom})`;
+    const lbl = document.getElementById('vv-zlabel');
+    if (lbl) lbl.textContent = Math.round(vvZoom * 100) + '%';
+  }
+
+  /* ── All map interactions: zoom, pan, panel drag, click-to-select ── */
+  function initVvInteract() {
     const canvas = document.getElementById('vv-canvas');
     if (!canvas) return;
 
-    let dragging = null; // { panel, startX, startY, origX, origY }
+    /* ── Zoom buttons ── */
+    document.getElementById('vv-zoom-in')?.addEventListener('click', () => {
+      vvZoom = Math.min(VV_ZOOM_MAX, +(vvZoom + VV_ZOOM_STEP).toFixed(2));
+      applyVvTransform(); requestAnimationFrame(vvDrawLines);
+    });
+    document.getElementById('vv-zoom-out')?.addEventListener('click', () => {
+      vvZoom = Math.max(VV_ZOOM_MIN, +(vvZoom - VV_ZOOM_STEP).toFixed(2));
+      applyVvTransform(); requestAnimationFrame(vvDrawLines);
+    });
+    document.getElementById('vv-zoom-reset')?.addEventListener('click', () => {
+      vvZoom = 1; vvPan = { x: 40, y: 40 };
+      applyVvTransform(); requestAnimationFrame(vvDrawLines);
+    });
 
+    /* ── Scroll-wheel zoom centred on cursor ── */
+    canvas.addEventListener('wheel', e => {
+      e.preventDefault();
+      const delta   = e.deltaY < 0 ? VV_ZOOM_STEP : -VV_ZOOM_STEP;
+      const newZoom = Math.min(VV_ZOOM_MAX, Math.max(VV_ZOOM_MIN, +(vvZoom + delta).toFixed(2)));
+      if (newZoom === vvZoom) return;
+      const cRect = canvas.getBoundingClientRect();
+      const mx    = e.clientX - cRect.left, my = e.clientY - cRect.top;
+      const scale = newZoom / vvZoom;
+      vvPan.x = mx - scale * (mx - vvPan.x);
+      vvPan.y = my - scale * (my - vvPan.y);
+      vvZoom  = newZoom;
+      applyVvTransform(); requestAnimationFrame(vvDrawLines);
+    }, { passive: false });
+
+    /* ── Mouse down: panel/column drag vs canvas pan ── */
     canvas.addEventListener('mousedown', e => {
       const hdr = e.target.closest('[data-drag]');
-      if (!hdr) return;
-      const key   = hdr.dataset.drag;
-      const panel = hdr.closest('.vv-panel');
-      if (!panel) return;
-      e.preventDefault();
-      dragging = {
-        panel, key,
-        startX: e.clientX, startY: e.clientY,
-        origX: vvPosStore[key].x, origY: vvPosStore[key].y,
-      };
-      panel.classList.add('vv-dragging');
+      if (hdr) {
+        const key       = hdr.dataset.drag;
+        const draggable = hdr.closest('.vv-panel');
+        if (!draggable) return;
+        e.preventDefault();
+        /* Comp panels use vvCompPosStore; prim/sem use vvPosStore */
+        const isComp = key.startsWith('comp-');
+        const orig   = isComp
+          ? (vvCompPosStore.get(key) ?? { x: 0, y: 0 })
+          : (vvPosStore[key]         ?? { x: 0, y: 0 });
+        vvInteraction = {
+          type: 'drag', draggable, key, moved: false, isComp,
+          startCX: e.clientX, startCY: e.clientY,
+          origX: orig.x, origY: orig.y,
+        };
+        draggable.classList.add('vv-dragging');
+      } else if (!e.target.closest('.vv-pbody-fit, .vv-panel-body')) {
+        /* Canvas pan — ignore clicks inside scrollable bodies */
+        e.preventDefault();
+        vvInteraction = {
+          type: 'pan', moved: false,
+          startCX: e.clientX, startCY: e.clientY,
+          panOffX: e.clientX - vvPan.x, panOffY: e.clientY - vvPan.y,
+        };
+        canvas.classList.add('is-panning');
+      }
     });
 
     document.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      const dx = e.clientX - dragging.startX;
-      const dy = e.clientY - dragging.startY;
-      const nx = Math.max(0, dragging.origX + dx);
-      const ny = Math.max(0, dragging.origY + dy);
-      vvPosStore[dragging.key] = { x: nx, y: ny };
-      dragging.panel.style.left = nx + 'px';
-      dragging.panel.style.top  = ny + 'px';
-      vvDrawLines();
+      if (!vvInteraction) return;
+      /* Track whether the pointer actually moved (to distinguish drag from click) */
+      if (!vvInteraction.moved) {
+        if (Math.abs(e.clientX - vvInteraction.startCX) > 3 ||
+            Math.abs(e.clientY - vvInteraction.startCY) > 3) {
+          vvInteraction.moved = true;
+        }
+      }
+      if (vvInteraction.type === 'drag') {
+        const nx  = vvInteraction.origX + (e.clientX - vvInteraction.startCX) / vvZoom;
+        const ny  = vvInteraction.origY + (e.clientY - vvInteraction.startCY) / vvZoom;
+        const key = vvInteraction.key;
+        /* Write position back to the right store */
+        if (vvInteraction.isComp) vvCompPosStore.set(key, { x: nx, y: ny });
+        else                      vvPosStore[key] = { x: nx, y: ny };
+        vvInteraction.draggable.style.left = nx + 'px';
+        vvInteraction.draggable.style.top  = ny + 'px';
+        requestAnimationFrame(vvDrawLines);
+      } else if (vvInteraction.type === 'pan') {
+        vvPan.x = e.clientX - vvInteraction.panOffX;
+        vvPan.y = e.clientY - vvInteraction.panOffY;
+        applyVvTransform(); requestAnimationFrame(vvDrawLines);
+      }
     });
 
     document.addEventListener('mouseup', () => {
-      if (!dragging) return;
-      dragging.panel.classList.remove('vv-dragging');
-      dragging = null;
+      if (!vvInteraction) return;
+      /* If the pointer moved, suppress the upcoming click event */
+      if (vvInteraction.moved) vvClickSuppressed = true;
+      if (vvInteraction.type === 'drag') {
+        vvInteraction.draggable.classList.remove('vv-dragging');
+      } else {
+        document.getElementById('vv-canvas')?.classList.remove('is-panning');
+      }
+      vvInteraction = null;
+    });
+
+    /* ── Click: select variable or deselect ── */
+    canvas.addEventListener('click', e => {
+      if (vvClickSuppressed) { vvClickSuppressed = false; return; }
+      const row = e.target.closest('.vv-row[data-var]');
+      if (row) {
+        vvSelectVar(row.dataset.var);
+      } else if (!e.target.closest('.vv-panel')) {
+        /* Clicked on canvas background — clear selection */
+        vvDeselect();
+      }
     });
   }
 
+  /* ── Draw bezier connection lines in world-coordinate SVG ── */
+  /* Uses vvSelectedVar to dim/highlight when a variable is selected.        */
   function vvDrawLines() {
     const svg    = document.getElementById('vv-svg');
     const canvas = document.getElementById('vv-canvas');
     if (!svg || !canvas) return;
 
-    /* Size SVG to cover the whole canvas area */
-    const O = canvas.getBoundingClientRect();
-    svg.style.width  = O.width  + 'px';
-    svg.style.height = O.height + 'px';
+    const canvasR = canvas.getBoundingClientRect();
+    const hlVars  = vvSelectedVar ? vvBuildHlSet(vvSelectedVar) : null;
+    const hasSel  = !!hlVars;
 
-    function dotXY(el) {
+    function toWorld(cx, cy) {
+      return {
+        x: (cx - canvasR.left - vvPan.x) / vvZoom,
+        y: (cy - canvasR.top  - vvPan.y) / vvZoom,
+      };
+    }
+    function dotWorld(el) {
       const r = el.getBoundingClientRect();
-      return { x: (r.left + r.right) / 2 - O.left, y: (r.top + r.bottom) / 2 - O.top };
+      return toWorld((r.left + r.right) / 2, (r.top + r.bottom) / 2);
     }
 
+    /* Build right-dot index by var name */
+    const rdMap = {};
+    document.querySelectorAll('#vv-canvas .vv-dot-r[data-sdot]').forEach(d => { rdMap[d.dataset.sdot] = d; });
+
     let paths = '';
-    canvas.querySelectorAll('.vv-dot-l[data-cdot]').forEach(cd => {
-      const sd = canvas.querySelector(`.vv-dot-r[data-sdot="${cd.dataset.cref}"]`);
+    document.querySelectorAll('#vv-canvas .vv-dot-l[data-cref]').forEach(cd => {
+      const sd = rdMap[cd.dataset.cref];
       if (!sd) return;
-      const p1 = dotXY(sd), p2 = dotXY(cd);
-      const dx = Math.abs(p2.x - p1.x) * 0.5;
-      const d  = `M${p1.x},${p1.y} C${p1.x + dx},${p1.y} ${p2.x - dx},${p2.y} ${p2.x},${p2.y}`;
-      paths += `<path d="${d}" fill="none" stroke="rgba(59,130,246,.4)" stroke-width="1.5" stroke-linecap="round"/>`;
+
+      const cdR = cd.getBoundingClientRect();
+      const sdR = sd.getBoundingClientRect();
+      const visible = r =>
+        r.right  > canvasR.left && r.left   < canvasR.right &&
+        r.bottom > canvasR.top  && r.top    < canvasR.bottom;
+      if (!visible(cdR) && !visible(sdR)) return;
+
+      const srcVar = sd.dataset.sdot;
+      const dstVar = cd.closest('[data-var]')?.dataset.var ?? null;
+      const isHl   = hasSel && hlVars.has(srcVar) && dstVar && hlVars.has(dstVar);
+
+      const p1  = dotWorld(sd);
+      const p2  = dotWorld(cd);
+      const dx  = Math.abs(p2.x - p1.x) * 0.45;
+      const d   = `M${p1.x},${p1.y} C${p1.x+dx},${p1.y} ${p2.x-dx},${p2.y} ${p2.x},${p2.y}`;
+
+      let col, width;
+      if (hasSel) {
+        if (isHl) {
+          /* Highlighted: teal for prim→sem, blue for sem→comp */
+          col   = p1.x < p2.x ? 'rgba(20,184,166,.95)' : 'rgba(59,130,246,.95)';
+          width = 2.5;
+        } else {
+          col   = 'rgba(150,150,150,.08)';
+          width = 1;
+        }
+      } else {
+        col   = p1.x < p2.x ? 'rgba(20,184,166,.35)' : 'rgba(59,130,246,.35)';
+        width = 1.4;
+      }
+      paths += `<path d="${d}" fill="none" stroke="${col}" stroke-width="${width}" stroke-linecap="round"/>`;
     });
+
     svg.innerHTML = `<g>${paths}</g>`;
+  }
+
+  /* ── Build the set of variables in a selection chain ── */
+  function vvBuildHlSet(varName) {
+    const { semRefMap, compRefMap, primSet, semSet } = vvConnData;
+    const hl = new Set([varName]);
+
+    if (primSet.has(varName)) {
+      /* Prim selected → find sems that reference it → find comps that reference those sems */
+      semRefMap.forEach((primRef, semName) => {
+        if (primRef === varName) {
+          hl.add(semName);
+          compRefMap.forEach((ref, compName) => { if (ref === semName) hl.add(compName); });
+        }
+      });
+    } else if (semSet.has(varName)) {
+      /* Sem selected → walk up to prim, walk down to comps */
+      const primRef = semRefMap.get(varName);
+      if (primRef) hl.add(primRef);
+      compRefMap.forEach((ref, compName) => { if (ref === varName) hl.add(compName); });
+    } else {
+      /* Comp var selected → walk up through sem → prim */
+      const ref = compRefMap.get(varName);
+      if (ref) {
+        hl.add(ref);
+        if (semSet.has(ref)) {
+          const primRef = semRefMap.get(ref);
+          if (primRef) hl.add(primRef);
+        }
+      }
+    }
+    return hl;
+  }
+
+  /* ── Select a variable: highlight its chain, dim everything else ── */
+  function vvSelectVar(varName) {
+    const world = document.getElementById('vv-world');
+    if (!world) return;
+    /* Toggle off if clicking the same variable again */
+    if (vvSelectedVar === varName) { vvDeselect(); return; }
+
+    vvSelectedVar = varName;
+    const hlVars = vvBuildHlSet(varName);
+
+    world.setAttribute('data-sel', '1');
+    world.querySelectorAll('[data-var]').forEach(row => {
+      row.toggleAttribute('data-hl', hlVars.has(row.dataset.var));
+    });
+    requestAnimationFrame(vvDrawLines);
+  }
+
+  /* ── Clear selection ── */
+  function vvDeselect() {
+    vvSelectedVar = null;
+    const world = document.getElementById('vv-world');
+    if (!world) return;
+    world.removeAttribute('data-sel');
+    world.querySelectorAll('[data-hl]').forEach(el => el.removeAttribute('data-hl'));
+    requestAnimationFrame(vvDrawLines);
   }
 
   /* ── Init ── */
@@ -1118,5 +1515,8 @@
   refreshColorStrip();
   initSplitButtons();
   setTimeout(autoContrastPrimary, 100);
+
+  /* MDS_VARS catalogue is available synchronously from mds-vars-data.js.
+     No async load needed — readMdsCoreVars() always has data on first call. */
 
 })();

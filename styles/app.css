@@ -1814,6 +1814,39 @@ html, body {
 }
 [data-theme="ctr--tol--dark"] .tva-sw-text { background: var(--p-surface-700); }
 
+/* Ruler swatch — for spacing / radius / dimension tokens */
+.tva-sw-dim {
+  background: var(--p-surface-100);
+  border-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+.tva-sw-dim::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* hatched ruler lines */
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 3px,
+      var(--p-surface-300) 3px 4px
+    );
+  opacity: .7;
+}
+.tva-sw-dim::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%; transform: translateY(-50%);
+  height: 2px;
+  background: var(--p-surface-400);
+  border-radius: 1px;
+}
+[data-theme="ctr--tol--dark"] .tva-sw-dim { background: var(--p-surface-800); }
+[data-theme="ctr--tol--dark"] .tva-sw-dim::before { opacity: .5; }
+[data-theme="ctr--tol--dark"] .tva-sw-dim::after  { background: var(--p-surface-500); }
+
 .tva-name {
   font-family: 'Menlo','Consolas',monospace;
   font-size: 11.5px;
@@ -1874,19 +1907,102 @@ html, body {
 
 .tv-map-area {
   flex: 1;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background: var(--p-surface-50);
 }
 [data-theme="ctr--tol--dark"] .tv-map-area { background: var(--p-surface-900); }
 
-/* ── Draggable canvas ── */
+/* ── Toolbar above the infinite canvas ── */
+.vv-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--p-surface-200);
+  background: var(--p-surface-0);
+  flex-shrink: 0;
+  z-index: 20;
+}
+[data-theme="ctr--tol--dark"] .vv-toolbar {
+  background: var(--p-surface-900);
+  border-color: var(--p-surface-700);
+}
+
+.vv-zoom-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--p-surface-300);
+  border-radius: 6px;
+  padding: 2px;
+  background: var(--p-surface-50);
+}
+[data-theme="ctr--tol--dark"] .vv-zoom-group {
+  border-color: var(--p-surface-600);
+  background: var(--p-surface-800);
+}
+
+.vv-zbtn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--p-surface-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--p-transition-duration), color var(--p-transition-duration);
+  line-height: 1;
+}
+.vv-zbtn:hover {
+  background: var(--p-surface-100);
+  color: var(--p-surface-800);
+}
+[data-theme="ctr--tol--dark"] .vv-zbtn { color: var(--p-surface-300); }
+[data-theme="ctr--tol--dark"] .vv-zbtn:hover { background: rgba(255,255,255,.08); color: var(--p-surface-100); }
+
+.vv-zlabel {
+  min-width: 36px;
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--p-surface-500);
+  font-variant-numeric: tabular-nums;
+}
+
+.vv-reset {
+  width: auto;
+  padding: 0 10px;
+  font-size: 12px;
+  border: 1px solid var(--p-surface-300);
+  border-radius: 6px;
+  color: var(--p-surface-500);
+}
+.vv-reset:hover { border-color: var(--p-surface-400); }
+[data-theme="ctr--tol--dark"] .vv-reset { border-color: var(--p-surface-600); }
+
+.vv-hint {
+  font-size: 11px;
+  color: var(--p-surface-400);
+  margin-left: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-theme="ctr--tol--dark"] .vv-hint { color: var(--p-surface-500); }
+
+/* ── Infinite canvas ── */
 .vv-canvas {
   position: relative;
-  width: 100%;
-  min-height: 100%;
-  /* at least 900px tall so panels have room to move */
-  min-height: max(100%, 900px);
+  flex: 1;
   overflow: hidden;
+  cursor: grab;
 }
 .vv-svg {
   position: absolute;
@@ -1897,6 +2013,18 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
+/* ── World layer — the zoomable/pannable space ── */
+.vv-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* ── Canvas states ── */
+.vv-canvas.is-panning { cursor: grabbing; }
 
 /* ── Panels — absolutely positioned, draggable ── */
 .vv-panel {
@@ -1996,6 +2124,37 @@ html, body {
 }
 [data-theme="ctr--tol--dark"] .vv-sw-text { background: var(--p-surface-600); }
 
+/* Ruler swatch (map view) */
+.vv-sw-dim {
+  background: var(--p-surface-200);
+  border-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+.vv-sw-dim::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 3px,
+      var(--p-surface-400) 3px 4px
+    );
+  opacity: .6;
+}
+.vv-sw-dim::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%; transform: translateY(-50%);
+  height: 2px;
+  background: var(--p-surface-500);
+  border-radius: 1px;
+}
+[data-theme="ctr--tol--dark"] .vv-sw-dim { background: var(--p-surface-700); }
+[data-theme="ctr--tol--dark"] .vv-sw-dim::after { background: var(--p-surface-400); }
+
 /* ── Token info ── */
 .vv-info {
   flex: 1;
@@ -2045,3 +2204,139 @@ html, body {
 .vv-dot-r { margin-left: auto; transform: translateX(20px); }
 /* left dot: pushed to panel left edge */
 .vv-dot-l { order: -1; transform: translateX(-20px); }
+/* invisible spacer — same layout footprint as a dot but invisible */
+.vv-dot-sp {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  order: -1;
+  visibility: hidden;
+}
+
+/* ── Scrollable panel body (legacy, kept for backward compat) ── */
+.vv-panel-body {
+  max-height: 520px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+.vv-panel-body::-webkit-scrollbar { width: 4px; }
+.vv-panel-body::-webkit-scrollbar-track { background: transparent; }
+.vv-panel-body::-webkit-scrollbar-thumb {
+  background: var(--p-surface-300);
+  border-radius: 999px;
+}
+[data-theme="ctr--tol--dark"] .vv-panel-body::-webkit-scrollbar-thumb { background: var(--p-surface-600); }
+
+/* ── Auto-height panel body: grows with content, no scroll ── */
+.vv-pbody-fit {
+  overflow: visible;
+}
+
+/* ── Panel variant that sizes to content (no fixed width/height) ── */
+.vv-panel-fit {
+  /* Inherits .vv-panel base styles but overrides width */
+  width: 290px;
+}
+
+/* Smaller header for per-component panels */
+.vv-phdr-sm {
+  font-size: 10.5px;
+  padding: 7px 14px 6px;
+}
+
+/* ── Selection: dim everything, brighten only the highlighted chain ── */
+.vv-row { cursor: pointer; }
+
+/* When a var is selected, dim all non-highlighted rows */
+.vv-world[data-sel] .vv-row {
+  opacity: 0.18;
+  transition: opacity .18s;
+}
+.vv-world[data-sel] .vv-row[data-hl] {
+  opacity: 1;
+  background: rgba(20,184,166,.08);
+  border-radius: 4px;
+}
+[data-theme="ctr--tol--dark"] .vv-world[data-sel] .vv-row[data-hl] {
+  background: rgba(20,184,166,.12);
+}
+/* Highlighted rows also get a subtle left accent */
+.vv-world[data-sel] .vv-row[data-hl] .vv-dot-l,
+.vv-world[data-sel] .vv-row[data-hl] .vv-dot-r {
+  box-shadow: 0 0 0 3px rgba(20,184,166,.3);
+}
+
+/* ── Panel token-count badge ── */
+.vv-pc {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(59,130,246,.7);
+  background: rgba(59,130,246,.1);
+  padding: 1px 6px;
+  border-radius: 999px;
+  letter-spacing: .01em;
+}
+[data-theme="ctr--tol--dark"] .vv-pc {
+  color: rgba(96,165,250,.7);
+  background: rgba(96,165,250,.12);
+}
+
+/* ── Group separator count badge ── */
+.vv-gc {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(59,130,246,.6);
+  background: rgba(59,130,246,.08);
+  padding: 0 5px;
+  border-radius: 999px;
+  vertical-align: middle;
+  letter-spacing: 0;
+  text-transform: none;
+}
+[data-theme="ctr--tol--dark"] .vv-gc { color: rgba(96,165,250,.55); background: rgba(96,165,250,.1); }
+
+/* ── Semantic sub-group separators (light / dark mode tinted) ── */
+.vv-gsep-light {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #92400e;
+  background: #fffbeb;
+  padding: 8px 14px 4px;
+  border-top: 1px solid #fde68a;
+}
+.vv-gsep-light:first-child { border-top: none; }
+[data-theme="ctr--tol--dark"] .vv-gsep-light {
+  color: #fbbf24;
+  background: rgba(251,191,36,.06);
+  border-color: rgba(251,191,36,.15);
+}
+
+.vv-gsep-dark {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #3730a3;
+  background: #eef2ff;
+  padding: 8px 14px 4px;
+  border-top: 1px solid #c7d2fe;
+}
+.vv-gsep-dark:first-child { border-top: none; }
+[data-theme="ctr--tol--dark"] .vv-gsep-dark {
+  color: #818cf8;
+  background: rgba(99,102,241,.06);
+  border-color: rgba(99,102,241,.15);
+}
+
+/* ── Empty panel state ── */
+.vv-empty {
+  padding: 20px 16px;
+  font-size: 12px;
+  color: var(--p-surface-400);
+  text-align: center;
+  font-style: italic;
+}
