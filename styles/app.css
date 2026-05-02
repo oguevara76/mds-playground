@@ -1934,6 +1934,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 4px;
+  height: 32px;
+  box-sizing: border-box;
   border: 1px solid var(--p-surface-300);
   border-radius: 6px;
   padding: 2px;
@@ -1978,6 +1980,8 @@ html, body {
 
 .vv-reset {
   width: auto;
+  height: 32px;
+  box-sizing: border-box;
   padding: 0 10px;
   font-size: 12px;
   border: 1px solid var(--p-surface-300);
@@ -2002,10 +2006,12 @@ html, body {
   display: flex;
   align-items: center;
   gap: 5px;
+  height: 32px;
+  box-sizing: border-box;
   background: var(--p-surface-0);
   border: 1px solid var(--p-surface-200);
   border-radius: 6px;
-  padding: 3px 8px 3px 9px;
+  padding: 0 8px 0 9px;
   min-width: 200px;
   transition: border-color .15s, box-shadow .15s;
 }
@@ -2069,16 +2075,16 @@ html, body {
 }
 .vv-world[data-search]:not([data-sel]) .vv-row[data-smatch] {
   opacity: 1;
-  background: rgba(251,191,36,.12);
+  background: rgba(20,184,166,.08);
   border-radius: 4px;
 }
 [data-theme="ctr--tol--dark"] .vv-world[data-search]:not([data-sel]) .vv-row[data-smatch] {
-  background: rgba(251,191,36,.09);
+  background: rgba(20,184,166,.12);
 }
 /* Glow on matched connection dots */
 .vv-world[data-search]:not([data-sel]) .vv-row[data-smatch] .vv-dot-l,
 .vv-world[data-search]:not([data-sel]) .vv-row[data-smatch] .vv-dot-r {
-  box-shadow: 0 0 0 3px rgba(251,191,36,.4);
+  box-shadow: 0 0 0 3px rgba(20,184,166,.3);
 }
 
 /* ── Infinite canvas ── */

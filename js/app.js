@@ -1483,8 +1483,59 @@
       world.querySelectorAll('[data-smatch]').forEach(el => el.removeAttribute('data-smatch'));
     } else {
       world.setAttribute('data-search', '1');
+
+      /* Step 1: direct name matches */
+      const directHits = new Set();
       world.querySelectorAll('[data-var]').forEach(row => {
-        row.toggleAttribute('data-smatch', row.dataset.var.toLowerCase().includes(lq));
+        const matches = row.dataset.var.toLowerCase().includes(lq);
+        row.toggleAttribute('data-smatch', matches);
+        if (matches) directHits.add(row.dataset.var);
+      });
+
+      /* Step 2: build the full set of vars that should be highlighted.
+         A connector is only drawn highlighted when BOTH endpoints are in this set,
+         so we must include every node reachable from a direct hit in both directions. */
+      const { semRefMap, compRefMap, primSet, semSet } = vvConnData;
+      const allHits = new Set(directHits);
+
+      /* For each direct hit, propagate along every connected edge */
+      directHits.forEach(name => {
+        if (primSet.has(name)) {
+          /* prim → mark sems that reference it, then their comps */
+          semRefMap.forEach((primRef, semName) => {
+            if (primRef !== name) return;
+            allHits.add(semName);
+            compRefMap.forEach((ref, compName) => {
+              if (ref === semName) allHits.add(compName);
+            });
+          });
+          /* prim → mark comps that reference it directly */
+          compRefMap.forEach((ref, compName) => {
+            if (ref === name) allHits.add(compName);
+          });
+        } else if (semSet.has(name)) {
+          /* sem → mark its referenced prim */
+          const primRef = semRefMap.get(name);
+          if (primRef) allHits.add(primRef);
+          /* sem → mark comps that reference it */
+          compRefMap.forEach((ref, compName) => {
+            if (ref === name) allHits.add(compName);
+          });
+        } else {
+          /* comp → mark its referenced sem/prim, and that sem's prim */
+          const ref = compRefMap.get(name);
+          if (ref) {
+            allHits.add(ref);
+            const primRef = semRefMap.get(ref);
+            if (primRef) allHits.add(primRef);
+          }
+        }
+      });
+
+      /* Apply data-smatch to all reachable rows — iterate instead of using CSS.escape
+         because variable names start with '--' which CSS.escape would corrupt */
+      world.querySelectorAll('[data-var]').forEach(row => {
+        row.toggleAttribute('data-smatch', allHits.has(row.dataset.var));
       });
     }
     requestAnimationFrame(vvDrawLines);
@@ -1566,9 +1617,9 @@
         /* Search mode */
         const srcHit = searchHits.has(srcVar);
         const dstHit = dstVar && searchHits.has(dstVar);
-        if (srcHit || dstHit) {
-          col   = 'rgba(251,191,36,.9)';
-          width = 2;
+        if (srcHit && dstHit) {
+          col   = p1.x < p2.x ? 'rgba(20,184,166,.95)' : 'rgba(59,130,246,.95)';
+          width = 2.5;
           isFg  = true;   // matched → foreground
         } else {
           col   = 'rgba(150,150,150,.07)';
