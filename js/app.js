@@ -210,11 +210,11 @@
       injectSlot(slot, '');
     });
     fileInput.value = '';
+    invalidateMdsCache();
     renderFileList();
     validateSlots();
     syncToggleState();
-    refreshColorStrip();
-    refreshTokenGrid();
+    setTimeout(() => { refreshColorStrip(); refreshTokenGrid(); autoContrastPrimary(); if (tvIsActive) { if (tvMapMode) renderTvMap(); else renderTvList(tvSearch.value); } }, 120);
     showToast('Ficheros eliminados — tokens por defecto restaurados', 'info');
   }
 

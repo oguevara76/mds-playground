@@ -1,0 +1,11 @@
+/* Semantics Light — Ejemplo: Azul #3b61b5
+   #3b61b5 tiene contraste 5.8:1 con blanco → texto de botones en blanco es válido.
+   Solo se ajusta el highlight para alinearlo con la gama azul.
+*/
+
+html[data-theme="ctr--tol--light"] {
+  --highlight-background:       rgba( 59,  97, 181, 0.12);
+  --highlight-color:            rgba( 44,  73, 135, 1);
+  --highlight-focus-background: rgba( 59,  97, 181, 0.22);
+  --highlight-focus-color:      rgba( 30,  50,  93, 1);
+}

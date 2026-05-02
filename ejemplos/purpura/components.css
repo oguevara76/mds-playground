@@ -1,0 +1,8 @@
+/* Components — Ejemplo: Púrpura #8240c7
+   #8240c7 es suficientemente oscuro para mantener texto blanco en botones filled.
+   Solo se ajusta el focus ring al tono oscuro de la rampa púrpura.
+*/
+
+html:root {
+  --button-primary-focus-ring-color: rgba(95, 44, 150, 1);
+}

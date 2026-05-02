@@ -1,0 +1,8 @@
+/* Components — Ejemplo: Azul #3b61b5
+   #3b61b5 es suficientemente oscuro para mantener texto blanco en botones filled.
+   Solo se ajusta el focus ring al tono oscuro de la rampa azul.
+*/
+
+html:root {
+  --button-primary-focus-ring-color: rgba(44, 73, 135, 1);
+}

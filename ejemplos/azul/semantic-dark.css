@@ -1,0 +1,12 @@
+/* Semantics Dark — Ejemplo: Azul #3b61b5
+   En dark mode el primary usa --teal-400 (#5c83d6), el tono más claro
+   de la rampa azul — visible sobre fondos oscuros.
+   El contraste usa --surface-900 (oscuro) definido en el MDS base.
+*/
+
+html[data-theme="ctr--tol--dark"] {
+  --highlight-background:       rgba( 92, 131, 214, 0.15);
+  --highlight-color:            rgba(125, 159, 232, 1);
+  --highlight-focus-background: rgba( 92, 131, 214, 0.25);
+  --highlight-focus-color:      rgba(172, 196, 246, 1);
+}

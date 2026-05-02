@@ -1,0 +1,12 @@
+/* Semantics Dark — Ejemplo: Púrpura #8240c7
+   En dark mode el primary usa --teal-400 (#9c62da), el tono más claro
+   de la rampa púrpura — visible sobre fondos oscuros.
+   El contraste usa --surface-900 (oscuro) definido en el MDS base.
+*/
+
+html[data-theme="ctr--tol--dark"] {
+  --highlight-background:       rgba(156,  98, 218, 0.15);
+  --highlight-color:            rgba(177, 125, 232, 1);
+  --highlight-focus-background: rgba(156,  98, 218, 0.25);
+  --highlight-focus-color:      rgba(208, 172, 246, 1);
+}
