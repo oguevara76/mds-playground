@@ -1077,6 +1077,12 @@ html, body {
   margin-bottom: 12px;
 }
 .pv-icon-btn { width: 28px !important; height: 28px !important; }
+.pv-jobs-browse {
+  font-size: 11px !important;
+  padding: 4px 10px !important;
+  height: auto !important;
+  border-radius: 999px !important;
+}
 .pv-job-list { display: flex; flex-direction: column; gap: 14px; }
 .pv-job-item { display: flex; gap: 12px; align-items: flex-start; }
 .pv-job-logo {
@@ -1093,17 +1099,49 @@ html, body {
   color: var(--p-content-color);
   flex-shrink: 0;
 }
-.pv-job-logo-netflix { background: #000; color: #e50914; }
-.pv-job-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.pv-job-logo-brand { color: var(--p-primary-color); }
+.pv-job-logo-netflix { color: var(--p-content-color); }
+.pv-job-info { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.pv-job-title-row { display: flex; align-items: center; gap: 6px; justify-content: space-between; }
 .pv-job-title {
   font-size: 12px;
   font-weight: 600;
   color: var(--p-content-color);
   margin: 0;
   line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pv-job-type { font-size: 11px; color: var(--p-surface-400); margin: 0; }
-.pv-job-tag { font-size: 11px !important; border-radius: 999px !important; width: fit-content; }
+.pv-job-tag { font-size: 11px !important; border-radius: 999px !important; width: fit-content; flex-shrink: 0; }
+.pv-job-tag-new {
+  background: var(--p-primary-50) !important;
+  color: var(--p-primary-600) !important;
+  border: 1px solid var(--p-primary-200) !important;
+}
+[data-theme="ctr--tol--dark"] .pv-job-tag-new {
+  background: var(--p-primary-900) !important;
+  color: var(--p-primary-300) !important;
+  border-color: var(--p-primary-700) !important;
+}
+.pv-job-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+.pv-job-salary {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--p-primary-color);
+}
+.pv-job-apply {
+  font-size: 11px !important;
+  padding: 3px 10px !important;
+  height: auto !important;
+  border-radius: 999px !important;
+}
 
 /* ── Top Products card ── */
 .pv-product-list { display: flex; flex-direction: column; }
