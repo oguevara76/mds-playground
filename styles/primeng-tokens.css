@@ -283,7 +283,70 @@
   --p-input-padding-x:        var(--inputtext-padding-x, var(--form-field-padding-x,    12px));
   --p-input-padding-y:        var(--inputtext-padding-y, var(--form-field-padding-y,     8px));
   --p-input-border-radius:    var(--inputtext-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+  --p-input-hover-border:     var(--inputtext-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+  --p-input-disabled-bg:      var(--inputtext-disabled-background, var(--form-field-disabled-background, var(--p-surface-200)));
+  --p-input-disabled-color:   var(--inputtext-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+  --p-input-invalid-border:   var(--inputtext-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+  --p-input-sm-padding-x:     var(--inputtext-sm-padding-x, var(--form-field-sm-padding-x, 10px));
+  --p-input-sm-padding-y:     var(--inputtext-sm-padding-y, var(--form-field-sm-padding-y, 5px));
+  --p-input-sm-font-size:     var(--inputtext-sm-font-size, 12px);
+  --p-input-lg-padding-x:     var(--inputtext-lg-padding-x, var(--form-field-lg-padding-x, 22px));
+  --p-input-lg-padding-y:     var(--inputtext-lg-padding-y, var(--form-field-lg-padding-y, 11px));
+  --p-input-lg-font-size:     var(--inputtext-lg-font-size, 16px);
+  --p-float-label-color:      var(--float-label-color, var(--form-field-float-label-color, var(--p-surface-500)));
+  --p-float-label-focus-color:var(--float-label-focus-color, var(--form-field-float-label-focus-color, var(--p-primary-color)));
+  --p-float-label-invalid-color: var(--float-label-invalid-color, var(--form-field-float-label-invalid-color, var(--p-danger-color)));
   --p-focus-ring:             0 0 0 var(--p-focus-ring-width) color-mix(in srgb, var(--p-focus-ring-color) 30%, transparent);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Checkbox
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-checkbox-width:                       var(--checkbox-width, var(--dimension-spacing-x16, 16px));
+  --p-checkbox-height:                      var(--checkbox-height, var(--dimension-spacing-x16, 16px));
+  --p-checkbox-sm-width:                    var(--checkbox-sm-width, var(--dimension-spacing-x14, 14px));
+  --p-checkbox-sm-height:                   var(--checkbox-sm-height, var(--dimension-spacing-x14, 14px));
+  --p-checkbox-lg-width:                    var(--checkbox-lg-width, var(--dimension-spacing-x20, 20px));
+  --p-checkbox-lg-height:                   var(--checkbox-lg-height, var(--dimension-spacing-x20, 20px));
+  --p-checkbox-border-radius:               var(--checkbox-border-radius, var(--border-radius-sm, var(--p-border-radius-sm)));
+  --p-checkbox-background:                  var(--checkbox-background, var(--p-input-bg));
+  --p-checkbox-border-color:                var(--checkbox-border-color, var(--p-input-border-color));
+  --p-checkbox-hover-border-color:          var(--checkbox-hover-border-color, var(--p-input-border-color));
+  --p-checkbox-focus-border-color:          var(--checkbox-focus-border-color, var(--p-primary-color));
+  --p-checkbox-focus-ring-width:            var(--checkbox-focus-ring-width, var(--p-focus-ring-width));
+  --p-checkbox-focus-ring-color:            var(--checkbox-focus-ring-color, var(--p-focus-ring-color));
+  --p-checkbox-checked-background:          var(--checkbox-checked-background, var(--p-primary-color));
+  --p-checkbox-checked-border-color:        var(--checkbox-checked-border-color, var(--p-primary-color));
+  --p-checkbox-checked-hover-background:    var(--checkbox-checked-hover-background, var(--p-primary-hover-color));
+  --p-checkbox-checked-hover-border-color:  var(--checkbox-checked-hover-border-color, var(--p-primary-hover-color));
+  --p-checkbox-icon-color:                  var(--checkbox-icon-color, var(--p-input-color));
+  --p-checkbox-icon-checked-color:          var(--checkbox-icon-checked-color, var(--p-primary-color-text));
+  --p-checkbox-disabled-background:         var(--checkbox-disabled-background, var(--p-surface-200));
+  --p-checkbox-icon-disabled-color:         var(--checkbox-icon-disabled-color, var(--p-surface-400));
+  --p-checkbox-invalid-border-color:        var(--checkbox-invalid-border-color, var(--p-danger-color));
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — RadioButton
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-radiobutton-width:                    var(--radiobutton-width, var(--dimension-spacing-x16, 16px));
+  --p-radiobutton-height:                   var(--radiobutton-height, var(--dimension-spacing-x16, 16px));
+  --p-radiobutton-sm-width:                 var(--radiobutton-sm-width, var(--dimension-spacing-x14, 14px));
+  --p-radiobutton-sm-height:                var(--radiobutton-sm-height, var(--dimension-spacing-x14, 14px));
+  --p-radiobutton-lg-width:                 var(--radiobutton-lg-width, var(--dimension-spacing-x20, 20px));
+  --p-radiobutton-lg-height:                var(--radiobutton-lg-height, var(--dimension-spacing-x20, 20px));
+  --p-radiobutton-background:               var(--radiobutton-background, var(--p-input-bg));
+  --p-radiobutton-border-color:             var(--radiobutton-border-color, var(--p-input-border-color));
+  --p-radiobutton-hover-border-color:       var(--radiobutton-hover-border-color, var(--p-input-border-color));
+  --p-radiobutton-focus-border-color:       var(--radiobutton-focus-border-color, var(--p-primary-color));
+  --p-radiobutton-focus-ring-width:         var(--radiobutton-focus-ring-width, var(--p-focus-ring-width));
+  --p-radiobutton-focus-ring-color:         var(--radiobutton-focus-ring-color, var(--p-focus-ring-color));
+  --p-radiobutton-checked-background:       var(--radiobutton-checked-background, var(--p-primary-color));
+  --p-radiobutton-checked-border-color:     var(--radiobutton-checked-border-color, var(--p-primary-color));
+  --p-radiobutton-checked-hover-background: var(--radiobutton-checked-hover-background, var(--p-primary-hover-color));
+  --p-radiobutton-checked-hover-border-color: var(--radiobutton-checked-hover-border-color, var(--p-primary-hover-color));
+  --p-radiobutton-icon-checked-color:       var(--radiobutton-icon-checked-color, var(--p-primary-color-text));
+  --p-radiobutton-disabled-background:      var(--radiobutton-disabled-background, var(--p-surface-200));
+  --p-radiobutton-icon-disabled-color:      var(--radiobutton-icon-disabled-color, var(--p-surface-400));
+  --p-radiobutton-invalid-border-color:     var(--radiobutton-invalid-border-color, var(--p-danger-color));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Card

@@ -30,6 +30,53 @@
     });
   });
 
+  /* ── Form catalog interactions (radio + checkbox) ── */
+  function setRadioChecked(optionEl, checked) {
+    const radioEl = optionEl.querySelector('.p-radio');
+    if (!radioEl) return;
+    radioEl.classList.toggle('p-radio-checked', checked);
+    radioEl.innerHTML = checked ? '<span class="p-radio-dot"></span>' : '';
+    optionEl.setAttribute('aria-pressed', checked ? 'true' : 'false');
+  }
+
+  document.querySelectorAll('[data-radio-group]').forEach(groupEl => {
+    groupEl.querySelectorAll('.js-radio-option').forEach(optionEl => {
+      optionEl.addEventListener('click', () => {
+        groupEl.querySelectorAll('.js-radio-option').forEach(el => setRadioChecked(el, el === optionEl));
+      });
+    });
+  });
+
+  function setCheckboxChecked(optionEl, checked) {
+    const checkboxEl = optionEl.querySelector('.p-checkbox');
+    if (!checkboxEl) return;
+    checkboxEl.classList.toggle('p-checkbox-checked', checked);
+    checkboxEl.innerHTML = checked ? '<i class="pi pi-check"></i>' : '';
+    optionEl.setAttribute('aria-pressed', checked ? 'true' : 'false');
+  }
+
+  document.querySelectorAll('.js-checkbox-option').forEach(optionEl => {
+    optionEl.addEventListener('click', () => {
+      const isChecked = optionEl.getAttribute('aria-pressed') === 'true';
+      setCheckboxChecked(optionEl, !isChecked);
+    });
+  });
+
+  document.querySelectorAll('.input-variant-block').forEach(showcaseEl => {
+    showcaseEl.querySelectorAll('.js-input-icon-toggle').forEach(toggleEl => {
+      toggleEl.addEventListener('click', () => {
+        const side = toggleEl.dataset.iconSide;
+        const isOn = toggleEl.getAttribute('aria-pressed') === 'true';
+        const next = !isOn;
+        toggleEl.setAttribute('aria-pressed', next ? 'true' : 'false');
+        const toggleKnob = toggleEl.querySelector('.p-toggle');
+        if (toggleKnob) toggleKnob.classList.toggle('p-toggle-on', next);
+        if (side === 'left') showcaseEl.classList.toggle('show-left-icon', next);
+        if (side === 'right') showcaseEl.classList.toggle('show-right-icon', next);
+      });
+    });
+  });
+
   /* ── Theme toggle ── */
   let isDark      = false;
   let forcedDark  = false; // true cuando dark se activó automáticamente (sin light)

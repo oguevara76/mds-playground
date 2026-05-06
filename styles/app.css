@@ -450,6 +450,10 @@ html, body {
   padding-bottom: 12px;
   border-bottom: 1px solid var(--p-content-border);
 }
+.component-title-primary {
+  color: var(--p-primary-color);
+  border-bottom-color: color-mix(in srgb, var(--p-primary-color) 30%, var(--p-content-border));
+}
 .component-row {
   display: flex;
   align-items: center;
@@ -497,6 +501,23 @@ html, body {
   text-decoration: none;
 }
 .catalog-link:hover { text-decoration: underline; }
+.catalog-token-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.catalog-token-grid code {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: var(--p-border-radius-sm);
+  background: color-mix(in srgb, var(--p-content-bg) 92%, var(--p-surface-200));
+  border: 1px solid var(--p-content-border);
+  color: var(--p-content-color);
+  font-size: 12px;
+  line-height: 1.2;
+}
 .messages-stack { display: flex; flex-direction: column; gap: 8px; }
 
 .input-grid {
@@ -510,6 +531,129 @@ html, body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
+}
+.form-catalog-stack {
+  grid-template-columns: 1fr;
+}
+
+/* Form catalog — bloques dentro de una card */
+.input-variant-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.catalog-preview > .input-variant-title:first-of-type {
+  margin-top: 0;
+}
+.input-variant-block {
+  margin-top: 24px;
+}
+.input-variant-block:first-of-type {
+  margin-top: 0;
+}
+.input-variant-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--p-primary-color) 30%, var(--p-content-border));
+}
+.input-interaction-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.catalog-input-interactive {
+  max-width: 320px;
+  width: 100%;
+}
+.catalog-input-interactive > .p-field {
+  gap: 6px;
+}
+.catalog-input-interactive > .p-floatlabel {
+  max-width: 320px;
+}
+.catalog-input-states-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  align-items: flex-end;
+}
+.catalog-input-state {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 160px;
+  min-width: 160px;
+  max-width: 280px;
+}
+.catalog-input-state-caption {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p-surface-400);
+}
+.is-static-preview {
+  cursor: default;
+}
+.is-static-preview button,
+.is-static-preview input,
+.is-static-preview select,
+.is-static-preview textarea,
+.is-static-preview [role="button"] {
+  pointer-events: none;
+  user-select: none;
+}
+.catalog-input-demo-wide {
+  max-width: 100%;
+}
+.input-icon-switches {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+}
+.input-icon-panel {
+  border-left: 1px solid var(--p-content-border);
+  padding-left: 16px;
+  min-width: 164px;
+}
+.input-icon-panel-title {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--p-surface-400);
+}
+.input-icon-switches .p-toggle-wrap {
+  gap: 6px;
+}
+
+.inputtext-showcase .input-interaction-scope .p-inputtext {
+  background-repeat: no-repeat, no-repeat;
+  background-size: 16px 16px, 16px 16px;
+  background-position: left 12px center, right 12px center;
+}
+.input-variant-block.show-left-icon .input-interaction-scope .p-inputtext {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E"), none;
+  padding-left: 40px;
+}
+.input-variant-block.show-left-icon .input-interaction-scope .p-floatlabel label,
+.input-variant-block.show-left-icon .input-interaction-scope .p-iftalabel label {
+  left: 40px;
+}
+.input-variant-block.show-right-icon .input-interaction-scope .p-inputtext {
+  background-image: none, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+  padding-right: 40px;
+}
+.input-variant-block.show-left-icon.show-right-icon .input-interaction-scope .p-inputtext {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
 }
 
 /* Stats in card */

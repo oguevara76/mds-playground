@@ -147,7 +147,7 @@
 
         <!-- ══ BUTTON ══ -->
         <section class="preview-section">
-          <h3 class="section-title">Button</h3>
+          <h3 class="section-title component-title-primary">Button</h3>
 
           <div class="btn-section">
             <p class="btn-section-title">Severidad</p>
@@ -288,9 +288,699 @@
       </div>
 
       <div class="tab-panel" id="tab-form-catalog">
-        <section class="preview-section">
-          <h3 class="section-title">Form components</h3>
-        </section>
+        <div class="cards-grid form-catalog-stack">
+            <div class="catalog-preview">
+              <h3 class="section-title component-title-primary">RadioButton</h3>
+              <div class="btn-section">
+                <p class="btn-section-title">Interacción</p>
+                <div class="btn-row" data-radio-group="form-catalog-radios">
+                  <button type="button" class="p-radio-wrap js-radio-option" data-radio-value="visa" aria-pressed="true">
+                    <span class="p-radio p-radio-checked"><span class="p-radio-dot"></span></span>
+                    Visa
+                  </button>
+                  <button type="button" class="p-radio-wrap js-radio-option" data-radio-value="mastercard" aria-pressed="false">
+                    <span class="p-radio"></span>
+                    Mastercard
+                  </button>
+                  <button type="button" class="p-radio-wrap js-radio-option" data-radio-value="amex" aria-pressed="false">
+                    <span class="p-radio"></span>
+                    Amex
+                  </button>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Estados</p>
+                <div class="btn-row is-static-preview">
+                  <label class="p-radio-wrap">
+                    <span class="p-radio p-radio-checked"><span class="p-radio-dot"></span></span>
+                    Seleccionado
+                  </label>
+                  <label class="p-radio-wrap">
+                    <span class="p-radio"></span>
+                    No seleccionado
+                  </label>
+                  <label class="p-radio-wrap">
+                    <span class="p-radio p-radio-invalid"></span>
+                    Invalid
+                  </label>
+                  <label class="p-radio-wrap">
+                    <span class="p-radio p-radio-checked p-radio-disabled"><span class="p-radio-dot"></span></span>
+                    Disabled
+                  </label>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Tamaños</p>
+                <div class="btn-row is-static-preview">
+                  <label class="p-radio-wrap">
+                    <span class="p-radio p-radio-checked p-radio-sm"><span class="p-radio-dot"></span></span>
+                    Small
+                  </label>
+                  <label class="p-radio-wrap">
+                    <span class="p-radio p-radio-checked"><span class="p-radio-dot"></span></span>
+                    Normal
+                  </label>
+                  <label class="p-radio-wrap">
+                    <span class="p-radio p-radio-checked p-radio-lg"><span class="p-radio-dot"></span></span>
+                    Large
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="catalog-preview">
+              <h3 class="section-title component-title-primary">Checkbox</h3>
+              <div class="btn-section">
+                <p class="btn-section-title">Interacción</p>
+                <div class="btn-row">
+                  <button type="button" class="p-checkbox-wrap js-checkbox-option" aria-pressed="true">
+                    <span class="p-checkbox p-checkbox-checked"><i class="pi pi-check"></i></span>
+                    Email
+                  </button>
+                  <button type="button" class="p-checkbox-wrap js-checkbox-option" aria-pressed="false">
+                    <span class="p-checkbox"></span>
+                    SMS
+                  </button>
+                  <button type="button" class="p-checkbox-wrap js-checkbox-option" aria-pressed="true">
+                    <span class="p-checkbox p-checkbox-checked"><i class="pi pi-check"></i></span>
+                    Push
+                  </button>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Estados</p>
+                <div class="btn-row is-static-preview">
+                  <label class="p-checkbox-wrap">
+                    <span class="p-checkbox p-checkbox-checked"><i class="pi pi-check"></i></span>
+                    Seleccionado
+                  </label>
+                  <label class="p-checkbox-wrap">
+                    <span class="p-checkbox"></span>
+                    No seleccionado
+                  </label>
+                  <label class="p-checkbox-wrap">
+                    <span class="p-checkbox p-checkbox-invalid"></span>
+                    Invalid
+                  </label>
+                  <label class="p-checkbox-wrap">
+                    <span class="p-checkbox p-checkbox-checked p-checkbox-disabled"><i class="pi pi-check"></i></span>
+                    Disabled
+                  </label>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Tamaños</p>
+                <div class="btn-row is-static-preview">
+                  <label class="p-checkbox-wrap">
+                    <span class="p-checkbox p-checkbox-checked p-checkbox-sm"><i class="pi pi-check"></i></span>
+                    Small
+                  </label>
+                  <label class="p-checkbox-wrap">
+                    <span class="p-checkbox p-checkbox-checked"><i class="pi pi-check"></i></span>
+                    Normal
+                  </label>
+                  <label class="p-checkbox-wrap">
+                    <span class="p-checkbox p-checkbox-checked p-checkbox-lg"><i class="pi pi-check"></i></span>
+                    Large
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="catalog-preview inputtext-showcase">
+              <div class="input-variant-block">
+                <div class="input-variant-head">
+                  <h3 class="section-title component-title-primary input-variant-title">InputText default</h3>
+                </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Interacción</p>
+                <div class="input-interaction-row">
+                  <div class="catalog-input-interactive input-interaction-scope">
+                    <div class="p-field">
+                      <label class="p-label" for="it-def-live">Label</label>
+                      <input id="it-def-live" type="text" class="p-inputtext" placeholder="Placeholder" />
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="input-icon-panel">
+                    <p class="input-icon-panel-title">Visualizar icono</p>
+                    <div class="input-icon-switches">
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="left" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Izquierdo
+                      </button>
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="right" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Derecho
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Estados</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Normal</span>
+                    <div class="p-field">
+                      <label class="p-label">Label</label>
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Texto de ejemplo" readonly tabindex="-1" aria-label="Normal" />
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Hover</span>
+                    <div class="p-field">
+                      <label class="p-label">Label</label>
+                      <div class="p-input-demo-wrap p-input-demo--hover">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Simulado" readonly tabindex="-1" aria-label="Hover" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Focus</span>
+                    <div class="p-field">
+                      <label class="p-label">Label</label>
+                      <div class="p-input-demo-wrap p-input-demo--focus">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Simulado" readonly tabindex="-1" aria-label="Focus" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Invalid</span>
+                    <div class="p-field">
+                      <label class="p-label">Label</label>
+                      <input type="text" class="p-inputtext p-invalid" placeholder="Placeholder" value="Error de validación" readonly tabindex="-1" aria-label="Invalid" />
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Disabled</span>
+                    <div class="p-field">
+                      <label class="p-label">Label</label>
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="No editable" disabled />
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Readonly</span>
+                    <div class="p-field">
+                      <label class="p-label">Label</label>
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Solo lectura" readonly tabindex="-1" aria-label="Readonly" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Tamaños</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Small</span>
+                    <div class="p-field catalog-input-interactive">
+                      <label class="p-label" for="it-def-sz-sm">Label</label>
+                      <input id="it-def-sz-sm" type="text" class="p-inputtext p-inputtext-sm" placeholder="Placeholder" />
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Normal</span>
+                    <div class="p-field catalog-input-interactive">
+                      <label class="p-label" for="it-def-sz-md">Label</label>
+                      <input id="it-def-sz-md" type="text" class="p-inputtext" placeholder="Placeholder" />
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Large</span>
+                    <div class="p-field catalog-input-interactive">
+                      <label class="p-label" for="it-def-sz-lg">Label</label>
+                      <input id="it-def-sz-lg" type="text" class="p-inputtext p-inputtext-lg" placeholder="Placeholder" />
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              <div class="input-variant-block">
+              <div class="input-variant-head">
+                <h3 class="section-title component-title-primary input-variant-title">InputText float label Over</h3>
+</div>
+              <div class="btn-section">
+                <p class="btn-section-title">Interacción</p>
+                <div class="input-interaction-row">
+                  <div class="catalog-input-interactive input-interaction-scope">
+                    <span class="p-floatlabel p-floatlabel--over">
+                      <input id="it-flo-live" type="text" class="p-inputtext" placeholder=" " />
+                      <label for="it-flo-live">Label</label>
+                    </span>
+                    <small class="p-hint">Helper Text</small>
+                  </div>
+                  <div class="input-icon-panel">
+                    <p class="input-icon-panel-title">Visualizar icono</p>
+                    <div class="input-icon-switches">
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="left" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Izquierdo
+                      </button>
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="right" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Derecho
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Estados</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Vacío</span>
+                    <span class="p-floatlabel p-floatlabel--over">
+                      <input type="text" class="p-inputtext" placeholder=" " readonly tabindex="-1" aria-label="Vacío" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Relleno</span>
+                    <span class="p-floatlabel p-floatlabel--over is-label-floated">
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Relleno" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Hover</span>
+                    <div class="p-input-demo-wrap p-input-demo--hover">
+                      <span class="p-floatlabel p-floatlabel--over is-label-floated">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Hover" />
+                        <label>Label</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Focus</span>
+                    <div class="p-input-demo-wrap p-input-demo--focus">
+                      <span class="p-floatlabel p-floatlabel--over is-label-floated">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Focus" />
+                        <label>Label</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Invalid</span>
+                    <span class="p-floatlabel p-floatlabel--over is-label-floated is-label-invalid">
+                      <input type="text" class="p-inputtext p-invalid" placeholder="Placeholder" value="Error" readonly tabindex="-1" aria-label="Invalid" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Disabled</span>
+                    <span class="p-floatlabel p-floatlabel--over is-label-floated">
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Bloqueado" disabled aria-label="Disabled" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Tamaños</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Small</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--over is-label-floated">
+                        <input id="it-flo-sz-sm" type="text" class="p-inputtext p-inputtext-sm" placeholder=" " />
+                        <label for="it-flo-sz-sm">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Normal</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--over is-label-floated">
+                        <input id="it-flo-sz-md" type="text" class="p-inputtext" placeholder=" " />
+                        <label for="it-flo-sz-md">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Large</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--over is-label-floated">
+                        <input id="it-flo-sz-lg" type="text" class="p-inputtext p-inputtext-lg" placeholder=" " />
+                        <label for="it-flo-sz-lg">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              <div class="input-variant-block">
+              <div class="input-variant-head">
+                <h3 class="section-title component-title-primary input-variant-title">InputText float label On</h3>
+</div>
+              <div class="btn-section">
+                <p class="btn-section-title">Interacción</p>
+                <div class="input-interaction-row">
+                  <div class="catalog-input-interactive input-interaction-scope">
+                    <span class="p-floatlabel p-floatlabel--on">
+                      <input id="it-fon-live" type="text" class="p-inputtext" placeholder=" " />
+                      <label for="it-fon-live">Label</label>
+                    </span>
+                    <small class="p-hint">Helper Text</small>
+                  </div>
+                  <div class="input-icon-panel">
+                    <p class="input-icon-panel-title">Visualizar icono</p>
+                    <div class="input-icon-switches">
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="left" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Izquierdo
+                      </button>
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="right" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Derecho
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Estados</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Vacío</span>
+                    <span class="p-floatlabel p-floatlabel--on">
+                      <input type="text" class="p-inputtext" placeholder=" " readonly tabindex="-1" aria-label="Vacío" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Relleno</span>
+                    <span class="p-floatlabel p-floatlabel--on is-label-floated">
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Relleno" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Hover</span>
+                    <div class="p-input-demo-wrap p-input-demo--hover">
+                      <span class="p-floatlabel p-floatlabel--on is-label-floated">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Hover" />
+                        <label>Label</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Focus</span>
+                    <div class="p-input-demo-wrap p-input-demo--focus">
+                      <span class="p-floatlabel p-floatlabel--on is-label-floated">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Focus" />
+                        <label>Label</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Invalid</span>
+                    <span class="p-floatlabel p-floatlabel--on is-label-floated is-label-invalid">
+                      <input type="text" class="p-inputtext p-invalid" placeholder="Placeholder" value="Error" readonly tabindex="-1" aria-label="Invalid" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Disabled</span>
+                    <span class="p-floatlabel p-floatlabel--on is-label-floated">
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Bloqueado" disabled aria-label="Disabled" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Tamaños</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Small</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--on is-label-floated">
+                        <input id="it-fon-sz-sm" type="text" class="p-inputtext p-inputtext-sm" placeholder=" " />
+                        <label for="it-fon-sz-sm">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Normal</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--on is-label-floated">
+                        <input id="it-fon-sz-md" type="text" class="p-inputtext" placeholder=" " />
+                        <label for="it-fon-sz-md">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Large</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--on is-label-floated">
+                        <input id="it-fon-sz-lg" type="text" class="p-inputtext p-inputtext-lg" placeholder=" " />
+                        <label for="it-fon-sz-lg">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              <div class="input-variant-block">
+              <div class="input-variant-head">
+                <h3 class="section-title component-title-primary input-variant-title">InputText float label In</h3>
+</div>
+              <div class="btn-section">
+                <p class="btn-section-title">Interacción</p>
+                <div class="input-interaction-row">
+                  <div class="catalog-input-interactive input-interaction-scope">
+                    <span class="p-floatlabel p-floatlabel--in">
+                      <input id="it-fin-live" type="text" class="p-inputtext" placeholder=" " />
+                      <label for="it-fin-live">Label</label>
+                    </span>
+                    <small class="p-hint">Helper Text</small>
+                  </div>
+                  <div class="input-icon-panel">
+                    <p class="input-icon-panel-title">Visualizar icono</p>
+                    <div class="input-icon-switches">
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="left" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Izquierdo
+                      </button>
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="right" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Derecho
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Estados</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Vacío</span>
+                    <span class="p-floatlabel p-floatlabel--in">
+                      <input type="text" class="p-inputtext" placeholder=" " readonly tabindex="-1" aria-label="Vacío" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Relleno</span>
+                    <span class="p-floatlabel p-floatlabel--in is-label-floated">
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Relleno" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Hover</span>
+                    <div class="p-input-demo-wrap p-input-demo--hover">
+                      <span class="p-floatlabel p-floatlabel--in is-label-floated">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Hover" />
+                        <label>Label</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Focus</span>
+                    <div class="p-input-demo-wrap p-input-demo--focus">
+                      <span class="p-floatlabel p-floatlabel--in is-label-floated">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Focus" />
+                        <label>Label</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Invalid</span>
+                    <span class="p-floatlabel p-floatlabel--in is-label-floated is-label-invalid">
+                      <input type="text" class="p-inputtext p-invalid" placeholder="Placeholder" value="Error" readonly tabindex="-1" aria-label="Invalid" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Disabled</span>
+                    <span class="p-floatlabel p-floatlabel--in is-label-floated">
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Bloqueado" disabled aria-label="Disabled" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Tamaños</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Small</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--in is-label-floated">
+                        <input id="it-fin-sz-sm" type="text" class="p-inputtext p-inputtext-sm" placeholder=" " />
+                        <label for="it-fin-sz-sm">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Normal</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--in is-label-floated">
+                        <input id="it-fin-sz-md" type="text" class="p-inputtext" placeholder=" " />
+                        <label for="it-fin-sz-md">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Large</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-floatlabel p-floatlabel--in is-label-floated">
+                        <input id="it-fin-sz-lg" type="text" class="p-inputtext p-inputtext-lg" placeholder=" " />
+                        <label for="it-fin-sz-lg">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              <div class="input-variant-block">
+              <div class="input-variant-head">
+                <h3 class="section-title component-title-primary input-variant-title">InputText IftaLabel</h3>
+</div>
+              <div class="btn-section">
+                <p class="btn-section-title">Interacción</p>
+                <div class="input-interaction-row">
+                  <div class="catalog-input-interactive input-interaction-scope">
+                    <span class="p-iftalabel">
+                      <input id="it-ifta-live" type="text" class="p-inputtext" placeholder="Placeholder" />
+                      <label for="it-ifta-live">Label</label>
+                    </span>
+                    <small class="p-hint">Helper Text</small>
+                  </div>
+                  <div class="input-icon-panel">
+                    <p class="input-icon-panel-title">Visualizar icono</p>
+                    <div class="input-icon-switches">
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="left" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Izquierdo
+                      </button>
+                      <button type="button" class="p-toggle-wrap js-input-icon-toggle" data-icon-side="right" aria-pressed="false">
+                        <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                        Derecho
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Estados</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Normal</span>
+                    <span class="p-iftalabel">
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Normal" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Hover</span>
+                    <div class="p-input-demo-wrap p-input-demo--hover">
+                      <span class="p-iftalabel">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Hover" />
+                        <label>Label</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Focus</span>
+                    <div class="p-input-demo-wrap p-input-demo--focus">
+                      <span class="p-iftalabel">
+                        <input type="text" class="p-inputtext" placeholder="Placeholder" value="Contenido" readonly tabindex="-1" aria-label="Focus" />
+                        <label>Label</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Invalid</span>
+                    <span class="p-iftalabel is-label-invalid">
+                      <input type="text" class="p-inputtext p-invalid" placeholder="Placeholder" value="Error" readonly tabindex="-1" aria-label="Invalid" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Disabled</span>
+                    <span class="p-iftalabel">
+                      <input type="text" class="p-inputtext" placeholder="Placeholder" value="Bloqueado" disabled aria-label="Disabled" />
+                      <label>Label</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Tamaños</p>
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Small</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-iftalabel">
+                        <input id="it-ifta-sz-sm" type="text" class="p-inputtext p-inputtext-sm" placeholder="Placeholder" />
+                        <label for="it-ifta-sz-sm">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Normal</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-iftalabel">
+                        <input id="it-ifta-sz-md" type="text" class="p-inputtext" placeholder="Placeholder" />
+                        <label for="it-ifta-sz-md">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                  <div class="catalog-input-state">
+                    <span class="catalog-input-state-caption">Large</span>
+                    <div class="catalog-input-interactive">
+                      <span class="p-iftalabel">
+                        <input id="it-ifta-sz-lg" type="text" class="p-inputtext p-inputtext-lg" placeholder="Placeholder" />
+                        <label for="it-ifta-sz-lg">Label</label>
+                      </span>
+                      <small class="p-hint">Helper Text</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
       </div>
 
       <div class="tab-panel" id="tab-data-catalog">
