@@ -3,7 +3,11 @@
    Solo se ajusta el highlight para alinearlo con la gama ámbar.
 */
 
-html[data-theme="ctr--tol--light"] {
+html[data-theme="light"] {
+  --primary-color: #786008;
+  --primary-hover-color: #554407;
+  --primary-active-color: #3c2f06;
+  --primary-contrast-color: rgba(255, 255, 255, 1);
   --highlight-background:       rgba(120, 96, 8, 0.12);
   --highlight-color:            rgba(85, 68, 7, 1);
   --highlight-focus-background: rgba(120, 96, 8, 0.22);

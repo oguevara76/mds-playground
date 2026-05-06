@@ -36,27 +36,27 @@
 .p-button-warning   { --p-focus-ring-color: var(--p-warning-color); }
 .p-button-help      { --p-focus-ring-color: var(--p-help-color); }
 
-[data-theme="ctr--tol--dark"] .p-button-contrast { --p-focus-ring-color: var(--p-surface-0); }
+[data-theme="dark"] .p-button-contrast { --p-focus-ring-color: var(--p-surface-0); }
 
 /* ── Dark mode overrides ── */
-[data-theme="ctr--tol--dark"] .p-card-body p {
+[data-theme="dark"] .p-card-body p {
   color: var(--p-surface-300);
 }
-[data-theme="ctr--tol--dark"] .card-icon-wrap {
+[data-theme="dark"] .card-icon-wrap {
   background: color-mix(in srgb, var(--p-primary-color) 20%, transparent);
   color: var(--p-primary-color);
 }
-[data-theme="ctr--tol--dark"] .p-chip {
+[data-theme="dark"] .p-chip {
   color: var(--p-surface-200);
   border-color: var(--p-surface-600);
 }
-[data-theme="ctr--tol--dark"] .p-label {
+[data-theme="dark"] .p-label {
   color: var(--p-surface-400);
 }
-[data-theme="ctr--tol--dark"] .p-datatable tr:hover td {
+[data-theme="dark"] .p-datatable tr:hover td {
   background: rgba(255, 255, 255, 0.04);
 }
-[data-theme="ctr--tol--dark"] .p-dialog-content {
+[data-theme="dark"] .p-dialog-content {
   color: var(--p-surface-300);
 }
 
@@ -127,6 +127,10 @@
   background:   var(--p-button-success-hover-background);
   border-color: var(--p-button-success-hover-background);
 }
+.p-button-success:active:not(:disabled) {
+  background:   var(--p-button-success-active-background);
+  border-color: var(--p-button-success-active-background);
+}
 
 /* ── Filled: Warning ── */
 .p-button-warning {
@@ -137,6 +141,10 @@
 .p-button-warning:hover {
   background:   var(--p-button-warning-hover-background);
   border-color: var(--p-button-warning-hover-background);
+}
+.p-button-warning:active:not(:disabled) {
+  background:   var(--p-button-warning-active-background);
+  border-color: var(--p-button-warning-active-background);
 }
 
 /* ── Filled: Info ── */
@@ -149,6 +157,10 @@
   background:   var(--p-button-info-hover-background);
   border-color: var(--p-button-info-hover-background);
 }
+.p-button-info:active:not(:disabled) {
+  background:   var(--p-button-info-active-background);
+  border-color: var(--p-button-info-active-background);
+}
 
 /* ── Filled: Help ── */
 .p-button-help {
@@ -159,6 +171,10 @@
 .p-button-help:hover {
   background:   var(--p-button-help-hover-background);
   border-color: var(--p-button-help-hover-background);
+}
+.p-button-help:active:not(:disabled) {
+  background:   var(--p-button-help-active-background);
+  border-color: var(--p-button-help-active-background);
 }
 
 /* ── Outlined: Primary ── */
@@ -206,6 +222,7 @@
   color:        var(--p-button-outlined-success-color);
 }
 .p-button-success.p-button-outlined:hover { background: var(--p-button-outlined-success-hover-background); }
+.p-button-success.p-button-outlined:active:not(:disabled) { background: var(--p-button-outlined-success-active-background); }
 
 /* ── Outlined: Warning ── */
 .p-button-warning.p-button-outlined {
@@ -214,6 +231,7 @@
   color:        var(--p-button-outlined-warning-color);
 }
 .p-button-warning.p-button-outlined:hover { background: var(--p-button-outlined-warning-hover-background); }
+.p-button-warning.p-button-outlined:active:not(:disabled) { background: var(--p-button-outlined-warning-active-background); }
 
 /* ── Outlined: Info ── */
 .p-button-info.p-button-outlined {
@@ -222,6 +240,7 @@
   color:        var(--p-button-outlined-info-color);
 }
 .p-button-info.p-button-outlined:hover { background: var(--p-button-outlined-info-hover-background); }
+.p-button-info.p-button-outlined:active:not(:disabled) { background: var(--p-button-outlined-info-active-background); }
 
 /* ── Outlined: Help ── */
 .p-button-help.p-button-outlined {
@@ -230,6 +249,7 @@
   color:        var(--p-button-outlined-help-color);
 }
 .p-button-help.p-button-outlined:hover { background: var(--p-button-outlined-help-hover-background); }
+.p-button-help.p-button-outlined:active:not(:disabled) { background: var(--p-button-outlined-help-active-background); }
 
 /* ── Text: Primary ── */
 .p-button-text,
@@ -269,12 +289,16 @@
 /* ── Text: Success / Warning / Info / Help ── */
 .p-button-success.p-button-text  { background: transparent; border-color: transparent; color: var(--p-button-text-success-color); }
 .p-button-success.p-button-text:hover  { background: var(--p-button-text-success-hover-background); }
+.p-button-success.p-button-text:active:not(:disabled) { background: var(--p-button-text-success-active-background); }
 .p-button-warning.p-button-text  { background: transparent; border-color: transparent; color: var(--p-button-text-warning-color); }
 .p-button-warning.p-button-text:hover  { background: var(--p-button-text-warning-hover-background); }
+.p-button-warning.p-button-text:active:not(:disabled) { background: var(--p-button-text-warning-active-background); }
 .p-button-info.p-button-text     { background: transparent; border-color: transparent; color: var(--p-button-text-info-color); }
 .p-button-info.p-button-text:hover     { background: var(--p-button-text-info-hover-background); }
+.p-button-info.p-button-text:active:not(:disabled) { background: var(--p-button-text-info-active-background); }
 .p-button-help.p-button-text     { background: transparent; border-color: transparent; color: var(--p-button-text-help-color); }
 .p-button-help.p-button-text:hover     { background: var(--p-button-text-help-hover-background); }
+.p-button-help.p-button-text:active:not(:disabled) { background: var(--p-button-text-help-active-background); }
 
 /* ── Raised ── */
 .p-button-raised { box-shadow: var(--p-button-raised-shadow); }
@@ -284,6 +308,13 @@
 .p-button-rounded { border-radius: 999px; }
 
 .p-button:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Loading — alineado a PrimeNG (no clicable mientras carga) */
+.p-button.p-button-loading {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.88;
+}
 
 /* ── Button: Icon-only ── */
 .p-button-icon-only {
@@ -303,6 +334,19 @@
   padding-right: 4px;
 }
 .p-button-link:hover { background: transparent; color: var(--p-primary-700); text-decoration: underline; }
+.p-button-link:focus-visible {
+  outline: var(--p-focus-ring-width) var(--p-focus-ring-style) var(--p-focus-ring-color);
+  outline-offset: var(--p-focus-ring-offset);
+}
+.p-button-link { --p-focus-ring-color: var(--p-primary-color); }
+
+/* Toggle iconos en catálogo Form — foco teclado */
+.js-input-icon-toggle:focus-visible {
+  outline: var(--p-focus-ring-width) var(--p-focus-ring-style) var(--p-focus-ring-color);
+  outline-offset: 2px;
+  border-radius: var(--p-border-radius-sm);
+}
+.js-input-icon-toggle { --p-focus-ring-color: var(--p-primary-color); }
 
 /* ─────────────────────────────── SpeedDial ─────────────────────────────── */
 .speeddial-showcase {
@@ -583,7 +627,7 @@
 }
 .p-inputtextarea:focus {
   border-color: var(--p-input-focus-border);
-  box-shadow: var(--p-focus-ring);
+  box-shadow: none;
 }
 
 .p-input-icon-left {
@@ -608,7 +652,7 @@
   margin-top: 6px;
   font-size: 12px;
   line-height: 1.35;
-  color: var(--p-surface-500);
+  color: var(--p-form-field-hint-color);
 }
 
 /* Demo estados estáticos: hover/focus desde el wrapper (campo típicamente readonly) */
@@ -755,7 +799,7 @@
 }
 .p-dropdown-select:focus {
   border-color: var(--p-input-focus-border);
-  box-shadow: var(--p-focus-ring);
+  box-shadow: none;
 }
 .p-dropdown-arrow {
   position: absolute;
@@ -917,7 +961,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--p-surface-0);
   position: absolute;
   top: 3px;
   left: 3px;
@@ -1027,8 +1071,8 @@
 .p-label {
   font-family: var(--p-font-family);
   font-size: 13px;
-  font-weight: 500;
-  color: var(--p-surface-600);
+  font-weight: var(--p-form-field-label-font-weight);
+  color: var(--p-form-field-label-color);
 }
 
 /* ── DataTable ── */

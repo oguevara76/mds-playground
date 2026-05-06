@@ -1,10 +1,6 @@
-/* Primitives - Theme: primitives */
-/* Version: 1.0.0 */
-/* Description: Primitive variables for color and spacing. */
-/* Author: UX/UI Design System Team */
-/* Last Updated: 2026-04-29 */
+/* Variables primitivas — playground */
 
-@layer csisarqref;
+@layer mds-core;
 
 html:root {
   --amber-100: rgba(254, 243, 199, 1);

@@ -1,10 +1,10 @@
-# MDS Playground — Indra Design System
+# MDS Playground
 
-Preview en vivo de componentes PrimeNG con soporte para cargar tokens CSS personalizados desde tu Design System.
+Vista previa en vivo de componentes PrimeNG con soporte para cargar tokens CSS personalizados desde un design system.
 
 ## ✨ Funcionalidades
 
-- **Upload de CSS** — Arrastra o selecciona el fichero CSS generado desde MDS/Figma para sobreescribir los tokens de PrimeNG en tiempo real
+- **Upload de CSS** — Arrastra o selecciona un fichero de tokens para sobreescribir las variables de PrimeNG en tiempo real
 - **Token inspector** — Visualización en vivo de los custom properties activos
 - **Paleta de color** — Preview de la rampa de color primaria
 - **4 secciones de preview**: Componentes · Formularios · Dashboard · Layouts
@@ -77,14 +77,14 @@ GitHub te lo muestra en la misma sección de **Settings → Pages**.
 ## 🎨 Cómo usar el playground
 
 1. Abre el playground en el navegador
-2. En el sidebar izquierdo, sube tu fichero `.css` con los tokens MDS
+2. En el sidebar izquierdo, sube tu fichero `.css` con los tokens
 3. Los componentes se actualizan **instantáneamente**
 4. Usa las pestañas para navegar entre secciones
 5. Alterna dark/light con el botón de la luna en el header
 
 ### Formato del CSS a subir
 
-El fichero debe contener custom properties en `:root`. Ver `ejemplo-tokens.css` como referencia:
+El fichero debe contener custom properties. Para **semántica** light/dark, usa los selectores `html[data-theme="light"]` y `html[data-theme="dark"]`. Para un ejemplo genérico en `:root`, ver `ejemplo-tokens.css`:
 
 ```css
 :root {
@@ -99,8 +99,8 @@ El fichero debe contener custom properties en `:root`. Ver `ejemplo-tokens.css` 
 ## 🔧 Personalización
 
 Para añadir más componentes, edita `index.html` directamente.  
-Para ajustar el tema por defecto (MDS Indra), edita `styles/primeng-tokens.css`.
+Para ajustar el tema por defecto, edita `styles/primeng-tokens.css`.
 
 ---
 
-Desarrollado con ❤️ para el Design System MDS · Indra · PrimeNG v17
+Playground de tokens · PrimeNG v17

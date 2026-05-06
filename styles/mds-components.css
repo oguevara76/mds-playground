@@ -1,10 +1,6 @@
-/* Components - Theme: components */
-/* Version: 1.0.0 */
-/* Description: Variables and Effect Styles for components. */
-/* Author: UX/UI Design System Team */
-/* Last Updated: 2026-04-29 */
+/* Tokens de componente — playground */
 
-@layer csisarqref;
+@layer mds-core;
 
 html:root {
   --accordion-content-background: var(--content-background);
@@ -222,6 +218,7 @@ html:root {
   --button-info-hover-color: var(--primary-contrast-color);
   --button-label-font-weight: 500;
   --button-lg-font-size: var(--form-field-lg-font-size);
+  --button-lg-icon-only-width: var(--dimension-spacing-x40);
   --button-lg-padding-x: var(--dimension-spacing-x16);
   --button-lg-padding-y: var(--dimension-spacing-x10);
   --button-link-active-color: var(--primary-color);
@@ -231,8 +228,8 @@ html:root {
   --button-outlined-contrast-border-color: var(--surface-context-strong);
   --button-outlined-contrast-color: var(--surface-context-intense);
   --button-outlined-contrast-hover-background: var(--surface-context-subtle);
-  --button-outlined-danger-active-background: var(--feedback-danger-subtle);
-  --button-outlined-danger-border-color: var(--feedback-danger-base);
+  --button-outlined-danger-active-background: var(--feedback-danger-minimal);
+  --button-outlined-danger-border-color: var(--feedback-danger-strong);
   --button-outlined-danger-color: var(--feedback-danger-strong);
   --button-outlined-danger-hover-background: var(--feedback-danger-minimal);
   --button-outlined-help-active-background: var(--feedback-help-subtle);
@@ -247,10 +244,10 @@ html:root {
   --button-outlined-plain-border-color: var(--surface-context-base);
   --button-outlined-plain-color: var(--teal-700);
   --button-outlined-plain-hover-background: var(--surface-context-subtle);
-  --button-outlined-primary-active-background: var(--surface-context-primary-medium);
-  --button-outlined-primary-border-color: var(--primary-200);
+  --button-outlined-primary-active-background: var(--surface-context-primary-soft);
+  --button-outlined-primary-border-color: var(--primary-color);
   --button-outlined-primary-color: var(--primary-color);
-  --button-outlined-primary-hover-background: var(--surface-context-primary-subtle);
+  --button-outlined-primary-hover-background: var(--surface-context-primary-soft);
   --button-outlined-secondary-active-background: var(--surface-context-medium);
   --button-outlined-secondary-border-color: var(--surface-context-medium);
   --button-outlined-secondary-color: var(--surface-context-contrast);
@@ -288,6 +285,7 @@ html:root {
   --button-secondary-hover-border-color: var(--surface-context-base);
   --button-secondary-hover-color: var(--surface-context-contrast);
   --button-sm-font-size: var(--form-field-sm-font-size);
+  --button-sm-icon-only-width: var(--dimension-spacing-x24);
   --button-sm-padding-x: var(--dimension-spacing-x6);
   --button-sm-padding-y: var(--dimension-spacing-x4);
   --button-success-active-background: var(--feedback-success-contrast);
@@ -426,7 +424,7 @@ html:root {
   --checkbox-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --checkbox-focus-ring-width: var(--focus-ring-width);
   --checkbox-height: var(--dimension-spacing-x16);
-  --checkbox-hover-border-color: var(--form-field-border-color);
+  --checkbox-hover-border-color: var(--form-field-hover-border-color);
   --checkbox-icon-checked-color: var(--primary-contrast-color);
   --checkbox-icon-checked-hover-color: var(--primary-contrast-color);
   --checkbox-icon-color: var(--form-field-color);
@@ -911,6 +909,7 @@ html:root {
   --inputtext-background: var(--form-field-background);
   --inputtext-border-color: var(--form-field-border-color);
   --inputtext-border-radius: var(--form-field-border-radius);
+  --inputtext-border-rounded-radius: var(--form-field-border-radius-rounded);
   --inputtext-color: var(--form-field-color);
   --inputtext-disabled-background: var(--form-field-disabled-background);
   --inputtext-disabled-color: var(--form-field-disabled-color);

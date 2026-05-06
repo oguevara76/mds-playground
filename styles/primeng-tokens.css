@@ -159,24 +159,28 @@
   /* ── Filled: Success ── */
   --p-button-success-background:       var(--button-success-background,       var(--p-success-color));
   --p-button-success-hover-background: var(--button-success-hover-background, color-mix(in srgb, var(--p-success-color) 80%, black));
+  --p-button-success-active-background: var(--button-success-active-background, color-mix(in srgb, var(--p-success-color) 65%, black));
   --p-button-success-border-color:     var(--button-success-border-color,     var(--p-success-color));
   --p-button-success-color:            var(--button-success-color,            #ffffff);
 
   /* ── Filled: Warning ── */
   --p-button-warning-background:       var(--button-warn-background,       var(--p-warning-color));
   --p-button-warning-hover-background: var(--button-warn-hover-background, color-mix(in srgb, var(--p-warning-color) 80%, black));
+  --p-button-warning-active-background: var(--button-warn-active-background, color-mix(in srgb, var(--p-warning-color) 65%, black));
   --p-button-warning-border-color:     var(--button-warn-border-color,     var(--p-warning-color));
   --p-button-warning-color:            var(--button-warn-color,            #ffffff);
 
   /* ── Filled: Info ── */
   --p-button-info-background:       var(--button-info-background,       var(--p-info-color));
   --p-button-info-hover-background: var(--button-info-hover-background, color-mix(in srgb, var(--p-info-color) 80%, black));
+  --p-button-info-active-background: var(--button-info-active-background, color-mix(in srgb, var(--p-info-color) 65%, black));
   --p-button-info-border-color:     var(--button-info-border-color,     var(--p-info-color));
   --p-button-info-color:            var(--button-info-color,            #ffffff);
 
   /* ── Filled: Help ── */
   --p-button-help-background:       var(--button-help-background,       var(--p-help-color));
   --p-button-help-hover-background: var(--button-help-hover-background, color-mix(in srgb, var(--p-help-color) 80%, black));
+  --p-button-help-active-background: var(--button-help-active-background, color-mix(in srgb, var(--p-help-color) 65%, black));
   --p-button-help-border-color:     var(--button-help-border-color,     var(--p-help-color));
   --p-button-help-color:            var(--button-help-color,            #ffffff);
 
@@ -208,21 +212,25 @@
   --p-button-outlined-success-border-color:        var(--button-outlined-success-border-color,      var(--p-success-color));
   --p-button-outlined-success-color:               var(--button-outlined-success-color,             var(--p-success-color));
   --p-button-outlined-success-hover-background:    var(--button-outlined-success-hover-background,  var(--p-success-bg));
+  --p-button-outlined-success-active-background:   var(--button-outlined-success-active-background, color-mix(in srgb, var(--p-success-color) 16%, transparent));
 
   /* ── Outlined: Warning ── */
   --p-button-outlined-warning-border-color:        var(--button-outlined-warn-border-color,         var(--p-warning-color));
   --p-button-outlined-warning-color:               var(--button-outlined-warn-color,                var(--p-warning-color));
   --p-button-outlined-warning-hover-background:    var(--button-outlined-warn-hover-background,     var(--p-warning-bg));
+  --p-button-outlined-warning-active-background:   var(--button-outlined-warn-active-background,    color-mix(in srgb, var(--p-warning-color) 16%, transparent));
 
   /* ── Outlined: Info ── */
   --p-button-outlined-info-border-color:           var(--button-outlined-info-border-color,         var(--p-info-color));
   --p-button-outlined-info-color:                  var(--button-outlined-info-color,                var(--p-info-color));
   --p-button-outlined-info-hover-background:       var(--button-outlined-info-hover-background,     var(--p-info-bg));
+  --p-button-outlined-info-active-background:      var(--button-outlined-info-active-background,    color-mix(in srgb, var(--p-info-color) 16%, transparent));
 
   /* ── Outlined: Help ── */
   --p-button-outlined-help-border-color:           var(--button-outlined-help-border-color,         var(--p-help-color));
   --p-button-outlined-help-color:                  var(--button-outlined-help-color,                var(--p-help-color));
   --p-button-outlined-help-hover-background:       var(--button-outlined-help-hover-background,     var(--p-help-bg));
+  --p-button-outlined-help-active-background:      var(--button-outlined-help-active-background,    color-mix(in srgb, var(--p-help-color) 16%, transparent));
 
   /* ── Text: Primary ── */
   --p-button-text-primary-color:             var(--p-primary-color);
@@ -247,12 +255,16 @@
   /* ── Text: Success / Warning / Info / Help ── */
   --p-button-text-success-color:            var(--p-success-color);
   --p-button-text-success-hover-background: var(--p-success-bg);
+  --p-button-text-success-active-background: color-mix(in srgb, var(--p-success-color) 16%, transparent);
   --p-button-text-warning-color:            var(--p-warning-color);
   --p-button-text-warning-hover-background: var(--p-warning-bg);
+  --p-button-text-warning-active-background: color-mix(in srgb, var(--p-warning-color) 16%, transparent);
   --p-button-text-info-color:               var(--p-info-color);
   --p-button-text-info-hover-background:    var(--p-info-bg);
+  --p-button-text-info-active-background:    color-mix(in srgb, var(--p-info-color) 16%, transparent);
   --p-button-text-help-color:               var(--p-help-color);
   --p-button-text-help-hover-background:    var(--p-help-bg);
+  --p-button-text-help-active-background:    color-mix(in srgb, var(--p-help-color) 16%, transparent);
 
   /* ── Raised shadow ── */
   --p-button-raised-shadow: var(--button-raised-shadow,
@@ -271,8 +283,8 @@
   --p-button-gap:              var(--button-gap,           var(--dimension-spacing-x6,     6px));
   --p-button-border-radius:    var(--button-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
   --p-button-icon-only-width:  var(--button-icon-only-width, var(--dimension-spacing-x32, 38px));
-  --p-button-icon-only-width-sm: var(--dimension-spacing-x28, 30px);
-  --p-button-icon-only-width-lg: var(--dimension-spacing-x42, 46px);
+  --p-button-icon-only-width-sm: var(--button-sm-icon-only-width, var(--dimension-spacing-x28, 30px));
+  --p-button-icon-only-width-lg: var(--button-lg-icon-only-width, var(--dimension-spacing-x42, 46px));
   --p-button-font-size:        var(--p-font-size);
   --p-button-sm-font-size:     var(--button-sm-font-size, var(--form-field-sm-font-size,  13px));
   --p-button-lg-font-size:     var(--button-lg-font-size, var(--form-field-lg-font-size,  15px));
@@ -296,6 +308,9 @@
   --p-float-label-color:      var(--float-label-color, var(--form-field-float-label-color, var(--p-surface-500)));
   --p-float-label-focus-color:var(--float-label-focus-color, var(--form-field-float-label-focus-color, var(--p-primary-color)));
   --p-float-label-invalid-color: var(--float-label-invalid-color, var(--form-field-float-label-invalid-color, var(--p-danger-color)));
+  --p-form-field-label-color:   var(--form-field-label-color, var(--p-surface-600));
+  --p-form-field-label-font-weight: var(--form-field-label-font-weight, 500);
+  --p-form-field-hint-color:    var(--form-field-hint-color, var(--p-surface-500));
   --p-focus-ring:             0 0 0 var(--p-focus-ring-width) color-mix(in srgb, var(--p-focus-ring-color) 30%, transparent);
 
   /* ═══════════════════════════════════════════════════════════════════
@@ -420,9 +435,9 @@
 
 
 /* ─── DARK MODE ─────────────────────────────────────────────────────── */
-/* Selector alineado con MDS: data-theme="ctr--tol--dark"               */
-/* Estos valores son fallback cuando los ficheros MDS no están cargados. */
-[data-theme="ctr--tol--dark"] {
+/* Modo oscuro: data-theme="dark" */
+/* Valores de respaldo si los CSS semánticos del playground no están cargados. */
+[data-theme="dark"] {
 
   /* Primary (paleta invertida para dark) */
   --p-primary-50:  var(--primary-50,  #000911);
@@ -482,6 +497,9 @@
   --p-input-bg:           var(--form-field-background,        var(--p-surface-700));
   --p-input-color:        var(--form-field-color,             var(--p-surface-100));
   --p-input-placeholder:  var(--form-field-placeholder-color, var(--p-surface-500));
+
+  --p-form-field-label-color: var(--form-field-label-color, var(--p-surface-400));
+  --p-form-field-hint-color:  var(--form-field-hint-color, var(--p-surface-500));
 
   /* Content dark */
   --p-content-bg:     var(--content-background,   var(--p-surface-800));

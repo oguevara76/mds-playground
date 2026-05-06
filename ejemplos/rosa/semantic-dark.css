@@ -3,7 +3,11 @@
    de la rampa rosa — visible sobre fondos oscuros.
 */
 
-html[data-theme="ctr--tol--dark"] {
+html[data-theme="dark"] {
+  --primary-color: #d45e91;
+  --primary-hover-color: #c44f82;
+  --primary-active-color: #b04472;
+  --primary-contrast-color: var(--surface-900, #09090b);
   --highlight-background:       rgba(212, 94, 145, 0.15);
   --highlight-color:            rgba(232, 125, 171, 1);
   --highlight-focus-background: rgba(212, 94, 145, 0.25);

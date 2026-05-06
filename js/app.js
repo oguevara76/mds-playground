@@ -36,15 +36,57 @@
     if (!radioEl) return;
     radioEl.classList.toggle('p-radio-checked', checked);
     radioEl.innerHTML = checked ? '<span class="p-radio-dot"></span>' : '';
-    optionEl.setAttribute('aria-pressed', checked ? 'true' : 'false');
+    optionEl.setAttribute('aria-checked', checked ? 'true' : 'false');
+  }
+
+  function syncRadioTabIndices(groupEl) {
+    groupEl.querySelectorAll('.js-radio-option').forEach(el => {
+      el.tabIndex = el.getAttribute('aria-checked') === 'true' ? 0 : -1;
+    });
   }
 
   document.querySelectorAll('[data-radio-group]').forEach(groupEl => {
     groupEl.querySelectorAll('.js-radio-option').forEach(optionEl => {
       optionEl.addEventListener('click', () => {
         groupEl.querySelectorAll('.js-radio-option').forEach(el => setRadioChecked(el, el === optionEl));
+        syncRadioTabIndices(groupEl);
       });
     });
+
+    groupEl.addEventListener('keydown', (e) => {
+      const options = [...groupEl.querySelectorAll('.js-radio-option')];
+      if (!options.length) return;
+      const currentIndex = options.indexOf(document.activeElement);
+      let nextIndex = currentIndex;
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % options.length;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        nextIndex = currentIndex < 0 ? options.length - 1 : (currentIndex - 1 + options.length) % options.length;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        nextIndex = 0;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        nextIndex = options.length - 1;
+      } else if (e.key === ' ' || e.key === 'Enter') {
+        if (currentIndex >= 0) {
+          e.preventDefault();
+          options[currentIndex].click();
+        }
+        return;
+      } else {
+        return;
+      }
+
+      options.forEach((el, i) => setRadioChecked(el, i === nextIndex));
+      syncRadioTabIndices(groupEl);
+      options[nextIndex].focus();
+    });
+
+    syncRadioTabIndices(groupEl);
   });
 
   function setCheckboxChecked(optionEl, checked) {
@@ -52,15 +94,46 @@
     if (!checkboxEl) return;
     checkboxEl.classList.toggle('p-checkbox-checked', checked);
     checkboxEl.innerHTML = checked ? '<i class="pi pi-check"></i>' : '';
-    optionEl.setAttribute('aria-pressed', checked ? 'true' : 'false');
+    optionEl.setAttribute('aria-checked', checked ? 'true' : 'false');
   }
 
   document.querySelectorAll('.js-checkbox-option').forEach(optionEl => {
     optionEl.addEventListener('click', () => {
-      const isChecked = optionEl.getAttribute('aria-pressed') === 'true';
+      const isChecked = optionEl.getAttribute('aria-checked') === 'true';
       setCheckboxChecked(optionEl, !isChecked);
     });
+
+    optionEl.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        optionEl.click();
+      }
+    });
   });
+
+  /* FloatLabel interactivo: refuerzo de estado “flotado” con valor (paridad PrimeNG) */
+  function initLiveFloatLabels(scope) {
+    const root = scope || document;
+    root.querySelectorAll('#tab-form-catalog .p-floatlabel').forEach(wrap => {
+      if (wrap.closest('.is-static-preview')) return;
+      const input = wrap.querySelector('input.p-inputtext');
+      if (!input || input.disabled || input.readOnly) return;
+
+      const sync = () => {
+        const hasValue = input.value.trim().length > 0;
+        const focused = document.activeElement === input;
+        if (hasValue || focused) wrap.classList.add('is-label-floated');
+        else wrap.classList.remove('is-label-floated');
+      };
+
+      input.addEventListener('input', sync);
+      input.addEventListener('focus', sync);
+      input.addEventListener('blur', () => window.setTimeout(sync, 0));
+      sync();
+    });
+  }
+
+  initLiveFloatLabels(document);
 
   document.querySelectorAll('.input-variant-block').forEach(showcaseEl => {
     showcaseEl.querySelectorAll('.js-input-icon-toggle').forEach(toggleEl => {
@@ -73,6 +146,12 @@
         if (toggleKnob) toggleKnob.classList.toggle('p-toggle-on', next);
         if (side === 'left') showcaseEl.classList.toggle('show-left-icon', next);
         if (side === 'right') showcaseEl.classList.toggle('show-right-icon', next);
+      });
+      toggleEl.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          toggleEl.click();
+        }
       });
     });
   });
@@ -90,7 +169,7 @@
   });
 
   function applyTheme() {
-    const theme = isDark ? 'ctr--tol--dark' : 'ctr--tol--light';
+    const theme = isDark ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', theme);
     toggleTheme.innerHTML = isDark
       ? '<i class="pi pi-sun"></i><span>Light</span>'
@@ -105,7 +184,7 @@
   /* Detecta si el primary actual es claro u oscuro y ajusta el texto sobre él */
   function autoContrastPrimary() {
     const html    = document.documentElement;
-    const current = html.getAttribute('data-theme') || 'ctr--tol--light';
+    const current = html.getAttribute('data-theme') || 'light';
 
     /* Lee el primary para cada tema cambiando data-theme de forma síncrona
        (sin repintado visual hasta que el JS termina) y calcula la regla. */
@@ -127,8 +206,8 @@
       }`;
     };
 
-    const lightRule = buildRule('ctr--tol--light');
-    const darkRule  = buildRule('ctr--tol--dark');
+    const lightRule = buildRule('light');
+    const darkRule  = buildRule('dark');
 
     /* Restaurar el tema real antes de escribir el estilo */
     html.setAttribute('data-theme', current);
@@ -140,33 +219,56 @@
       document.head.appendChild(el);
     }
     el.textContent = lightRule + '\n' + darkRule;
+    finalizeUserCssOrder();
   }
 
   function syncToggleState() {
     const hasAnyFile = Object.values(loadedSlots).some(v => v !== null);
-    const hasLight   = !!loadedSlots['semantic-light'];
-    const hasDark    = !!loadedSlots['semantic-dark'];
-    const onlyDark   = hasDark && !hasLight;
+    const hasLightSem = !!loadedSlots['semantic-light'];
+    const hasDarkSem  = !!loadedSlots['semantic-dark'];
+    const onlyDarkSem = hasDarkSem && !hasLightSem;
+    const onlyLightSem = hasLightSem && !hasDarkSem;
 
     if (!hasAnyFile) {
-      /* Sin ficheros — playground usa el MDS base completo, ambos modos disponibles */
       toggleTheme.disabled = false;
       toggleTheme.title = '';
-    } else if (onlyDark) {
-      /* Solo dark semantic subido → auto-switch a dark y bloquear toggle */
+      if (forcedDark) forcedDark = false;
+      return;
+    }
+
+    if (onlyDarkSem) {
+      /* Solo semantic-dark subido → oscuro fijo, toggle deshabilitado */
       toggleTheme.disabled = true;
-      toggleTheme.title = 'Esta colección solo tiene modo oscuro';
-      if (!isDark) { isDark = true; forcedDark = true; applyTheme(); }
-    } else if (!hasDark) {
-      /* Ficheros cargados sin dark semantic → bloquear toggle en light */
+      toggleTheme.title = 'Solo hay semántica oscura: el tema permanece en modo oscuro.';
+      if (!isDark) {
+        isDark = true;
+        forcedDark = true;
+        applyTheme();
+      }
+      return;
+    }
+
+    if (onlyLightSem) {
+      /* Solo semantic-light subido → claro fijo, toggle deshabilitado */
       toggleTheme.disabled = true;
-      toggleTheme.title = 'Carga el fichero semantic-dark para activar el modo oscuro';
-      if (isDark) { isDark = false; applyTheme(); }
-    } else {
-      /* Ambos modos disponibles */
-      toggleTheme.disabled = false;
-      toggleTheme.title = '';
-      if (forcedDark) { isDark = false; forcedDark = false; applyTheme(); }
+      toggleTheme.title = 'Solo hay semántica clara: el tema permanece en modo claro.';
+      if (isDark) {
+        isDark = false;
+        applyTheme();
+      }
+      if (forcedDark) forcedDark = false;
+      return;
+    }
+
+    /* Semántica light+dark, o ninguna semántica subida (p. ej. solo primitivos/componente: el core aporta ambos modos) */
+    toggleTheme.disabled = false;
+    toggleTheme.title = '';
+    if (hasLightSem && hasDarkSem && forcedDark) {
+      isDark = false;
+      forcedDark = false;
+      applyTheme();
+    } else if (forcedDark && !hasDarkSem) {
+      forcedDark = false;
     }
   }
 
@@ -193,12 +295,34 @@
     'components':     'Componentes',
   };
 
-  /* ── Auto-detection of file type ── */
+  /* Orden en el DOM: prim → sem light → sem dark → comp, siempre delante de #auto-contrast */
+  const USER_STYLE_IDS_ORDERED = [
+    'user-primitives',
+    'user-semantic-light',
+    'user-semantic-dark',
+    'user-components',
+  ];
+
+  function finalizeUserCssOrder() {
+    const contrast = document.getElementById('auto-contrast');
+    if (!contrast || !document.head.contains(contrast)) return;
+    [...USER_STYLE_IDS_ORDERED].reverse().forEach(id => {
+      const el = document.getElementById(id);
+      if (el && document.head.contains(el)) document.head.insertBefore(el, contrast);
+    });
+  }
+
+  /* ── Auto-detection of file type (alineado con css-import-normalize.js) ── */
   function detectSlot(css) {
-    if (/html\[data-theme="ctr--tol--light"\]/.test(css)) return 'semantic-light';
-    if (/html\[data-theme="ctr--tol--dark"\]/.test(css))  return 'semantic-dark';
-    /* Components: cualquier token de componente sin prefijo --p- */
-    if (/--button-|--accordion-|--autocomplete-|--badge-|--input-/.test(css)) return 'components';
+    if (/html\[data-theme="light"\]/.test(css)) return 'semantic-light';
+    if (/html\[data-theme="dark"\]/.test(css)) return 'semantic-dark';
+    if (
+      typeof window.CssImportNormalize !== 'undefined' &&
+      typeof window.CssImportNormalize.looksLikeComponentsCss === 'function' &&
+      window.CssImportNormalize.looksLikeComponentsCss(css)
+    ) {
+      return 'components';
+    }
     return 'primitives';
   }
 
@@ -222,22 +346,102 @@
   });
 
   function processFiles(files) {
-    Array.from(files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const css  = sanitizeCSS(e.target.result);
-        const slot = detectSlot(css);
-        loadedSlots[slot] = { fileName: file.name, css };
-        injectSlot(slot, css);
+    const sorted = Array.from(files).sort((a, b) => a.name.localeCompare(b.name, 'es'));
+    const readers = sorted.map(
+      file =>
+        new Promise((resolve, reject) => {
+          const fr = new FileReader();
+          fr.onload = () => resolve({ file, text: fr.result });
+          fr.onerror = () => reject(new Error(file.name));
+          fr.readAsText(file);
+        })
+    );
+
+    Promise.all(readers)
+      .then(entries => {
+        /* Un solo pase: todos los slots se rellenan de forma determinista (nombre de fichero ordenado). */
+        const bySlot = {};
+        entries.forEach(({ file, text }) => {
+          const raw = sanitizeCSS(String(text));
+          const norm =
+            typeof window.CssImportNormalize !== 'undefined'
+              ? window.CssImportNormalize.normalizeUploaded(raw)
+              : { ok: false, injects: [] };
+
+          if (norm.ok && norm.injects && norm.injects.length) {
+            norm.injects.forEach(({ slot, css }) => {
+              bySlot[slot] = { fileName: file.name, css };
+            });
+          } else {
+            const slot = detectSlot(raw);
+            bySlot[slot] = { fileName: file.name, css: raw };
+          }
+        });
+
+        /* Obligatorio: primitivos + al menos un semántico (tras fusionar con lo ya cargado) */
+        const merged = { ...loadedSlots };
+        Object.entries(bySlot).forEach(([slot, payload]) => {
+          merged[slot] = payload;
+        });
+        const hasPrim = !!merged.primitives;
+        const hasSem =
+          !!merged['semantic-light'] || !!merged['semantic-dark'];
+        if (!hasPrim || !hasSem) {
+          if (!hasPrim && !hasSem) {
+            showToast(
+              'Subida no permitida: faltan primitivos y semántica (light u oscuro). Ambos son obligatorios.',
+              'error'
+            );
+          } else if (!hasPrim) {
+            showToast(
+              'Subida no permitida: falta el fichero de primitivos (obligatorio).',
+              'error'
+            );
+          } else {
+            showToast(
+              'Subida no permitida: falta semántica clara u oscura (al menos una es obligatoria).',
+              'error'
+            );
+          }
+          fileInput.value = '';
+          return;
+        }
+
+        Object.entries(bySlot).forEach(([slot, payload]) => {
+          loadedSlots[slot] = payload;
+          injectSlot(slot, payload.css);
+        });
+        finalizeUserCssOrder();
+
         invalidateMdsCache(); /* uploaded file may override core vars — force re-parse */
         renderFileList();
         validateSlots();
         syncToggleState();
-        setTimeout(() => { refreshColorStrip(); refreshTokenGrid(); autoContrastPrimary(); if (tvIsActive) { if (tvMapMode) renderTvMap(); else renderTvList(tvSearch.value); } }, 120);
-        showToast(`✓ ${SLOT_LABEL[slot]}: ${file.name}`, 'success');
-      };
-      reader.readAsText(file);
-    });
+        const labels = Object.keys(bySlot)
+          .sort()
+          .map(s => SLOT_LABEL[s]);
+        showToast(
+          labels.length
+            ? `✓ ${labels.join(' · ')} — ${entries.length} fichero(s)`
+            : `✓ ${entries.length} fichero(s)`,
+          'success'
+        );
+        setTimeout(
+          () => {
+            refreshColorStrip();
+            refreshTokenGrid();
+            autoContrastPrimary();
+            if (tvIsActive) {
+              if (tvMapMode) renderTvMap();
+              else renderTvList(tvSearch.value);
+            }
+          },
+          120
+        );
+      })
+      .catch(() => {
+        showToast('No se pudo leer uno de los ficheros', 'error');
+      });
   }
 
   function sanitizeCSS(css) {
@@ -248,7 +452,10 @@
 
   function injectSlot(slot, css) {
     const el = document.getElementById(SLOT_STYLE_ID[slot]);
-    if (el) el.textContent = css;
+    if (!el) return;
+    const t = String(css || '').trim();
+    /* Sin @layer: las mismas propiedades que el core/Prime ganan por orden (este bloque va tras los <link>). */
+    el.textContent = t;
   }
 
   function removeAllSlots() {
@@ -256,6 +463,7 @@
       loadedSlots[slot] = null;
       injectSlot(slot, '');
     });
+    finalizeUserCssOrder();
     fileInput.value = '';
     invalidateMdsCache();
     renderFileList();
@@ -265,11 +473,12 @@
     showToast('Ficheros eliminados — tokens por defecto restaurados', 'info');
   }
 
-  /* ── Validación: mínimo primitives + un semantic ── */
+  /* ── Obligatorio: primitivos + al menos un semántico. Componentes: opcional. ── */
   function validateSlots() {
-    const hasAnyFile  = Object.values(loadedSlots).some(v => v !== null);
-    const hasPrim     = !!loadedSlots['primitives'];
-    const hasSemantic = !!loadedSlots['semantic-light'] || !!loadedSlots['semantic-dark'];
+    const hasAnyFile = Object.values(loadedSlots).some(v => v !== null);
+    const hasPrim    = !!loadedSlots['primitives'];
+    const hasSem     =
+      !!loadedSlots['semantic-light'] || !!loadedSlots['semantic-dark'];
 
     if (!hasAnyFile) {
       uploadWarning.hidden = true;
@@ -277,12 +486,12 @@
     }
 
     let msg = null;
-    if (!hasPrim && !hasSemantic) {
-      msg = 'Faltan primitives y un semantic (light o dark).';
-    } else if (!hasPrim) {
-      msg = 'Falta el fichero primitives.css.';
-    } else if (!hasSemantic) {
-      msg = 'Falta al menos un fichero semantic (light o dark).';
+    if (!hasPrim) {
+      msg =
+        'Falta el fichero de primitivos (obligatorio). Añade también al menos un semántico (light y/o dark). Los componentes son opcionales.';
+    } else if (!hasSem) {
+      msg =
+        'Falta la semántica: sube al menos light o dark (obligatorio). El fichero de componentes es opcional.';
     }
 
     uploadWarningText.textContent = msg || '';
@@ -893,7 +1102,7 @@
     const semSubs   = [];
     const activeSlot  = isDark ? 'semantic-dark'  : 'semantic-light';
     const activeMode  = isDark ? 'dark'            : 'light';
-    const activeTheme = isDark ? 'ctr--tol--dark'  : 'ctr--tol--light';
+    const activeTheme = isDark ? 'dark'  : 'light';
     {
       const baseVars = (isDark ? base.dark : base.light).slice();
       const vars     = loadedSlots[activeSlot]
@@ -933,7 +1142,7 @@
     const semSubs = [];
     const activeSemData  = isDark ? dark  : light;
     const activeSemMode  = isDark ? 'dark'           : 'light';
-    const activeSemTheme = isDark ? 'ctr--tol--dark' : 'ctr--tol--light';
+    const activeSemTheme = isDark ? 'dark' : 'light';
     if (activeSemData.length) {
       const tokens = activeSemData.map(({ name, value }) => ({ name, label: name.replace(/^--/, ''), type: inferTokenType(value), value }));
       semSubs.push({ label: activeSemMode === 'light' ? 'Light' : 'Dark', mode: activeSemMode, theme: activeSemTheme, tokens });
@@ -951,7 +1160,7 @@
     const primSubs = [], semSubs = [], compSubs = [];
     TOKEN_CATALOG.forEach(g => {
       if (g.id.startsWith('prim'))       primSubs.push({ label: g.label.replace('Primitivos — ',''),  tokens: g.tokens });
-      else if (g.id.startsWith('sem'))   semSubs.push({ label: g.label.replace('Semánticos — ',''),   mode:'light', theme:'ctr--tol--light', tokens: g.tokens });
+      else if (g.id.startsWith('sem'))   semSubs.push({ label: g.label.replace('Semánticos — ',''),   mode:'light', theme:'light', tokens: g.tokens });
       else                               compSubs.push({ label: g.label.replace('Componentes — ',''), tokens: g.tokens });
     });
     const sections = [];
@@ -1749,7 +1958,7 @@
   }
 
   /* ── Init ── */
-  document.documentElement.setAttribute('data-theme', 'ctr--tol--light');
+  document.documentElement.setAttribute('data-theme', 'light');
   syncToggleState();
   refreshTokenGrid();
   refreshColorStrip();

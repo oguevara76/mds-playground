@@ -1,12 +1,8 @@
-/* Semantics - Theme: ctr--tol--dark */
-/* Version: 1.0.0 */
-/* Description: Base dark theme. */
-/* Author: UX/UI Design System Team */
-/* Last Updated: 2026-04-29 */
+/* Semántica — tema oscuro (playground) */
 
-@layer csisarqref;
+@layer mds-core;
 
-html[data-theme="ctr--tol--dark"] {
+html[data-theme="dark"] {
   --anchor-gutter: var(--dimension-spacing-x2);
   --border-radius-lg: var(--dimension-radius-x8);
   --border-radius-md: var(--dimension-radius-x6);
@@ -57,6 +53,7 @@ html[data-theme="ctr--tol--dark"] {
   --focus-ring-width: 1px;
   --form-field-background: var(--surface-950);
   --form-field-border-color: var(--surface-600);
+  --form-field-border-radius-rounded: var(--border-radius-pill);
   --form-field-border-radius: var(--border-radius-md);
   --form-field-color: var(--surface-0);
   --form-field-disabled-background: var(--surface-700);
@@ -177,6 +174,7 @@ html[data-theme="ctr--tol--dark"] {
   --surface-context-medium: var(--surface-600);
   --surface-context-minimal: var(--surface-950);
   --surface-context-primary-medium: var(--teal-600);
+  --surface-context-primary-soft: var(--teal-900);
   --surface-context-primary-subtle: var(--teal-800);
   --surface-context-soft: var(--surface-900);
   --surface-context-strong: var(--surface-400);

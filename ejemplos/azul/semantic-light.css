@@ -3,7 +3,12 @@
    Solo se ajusta el highlight para alinearlo con la gama azul.
 */
 
-html[data-theme="ctr--tol--light"] {
+html[data-theme="light"] {
+  /* Primary — visibles en botones, foco y franja de tokens (además del highlight) */
+  --primary-color: #3b61b5;
+  --primary-hover-color: #2c4987;
+  --primary-active-color: #1e325d;
+  --primary-contrast-color: rgba(255, 255, 255, 1);
   --highlight-background:       rgba( 59,  97, 181, 0.12);
   --highlight-color:            rgba( 44,  73, 135, 1);
   --highlight-focus-background: rgba( 59,  97, 181, 0.22);

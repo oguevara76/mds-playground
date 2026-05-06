@@ -3,7 +3,11 @@
    Solo se ajusta el highlight para alinearlo con la gama púrpura.
 */
 
-html[data-theme="ctr--tol--light"] {
+html[data-theme="light"] {
+  --primary-color: #8240c7;
+  --primary-hover-color: #5f2c96;
+  --primary-active-color: #411e67;
+  --primary-contrast-color: rgba(255, 255, 255, 1);
   --highlight-background:       rgba(130,  64, 199, 0.12);
   --highlight-color:            rgba( 95,  44, 150, 1);
   --highlight-focus-background: rgba(130,  64, 199, 0.22);

@@ -3,7 +3,11 @@
    de la rampa oliva — visible sobre fondos oscuros.
 */
 
-html[data-theme="ctr--tol--dark"] {
+html[data-theme="dark"] {
+  --primary-color: #bdc761;
+  --primary-hover-color: #a4ae47;
+  --primary-active-color: #7d843c;
+  --primary-contrast-color: var(--surface-900, #09090b);
   --highlight-background:       rgba(189, 199, 97, 0.15);
   --highlight-color:            rgba(212, 221, 136, 1);
   --highlight-focus-background: rgba(189, 199, 97, 0.25);

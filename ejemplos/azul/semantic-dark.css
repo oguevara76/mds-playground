@@ -4,7 +4,11 @@
    El contraste usa --surface-900 (oscuro) definido en el MDS base.
 */
 
-html[data-theme="ctr--tol--dark"] {
+html[data-theme="dark"] {
+  --primary-color: #5c83d6;
+  --primary-hover-color: #4a72c9;
+  --primary-active-color: #3b61b5;
+  --primary-contrast-color: var(--surface-900, #09090b);
   --highlight-background:       rgba( 92, 131, 214, 0.15);
   --highlight-color:            rgba(125, 159, 232, 1);
   --highlight-focus-background: rgba( 92, 131, 214, 0.25);

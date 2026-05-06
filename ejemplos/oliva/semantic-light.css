@@ -2,7 +2,11 @@
    Ajusta highlight al tono oliva en modo claro.
 */
 
-html[data-theme="ctr--tol--light"] {
+html[data-theme="light"] {
+  --primary-color: #7d843c;
+  --primary-hover-color: #5d632c;
+  --primary-active-color: #434620;
+  --primary-contrast-color: rgba(255, 255, 255, 1);
   --highlight-background:       rgba(125, 132, 60, 0.12);
   --highlight-color:            rgba( 93,  99, 44, 1);
   --highlight-focus-background: rgba(125, 132, 60, 0.22);

@@ -2,7 +2,11 @@
    Ajusta highlight al tono rosa en modo claro.
 */
 
-html[data-theme="ctr--tol--light"] {
+html[data-theme="light"] {
+  --primary-color: #b04472;
+  --primary-hover-color: #843356;
+  --primary-active-color: #5c243c;
+  --primary-contrast-color: rgba(255, 255, 255, 1);
   --highlight-background:       rgba(176, 68, 114, 0.12);
   --highlight-color:            rgba(132, 51,  86, 1);
   --highlight-focus-background: rgba(176, 68, 114, 0.22);
