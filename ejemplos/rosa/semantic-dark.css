@@ -1,13 +1,28 @@
 /* Semantics Dark — Ejemplo: Rosa #b04472
-   En dark mode el primary usa --teal-400 (#d45e91), tono más claro
+   En dark mode el primary usa --rose-400, tono más claro
    de la rampa rosa — visible sobre fondos oscuros.
 */
 
 html[data-theme="dark"] {
-  --primary-color: #d45e91;
-  --primary-hover-color: #c44f82;
-  --primary-active-color: #b04472;
+  --primary-50: var(--rose-950);
+  --primary-100: var(--rose-900);
+  --primary-200: var(--rose-800);
+  --primary-300: var(--rose-700);
+  --primary-400: var(--rose-600);
+  --primary-500: var(--rose-500);
+  --primary-600: var(--rose-400);
+  --primary-700: var(--rose-300);
+  --primary-800: var(--rose-200);
+  --primary-900: var(--rose-100);
+  --primary-950: var(--rose-50);
+  --primary-color: var(--rose-400);
+  --primary-hover-color: var(--rose-500);
+  --primary-active-color: var(--rose-600);
   --primary-contrast-color: var(--surface-900, #09090b);
+  --surface-context-fixed-primary: var(--rose-600);
+  --surface-context-primary-medium: var(--rose-600);
+  --surface-context-primary-soft: var(--rose-900);
+  --surface-context-primary-subtle: var(--rose-800);
   --highlight-background:       rgba(212, 94, 145, 0.15);
   --highlight-color:            rgba(232, 125, 171, 1);
   --highlight-focus-background: rgba(212, 94, 145, 0.25);

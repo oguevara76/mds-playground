@@ -689,12 +689,14 @@
   const tvSearchClear = document.getElementById('tv-search-clear');
   const tvSearchWrap  = document.getElementById('tv-search-wrap');
   const tvCount       = document.getElementById('tv-count');
+  const tvPrimaryBadge = document.getElementById('tv-primary-replacement');
   const navTokensLink = document.getElementById('nav-tokens');
   const previewTabsEl = document.querySelector('.preview-tabs');
   const tvBtnList     = document.getElementById('tv-btn-list');
   const tvBtnMap      = document.getElementById('tv-btn-map');
   const tvMapArea     = document.getElementById('tv-map-area');
   let   tvMapMode     = false;
+  let   tvPrimaryReplacementLabel = '';
 
   const TOKEN_CATALOG = [
     {
@@ -1042,6 +1044,68 @@
     return vars;
   }
 
+  const SCALE_STEPS_RE = '(50|100|200|300|400|500|600|700|800|900|950)';
+  const SCALE_TOKEN_RE = new RegExp(`^--([a-z][\\w-]*)-${SCALE_STEPS_RE}$`, 'i');
+  const TEAL_REF_RE    = new RegExp(`var\\(--teal-${SCALE_STEPS_RE}\\)`, 'g');
+
+  function extractPaletteNameSet(vars) {
+    const set = new Set();
+    vars.forEach(({ name }) => {
+      const m = name.match(SCALE_TOKEN_RE);
+      if (m) set.add(m[1].toLowerCase());
+    });
+    return set;
+  }
+
+  /**
+   * Si primitives subido trae una escala nueva (no-core) y no trae teal-*,
+   * usamos esa escala como sustitución visual/relacional de la primaria.
+   */
+  function detectPrimaryPaletteReplacement(uploadedCss, basePrimVars) {
+    const uploaded = parseCssVarsText(uploadedCss || '');
+    if (!uploaded.length) return null;
+
+    const byPalette = new Map(); // palette -> Map(step -> varName)
+    uploaded.forEach(({ name }) => {
+      const m = name.match(SCALE_TOKEN_RE);
+      if (!m) return;
+      const pal = m[1].toLowerCase();
+      const step = m[2];
+      if (!byPalette.has(pal)) byPalette.set(pal, new Map());
+      byPalette.get(pal).set(step, `--${pal}-${step}`);
+    });
+
+    const hasUploadedTeal = byPalette.has('teal');
+    if (hasUploadedTeal) return null; // caso clásico: overwrite directo de teal
+
+    const corePaletteSet = extractPaletteNameSet(basePrimVars || []);
+    let best = null;
+    byPalette.forEach((steps, palette) => {
+      const score = steps.size;
+      const isNonCore = !corePaletteSet.has(palette);
+      if (!best) {
+        best = { palette, steps, score, isNonCore };
+        return;
+      }
+      if (isNonCore && !best.isNonCore) { best = { palette, steps, score, isNonCore }; return; }
+      if (isNonCore === best.isNonCore && score > best.score) { best = { palette, steps, score, isNonCore }; }
+    });
+
+    if (!best || best.score < 3) return null;
+    return best; // { palette, steps: Map(step -> --palette-step), ... }
+  }
+
+  function replaceTealRefs(value, replacement) {
+    if (!value || !replacement) return value;
+    return String(value).replace(TEAL_REF_RE, full => {
+      const m = full.match(new RegExp(`--teal-${SCALE_STEPS_RE}`));
+      if (!m) return full;
+      const step = m[1];
+      const repl = replacement.steps.get(step);
+      return repl ? `var(${repl})` : full;
+    });
+  }
+
   /* Invalidate cache when user uploads custom CSS so next read re-evaluates */
   function invalidateMdsCache() { mdsVarsCache = null; }
 
@@ -1089,11 +1153,22 @@
     const base     = readMdsCoreVars();
     const sections = [];
 
+    const primReplacement = loadedSlots.primitives
+      ? detectPrimaryPaletteReplacement(loadedSlots.primitives.css, base.prim)
+      : null;
+    tvPrimaryReplacementLabel = primReplacement
+      ? `Primary replacement: ${primReplacement.palette}`
+      : '';
+
     /* ── Primitivos ── */
     {
-      const vars      = loadedSlots.primitives
+      let vars      = loadedSlots.primitives
         ? mergeUploadedVars(base.prim, loadedSlots.primitives.css)
         : base.prim.slice();
+      if (primReplacement) {
+        const isTealScale = n => /^--teal-(50|100|200|300|400|500|600|700|800|900|950)$/.test(n);
+        vars = vars.filter(v => !isTealScale(v.name));
+      }
       const subGroups = groupByPalette(vars);
       if (subGroups.length) sections.push({ id:'primitivos', label:'Primitivos', cls:'tva-prim', subGroups });
     }
@@ -1109,7 +1184,10 @@
         ? mergeUploadedVars(baseVars, loadedSlots[activeSlot].css)
         : baseVars;
       if (vars.length) {
-        const tokens = vars.map(({ name, value }) => ({ name, label: name.replace(/^--/, ''), type: inferTokenType(value), value }));
+        const tokens = vars.map(({ name, value }) => {
+          const mapped = primReplacement ? replaceTealRefs(value, primReplacement) : value;
+          return { name, label: name.replace(/^--/, ''), type: inferTokenType(mapped), value: mapped };
+        });
         semSubs.push({ label: activeMode === 'light' ? 'Light' : 'Dark', mode: activeMode, theme: activeTheme, tokens });
       }
     }
@@ -1120,7 +1198,10 @@
       const vars      = loadedSlots.components
         ? mergeUploadedVars(base.comp, loadedSlots.components.css)
         : base.comp.slice();
-      const subGroups = groupByComponent(vars);
+      const mappedVars = primReplacement
+        ? vars.map(v => ({ ...v, value: replaceTealRefs(v.value, primReplacement) }))
+        : vars;
+      const subGroups = groupByComponent(mappedVars);
       if (subGroups.length) sections.push({ id:'componentes', label:'Componentes', cls:'tva-comp', subGroups });
     }
 
@@ -1128,6 +1209,7 @@
   }
 
   function buildSectionsFromDocument() {
+    tvPrimaryReplacementLabel = '';
     const { prim, light, dark, comp } = readMdsCoreVars();
     const total = prim.length + light.length + dark.length + comp.length;
     if (!total) return buildFallbackSections();
@@ -1268,6 +1350,10 @@
     }).join('');
 
     tvCount.textContent = total + ' token' + (total !== 1 ? 's' : '');
+    if (tvPrimaryBadge) {
+      tvPrimaryBadge.hidden = !tvPrimaryReplacementLabel;
+      tvPrimaryBadge.textContent = tvPrimaryReplacementLabel || '';
+    }
   }
 
   tvSearch.addEventListener('input', () => {
@@ -1416,30 +1502,12 @@
     const semSet  = new Set(allSemVars.map(t => t.name));
 
     /* ── Build connection maps ── */
-    const mapTheme = semTheme || (isDark ? 'dark' : 'light');
-    const primResolvedAll = batchResolve(allPrimVars, mapTheme);
-    const semResolvedAll  = batchResolve(allSemVars, mapTheme);
-
-    /* sem → prim: (1) explicit var(--prim) ref, (2) fallback por color resuelto */
+    /* sem → prim: solo referencia explícita var(--primitive) */
     const semRefMap  = new Map(); // semName → primName
-    const primByHex  = new Map();
-    allPrimVars.forEach(t => {
-      const r = primResolvedAll[t.name];
-      if (r && r.hex && !primByHex.has(r.hex)) primByHex.set(r.hex, t.name);
-    });
     allSemVars.forEach(t => {
       const ref = extractVarRef(t.value);
       if (ref && primSet.has(ref)) {
         semRefMap.set(t.name, ref);
-        return;
-      }
-      /* Si el semantic viene en literal (sin var), reconectar por color efectivo. */
-      if (t.type === 'color') {
-        const rs = semResolvedAll[t.name];
-        if (rs && rs.hex) {
-          const primByColor = primByHex.get(rs.hex);
-          if (primByColor) semRefMap.set(t.name, primByColor);
-        }
       }
     });
     /* comp → sem or prim */
@@ -1535,6 +1603,11 @@
     /* ── Layout positions ── */
     const pp = vvPosStore.prim;
     const sp = vvPosStore.sem;
+
+    if (tvPrimaryBadge) {
+      tvPrimaryBadge.hidden = !tvPrimaryReplacementLabel;
+      tvPrimaryBadge.textContent = tvPrimaryReplacementLabel || '';
+    }
 
     /* ── Render ── */
     tvMapArea.innerHTML = `

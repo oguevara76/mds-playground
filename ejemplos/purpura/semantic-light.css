@@ -4,10 +4,25 @@
 */
 
 html[data-theme="light"] {
-  --primary-color: #8240c7;
-  --primary-hover-color: #5f2c96;
-  --primary-active-color: #411e67;
+  --primary-50: var(--purple-50);
+  --primary-100: var(--purple-100);
+  --primary-200: var(--purple-200);
+  --primary-300: var(--purple-300);
+  --primary-400: var(--purple-400);
+  --primary-500: var(--purple-500);
+  --primary-600: var(--purple-600);
+  --primary-700: var(--purple-700);
+  --primary-800: var(--purple-800);
+  --primary-900: var(--purple-900);
+  --primary-950: var(--purple-950);
+  --primary-color: var(--purple-600);
+  --primary-hover-color: var(--purple-700);
+  --primary-active-color: var(--purple-800);
   --primary-contrast-color: rgba(255, 255, 255, 1);
+  --surface-context-fixed-primary: var(--purple-600);
+  --surface-context-primary-medium: var(--purple-300);
+  --surface-context-primary-soft: var(--purple-50);
+  --surface-context-primary-subtle: var(--purple-100);
   --highlight-background:       rgba(130,  64, 199, 0.12);
   --highlight-color:            rgba( 95,  44, 150, 1);
   --highlight-focus-background: rgba(130,  64, 199, 0.22);

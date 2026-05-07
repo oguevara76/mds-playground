@@ -1,5 +1,5 @@
 /* Primitives — Ejemplo: Ámbar #786008
-   Remapea --teal-* a la rampa ámbar oscura con base #786008 en posición 600.
+   Remapea --amber-* a la rampa ámbar oscura con base #786008 en posición 600.
    El resto de la paleta se hereda del fichero base del MDS.
 
    Base: #786008 → HSL(47°, 88%, 25%)  Contraste con blanco: 6:1 ✓ WCAG AA
@@ -18,15 +18,15 @@
 */
 
 html:root {
-  --teal-50:  rgba(255, 251, 235, 1);
-  --teal-100: rgba(255, 244, 204, 1);
-  --teal-200: rgba(254, 234, 164, 1);
-  --teal-300: rgba(252, 220, 105, 1);
-  --teal-400: rgba(248, 204,  42, 1);
-  --teal-500: rgba(194, 154,  10, 1);
-  --teal-600: rgba(120,  96,   8, 1);
-  --teal-700: rgba( 85,  68,   7, 1);
-  --teal-800: rgba( 60,  47,   6, 1);
-  --teal-900: rgba( 41,  32,   5, 1);
-  --teal-950: rgba( 27,  21,   4, 1);
+  --amber-50:  rgba(255, 251, 235, 1);
+  --amber-100: rgba(255, 244, 204, 1);
+  --amber-200: rgba(254, 234, 164, 1);
+  --amber-300: rgba(252, 220, 105, 1);
+  --amber-400: rgba(248, 204,  42, 1);
+  --amber-500: rgba(194, 154,  10, 1);
+  --amber-600: rgba(120,  96,   8, 1);
+  --amber-700: rgba( 85,  68,   7, 1);
+  --amber-800: rgba( 60,  47,   6, 1);
+  --amber-900: rgba( 41,  32,   5, 1);
+  --amber-950: rgba( 27,  21,   4, 1);
 }

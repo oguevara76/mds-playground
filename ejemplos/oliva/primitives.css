@@ -1,5 +1,5 @@
 /* Primitives — Ejemplo: Oliva #7d843c
-   Remapea --teal-* a la rampa oliva con base #7d843c en posición 600.
+   Remapea --olive-* a la rampa oliva con base #7d843c en posición 600.
 
    Base: #7d843c → HSL(66°, 38%, 38%)  Brillo percibido: 0.48 → texto OSCURO
 
@@ -17,15 +17,15 @@
 */
 
 html:root {
-  --teal-50:  rgba(253, 254, 240, 1);
-  --teal-100: rgba(247, 250, 219, 1);
-  --teal-200: rgba(233, 239, 179, 1);
-  --teal-300: rgba(212, 221, 136, 1);
-  --teal-400: rgba(189, 199,  97, 1);
-  --teal-500: rgba(164, 174,  71, 1);
-  --teal-600: rgba(125, 132,  60, 1);
-  --teal-700: rgba( 93,  99,  44, 1);
-  --teal-800: rgba( 67,  70,  32, 1);
-  --teal-900: rgba( 43,  46,  21, 1);
-  --teal-950: rgba( 27,  28,  13, 1);
+  --olive-50:  rgba(253, 254, 240, 1);
+  --olive-100: rgba(247, 250, 219, 1);
+  --olive-200: rgba(233, 239, 179, 1);
+  --olive-300: rgba(212, 221, 136, 1);
+  --olive-400: rgba(189, 199,  97, 1);
+  --olive-500: rgba(164, 174,  71, 1);
+  --olive-600: rgba(125, 132,  60, 1);
+  --olive-700: rgba( 93,  99,  44, 1);
+  --olive-800: rgba( 67,  70,  32, 1);
+  --olive-900: rgba( 43,  46,  21, 1);
+  --olive-950: rgba( 27,  28,  13, 1);
 }

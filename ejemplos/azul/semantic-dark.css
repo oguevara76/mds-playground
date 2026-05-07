@@ -1,14 +1,29 @@
 /* Semantics Dark — Ejemplo: Azul #3b61b5
-   En dark mode el primary usa --teal-400 (#5c83d6), el tono más claro
+   En dark mode el primary usa --blue-400, el tono más claro
    de la rampa azul — visible sobre fondos oscuros.
    El contraste usa --surface-900 (oscuro) definido en el MDS base.
 */
 
 html[data-theme="dark"] {
-  --primary-color: #5c83d6;
-  --primary-hover-color: #4a72c9;
-  --primary-active-color: #3b61b5;
+  --primary-50: var(--blue-950);
+  --primary-100: var(--blue-900);
+  --primary-200: var(--blue-800);
+  --primary-300: var(--blue-700);
+  --primary-400: var(--blue-600);
+  --primary-500: var(--blue-500);
+  --primary-600: var(--blue-400);
+  --primary-700: var(--blue-300);
+  --primary-800: var(--blue-200);
+  --primary-900: var(--blue-100);
+  --primary-950: var(--blue-50);
+  --primary-color: var(--blue-400);
+  --primary-hover-color: var(--blue-500);
+  --primary-active-color: var(--blue-600);
   --primary-contrast-color: var(--surface-900, #09090b);
+  --surface-context-fixed-primary: var(--blue-600);
+  --surface-context-primary-medium: var(--blue-600);
+  --surface-context-primary-soft: var(--blue-900);
+  --surface-context-primary-subtle: var(--blue-800);
   --highlight-background:       rgba( 92, 131, 214, 0.15);
   --highlight-color:            rgba(125, 159, 232, 1);
   --highlight-focus-background: rgba( 92, 131, 214, 0.25);

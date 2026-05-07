@@ -1,5 +1,5 @@
 /* Primitives — Ejemplo: Púrpura #8240c7
-   Remapea --teal-* a la rampa púrpura con base #8240c7 en posición 600.
+   Remapea --purple-* a la rampa púrpura con base #8240c7 en posición 600.
 
    Base: #8240c7 → HSL(269°, 55%, 52%)  Contraste con blanco: 5.9:1 ✓ WCAG AA
 
@@ -17,15 +17,15 @@
 */
 
 html:root {
-  --teal-50:  rgba(247, 240, 255, 1);
-  --teal-100: rgba(234, 216, 253, 1);
-  --teal-200: rgba(208, 172, 246, 1);
-  --teal-300: rgba(177, 125, 232, 1);
-  --teal-400: rgba(156,  98, 218, 1);
-  --teal-500: rgba(143,  83, 208, 1);
-  --teal-600: rgba(130,  64, 199, 1);
-  --teal-700: rgba( 95,  44, 150, 1);
-  --teal-800: rgba( 65,  30, 103, 1);
-  --teal-900: rgba( 42,  19,  67, 1);
-  --teal-950: rgba( 25,  11,  39, 1);
+  --purple-50:  rgba(247, 240, 255, 1);
+  --purple-100: rgba(234, 216, 253, 1);
+  --purple-200: rgba(208, 172, 246, 1);
+  --purple-300: rgba(177, 125, 232, 1);
+  --purple-400: rgba(156,  98, 218, 1);
+  --purple-500: rgba(143,  83, 208, 1);
+  --purple-600: rgba(130,  64, 199, 1);
+  --purple-700: rgba( 95,  44, 150, 1);
+  --purple-800: rgba( 65,  30, 103, 1);
+  --purple-900: rgba( 42,  19,  67, 1);
+  --purple-950: rgba( 25,  11,  39, 1);
 }
