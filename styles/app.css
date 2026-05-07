@@ -466,6 +466,9 @@ html, body {
 }
 .component-title-primary {
   color: var(--p-primary-color);
+  font-weight: 700;
+  letter-spacing: .06em;
+  border-bottom-width: 2px;
   border-bottom-color: color-mix(in srgb, var(--p-primary-color) 30%, var(--p-content-border));
 }
 .component-row {

@@ -1176,19 +1176,21 @@
 
   function renderTokenRow(t, sec, hl, resolved) {
     let sw = '', val = '';
-    /* Value column always shows the raw CSS reference (var(--x) or literal) */
-    val = t.value || '—';
+  /* Prefer the effective value in current theme context (fallback to raw source value). */
+  const r = resolved ? resolved[t.name] : null;
+  val = t.value || '—';
     if (t.type === 'color') {
       /* Swatch: use batch-resolved hex for accurate theme color, else var(--name) */
-      const r   = resolved ? resolved[t.name] : null;
       const rgb = r ? r.rgb : resolveColor(t.name);
       const hex = r ? r.hex : rgbToHex(rgb);
       const dk  = r ? r.dk  : isDarkColor(rgb);
       const bg  = (r && hex) ? '#' + hex : `var(${t.name})`;
+    if (hex) val = '#' + hex;
       sw = `<span class="tva-sw${dk ? ' dk' : ''}" style="background:${bg}"></span>`;
     } else {
       /* Dimension / spacing / radius tokens get a ruler mark; typography keeps "Aa" */
       const isDim = /dimension|spacing|radius/i.test(t.name);
+    if (r && r.text) val = r.text;
       sw = isDim
         ? `<span class="tva-sw tva-sw-dim"></span>`
         : `<span class="tva-sw tva-sw-text">Aa</span>`;
@@ -1239,8 +1241,9 @@
       openCount++;
 
       const subGroupsHtml = filteredSubs.map(sg => {
-        /* Batch-resolve colors in the right theme context for semantic sub-groups */
-        const resolved = sg.theme ? batchResolve(sg.tokens, sg.theme) : null;
+        /* Resolve every token in the right theme context so list values reflect active overrides. */
+        const themeCtx = sg.theme || (isDark ? 'dark' : 'light');
+        const resolved = batchResolve(sg.tokens, themeCtx);
         const rowsHtml = sg.tokens.map(t => renderTokenRow(t, sec, hl, resolved)).join('');
 
         /* Semantic sub-groups (sg.mode set) skip the inner band — the mode
@@ -1413,11 +1416,31 @@
     const semSet  = new Set(allSemVars.map(t => t.name));
 
     /* ── Build connection maps ── */
-    /* sem → prim: first var() ref that points to a known primitive */
+    const mapTheme = semTheme || (isDark ? 'dark' : 'light');
+    const primResolvedAll = batchResolve(allPrimVars, mapTheme);
+    const semResolvedAll  = batchResolve(allSemVars, mapTheme);
+
+    /* sem → prim: (1) explicit var(--prim) ref, (2) fallback por color resuelto */
     const semRefMap  = new Map(); // semName → primName
+    const primByHex  = new Map();
+    allPrimVars.forEach(t => {
+      const r = primResolvedAll[t.name];
+      if (r && r.hex && !primByHex.has(r.hex)) primByHex.set(r.hex, t.name);
+    });
     allSemVars.forEach(t => {
       const ref = extractVarRef(t.value);
-      if (ref && primSet.has(ref)) semRefMap.set(t.name, ref);
+      if (ref && primSet.has(ref)) {
+        semRefMap.set(t.name, ref);
+        return;
+      }
+      /* Si el semantic viene en literal (sin var), reconectar por color efectivo. */
+      if (t.type === 'color') {
+        const rs = semResolvedAll[t.name];
+        if (rs && rs.hex) {
+          const primByColor = primByHex.get(rs.hex);
+          if (primByColor) semRefMap.set(t.name, primByColor);
+        }
+      }
     });
     /* comp → sem or prim */
     const compRefMap = new Map(); // compVarName → refName
