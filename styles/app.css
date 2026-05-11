@@ -600,6 +600,22 @@ html, body {
   gap: 16px 20px;
   align-items: flex-end;
 }
+/* FloatLabel: más aire entre leyenda (Vacío/Small), etiqueta flotante y helper en Form */
+#tab-form-catalog .catalog-input-state:has(.p-floatlabel) {
+  gap: 14px;
+}
+#tab-form-catalog .catalog-input-state .p-floatlabel {
+  margin-top: 6px;
+}
+#tab-form-catalog .catalog-input-interactive:has(.p-floatlabel) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+#tab-form-catalog .catalog-input-interactive:has(.p-floatlabel) .p-hint {
+  margin-top: 0;
+}
 .catalog-input-state {
   display: flex;
   flex-direction: column;

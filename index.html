@@ -15,6 +15,7 @@
 
   <!-- Tokens core (primitivos → semántica light/dark → componentes) -->
   <link rel="stylesheet" href="styles/mds-primitives.css" />
+  <link rel="stylesheet" href="styles/mds-dimension-bridge.css" />
   <link rel="stylesheet" href="styles/mds-semantic-light.css" />
   <link rel="stylesheet" href="styles/mds-semantic-dark.css" />
   <link rel="stylesheet" href="styles/mds-components.css" />
@@ -356,7 +357,7 @@
               <div class="btn-section">
                 <p class="btn-section-title">Tamaños</p>
                 <div class="btn-row is-static-preview">
-                  <label class="p-radio-wrap">
+                  <label class="p-radio-wrap p-radio-wrap-sm">
                     <span class="p-radio p-radio-checked p-radio-sm"><span class="p-radio-dot"></span></span>
                     Small
                   </label>
@@ -364,7 +365,7 @@
                     <span class="p-radio p-radio-checked"><span class="p-radio-dot"></span></span>
                     Normal
                   </label>
-                  <label class="p-radio-wrap">
+                  <label class="p-radio-wrap p-radio-wrap-lg">
                     <span class="p-radio p-radio-checked p-radio-lg"><span class="p-radio-dot"></span></span>
                     Large
                   </label>
@@ -415,7 +416,7 @@
               <div class="btn-section">
                 <p class="btn-section-title">Tamaños</p>
                 <div class="btn-row is-static-preview">
-                  <label class="p-checkbox-wrap">
+                  <label class="p-checkbox-wrap p-checkbox-wrap-sm">
                     <span class="p-checkbox p-checkbox-checked p-checkbox-sm"><i class="pi pi-check"></i></span>
                     Small
                   </label>
@@ -423,9 +424,65 @@
                     <span class="p-checkbox p-checkbox-checked"><i class="pi pi-check"></i></span>
                     Normal
                   </label>
-                  <label class="p-checkbox-wrap">
+                  <label class="p-checkbox-wrap p-checkbox-wrap-lg">
                     <span class="p-checkbox p-checkbox-checked p-checkbox-lg"><i class="pi pi-check"></i></span>
                     Large
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="catalog-preview">
+              <h3 class="section-title component-title-primary">ToggleSwitch</h3>
+              <div class="btn-section">
+                <p class="btn-section-title">Interacción</p>
+                <div class="btn-row" role="group" aria-label="ToggleSwitch interactivo">
+                  <label class="p-toggleswitch-wrap">
+                    <div class="p-toggleswitch p-component">
+                      <input type="checkbox" class="p-toggleswitch-input js-toggleswitch-input" role="switch" aria-label="Por defecto" />
+                      <span class="p-toggleswitch-slider"></span>
+                    </div>
+                    Por defecto
+                  </label>
+                  <label class="p-toggleswitch-wrap">
+                    <div class="p-toggleswitch p-component p-toggleswitch-checked">
+                      <input type="checkbox" class="p-toggleswitch-input js-toggleswitch-input" role="switch" aria-label="Activado" checked />
+                      <span class="p-toggleswitch-slider"></span>
+                    </div>
+                    Activado
+                  </label>
+                </div>
+              </div>
+              <div class="btn-section">
+                <p class="btn-section-title">Estados</p>
+                <div class="btn-row is-static-preview">
+                  <label class="p-toggleswitch-wrap">
+                    <div class="p-toggleswitch p-component">
+                      <input type="checkbox" class="p-toggleswitch-input" role="switch" aria-label="Por defecto" tabindex="-1" />
+                      <span class="p-toggleswitch-slider"></span>
+                    </div>
+                    Por defecto
+                  </label>
+                  <label class="p-toggleswitch-wrap">
+                    <div class="p-toggleswitch p-component p-toggleswitch-checked">
+                      <input type="checkbox" class="p-toggleswitch-input" role="switch" aria-label="Activado" checked tabindex="-1" />
+                      <span class="p-toggleswitch-slider"></span>
+                    </div>
+                    Activado
+                  </label>
+                  <label class="p-toggleswitch-wrap">
+                    <div class="p-toggleswitch p-component p-toggleswitch-disabled">
+                      <input type="checkbox" class="p-toggleswitch-input" role="switch" aria-label="Deshabilitado" disabled tabindex="-1" />
+                      <span class="p-toggleswitch-slider"></span>
+                    </div>
+                    Deshabilitado
+                  </label>
+                  <label class="p-toggleswitch-wrap">
+                    <div class="p-toggleswitch p-component p-toggleswitch-invalid">
+                      <input type="checkbox" class="p-toggleswitch-input" role="switch" aria-invalid="true" aria-label="Inválido" tabindex="-1" />
+                      <span class="p-toggleswitch-slider"></span>
+                    </div>
+                    Inválido
                   </label>
                 </div>
               </div>

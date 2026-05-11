@@ -1,0 +1,27 @@
+/* Puente: el core nuevo usa --dimension-scale-x*; primeng-tokens y legacy usan --dimension-spacing-x*. */
+
+@layer mds-core;
+
+html:root {
+  --dimension-spacing-x0: var(--dimension-scale-x0);
+  --dimension-spacing-x2: var(--dimension-scale-x2);
+  --dimension-spacing-x4: var(--dimension-scale-x4);
+  --dimension-spacing-x6: var(--dimension-scale-x6);
+  --dimension-spacing-x8: var(--dimension-scale-x8);
+  --dimension-spacing-x10: var(--dimension-scale-x10);
+  --dimension-spacing-x12: var(--dimension-scale-x12);
+  --dimension-spacing-x14: var(--dimension-scale-x14);
+  --dimension-spacing-x16: var(--dimension-scale-x16);
+  --dimension-spacing-x18: var(--dimension-scale-x18);
+  --dimension-spacing-x20: var(--dimension-scale-x20);
+  --dimension-spacing-x24: var(--dimension-scale-x24);
+  --dimension-spacing-x28: var(--dimension-scale-x28);
+  --dimension-spacing-x32: var(--dimension-scale-x32);
+  --dimension-spacing-x40: var(--dimension-scale-x40);
+  --dimension-spacing-x42: var(--dimension-scale-x42);
+  --dimension-spacing-x48: var(--dimension-scale-x48);
+  --dimension-spacing-x56: var(--dimension-scale-x56);
+  --dimension-spacing-x64: var(--dimension-scale-x64);
+  --dimension-spacing-x80: var(--dimension-scale-x80);
+  --dimension-spacing-x96: var(--dimension-scale-x96);
+}

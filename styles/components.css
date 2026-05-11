@@ -815,12 +815,26 @@
 .p-checkbox-wrap {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--form-field-gap-space);
   cursor: pointer;
   font-family: var(--p-font-family);
-  font-size: var(--p-font-size);
-  color: var(--p-content-color);
+  font-size: var(--dimension-scale-x14);
+  line-height: 1.25;
+  font-weight: 400;
+  color: var(--form-field-color);
   user-select: none;
+}
+.p-checkbox-wrap-sm {
+  gap: var(--form-field-sm-gap-scale);
+  font-size: var(--form-field-sm-font-size);
+}
+.p-checkbox-wrap-lg {
+  gap: var(--form-field-lg-gap-space);
+  font-size: var(--form-field-lg-font-size);
+}
+.p-checkbox-wrap:has(.p-checkbox-disabled) {
+  color: var(--form-field-disabled-color);
+  cursor: not-allowed;
 }
 .p-checkbox {
   display: inline-flex;
@@ -844,13 +858,17 @@
   background: var(--p-checkbox-checked-hover-background);
   border-color: var(--p-checkbox-checked-hover-border-color);
 }
-.p-checkbox-checked .pi { font-size: 11px; }
+.p-checkbox-checked .pi { font-size: var(--checkbox-icon-size); }
+.p-checkbox-sm.p-checkbox-checked .pi { font-size: var(--checkbox-icon-sm-size); }
+.p-checkbox-lg.p-checkbox-checked .pi { font-size: var(--checkbox-icon-lg-size); }
 .p-checkbox-indeterminate {
   background: var(--p-checkbox-checked-background);
   border-color: var(--p-checkbox-checked-border-color);
   color: var(--p-checkbox-icon-checked-color);
 }
-.p-checkbox-indeterminate .pi { font-size: 11px; }
+.p-checkbox-indeterminate .pi { font-size: var(--checkbox-icon-size); }
+.p-checkbox-sm.p-checkbox-indeterminate .pi { font-size: var(--checkbox-icon-sm-size); }
+.p-checkbox-lg.p-checkbox-indeterminate .pi { font-size: var(--checkbox-icon-lg-size); }
 .p-checkbox-disabled {
   background: var(--p-checkbox-disabled-background);
   border-color: var(--p-input-border-color);
@@ -871,12 +889,26 @@
 .p-radio-wrap {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--form-field-gap-space);
   cursor: pointer;
   font-family: var(--p-font-family);
-  font-size: var(--p-font-size);
-  color: var(--p-content-color);
+  font-size: var(--dimension-scale-x14);
+  line-height: 1.25;
+  font-weight: 400;
+  color: var(--form-field-color);
   user-select: none;
+}
+.p-radio-wrap-sm {
+  gap: var(--form-field-sm-gap-scale);
+  font-size: var(--form-field-sm-font-size);
+}
+.p-radio-wrap-lg {
+  gap: var(--form-field-lg-gap-space);
+  font-size: var(--form-field-lg-font-size);
+}
+.p-radio-wrap:has(.p-radio-disabled) {
+  color: var(--form-field-disabled-color);
+  cursor: not-allowed;
 }
 .js-radio-option,
 .js-checkbox-option {
@@ -915,10 +947,18 @@
   background: var(--p-radiobutton-checked-hover-background);
 }
 .p-radio-dot {
-  width: 8px;
-  height: 8px;
+  width: var(--radiobutton-icon-size);
+  height: var(--radiobutton-icon-size);
   border-radius: 50%;
   background: var(--p-radiobutton-icon-checked-color);
+}
+.p-radio-sm .p-radio-dot {
+  width: var(--radiobutton-icon-sm-size);
+  height: var(--radiobutton-icon-sm-size);
+}
+.p-radio-lg .p-radio-dot {
+  width: var(--radiobutton-icon-lg-size);
+  height: var(--radiobutton-icon-lg-size);
 }
 .p-radio-disabled {
   background: var(--p-radiobutton-disabled-background);
@@ -937,6 +977,112 @@
 .p-radio-lg { width: var(--p-radiobutton-lg-width); height: var(--p-radiobutton-lg-height); }
 
 /* ── Toggle / Switch ── */
+.p-toggleswitch-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--toggleswitch-gap, 8px);
+  cursor: pointer;
+  font-family: var(--p-font-family);
+  font-size: var(--p-font-size);
+  color: var(--p-content-color);
+  user-select: none;
+}
+.is-static-preview .p-toggleswitch-wrap:has(.p-toggleswitch-disabled) {
+  cursor: default;
+}
+.p-toggleswitch {
+  width: var(--toggleswitch-width);
+  height: var(--toggleswitch-height);
+  border: var(--toggleswitch-border-width) solid var(--toggleswitch-border-color);
+  border-radius: var(--toggleswitch-border-radius);
+  background: var(--toggleswitch-background);
+  box-shadow: var(--toggleswitch-shadow);
+  position: relative;
+  transition: background var(--p-transition-duration), border-color var(--p-transition-duration);
+  flex-shrink: 0;
+}
+.p-toggleswitch-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.p-toggleswitch-slider {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+.p-toggleswitch-slider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: var(--toggleswitch-handle-size);
+  height: var(--toggleswitch-handle-size);
+  border-radius: var(--toggleswitch-handle-border-radius);
+  background: var(--toggleswitch-handle-background);
+  transform: translateY(-50%);
+  transition: left var(--p-transition-duration), background var(--p-transition-duration);
+}
+.p-toggleswitch:hover:not(.p-toggleswitch-disabled) {
+  background: var(--toggleswitch-hover-background);
+  border-color: var(--toggleswitch-hover-border-color);
+}
+.p-toggleswitch:hover:not(.p-toggleswitch-disabled):not(.p-toggleswitch-checked) .p-toggleswitch-slider::before {
+  background: var(--toggleswitch-handle-hover-background);
+}
+.p-toggleswitch.p-toggleswitch-checked {
+  background: var(--toggleswitch-checked-background);
+  border-color: var(--toggleswitch-checked-border-color);
+}
+.p-toggleswitch.p-toggleswitch-checked:hover:not(.p-toggleswitch-disabled) {
+  background: var(--toggleswitch-checked-hover-background);
+  border-color: var(--toggleswitch-checked-hover-border-color);
+}
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider::before {
+  left: calc(100% - var(--toggleswitch-handle-size) - 3px);
+  background: var(--toggleswitch-handle-checked-background);
+}
+.p-toggleswitch.p-toggleswitch-checked:hover:not(.p-toggleswitch-disabled) .p-toggleswitch-slider::before {
+  background: var(--toggleswitch-handle-checked-hover-background);
+}
+.p-toggleswitch .p-toggleswitch-input:focus-visible + .p-toggleswitch-slider {
+  outline: var(--toggleswitch-focus-ring-width) solid color-mix(in srgb, var(--toggleswitch-focus-ring-color) 35%, transparent);
+  outline-offset: var(--toggleswitch-focus-ring-offset);
+  box-shadow: var(--toggleswitch-focus-ring-shadow);
+}
+.p-toggleswitch.p-toggleswitch-invalid {
+  border-color: var(--toggleswitch-invalid-border-color);
+}
+.p-toggleswitch.p-toggleswitch-invalid:hover:not(.p-toggleswitch-disabled) {
+  border-color: var(--toggleswitch-invalid-border-color);
+}
+/* Disabled+checked: misma lectura visual que ON (pista primaria), no pista gris con mango a la derecha. */
+.p-toggleswitch.p-toggleswitch-disabled {
+  opacity: 0.72;
+}
+.p-toggleswitch.p-toggleswitch-disabled:not(.p-toggleswitch-checked) {
+  background: var(--toggleswitch-disabled-background);
+  border-color: var(--toggleswitch-border-color);
+}
+.p-toggleswitch.p-toggleswitch-disabled:not(.p-toggleswitch-checked) .p-toggleswitch-slider::before {
+  background: var(--toggleswitch-handle-disabled-background);
+}
+.p-toggleswitch.p-toggleswitch-disabled.p-toggleswitch-checked {
+  background: var(--toggleswitch-checked-background);
+  border-color: var(--toggleswitch-checked-border-color);
+}
+.p-toggleswitch.p-toggleswitch-disabled.p-toggleswitch-checked .p-toggleswitch-slider::before {
+  background: var(--toggleswitch-handle-disabled-background);
+}
+.p-toggleswitch.p-toggleswitch-disabled .p-toggleswitch-input {
+  cursor: not-allowed;
+}
+
 .p-toggle-wrap {
   display: inline-flex;
   align-items: center;

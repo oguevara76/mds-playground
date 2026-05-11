@@ -1,4 +1,8 @@
-/* Variables primitivas — playground */
+/* Primitives - Theme: primitives */
+/* Version: 1.0.0 */
+/* Description: Primitive variables for color and spacing. */
+/* Author: UX/UI Design System Team */
+/* Last Updated: 2026-05-11 */
 
 @layer mds-core;
 
@@ -43,27 +47,27 @@ html:root {
   --dimension-radius-x6: 6px;
   --dimension-radius-x8: 8px;
   --dimension-radius-x999: 999px;
-  --dimension-spacing-x0: 0px;
-  --dimension-spacing-x10: 10px;
-  --dimension-spacing-x12: 12px;
-  --dimension-spacing-x14: 14px;
-  --dimension-spacing-x16: 16px;
-  --dimension-spacing-x18: 18px;
-  --dimension-spacing-x20: 20px;
-  --dimension-spacing-x24: 24px;
-  --dimension-spacing-x28: 28px;
-  --dimension-spacing-x2: 2px;
-  --dimension-spacing-x32: 32px;
-  --dimension-spacing-x40: 40px;
-  --dimension-spacing-x42: 42px;
-  --dimension-spacing-x48: 48px;
-  --dimension-spacing-x4: 4px;
-  --dimension-spacing-x56: 56px;
-  --dimension-spacing-x64: 64px;
-  --dimension-spacing-x6: 6px;
-  --dimension-spacing-x80: 80px;
-  --dimension-spacing-x8: 8px;
-  --dimension-spacing-x96: 96px;
+  --dimension-scale-x0: 0px;
+  --dimension-scale-x10: 10px;
+  --dimension-scale-x12: 12px;
+  --dimension-scale-x14: 14px;
+  --dimension-scale-x16: 16px;
+  --dimension-scale-x18: 18px;
+  --dimension-scale-x20: 20px;
+  --dimension-scale-x24: 24px;
+  --dimension-scale-x28: 28px;
+  --dimension-scale-x2: 2px;
+  --dimension-scale-x32: 32px;
+  --dimension-scale-x40: 40px;
+  --dimension-scale-x42: 42px;
+  --dimension-scale-x48: 48px;
+  --dimension-scale-x4: 4px;
+  --dimension-scale-x56: 56px;
+  --dimension-scale-x64: 64px;
+  --dimension-scale-x6: 6px;
+  --dimension-scale-x80: 80px;
+  --dimension-scale-x8: 8px;
+  --dimension-scale-x96: 96px;
   --emerald-100: rgba(209, 250, 229, 1);
   --emerald-200: rgba(167, 243, 208, 1);
   --emerald-300: rgba(110, 231, 183, 1);

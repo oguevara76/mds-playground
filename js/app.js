@@ -111,6 +111,18 @@
     });
   });
 
+  function syncToggleSwitchState(inputEl) {
+    const root = inputEl.closest('.p-toggleswitch');
+    if (!root) return;
+    root.classList.toggle('p-toggleswitch-checked', inputEl.checked);
+    root.classList.toggle('p-toggleswitch-disabled', inputEl.disabled);
+  }
+
+  document.querySelectorAll('.js-toggleswitch-input').forEach(inputEl => {
+    syncToggleSwitchState(inputEl);
+    inputEl.addEventListener('change', () => syncToggleSwitchState(inputEl));
+  });
+
   /* FloatLabel interactivo: refuerzo de estado “flotado” con valor (paridad PrimeNG) */
   function initLiveFloatLabels(scope) {
     const root = scope || document;
@@ -912,7 +924,7 @@
   /* ── Palette label from a primitive variable name ── */
   function primPalette(name) {
     /* Dimension tokens (spacing/radius) get their own group */
-    if (/^--dimension-spacing/.test(name)) return 'Spacing';
+    if (/^--dimension-(spacing|scale)/.test(name)) return 'Spacing';
     if (/^--dimension-radius/.test(name))  return 'Radius';
     /* Strip optional --p- prefix, then read first word segment */
     const n = name.startsWith('--p-') ? name.slice(4) : name.slice(2);

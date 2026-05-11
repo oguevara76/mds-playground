@@ -1,9 +1,13 @@
-/* Semántica — tema claro (playground) */
+/* Semantics - Theme: ctr--tol--light */
+/* Version: 1.0.0 */
+/* Description: Base light theme. */
+/* Author: UX/UI Design System Team */
+/* Last Updated: 2026-05-11 */
 
 @layer mds-core;
 
 html[data-theme="light"] {
-  --anchor-gutter: var(--dimension-spacing-x2);
+  --anchor-gutter: var(--dimension-scale-x2);
   --border-radius-lg: var(--dimension-radius-x8);
   --border-radius-md: var(--dimension-radius-x6);
   --border-radius-none: var(--dimension-radius-x0);
@@ -52,7 +56,7 @@ html[data-theme="light"] {
   --focus-ring-offset: 2px;
   --focus-ring-width: 1px;
   --form-field-background: var(--surface-0);
-  --form-field-border-color: var(--surface-300);
+  --form-field-border-color: var(--surface-400);
   --form-field-border-radius-rounded: var(--border-radius-pill);
   --form-field-border-radius: var(--border-radius-md);
   --form-field-color: var(--surface-700);
@@ -66,27 +70,30 @@ html[data-theme="light"] {
   --form-field-float-label-invalid-color: var(--red-600);
   --form-field-focus-border-color: var(--primary-color);
   --form-field-focus-ring-color: rgba(0, 0, 0, 0);
-  --form-field-focus-ring-offset: var(--dimension-spacing-x0);
-  --form-field-focus-ring-width: var(--dimension-spacing-x0);
-  --form-field-hover-border-color: var(--surface-400);
+  --form-field-focus-ring-offset: var(--dimension-scale-x0);
+  --form-field-focus-ring-width: var(--dimension-scale-x0);
+  --form-field-gap-space: var(--dimension-scale-x8);
+  --form-field-hover-border-color: var(--surface-context-strong);
   --form-field-icon-color: var(--surface-400);
   --form-field-invalid-border-color: var(--red-400);
   --form-field-invalid-placeholder-color: var(--red-600);
-  --form-field-lg-font-size: var(--dimension-spacing-x16);
-  --form-field-lg-padding-x: var(--dimension-spacing-x12);
-  --form-field-lg-padding-y: var(--dimension-spacing-x12);
-  --form-field-padding-x: var(--dimension-spacing-x12);
-  --form-field-padding-y: var(--dimension-spacing-x8);
+  --form-field-lg-font-size: var(--dimension-scale-x16);
+  --form-field-lg-gap-space: var(--dimension-scale-x10);
+  --form-field-lg-padding-x: var(--dimension-scale-x12);
+  --form-field-lg-padding-y: var(--dimension-scale-x12);
+  --form-field-padding-x: var(--dimension-scale-x12);
+  --form-field-padding-y: var(--dimension-scale-x8);
   --form-field-placeholder-color: var(--surface-500);
-  --form-field-sm-font-size: var(--dimension-spacing-x12);
-  --form-field-sm-padding-x: var(--dimension-spacing-x8);
-  --form-field-sm-padding-y: var(--dimension-spacing-x4);
+  --form-field-sm-font-size: var(--dimension-scale-x12);
+  --form-field-sm-gap-scale: var(--dimension-scale-x6);
+  --form-field-sm-padding-x: var(--dimension-scale-x8);
+  --form-field-sm-padding-y: var(--dimension-scale-x4);
   --highlight-background: var(--primary-50);
   --highlight-color: var(--primary-700);
   --highlight-focus-background: var(--primary-100);
   --highlight-focus-color: var(--primary-800);
-  --icon-size: var(--dimension-spacing-x16);
-  --list-gap: var(--dimension-spacing-x2);
+  --icon-size: var(--dimension-scale-x16);
+  --list-gap: var(--dimension-scale-x2);
   --list-option-border-radius: var(--border-radius-sm);
   --list-option-color: var(--text-color);
   --list-option-focus-background: var(--surface-100);
@@ -108,15 +115,15 @@ html[data-theme="light"] {
   --navigation-item-color: var(--text-color);
   --navigation-item-focus-background: var(--surface-100);
   --navigation-item-focus-color: var(--text-hover-color);
-  --navigation-item-gap: var(--dimension-spacing-x8);
+  --navigation-item-gap: var(--dimension-scale-x8);
   --navigation-item-icon-active-color: var(--surface-500);
   --navigation-item-icon-color: var(--surface-400);
   --navigation-item-icon-focus-color: var(--surface-500);
-  --navigation-list-gap: var(--dimension-spacing-x2);
+  --navigation-list-gap: var(--dimension-scale-x2);
   --navigation-submenu-icon-active-color: var(--surface-500);
   --navigation-submenu-icon-color: var(--surface-400);
   --navigation-submenu-icon-focus-color: var(--surface-500);
-  --navigation-submenu-icon-size: var(--dimension-spacing-x12);
+  --navigation-submenu-icon-size: var(--dimension-scale-x12);
   --navigation-submenu-label-background: rgba(0, 0, 0, 0);
   --navigation-submenu-label-color: var(--text-muted-color);
   --navigation-submenu-label-font-weight: 600;
@@ -127,12 +134,12 @@ html[data-theme="light"] {
   --overlay-modal-border-color: var(--surface-200);
   --overlay-modal-border-radius: var(--border-radius-xl);
   --overlay-modal-color: var(--text-color);
-  --overlay-modal-padding: var(--dimension-spacing-x18);
+  --overlay-modal-padding: var(--dimension-scale-x18);
   --overlay-popover-background: var(--surface-0);
   --overlay-popover-border-color: var(--surface-200);
   --overlay-popover-border-radius: var(--border-radius-md);
   --overlay-popover-color: var(--text-color);
-  --overlay-popover-padding: var(--dimension-spacing-x12);
+  --overlay-popover-padding: var(--dimension-scale-x12);
   --overlay-select-background: var(--surface-0);
   --overlay-select-border-color: var(--surface-200);
   --overlay-select-border-radius: var(--border-radius-md);
