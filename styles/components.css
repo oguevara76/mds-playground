@@ -1188,6 +1188,172 @@
 .p-message-error   { background: var(--p-danger-bg);  color: var(--p-danger-color); }
 .p-message-info    { background: var(--p-info-bg);    color: var(--p-info-color); }
 
+/* ── Toast (paridad visual PrimeNG, tokens --p-toast-* ← --toast-* vía primeng-tokens.css) ── */
+.p-toast.p-component {
+  font-family: var(--p-font-family);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  max-width: var(--p-toast-width);
+}
+.p-toast-message {
+  width: 100%;
+  max-width: var(--p-toast-width);
+  border-radius: var(--p-toast-border-radius);
+  border-style: solid;
+  border-width: var(--p-toast-border-width);
+  overflow: hidden;
+}
+.p-toast-message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--p-toast-content-gap);
+  padding: var(--p-toast-content-padding);
+}
+.p-toast-message-icon {
+  flex-shrink: 0;
+  font-size: var(--p-toast-icon-size);
+  line-height: 1;
+  margin-top: 1px;
+}
+.p-toast-message-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--p-toast-text-gap);
+}
+.p-toast-summary {
+  display: block;
+  font-size: var(--p-toast-summary-font-size);
+  font-weight: var(--p-toast-summary-font-weight);
+  line-height: 1.35;
+}
+.p-toast-detail {
+  display: block;
+  font-size: var(--p-toast-detail-font-size);
+  font-weight: var(--p-toast-detail-font-weight);
+  line-height: 1.45;
+  margin: 0;
+}
+.p-toast-icon-close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--p-toast-close-button-width);
+  height: var(--p-toast-close-button-height);
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--p-toast-close-button-border-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.85;
+}
+.p-toast-icon-close .pi {
+  font-size: var(--p-toast-close-icon-size);
+}
+.p-toast-icon-close:hover {
+  opacity: 1;
+}
+.p-toast-icon-close:disabled {
+  cursor: default;
+  opacity: 0.72;
+  pointer-events: none;
+}
+.p-toast-icon-close:focus-visible {
+  outline: var(--p-toast-close-button-focus-ring-width) solid currentColor;
+  outline-offset: var(--p-toast-close-button-focus-ring-offset);
+}
+
+.p-toast-message-success {
+  background: var(--p-toast-success-background);
+  border-color: var(--p-toast-success-border-color);
+  color: var(--p-toast-success-color);
+  box-shadow: var(--p-toast-success-shadow);
+}
+.p-toast-message-success .p-toast-detail { color: var(--p-toast-success-detail-color); }
+.p-toast-message-success .p-toast-icon-close:hover {
+  background: var(--p-toast-success-close-button-hover-background);
+}
+.p-toast-message-success .p-toast-icon-close:focus-visible {
+  outline-color: var(--p-toast-success-close-button-focus-ring-color);
+}
+
+.p-toast-message-info {
+  background: var(--p-toast-info-background);
+  border-color: var(--p-toast-info-border-color);
+  color: var(--p-toast-info-color);
+  box-shadow: var(--p-toast-info-shadow);
+}
+.p-toast-message-info .p-toast-detail { color: var(--p-toast-info-detail-color); }
+.p-toast-message-info .p-toast-icon-close:hover {
+  background: var(--p-toast-info-close-button-hover-background);
+}
+.p-toast-message-info .p-toast-icon-close:focus-visible {
+  outline-color: var(--p-toast-info-close-button-focus-ring-color);
+}
+
+.p-toast-message-warn {
+  background: var(--p-toast-warn-background);
+  border-color: var(--p-toast-warn-border-color);
+  color: var(--p-toast-warn-color);
+  box-shadow: var(--p-toast-warn-shadow);
+}
+.p-toast-message-warn .p-toast-detail { color: var(--p-toast-warn-detail-color); }
+.p-toast-message-warn .p-toast-icon-close:hover {
+  background: var(--p-toast-warn-close-button-hover-background);
+}
+.p-toast-message-warn .p-toast-icon-close:focus-visible {
+  outline-color: var(--p-toast-warn-close-button-focus-ring-color);
+}
+
+.p-toast-message-error {
+  background: var(--p-toast-error-background);
+  border-color: var(--p-toast-error-border-color);
+  color: var(--p-toast-error-color);
+  box-shadow: var(--p-toast-error-shadow);
+}
+.p-toast-message-error .p-toast-detail { color: var(--p-toast-error-detail-color); }
+.p-toast-message-error .p-toast-icon-close:hover {
+  background: var(--p-toast-error-close-button-hover-background);
+}
+.p-toast-message-error .p-toast-icon-close:focus-visible {
+  outline-color: var(--p-toast-error-close-button-focus-ring-color);
+}
+
+.p-toast-message-secondary {
+  background: var(--p-toast-secondary-background);
+  border-color: var(--p-toast-secondary-border-color);
+  color: var(--p-toast-secondary-color);
+  box-shadow: var(--p-toast-secondary-shadow);
+}
+.p-toast-message-secondary .p-toast-detail { color: var(--p-toast-secondary-detail-color); }
+.p-toast-message-secondary .p-toast-icon-close:hover {
+  background: var(--p-toast-secondary-close-button-hover-background);
+}
+.p-toast-message-secondary .p-toast-icon-close:focus-visible {
+  outline-color: var(--p-toast-secondary-close-button-focus-ring-color);
+}
+
+.p-toast-message-contrast {
+  background: var(--p-toast-contrast-background);
+  border-color: var(--p-toast-contrast-border-color);
+  color: var(--p-toast-contrast-color);
+  box-shadow: var(--p-toast-contrast-shadow);
+}
+.p-toast-message-contrast .p-toast-detail { color: var(--p-toast-contrast-detail-color); }
+.p-toast-message-contrast .p-toast-icon-close:hover {
+  background: var(--p-toast-contrast-close-button-hover-background);
+}
+.p-toast-message-contrast .p-toast-icon-close:focus-visible {
+  outline-color: var(--p-toast-contrast-close-button-focus-ring-color);
+}
+
 /* ── Chips ── */
 .p-chip {
   display: inline-flex;

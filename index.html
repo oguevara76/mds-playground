@@ -1109,9 +1109,94 @@
       </div>
 
       <div class="tab-panel" id="tab-messages-catalog">
-        <section class="preview-section">
-          <h3 class="section-title">Messages components</h3>
-        </section>
+        <!-- Contenedor fijo top-left (paridad posición PrimeNG position="top-left") -->
+        <div id="toast-catalog-live" class="p-toast p-component p-toast-top-left toast-catalog-live toast-catalog-live-viewport" aria-live="polite" aria-label="Toasts en vivo"></div>
+        <div class="cards-grid form-catalog-stack">
+          <div class="catalog-preview">
+            <h3 class="section-title component-title-primary">Toast</h3>
+
+            <div class="btn-section">
+              <p class="btn-section-title">Interacción</p>
+              <div class="btn-row">
+                <button type="button" class="p-button p-button-primary p-button-sm js-toast-catalog-push" data-toast-severity="success"><i class="pi pi-check"></i> Success</button>
+                <button type="button" class="p-button p-button-info p-button-sm js-toast-catalog-push" data-toast-severity="info"><i class="pi pi-info-circle"></i> Info</button>
+                <button type="button" class="p-button p-button-warning p-button-sm js-toast-catalog-push" data-toast-severity="warn"><i class="pi pi-exclamation-triangle"></i> Warn</button>
+                <button type="button" class="p-button p-button-danger p-button-sm js-toast-catalog-push" data-toast-severity="error"><i class="pi pi-times-circle"></i> Error</button>
+                <button type="button" class="p-button p-button-secondary p-button-sm js-toast-catalog-push" data-toast-severity="secondary"><i class="pi pi-cog"></i> Secondary</button>
+                <button type="button" class="p-button p-button-contrast p-button-sm js-toast-catalog-push" data-toast-severity="contrast"><i class="pi pi-bolt"></i> Contrast</button>
+              </div>
+              <div class="btn-row" style="margin-top:10px">
+                <button type="button" class="p-button p-button-link p-button-sm" id="toast-catalog-hide-all">Ocultar toast activos</button>
+              </div>
+            </div>
+
+            <div class="btn-section" style="margin-top:20px">
+              <p class="btn-section-title">Estados</p>
+              <div class="p-toast p-component toast-catalog-stack" aria-label="Toasts de ejemplo por severidad">
+                <div class="p-toast-message p-toast-message-success" role="alert" aria-live="polite">
+                  <div class="p-toast-message-content">
+                    <i class="p-toast-message-icon pi pi-check" aria-hidden="true"></i>
+                    <div class="p-toast-message-text">
+                      <span class="p-toast-summary">Correcto</span>
+                      <span class="p-toast-detail">El recurso se creó sin errores.</span>
+                    </div>
+                    <button type="button" class="p-toast-icon-close" disabled aria-hidden="true" tabindex="-1" title="Solo vista previa"><i class="pi pi-times" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+                <div class="p-toast-message p-toast-message-info" role="alert" aria-live="polite">
+                  <div class="p-toast-message-content">
+                    <i class="p-toast-message-icon pi pi-info-circle" aria-hidden="true"></i>
+                    <div class="p-toast-message-text">
+                      <span class="p-toast-summary">Aviso</span>
+                      <span class="p-toast-detail">Hay una nueva versión del manual de estilo.</span>
+                    </div>
+                    <button type="button" class="p-toast-icon-close" disabled aria-hidden="true" tabindex="-1" title="Solo vista previa"><i class="pi pi-times" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+                <div class="p-toast-message p-toast-message-warn" role="alert" aria-live="polite">
+                  <div class="p-toast-message-content">
+                    <i class="p-toast-message-icon pi pi-exclamation-triangle" aria-hidden="true"></i>
+                    <div class="p-toast-message-text">
+                      <span class="p-toast-summary">Advertencia</span>
+                      <span class="p-toast-detail">La cuota de almacenamiento está cerca del límite.</span>
+                    </div>
+                    <button type="button" class="p-toast-icon-close" disabled aria-hidden="true" tabindex="-1" title="Solo vista previa"><i class="pi pi-times" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+                <div class="p-toast-message p-toast-message-error" role="alert" aria-live="assertive">
+                  <div class="p-toast-message-content">
+                    <i class="p-toast-message-icon pi pi-times-circle" aria-hidden="true"></i>
+                    <div class="p-toast-message-text">
+                      <span class="p-toast-summary">Error</span>
+                      <span class="p-toast-detail">No se pudo validar la sesión. Vuelve a iniciar sesión.</span>
+                    </div>
+                    <button type="button" class="p-toast-icon-close" disabled aria-hidden="true" tabindex="-1" title="Solo vista previa"><i class="pi pi-times" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+                <div class="p-toast-message p-toast-message-secondary" role="alert" aria-live="polite">
+                  <div class="p-toast-message-content">
+                    <i class="p-toast-message-icon pi pi-cog" aria-hidden="true"></i>
+                    <div class="p-toast-message-text">
+                      <span class="p-toast-summary">Secundario</span>
+                      <span class="p-toast-detail">Preferencias actualizadas en segundo plano.</span>
+                    </div>
+                    <button type="button" class="p-toast-icon-close" disabled aria-hidden="true" tabindex="-1" title="Solo vista previa"><i class="pi pi-times" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+                <div class="p-toast-message p-toast-message-contrast" role="alert" aria-live="polite">
+                  <div class="p-toast-message-content">
+                    <i class="p-toast-message-icon pi pi-bolt" aria-hidden="true"></i>
+                    <div class="p-toast-message-text">
+                      <span class="p-toast-summary">Contraste</span>
+                      <span class="p-toast-detail">Modo de alto contraste activo para esta vista.</span>
+                    </div>
+                    <button type="button" class="p-toast-icon-close" disabled aria-hidden="true" tabindex="-1" title="Solo vista previa"><i class="pi pi-times" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="tab-panel" id="tab-media-catalog">
@@ -1975,14 +2060,21 @@
       <!-- ══ TAB: MESSAGES ══ -->
       <div class="tab-panel" id="tab-messages">
         <section class="preview-section">
-          <h3 class="section-title">Message &amp; Toast</h3>
-          <div class="messages-stack">
-            <div class="p-message p-message-success"><i class="pi pi-check-circle"></i><div><strong>Message success</strong><p>Componente de feedback persistente.</p></div></div>
-            <div class="p-message p-message-info"><i class="pi pi-info-circle"></i><div><strong>Message info</strong><p>Ideal para notas de estado global.</p></div></div>
+          <h3 class="section-title">Toast</h3>
+          <div class="p-toast p-component" style="margin-top:14px;max-width:var(--p-toast-width)" aria-label="Toast de ejemplo">
+            <div class="p-toast-message p-toast-message-success" role="status">
+              <div class="p-toast-message-content">
+                <i class="p-toast-message-icon pi pi-check" aria-hidden="true"></i>
+                <div class="p-toast-message-text">
+                  <span class="p-toast-summary">Correcto</span>
+                  <span class="p-toast-detail">El recurso se creó sin errores.</span>
+                </div>
+                <button type="button" class="p-toast-icon-close" disabled aria-hidden="true" tabindex="-1" title="Solo vista previa"><i class="pi pi-times" aria-hidden="true"></i></button>
+              </div>
+            </div>
           </div>
           <div class="component-row" style="margin-top:12px">
-            <button class="p-button p-button-primary p-button-sm"><i class="pi pi-bell"></i> Disparar Toast</button>
-            <button class="p-button p-button-outlined p-button-sm">Limpiar</button>
+            <button type="button" class="p-button p-button-primary p-button-sm" id="tab-messages-open-catalog" title="Abre la pestaña Messages del catálogo"><i class="pi pi-bell"></i> Ver catálogo Toast</button>
           </div>
         </section>
       </div>

@@ -168,6 +168,209 @@
     });
   });
 
+  /* ── Catálogo Messages: Toast dinámico (mismas clases PrimeNG del playground) ── */
+  const TOAST_CATALOG_ICONS = {
+    success: 'pi-check',
+    info: 'pi-info-circle',
+    warn: 'pi-exclamation-triangle',
+    error: 'pi-times-circle',
+    secondary: 'pi-cog',
+    contrast: 'pi-bolt'
+  };
+  const TOAST_CATALOG_COPY = {
+    success: { summary: 'Correcto', detail: 'El recurso se creó sin errores.' },
+    info: { summary: 'Aviso', detail: 'Hay una nueva versión del manual de estilo.' },
+    warn: { summary: 'Advertencia', detail: 'La cuota de almacenamiento está cerca del límite.' },
+    error: { summary: 'Error', detail: 'No se pudo validar la sesión. Vuelve a iniciar sesión.' },
+    secondary: { summary: 'Secundario', detail: 'Preferencias actualizadas en segundo plano.' },
+    contrast: { summary: 'Contraste', detail: 'Modo de alto contraste activo para esta vista.' }
+  };
+
+  const TOAST_CATALOG_AUTO_MS = 10000;
+  const TOAST_CATALOG_LEAVE_MS = 380;
+  const TOAST_CATALOG_SLOT_GAP = 10;
+
+  let toastCatalogStackZ = 0;
+
+  function refreshToastCatalogViewportHeight(live) {
+    if (!live) return;
+    let maxBottom = 0;
+    live.querySelectorAll('.p-toast-message').forEach((el) => {
+      const raw = el.style.top;
+      const top = Number.isFinite(parseFloat(raw)) ? parseFloat(raw) : 0;
+      const h = el.offsetHeight;
+      const bottom = top + h;
+      if (bottom > maxBottom) maxBottom = bottom;
+    });
+    live.style.minHeight = maxBottom > 0 ? `${Math.ceil(maxBottom)}px` : '';
+  }
+
+  function assignToastCatalogSlot(wrap, live) {
+    let maxBottom = 0;
+    live.querySelectorAll('.p-toast-message').forEach((el) => {
+      if (el === wrap) return;
+      const raw = el.style.top;
+      const top = Number.isFinite(parseFloat(raw)) ? parseFloat(raw) : 0;
+      const h = el.offsetHeight;
+      const bottom = top + h;
+      if (bottom > maxBottom) maxBottom = bottom;
+    });
+    const siblingCount = [...live.querySelectorAll('.p-toast-message')].filter((e) => e !== wrap).length;
+    const topPx = siblingCount === 0 ? 0 : maxBottom + TOAST_CATALOG_SLOT_GAP;
+    wrap.style.top = `${topPx}px`;
+    wrap.style.zIndex = String(++toastCatalogStackZ);
+    refreshToastCatalogViewportHeight(live);
+  }
+
+  function scheduleToastCatalogSlotLayout(wrap, live) {
+    assignToastCatalogSlot(wrap, live);
+    window.requestAnimationFrame(() => {
+      assignToastCatalogSlot(wrap, live);
+      window.requestAnimationFrame(() => assignToastCatalogSlot(wrap, live));
+    });
+  }
+
+  function clearToastCatalogTimers(live) {
+    if (!live) return;
+    live.querySelectorAll('.p-toast-message[data-toast-timer-id]').forEach(el => {
+      const tid = el.getAttribute('data-toast-timer-id');
+      if (tid) window.clearTimeout(Number(tid));
+      el.removeAttribute('data-toast-timer-id');
+    });
+  }
+
+  function fadeOutRemoveToast(wrap) {
+    if (!wrap || !wrap.isConnected || wrap.classList.contains('toast-catalog-leave')) return;
+    const tid = wrap.getAttribute('data-toast-timer-id');
+    if (tid) window.clearTimeout(Number(tid));
+    wrap.removeAttribute('data-toast-timer-id');
+
+    let finished = false;
+    const detach = () => {
+      if (finished) return;
+      finished = true;
+      wrap.removeEventListener('transitionend', onEnd);
+      const liveRoot = wrap.closest('#toast-catalog-live');
+      if (wrap.isConnected) wrap.remove();
+      if (liveRoot) refreshToastCatalogViewportHeight(liveRoot);
+    };
+    const onEnd = (e) => {
+      if (e.target !== wrap || e.propertyName !== 'opacity') return;
+      detach();
+    };
+
+    wrap.classList.remove('toast-catalog-enter');
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      detach();
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      if (!wrap.isConnected || finished) return;
+      wrap.classList.add('toast-catalog-leave');
+      wrap.addEventListener('transitionend', onEnd);
+      window.setTimeout(detach, TOAST_CATALOG_LEAVE_MS + 120);
+    });
+  }
+
+  function hideAllToastCatalogMessages() {
+    const live = document.getElementById('toast-catalog-live');
+    if (!live) return;
+    const nodes = [...live.querySelectorAll('.p-toast-message')];
+    if (!nodes.length) return;
+    clearToastCatalogTimers(live);
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      live.replaceChildren();
+      live.style.minHeight = '';
+      return;
+    }
+    nodes.forEach(wrap => {
+      wrap.classList.remove('toast-catalog-enter');
+      wrap.classList.add('toast-catalog-leave');
+    });
+    window.setTimeout(() => {
+      if (live.isConnected) {
+        live.replaceChildren();
+        live.style.minHeight = '';
+      }
+    }, TOAST_CATALOG_LEAVE_MS + 120);
+  }
+
+  function appendToastCatalogMessage(severity) {
+    const live = document.getElementById('toast-catalog-live');
+    if (!live) return;
+    const icon = TOAST_CATALOG_ICONS[severity] || 'pi-info-circle';
+    const copy = TOAST_CATALOG_COPY[severity] || { summary: 'Toast', detail: 'Ejemplo.' };
+    const wrap = document.createElement('div');
+    wrap.className = 'p-toast-message p-toast-message-' + severity;
+    wrap.setAttribute('role', 'alert');
+
+    const content = document.createElement('div');
+    content.className = 'p-toast-message-content';
+
+    const ic = document.createElement('i');
+    ic.className = 'p-toast-message-icon pi ' + icon;
+    ic.setAttribute('aria-hidden', 'true');
+
+    const text = document.createElement('div');
+    text.className = 'p-toast-message-text';
+    const sum = document.createElement('span');
+    sum.className = 'p-toast-summary';
+    sum.textContent = copy.summary;
+    const det = document.createElement('span');
+    det.className = 'p-toast-detail';
+    det.textContent = copy.detail;
+    text.append(sum, det);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'p-toast-icon-close js-toast-catalog-close';
+    closeBtn.setAttribute('aria-label', 'Cerrar');
+    const closeIc = document.createElement('i');
+    closeIc.className = 'pi pi-times';
+    closeIc.setAttribute('aria-hidden', 'true');
+    closeBtn.append(closeIc);
+
+    const removeWrap = () => fadeOutRemoveToast(wrap);
+
+    closeBtn.addEventListener('click', removeWrap);
+
+    const tid = window.setTimeout(removeWrap, TOAST_CATALOG_AUTO_MS);
+    wrap.setAttribute('data-toast-timer-id', String(tid));
+
+    content.append(ic, text, closeBtn);
+    wrap.append(content);
+    live.appendChild(wrap);
+    scheduleToastCatalogSlotLayout(wrap, live);
+    wrap.classList.add('toast-catalog-enter');
+    const onEnterDone = () => {
+      wrap.classList.remove('toast-catalog-enter');
+      const liveRoot = wrap.closest('#toast-catalog-live');
+      if (liveRoot) refreshToastCatalogViewportHeight(liveRoot);
+    };
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.setTimeout(onEnterDone, 0);
+    } else {
+      wrap.addEventListener('animationend', onEnterDone, { once: true });
+    }
+  }
+
+  document.querySelectorAll('.js-toast-catalog-push').forEach(btn => {
+    btn.addEventListener('click', () => appendToastCatalogMessage(btn.dataset.toastSeverity));
+  });
+  const toastCatalogHideAll = document.getElementById('toast-catalog-hide-all');
+  if (toastCatalogHideAll) {
+    toastCatalogHideAll.addEventListener('click', hideAllToastCatalogMessages);
+  }
+  const tabMessagesOpenCatalog = document.getElementById('tab-messages-open-catalog');
+  if (tabMessagesOpenCatalog) {
+    tabMessagesOpenCatalog.addEventListener('click', () => {
+      const tab = document.querySelector('.preview-tab[data-tab="messages-catalog"]');
+      if (tab) tab.click();
+    });
+  }
+
   /* ── Theme toggle ── */
   let isDark      = false;
   let forcedDark  = false; // true cuando dark se activó automáticamente (sin light)
@@ -800,10 +1003,10 @@
     '--highlight-color':             ['Checkbox text', 'Radio text', 'MultiSelect text'],
     '--highlight-focus-background':  ['Checkbox focus', 'Radio focus'],
     '--highlight-focus-color':       ['Checkbox focus text', 'Radio focus text'],
-    '--p-success-color':             ['Button success', 'Tag success', 'Message'],
-    '--p-danger-color':              ['Button danger', 'Tag danger', 'InputText invalid'],
-    '--p-warning-color':             ['Tag warn', 'Message warn'],
-    '--p-info-color':                ['Tag info', 'Message info'],
+    '--p-success-color':             ['Button success', 'Tag success', 'Toast success'],
+    '--p-danger-color':              ['Button danger', 'Tag danger', 'InputText invalid', 'Toast error'],
+    '--p-warning-color':             ['Tag warn', 'Toast warn'],
+    '--p-info-color':                ['Tag info', 'Toast info'],
     '--p-font-family':               ['Todos los componentes'],
     '--p-font-size':                 ['Button', 'InputText', 'Badge', 'Tag'],
     '--p-border-radius':             ['Button', 'InputText', 'Select'],
@@ -853,7 +1056,8 @@
     { id: 'vvc-tag-ok',     label: 'tag · success',           semRef: '--p-success-color'               },
     { id: 'vvc-tag-err',    label: 'tag · danger',            semRef: '--p-danger-color'                },
     { id: 'vvc-tag-warn',   label: 'tag · warning',           semRef: '--p-warning-color'               },
-    { id: 'vvc-msg-info',   label: 'message · info',          semRef: '--p-info-color'                  },
+    { id: 'vvc-toast-ok',   label: 'toast · success',         semRef: '--p-success-color'               },
+    { id: 'vvc-toast-err',  label: 'toast · error',           semRef: '--p-danger-color'                },
     { id: 'vvc-all-font',   label: 'todos · font-family',     semRef: '--p-font-family'                 },
     { id: 'vvc-btn-radius', label: 'button · border-radius',  semRef: '--p-border-radius-md'            },
     { id: 'vvc-inp-radius', label: 'input · border-radius',   semRef: '--p-border-radius-md'            },

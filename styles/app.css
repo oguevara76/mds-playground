@@ -537,6 +537,75 @@ html, body {
 }
 .messages-stack { display: flex; flex-direction: column; gap: 8px; }
 
+/* Catálogo Messages: toasts dinámicos fijos top-left (debajo de la topbar fija) */
+@keyframes toast-catalog-bounce-from-left {
+  0% {
+    transform: translate3d(-115%, 0, 0);
+    opacity: 0;
+  }
+  52% {
+    transform: translate3d(12px, 0, 0);
+    opacity: 1;
+  }
+  68% {
+    transform: translate3d(-8px, 0, 0);
+  }
+  82% {
+    transform: translate3d(4px, 0, 0);
+  }
+  94% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+#toast-catalog-live.toast-catalog-live-viewport {
+  position: fixed;
+  top: calc(72px + 12px);
+  left: 1rem;
+  z-index: 1100;
+  margin: 0;
+  width: var(--p-toast-width);
+  max-width: min(calc(100vw - 2rem), var(--p-toast-width));
+  display: block;
+  min-height: 0;
+  pointer-events: none;
+}
+#toast-catalog-live.toast-catalog-live-viewport .p-toast-message.toast-catalog-enter {
+  animation: toast-catalog-bounce-from-left 0.68s cubic-bezier(0.34, 1.25, 0.64, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  #toast-catalog-live.toast-catalog-live-viewport .p-toast-message.toast-catalog-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+#toast-catalog-live.toast-catalog-live-viewport .p-toast-message {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+/* Salida: fade en sitio (sin “subida” brusca del layout hasta que termina el fade) */
+#toast-catalog-live.toast-catalog-live-viewport .p-toast-message.toast-catalog-leave {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.36s ease;
+}
+#tab-messages-catalog .toast-catalog-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+  max-width: var(--p-toast-width);
+}
+
 .input-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

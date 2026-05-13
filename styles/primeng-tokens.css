@@ -406,6 +406,76 @@
   --p-message-border-radius:  var(--message-border-radius, var(--content-border-radius, var(--p-border-radius)));
 
   /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Toast
+     Bridge: var(--toast-*, fallback) ← MDS components.css
+  ═══════════════════════════════════════════════════════════════════ */
+  --p-toast-width:                              var(--toast-width, 350px);
+  --p-toast-border-radius:                      var(--toast-border-radius, var(--p-border-radius));
+  --p-toast-border-width:                       var(--toast-border-width, 1px);
+  --p-toast-content-padding:                    var(--toast-content-padding, 16px);
+  --p-toast-content-gap:                        var(--toast-content-gap, 8px);
+  --p-toast-text-gap:                           var(--toast-text-gap, 6px);
+  --p-toast-summary-font-size:                  var(--toast-summary-font-size, 14px);
+  --p-toast-summary-font-weight:                var(--toast-summary-font-weight, 500);
+  --p-toast-detail-font-size:                   var(--toast-detail-font-size, 12px);
+  --p-toast-detail-font-weight:                var(--toast-detail-font-weight, 500);
+  --p-toast-icon-size:                          var(--toast-icon-size, 16px);
+  --p-toast-close-button-width:                 var(--toast-close-button-width, 24px);
+  --p-toast-close-button-height:                var(--toast-close-button-height, 24px);
+  --p-toast-close-button-border-radius:         var(--toast-close-button-border-radius, var(--p-border-radius-sm));
+  --p-toast-close-icon-size:                    var(--toast-close-icon-size, 14px);
+  --p-toast-close-button-focus-ring-width:      var(--toast-close-button-focus-ring-width, 2px);
+  --p-toast-close-button-focus-ring-offset:     var(--toast-close-button-focus-ring-offset, 0px);
+
+  --p-toast-success-background:                 var(--toast-success-background, var(--p-success-bg));
+  --p-toast-success-border-color:               var(--toast-success-border-color, var(--p-success-color));
+  --p-toast-success-color:                      var(--toast-success-color, var(--p-success-color));
+  --p-toast-success-detail-color:               var(--toast-success-detail-color, var(--p-content-color));
+  --p-toast-success-shadow:                     var(--toast-success-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-toast-success-close-button-hover-background: var(--toast-success-close-button-hover-background, var(--p-success-subtle));
+  --p-toast-success-close-button-focus-ring-color: var(--toast-success-close-button-focus-ring-color, var(--p-success-color));
+
+  --p-toast-info-background:                    var(--toast-info-background, var(--p-info-bg));
+  --p-toast-info-border-color:                  var(--toast-info-border-color, var(--p-info-color));
+  --p-toast-info-color:                         var(--toast-info-color, var(--p-info-color));
+  --p-toast-info-detail-color:                  var(--toast-info-detail-color, var(--p-content-color));
+  --p-toast-info-shadow:                        var(--toast-info-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-toast-info-close-button-hover-background: var(--toast-info-close-button-hover-background, color-mix(in srgb, var(--p-info-color) 18%, transparent));
+  --p-toast-info-close-button-focus-ring-color: var(--toast-info-close-button-focus-ring-color, var(--p-info-color));
+
+  --p-toast-warn-background:                    var(--toast-warn-background, var(--p-warning-bg));
+  --p-toast-warn-border-color:                  var(--toast-warn-border-color, var(--p-warning-color));
+  --p-toast-warn-color:                         var(--toast-warn-color, var(--p-warning-color));
+  --p-toast-warn-detail-color:                  var(--toast-warn-detail-color, var(--p-content-color));
+  --p-toast-warn-shadow:                        var(--toast-warn-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-toast-warn-close-button-hover-background: var(--toast-warn-close-button-hover-background, color-mix(in srgb, var(--p-warning-color) 18%, transparent));
+  --p-toast-warn-close-button-focus-ring-color: var(--toast-warn-close-button-focus-ring-color, var(--p-warning-color));
+
+  --p-toast-error-background:                   var(--toast-error-background, var(--p-danger-bg));
+  --p-toast-error-border-color:                 var(--toast-error-border-color, var(--p-danger-color));
+  --p-toast-error-color:                        var(--toast-error-color, var(--p-danger-color));
+  --p-toast-error-detail-color:                 var(--toast-error-detail-color, var(--p-content-color));
+  --p-toast-error-shadow:                       var(--toast-error-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-toast-error-close-button-hover-background: var(--toast-error-close-button-hover-background, var(--p-danger-subtle));
+  --p-toast-error-close-button-focus-ring-color: var(--toast-error-close-button-focus-ring-color, var(--p-danger-color));
+
+  --p-toast-secondary-background:               var(--toast-secondary-background, var(--p-secondary-bg));
+  --p-toast-secondary-border-color:             var(--toast-secondary-border-color, var(--p-surface-300));
+  --p-toast-secondary-color:                    var(--toast-secondary-color, var(--p-secondary-color));
+  --p-toast-secondary-detail-color:             var(--toast-secondary-detail-color, var(--p-content-color));
+  --p-toast-secondary-shadow:                   var(--toast-secondary-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-toast-secondary-close-button-hover-background: var(--toast-secondary-close-button-hover-background, var(--p-surface-100));
+  --p-toast-secondary-close-button-focus-ring-color: var(--toast-secondary-close-button-focus-ring-color, var(--p-surface-600));
+
+  --p-toast-contrast-background:                var(--toast-contrast-background, var(--p-surface-900));
+  --p-toast-contrast-border-color:              var(--toast-contrast-border-color, var(--p-surface-900));
+  --p-toast-contrast-color:                     var(--toast-contrast-color, var(--p-surface-0));
+  --p-toast-contrast-detail-color:              var(--toast-contrast-detail-color, var(--p-surface-200));
+  --p-toast-contrast-shadow:                    var(--toast-contrast-shadow, 0 4px 8px rgba(0, 0, 0, 0.12));
+  --p-toast-contrast-close-button-hover-background: var(--toast-contrast-close-button-hover-background, var(--p-surface-700));
+  --p-toast-contrast-close-button-focus-ring-color: var(--toast-contrast-close-button-focus-ring-color, var(--p-surface-0));
+
+  /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Dialog
      ═══════════════════════════════════════════════════════════════════ */
   --p-dialog-border-radius:        var(--dialog-border-radius, var(--overlay-modal-border-radius, var(--p-border-radius-xl)));
