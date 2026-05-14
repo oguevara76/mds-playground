@@ -1175,7 +1175,7 @@
   border-radius: var(--p-message-border-radius);
   outline-width: var(--p-message-border-width);
   outline-style: solid;
-  outline-color: transparent;
+  outline-offset: 0;
   box-sizing: border-box;
 }
 .p-message-content {
