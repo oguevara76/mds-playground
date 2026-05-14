@@ -2,7 +2,7 @@
 /* Version: 1.0.0 */
 /* Description: Variables and Effect Styles for components. */
 /* Author: UX/UI Design System Team */
-/* Last Updated: 2026-05-11 */
+/* Last Updated: 2026-05-14 */
 
 @layer mds-core;
 
@@ -198,6 +198,7 @@ html:root {
   --button-figma-raised-background: rgba(255, 255, 255, 0.01);
   --button-focus-ring-offset: var(--focus-ring-offset);
   --button-focus-ring-width: var(--focus-ring-width);
+  --button-font-size: var(--form-field-font-size);
   --button-gap: var(--dimension-scale-x6);
   --button-help-active-background: var(--feedback-help-contrast);
   --button-help-active-border-color: var(--feedback-help-contrast);
@@ -784,13 +785,13 @@ html:root {
   --float-label-invalid-color: var(--form-field-float-label-invalid-color);
   --floatlabel-active-font-size: 11px;
   --floatlabel-active-font-weight: 400;
-  --floatlabel-color: rgba(100, 116, 139, 1);
-  --floatlabel-focus-color: rgba(100, 116, 139, 1);
+  --floatlabel-color: var(--form-field-float-label-color);
+  --floatlabel-focus-color: var(--form-field-float-label-focus-color);
   --floatlabel-in-active-top: 7px;
   --floatlabel-in-input-padding-bottom: 7px;
   --floatlabel-in-input-padding-top: 21px;
-  --floatlabel-invalid-color: rgba(220, 38, 38, 1);
-  --floatlabel-on-active-background: rgba(255, 255, 255, 1);
+  --floatlabel-invalid-color: var(--form-field-float-label-invalid-color);
+  --floatlabel-on-active-background: var(--form-field-background);
   --floatlabel-on-active-padding-x: 2px;
   --floatlabel-on-active-padding-y: 0px;
   --floatlabel-on-border-radius: 2px;
@@ -858,15 +859,16 @@ html:root {
   --galleria-thumbnail-nav-button-size: var(--dimension-scale-x28);
   --galleria-thumbnails-content-background: var(--content-background);
   --iconfield-figma-lg-icon-size: var(--inputtext-lg-font-size);
+  --iconfield-figma-size: var(--inputtext-font-size);
   --iconfield-figma-sm-icon-size: var(--inputtext-sm-font-size);
   --iconfield-icon-color: var(--form-field-icon-color);
-  --iftalabel-color: rgba(100, 116, 139, 1);
-  --iftalabel-focus-color: rgba(100, 116, 139, 1);
+  --iftalabel-color: var(--form-field-float-label-color);
+  --iftalabel-focus-color: var(--form-field-float-label-focus-color);
   --iftalabel-font-size: 11px;
   --iftalabel-font-weight: 400;
   --iftalabel-input-padding-bottom: 7px;
   --iftalabel-input-padding-top: 21px;
-  --iftalabel-invalid-color: rgba(220, 38, 38, 1);
+  --iftalabel-invalid-color: var(--form-field-float-label-invalid-color);
   --iftalabel-position-x: 11px;
   --iftalabel-top: 7px;
   --image-action-border-radius: var(--border-radius-pill);
@@ -932,7 +934,6 @@ html:root {
   --inputotp-inputotp-input-lg-width: var(--dimension-scale-x42);
   --inputotp-inputotp-input-sm-width: var(--dimension-scale-x28);
   --inputotp-inputotp-input-width: var(--dimension-scale-x32);
-  --inputtext-Font: var(--app-font-size);
   --inputtext-background: var(--form-field-background);
   --inputtext-border-color: var(--form-field-border-color);
   --inputtext-border-radius: var(--form-field-border-radius);
@@ -948,6 +949,7 @@ html:root {
   --inputtext-focus-ring-offset: var(--form-field-focus-ring-offset);
   --inputtext-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --inputtext-focus-ring-width: var(--form-field-focus-ring-width);
+  --inputtext-font-size: var(--form-field-font-size);
   --inputtext-hover-border-color: var(--form-field-hover-border-color);
   --inputtext-invalid-border-color: var(--form-field-invalid-border-color);
   --inputtext-invalid-placeholder-color: var(--form-field-invalid-placeholder-color);
@@ -1098,7 +1100,13 @@ html:root {
   --message-close-icon-lg-size: var(--dimension-scale-x16);
   --message-close-icon-size: var(--dimension-scale-x14);
   --message-close-icon-sm-size: var(--dimension-scale-x12);
-  --message-content-gap: var(--dimension-scale-x6);
+  --message-content-gap: var(--dimension-scale-x8);
+  --message-content-lg-padding-x: var(--dimension-scale-x12);
+  --message-content-lg-padding-y: var(--dimension-scale-x8);
+  --message-content-padding-x: var(--dimension-scale-x10);
+  --message-content-padding-y: var(--dimension-scale-x6);
+  --message-content-sm-padding-x: var(--dimension-scale-x8);
+  --message-content-sm-padding-y: var(--dimension-scale-x4);
   --message-contrast-background: var(--surface-context-intense);
   --message-contrast-border-color: var(--surface-context-intense);
   --message-contrast-close-button-focus-ring-color: var(--surface-context-minimal);
@@ -1109,7 +1117,7 @@ html:root {
   --message-contrast-shadow: 0px 4px 8px 0px rgba(0, 0, 1, 0.04);
   --message-contrast-simple-color: var(--surface-context-intense);
   --message-error-background: var(--feedback-danger-minimal);
-  --message-error-border-color: var(--feedback-danger-base);
+  --message-error-border-color: var(--feedback-danger-strong);
   --message-error-close-button-focus-ring-color: var(--feedback-danger-strong);
   --message-error-close-button-hover-background: var(--feedback-danger-subtle);
   --message-error-color: var(--feedback-danger-strong);
@@ -1121,7 +1129,7 @@ html:root {
   --message-icon-size: var(--dimension-scale-x16);
   --message-icon-sm-size: var(--dimension-scale-x14);
   --message-info-background: var(--feedback-info-minimal);
-  --message-info-border-color: var(--feedback-info-base);
+  --message-info-border-color: var(--feedback-info-strong);
   --message-info-close-button-focus-ring-color: var(--feedback-info-strong);
   --message-info-close-button-hover-background: var(--feedback-info-subtle);
   --message-info-color: var(--feedback-info-strong);
@@ -1131,7 +1139,7 @@ html:root {
   --message-info-simple-color: var(--feedback-info-strong);
   --message-outlined-border-width: 1px;
   --message-secondary-background: var(--surface-context-subtle);
-  --message-secondary-border-color: var(--surface-context-base);
+  --message-secondary-border-color: var(--surface-context-contrast);
   --message-secondary-close-button-focus-ring-color: var(--surface-context-contrast);
   --message-secondary-close-button-hover-background: var(--surface-context-base);
   --message-secondary-color: var(--surface-context-contrast);
@@ -1141,7 +1149,7 @@ html:root {
   --message-secondary-simple-color: var(--surface-context-strong);
   --message-simple-content-padding: var(--dimension-scale-x0);
   --message-success-background: var(--feedback-success-minimal);
-  --message-success-border-color: var(--feedback-success-base);
+  --message-success-border-color: var(--feedback-success-strong);
   --message-success-close-button-focus-ring-color: var(--feedback-success-strong);
   --message-success-close-button-hover-background: var(--feedback-success-subtle);
   --message-success-color: var(--feedback-success-strong);
@@ -1154,7 +1162,7 @@ html:root {
   --message-text-lg-font-size: 16px;
   --message-text-sm-font-size: 12px;
   --message-warn-background: var(--feedback-warn-minimal);
-  --message-warn-border-color: var(--feedback-warn-base);
+  --message-warn-border-color: var(--feedback-warn-strong);
   --message-warn-close-button-focus-ring-color: var(--feedback-warn-strong);
   --message-warn-close-button-hover-background: var(--feedback-warn-subtle);
   --message-warn-color: var(--feedback-warn-strong);
@@ -1645,7 +1653,7 @@ html:root {
   --toast-detail-font-size: 12px;
   --toast-detail-font-weight: 500;
   --toast-error-background: var(--feedback-danger-minimal);
-  --toast-error-border-color: var(--feedback-danger-base);
+  --toast-error-border-color: var(--feedback-danger-strong);
   --toast-error-close-button-focus-ring-color: var(--feedback-danger-strong);
   --toast-error-close-button-hover-background: var(--feedback-danger-subtle);
   --toast-error-color: var(--feedback-danger-strong);
@@ -1653,21 +1661,21 @@ html:root {
   --toast-error-shadow: 0px 4px 8px 0px rgba(10, 3, 3, 0.04);
   --toast-icon-size: var(--dimension-scale-x16);
   --toast-info-background: var(--feedback-info-minimal);
-  --toast-info-border-color: var(--feedback-info-base);
+  --toast-info-border-color: var(--feedback-info-strong);
   --toast-info-close-button-focus-ring-color: var(--feedback-info-strong);
   --toast-info-close-button-hover-background: var(--feedback-info-subtle);
   --toast-info-color: var(--feedback-info-strong);
   --toast-info-detail-color: var(--text-color);
   --toast-info-shadow: 0px 4px 8px 0px rgba(2, 5, 10, 0.04);
   --toast-secondary-background: var(--surface-context-base);
-  --toast-secondary-border-color: var(--surface-context-medium);
+  --toast-secondary-border-color: var(--surface-context-contrast);
   --toast-secondary-close-button-focus-ring-color: var(--surface-context-contrast);
   --toast-secondary-close-button-hover-background: var(--surface-context-base);
   --toast-secondary-color: var(--surface-context-contrast);
   --toast-secondary-detail-color: var(--surface-context-contrast);
   --toast-secondary-shadow: 0px 4px 8px 0px rgba(4, 5, 6, 0.04);
   --toast-success-background: var(--feedback-success-minimal);
-  --toast-success-border-color: var(--feedback-success-base);
+  --toast-success-border-color: var(--feedback-success-strong);
   --toast-success-close-button-focus-ring-color: var(--feedback-success-strong);
   --toast-success-close-button-hover-background: var(--feedback-success-subtle);
   --toast-success-color: var(--feedback-success-strong);
@@ -1677,7 +1685,7 @@ html:root {
   --toast-summary-font-weight: 500;
   --toast-text-gap: var(--dimension-scale-x6);
   --toast-warn-background: var(--feedback-warn-minimal);
-  --toast-warn-border-color: var(--feedback-warn-base);
+  --toast-warn-border-color: var(--feedback-warn-strong);
   --toast-warn-close-button-focus-ring-color: var(--feedback-warn-strong);
   --toast-warn-close-button-hover-background: var(--feedback-warn-subtle);
   --toast-warn-color: var(--feedback-warn-strong);
@@ -1731,13 +1739,13 @@ html:root {
   --togglebutton-sm-font-size: var(--form-field-sm-font-size);
   --togglebutton-sm-padding-x: var(--dimension-scale-x8);
   --togglebutton-sm-padding-y: var(--dimension-scale-x6);
-  --toggleswitch-background: var(--surface-context-medium);
+  --toggleswitch-background: var(--surface-context-emphasized);
   --toggleswitch-border-color: rgba(0, 0, 0, 0);
   --toggleswitch-border-radius: var(--border-radius-pill);
   --toggleswitch-border-width: 1px;
   --toggleswitch-checked-background: var(--primary-color);
   --toggleswitch-checked-border-color: rgba(0, 0, 0, 0);
-  --toggleswitch-checked-hover-background: var(--primary-400);
+  --toggleswitch-checked-hover-background: var(--primary-700);
   --toggleswitch-checked-hover-border-color: rgba(0, 0, 0, 0);
   --toggleswitch-disabled-background: var(--surface-context-base);
   --toggleswitch-focus-ring-color: var(--focus-ring-color);

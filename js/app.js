@@ -371,6 +371,20 @@
     });
   }
 
+  const tabMessagesOpenCatalogMessage = document.getElementById('tab-messages-open-catalog-message');
+  if (tabMessagesOpenCatalogMessage) {
+    tabMessagesOpenCatalogMessage.addEventListener('click', () => {
+      const tab = document.querySelector('.preview-tab[data-tab="messages-catalog"]');
+      if (tab) tab.click();
+      const anchor = document.getElementById('message-catalog-preview');
+      if (anchor) {
+        window.requestAnimationFrame(() => {
+          anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+    });
+  }
+
   /* ── Theme toggle ── */
   let isDark      = false;
   let forcedDark  = false; // true cuando dark se activó automáticamente (sin light)
@@ -1058,6 +1072,8 @@
     { id: 'vvc-tag-warn',   label: 'tag · warning',           semRef: '--p-warning-color'               },
     { id: 'vvc-toast-ok',   label: 'toast · success',         semRef: '--p-success-color'               },
     { id: 'vvc-toast-err',  label: 'toast · error',           semRef: '--p-danger-color'                },
+    { id: 'vvc-msg-bg',     label: 'message · success bg',    semRef: '--message-success-background'    },
+    { id: 'vvc-msg-border', label: 'message · info borde',    semRef: '--message-info-border-color'     },
     { id: 'vvc-all-font',   label: 'todos · font-family',     semRef: '--p-font-family'                 },
     { id: 'vvc-btn-radius', label: 'button · border-radius',  semRef: '--p-border-radius-md'            },
     { id: 'vvc-inp-radius', label: 'input · border-radius',   semRef: '--p-border-radius-md'            },

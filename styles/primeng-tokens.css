@@ -400,10 +400,98 @@
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Message
-     ═══════════════════════════════════════════════════════════════════ */
-  --p-message-padding:        var(--dimension-spacing-x14, 14px) var(--dimension-spacing-x16, 16px);
-  --p-message-gap:            var(--message-content-gap, var(--dimension-spacing-x12, 12px));
-  --p-message-border-radius:  var(--message-border-radius, var(--content-border-radius, var(--p-border-radius)));
+     Bridge: var(--message-*, fallback) ← MDS (mds-vars-data.js) → paridad PrimeNG 19
+  ═══════════════════════════════════════════════════════════════════ */
+  --p-message-border-radius:              var(--message-border-radius, var(--content-border-radius, var(--p-border-radius)));
+  --p-message-border-width:               var(--message-border-width, 1px);
+  /* Padding/gap: alineado con mds-components (--message-content-padding-x/y, sm, lg, --message-content-gap) */
+  --p-message-content-padding:
+    var(--message-content-padding-y, var(--dimension-scale-x6, 6px))
+    var(--message-content-padding-x, var(--dimension-scale-x10, 10px));
+  --p-message-content-padding-sm:
+    var(--message-content-sm-padding-y, var(--dimension-scale-x4, 4px))
+    var(--message-content-sm-padding-x, var(--dimension-scale-x8, 8px));
+  --p-message-content-padding-lg:
+    var(--message-content-lg-padding-y, var(--dimension-scale-x8, 8px))
+    var(--message-content-lg-padding-x, var(--dimension-scale-x12, 12px));
+  --p-message-content-gap:                var(--message-content-gap, var(--dimension-scale-x8, 8px));
+  --p-message-simple-content-padding:     var(--message-simple-content-padding, 0px);
+  --p-message-outlined-border-width:      var(--message-outlined-border-width, 1px);
+  --p-message-text-font-size:             var(--message-text-font-size, 14px);
+  --p-message-text-font-weight:           var(--message-text-font-weight, 500);
+  --p-message-text-sm-font-size:          var(--message-text-sm-font-size, 12px);
+  --p-message-text-lg-font-size:          var(--message-text-lg-font-size, 16px);
+  --p-message-icon-size:                  var(--message-icon-size, 16px);
+  --p-message-icon-sm-size:               var(--message-icon-sm-size, 14px);
+  --p-message-icon-lg-size:               var(--message-icon-lg-size, 18px);
+  --p-message-close-button-width:         var(--message-close-button-width, 24px);
+  --p-message-close-button-height:        var(--message-close-button-height, 24px);
+  --p-message-close-button-border-radius: var(--message-close-button-border-radius, var(--p-border-radius-sm));
+  --p-message-close-icon-size:            var(--message-close-icon-size, 14px);
+  --p-message-close-icon-sm-size:         var(--message-close-icon-sm-size, 12px);
+  --p-message-close-icon-lg-size:         var(--message-close-icon-lg-size, 16px);
+  --p-message-close-button-focus-ring-width:  var(--message-close-button-focus-ring-width, 2px);
+  --p-message-close-button-focus-ring-offset: var(--message-close-button-focus-ring-offset, 0px);
+
+  --p-message-success-background:                 var(--message-success-background, var(--p-success-bg));
+  --p-message-success-border-color:             var(--message-success-border-color, var(--p-success-color));
+  --p-message-success-color:                    var(--message-success-color, var(--p-success-color));
+  --p-message-success-shadow:                   var(--message-success-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-message-success-close-button-hover-background: var(--message-success-close-button-hover-background, var(--p-success-subtle));
+  --p-message-success-close-button-focus-ring-color: var(--message-success-close-button-focus-ring-color, var(--p-success-color));
+  --p-message-success-outlined-color:           var(--message-success-outlined-color, var(--p-success-color));
+  --p-message-success-outlined-border-color:    var(--message-success-outlined-border-color, var(--p-success-color));
+  --p-message-success-simple-color:             var(--message-success-simple-color, var(--p-success-color));
+
+  --p-message-info-background:                  var(--message-info-background, var(--p-info-bg));
+  --p-message-info-border-color:                var(--message-info-border-color, var(--p-info-color));
+  --p-message-info-color:                       var(--message-info-color, var(--p-info-color));
+  --p-message-info-shadow:                      var(--message-info-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-message-info-close-button-hover-background: var(--message-info-close-button-hover-background, color-mix(in srgb, var(--p-info-color) 18%, transparent));
+  --p-message-info-close-button-focus-ring-color: var(--message-info-close-button-focus-ring-color, var(--p-info-color));
+  --p-message-info-outlined-color:              var(--message-info-outlined-color, var(--p-info-color));
+  --p-message-info-outlined-border-color:       var(--message-info-outlined-border-color, var(--p-info-color));
+  --p-message-info-simple-color:                var(--message-info-simple-color, var(--p-info-color));
+
+  --p-message-warn-background:                  var(--message-warn-background, var(--p-warning-bg));
+  --p-message-warn-border-color:              var(--message-warn-border-color, var(--p-warning-color));
+  --p-message-warn-color:                     var(--message-warn-color, var(--p-warning-color));
+  --p-message-warn-shadow:                    var(--message-warn-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-message-warn-close-button-hover-background: var(--message-warn-close-button-hover-background, color-mix(in srgb, var(--p-warning-color) 18%, transparent));
+  --p-message-warn-close-button-focus-ring-color: var(--message-warn-close-button-focus-ring-color, var(--p-warning-color));
+  --p-message-warn-outlined-color:              var(--message-warn-outlined-color, var(--p-warning-color));
+  --p-message-warn-outlined-border-color:     var(--message-warn-outlined-border-color, var(--p-warning-color));
+  --p-message-warn-simple-color:              var(--message-warn-simple-color, var(--p-warning-color));
+
+  --p-message-error-background:               var(--message-error-background, var(--p-danger-bg));
+  --p-message-error-border-color:           var(--message-error-border-color, var(--p-danger-color));
+  --p-message-error-color:                  var(--message-error-color, var(--p-danger-color));
+  --p-message-error-shadow:                 var(--message-error-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-message-error-close-button-hover-background: var(--message-error-close-button-hover-background, var(--p-danger-subtle));
+  --p-message-error-close-button-focus-ring-color: var(--message-error-close-button-focus-ring-color, var(--p-danger-color));
+  --p-message-error-outlined-color:         var(--message-error-outlined-color, var(--p-danger-color));
+  --p-message-error-outlined-border-color:  var(--message-error-outlined-border-color, var(--p-danger-color));
+  --p-message-error-simple-color:           var(--message-error-simple-color, var(--p-danger-color));
+
+  --p-message-secondary-background:           var(--message-secondary-background, var(--p-secondary-bg));
+  --p-message-secondary-border-color:       var(--message-secondary-border-color, var(--p-surface-300));
+  --p-message-secondary-color:               var(--message-secondary-color, var(--p-secondary-color));
+  --p-message-secondary-shadow:              var(--message-secondary-shadow, 0 4px 8px rgba(0, 0, 0, 0.06));
+  --p-message-secondary-close-button-hover-background: var(--message-secondary-close-button-hover-background, var(--p-surface-100));
+  --p-message-secondary-close-button-focus-ring-color: var(--message-secondary-close-button-focus-ring-color, var(--p-surface-600));
+  --p-message-secondary-outlined-color:     var(--message-secondary-outlined-color, var(--p-surface-600));
+  --p-message-secondary-outlined-border-color: var(--message-secondary-outlined-border-color, var(--p-surface-600));
+  --p-message-secondary-simple-color:       var(--message-secondary-simple-color, var(--p-surface-600));
+
+  --p-message-contrast-background:            var(--message-contrast-background, var(--p-surface-900));
+  --p-message-contrast-border-color:        var(--message-contrast-border-color, var(--p-surface-900));
+  --p-message-contrast-color:                 var(--message-contrast-color, var(--p-surface-0));
+  --p-message-contrast-shadow:                var(--message-contrast-shadow, 0 4px 8px rgba(0, 0, 0, 0.12));
+  --p-message-contrast-close-button-hover-background: var(--message-contrast-close-button-hover-background, var(--p-surface-700));
+  --p-message-contrast-close-button-focus-ring-color: var(--message-contrast-close-button-focus-ring-color, var(--p-surface-0));
+  --p-message-contrast-outlined-color:      var(--message-contrast-outlined-color, var(--p-surface-900));
+  --p-message-contrast-outlined-border-color: var(--message-contrast-outlined-border-color, var(--p-surface-900));
+  --p-message-contrast-simple-color:        var(--message-contrast-simple-color, var(--p-surface-900));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Toast

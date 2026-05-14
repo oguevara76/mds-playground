@@ -1165,28 +1165,264 @@
   font-size: 16px;
 }
 
-/* ── Messages ── */
-.p-message {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--p-message-gap);
-  padding: var(--p-message-padding);
-  border-radius: var(--p-message-border-radius);
+/* ── Message: etiqueta inline PrimeNG (icono + texto + cerrar), ancho al contenido — no es Toast ── */
+.p-message.p-component {
+  display: inline-flex;
+  vertical-align: middle;
+  width: fit-content;
+  max-width: 100%;
   font-family: var(--p-font-family);
-  font-size: 13px;
+  border-radius: var(--p-message-border-radius);
+  outline-width: var(--p-message-border-width);
+  outline-style: solid;
+  outline-color: transparent;
+  box-sizing: border-box;
 }
-.p-message > .pi {
-  font-size: 16px;
+.p-message-content {
+  display: flex;
+  align-items: center;
+  padding: var(--p-message-content-padding);
+  gap: var(--p-message-content-gap);
+  min-width: 0;
+}
+.p-message-sm .p-message-content {
+  padding: var(--p-message-content-padding-sm);
+}
+.p-message-lg .p-message-content {
+  padding: var(--p-message-content-padding-lg);
+}
+.p-message-icon {
   flex-shrink: 0;
-  margin-top: 2px;
+  font-size: var(--p-message-icon-size);
+  width: var(--p-message-icon-size);
+  height: var(--p-message-icon-size);
+  line-height: 1;
+  margin-top: 0;
 }
-.p-message > div strong { display: block; font-weight: 600; margin-bottom: 2px; }
-.p-message > div p { margin: 0; opacity: .85; }
+.p-message-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--p-message-text-font-size);
+  font-weight: var(--p-message-text-font-weight);
+  line-height: 1.25;
+}
+.p-message-summary {
+  display: inline;
+  font-weight: 600;
+}
+.p-message-detail {
+  display: inline;
+  margin: 0;
+  font-weight: var(--p-message-text-font-weight);
+  opacity: 0.88;
+}
+.p-message-text:has(.p-message-detail) {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.p-message-close-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: auto;
+  width: var(--p-message-close-button-width);
+  height: var(--p-message-close-button-height);
+  padding: 0;
+  border: none;
+  border-radius: var(--p-message-close-button-border-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.88;
+  transition: background 0.2s, opacity 0.2s;
+}
+.p-message-close-button:hover {
+  opacity: 1;
+}
+.p-message-close-button:focus-visible {
+  outline: var(--p-message-close-button-focus-ring-width) solid currentColor;
+  outline-offset: var(--p-message-close-button-focus-ring-offset);
+}
+.p-message-close-button:disabled {
+  cursor: default;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.p-message-close-icon {
+  font-size: var(--p-message-close-icon-size);
+  width: var(--p-message-close-icon-size);
+  height: var(--p-message-close-icon-size);
+  line-height: 1;
+}
 
-.p-message-success { background: var(--p-success-bg); color: var(--p-success-color); }
-.p-message-warn    { background: var(--p-warning-bg); color: var(--p-warning-color); }
-.p-message-error   { background: var(--p-danger-bg);  color: var(--p-danger-color); }
-.p-message-info    { background: var(--p-info-bg);    color: var(--p-info-color); }
+.p-message-outlined {
+  background: var(--p-content-bg) !important;
+  outline-width: var(--p-message-outlined-border-width);
+  box-shadow: none !important;
+}
+.p-message-simple {
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.p-message-simple .p-message-content {
+  padding: var(--p-message-simple-content-padding);
+}
+
+.p-message-sm .p-message-text {
+  font-size: var(--p-message-text-sm-font-size);
+}
+.p-message-sm .p-message-icon {
+  font-size: var(--p-message-icon-sm-size);
+  width: var(--p-message-icon-sm-size);
+  height: var(--p-message-icon-sm-size);
+}
+.p-message-sm .p-message-close-icon {
+  font-size: var(--p-message-close-icon-sm-size);
+  width: var(--p-message-close-icon-sm-size);
+  height: var(--p-message-close-icon-sm-size);
+}
+.p-message-lg .p-message-text {
+  font-size: var(--p-message-text-lg-font-size);
+}
+.p-message-lg .p-message-icon {
+  font-size: var(--p-message-icon-lg-size);
+  width: var(--p-message-icon-lg-size);
+  height: var(--p-message-icon-lg-size);
+}
+.p-message-lg .p-message-close-icon {
+  font-size: var(--p-message-close-icon-lg-size);
+  width: var(--p-message-close-icon-lg-size);
+  height: var(--p-message-close-icon-lg-size);
+}
+
+.p-message-success {
+  background: var(--p-message-success-background);
+  outline-color: var(--p-message-success-border-color);
+  color: var(--p-message-success-color);
+  box-shadow: var(--p-message-success-shadow);
+}
+.p-message-success .p-message-close-button:hover {
+  background: var(--p-message-success-close-button-hover-background);
+}
+.p-message-success .p-message-close-button:focus-visible {
+  outline-color: var(--p-message-success-close-button-focus-ring-color);
+}
+.p-message-success.p-message-outlined {
+  color: var(--p-message-success-outlined-color);
+  outline-color: var(--p-message-success-outlined-border-color);
+}
+.p-message-success.p-message-simple {
+  color: var(--p-message-success-simple-color);
+}
+
+.p-message-info {
+  background: var(--p-message-info-background);
+  outline-color: var(--p-message-info-border-color);
+  color: var(--p-message-info-color);
+  box-shadow: var(--p-message-info-shadow);
+}
+.p-message-info .p-message-close-button:hover {
+  background: var(--p-message-info-close-button-hover-background);
+}
+.p-message-info .p-message-close-button:focus-visible {
+  outline-color: var(--p-message-info-close-button-focus-ring-color);
+}
+.p-message-info.p-message-outlined {
+  color: var(--p-message-info-outlined-color);
+  outline-color: var(--p-message-info-outlined-border-color);
+}
+.p-message-info.p-message-simple {
+  color: var(--p-message-info-simple-color);
+}
+
+.p-message-warn {
+  background: var(--p-message-warn-background);
+  outline-color: var(--p-message-warn-border-color);
+  color: var(--p-message-warn-color);
+  box-shadow: var(--p-message-warn-shadow);
+}
+.p-message-warn .p-message-close-button:hover {
+  background: var(--p-message-warn-close-button-hover-background);
+}
+.p-message-warn .p-message-close-button:focus-visible {
+  outline-color: var(--p-message-warn-close-button-focus-ring-color);
+}
+.p-message-warn.p-message-outlined {
+  color: var(--p-message-warn-outlined-color);
+  outline-color: var(--p-message-warn-outlined-border-color);
+}
+.p-message-warn.p-message-simple {
+  color: var(--p-message-warn-simple-color);
+}
+
+.p-message-error {
+  background: var(--p-message-error-background);
+  outline-color: var(--p-message-error-border-color);
+  color: var(--p-message-error-color);
+  box-shadow: var(--p-message-error-shadow);
+}
+.p-message-error .p-message-close-button:hover {
+  background: var(--p-message-error-close-button-hover-background);
+}
+.p-message-error .p-message-close-button:focus-visible {
+  outline-color: var(--p-message-error-close-button-focus-ring-color);
+}
+.p-message-error.p-message-outlined {
+  color: var(--p-message-error-outlined-color);
+  outline-color: var(--p-message-error-outlined-border-color);
+}
+.p-message-error.p-message-simple {
+  color: var(--p-message-error-simple-color);
+}
+
+.p-message-secondary {
+  background: var(--p-message-secondary-background);
+  outline-color: var(--p-message-secondary-border-color);
+  color: var(--p-message-secondary-color);
+  box-shadow: var(--p-message-secondary-shadow);
+}
+.p-message-secondary .p-message-close-button:hover {
+  background: var(--p-message-secondary-close-button-hover-background);
+}
+.p-message-secondary .p-message-close-button:focus-visible {
+  outline-color: var(--p-message-secondary-close-button-focus-ring-color);
+}
+.p-message-secondary.p-message-outlined {
+  color: var(--p-message-secondary-outlined-color);
+  outline-color: var(--p-message-secondary-outlined-border-color);
+}
+.p-message-secondary.p-message-simple {
+  color: var(--p-message-secondary-simple-color);
+}
+
+.p-message-contrast {
+  background: var(--p-message-contrast-background);
+  outline-color: var(--p-message-contrast-border-color);
+  color: var(--p-message-contrast-color);
+  box-shadow: var(--p-message-contrast-shadow);
+}
+.p-message-contrast .p-message-close-button:hover {
+  background: var(--p-message-contrast-close-button-hover-background);
+}
+.p-message-contrast .p-message-close-button:focus-visible {
+  outline-color: var(--p-message-contrast-close-button-focus-ring-color);
+}
+.p-message-contrast.p-message-outlined {
+  color: var(--p-message-contrast-outlined-color);
+  outline-color: var(--p-message-contrast-outlined-border-color);
+}
+.p-message-contrast.p-message-simple {
+  color: var(--p-message-contrast-simple-color);
+}
 
 /* ── Toast (paridad visual PrimeNG, tokens --p-toast-* ← --toast-* vía primeng-tokens.css) ── */
 .p-toast.p-component {
