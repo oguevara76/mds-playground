@@ -24,12 +24,15 @@ require() {
 pick_semantic_light() {
   if [[ -f "$DESKTOP/ctr--its--light.css" ]]; then echo "$DESKTOP/ctr--its--light.css"
   elif [[ -f "$DESKTOP/ctr--tol--light.css" ]]; then echo "$DESKTOP/ctr--tol--light.css"
+  elif [[ -f "$DESKTOP/ctr--tol--lan--light.css" ]]; then echo "$DESKTOP/ctr--tol--lan--light.css"
   else echo ""; fi
 }
 
 pick_semantic_dark() {
   if [[ -f "$DESKTOP/ctr--its--dark.css" ]]; then echo "$DESKTOP/ctr--its--dark.css"
   elif [[ -f "$DESKTOP/ctr--tol--dark.css" ]]; then echo "$DESKTOP/ctr--tol--dark.css"
+  elif [[ -f "$DESKTOP/ctr--tol--lan--darkbrand.css" ]]; then echo "$DESKTOP/ctr--tol--lan--darkbrand.css"
+  elif [[ -f "$DESKTOP/ctr--tol--lan--dark.css" ]]; then echo "$DESKTOP/ctr--tol--lan--dark.css"
   else echo ""; fi
 }
 
@@ -47,6 +50,9 @@ transform() {
       -e 's/html\[data-theme="ctr--its--dark"\]/html[data-theme="dark"]/g' \
       -e 's/html\[data-theme="ctr--tol--light"\]/html[data-theme="light"]/g' \
       -e 's/html\[data-theme="ctr--tol--dark"\]/html[data-theme="dark"]/g' \
+      -e 's/html\[data-theme="ctr--tol--lan--light"\]/html[data-theme="light"]/g' \
+      -e 's/html\[data-theme="ctr--tol--lan--darkbrand"\]/html[data-theme="dark"]/g' \
+      -e 's/html\[data-theme="ctr--tol--lan--dark"\]/html[data-theme="dark"]/g' \
       "$1"
 }
 
