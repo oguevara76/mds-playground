@@ -684,7 +684,7 @@ html, body {
 #tab-data-catalog .paginator-catalog-states-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px 20px;
+  gap: 16px 12px;
   align-items: flex-end;
   margin-top: 8px;
 }
@@ -692,9 +692,19 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex: 1 1 120px;
-  min-width: 120px;
-  max-width: 200px;
+  flex: 0 0 auto;
+  width: fit-content;
+  min-width: 0;
+  max-width: none;
+}
+#tab-data-catalog .paginator-catalog-state--informe {
+  flex: 0 0 auto;
+  width: fit-content;
+  min-width: 0;
+  max-width: 11rem;
+}
+#tab-data-catalog .paginator-catalog-state:not(.paginator-catalog-state--informe) .paginator-catalog-state-demo {
+  width: fit-content;
 }
 #tab-data-catalog .paginator-catalog-state-caption {
   font-size: 10px;
@@ -709,10 +719,17 @@ html, body {
 }
 #tab-data-catalog .paginator-catalog-state-demo .p-paginator-content {
   justify-content: flex-start;
+  align-items: center;
+  min-height: var(--p-paginator-nav-button-height, 32px);
 }
 #tab-data-catalog .paginator-catalog-nav-hover-demo {
   background: var(--p-paginator-nav-button-hover-background);
   color: var(--p-paginator-nav-button-hover-color);
+}
+/* Vistas estáticas: sin disabled en HTML para no heredar opacity 0.5 del paginator */
+#tab-data-catalog .paginator-catalog-state-demo .p-paginator-page:not(.p-disabled):not(:disabled) {
+  opacity: 1;
+  cursor: default;
 }
 
 /* Catálogo Message — filas por tipo o tamaño */

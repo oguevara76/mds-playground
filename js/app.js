@@ -1250,15 +1250,20 @@
 
   /* ── Relationship maps ── */
   const SEM_AFFECTS = {
-    '--highlight-background':        ['Checkbox', 'Radio', 'MultiSelect', 'Listbox', 'Paginator página activa'],
-    '--highlight-color':             ['Checkbox text', 'Radio text', 'MultiSelect text', 'Paginator página activa'],
+    '--highlight-background':        ['Checkbox', 'Radio', 'MultiSelect', 'Listbox'],
+    '--highlight-color':             ['Checkbox text', 'Radio text', 'MultiSelect text'],
     '--highlight-focus-background':  ['Checkbox focus', 'Radio focus'],
     '--highlight-focus-color':       ['Checkbox focus text', 'Radio focus text'],
+    '--primary-color':               ['Tabs active', 'Tabs ink bar', 'Paginator página activa', 'Focus ring', 'Button primary'],
+    '--primary-contrast-color':      ['Paginator página activa', 'Button primary text'],
+    '--feedback-success-medium':   ['Button success', 'Tag success', 'Toast success', 'Message success'],
+    '--feedback-danger-medium':    ['Button danger', 'Tag danger', 'InputText invalid', 'Toast error'],
+    '--feedback-warn-medium':      ['Tag warn', 'Toast warn'],
+    '--feedback-info-medium':      ['Tag info', 'Toast info'],
     '--p-success-color':             ['Button success', 'Tag success', 'Toast success'],
     '--p-danger-color':              ['Button danger', 'Tag danger', 'InputText invalid', 'Toast error'],
     '--p-warning-color':             ['Tag warn', 'Toast warn'],
     '--p-info-color':                ['Tag info', 'Toast info'],
-    '--primary-color':               ['Tabs active', 'Tabs ink bar'],
     '--p-font-family':               ['Todos los componentes'],
     '--p-font-size':                 ['Button', 'InputText', 'Badge', 'Tag'],
     '--p-border-radius':             ['Button', 'InputText', 'Select'],
@@ -1271,11 +1276,13 @@
   };
 
   const COMP_SOURCES = {
-    '--button-primary-color':            { label: 'auto-contrast(--p-primary-color)', group: 'Primitivos / Primaria' },
-    '--button-primary-hover-color':      { label: 'auto-contrast(--p-primary-color)', group: 'Primitivos / Primaria' },
-    '--button-primary-active-color':     { label: 'auto-contrast(--p-primary-color)', group: 'Primitivos / Primaria' },
-    '--button-primary-focus-ring-color': { label: 'rgba(--p-primary-color, 0.6)',     group: 'Primitivos / Primaria' },
-    '--p-button-primary-color':          { label: 'auto-contrast(--p-primary-color)', group: 'Primitivos / Primaria' },
+    '--button-primary-background':       { label: 'var(--primary-color)',                  group: 'Semánticos / Primaria' },
+    '--button-primary-color':            { label: 'var(--surface-context-fixed-light)',    group: 'Semánticos / Surface' },
+    '--button-primary-hover-background': { label: 'var(--primary-hover-color)',            group: 'Semánticos / Primaria' },
+    '--button-primary-active-background':{ label: 'var(--primary-active-color)',           group: 'Semánticos / Primaria' },
+    '--button-primary-focus-ring-color': { label: 'var(--primary-color)',                  group: 'Semánticos / Primaria' },
+    '--paginator-nav-button-selected-background': { label: 'var(--primary-color)',         group: 'Semánticos / Primaria' },
+    '--paginator-nav-button-selected-color':      { label: 'var(--primary-contrast-color)', group: 'Semánticos / Primaria' },
   };
 
   /* ── VV map: semantic tokens (left panel) ── */
@@ -1406,6 +1413,22 @@
     if (!value) return null;
     const m = (value + '').match(/var\((--[\w-]+)/);
     return m ? m[1] : null;
+  }
+
+  /* ── Follow var() chains until a name in targetSet is reached (map/list metadata) ── */
+  function resolveVarChain(value, valueMap, targetSet, maxDepth = 8) {
+    let current = (value || '').trim();
+    const visited = new Set();
+    for (let i = 0; i < maxDepth; i++) {
+      const ref = extractVarRef(current);
+      if (!ref || visited.has(ref)) return null;
+      visited.add(ref);
+      if (targetSet.has(ref)) return ref;
+      const next = valueMap.get(ref);
+      if (!next) return null;
+      current = next;
+    }
+    return null;
   }
 
   /* ── Component label from a component variable name ── */
@@ -1971,20 +1994,23 @@
     const primSet = new Set(allPrimVars.map(t => t.name));
     const semSet  = new Set(allSemVars.map(t => t.name));
 
-    /* ── Build connection maps ── */
-    /* sem → prim: solo referencia explícita var(--primitive) */
+    /* ── Build connection maps (follow var() chains through semantic layers) ── */
+    const valueMap = new Map();
+    allPrimVars.forEach(t => valueMap.set(t.name, t.value));
+    allSemVars.forEach(t => valueMap.set(t.name, t.value));
+    allCompVars.forEach(t => valueMap.set(t.name, t.value));
+
     const semRefMap  = new Map(); // semName → primName
     allSemVars.forEach(t => {
-      const ref = extractVarRef(t.value);
-      if (ref && primSet.has(ref)) {
-        semRefMap.set(t.name, ref);
-      }
+      const ref = resolveVarChain(t.value, valueMap, primSet);
+      if (ref) semRefMap.set(t.name, ref);
     });
-    /* comp → sem or prim */
-    const compRefMap = new Map(); // compVarName → refName
+
+    const compRefMap = new Map(); // compVarName → semName or primName
     allCompVars.forEach(t => {
-      const ref = extractVarRef(t.value);
-      if (ref && (semSet.has(ref) || primSet.has(ref))) compRefMap.set(t.name, ref);
+      const ref = resolveVarChain(t.value, valueMap, semSet)
+        || resolveVarChain(t.value, valueMap, primSet);
+      if (ref) compRefMap.set(t.name, ref);
     });
 
     /* ── Persist connection data for selection logic ── */

@@ -1276,8 +1276,8 @@ html:root {
   --paginator-nav-button-height: var(--dimension-scale-x32);
   --paginator-nav-button-hover-background: var(--primary-hover-color);
   --paginator-nav-button-hover-color: var(--surface-context-fixed-light);
-  --paginator-nav-button-selected-background: var(--highlight-background);
-  --paginator-nav-button-selected-color: var(--highlight-color);
+  --paginator-nav-button-selected-background: var(--primary-color);
+  --paginator-nav-button-selected-color: var(--primary-contrast-color);
   --paginator-nav-button-width: var(--dimension-scale-x32);
   --paginator-padding-x: 14px;
   --paginator-padding-y: 7px;
@@ -1933,4 +1933,4 @@ html:root {
   --virtualscroller-loader-icon-size: 28px;
   --virtualscroller-loader-mask-background: var(--content-background);
   --virtualscroller-loader-mask-color: var(--text-muted-color);
-}
+}}

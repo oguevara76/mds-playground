@@ -624,10 +624,10 @@
   --p-paginator-transition-duration:              var(--paginator-transition-duration, var(--p-transition-duration, 180ms));
   --p-paginator-nav-button-background:            var(--paginator-nav-button-background, transparent);
   --p-paginator-nav-button-hover-background:      var(--paginator-nav-button-hover-background, var(--p-content-hover-bg));
-  --p-paginator-nav-button-selected-background:   var(--paginator-nav-button-selected-background, var(--p-highlight-bg));
+  --p-paginator-nav-button-selected-background:   var(--paginator-nav-button-selected-background, var(--p-primary-color));
   --p-paginator-nav-button-color:                 var(--paginator-nav-button-color, var(--p-surface-500));
   --p-paginator-nav-button-hover-color:           var(--paginator-nav-button-hover-color, var(--p-content-color));
-  --p-paginator-nav-button-selected-color:        var(--paginator-nav-button-selected-color, var(--p-highlight-color));
+  --p-paginator-nav-button-selected-color:        var(--paginator-nav-button-selected-color, var(--p-primary-color-text));
   --p-paginator-nav-button-width:                 var(--paginator-nav-button-width, 32px);
   --p-paginator-nav-button-height:                var(--paginator-nav-button-height, 32px);
   --p-paginator-nav-button-border-radius:         var(--paginator-nav-button-border-radius, var(--p-border-radius-full));
