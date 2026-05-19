@@ -613,6 +613,33 @@
   --p-tabs-active-bar-background:                 var(--tabs-active-bar-background, var(--p-primary-color));
 
   /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Paginator
+     Bridge: var(--paginator-*, fallback) ← MDS components.css
+  ═══════════════════════════════════════════════════════════════════ */
+  --p-paginator-padding:                          var(--paginator-padding, var(--dimension-scale-x8, 8px) var(--dimension-scale-x16, 16px));
+  --p-paginator-gap:                              var(--paginator-gap, 4px);
+  --p-paginator-border-radius:                    var(--paginator-border-radius, var(--p-border-radius));
+  --p-paginator-background:                       var(--paginator-background, var(--p-content-bg));
+  --p-paginator-color:                            var(--paginator-color, var(--p-content-color));
+  --p-paginator-transition-duration:              var(--paginator-transition-duration, var(--p-transition-duration, 180ms));
+  --p-paginator-nav-button-background:            var(--paginator-nav-button-background, transparent);
+  --p-paginator-nav-button-hover-background:      var(--paginator-nav-button-hover-background, var(--p-content-hover-bg));
+  --p-paginator-nav-button-selected-background:   var(--paginator-nav-button-selected-background, var(--p-highlight-bg));
+  --p-paginator-nav-button-color:                 var(--paginator-nav-button-color, var(--p-surface-500));
+  --p-paginator-nav-button-hover-color:           var(--paginator-nav-button-hover-color, var(--p-content-color));
+  --p-paginator-nav-button-selected-color:        var(--paginator-nav-button-selected-color, var(--p-highlight-color));
+  --p-paginator-nav-button-width:                 var(--paginator-nav-button-width, 32px);
+  --p-paginator-nav-button-height:                var(--paginator-nav-button-height, 32px);
+  --p-paginator-nav-button-border-radius:         var(--paginator-nav-button-border-radius, var(--p-border-radius-full));
+  --p-paginator-nav-button-focus-ring-width:      var(--paginator-nav-button-focus-ring-width, var(--p-focus-ring-width, 2px));
+  --p-paginator-nav-button-focus-ring-style:      var(--paginator-nav-button-focus-ring-style, solid);
+  --p-paginator-nav-button-focus-ring-color:      var(--paginator-nav-button-focus-ring-color, var(--p-focus-ring-color));
+  --p-paginator-nav-button-focus-ring-offset:     var(--paginator-nav-button-focus-ring-offset, var(--p-focus-ring-offset, 0));
+  --p-paginator-nav-button-focus-ring-shadow:     var(--paginator-nav-button-focus-ring-shadow, none);
+  --p-paginator-current-page-report-color:        var(--paginator-current-page-report-color, var(--p-surface-500));
+  --p-paginator-jump-to-page-input-max-width:     var(--paginator-jump-to-page-input-max-width, 32px);
+
+  /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Dialog
      ═══════════════════════════════════════════════════════════════════ */
   --p-dialog-border-radius:        var(--dialog-border-radius, var(--overlay-modal-border-radius, var(--p-border-radius-xl)));

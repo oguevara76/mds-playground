@@ -1073,9 +1073,93 @@
       </div>
 
       <div class="tab-panel" id="tab-data-catalog">
-        <section class="preview-section">
-          <h3 class="section-title">Data components</h3>
-        </section>
+        <div class="cards-grid form-catalog-stack">
+          <div class="catalog-preview" id="paginator-catalog-preview">
+            <h3 class="section-title component-title-primary">Paginator</h3>
+
+            <div class="btn-section">
+              <p class="btn-section-title">Interacción</p>
+              <nav
+                id="paginator-catalog-live"
+                class="p-paginator p-component paginator-catalog-live js-paginator-catalog-root"
+                role="navigation"
+                aria-label="Paginator interactivo del catálogo"
+                data-paginator-first="0"
+                data-paginator-rows="10"
+                data-paginator-total="120"
+              >
+                <div class="p-paginator-content">
+                  <div class="p-paginator-rpp-dropdown p-dropdown">
+                    <select id="paginator-catalog-rpp" class="p-dropdown-select p-paginator-rpp-select js-paginator-catalog-rpp" aria-label="Filas por página">
+                      <option value="10" selected>10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                    </select>
+                    <i class="p-dropdown-arrow pi pi-chevron-down" aria-hidden="true"></i>
+                  </div>
+                  <button type="button" class="p-paginator-first p-paginator-nav-button js-paginator-catalog-first" aria-label="Primera página"><i class="p-paginator-first-icon pi pi-angle-double-left" aria-hidden="true"></i></button>
+                  <button type="button" class="p-paginator-prev p-paginator-nav-button js-paginator-catalog-prev" aria-label="Página anterior"><i class="p-paginator-prev-icon pi pi-angle-left" aria-hidden="true"></i></button>
+                  <span class="p-paginator-pages js-paginator-catalog-pages" role="presentation"></span>
+                  <button type="button" class="p-paginator-next p-paginator-nav-button js-paginator-catalog-next" aria-label="Página siguiente"><i class="p-paginator-next-icon pi pi-angle-right" aria-hidden="true"></i></button>
+                  <button type="button" class="p-paginator-last p-paginator-nav-button js-paginator-catalog-last" aria-label="Última página"><i class="p-paginator-last-icon pi pi-angle-double-right" aria-hidden="true"></i></button>
+                  <span class="p-paginator-current js-paginator-catalog-report" aria-live="polite">1 - 10 de 120</span>
+                </div>
+              </nav>
+            </div>
+
+            <div class="btn-section" style="margin-top:20px">
+              <p class="btn-section-title">Estados</p>
+              <div class="paginator-catalog-states-row is-static-preview" aria-label="Botones del paginator por estado">
+                <div class="paginator-catalog-state">
+                  <span class="paginator-catalog-state-caption">Inactiva</span>
+                  <div class="p-paginator p-component paginator-catalog-state-demo" role="presentation">
+                    <div class="p-paginator-content">
+                      <span class="p-paginator-pages" role="presentation">
+                        <button type="button" class="p-paginator-page p-paginator-nav-button" tabindex="-1" disabled>2</button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="paginator-catalog-state">
+                  <span class="paginator-catalog-state-caption">Activa</span>
+                  <div class="p-paginator p-component paginator-catalog-state-demo" role="presentation">
+                    <div class="p-paginator-content">
+                      <span class="p-paginator-pages" role="presentation">
+                        <button type="button" class="p-paginator-page p-paginator-nav-button p-paginator-page-selected" tabindex="-1" disabled aria-current="page">3</button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="paginator-catalog-state">
+                  <span class="paginator-catalog-state-caption">Hover</span>
+                  <div class="p-paginator p-component paginator-catalog-state-demo" role="presentation">
+                    <div class="p-paginator-content">
+                      <span class="p-paginator-pages" role="presentation">
+                        <button type="button" class="p-paginator-page p-paginator-nav-button paginator-catalog-nav-hover-demo" tabindex="-1" disabled>4</button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="paginator-catalog-state">
+                  <span class="paginator-catalog-state-caption">Deshabilitada</span>
+                  <div class="p-paginator p-component paginator-catalog-state-demo" role="presentation">
+                    <div class="p-paginator-content">
+                      <button type="button" class="p-paginator-prev p-paginator-nav-button p-disabled" tabindex="-1" disabled aria-label="Página anterior"><i class="p-paginator-prev-icon pi pi-angle-left" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="paginator-catalog-state">
+                  <span class="paginator-catalog-state-caption">Informe</span>
+                  <div class="p-paginator p-component paginator-catalog-state-demo" role="presentation">
+                    <div class="p-paginator-content">
+                      <span class="p-paginator-current">11 - 20 de 120</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="tab-panel" id="tab-panel-catalog">

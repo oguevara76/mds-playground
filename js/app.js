@@ -443,6 +443,136 @@
     }
   }
 
+  /* ── Catálogo Data: Paginator (paridad PrimeNG, tokens --paginator-* del core MDS) ── */
+  const PAGINATOR_CATALOG_PAGE_LINK_SIZE = 5;
+
+  function paginatorCatalogPageCount(total, rows) {
+    return Math.max(1, Math.ceil(total / rows));
+  }
+
+  function paginatorCatalogCurrentPage(first, rows) {
+    return Math.floor(first / rows);
+  }
+
+  function paginatorCatalogSyncNavDisabled(btn, disabled) {
+    if (!btn) return;
+    btn.disabled = disabled;
+    btn.classList.toggle('p-disabled', disabled);
+    btn.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+  }
+
+  function renderPaginatorCatalog(root) {
+    const total = parseInt(root.dataset.paginatorTotal, 10) || 0;
+    let first = parseInt(root.dataset.paginatorFirst, 10) || 0;
+    let rows = parseInt(root.dataset.paginatorRows, 10) || 10;
+    if (rows < 1) rows = 10;
+
+    const pageCount = paginatorCatalogPageCount(total, rows);
+    let currentPage = paginatorCatalogCurrentPage(first, rows);
+    if (currentPage >= pageCount) {
+      first = Math.max(0, (pageCount - 1) * rows);
+      currentPage = paginatorCatalogCurrentPage(first, rows);
+    }
+    root.dataset.paginatorFirst = String(first);
+    root.dataset.paginatorRows = String(rows);
+
+    const rpp = root.querySelector('.js-paginator-catalog-rpp');
+    if (rpp && rpp.value !== String(rows)) rpp.value = String(rows);
+
+    const lastRecord = Math.min(first + rows, total);
+    const report = root.querySelector('.js-paginator-catalog-report');
+    if (report) {
+      report.textContent = total === 0 ? '0 de 0' : `${first + 1} - ${lastRecord} de ${total}`;
+    }
+
+    paginatorCatalogSyncNavDisabled(root.querySelector('.js-paginator-catalog-first'), currentPage === 0);
+    paginatorCatalogSyncNavDisabled(root.querySelector('.js-paginator-catalog-prev'), currentPage === 0);
+    paginatorCatalogSyncNavDisabled(root.querySelector('.js-paginator-catalog-next'), currentPage >= pageCount - 1);
+    paginatorCatalogSyncNavDisabled(root.querySelector('.js-paginator-catalog-last'), currentPage >= pageCount - 1);
+
+    const pagesEl = root.querySelector('.js-paginator-catalog-pages');
+    if (!pagesEl) return;
+
+    let start = Math.max(0, currentPage - Math.floor(PAGINATOR_CATALOG_PAGE_LINK_SIZE / 2));
+    let end = Math.min(pageCount, start + PAGINATOR_CATALOG_PAGE_LINK_SIZE);
+    start = Math.max(0, end - PAGINATOR_CATALOG_PAGE_LINK_SIZE);
+
+    pagesEl.replaceChildren();
+    for (let page = start; page < end; page += 1) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'p-paginator-page p-paginator-nav-button js-paginator-catalog-page';
+      btn.textContent = String(page + 1);
+      btn.setAttribute('aria-label', `Página ${page + 1}`);
+      if (page === currentPage) {
+        btn.classList.add('p-paginator-page-selected');
+        btn.setAttribute('aria-current', 'page');
+      }
+      btn.addEventListener('click', () => {
+        root.dataset.paginatorFirst = String(page * rows);
+        renderPaginatorCatalog(root);
+      });
+      pagesEl.appendChild(btn);
+    }
+  }
+
+  function initPaginatorCatalogRoot(root) {
+    if (!root || root.dataset.paginatorCatalogInit === '1') return;
+    root.dataset.paginatorCatalogInit = '1';
+
+    const rpp = root.querySelector('.js-paginator-catalog-rpp');
+    const firstBtn = root.querySelector('.js-paginator-catalog-first');
+    const prevBtn = root.querySelector('.js-paginator-catalog-prev');
+    const nextBtn = root.querySelector('.js-paginator-catalog-next');
+    const lastBtn = root.querySelector('.js-paginator-catalog-last');
+
+    if (rpp) {
+      rpp.addEventListener('change', () => {
+        root.dataset.paginatorRows = rpp.value;
+        root.dataset.paginatorFirst = '0';
+        renderPaginatorCatalog(root);
+      });
+    }
+    if (firstBtn) {
+      firstBtn.addEventListener('click', () => {
+        root.dataset.paginatorFirst = '0';
+        renderPaginatorCatalog(root);
+      });
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        const rows = parseInt(root.dataset.paginatorRows, 10) || 10;
+        const first = parseInt(root.dataset.paginatorFirst, 10) || 0;
+        root.dataset.paginatorFirst = String(Math.max(0, first - rows));
+        renderPaginatorCatalog(root);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const total = parseInt(root.dataset.paginatorTotal, 10) || 0;
+        const rows = parseInt(root.dataset.paginatorRows, 10) || 10;
+        const first = parseInt(root.dataset.paginatorFirst, 10) || 0;
+        const pageCount = paginatorCatalogPageCount(total, rows);
+        const nextFirst = Math.min((pageCount - 1) * rows, first + rows);
+        root.dataset.paginatorFirst = String(nextFirst);
+        renderPaginatorCatalog(root);
+      });
+    }
+    if (lastBtn) {
+      lastBtn.addEventListener('click', () => {
+        const total = parseInt(root.dataset.paginatorTotal, 10) || 0;
+        const rows = parseInt(root.dataset.paginatorRows, 10) || 10;
+        const pageCount = paginatorCatalogPageCount(total, rows);
+        root.dataset.paginatorFirst = String((pageCount - 1) * rows);
+        renderPaginatorCatalog(root);
+      });
+    }
+
+    renderPaginatorCatalog(root);
+  }
+
+  document.querySelectorAll('.js-paginator-catalog-root').forEach(initPaginatorCatalogRoot);
+
   document.querySelectorAll('.js-tabs-catalog-root').forEach(initTabsCatalogRoot);
   document.querySelectorAll('.tabs-catalog-state-demo .p-tablist-tab-list').forEach(positionTabsCatalogInkbar);
   const tabMessagesOpenCatalog = document.getElementById('tab-messages-open-catalog');
@@ -1095,8 +1225,8 @@
 
   /* ── Relationship maps ── */
   const SEM_AFFECTS = {
-    '--highlight-background':        ['Checkbox', 'Radio', 'MultiSelect', 'Listbox'],
-    '--highlight-color':             ['Checkbox text', 'Radio text', 'MultiSelect text'],
+    '--highlight-background':        ['Checkbox', 'Radio', 'MultiSelect', 'Listbox', 'Paginator página activa'],
+    '--highlight-color':             ['Checkbox text', 'Radio text', 'MultiSelect text', 'Paginator página activa'],
     '--highlight-focus-background':  ['Checkbox focus', 'Radio focus'],
     '--highlight-focus-color':       ['Checkbox focus text', 'Radio focus text'],
     '--p-success-color':             ['Button success', 'Tag success', 'Toast success'],

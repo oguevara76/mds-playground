@@ -675,6 +675,46 @@ html, body {
   max-width: min(100%, var(--p-toast-width));
 }
 
+/* ── Catálogo Data: Paginator ── */
+#tab-data-catalog .paginator-catalog-live {
+  width: 100%;
+  max-width: 42rem;
+  margin-top: 4px;
+}
+#tab-data-catalog .paginator-catalog-states-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  align-items: flex-end;
+  margin-top: 8px;
+}
+#tab-data-catalog .paginator-catalog-state {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 120px;
+  min-width: 120px;
+  max-width: 200px;
+}
+#tab-data-catalog .paginator-catalog-state-caption {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p-surface-400);
+}
+#tab-data-catalog .paginator-catalog-state-demo {
+  width: 100%;
+  pointer-events: none;
+}
+#tab-data-catalog .paginator-catalog-state-demo .p-paginator-content {
+  justify-content: flex-start;
+}
+#tab-data-catalog .paginator-catalog-nav-hover-demo {
+  background: var(--p-paginator-nav-button-hover-background);
+  color: var(--p-paginator-nav-button-hover-color);
+}
+
 /* Catálogo Message — filas por tipo o tamaño */
 .message-catalog-message-row {
   display: flex;
