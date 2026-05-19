@@ -342,12 +342,14 @@
 
 /* Toggle iconos en catálogo Form / Tabs — foco teclado */
 .js-input-icon-toggle:focus-visible,
+.js-input-rounded-toggle:focus-visible,
 .js-tabs-icon-toggle:focus-visible {
   outline: var(--p-focus-ring-width) var(--p-focus-ring-style) var(--p-focus-ring-color);
   outline-offset: 2px;
   border-radius: var(--p-border-radius-sm);
 }
 .js-input-icon-toggle,
+.js-input-rounded-toggle,
 .js-tabs-icon-toggle { --p-focus-ring-color: var(--p-primary-color); }
 
 /* ─────────────────────────────── SpeedDial ─────────────────────────────── */
@@ -611,6 +613,9 @@
 .p-inputtext-lg {
   padding: var(--p-input-lg-padding-y) var(--p-input-lg-padding-x);
   font-size: var(--p-input-lg-font-size);
+}
+.p-inputtext-rounded {
+  border-radius: var(--inputtext-border-rounded-radius, var(--form-field-border-radius-rounded, 999px));
 }
 
 .p-inputtextarea {
@@ -921,12 +926,14 @@
   color: inherit;
 }
 .js-input-icon-toggle,
+.js-input-rounded-toggle,
 .js-tabs-icon-toggle {
   background: none;
   border: none;
   padding: 0;
   font: inherit;
   color: inherit;
+  cursor: pointer;
 }
 .p-radio {
   width: var(--p-radiobutton-width);

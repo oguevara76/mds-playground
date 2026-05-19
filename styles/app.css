@@ -865,7 +865,7 @@ html, body {
 .input-icon-panel {
   border-left: 1px solid var(--p-content-border);
   padding-left: 16px;
-  min-width: 164px;
+  min-width: 200px;
 }
 .input-icon-panel-title {
   margin: 0 0 10px;
@@ -875,8 +875,21 @@ html, body {
   text-transform: uppercase;
   color: var(--p-surface-400);
 }
+.input-config-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.input-config-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--p-content-color);
+  line-height: 1.2;
+}
 .input-icon-switches .p-toggle-wrap {
-  gap: 6px;
+  flex-shrink: 0;
+  gap: 0;
 }
 
 .inputtext-showcase .input-interaction-scope .p-inputtext {

@@ -581,7 +581,7 @@
   --p-tabs-tab-color:                             var(--tabs-tab-color, var(--p-surface-500));
   --p-tabs-tab-hover-color:                       var(--tabs-tab-hover-color, var(--p-content-color));
   --p-tabs-tab-active-color:                      var(--tabs-tab-active-color, var(--p-primary-color));
-  --p-tabs-tab-padding:                           var(--tabs-tab-padding, var(--dimension-scale-x12, 12px) var(--dimension-scale-x16, 16px));
+  --p-tabs-tab-padding:                           var(--tabs-tab-padding-y, var(--dimension-scale-x14, 14px)) var(--tabs-tab-padding-x, var(--dimension-scale-x16, 16px));
   --p-tabs-tab-font-weight:                       var(--tabs-tab-font-weight, 600);
   --p-tabs-tab-margin:                            var(--tabs-tab-margin, 0);
   --p-tabs-tab-gap:                               var(--tabs-tab-gap, 8px);
@@ -592,7 +592,7 @@
   --p-tabs-tab-focus-ring-shadow:                 var(--tabs-tab-focus-ring-shadow, none);
   --p-tabs-tabpanel-background:                   var(--tabs-tabpanel-background, var(--p-content-bg));
   --p-tabs-tabpanel-color:                        var(--tabs-tabpanel-color, var(--p-content-color));
-  --p-tabs-tabpanel-padding:                      var(--tabs-tabpanel-padding, var(--dimension-scale-x16, 16px) 0 0);
+  --p-tabs-tabpanel-padding:                      var(--tabs-tabpanel-padding-top, var(--dimension-scale-x12, 12px)) var(--tabs-tabpanel-padding-right, var(--dimension-scale-x16, 16px)) var(--tabs-tabpanel-padding-bottom, var(--dimension-scale-x16, 16px)) var(--tabs-tabpanel-padding-left, var(--dimension-scale-x16, 16px));
   --p-tabs-tabpanel-focus-ring-width:             var(--tabs-tabpanel-focus-ring-width, var(--p-focus-ring-width, 2px));
   --p-tabs-tabpanel-focus-ring-style:             var(--tabs-tabpanel-focus-ring-style, solid);
   --p-tabs-tabpanel-focus-ring-color:             var(--tabs-tabpanel-focus-ring-color, var(--p-focus-ring-color));

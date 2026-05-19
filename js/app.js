@@ -173,8 +173,33 @@
     });
   }
 
+  function bindInputRoundedToggle(showcaseEl) {
+    showcaseEl.querySelectorAll('.js-input-rounded-toggle').forEach(toggleEl => {
+      const syncRounded = (on) => {
+        showcaseEl.classList.toggle('show-rounded', on);
+        showcaseEl.querySelectorAll('.input-interaction-scope .p-inputtext').forEach((inp) => {
+          inp.classList.toggle('p-inputtext-rounded', on);
+        });
+      };
+      toggleEl.addEventListener('click', () => {
+        const next = toggleEl.getAttribute('aria-pressed') !== 'true';
+        toggleEl.setAttribute('aria-pressed', next ? 'true' : 'false');
+        const toggleKnob = toggleEl.querySelector('.p-toggle');
+        if (toggleKnob) toggleKnob.classList.toggle('p-toggle-on', next);
+        syncRounded(next);
+      });
+      toggleEl.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          toggleEl.click();
+        }
+      });
+    });
+  }
+
   document.querySelectorAll('.input-variant-block').forEach(showcaseEl => {
     bindCatalogIconToggles(showcaseEl, '.js-input-icon-toggle');
+    bindInputRoundedToggle(showcaseEl);
   });
 
   document.querySelectorAll('.tabs-variant-block').forEach(showcaseEl => {
