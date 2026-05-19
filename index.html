@@ -1079,9 +1079,91 @@
       </div>
 
       <div class="tab-panel" id="tab-panel-catalog">
-        <section class="preview-section">
-          <h3 class="section-title">Panel components</h3>
-        </section>
+        <div class="cards-grid form-catalog-stack">
+          <div class="catalog-preview tabs-variant-block" id="tabs-catalog-preview">
+            <h3 class="section-title component-title-primary">Tabs</h3>
+
+            <div class="btn-section">
+              <p class="btn-section-title">Interacción</p>
+              <div class="tabs-interaction-row">
+                <div
+                  id="tabs-catalog-live"
+                  class="p-tabs p-component tabs-catalog-live js-tabs-catalog-root"
+                  data-tabs-value="0"
+                  aria-label="Tabs interactivos del catálogo"
+                >
+                  <div class="p-tablist p-component">
+                    <div class="p-tablist-content">
+                      <div class="p-tablist-tab-list" role="tablist" aria-label="Secciones">
+                        <button type="button" class="p-tab p-tab-active p-component js-tabs-catalog-tab" role="tab" data-tabs-value="0" aria-selected="true" tabindex="0" id="tabs-catalog-tab-0" aria-controls="tabs-catalog-panel-0"><i class="pi pi-home tabs-tab-icon tabs-tab-icon-left" aria-hidden="true"></i><span class="tabs-tab-label">General</span><i class="pi pi-angle-right tabs-tab-icon tabs-tab-icon-right" aria-hidden="true"></i></button>
+                        <button type="button" class="p-tab p-component js-tabs-catalog-tab" role="tab" data-tabs-value="1" aria-selected="false" tabindex="-1" id="tabs-catalog-tab-1" aria-controls="tabs-catalog-panel-1"><i class="pi pi-file tabs-tab-icon tabs-tab-icon-left" aria-hidden="true"></i><span class="tabs-tab-label">Detalles</span><i class="pi pi-angle-right tabs-tab-icon tabs-tab-icon-right" aria-hidden="true"></i></button>
+                        <button type="button" class="p-tab p-component js-tabs-catalog-tab" role="tab" data-tabs-value="2" aria-selected="false" tabindex="-1" id="tabs-catalog-tab-2" aria-controls="tabs-catalog-panel-2"><i class="pi pi-history tabs-tab-icon tabs-tab-icon-left" aria-hidden="true"></i><span class="tabs-tab-label">Historial</span><i class="pi pi-angle-right tabs-tab-icon tabs-tab-icon-right" aria-hidden="true"></i></button>
+                        <span class="p-tablist-active-bar" role="presentation" aria-hidden="true"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-tabpanels">
+                    <div class="p-tabs-panel js-tabs-catalog-panel" role="tabpanel" id="tabs-catalog-panel-0" aria-labelledby="tabs-catalog-tab-0" data-tabs-value="0">
+                      <p class="tabs-catalog-panel-text">Resumen del expediente, estado actual y acciones rápidas para el equipo.</p>
+                    </div>
+                    <div class="p-tabs-panel js-tabs-catalog-panel" role="tabpanel" id="tabs-catalog-panel-1" aria-labelledby="tabs-catalog-tab-1" data-tabs-value="1" hidden>
+                      <p class="tabs-catalog-panel-text">Datos de contacto, dirección fiscal y preferencias de notificación del titular.</p>
+                    </div>
+                    <div class="p-tabs-panel js-tabs-catalog-panel" role="tabpanel" id="tabs-catalog-panel-2" aria-labelledby="tabs-catalog-tab-2" data-tabs-value="2" hidden>
+                      <p class="tabs-catalog-panel-text">Registro de cambios, aprobaciones y eventos sincronizados en los últimos 30 días.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-icon-panel">
+                  <p class="input-icon-panel-title">Visualizar icono</p>
+                  <div class="input-icon-switches">
+                    <button type="button" class="p-toggle-wrap js-tabs-icon-toggle" data-icon-side="left" aria-pressed="false">
+                      <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                      Izquierdo
+                    </button>
+                    <button type="button" class="p-toggle-wrap js-tabs-icon-toggle" data-icon-side="right" aria-pressed="false">
+                      <span class="p-toggle"><span class="p-toggle-knob"></span></span>
+                      Derecho
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-section" style="margin-top:20px">
+              <p class="btn-section-title">Estados</p>
+              <div class="tabs-catalog-states-row is-static-preview" aria-label="Tabs por estado activa e inactiva">
+                <div class="tabs-catalog-state">
+                  <span class="tabs-catalog-state-caption">Activa</span>
+                  <div class="p-tabs p-component tabs-catalog-state-demo">
+                    <div class="p-tablist p-component">
+                      <div class="p-tablist-content">
+                        <div class="p-tablist-tab-list" role="presentation">
+                          <span class="p-tab p-tab-active p-component" role="presentation"><span class="tabs-tab-label">General</span></span>
+                          <span class="p-tab p-component" role="presentation"><span class="tabs-tab-label">Detalles</span></span>
+                          <span class="p-tablist-active-bar" aria-hidden="true"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tabs-catalog-state">
+                  <span class="tabs-catalog-state-caption">Inactiva</span>
+                  <div class="p-tabs p-component tabs-catalog-state-demo">
+                    <div class="p-tablist p-component">
+                      <div class="p-tablist-content">
+                        <div class="p-tablist-tab-list" role="presentation">
+                          <span class="p-tab p-component" role="presentation"><span class="tabs-tab-label">General</span></span>
+                          <span class="p-tab p-component" role="presentation"><span class="tabs-tab-label">Detalles</span></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="tab-panel" id="tab-overlay-catalog">

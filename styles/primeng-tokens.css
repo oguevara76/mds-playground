@@ -564,6 +564,55 @@
   --p-toast-contrast-close-button-focus-ring-color: var(--toast-contrast-close-button-focus-ring-color, var(--p-surface-0));
 
   /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Tabs
+     Bridge: var(--tabs-*, fallback) ← MDS components.css
+  ═══════════════════════════════════════════════════════════════════ */
+  --p-tabs-transition-duration:                   var(--tabs-transition-duration, 0.2s);
+  --p-tabs-tablist-background:                    var(--tabs-tablist-background, transparent);
+  --p-tabs-tablist-border-color:                  var(--tabs-tablist-border-color, var(--p-content-border));
+  --p-tabs-tablist-border-width:                  var(--tabs-tablist-border-width, 0 0 1px 0);
+  --p-tabs-tab-background:                        var(--tabs-tab-background, transparent);
+  --p-tabs-tab-hover-background:                  var(--tabs-tab-hover-background, transparent);
+  --p-tabs-tab-active-background:                 var(--tabs-tab-active-background, transparent);
+  --p-tabs-tab-border-width:                      var(--tabs-tab-border-width, 0 0 1px 0);
+  --p-tabs-tab-border-color:                      var(--tabs-tab-border-color, var(--p-content-border));
+  --p-tabs-tab-hover-border-color:                var(--tabs-tab-hover-border-color, var(--p-content-border));
+  --p-tabs-tab-active-border-color:               var(--tabs-tab-active-border-color, var(--p-primary-color));
+  --p-tabs-tab-color:                             var(--tabs-tab-color, var(--p-surface-500));
+  --p-tabs-tab-hover-color:                       var(--tabs-tab-hover-color, var(--p-content-color));
+  --p-tabs-tab-active-color:                      var(--tabs-tab-active-color, var(--p-primary-color));
+  --p-tabs-tab-padding:                           var(--tabs-tab-padding, var(--dimension-scale-x12, 12px) var(--dimension-scale-x16, 16px));
+  --p-tabs-tab-font-weight:                       var(--tabs-tab-font-weight, 600);
+  --p-tabs-tab-margin:                            var(--tabs-tab-margin, 0);
+  --p-tabs-tab-gap:                               var(--tabs-tab-gap, 8px);
+  --p-tabs-tab-focus-ring-width:                  var(--tabs-tab-focus-ring-width, var(--p-focus-ring-width, 2px));
+  --p-tabs-tab-focus-ring-style:                  var(--tabs-tab-focus-ring-style, solid);
+  --p-tabs-tab-focus-ring-color:                  var(--tabs-tab-focus-ring-color, var(--p-focus-ring-color));
+  --p-tabs-tab-focus-ring-offset:                 var(--tabs-tab-focus-ring-offset, -1px);
+  --p-tabs-tab-focus-ring-shadow:                 var(--tabs-tab-focus-ring-shadow, none);
+  --p-tabs-tabpanel-background:                   var(--tabs-tabpanel-background, var(--p-content-bg));
+  --p-tabs-tabpanel-color:                        var(--tabs-tabpanel-color, var(--p-content-color));
+  --p-tabs-tabpanel-padding:                      var(--tabs-tabpanel-padding, var(--dimension-scale-x16, 16px) 0 0);
+  --p-tabs-tabpanel-focus-ring-width:             var(--tabs-tabpanel-focus-ring-width, var(--p-focus-ring-width, 2px));
+  --p-tabs-tabpanel-focus-ring-style:             var(--tabs-tabpanel-focus-ring-style, solid);
+  --p-tabs-tabpanel-focus-ring-color:             var(--tabs-tabpanel-focus-ring-color, var(--p-focus-ring-color));
+  --p-tabs-tabpanel-focus-ring-offset:            var(--tabs-tabpanel-focus-ring-offset, var(--p-focus-ring-offset, 0));
+  --p-tabs-tabpanel-focus-ring-shadow:            var(--tabs-tabpanel-focus-ring-shadow, none);
+  --p-tabs-nav-button-background:                 var(--tabs-nav-button-background, var(--p-content-bg));
+  --p-tabs-nav-button-color:                      var(--tabs-nav-button-color, var(--p-surface-500));
+  --p-tabs-nav-button-hover-color:                var(--tabs-nav-button-hover-color, var(--p-content-color));
+  --p-tabs-nav-button-width:                      var(--tabs-nav-button-width, 32px);
+  --p-tabs-nav-button-focus-ring-width:           var(--tabs-nav-button-focus-ring-width, var(--p-focus-ring-width, 2px));
+  --p-tabs-nav-button-focus-ring-style:           var(--tabs-nav-button-focus-ring-style, solid);
+  --p-tabs-nav-button-focus-ring-color:           var(--tabs-nav-button-focus-ring-color, var(--p-focus-ring-color));
+  --p-tabs-nav-button-focus-ring-offset:          var(--tabs-nav-button-focus-ring-offset, -1px);
+  --p-tabs-nav-button-focus-ring-shadow:          var(--tabs-nav-button-focus-ring-shadow, none);
+  --p-tabs-nav-button-shadow:                     var(--tabs-nav-button-shadow, 0 0 10px 50px color-mix(in srgb, var(--p-content-bg) 80%, transparent));
+  --p-tabs-active-bar-height:                     var(--tabs-active-bar-height, 1px);
+  --p-tabs-active-bar-bottom:                     var(--tabs-active-bar-bottom, -1px);
+  --p-tabs-active-bar-background:                 var(--tabs-active-bar-background, var(--p-primary-color));
+
+  /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Dialog
      ═══════════════════════════════════════════════════════════════════ */
   --p-dialog-border-radius:        var(--dialog-border-radius, var(--overlay-modal-border-radius, var(--p-border-radius-xl)));

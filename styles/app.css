@@ -608,6 +608,67 @@ html, body {
   width: 100%;
   max-width: none;
 }
+/* ── Catálogo Panel: Tabs ── */
+.tabs-interaction-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.tabs-catalog-live {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 36rem;
+}
+.tabs-catalog-panel-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: inherit;
+}
+.tabs-variant-block .tabs-tab-icon {
+  display: none;
+  font-size: var(--p-tabs-tab-icon-size, var(--icon-size, 16px));
+  line-height: 1;
+}
+.tabs-variant-block.show-left-icon .tabs-tab-icon-left {
+  display: inline-flex;
+}
+.tabs-variant-block.show-right-icon .tabs-tab-icon-right {
+  display: inline-flex;
+}
+.tabs-catalog-states-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: flex-end;
+}
+.tabs-catalog-state {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 200px;
+  min-width: 200px;
+  max-width: 320px;
+}
+.tabs-catalog-state-caption {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p-surface-400);
+}
+.tabs-catalog-state-demo {
+  width: 100%;
+  pointer-events: none;
+}
+.tabs-catalog-state-demo .p-tab {
+  cursor: default;
+}
+.tabs-catalog-state-demo .p-tabpanels {
+  display: none;
+}
+
 #tab-messages-catalog .toast-catalog-stack .p-toast-message {
   width: auto;
   flex: 0 1 var(--p-toast-width);

@@ -147,8 +147,8 @@
 
   initLiveFloatLabels(document);
 
-  document.querySelectorAll('.input-variant-block').forEach(showcaseEl => {
-    showcaseEl.querySelectorAll('.js-input-icon-toggle').forEach(toggleEl => {
+  function bindCatalogIconToggles(showcaseEl, toggleSelector) {
+    showcaseEl.querySelectorAll(toggleSelector).forEach(toggleEl => {
       toggleEl.addEventListener('click', () => {
         const side = toggleEl.dataset.iconSide;
         const isOn = toggleEl.getAttribute('aria-pressed') === 'true';
@@ -158,6 +158,11 @@
         if (toggleKnob) toggleKnob.classList.toggle('p-toggle-on', next);
         if (side === 'left') showcaseEl.classList.toggle('show-left-icon', next);
         if (side === 'right') showcaseEl.classList.toggle('show-right-icon', next);
+        const liveRoot = showcaseEl.querySelector('.js-tabs-catalog-root');
+        if (liveRoot) {
+          const tablist = liveRoot.querySelector('.p-tablist-tab-list');
+          if (tablist) positionTabsCatalogInkbar(tablist);
+        }
       });
       toggleEl.addEventListener('keydown', (e) => {
         if (e.key === ' ' || e.key === 'Enter') {
@@ -166,6 +171,14 @@
         }
       });
     });
+  }
+
+  document.querySelectorAll('.input-variant-block').forEach(showcaseEl => {
+    bindCatalogIconToggles(showcaseEl, '.js-input-icon-toggle');
+  });
+
+  document.querySelectorAll('.tabs-variant-block').forEach(showcaseEl => {
+    bindCatalogIconToggles(showcaseEl, '.js-tabs-icon-toggle');
   });
 
   /* ── Catálogo Messages: Toast dinámico (mismas clases PrimeNG del playground) ── */
@@ -363,6 +376,75 @@
   if (toastCatalogHideAll) {
     toastCatalogHideAll.addEventListener('click', hideAllToastCatalogMessages);
   }
+
+  /* ── Catálogo Panel: Tabs (paridad PrimeNG, tokens --tabs-* del core MDS) ── */
+  function positionTabsCatalogInkbar(tablist) {
+    if (!tablist) return;
+    const inkbar = tablist.querySelector('.p-tablist-active-bar');
+    const active = tablist.querySelector('.p-tab-active');
+    if (!inkbar || !active) return;
+    inkbar.style.width = active.offsetWidth + 'px';
+    inkbar.style.left = active.offsetLeft + 'px';
+  }
+
+  function activateTabsCatalogRoot(root, value) {
+    if (!root) return;
+    const tablist = root.querySelector('.p-tablist-tab-list');
+    const tabs = root.querySelectorAll('.js-tabs-catalog-tab');
+    const panels = root.querySelectorAll('.js-tabs-catalog-panel');
+    root.dataset.tabsValue = value;
+    tabs.forEach(tab => {
+      const isActive = tab.dataset.tabsValue === value;
+      tab.classList.toggle('p-tab-active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      tab.tabIndex = isActive ? 0 : -1;
+    });
+    panels.forEach(panel => {
+      const isActive = panel.dataset.tabsValue === value;
+      panel.hidden = !isActive;
+    });
+    positionTabsCatalogInkbar(tablist);
+  }
+
+  function initTabsCatalogRoot(root) {
+    if (!root || root.dataset.tabsCatalogInit === '1') return;
+    root.dataset.tabsCatalogInit = '1';
+    const tablist = root.querySelector('.p-tablist-tab-list');
+    const tabs = [...root.querySelectorAll('.js-tabs-catalog-tab')];
+    const initial = root.dataset.tabsValue || '0';
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        if (tab.classList.contains('p-disabled')) return;
+        activateTabsCatalogRoot(root, tab.dataset.tabsValue);
+      });
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Home' && e.key !== 'End') return;
+        e.preventDefault();
+        const enabled = tabs.filter(t => !t.classList.contains('p-disabled'));
+        const currentIdx = enabled.indexOf(tab);
+        if (currentIdx < 0) return;
+        let nextIdx = currentIdx;
+        if (e.key === 'ArrowLeft') nextIdx = (currentIdx - 1 + enabled.length) % enabled.length;
+        if (e.key === 'ArrowRight') nextIdx = (currentIdx + 1) % enabled.length;
+        if (e.key === 'Home') nextIdx = 0;
+        if (e.key === 'End') nextIdx = enabled.length - 1;
+        enabled[nextIdx].click();
+        enabled[nextIdx].focus();
+      });
+    });
+
+    activateTabsCatalogRoot(root, initial);
+    if (typeof ResizeObserver !== 'undefined' && tablist) {
+      const ro = new ResizeObserver(() => positionTabsCatalogInkbar(tablist));
+      ro.observe(tablist);
+    } else {
+      window.addEventListener('resize', () => positionTabsCatalogInkbar(tablist));
+    }
+  }
+
+  document.querySelectorAll('.js-tabs-catalog-root').forEach(initTabsCatalogRoot);
+  document.querySelectorAll('.tabs-catalog-state-demo .p-tablist-tab-list').forEach(positionTabsCatalogInkbar);
   const tabMessagesOpenCatalog = document.getElementById('tab-messages-open-catalog');
   if (tabMessagesOpenCatalog) {
     tabMessagesOpenCatalog.addEventListener('click', () => {
@@ -1021,6 +1103,7 @@
     '--p-danger-color':              ['Button danger', 'Tag danger', 'InputText invalid', 'Toast error'],
     '--p-warning-color':             ['Tag warn', 'Toast warn'],
     '--p-info-color':                ['Tag info', 'Toast info'],
+    '--primary-color':               ['Tabs active', 'Tabs ink bar'],
     '--p-font-family':               ['Todos los componentes'],
     '--p-font-size':                 ['Button', 'InputText', 'Badge', 'Tag'],
     '--p-border-radius':             ['Button', 'InputText', 'Select'],
@@ -1180,7 +1263,7 @@
   }
 
   /* ── Is this variable a component token? ── */
-  const COMP_RE = /^--(button|accordion|autocomplete|badge|breadcrumb|calendar|card|carousel|checkbox|chip|colorpicker|confirmdialog|contextmenu|datatable|dataview|dialog|divider|dropdown|editor|fieldset|fileupload|galleria|image|inlinemessage|inputgroup|inputnumber|inputotp|inputswitch|inputtext|knob|listbox|megamenu|menu|menubar|message|multiselect|orderlist|organizationchart|overlaypanel|paginator|panel|panelmenu|password|picklist|progressbar|progressspinner|radio|radiobutton|rating|scrollpanel|selectbutton|sidebar|skeleton|slider|speeddial|splitbutton|steps|tabmenu|tabview|tag|terminal|textarea|tieredmenu|timeline|toast|togglebutton|toolbar|tooltip|tree|treetable|tristatecheckbox|virtualscroller)-/;
+  const COMP_RE = /^--(button|accordion|autocomplete|badge|breadcrumb|calendar|card|carousel|checkbox|chip|colorpicker|confirmdialog|contextmenu|datatable|dataview|dialog|divider|dropdown|editor|fieldset|fileupload|galleria|image|inlinemessage|inputgroup|inputnumber|inputotp|inputswitch|inputtext|knob|listbox|megamenu|menu|menubar|message|multiselect|orderlist|organizationchart|overlaypanel|paginator|panel|panelmenu|password|picklist|progressbar|progressspinner|radio|radiobutton|rating|scrollpanel|selectbutton|sidebar|skeleton|slider|speeddial|splitbutton|steps|tabmenu|tabs|tabview|tag|terminal|textarea|tieredmenu|timeline|toast|togglebutton|toolbar|tooltip|tree|treetable|tristatecheckbox|virtualscroller)-/;
   function isCompVar(name) {
     return COMP_RE.test(name) || /^--p-(button|accordion|checkbox|inputtext|select)-/.test(name);
   }
