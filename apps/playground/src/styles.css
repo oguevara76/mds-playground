@@ -1,0 +1,6 @@
+/* Overrides mínimos tras app.css del legacy */
+
+html,
+body {
+  height: 100%;
+}

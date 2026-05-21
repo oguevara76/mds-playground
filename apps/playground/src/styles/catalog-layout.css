@@ -1,0 +1,31 @@
+/* Helpers de catálogo (extraído de styles/components.css — solo layout, no réplica .p-button) */
+
+.btn-section {
+  margin-bottom: 32px;
+}
+
+.btn-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--p-surface-400);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--p-content-border-color, var(--content-border-color));
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-row + .btn-row {
+  margin-top: 10px;
+}
+
+.btn-row--align-center {
+  align-items: center;
+}

@@ -1,0 +1,146 @@
+<div class="cards-grid form-catalog-stack">
+  <div class="catalog-preview">
+    <section class="preview-section preview-section--flush">
+      <h3 class="section-title component-title-primary">Button</h3>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Severidad</p>
+        <div class="btn-row">
+          <p-button label="Primary" severity="primary" />
+          <p-button label="Secondary" severity="secondary" />
+          <p-button label="Contrast" severity="contrast" />
+          <p-button label="Danger" severity="danger" />
+        </div>
+        <div class="btn-row">
+          <p-button label="Success" severity="success" />
+          <p-button label="Warning" severity="warn" />
+          <p-button label="Info" severity="info" />
+          <p-button label="Help" severity="help" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Outlined</p>
+        <div class="btn-row">
+          <p-button label="Primary" severity="primary" [outlined]="true" />
+          <p-button label="Secondary" severity="secondary" [outlined]="true" />
+          <p-button label="Contrast" severity="contrast" [outlined]="true" />
+          <p-button label="Danger" severity="danger" [outlined]="true" />
+        </div>
+        <div class="btn-row">
+          <p-button label="Success" severity="success" [outlined]="true" />
+          <p-button label="Warning" severity="warn" [outlined]="true" />
+          <p-button label="Info" severity="info" [outlined]="true" />
+          <p-button label="Help" severity="help" [outlined]="true" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Text</p>
+        <div class="btn-row">
+          <p-button label="Primary" severity="primary" [text]="true" />
+          <p-button label="Secondary" severity="secondary" [text]="true" />
+          <p-button label="Contrast" severity="contrast" [text]="true" />
+          <p-button label="Danger" severity="danger" [text]="true" />
+        </div>
+        <div class="btn-row">
+          <p-button label="Success" severity="success" [text]="true" />
+          <p-button label="Warning" severity="warn" [text]="true" />
+          <p-button label="Info" severity="info" [text]="true" />
+          <p-button label="Help" severity="help" [text]="true" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Raised</p>
+        <div class="btn-row">
+          <p-button label="Primary" severity="primary" [raised]="true" />
+          <p-button label="Secondary" severity="secondary" [raised]="true" />
+          <p-button label="Contrast" severity="contrast" [raised]="true" />
+          <p-button label="Danger" severity="danger" [raised]="true" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Raised Text</p>
+        <div class="btn-row">
+          <p-button label="Primary" severity="primary" [raised]="true" [text]="true" />
+          <p-button label="Secondary" severity="secondary" [raised]="true" [text]="true" />
+          <p-button label="Contrast" severity="contrast" [raised]="true" [text]="true" />
+          <p-button label="Danger" severity="danger" [raised]="true" [text]="true" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Rounded</p>
+        <div class="btn-row">
+          <p-button label="Primary" severity="primary" [rounded]="true" />
+          <p-button label="Secondary" severity="secondary" [rounded]="true" />
+          <p-button label="Contrast" severity="contrast" [rounded]="true" />
+          <p-button label="Danger" severity="danger" [rounded]="true" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Rounded Outlined</p>
+        <div class="btn-row">
+          <p-button label="Primary" severity="primary" [rounded]="true" [outlined]="true" />
+          <p-button label="Secondary" severity="secondary" [rounded]="true" [outlined]="true" />
+          <p-button label="Contrast" severity="contrast" [rounded]="true" [outlined]="true" />
+          <p-button label="Danger" severity="danger" [rounded]="true" [outlined]="true" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Con icono</p>
+        <div class="btn-row">
+          <p-button label="Confirmar" icon="pi pi-check" severity="primary" />
+          <p-button label="Configurar" icon="pi pi-cog" severity="secondary" />
+          <p-button label="Acceder" icon="pi pi-lock" severity="contrast" />
+          <p-button label="Eliminar" icon="pi pi-trash" iconPos="right" severity="danger" />
+          <p-button label="Descargar" icon="pi pi-download" severity="primary" [outlined]="true" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Solo icono</p>
+        <div class="btn-row btn-row--align-center">
+          <p-button icon="pi pi-check" severity="primary" ariaLabel="Confirmar" />
+          <p-button icon="pi pi-cog" severity="secondary" ariaLabel="Configurar" />
+          <p-button icon="pi pi-lock" severity="contrast" ariaLabel="Acceder" />
+          <p-button icon="pi pi-trash" severity="danger" ariaLabel="Eliminar" />
+          <p-button icon="pi pi-plus" severity="primary" [rounded]="true" ariaLabel="Añadir" />
+          <p-button icon="pi pi-search" severity="secondary" [rounded]="true" ariaLabel="Buscar" />
+          <p-button icon="pi pi-lock" severity="contrast" [rounded]="true" ariaLabel="Acceder" />
+          <p-button icon="pi pi-share-alt" [rounded]="true" [outlined]="true" ariaLabel="Compartir" />
+          <p-button icon="pi pi-heart" [rounded]="true" [text]="true" ariaLabel="Favorito" />
+          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" ariaLabel="Borrar" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Tamaños</p>
+        <div class="btn-row btn-row--align-center">
+          <p-button label="Small" severity="primary" size="small" />
+          <p-button label="Normal" severity="primary" />
+          <p-button label="Large" severity="primary" size="large" />
+          <p-button label="Small" icon="pi pi-download" severity="primary" size="small" [outlined]="true" />
+          <p-button label="Normal" icon="pi pi-download" severity="primary" [outlined]="true" />
+          <p-button label="Large" icon="pi pi-download" severity="primary" size="large" [outlined]="true" />
+          <p-button icon="pi pi-plus" severity="primary" size="small" [rounded]="true" ariaLabel="Añadir" />
+          <p-button icon="pi pi-plus" severity="primary" [rounded]="true" ariaLabel="Añadir" />
+          <p-button icon="pi pi-plus" severity="primary" size="large" [rounded]="true" ariaLabel="Añadir" />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">Estados</p>
+        <div class="btn-row">
+          <p-button label="Disabled" severity="primary" [disabled]="true" />
+          <p-button label="Disabled Outlined" severity="primary" [outlined]="true" [disabled]="true" />
+          <p-button label="Loading" severity="primary" [loading]="true" />
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

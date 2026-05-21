@@ -1,0 +1,54 @@
+<p-toast position="top-right" />
+
+<header class="topbar">
+  <a routerLink="/" class="topbar-brand" title="Ir al inicio">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true" style="flex-shrink:0">
+      <rect width="40" height="40" rx="12" fill="url(#brand-gradient)" />
+      <text y="26" x="12" font-size="18" font-family="system-ui" fill="white" font-weight="700">M</text>
+      <defs>
+        <linearGradient id="brand-gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#1FADA2" />
+          <stop offset="1" stop-color="#17B0CF" />
+        </linearGradient>
+      </defs>
+    </svg>
+    <span class="brand-name">Playground</span>
+  </a>
+  <nav class="topbar-nav">
+    <a routerLink="/button" routerLinkActive="active" class="nav-link">Button</a>
+    <a class="nav-link" href="../index.html" rel="noopener">Legacy ↗</a>
+    <a href="https://primeng.org/button" target="_blank" rel="noopener noreferrer" class="nav-link">PrimeNG Docs ↗</a>
+  </nav>
+  <div class="topbar-actions">
+    <button
+      type="button"
+      class="theme-switch"
+      (click)="onThemeToggle()"
+      [disabled]="theme.toggleDisabled()"
+      [title]="theme.toggleTitle()"
+    >
+      @if (theme.mode() === 'dark') {
+        <i class="pi pi-sun"></i><span>Light</span>
+      } @else {
+        <i class="pi pi-moon"></i><span>Dark</span>
+      }
+    </button>
+  </div>
+</header>
+
+<div class="layout">
+  <app-playground-sidebar />
+
+  <main class="preview-area">
+    <div class="preview-tabs">
+      <a routerLink="/button" routerLinkActive="active" class="preview-tab">Button</a>
+      <span class="preview-tab preview-tab--soon" title="Próxima fase">Form</span>
+      <span class="preview-tab preview-tab--soon">Data</span>
+      <span class="preview-tab preview-tab--soon">Panel</span>
+    </div>
+
+    <div class="tab-panel active">
+      <router-outlet />
+    </div>
+  </main>
+</div>

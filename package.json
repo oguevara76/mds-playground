@@ -1,0 +1,11 @@
+{
+  "name": "mds-playground",
+  "private": true,
+  "scripts": {
+    "setup": "pnpm install --dir apps/playground",
+    "playground:start": "pnpm --dir apps/playground start",
+    "playground:build": "pnpm --dir apps/playground build",
+    "playground:build:pages": "pnpm --dir apps/playground build:pages",
+    "legacy:serve": "pnpm dlx serve . -l 5500"
+  }
+}

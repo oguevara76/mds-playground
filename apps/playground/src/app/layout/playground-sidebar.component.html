@@ -1,0 +1,75 @@
+<aside class="sidebar">
+  <div class="sidebar-section">
+    @if (upload.loadedEntries.length) {
+      <div class="sidebar-label-row">
+        <p class="sidebar-label">Colecciones adjuntas</p>
+        <button type="button" class="lf-remove-all" (click)="upload.removeAll()" title="Eliminar todos los ficheros">
+          <i class="pi pi-trash"></i> Limpiar
+        </button>
+      </div>
+      <ul class="loaded-files">
+        @for (entry of upload.loadedEntries; track entry.slot) {
+          <li class="loaded-file-item">
+            <i class="pi pi-file lf-icon"></i>
+            <span class="lf-name" [title]="entry.fileName">{{ entry.fileName }}</span>
+          </li>
+        }
+      </ul>
+    }
+
+    @if (upload.uploadWarning(); as warn) {
+      <div class="upload-warning">
+        <i class="pi pi-exclamation-triangle"></i>
+        <span>{{ warn }}</span>
+      </div>
+    }
+
+    @if (!upload.hasUploadedFiles) {
+      <div
+        class="upload-zone"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+      >
+        <div class="upload-icon"><i class="pi pi-upload"></i></div>
+        <p class="upload-text">Arrastra tus <strong>.css</strong> aquí</p>
+        <p class="upload-sub">El sistema sobreescribirá las variables core con las nuevas css</p>
+        <input type="file" accept=".css" multiple (change)="onFilesSelected($event)" />
+      </div>
+    }
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-label">Tokens activos</p>
+    <div class="token-grid">
+      @for (row of upload.tokenRows(); track row.label) {
+        <div class="token-row">
+          @if (row.isFont) {
+            <div class="token-swatch token-swatch-font">Aa</div>
+          } @else {
+            <div class="token-swatch" [style.background]="row.swatchCss"></div>
+          }
+          <span class="token-name">{{ row.label }}</span>
+          <span class="token-value">{{ row.display }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <p class="sidebar-label">Paleta primaria</p>
+    <div class="color-strip">
+      @for (sw of upload.colorSwatches(); track sw.cssVar) {
+        <div
+          class="color-swatch"
+          [class.is-dark]="sw.isDark"
+          [class.color-swatch-base]="sw.step === 'Base'"
+          [style.background]="'var(' + sw.cssVar + ')'"
+        >
+          <span class="swatch-step">{{ sw.step }}</span>
+          <span class="swatch-hex">{{ sw.hex }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</aside>

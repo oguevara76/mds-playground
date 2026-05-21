@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+apps/playground/node_modules/
+
+# Angular build
+apps/playground/dist/
+apps/playground/.angular/
+
+# Local Pages assemble
+_site/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.log

@@ -11,11 +11,29 @@ Vista previa en vivo de componentes PrimeNG con soporte para cargar tokens CSS p
 - **Dark / Light mode** — Toggle entre modos de tema
 - **Sin build step** — HTML + CSS + JS puro, funciona directamente en el navegador
 
+## Angular + PrimeNG v20 (`apps/playground/`)
+
+App con **`<p-button>` real**, shell visual del legacy, **upload de CSS** y paleta/tokens en sidebar. El HTML estático de la raíz **no se sustituye**.
+
+| Documento | Contenido |
+|-----------|-----------|
+| [docs/FASE-0.md](docs/FASE-0.md) | Desarrollo local, upload, pruebas con `ejemplos/` |
+| [docs/GITHUB-PAGES.md](docs/GITHUB-PAGES.md) | Compilar y publicar legacy + `/phase0/` en Pages |
+
+```bash
+cd ~/Desktop/Github/mds-playground
+pnpm run setup && pnpm run playground:start   # http://localhost:3000/button
+pnpm run legacy:serve                          # otra terminal → http://localhost:5500/
+```
+
+---
+
 ## 📁 Estructura del proyecto
 
 ```
 mds-playground/
-├── index.html              # App principal
+├── apps/playground/        # Angular 20 + PrimeNG 20 (Fase 0)
+├── index.html              # App principal (legacy)
 ├── ejemplo-tokens.css      # Ejemplo de fichero CSS para subir
 ├── styles/
 │   ├── primeng-tokens.css  # Variables por defecto de PrimeNG (tema MDS base)

@@ -1,0 +1,9 @@
+.preview-tab--soon {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+a.preview-tab {
+  text-decoration: none;
+}
