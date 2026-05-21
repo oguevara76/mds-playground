@@ -16,6 +16,7 @@ pnpm run playground:start
 ```
 
 - Catálogo Button: http://localhost:3000/button  
+- Catálogo Form: http://localhost:3000/form  
 - Upload CSS, paleta y tokens activos: sidebar izquierdo (paridad con legacy)
 
 **Terminal 2 — Legacy estático (puerto 5500)**
@@ -30,17 +31,18 @@ pnpm run legacy:serve
 
 ---
 
-## Fase 0 ✓ · Fase 1 ✓ (actual)
+## Fase 0 ✓ · Fase 1 ✓ · Fase 2 ✓ Form (actual)
 
 | Funcionalidad | Legacy | Angular `apps/playground` |
 |---------------|--------|---------------------------|
-| `<p-button>` real | No | **Sí** |
+| `<p-button>` real | No | **Sí** (`/button`) |
+| Catálogo Form (Radio, Checkbox, ToggleSwitch, InputText) | Sí | **Sí** (`/form`) |
 | Shell visual (topbar, sidebar, tabs) | Sí | **Sí** (`styles/app.css`) |
 | Upload 4 capas CSS | Sí | **Sí** |
 | Tokens activos + paleta | Sí | **Sí** |
 | Dark / light | Sí | **Sí** |
 | Mapa / vista Tokens completa | Sí | Pendiente |
-| Resto de catálogos | Sí | Pendiente |
+| Data / Panel catálogos | Sí | Pendiente |
 
 ### Probar upload con marcas de ejemplo
 
@@ -76,5 +78,5 @@ Si no ves cambio: sube **primitivos + semántica light** (mínimo), recarga la p
 ## Siguiente fase
 
 - Vista Tokens (listado + mapa) portada de `app.js`
-- Catálogo Form con componentes PrimeNG reales
+- Catálogos Data y Panel
 - Preset generado desde `mds-*.css` (`updatePreset`)

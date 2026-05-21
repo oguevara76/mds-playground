@@ -148,14 +148,23 @@ html, body {
 /* ── Main layout ── */
 .layout {
   display: flex;
-  height: 100vh;
-  padding-top: 72px;
+  align-items: stretch;
+  min-height: calc(100vh - 72px);
+  height: calc(100vh - 72px);
+  margin-top: 72px;
+}
+
+/* Angular: el host no debe acortar la altura del <aside class="sidebar"> */
+app-playground-sidebar {
+  display: contents;
 }
 
 /* ── Sidebar ── */
 .sidebar {
   width: 280px;
   flex-shrink: 0;
+  align-self: stretch;
+  min-height: 100%;
   background: var(--sidebar-bg);
   border-right: 1px solid var(--sidebar-border);
   overflow-y: auto;
@@ -390,6 +399,7 @@ html, body {
 /* ── Preview area ── */
 .preview-area {
   flex: 1;
+  min-height: 100%;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -436,7 +446,7 @@ html, body {
 .preview-section {
   background: var(--surface-context-minimal);
   border: 1px solid var(--surface-context-emphasized);
-  border-radius: var(--p-border-radius-lg);
+  border-radius: var(--border-radius-lg, var(--p-border-radius-lg, 8px));
   padding: 32px;
   margin-bottom: 16px;
 }
@@ -471,6 +481,23 @@ html, body {
   border-bottom-width: 2px;
   border-bottom-color: color-mix(in srgb, var(--p-primary-color) 30%, var(--p-content-border));
 }
+
+/* Catálogo: subtítulos y líneas separadoras más discretas en dark */
+[data-theme="dark"] .btn-section-title {
+  color: var(--p-surface-600, var(--surface-600));
+  border-bottom-color: var(--p-surface-800, var(--surface-800));
+}
+
+[data-theme="dark"] .section-title {
+  color: var(--p-surface-600, var(--surface-600));
+  border-bottom-color: var(--p-surface-800, var(--surface-800));
+}
+
+[data-theme="dark"] .section-title.component-title-primary {
+  color: color-mix(in srgb, var(--p-primary-color) 78%, var(--p-surface-500, var(--surface-500)));
+  border-bottom-color: color-mix(in srgb, var(--p-primary-color) 18%, var(--p-surface-800, var(--surface-800)));
+}
+
 .component-row {
   display: flex;
   align-items: center;
@@ -485,7 +512,7 @@ html, body {
 .catalog-preview {
   background: var(--surface-context-minimal);
   border: 1px solid var(--surface-context-emphasized);
-  border-radius: var(--p-border-radius);
+  border-radius: var(--border-radius-md, var(--content-border-radius, 6px));
   padding: 22px;
   margin-bottom: 14px;
 }
@@ -502,7 +529,7 @@ html, body {
 .catalog-card {
   background: var(--surface-context-minimal);
   border: 1px solid var(--surface-context-emphasized);
-  border-radius: var(--p-border-radius);
+  border-radius: var(--border-radius-md, var(--content-border-radius, 6px));
   padding: 18px;
   display: flex;
   align-items: center;

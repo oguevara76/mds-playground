@@ -1,0 +1,86 @@
+:host {
+  display: block;
+}
+
+.form-choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 20px;
+}
+
+.form-choice-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--p-content-color);
+  cursor: pointer;
+}
+
+.form-choice-item label {
+  cursor: pointer;
+  margin: 0;
+}
+
+.form-catalog-stack .component-title-primary {
+  margin-bottom: 0;
+}
+
+.form-input-interaction-field {
+  width: 100%;
+  max-width: 320px;
+}
+
+.form-config-aside {
+  flex: 0 0 auto;
+  min-width: 200px;
+  max-width: 240px;
+  border-left: 1px solid var(--p-content-border);
+  padding-left: 16px;
+}
+
+.form-config-aside-title {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p-surface-400);
+}
+
+.form-config-aside-hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--p-surface-500);
+}
+
+.form-config-link {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--p-primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.form-config-link:hover {
+  color: var(--p-primary-hover-color, var(--p-primary-color));
+}
+
+.form-config-link:focus-visible {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.form-config-popover-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 220px;
+  padding: 4px 2px;
+}

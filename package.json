@@ -6,6 +6,8 @@
     "playground:start": "pnpm --dir apps/playground start",
     "playground:build": "pnpm --dir apps/playground build",
     "playground:build:pages": "pnpm --dir apps/playground build:pages",
-    "legacy:serve": "pnpm dlx serve . -l 5500"
+    "legacy:serve": "pnpm dlx serve . -l 5500",
+    "regen:prime-bridge": "python3 scripts/regen-prime-runtime-bridge.py",
+    "regen:mds": "python3 scripts/regen-mds-vars-data.py && python3 scripts/regen-prime-runtime-bridge.py"
   }
 }

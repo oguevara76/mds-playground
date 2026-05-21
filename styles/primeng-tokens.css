@@ -5,7 +5,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ─── LIGHT MODE (default) ─────────────────────────────────────────── */
-:root {
+html[data-theme="light"] {
 
   /* ── Primary palette
      Bridge: var(--primary-N, fallback) ← MDS semantic-light/dark
@@ -243,9 +243,9 @@
   --p-button-text-secondary-active-background: var(--p-surface-200);
 
   /* ── Text: Contrast ── */
-  --p-button-text-contrast-color:             var(--p-surface-900);
-  --p-button-text-contrast-hover-background:  var(--p-surface-100);
-  --p-button-text-contrast-active-background: var(--p-surface-200);
+  --p-button-text-contrast-color:             var(--button-text-contrast-color, var(--p-surface-900));
+  --p-button-text-contrast-hover-background:  var(--button-text-contrast-hover-background, var(--p-surface-100));
+  --p-button-text-contrast-active-background: var(--button-text-contrast-active-background, var(--p-surface-200));
 
   /* ── Text: Danger ── */
   --p-button-text-danger-color:             var(--button-text-danger-color, var(--p-danger-color));
@@ -594,6 +594,22 @@
   --p-tooltip-color:        var(--tooltip-color, var(--p-surface-0));
 
   /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Popover / overlay select
+     Bridge: var(--popover-*, --overlay-*-*) ← MDS components.css
+  ═══════════════════════════════════════════════════════════════════ */
+  --p-popover-background:       var(--popover-background, var(--overlay-popover-background));
+  --p-popover-border-color:     var(--popover-border-color, var(--overlay-popover-border-color));
+  --p-popover-color:            var(--popover-color, var(--overlay-popover-color));
+  --p-popover-border-radius:    var(--popover-border-radius, var(--overlay-popover-border-radius, var(--p-border-radius)));
+  --p-popover-content-padding:  var(--popover-content-padding, var(--overlay-popover-padding, 12px));
+  --p-popover-shadow:           var(--popover-shadow, var(--overlay-popover-shadow));
+  --p-select-overlay-background:  var(--overlay-select-background, var(--overlay-popover-background));
+  --p-select-overlay-border-color: var(--overlay-select-border-color, var(--overlay-popover-border-color));
+  --p-select-overlay-color:     var(--overlay-select-color, var(--overlay-popover-color));
+  --p-select-overlay-border-radius: var(--overlay-select-border-radius, var(--p-border-radius));
+  --p-select-overlay-shadow:    var(--overlay-select-shadow, var(--popover-shadow));
+
+  /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tabs
      Bridge: var(--tabs-*, fallback) ← MDS components.css
   ═══════════════════════════════════════════════════════════════════ */
@@ -699,9 +715,15 @@
 
 
 /* ─── DARK MODE ─────────────────────────────────────────────────────── */
-/* Modo oscuro: data-theme="dark" */
-/* Valores de respaldo si los CSS semánticos del playground no están cargados. */
-[data-theme="dark"] {
+/* Modo oscuro: data-theme="dark" en <html> — shell + tokens de componente */
+html[data-theme="dark"] {
+
+  /* Border radius — misma escala que light (MDS semantic) */
+  --p-border-radius:      var(--border-radius-md,   6px);
+  --p-border-radius-sm:   var(--border-radius-sm,   4px);
+  --p-border-radius-lg:   var(--border-radius-lg,   8px);
+  --p-border-radius-xl:   var(--border-radius-xl,   12px);
+  --p-border-radius-pill: var(--border-radius-pill, 999px);
 
   /* Primary (paleta invertida para dark) */
   --p-primary-50:  var(--primary-50,  #000911);
@@ -770,7 +792,30 @@
   --p-content-border: var(--content-border-color, var(--p-surface-700));
   --p-content-color:  var(--text-color,            var(--p-surface-100));
 
-  /* Button component tokens — dark overrides */
+  /* Button component tokens — dark (misma cadena MDS que light) */
+  --p-button-primary-background:         var(--button-primary-background,        var(--p-primary-color));
+  --p-button-primary-hover-background:   var(--button-primary-hover-background,  var(--p-primary-hover-color));
+  --p-button-primary-active-background:  var(--button-primary-active-background, var(--p-primary-active-color));
+  --p-button-primary-border-color:       var(--button-primary-border-color,      var(--p-primary-color));
+  --p-button-primary-hover-border-color: var(--button-primary-hover-border-color,var(--p-primary-hover-color));
+  --p-button-primary-active-border-color:var(--button-primary-active-border-color,var(--p-primary-active-color));
+  --p-button-primary-color:              var(--button-primary-color,             var(--p-primary-color-text));
+
+  --p-button-danger-background:         var(--button-danger-background,        var(--p-danger-color));
+  --p-button-danger-hover-background:   var(--button-danger-hover-background,  var(--p-danger-color));
+  --p-button-danger-active-background:  var(--button-danger-active-background, var(--p-danger-color));
+  --p-button-danger-border-color:       var(--button-danger-border-color,      var(--p-danger-color));
+  --p-button-danger-color:              var(--button-danger-color,             #ffffff);
+
+  --p-button-outlined-primary-hover-background:  var(--button-outlined-primary-hover-background,  color-mix(in srgb, var(--p-primary-color) 16%, transparent));
+  --p-button-outlined-primary-active-background: var(--button-outlined-primary-active-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent));
+  --p-button-outlined-primary-border-color:      var(--button-outlined-primary-border-color,      var(--p-primary-color));
+  --p-button-outlined-primary-color:             var(--button-outlined-primary-color,             var(--p-primary-color));
+
+  --p-button-text-primary-hover-background:  var(--button-text-primary-hover-background, color-mix(in srgb, var(--p-primary-color) 16%, transparent));
+  --p-button-text-primary-active-background: var(--button-text-primary-active-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent));
+  --p-button-text-primary-color:             var(--button-text-primary-color,             var(--p-primary-color));
+
   --p-button-secondary-background:         var(--button-secondary-background,       var(--p-surface-700));
   --p-button-secondary-hover-background:   var(--button-secondary-hover-background, var(--p-surface-600));
   --p-button-secondary-active-background:  var(--button-secondary-active-background,var(--p-surface-500));
@@ -792,9 +837,9 @@
   --p-button-outlined-secondary-color:            var(--button-outlined-secondary-color,           var(--p-surface-300));
   --p-button-outlined-secondary-hover-background: var(--button-outlined-secondary-hover-background,var(--p-surface-700));
 
-  --p-button-text-contrast-color:             var(--p-surface-0);
-  --p-button-text-contrast-hover-background:  var(--p-surface-700);
-  --p-button-text-contrast-active-background: var(--p-surface-600);
+  --p-button-text-contrast-color:             var(--button-text-contrast-color, var(--p-surface-0));
+  --p-button-text-contrast-hover-background:  var(--button-text-contrast-hover-background, var(--p-surface-700));
+  --p-button-text-contrast-active-background: var(--button-text-contrast-active-background, var(--p-surface-600));
 
   --p-button-text-secondary-color:            var(--p-surface-300);
   --p-button-text-secondary-hover-background: var(--p-surface-700);
@@ -811,4 +856,17 @@
   --p-content-bg:     #0f1012;
   --p-content-border: rgba(255, 255, 255, 0.08);
   --p-content-color:  #f0f0f2;
+
+  /* Popover / select overlay (MDS dark) */
+  --p-popover-background:       var(--popover-background, var(--overlay-popover-background));
+  --p-popover-border-color:     var(--popover-border-color, var(--overlay-popover-border-color));
+  --p-popover-color:            var(--popover-color, var(--overlay-popover-color));
+  --p-popover-border-radius:    var(--popover-border-radius, var(--overlay-popover-border-radius, var(--p-border-radius)));
+  --p-popover-content-padding:  var(--popover-content-padding, var(--overlay-popover-padding, 12px));
+  --p-popover-shadow:           var(--popover-shadow, var(--overlay-popover-shadow));
+  --p-select-overlay-background:  var(--overlay-select-background, var(--overlay-popover-background));
+  --p-select-overlay-border-color: var(--overlay-select-border-color, var(--overlay-popover-border-color));
+  --p-select-overlay-color:     var(--overlay-select-color, var(--overlay-popover-color));
+  --p-select-overlay-border-radius: var(--overlay-select-border-radius, var(--p-border-radius));
+  --p-select-overlay-shadow:    var(--overlay-select-shadow, var(--popover-shadow));
 }

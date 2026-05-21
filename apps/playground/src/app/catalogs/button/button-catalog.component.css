@@ -1,1 +1,195 @@
-/* Estilos de catálogo y shell: styles/app.css + catalog-layout.css */
+.button-catalog-stack .catalog-preview + .catalog-preview {
+  margin-top: 0;
+}
+
+/* Jerarquía tipográfica: títulos principales con más contraste, subtítulos más suaves */
+.button-showcase > .preview-section > .section-title.component-title-primary {
+  color: var(--p-content-color);
+  font-weight: 800;
+  border-bottom-width: 2px;
+  border-bottom-color: color-mix(in srgb, var(--p-primary-color) 40%, var(--p-content-border));
+}
+
+.button-showcase .btn-section-title {
+  color: var(--p-surface-700);
+  font-weight: 700;
+  border-bottom-color: color-mix(in srgb, var(--p-content-border) 85%, var(--p-surface-300));
+}
+
+/* Subtítulo de variante (encima de la fila de estados) */
+.button-showcase .btn-variant-states-label {
+  color: var(--p-surface-600);
+  font-weight: 700;
+}
+
+/* Leyenda de estado / tamaño (debajo de cada botón) */
+.button-showcase .catalog-button-state-caption {
+  color: var(--p-surface-600);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* Dark: misma jerarquía — título bloque > sección > variante (más → menos contraste) */
+html[data-theme='dark'] .button-showcase > .preview-section > .section-title.component-title-primary,
+:host-context(html[data-theme='dark']) .button-showcase > .preview-section > .section-title.component-title-primary {
+  color: var(--p-surface-0);
+  font-weight: 800;
+  border-bottom-color: color-mix(in srgb, var(--p-primary-color) 42%, var(--p-surface-600));
+}
+
+html[data-theme='dark'] .button-showcase .btn-section-title,
+:host-context(html[data-theme='dark']) .button-showcase .btn-section-title {
+  color: var(--p-surface-300);
+  font-weight: 700;
+  border-bottom-color: var(--p-surface-800, var(--p-surface-700));
+}
+
+html[data-theme='dark'] .button-showcase .btn-variant-states-label,
+:host-context(html[data-theme='dark']) .button-showcase .btn-variant-states-label {
+  color: var(--p-surface-400);
+  font-weight: 700;
+}
+
+html[data-theme='dark'] .button-showcase .catalog-button-state-caption,
+:host-context(html[data-theme='dark']) .button-showcase .catalog-button-state-caption {
+  color: var(--p-surface-400);
+  font-weight: 500;
+}
+
+.button-interaction-row {
+  align-items: center;
+}
+
+.catalog-button-interactive {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.button-config-aside {
+  flex: 1 1 220px;
+  max-width: 320px;
+  margin-left: auto;
+  padding-left: 16px;
+  border-left: 1px solid var(--p-content-border);
+  text-align: left;
+}
+
+.button-config-aside-title {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p-surface-400);
+}
+
+.button-config-aside-hint {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--p-surface-500);
+}
+
+.button-config-link {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 500;
+  color: var(--p-primary-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.button-config-link:hover {
+  color: var(--p-primary-hover-color, var(--p-primary-color));
+}
+
+.button-config-link:focus-visible {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.button-config-popover-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 220px;
+  padding: 4px 2px;
+}
+
+.button-config-switches .button-config-divider.p-divider {
+  margin: 2px 0 0;
+}
+
+.button-config-switches .button-config-divider.p-divider::before {
+  border-block-start-color: var(--p-content-border);
+}
+
+.btn-variant-states-block {
+  margin-bottom: 36px;
+  padding-bottom: 4px;
+}
+
+.btn-variant-states-block:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.btn-variant-states-label {
+  margin: 0 0 12px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.catalog-button-states-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  align-items: flex-start;
+}
+
+.catalog-button-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 0 1 auto;
+  min-width: 88px;
+}
+
+.catalog-button-state-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.catalog-button-state-caption {
+  margin: 0;
+  line-height: 1.2;
+  text-transform: none;
+  letter-spacing: normal;
+  text-align: center;
+}
+
+/* Simulación hover/active en previews estáticos (PrimeNG real) */
+.p-button-demo-wrap.p-button-demo--hover ::ng-deep .p-button,
+.p-button-demo-wrap.p-button-demo--active ::ng-deep .p-button {
+  background: var(--btn-demo-bg) !important;
+  border-color: var(--btn-demo-border) !important;
+  color: var(--btn-demo-color) !important;
+}
+
+.p-button-demo-wrap.p-button-demo--hover ::ng-deep .p-button:enabled:focus-visible,
+.p-button-demo-wrap.p-button-demo--active ::ng-deep .p-button:enabled:focus-visible {
+  box-shadow: none;
+}

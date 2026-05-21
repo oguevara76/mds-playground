@@ -4,3 +4,27 @@ html,
 body {
   height: 100%;
 }
+
+/* Inter en toda la shell Angular + PrimeNG (evita fallback serif del preset) */
+html {
+  --p-font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html,
+body,
+app-root,
+.p-component,
+.p-button,
+.p-button-label,
+.p-select,
+.p-select-label,
+.p-toggleswitch,
+.p-popover,
+.p-toast {
+  font-family: var(--p-font-family) !important;
+}
+
+.pi,
+[class*='pi-'] {
+  font-family: 'primeicons' !important;
+}

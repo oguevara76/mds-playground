@@ -9,7 +9,9 @@ import {
   sanitizeUploadedCss,
 } from './css-import-normalize';
 import { ThemeService, type MdsThemeMode } from './theme.service';
-import { syncPrimeUixPalettesFromMds } from './theme-prime-sync';
+import { MDS_BUTTON_OVERRIDE_STYLE_ID } from './button-mds-overrides';
+import { MDS_OVERLAY_OVERRIDE_STYLE_ID } from './overlay-mds-overrides';
+import { MDS_RUNTIME_BRIDGE_STYLE_ID, syncPrimeUixPalettesFromMds } from './theme-prime-sync';
 import type { LoadedSlotFile, LoadedSlotsMap } from './theme.types';
 
 const SLOT_STYLE_ID: Record<UploadSlot, string> = {
@@ -31,6 +33,15 @@ const USER_STYLE_ORDER: string[] = [
   'user-semantic-light',
   'user-semantic-dark',
   'user-components',
+];
+
+/** Orden legacy: upload core → auto-contraste → puente --p-* (después del tema PrimeNG). */
+const POST_PRIME_STYLE_ORDER: string[] = [
+  ...USER_STYLE_ORDER,
+  'auto-contrast',
+  MDS_RUNTIME_BRIDGE_STYLE_ID,
+  MDS_BUTTON_OVERRIDE_STYLE_ID,
+  MDS_OVERLAY_OVERRIDE_STYLE_ID,
 ];
 
 /** Tokens MDS (no los --p-* generados por PrimeNG, que pisan el upload). */
@@ -159,6 +170,11 @@ export class ThemeUploadService {
     this.toast('Ficheros eliminados — tokens por defecto restaurados', 'info');
   }
 
+  /** Re-sincroniza PrimeNG + overrides MDS tras cambiar light/dark (sin recalcular inspector). */
+  resyncThemeRuntime(): void {
+    this.syncPrimeThemeRuntime();
+  }
+
   refreshInspector(): void {
     this.inspectorTick.update((n) => n + 1);
     this.tokenRows.set(
@@ -234,7 +250,7 @@ export class ThemeUploadService {
   }
 
   private ensureStyleElements(): void {
-    const ids = [...USER_STYLE_ORDER, 'auto-contrast'];
+    const ids = POST_PRIME_STYLE_ORDER;
     for (const id of ids) {
       let el = this.doc.getElementById(id);
       if (!el) {
@@ -252,19 +268,33 @@ export class ThemeUploadService {
    * Tras subir MDS, sincronizamos el preset runtime y recolocamos el CSS de usuario al final.
    */
   private syncPrimeThemeRuntime(): void {
-    syncPrimeUixPalettesFromMds((varName) => this.resolveColor(varName));
+    syncPrimeUixPalettesFromMds((varName) => this.resolveColor(varName), (id, css) =>
+      this.injectStyleBlock(id, css)
+    );
     requestAnimationFrame(() => this.ensureUserStylesAfterPrimeTheme());
   }
 
+  private injectStyleBlock(id: string, css: string): void {
+    let el = this.doc.getElementById(id);
+    if (!el) {
+      el = this.doc.createElement('style');
+      el.id = id;
+      this.doc.head.appendChild(el);
+    } else if (el.parentNode !== this.doc.head) {
+      this.doc.head.appendChild(el);
+    }
+    el.textContent = css;
+  }
+
   private ensureUserStylesAfterPrimeTheme(): void {
-    const ours = new Set([...USER_STYLE_ORDER, 'auto-contrast']);
+    const ours = new Set(POST_PRIME_STYLE_ORDER);
     const headStyles = Array.from(this.doc.head.querySelectorAll('style'));
     let lastPrime: HTMLStyleElement | null = null;
     for (const s of headStyles) {
       if (!s.id || !ours.has(s.id)) lastPrime = s;
     }
     let anchor: Element | null = lastPrime;
-    for (const id of [...USER_STYLE_ORDER, 'auto-contrast']) {
+    for (const id of POST_PRIME_STYLE_ORDER) {
       const el = this.doc.getElementById(id);
       if (!el) continue;
       if (anchor?.parentNode) {

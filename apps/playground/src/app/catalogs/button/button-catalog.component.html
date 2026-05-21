@@ -1,146 +1,193 @@
-<div class="cards-grid form-catalog-stack">
-  <div class="catalog-preview">
-    <section class="preview-section preview-section--flush">
-      <h3 class="section-title component-title-primary">Button</h3>
+<div class="cards-grid form-catalog-stack button-catalog-stack">
+  @for (block of blocks; track block.kind) {
+    <div class="catalog-preview button-showcase">
+      <section class="preview-section preview-section--flush">
+        <h3 class="section-title component-title-primary">{{ block.title }}</h3>
 
-      <div class="btn-section">
-        <p class="btn-section-title">Severidad</p>
-        <div class="btn-row">
-          <p-button label="Primary" severity="primary" />
-          <p-button label="Secondary" severity="secondary" />
-          <p-button label="Contrast" severity="contrast" />
-          <p-button label="Danger" severity="danger" />
+        <!-- 1. Interaction -->
+        <div class="btn-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="input-interaction-row button-interaction-row">
+            <div class="catalog-button-interactive btn-row btn-row--align-center">
+              @for (ds of dsSeverities; track ds.value) {
+                @if (interactionDualIcons(block.kind)) {
+                  <p-button
+                    [severity]="ds.value"
+                    [outlined]="false"
+                    [text]="isTextBlock(block.kind)"
+                    [rounded]="ix(block.kind).rounded"
+                    [raised]="ix(block.kind).raised"
+                    [size]="interactionPrimeSize(block.kind)"
+                  >
+                    <ng-template pTemplate="content">
+                      <span class="p-button-icon p-button-icon-left pi pi-check" aria-hidden="true"></span>
+                      <span class="p-button-label">{{ ds.label }}</span>
+                      <span class="p-button-icon p-button-icon-right pi pi-check" aria-hidden="true"></span>
+                    </ng-template>
+                  </p-button>
+                } @else {
+                  <p-button
+                    [label]="block.kind === 'icon' ? undefined : ds.label"
+                    [icon]="interactionIcon(block.kind)"
+                    [iconPos]="interactionIconPos(block.kind)"
+                    [severity]="ds.value"
+                    [outlined]="false"
+                    [text]="isTextBlock(block.kind)"
+                    [rounded]="ix(block.kind).rounded"
+                    [raised]="ix(block.kind).raised"
+                    [size]="interactionPrimeSize(block.kind)"
+                    [attr.aria-label]="block.kind === 'icon' ? ds.label : null"
+                  />
+                }
+              }
+            </div>
+            <aside class="button-config-aside">
+              <p class="button-config-aside-title">CONFIGURAR</p>
+              <p class="button-config-aside-hint">
+                Puedes
+                <button
+                  type="button"
+                  class="button-config-link"
+                  (click)="configPopover.toggle($event)"
+                  aria-haspopup="dialog"
+                  [attr.aria-expanded]="configPopover.overlayVisible"
+                >
+                  configurar este componente
+                </button>
+                con las diferentes variantes disponibles.
+              </p>
+              <p-popover
+                #configPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                [ariaLabel]="'Configurar ' + block.title"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="ix(block.kind).size"
+                        (ngModelChange)="patchIx(block.kind, { size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  @if (block.showIconLeft) {
+                    <div class="input-config-row">
+                      <span class="input-config-label">Icon left</span>
+                      <p-toggleswitch
+                        [ngModel]="ix(block.kind).iconLeft"
+                        (ngModelChange)="patchIx(block.kind, { iconLeft: $event })"
+                      />
+                    </div>
+                  }
+                  @if (block.showIconRight) {
+                    <div class="input-config-row">
+                      <span class="input-config-label">Icon right</span>
+                      <p-toggleswitch
+                        [ngModel]="ix(block.kind).iconRight"
+                        (ngModelChange)="patchIx(block.kind, { iconRight: $event })"
+                      />
+                    </div>
+                  }
+                  <div class="input-config-row">
+                    <span class="input-config-label">Rounded</span>
+                    <p-toggleswitch
+                      [ngModel]="ix(block.kind).rounded"
+                      (ngModelChange)="patchIx(block.kind, { rounded: $event })"
+                    />
+                  </div>
+                  <div class="input-config-row">
+                    <span class="input-config-label">Raised</span>
+                    <p-toggleswitch
+                      [ngModel]="ix(block.kind).raised"
+                      (ngModelChange)="patchIx(block.kind, { raised: $event })"
+                    />
+                  </div>
+                </div>
+              </p-popover>
+            </aside>
+          </div>
         </div>
-        <div class="btn-row">
-          <p-button label="Success" severity="success" />
-          <p-button label="Warning" severity="warn" />
-          <p-button label="Info" severity="info" />
-          <p-button label="Help" severity="help" />
-        </div>
-      </div>
 
-      <div class="btn-section">
-        <p class="btn-section-title">Outlined</p>
-        <div class="btn-row">
-          <p-button label="Primary" severity="primary" [outlined]="true" />
-          <p-button label="Secondary" severity="secondary" [outlined]="true" />
-          <p-button label="Contrast" severity="contrast" [outlined]="true" />
-          <p-button label="Danger" severity="danger" [outlined]="true" />
+        <!-- 2. Variants & States -->
+        <div class="btn-section">
+          <p class="btn-section-title">Variants &amp; States</p>
+          @for (variant of variantSpecs; track variant.label) {
+            <div class="btn-variant-states-block">
+              <p class="btn-variant-states-label">{{ variantRowLabel(variant) }}</p>
+              <div class="catalog-button-states-row is-static-preview">
+                @for (st of demoStates; track st.key) {
+                  <div class="catalog-button-state">
+                    <div
+                      class="catalog-button-state-preview"
+                      [ngClass]="demoStateClass(st.key)"
+                      [ngStyle]="demoWrapStyle(variant, st.key, block.kind)"
+                    >
+                      <p-button
+                        [label]="block.kind === 'icon' ? undefined : 'Primary'"
+                        [icon]="block.kind === 'icon' ? 'pi pi-plus' : undefined"
+                        severity="primary"
+                        [outlined]="!!variant.outlined"
+                        [text]="isTextBlock(block.kind)"
+                        [rounded]="!!variant.rounded"
+                        [raised]="!!variant.raised"
+                        [disabled]="st.key === 'disabled'"
+                        [attr.aria-label]="block.kind === 'icon' ? 'Primary' : null"
+                      />
+                    </div>
+                    <span class="catalog-button-state-caption">{{ st.caption }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
         </div>
-        <div class="btn-row">
-          <p-button label="Success" severity="success" [outlined]="true" />
-          <p-button label="Warning" severity="warn" [outlined]="true" />
-          <p-button label="Info" severity="info" [outlined]="true" />
-          <p-button label="Help" severity="help" [outlined]="true" />
-        </div>
-      </div>
 
-      <div class="btn-section">
-        <p class="btn-section-title">Text</p>
-        <div class="btn-row">
-          <p-button label="Primary" severity="primary" [text]="true" />
-          <p-button label="Secondary" severity="secondary" [text]="true" />
-          <p-button label="Contrast" severity="contrast" [text]="true" />
-          <p-button label="Danger" severity="danger" [text]="true" />
+        <!-- 3. Sizes -->
+        <div class="btn-section">
+          <p class="btn-section-title">Sizes</p>
+          <div class="catalog-button-states-row is-static-preview">
+            @for (sz of sizeOptions; track sz.key) {
+              <div class="catalog-button-state">
+                <div class="catalog-button-state-preview">
+                  @if (block.kind === 'icon') {
+                    <p-button
+                      icon="pi pi-plus"
+                      severity="primary"
+                      [size]="sz.size"
+                      [rounded]="true"
+                      ariaLabel="Primary"
+                    />
+                  } @else if (block.kind === 'text') {
+                    <p-button
+                      label="Primary"
+                      severity="primary"
+                      [text]="true"
+                      [size]="sz.size"
+                    />
+                  } @else {
+                    <p-button
+                      label="Primary"
+                      severity="primary"
+                      [size]="sz.size"
+                    />
+                  }
+                </div>
+                <span class="catalog-button-state-caption">{{ sz.caption }}</span>
+              </div>
+            }
+          </div>
         </div>
-        <div class="btn-row">
-          <p-button label="Success" severity="success" [text]="true" />
-          <p-button label="Warning" severity="warn" [text]="true" />
-          <p-button label="Info" severity="info" [text]="true" />
-          <p-button label="Help" severity="help" [text]="true" />
-        </div>
-      </div>
-
-      <div class="btn-section">
-        <p class="btn-section-title">Raised</p>
-        <div class="btn-row">
-          <p-button label="Primary" severity="primary" [raised]="true" />
-          <p-button label="Secondary" severity="secondary" [raised]="true" />
-          <p-button label="Contrast" severity="contrast" [raised]="true" />
-          <p-button label="Danger" severity="danger" [raised]="true" />
-        </div>
-      </div>
-
-      <div class="btn-section">
-        <p class="btn-section-title">Raised Text</p>
-        <div class="btn-row">
-          <p-button label="Primary" severity="primary" [raised]="true" [text]="true" />
-          <p-button label="Secondary" severity="secondary" [raised]="true" [text]="true" />
-          <p-button label="Contrast" severity="contrast" [raised]="true" [text]="true" />
-          <p-button label="Danger" severity="danger" [raised]="true" [text]="true" />
-        </div>
-      </div>
-
-      <div class="btn-section">
-        <p class="btn-section-title">Rounded</p>
-        <div class="btn-row">
-          <p-button label="Primary" severity="primary" [rounded]="true" />
-          <p-button label="Secondary" severity="secondary" [rounded]="true" />
-          <p-button label="Contrast" severity="contrast" [rounded]="true" />
-          <p-button label="Danger" severity="danger" [rounded]="true" />
-        </div>
-      </div>
-
-      <div class="btn-section">
-        <p class="btn-section-title">Rounded Outlined</p>
-        <div class="btn-row">
-          <p-button label="Primary" severity="primary" [rounded]="true" [outlined]="true" />
-          <p-button label="Secondary" severity="secondary" [rounded]="true" [outlined]="true" />
-          <p-button label="Contrast" severity="contrast" [rounded]="true" [outlined]="true" />
-          <p-button label="Danger" severity="danger" [rounded]="true" [outlined]="true" />
-        </div>
-      </div>
-
-      <div class="btn-section">
-        <p class="btn-section-title">Con icono</p>
-        <div class="btn-row">
-          <p-button label="Confirmar" icon="pi pi-check" severity="primary" />
-          <p-button label="Configurar" icon="pi pi-cog" severity="secondary" />
-          <p-button label="Acceder" icon="pi pi-lock" severity="contrast" />
-          <p-button label="Eliminar" icon="pi pi-trash" iconPos="right" severity="danger" />
-          <p-button label="Descargar" icon="pi pi-download" severity="primary" [outlined]="true" />
-        </div>
-      </div>
-
-      <div class="btn-section">
-        <p class="btn-section-title">Solo icono</p>
-        <div class="btn-row btn-row--align-center">
-          <p-button icon="pi pi-check" severity="primary" ariaLabel="Confirmar" />
-          <p-button icon="pi pi-cog" severity="secondary" ariaLabel="Configurar" />
-          <p-button icon="pi pi-lock" severity="contrast" ariaLabel="Acceder" />
-          <p-button icon="pi pi-trash" severity="danger" ariaLabel="Eliminar" />
-          <p-button icon="pi pi-plus" severity="primary" [rounded]="true" ariaLabel="Añadir" />
-          <p-button icon="pi pi-search" severity="secondary" [rounded]="true" ariaLabel="Buscar" />
-          <p-button icon="pi pi-lock" severity="contrast" [rounded]="true" ariaLabel="Acceder" />
-          <p-button icon="pi pi-share-alt" [rounded]="true" [outlined]="true" ariaLabel="Compartir" />
-          <p-button icon="pi pi-heart" [rounded]="true" [text]="true" ariaLabel="Favorito" />
-          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" ariaLabel="Borrar" />
-        </div>
-      </div>
-
-      <div class="btn-section">
-        <p class="btn-section-title">Tamaños</p>
-        <div class="btn-row btn-row--align-center">
-          <p-button label="Small" severity="primary" size="small" />
-          <p-button label="Normal" severity="primary" />
-          <p-button label="Large" severity="primary" size="large" />
-          <p-button label="Small" icon="pi pi-download" severity="primary" size="small" [outlined]="true" />
-          <p-button label="Normal" icon="pi pi-download" severity="primary" [outlined]="true" />
-          <p-button label="Large" icon="pi pi-download" severity="primary" size="large" [outlined]="true" />
-          <p-button icon="pi pi-plus" severity="primary" size="small" [rounded]="true" ariaLabel="Añadir" />
-          <p-button icon="pi pi-plus" severity="primary" [rounded]="true" ariaLabel="Añadir" />
-          <p-button icon="pi pi-plus" severity="primary" size="large" [rounded]="true" ariaLabel="Añadir" />
-        </div>
-      </div>
-
-      <div class="btn-section">
-        <p class="btn-section-title">Estados</p>
-        <div class="btn-row">
-          <p-button label="Disabled" severity="primary" [disabled]="true" />
-          <p-button label="Disabled Outlined" severity="primary" [outlined]="true" [disabled]="true" />
-          <p-button label="Loading" severity="primary" [loading]="true" />
-        </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
+  }
 </div>

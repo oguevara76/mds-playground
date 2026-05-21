@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 
-import type { UploadSlot } from './css-import-normalize';
 import type { LoadedSlotsMap } from './theme.types';
 
 export type MdsThemeMode = 'light' | 'dark';
@@ -74,6 +73,8 @@ export class ThemeService {
   }
 
   private apply(mode: MdsThemeMode): void {
-    document.documentElement.setAttribute('data-theme', mode);
+    const html = document.documentElement;
+    html.setAttribute('data-theme', mode);
+    html.style.colorScheme = mode;
   }
 }

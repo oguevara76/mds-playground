@@ -18,6 +18,9 @@ export class AppShellComponent {
 
   onThemeToggle(): void {
     this.theme.toggle();
-    setTimeout(() => this.upload.refreshInspector(), 50);
+    setTimeout(() => {
+      this.upload.resyncThemeRuntime();
+      this.upload.refreshInspector();
+    }, 0);
   }
 }

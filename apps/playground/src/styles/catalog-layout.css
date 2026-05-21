@@ -29,3 +29,9 @@
 .btn-row--align-center {
   align-items: center;
 }
+
+/* Paridad con app.css — subtítulos del catálogo en dark */
+[data-theme="dark"] .btn-section-title {
+  color: var(--p-surface-600, var(--surface-600));
+  border-bottom-color: var(--p-surface-800, var(--surface-800));
+}

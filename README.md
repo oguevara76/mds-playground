@@ -18,6 +18,7 @@ App con **`<p-button>` real**, shell visual del legacy, **upload de CSS** y pale
 | Documento | Contenido |
 |-----------|-----------|
 | [docs/FASE-0.md](docs/FASE-0.md) | Desarrollo local, upload, pruebas con `ejemplos/` |
+| [docs/TEMA-ANGULAR.md](docs/TEMA-ANGULAR.md) | Cascada core MDS + upload + puente PrimeNG (todos los componentes) |
 | [docs/GITHUB-PAGES.md](docs/GITHUB-PAGES.md) | Compilar y publicar legacy + `/phase0/` en Pages |
 
 ```bash

@@ -1,0 +1,431 @@
+<div class="cards-grid form-catalog-stack">
+  @for (block of blocks; track block.kind) {
+    <div
+      class="catalog-preview"
+      [class.inputtext-showcase]="isInputBlock(block)"
+    >
+      <section class="preview-section preview-section--flush">
+        <div [class.input-variant-block]="isInputBlock(block)">
+          <h3
+            class="section-title component-title-primary"
+            [class.input-variant-title]="isInputBlock(block)"
+          >
+            {{ block.title }}
+          </h3>
+
+        <!-- Interaction -->
+        <div class="btn-section">
+          <p class="btn-section-title">Interacción</p>
+
+          @switch (block.kind) {
+            @case ('radio') {
+              <div class="form-choice-row" role="radiogroup" aria-label="Método de pago">
+                @for (opt of radioOptions; track opt.value) {
+                  <div class="form-choice-item">
+                    <p-radiobutton
+                      name="form-catalog-radio"
+                      [value]="opt.value"
+                      [ngModel]="radioValue()"
+                      (ngModelChange)="radioValue.set($event)"
+                      [inputId]="'radio-ix-' + opt.value"
+                    />
+                    <label [for]="'radio-ix-' + opt.value">{{ opt.label }}</label>
+                  </div>
+                }
+              </div>
+            }
+            @case ('checkbox') {
+              <div class="form-choice-row" role="group" aria-label="Canales de notificación">
+                @for (opt of checkboxOptions; track opt.key) {
+                  <div class="form-choice-item">
+                    <p-checkbox
+                      [binary]="true"
+                      [ngModel]="checkboxChecked(opt.key)"
+                      (ngModelChange)="patchCheckbox(opt.key, $event)"
+                      [inputId]="'cb-ix-' + opt.key"
+                    />
+                    <label [for]="'cb-ix-' + opt.key">{{ opt.label }}</label>
+                  </div>
+                }
+              </div>
+            }
+            @case ('toggleswitch') {
+              <div class="form-choice-row" role="group" aria-label="ToggleSwitch interactivo">
+                <div class="form-choice-item">
+                  <p-toggleswitch
+                    [ngModel]="toggleOff()"
+                    (ngModelChange)="toggleOff.set($event)"
+                    ariaLabel="Por defecto"
+                  />
+                  <span>Por defecto</span>
+                </div>
+                <div class="form-choice-item">
+                  <p-toggleswitch
+                    [ngModel]="toggleOn()"
+                    (ngModelChange)="toggleOn.set($event)"
+                    ariaLabel="Activado"
+                  />
+                  <span>Activado</span>
+                </div>
+              </div>
+            }
+            @default {
+              @if (isInputBlock(block)) {
+                <div class="input-interaction-row">
+                  <div
+                    class="catalog-input-interactive input-interaction-scope"
+                    [ngClass]="interactionScopeClass(asInputKind(block.kind))"
+                  >
+                    @if (block.kind === 'input-default') {
+                      <div class="p-field form-input-interaction-field">
+                        <label class="p-label" [for]="'it-live-' + block.kind">Label</label>
+                        @if (ix(asInputKind(block.kind)).iconLeft || ix(asInputKind(block.kind)).iconRight) {
+                          <p-iconfield
+                            [iconPosition]="ix(asInputKind(block.kind)).iconLeft ? 'left' : 'right'"
+                          >
+                            <p-inputicon class="pi pi-search" />
+                            <input
+                              pInputText
+                              [id]="'it-live-' + block.kind"
+                              placeholder="Placeholder"
+                              [ngModel]="ix(asInputKind(block.kind)).value"
+                              (ngModelChange)="patchIx(asInputKind(block.kind), { value: $event })"
+                              [ngClass]="inputSizeClass(ix(asInputKind(block.kind)).size)"
+                              [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
+                              [fluid]="true"
+                            />
+                          </p-iconfield>
+                        } @else {
+                          <input
+                            pInputText
+                            [id]="'it-live-' + block.kind"
+                            placeholder="Placeholder"
+                            [ngModel]="ix(asInputKind(block.kind)).value"
+                            (ngModelChange)="patchIx(asInputKind(block.kind), { value: $event })"
+                            [ngClass]="inputSizeClass(ix(asInputKind(block.kind)).size)"
+                            [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
+                            [fluid]="true"
+                          />
+                        }
+                        <small class="p-hint">Helper Text</small>
+                      </div>
+                    } @else {
+                      <div class="form-input-interaction-field">
+                        <p-floatlabel [variant]="floatVariant(block)!">
+                          @if (ix(asInputKind(block.kind)).iconLeft || ix(asInputKind(block.kind)).iconRight) {
+                            <p-iconfield
+                              [iconPosition]="ix(asInputKind(block.kind)).iconLeft ? 'left' : 'right'"
+                            >
+                              <p-inputicon class="pi pi-search" />
+                              <input
+                                pInputText
+                                [id]="'it-live-' + block.kind"
+                                placeholder=" "
+                                [ngModel]="ix(asInputKind(block.kind)).value"
+                                (ngModelChange)="patchIx(asInputKind(block.kind), { value: $event })"
+                                [ngClass]="inputSizeClass(ix(asInputKind(block.kind)).size)"
+                                [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
+                                [fluid]="true"
+                              />
+                            </p-iconfield>
+                          } @else {
+                            <input
+                              pInputText
+                              [id]="'it-live-' + block.kind"
+                              placeholder=" "
+                              [ngModel]="ix(asInputKind(block.kind)).value"
+                              (ngModelChange)="patchIx(asInputKind(block.kind), { value: $event })"
+                              [ngClass]="inputSizeClass(ix(asInputKind(block.kind)).size)"
+                              [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
+                              [fluid]="true"
+                            />
+                          }
+                          <label [for]="'it-live-' + block.kind">Label</label>
+                        </p-floatlabel>
+                        <small class="p-hint">Helper Text</small>
+                      </div>
+                    }
+                  </div>
+                  <aside class="form-config-aside">
+                    <p class="form-config-aside-title">CONFIGURAR</p>
+                    <p class="form-config-aside-hint">
+                      Puedes
+                      <button
+                        type="button"
+                        class="form-config-link"
+                        (click)="configPopover.toggle($event)"
+                        aria-haspopup="dialog"
+                        [attr.aria-expanded]="configPopover.overlayVisible"
+                      >
+                        configurar este componente
+                      </button>
+                      con las diferentes variantes disponibles.
+                    </p>
+                    <p-popover
+                      #configPopover
+                      styleClass="button-config-popover"
+                      appendTo="body"
+                      [ariaLabel]="'Configurar ' + block.title"
+                    >
+                      <div class="form-config-popover-body input-icon-switches button-config-switches">
+                        <div class="button-config-size-field">
+                          <span class="input-config-label">Size</span>
+                          <div class="button-config-size-toggle-wrap">
+                            <p-selectbutton
+                              [options]="sizeSelectOptions"
+                              optionLabel="label"
+                              optionValue="value"
+                              [ngModel]="ix(asInputKind(block.kind)).size"
+                              (ngModelChange)="patchIx(asInputKind(block.kind), { size: $event })"
+                              [allowEmpty]="false"
+                              [fluid]="true"
+                              size="small"
+                              ariaLabel="Size"
+                            />
+                          </div>
+                        </div>
+                        <p-divider styleClass="button-config-divider" />
+                        <div class="input-config-row">
+                          <span class="input-config-label">Icon left</span>
+                          <p-toggleswitch
+                            [ngModel]="ix(asInputKind(block.kind)).iconLeft"
+                            (ngModelChange)="patchIx(asInputKind(block.kind), { iconLeft: $event })"
+                          />
+                        </div>
+                        <div class="input-config-row">
+                          <span class="input-config-label">Icon right</span>
+                          <p-toggleswitch
+                            [ngModel]="ix(asInputKind(block.kind)).iconRight"
+                            (ngModelChange)="patchIx(asInputKind(block.kind), { iconRight: $event })"
+                          />
+                        </div>
+                        <div class="input-config-row">
+                          <span class="input-config-label">Rounded</span>
+                          <p-toggleswitch
+                            [ngModel]="ix(asInputKind(block.kind)).rounded"
+                            (ngModelChange)="patchIx(asInputKind(block.kind), { rounded: $event })"
+                          />
+                        </div>
+                      </div>
+                    </p-popover>
+                  </aside>
+                </div>
+              }
+            }
+          }
+        </div>
+
+        <!-- Estados -->
+        <div class="btn-section">
+          <p class="btn-section-title">Estados</p>
+
+          @switch (block.kind) {
+            @case ('radio') {
+              <div class="btn-row is-static-preview">
+                <div class="form-choice-item">
+                  <p-radiobutton name="radio-st-sel" value="on" [ngModel]="'on'" inputId="radio-st-sel" />
+                  <label for="radio-st-sel">Seleccionado</label>
+                </div>
+                <div class="form-choice-item">
+                  <p-radiobutton name="radio-st-off" value="on" [ngModel]="'off'" inputId="radio-st-off" />
+                  <label for="radio-st-off">No seleccionado</label>
+                </div>
+                <div class="form-choice-item">
+                  <p-radiobutton name="radio-st-inv" value="on" [ngModel]="'on'" [invalid]="true" inputId="radio-st-inv" />
+                  <label for="radio-st-inv">Invalid</label>
+                </div>
+                <div class="form-choice-item">
+                  <p-radiobutton
+                    name="radio-st-dis"
+                    value="on"
+                    [ngModel]="'on'"
+                    [disabled]="true"
+                    inputId="radio-st-dis"
+                  />
+                  <label for="radio-st-dis">Disabled</label>
+                </div>
+              </div>
+            }
+            @case ('checkbox') {
+              <div class="btn-row is-static-preview">
+                <div class="form-choice-item">
+                  <p-checkbox [ngModel]="true" [binary]="true" inputId="cb-st-on" />
+                  <label for="cb-st-on">Seleccionado</label>
+                </div>
+                <div class="form-choice-item">
+                  <p-checkbox [ngModel]="false" [binary]="true" inputId="cb-st-off" />
+                  <label for="cb-st-off">No seleccionado</label>
+                </div>
+                <div class="form-choice-item">
+                  <p-checkbox [ngModel]="false" [binary]="true" [invalid]="true" inputId="cb-st-inv" />
+                  <label for="cb-st-inv">Invalid</label>
+                </div>
+                <div class="form-choice-item">
+                  <p-checkbox [ngModel]="true" [binary]="true" [disabled]="true" inputId="cb-st-dis" />
+                  <label for="cb-st-dis">Disabled</label>
+                </div>
+              </div>
+            }
+            @case ('toggleswitch') {
+              <div class="btn-row is-static-preview">
+                <div class="form-choice-item">
+                  <p-toggleswitch [ngModel]="false" ariaLabel="Por defecto" />
+                  <span>Por defecto</span>
+                </div>
+                <div class="form-choice-item">
+                  <p-toggleswitch [ngModel]="true" ariaLabel="Activado" />
+                  <span>Activado</span>
+                </div>
+                <div class="form-choice-item">
+                  <p-toggleswitch [ngModel]="false" [disabled]="true" ariaLabel="Deshabilitado" />
+                  <span>Deshabilitado</span>
+                </div>
+                <div class="form-choice-item">
+                  <p-toggleswitch [ngModel]="false" [invalid]="true" ariaLabel="Inválido" />
+                  <span>Inválido</span>
+                </div>
+              </div>
+            }
+            @default {
+              @if (isInputBlock(block)) {
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-input-state">
+                      <span class="catalog-input-state-caption">{{ st.caption }}</span>
+                      @if (block.kind === 'input-default') {
+                        <div class="p-field">
+                          <label class="p-label">Label</label>
+                          <div [ngClass]="inputDemoWrap(st.key)">
+                            <input
+                              pInputText
+                              placeholder="Placeholder"
+                              [value]="inputStateValue(st.key)"
+                              [invalid]="inputStateInvalid(st.key)"
+                              [disabled]="inputStateDisabled(st.key)"
+                              [readonly]="inputStateReadonly(st.key)"
+                              tabindex="-1"
+                              [attr.aria-label]="st.caption"
+                            />
+                          </div>
+                        </div>
+                      } @else {
+                        <div [ngClass]="inputDemoWrap(st.key)">
+                          <p-floatlabel
+                            [variant]="floatVariant(block)!"
+                            [class.is-label-floated]="inputFloatFilled(st.key)"
+                            [class.is-label-invalid]="st.key === 'invalid'"
+                          >
+                            <input
+                              pInputText
+                              [placeholder]="st.key === 'empty' ? ' ' : 'Placeholder'"
+                              [value]="inputStateValue(st.key)"
+                              [invalid]="inputStateInvalid(st.key)"
+                              [disabled]="inputStateDisabled(st.key)"
+                              [readonly]="true"
+                              tabindex="-1"
+                              [attr.aria-label]="st.caption"
+                            />
+                            <label>Label</label>
+                          </p-floatlabel>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            }
+          }
+        </div>
+
+        <!-- Tamaños -->
+        <div class="btn-section">
+          <p class="btn-section-title">Tamaños</p>
+
+          @switch (block.kind) {
+            @case ('radio') {
+              <div class="btn-row is-static-preview">
+                @for (sz of sizeOptions; track sz.key) {
+                  <div class="form-choice-item">
+                    <p-radiobutton
+                      name="radio-sz-{{ sz.key }}"
+                      value="on"
+                      [ngModel]="'on'"
+                      [size]="sz.pSize"
+                      [inputId]="'radio-sz-' + sz.key"
+                    />
+                    <label [for]="'radio-sz-' + sz.key">{{ sz.caption }}</label>
+                  </div>
+                }
+              </div>
+            }
+            @case ('checkbox') {
+              <div class="btn-row is-static-preview">
+                @for (sz of sizeOptions; track sz.key) {
+                  <div class="form-choice-item">
+                    <p-checkbox
+                      [ngModel]="true"
+                      [binary]="true"
+                      [size]="sz.pSize"
+                      [inputId]="'cb-sz-' + sz.key"
+                    />
+                    <label [for]="'cb-sz-' + sz.key">{{ sz.caption }}</label>
+                  </div>
+                }
+              </div>
+            }
+            @case ('toggleswitch') {
+              <p class="btn-section-hint" style="margin: 0; font-size: 12px; color: var(--p-surface-500)">
+                ToggleSwitch no expone tamaños en PrimeNG 20; se muestra un único tamaño.
+              </p>
+              <div class="btn-row is-static-preview">
+                <div class="form-choice-item">
+                  <p-toggleswitch [ngModel]="true" ariaLabel="Normal" />
+                  <span>Normal</span>
+                </div>
+              </div>
+            }
+            @default {
+              @if (isInputBlock(block)) {
+                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-input-state">
+                      <span class="catalog-input-state-caption">{{ sz.caption }}</span>
+                      @if (block.kind === 'input-default') {
+                        <div class="p-field catalog-input-interactive">
+                          <label class="p-label" [for]="'it-sz-' + block.kind + '-' + sz.key">Label</label>
+                          <input
+                            pInputText
+                            [id]="'it-sz-' + block.kind + '-' + sz.key"
+                            placeholder="Placeholder"
+                            [ngClass]="inputSizeClass(sz.key)"
+                            [fluid]="true"
+                          />
+                          <small class="p-hint">Helper Text</small>
+                        </div>
+                      } @else {
+                        <div class="catalog-input-interactive">
+                          <p-floatlabel [variant]="floatVariant(block)!" class="is-label-floated">
+                            <input
+                              pInputText
+                              [id]="'it-sz-' + block.kind + '-' + sz.key"
+                              placeholder=" "
+                              [ngClass]="inputSizeClass(sz.key)"
+                              [fluid]="true"
+                            />
+                            <label [for]="'it-sz-' + block.kind + '-' + sz.key">Label</label>
+                          </p-floatlabel>
+                          <small class="p-hint">Helper Text</small>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            }
+          }
+        </div>
+        </div>
+      </section>
+    </div>
+  }
+</div>
