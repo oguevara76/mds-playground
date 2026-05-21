@@ -372,13 +372,31 @@
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tag
+     Bridge: var(--tag-*, fallback) ← MDS components
      ═══════════════════════════════════════════════════════════════════ */
-  --p-tag-padding-y:          var(--dimension-spacing-x4,  3px);
-  --p-tag-padding-x:          var(--dimension-spacing-x10, 10px);
-  --p-tag-gap:                var(--tag-gap, var(--dimension-spacing-x4, 4px));
+  --p-tag-padding-y:          var(--tag-padding-y, var(--dimension-scale-x4, 4px));
+  --p-tag-padding-x:          var(--tag-padding-x, var(--dimension-scale-x8, 8px));
+  --p-tag-gap:                var(--tag-gap, var(--dimension-scale-x4, 4px));
   --p-tag-border-radius:      var(--tag-border-radius, var(--content-border-radius, var(--p-border-radius-sm)));
-  --p-tag-font-size:          var(--tag-font-size, 12px);
-  --p-tag-font-weight:        var(--tag-font-weight, 500);
+  --p-tag-rounded-border-radius: var(--tag-rounded-border-radius, var(--border-radius-pill, 999px));
+  --p-tag-icon-size:          var(--tag-icon-size, var(--dimension-scale-x12, 12px));
+  --p-tag-font-size:          var(--tag-font-size, 14px);
+  --p-tag-font-weight:        var(--tag-font-weight, 700);
+
+  --p-tag-primary-background:   var(--tag-primary-background, color-mix(in srgb, var(--p-primary-color) 12%, transparent));
+  --p-tag-primary-color:        var(--tag-primary-color, var(--p-primary-700));
+  --p-tag-secondary-background: var(--tag-secondary-background, var(--p-secondary-bg));
+  --p-tag-secondary-color:      var(--tag-secondary-color, var(--p-secondary-color));
+  --p-tag-success-background:   var(--tag-success-background, var(--p-success-bg));
+  --p-tag-success-color:        var(--tag-success-color, var(--p-success-color));
+  --p-tag-info-background:      var(--tag-info-background, var(--p-info-bg));
+  --p-tag-info-color:           var(--tag-info-color, var(--p-info-color));
+  --p-tag-warning-background:   var(--tag-warn-background, var(--p-warning-bg));
+  --p-tag-warning-color:        var(--tag-warn-color, var(--p-warning-color));
+  --p-tag-danger-background:    var(--tag-danger-background, var(--p-danger-bg));
+  --p-tag-danger-color:         var(--tag-danger-color, var(--p-danger-color));
+  --p-tag-contrast-background:  var(--tag-contrast-background, var(--p-surface-800));
+  --p-tag-contrast-color:       var(--tag-contrast-color, var(--p-surface-100));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Badge
@@ -562,6 +580,18 @@
   --p-toast-contrast-shadow:                    var(--toast-contrast-shadow, 0 4px 8px rgba(0, 0, 0, 0.12));
   --p-toast-contrast-close-button-hover-background: var(--toast-contrast-close-button-hover-background, var(--p-surface-700));
   --p-toast-contrast-close-button-focus-ring-color: var(--toast-contrast-close-button-focus-ring-color, var(--p-surface-0));
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Tooltip
+     Bridge: var(--tooltip-*, fallback) ← MDS components.css
+  ═══════════════════════════════════════════════════════════════════ */
+  --p-tooltip-max-width:    var(--tooltip-max-width, 184px);
+  --p-tooltip-gutter:       var(--tooltip-gutter, 4px);
+  --p-tooltip-shadow:       var(--tooltip-shadow, 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1));
+  --p-tooltip-padding:      var(--tooltip-padding, var(--overlay-popover-padding, 8px 12px));
+  --p-tooltip-border-radius: var(--tooltip-border-radius, var(--p-border-radius));
+  --p-tooltip-background:   var(--tooltip-background, var(--p-surface-900));
+  --p-tooltip-color:        var(--tooltip-color, var(--p-surface-0));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tabs

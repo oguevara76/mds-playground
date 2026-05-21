@@ -61,12 +61,16 @@ html:root {
   --dimension-scale-x0: 0px;
   --dimension-scale-x10: 10px;
   --dimension-scale-x12: 12px;
+  --dimension-scale-x128: 128px;
   --dimension-scale-x14: 14px;
   --dimension-scale-x16: 16px;
   --dimension-scale-x18: 18px;
+  --dimension-scale-x192: 192px;
   --dimension-scale-x2: 2px;
   --dimension-scale-x20: 20px;
+  --dimension-scale-x22: 22px;
   --dimension-scale-x24: 24px;
+  --dimension-scale-x256: 256px;
   --dimension-scale-x28: 28px;
   --dimension-scale-x32: 32px;
   --dimension-scale-x4: 4px;

@@ -569,12 +569,21 @@
   font-weight: var(--p-tag-font-weight);
   font-family: var(--p-font-family);
 }
-.p-tag-primary   { background: color-mix(in srgb, var(--p-primary-color) 12%, transparent); color: var(--p-primary-700); }
-.p-tag-success   { background: var(--p-success-bg); color: var(--p-success-color); }
-.p-tag-warning   { background: var(--p-warning-bg); color: var(--p-warning-color); }
-.p-tag-danger    { background: var(--p-danger-bg);  color: var(--p-danger-color); }
-.p-tag-secondary { background: var(--p-secondary-bg); color: var(--p-secondary-color); }
-.p-tag-contrast  { background: var(--p-surface-800); color: var(--p-surface-100); }
+.p-tag-rounded {
+  border-radius: var(--p-tag-rounded-border-radius);
+}
+.p-tag-icon,
+.p-tag > .pi {
+  font-size: var(--p-tag-icon-size);
+  line-height: 1;
+}
+.p-tag-primary   { background: var(--p-tag-primary-background);   color: var(--p-tag-primary-color); }
+.p-tag-success   { background: var(--p-tag-success-background);   color: var(--p-tag-success-color); }
+.p-tag-info      { background: var(--p-tag-info-background);      color: var(--p-tag-info-color); }
+.p-tag-warning   { background: var(--p-tag-warning-background);   color: var(--p-tag-warning-color); }
+.p-tag-danger    { background: var(--p-tag-danger-background);    color: var(--p-tag-danger-color); }
+.p-tag-secondary { background: var(--p-tag-secondary-background); color: var(--p-tag-secondary-color); }
+.p-tag-contrast  { background: var(--p-tag-contrast-background);  color: var(--p-tag-contrast-color); }
 
 /* ── Inputs ── */
 .p-inputtext {
@@ -1598,6 +1607,64 @@
 }
 .p-toast-message-contrast .p-toast-icon-close:focus-visible {
   outline-color: var(--p-toast-contrast-close-button-focus-ring-color);
+}
+
+/* ── Tooltip (paridad PrimeUIX / PrimeNG, tokens --p-tooltip-* ← --tooltip-* vía primeng-tokens.css) ── */
+.p-tooltip.p-component {
+  position: absolute;
+  display: none;
+  max-width: var(--p-tooltip-max-width);
+  font-family: var(--p-font-family);
+  z-index: 1101;
+}
+.p-tooltip.p-tooltip-catalog-visible {
+  display: block;
+}
+.p-tooltip-right,
+.p-tooltip-left {
+  padding: 0 var(--p-tooltip-gutter);
+}
+.p-tooltip-top,
+.p-tooltip-bottom {
+  padding: var(--p-tooltip-gutter) 0;
+}
+.p-tooltip-text {
+  white-space: pre-line;
+  word-break: break-word;
+  background: var(--p-tooltip-background);
+  color: var(--p-tooltip-color);
+  padding: var(--p-tooltip-padding);
+  box-shadow: var(--p-tooltip-shadow);
+  border-radius: var(--p-tooltip-border-radius);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.p-tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.p-tooltip-right .p-tooltip-arrow {
+  margin-top: calc(-1 * var(--p-tooltip-gutter));
+  border-width: var(--p-tooltip-gutter) var(--p-tooltip-gutter) var(--p-tooltip-gutter) 0;
+  border-right-color: var(--p-tooltip-background);
+}
+.p-tooltip-left .p-tooltip-arrow {
+  margin-top: calc(-1 * var(--p-tooltip-gutter));
+  border-width: var(--p-tooltip-gutter) 0 var(--p-tooltip-gutter) var(--p-tooltip-gutter);
+  border-left-color: var(--p-tooltip-background);
+}
+.p-tooltip-top .p-tooltip-arrow {
+  margin-left: calc(-1 * var(--p-tooltip-gutter));
+  border-width: var(--p-tooltip-gutter) var(--p-tooltip-gutter) 0 var(--p-tooltip-gutter);
+  border-top-color: var(--p-tooltip-background);
+}
+.p-tooltip-bottom .p-tooltip-arrow {
+  margin-left: calc(-1 * var(--p-tooltip-gutter));
+  border-width: 0 var(--p-tooltip-gutter) var(--p-tooltip-gutter) var(--p-tooltip-gutter);
+  border-bottom-color: var(--p-tooltip-background);
 }
 
 /* ── Tabs (paridad PrimeNG v19, tokens --p-tabs-* ← --tabs-* vía primeng-tokens.css) ── */

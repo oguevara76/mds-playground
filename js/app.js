@@ -402,6 +402,165 @@
     toastCatalogHideAll.addEventListener('click', hideAllToastCatalogMessages);
   }
 
+  /* ── Catálogo Overlay: Tooltip (paridad PrimeNG, tokens --tooltip-* del core MDS) ── */
+  let tooltipCatalogActive = null;
+
+  function outerWidth(el) {
+    if (!el) return 0;
+    const r = el.getBoundingClientRect();
+    return r.width;
+  }
+
+  function outerHeight(el) {
+    if (!el) return 0;
+    const r = el.getBoundingClientRect();
+    return r.height;
+  }
+
+  function hideTooltipCatalog() {
+    if (!tooltipCatalogActive) return;
+    const { tooltip, trigger } = tooltipCatalogActive;
+    tooltip.classList.remove('p-tooltip-catalog-visible');
+    tooltip.remove();
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.removeAttribute('aria-describedby');
+    }
+    tooltipCatalogActive = null;
+  }
+
+  function alignTooltipCatalog(tooltip, trigger, position) {
+    const pos = position || 'top';
+    tooltip.className = 'p-tooltip p-component p-tooltip-' + pos + ' p-tooltip-catalog-visible';
+    tooltip.style.left = '-999px';
+    tooltip.style.top = '-999px';
+    document.body.appendChild(tooltip);
+
+    const host = trigger.getBoundingClientRect();
+    const tw = outerWidth(tooltip);
+    const th = outerHeight(tooltip);
+    const twEl = outerWidth(trigger);
+    const thEl = outerHeight(trigger);
+    const arrow = tooltip.querySelector('.p-tooltip-arrow');
+    let left = 0;
+    let top = 0;
+
+    if (pos === 'right') {
+      left = host.left + twEl;
+      top = host.top + (thEl - th) / 2;
+      if (arrow) {
+        arrow.style.top = '50%';
+        arrow.style.right = '';
+        arrow.style.bottom = '';
+        arrow.style.left = '0';
+      }
+    } else if (pos === 'left') {
+      left = host.left - tw;
+      top = host.top + (thEl - th) / 2;
+      if (arrow) {
+        arrow.style.top = '50%';
+        arrow.style.right = '0';
+        arrow.style.bottom = '';
+        arrow.style.left = '';
+      }
+    } else if (pos === 'bottom') {
+      left = host.left + (twEl - tw) / 2;
+      top = host.top + thEl;
+      if (arrow) {
+        const center = host.left + twEl / 2 - left;
+        arrow.style.top = '0';
+        arrow.style.right = '';
+        arrow.style.bottom = '';
+        arrow.style.left = center + 'px';
+      }
+    } else {
+      left = host.left + (twEl - tw) / 2;
+      top = host.top - th;
+      if (arrow) {
+        const center = host.left + twEl / 2 - left;
+        arrow.style.top = '';
+        arrow.style.right = '';
+        arrow.style.bottom = '0';
+        arrow.style.left = center + 'px';
+      }
+    }
+
+    tooltip.style.left = Math.round(left) + 'px';
+    tooltip.style.top = Math.round(top) + 'px';
+  }
+
+  function showTooltipCatalog(trigger) {
+    const text = trigger.dataset.tooltipText || '';
+    const position = trigger.dataset.tooltipPosition || 'top';
+    if (!text) return;
+
+    if (tooltipCatalogActive && tooltipCatalogActive.trigger === trigger) {
+      hideTooltipCatalog();
+      return;
+    }
+
+    hideTooltipCatalog();
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'p-tooltip p-component';
+    tooltip.setAttribute('role', 'tooltip');
+    const tooltipId = 'tooltip-catalog-' + Date.now();
+    tooltip.id = tooltipId;
+
+    const arrow = document.createElement('div');
+    arrow.className = 'p-tooltip-arrow';
+    arrow.setAttribute('data-pc-section', 'arrow');
+
+    const textEl = document.createElement('div');
+    textEl.className = 'p-tooltip-text';
+    textEl.setAttribute('data-pc-section', 'text');
+    textEl.textContent = text;
+
+    tooltip.append(arrow, textEl);
+    alignTooltipCatalog(tooltip, trigger, position);
+
+    trigger.setAttribute('aria-expanded', 'true');
+    trigger.setAttribute('aria-describedby', tooltipId);
+    tooltipCatalogActive = { tooltip, trigger };
+  }
+
+  document.querySelectorAll('.js-tooltip-catalog-trigger').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      showTooltipCatalog(trigger);
+    });
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') hideTooltipCatalog();
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!tooltipCatalogActive) return;
+    const t = e.target;
+    if (tooltipCatalogActive.tooltip.contains(t) || tooltipCatalogActive.trigger.contains(t)) return;
+    hideTooltipCatalog();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hideTooltipCatalog();
+  });
+
+  window.addEventListener('resize', () => {
+    if (!tooltipCatalogActive) return;
+    alignTooltipCatalog(
+      tooltipCatalogActive.tooltip,
+      tooltipCatalogActive.trigger,
+      tooltipCatalogActive.trigger.dataset.tooltipPosition || 'top'
+    );
+  });
+
+  document.querySelectorAll('.preview-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      if (tab.dataset.tab !== 'overlay-catalog') hideTooltipCatalog();
+    });
+  });
+
   /* ── Catálogo Panel: Tabs (paridad PrimeNG, tokens --tabs-* del core MDS) ── */
   function positionTabsCatalogInkbar(tablist) {
     if (!tablist) return;
@@ -1248,81 +1407,63 @@
     },
   ];
 
-  /* ── Relationship maps ── */
-  const SEM_AFFECTS = {
-    '--highlight-background':        ['Checkbox', 'Radio', 'MultiSelect', 'Listbox'],
-    '--highlight-color':             ['Checkbox text', 'Radio text', 'MultiSelect text'],
-    '--highlight-focus-background':  ['Checkbox focus', 'Radio focus'],
-    '--highlight-focus-color':       ['Checkbox focus text', 'Radio focus text'],
-    '--primary-color':               ['Tabs active', 'Tabs ink bar', 'Paginator página activa', 'Focus ring', 'Button primary'],
-    '--primary-contrast-color':      ['Paginator página activa', 'Button primary text'],
-    '--feedback-success-medium':   ['Button success', 'Tag success', 'Toast success', 'Message success'],
-    '--feedback-danger-medium':    ['Button danger', 'Tag danger', 'InputText invalid', 'Toast error'],
-    '--feedback-warn-medium':      ['Tag warn', 'Toast warn'],
-    '--feedback-info-medium':      ['Tag info', 'Toast info'],
-    '--p-success-color':             ['Button success', 'Tag success', 'Toast success'],
-    '--p-danger-color':              ['Button danger', 'Tag danger', 'InputText invalid', 'Toast error'],
-    '--p-warning-color':             ['Tag warn', 'Toast warn'],
-    '--p-info-color':                ['Tag info', 'Toast info'],
-    '--p-font-family':               ['Todos los componentes'],
-    '--p-font-size':                 ['Button', 'InputText', 'Badge', 'Tag'],
-    '--p-border-radius':             ['Button', 'InputText', 'Select'],
-    '--p-border-radius-sm':          ['Badge', 'Chip', 'Avatar'],
-    '--p-border-radius-md':          ['Button', 'InputText', 'Checkbox', 'Radio'],
-    '--p-border-radius-lg':          ['Card', 'Panel', 'Fieldset'],
-    '--p-border-radius-xl':          ['Dialog', 'Drawer'],
-    '--p-border-radius-2xl':         ['OverlayPanel'],
-    '--p-border-radius-full':        ['Avatar circular', 'Badge circular'],
-  };
+  /* ── Relationship maps (generados desde el catálogo MDS activo) ── */
+  function classifyRefGroup(ref, primSet) {
+    if (primSet.has(ref)) {
+      const m = ref.match(/^--([a-z]+)-/);
+      const pal = m ? m[1][0].toUpperCase() + m[1].slice(1) : 'General';
+      return 'Primitivos / ' + pal;
+    }
+    if (/^--primary/.test(ref))       return 'Semánticos / Primaria';
+    if (/^--surface/.test(ref))        return 'Semánticos / Surface';
+    if (/^--feedback-/.test(ref))      return 'Semánticos / Feedback';
+    if (/^--highlight-/.test(ref))     return 'Semánticos / Highlight';
+    if (/^--form-field-/.test(ref))    return 'Semánticos / Form field';
+    if (/^--text-/.test(ref))          return 'Semánticos / Texto';
+    if (/^--border-radius/.test(ref))  return 'Semánticos / Forma';
+    if (/^--content-/.test(ref))       return 'Semánticos / Content';
+    if (/^--navigation-/.test(ref))    return 'Semánticos / Navigation';
+    if (/^--overlay-/.test(ref))        return 'Semánticos / Overlay';
+    if (/^--list-/.test(ref))           return 'Semánticos / List';
+    if (/^--mask-/.test(ref))          return 'Semánticos / Mask';
+    if (/^--focus-ring/.test(ref))      return 'Semánticos / Focus';
+    return 'Semánticos / General';
+  }
 
-  const COMP_SOURCES = {
-    '--button-primary-background':       { label: 'var(--primary-color)',                  group: 'Semánticos / Primaria' },
-    '--button-primary-color':            { label: 'var(--surface-context-fixed-light)',    group: 'Semánticos / Surface' },
-    '--button-primary-hover-background': { label: 'var(--primary-hover-color)',            group: 'Semánticos / Primaria' },
-    '--button-primary-active-background':{ label: 'var(--primary-active-color)',           group: 'Semánticos / Primaria' },
-    '--button-primary-focus-ring-color': { label: 'var(--primary-color)',                  group: 'Semánticos / Primaria' },
-    '--paginator-nav-button-selected-background': { label: 'var(--primary-color)',         group: 'Semánticos / Primaria' },
-    '--paginator-nav-button-selected-color':      { label: 'var(--primary-contrast-color)', group: 'Semánticos / Primaria' },
-  };
+  function buildTokenMapsFromSections(sections) {
+    const primTokens = sections.find(s => s.id === 'primitivos')?.subGroups.flatMap(sg => sg.tokens) ?? [];
+    const semTokens  = sections.find(s => s.id === 'semanticos')?.subGroups.flatMap(sg => sg.tokens) ?? [];
+    const compTokens = sections.find(s => s.id === 'componentes')?.subGroups.flatMap(sg => sg.tokens) ?? [];
 
-  /* ── VV map: semantic tokens (left panel) ── */
-  const VV_SEM = [
-    { name: '--p-primary-color',               label: 'primary-color',      type: 'color', group: 'Primaria'     },
-    { name: '--highlight-background',          label: 'highlight-bg',       type: 'color', group: 'Highlight'    },
-    { name: '--highlight-color',               label: 'highlight-color',    type: 'color', group: 'Highlight'    },
-    { name: '--highlight-focus-background',    label: 'highlight-focus-bg', type: 'color', group: 'Highlight'    },
-    { name: '--p-success-color',               label: 'success',            type: 'color', group: 'Estados'      },
-    { name: '--p-danger-color',                label: 'danger',             type: 'color', group: 'Estados'      },
-    { name: '--p-warning-color',               label: 'warning',            type: 'color', group: 'Estados'      },
-    { name: '--p-info-color',                  label: 'info',               type: 'color', group: 'Estados'      },
-    { name: '--p-font-family',                 label: 'font-family',        type: 'text',  group: 'Tipografía'   },
-    { name: '--p-border-radius-md',            label: 'radius-md',          type: 'text',  group: 'Forma'        },
-    { name: '--button-primary-color',          label: 'btn-primary-color',  type: 'color', group: 'Auto-contraste' },
-    { name: '--button-primary-focus-ring-color', label: 'btn-focus-ring',   type: 'color', group: 'Auto-contraste' },
-  ];
+    const valueMap = new Map();
+    const primSet  = new Set();
+    const semSet   = new Set();
 
-  /* ── VV map: component usages (right panel) ── */
-  const VV_COMP = [
-    { id: 'vvc-btn-bg',     label: 'button · primary bg',     semRef: '--p-primary-color'               },
-    { id: 'vvc-btn-text',   label: 'button · primary text',   semRef: '--button-primary-color'          },
-    { id: 'vvc-btn-ring',   label: 'button · focus ring',     semRef: '--button-primary-focus-ring-color'},
-    { id: 'vvc-pill-bg',    label: 'tab-pill · active bg',    semRef: '--p-primary-color'               },
-    { id: 'vvc-pill-text',  label: 'tab-pill · active text',  semRef: '--button-primary-color'          },
-    { id: 'vvc-chk-bg',     label: 'checkbox · selected bg',  semRef: '--highlight-background'          },
-    { id: 'vvc-chk-text',   label: 'checkbox · color',        semRef: '--highlight-color'               },
-    { id: 'vvc-radio-bg',   label: 'radio · selected bg',     semRef: '--highlight-background'          },
-    { id: 'vvc-radio-focus',label: 'radio · focus bg',        semRef: '--highlight-focus-background'    },
-    { id: 'vvc-tag-ok',     label: 'tag · success',           semRef: '--p-success-color'               },
-    { id: 'vvc-tag-err',    label: 'tag · danger',            semRef: '--p-danger-color'                },
-    { id: 'vvc-tag-warn',   label: 'tag · warning',           semRef: '--p-warning-color'               },
-    { id: 'vvc-toast-ok',   label: 'toast · success',         semRef: '--p-success-color'               },
-    { id: 'vvc-toast-err',  label: 'toast · error',           semRef: '--p-danger-color'                },
-    { id: 'vvc-msg-bg',     label: 'message · success bg',    semRef: '--message-success-background'    },
-    { id: 'vvc-msg-border', label: 'message · info borde',    semRef: '--message-info-border-color'     },
-    { id: 'vvc-all-font',   label: 'todos · font-family',     semRef: '--p-font-family'                 },
-    { id: 'vvc-btn-radius', label: 'button · border-radius',  semRef: '--p-border-radius-md'            },
-    { id: 'vvc-inp-radius', label: 'input · border-radius',   semRef: '--p-border-radius-md'            },
-  ];
+    primTokens.forEach(t => { valueMap.set(t.name, t.value); primSet.add(t.name); });
+    semTokens.forEach(t => { valueMap.set(t.name, t.value); semSet.add(t.name); });
+    compTokens.forEach(t => valueMap.set(t.name, t.value));
+
+    const compSources = {};
+    const semAffects  = {};
+
+    compTokens.forEach(t => {
+      const ref = resolveVarChain(t.value, valueMap, semSet)
+        || resolveVarChain(t.value, valueMap, primSet);
+      if (!ref) return;
+      compSources[t.name] = { label: `var(${ref})`, group: classifyRefGroup(ref, primSet) };
+      if (semSet.has(ref)) {
+        if (!semAffects[ref]) semAffects[ref] = [];
+        const lbl = compLabel(t.name);
+        if (!semAffects[ref].includes(lbl)) semAffects[ref].push(lbl);
+      }
+    });
+
+    Object.keys(semAffects).forEach(k => {
+      semAffects[k].sort((a, b) => a.localeCompare(b, 'es'));
+    });
+
+    return { compSources, semAffects };
+  }
 
   function showTokensView() {
     tvIsActive = true;
@@ -1749,7 +1890,7 @@
      LIST RENDERER
      ════════════════════════════════════════════════════════════ */
 
-  function renderTokenRow(t, sec, hl, resolved) {
+  function renderTokenRow(t, sec, hl, resolved, tokenMaps) {
     let sw = '', val = '';
   /* Prefer the effective value in current theme context (fallback to raw source value). */
   const r = resolved ? resolved[t.name] : null;
@@ -1772,10 +1913,11 @@
     }
 
     let meta = '';
-    if (sec.id === 'semanticos' && SEM_AFFECTS[t.name]) {
-      meta = `<div class="tva-meta tva-meta-sem"><i class="pi pi-arrow-right"></i>${SEM_AFFECTS[t.name].join(' · ')}</div>`;
-    } else if (sec.id === 'componentes' && COMP_SOURCES[t.name]) {
-      const src = COMP_SOURCES[t.name];
+    const affects = tokenMaps?.semAffects?.[t.name];
+    const src     = tokenMaps?.compSources?.[t.name];
+    if (sec.id === 'semanticos' && affects?.length) {
+      meta = `<div class="tva-meta tva-meta-sem"><i class="pi pi-arrow-right"></i>${affects.join(' · ')}</div>`;
+    } else if (sec.id === 'componentes' && src) {
       meta = `<div class="tva-meta tva-meta-comp"><i class="pi pi-link"></i><code>${src.label}</code><em>${src.group}</em></div>`;
     }
 
@@ -1797,7 +1939,8 @@
       return s.replace(re, '<mark>$1</mark>');
     };
 
-    const sections = buildSections();
+    const sections  = buildSections();
+    const tokenMaps = buildTokenMapsFromSections(sections);
 
     tvContent.innerHTML = sections.map(sec => {
       /* Filter by query */
@@ -1819,7 +1962,7 @@
         /* Resolve every token in the right theme context so list values reflect active overrides. */
         const themeCtx = sg.theme || (isDark ? 'dark' : 'light');
         const resolved = batchResolve(sg.tokens, themeCtx);
-        const rowsHtml = sg.tokens.map(t => renderTokenRow(t, sec, hl, resolved)).join('');
+        const rowsHtml = sg.tokens.map(t => renderTokenRow(t, sec, hl, resolved, tokenMaps)).join('');
 
         /* Semantic sub-groups (sg.mode set) skip the inner band — the mode
            label is already in the section title ("Semánticos - Light / Dark"). */

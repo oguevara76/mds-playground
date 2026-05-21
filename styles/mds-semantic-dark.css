@@ -1,8 +1,8 @@
-/* Semantics - Theme: ctr--tol--dark */
+/* Semantics - Theme: ctr--its--dark */
 /* Version: 1.0.0 */
 /* Description: Base dark theme. */
 /* Author: UX/UI Design System Team */
-/* Last Updated: 2026-05-19 */
+/* Last Updated: 2026-05-21 */
 
 @layer mds-core;
 
@@ -80,15 +80,20 @@ html[data-theme="dark"] {
   --form-field-invalid-placeholder-color: var(--red-400);
   --form-field-lg-font-size: var(--dimension-scale-x16);
   --form-field-lg-gap-space: var(--dimension-scale-x10);
-  --form-field-lg-padding-x: var(--dimension-scale-x12);
+  --form-field-lg-padding-x: var(--dimension-scale-x14);
   --form-field-lg-padding-y: var(--dimension-scale-x12);
-  --form-field-padding-x: var(--dimension-scale-x12);
+  --form-field-lg-position-x: var(--dimension-scale-x16);
+  --form-field-padding-x: var(--dimension-scale-x10);
   --form-field-padding-y: var(--dimension-scale-x8);
   --form-field-placeholder-color: var(--surface-400);
+  --form-field-position-x: var(--dimension-scale-x14);
   --form-field-sm-font-size: var(--dimension-scale-x12);
   --form-field-sm-gap-scale: var(--dimension-scale-x6);
-  --form-field-sm-padding-x: var(--dimension-scale-x8);
+  --form-field-sm-padding-x: var(--dimension-scale-x10);
   --form-field-sm-padding-y: var(--dimension-scale-x4);
+  --form-field-sm-position-x: var(--dimension-scale-x10);
+  --form-field-sm-position-y: var(--dimension-scale-x4);
+  --form-field-xs-font-size: var(--dimension-scale-x10);
   --highlight-background: var(--primary-color);
   --highlight-color: var(--neutral-white);
   --highlight-focus-background: rgba(75, 168, 188, 0.24);

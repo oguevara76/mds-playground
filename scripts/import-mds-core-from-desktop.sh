@@ -63,6 +63,6 @@ transform "$DARK_SRC"  > "$ROOT/styles/mds-semantic-dark.css"
 
 python3 "$ROOT/scripts/regen-mds-vars-data.py"
 
-echo "Importado en $ROOT/styles/ (mds-*.css) y regenerado js/mds-vars-data.js."
+echo "Importado en $ROOT/styles/ (mds-*.css) y regenerado js/mds-vars-data.js (listado + mapa de tokens)."
 echo "  light: $(basename "$LIGHT_SRC")"
 echo "  dark:  $(basename "$DARK_SRC")"

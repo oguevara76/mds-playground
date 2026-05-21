@@ -1305,9 +1305,80 @@
       </div>
 
       <div class="tab-panel" id="tab-overlay-catalog">
-        <section class="preview-section">
-          <h3 class="section-title">Overlay components</h3>
-        </section>
+        <div id="tooltip-catalog-live" aria-hidden="true"></div>
+        <div class="cards-grid form-catalog-stack">
+          <div class="catalog-preview tooltip-variant-block" id="tooltip-catalog-preview">
+            <h3 class="section-title component-title-primary">Tooltip</h3>
+
+            <div class="btn-section">
+              <p class="btn-section-title">Interacción</p>
+              <div class="tooltip-interaction-row">
+                <div class="catalog-input-interactive tooltip-interaction-scope">
+                  <div class="p-field">
+                    <div class="p-label-row">
+                      <label class="p-label" for="tooltip-it-live">Nombre del proyecto</label>
+                      <button
+                        type="button"
+                        class="tooltip-help-trigger js-tooltip-catalog-trigger"
+                        id="tooltip-help-trigger"
+                        aria-label="Ayuda sobre nombre del proyecto"
+                        aria-expanded="false"
+                        data-tooltip-text="Usa un nombre corto y único. Solo letras, números y guiones."
+                        data-tooltip-position="top"
+                      >
+                        <i class="pi pi-question-circle" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <input id="tooltip-it-live" type="text" class="p-inputtext" placeholder="Mi proyecto" />
+                    <small class="p-hint">Identificador visible en el listado.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-section" style="margin-top:20px">
+              <p class="btn-section-title">Posiciones</p>
+              <div class="tooltip-catalog-positions-row is-static-preview" aria-label="Tooltip en las cuatro posiciones">
+                <div class="tooltip-catalog-position-item">
+                  <span class="tooltip-catalog-position-caption">Top</span>
+                  <div class="tooltip-catalog-position-frame tooltip-catalog-position-frame--top">
+                    <div class="p-tooltip p-tooltip-top p-component tooltip-catalog-static-demo" role="tooltip">
+                      <div class="p-tooltip-arrow" data-pc-section="arrow"></div>
+                      <div class="p-tooltip-text" data-pc-section="text">Texto de ayuda arriba del objetivo.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tooltip-catalog-position-item">
+                  <span class="tooltip-catalog-position-caption">Right</span>
+                  <div class="tooltip-catalog-position-frame tooltip-catalog-position-frame--right">
+                    <div class="p-tooltip p-tooltip-right p-component tooltip-catalog-static-demo" role="tooltip">
+                      <div class="p-tooltip-arrow" data-pc-section="arrow"></div>
+                      <div class="p-tooltip-text" data-pc-section="text">Texto de ayuda a la derecha.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tooltip-catalog-position-item">
+                  <span class="tooltip-catalog-position-caption">Bottom</span>
+                  <div class="tooltip-catalog-position-frame tooltip-catalog-position-frame--bottom">
+                    <div class="p-tooltip p-tooltip-bottom p-component tooltip-catalog-static-demo" role="tooltip">
+                      <div class="p-tooltip-arrow" data-pc-section="arrow"></div>
+                      <div class="p-tooltip-text" data-pc-section="text">Texto de ayuda debajo del objetivo.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tooltip-catalog-position-item">
+                  <span class="tooltip-catalog-position-caption">Left</span>
+                  <div class="tooltip-catalog-position-frame tooltip-catalog-position-frame--left">
+                    <div class="p-tooltip p-tooltip-left p-component tooltip-catalog-static-demo" role="tooltip">
+                      <div class="p-tooltip-arrow" data-pc-section="arrow"></div>
+                      <div class="p-tooltip-text" data-pc-section="text">Texto de ayuda a la izquierda.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="tab-panel" id="tab-file-catalog">
@@ -1338,7 +1409,7 @@
             <div class="btn-section">
               <p class="btn-section-title">Interacción</p>
               <div class="btn-row">
-                <button type="button" class="p-button p-button-primary p-button-sm js-toast-catalog-push" data-toast-severity="success"><i class="pi pi-check"></i> Success</button>
+                <button type="button" class="p-button p-button-success p-button-sm js-toast-catalog-push" data-toast-severity="success"><i class="pi pi-check"></i> Success</button>
                 <button type="button" class="p-button p-button-info p-button-sm js-toast-catalog-push" data-toast-severity="info"><i class="pi pi-info-circle"></i> Info</button>
                 <button type="button" class="p-button p-button-warning p-button-sm js-toast-catalog-push" data-toast-severity="warn"><i class="pi pi-exclamation-triangle"></i> Warn</button>
                 <button type="button" class="p-button p-button-danger p-button-sm js-toast-catalog-push" data-toast-severity="error"><i class="pi pi-times-circle"></i> Error</button>
@@ -1477,9 +1548,43 @@
       </div>
 
       <div class="tab-panel" id="tab-misc-catalog">
-        <section class="preview-section">
-          <h3 class="section-title">Misc components</h3>
-        </section>
+        <div class="cards-grid form-catalog-stack">
+          <div class="catalog-preview" id="tag-catalog-preview">
+            <h3 class="section-title component-title-primary">Tag</h3>
+            <div class="btn-section" style="margin-top:4px">
+              <p class="btn-section-title" style="margin-top:0;margin-bottom:6px;font-size:12px;letter-spacing:0.02em">Severidad</p>
+              <div class="tag-catalog-row" aria-label="Tag, todas las severidades">
+                <span class="p-tag p-tag-primary">Primary</span>
+                <span class="p-tag p-tag-secondary">Secondary</span>
+                <span class="p-tag p-tag-success">Success</span>
+                <span class="p-tag p-tag-info">Info</span>
+                <span class="p-tag p-tag-warning">Warn</span>
+                <span class="p-tag p-tag-danger">Danger</span>
+                <span class="p-tag p-tag-contrast">Contrast</span>
+              </div>
+              <p class="btn-section-title" style="margin-top:32px;margin-bottom:6px;font-size:12px;letter-spacing:0.02em">Rounded</p>
+              <div class="tag-catalog-row" aria-label="Tag rounded, todas las severidades">
+                <span class="p-tag p-tag-rounded p-tag-primary">Primary</span>
+                <span class="p-tag p-tag-rounded p-tag-secondary">Secondary</span>
+                <span class="p-tag p-tag-rounded p-tag-success">Success</span>
+                <span class="p-tag p-tag-rounded p-tag-info">Info</span>
+                <span class="p-tag p-tag-rounded p-tag-warning">Warn</span>
+                <span class="p-tag p-tag-rounded p-tag-danger">Danger</span>
+                <span class="p-tag p-tag-rounded p-tag-contrast">Contrast</span>
+              </div>
+              <p class="btn-section-title" style="margin-top:32px;margin-bottom:6px;font-size:12px;letter-spacing:0.02em">Icono</p>
+              <div class="tag-catalog-row" aria-label="Tag con icono, todas las severidades">
+                <span class="p-tag p-tag-primary"><i class="p-tag-icon pi pi-bookmark" aria-hidden="true"></i> Primary</span>
+                <span class="p-tag p-tag-secondary"><i class="p-tag-icon pi pi-cog" aria-hidden="true"></i> Secondary</span>
+                <span class="p-tag p-tag-success"><i class="p-tag-icon pi pi-check" aria-hidden="true"></i> Success</span>
+                <span class="p-tag p-tag-info"><i class="p-tag-icon pi pi-info-circle" aria-hidden="true"></i> Info</span>
+                <span class="p-tag p-tag-warning"><i class="p-tag-icon pi pi-exclamation-triangle" aria-hidden="true"></i> Warn</span>
+                <span class="p-tag p-tag-danger"><i class="p-tag-icon pi pi-times-circle" aria-hidden="true"></i> Danger</span>
+                <span class="p-tag p-tag-contrast"><i class="p-tag-icon pi pi-bolt" aria-hidden="true"></i> Contrast</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="tab-panel" id="tab-utilities-catalog">
@@ -2449,7 +2554,7 @@
   </div>
 
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Catálogo de variables (sincronizado con los CSS del proyecto) -->
+  <!-- Catálogo MDS (listado + mapa de tokens en la vista Tokens) -->
   <script src="js/mds-vars-data.js"></script>
   <!-- Normaliza CSS de exportación ajena: variables → tema light/dark del playground -->
   <script src="js/css-import-normalize.js"></script>

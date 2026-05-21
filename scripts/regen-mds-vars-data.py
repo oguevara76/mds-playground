@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Regenera js/mds-vars-data.js desde styles/mds-primitives.css, mds-semantic-*.css y mds-components.css."""
+"""Regenera js/mds-vars-data.js desde styles/mds-primitives.css, mds-semantic-*.css y mds-components.css.
+
+Alimenta la vista Tokens (listado + mapa) vía MDS_VARS en js/app.js.
+"""
 import re
 from pathlib import Path
 

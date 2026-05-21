@@ -20,7 +20,11 @@
         "--amber-950": "rgba( 27,  21,   4, 1)"
       },
       "components": {
-        "--button-primary-focus-ring-color": "rgba(85, 68, 7, 1)"
+        "--badge-primary-background": "var(--primary-color)",
+        "--button-outlined-plain-color": "var(--primary-700)",
+        "--button-primary-focus-ring-color": "rgba(85, 68, 7, 1)",
+        "--stepper-step-number-active-background": "var(--primary-color)",
+        "--tag-primary-background": "var(--primary-color)"
       },
       "semantic-light": {
         "--highlight-background": "rgba(120, 96, 8, 0.12)",
@@ -66,8 +70,8 @@
         "--primary-color": "var(--amber-400)",
         "--primary-contrast-color": "var(--surface-900, #09090b)",
         "--primary-hover-color": "var(--amber-500)",
-        "--surface-context-fixed-primary": "var(--amber-600)",
-        "--surface-context-primary-medium": "var(--amber-600)",
+        "--surface-context-fixed-primary": "var(--primary-color)",
+        "--surface-context-primary-medium": "var(--primary-color)",
         "--surface-context-primary-soft": "var(--amber-900)",
         "--surface-context-primary-subtle": "var(--amber-800)"
       }
@@ -95,7 +99,11 @@
         "--blue-950": "rgba( 12,  21,  38, 1)"
       },
       "components": {
-        "--button-primary-focus-ring-color": "rgba(44, 73, 135, 1)"
+        "--badge-primary-background": "var(--primary-color)",
+        "--button-outlined-plain-color": "var(--primary-700)",
+        "--button-primary-focus-ring-color": "rgba(44, 73, 135, 1)",
+        "--stepper-step-number-active-background": "var(--primary-color)",
+        "--tag-primary-background": "var(--primary-color)"
       },
       "semantic-light": {
         "--highlight-background": "rgba( 59,  97, 181, 0.12)",
@@ -141,8 +149,8 @@
         "--primary-color": "var(--blue-400)",
         "--primary-contrast-color": "var(--surface-900, #09090b)",
         "--primary-hover-color": "var(--blue-500)",
-        "--surface-context-fixed-primary": "var(--blue-600)",
-        "--surface-context-primary-medium": "var(--blue-600)",
+        "--surface-context-fixed-primary": "var(--primary-color)",
+        "--surface-context-primary-medium": "var(--primary-color)",
         "--surface-context-primary-soft": "var(--blue-900)",
         "--surface-context-primary-subtle": "var(--blue-800)"
       }
@@ -170,10 +178,14 @@
         "--olive-950": "rgba( 27,  28,  13, 1)"
       },
       "components": {
+        "--badge-primary-background": "var(--primary-color)",
+        "--button-outlined-plain-color": "var(--primary-700)",
         "--button-primary-active-color": "rgba(30, 32, 12, 1)",
         "--button-primary-color": "rgba(30, 32, 12, 1)",
         "--button-primary-focus-ring-color": "rgba(67, 70, 32, 1)",
-        "--button-primary-hover-color": "rgba(30, 32, 12, 1)"
+        "--button-primary-hover-color": "rgba(30, 32, 12, 1)",
+        "--stepper-step-number-active-background": "var(--primary-color)",
+        "--tag-primary-background": "var(--primary-color)"
       },
       "semantic-light": {
         "--highlight-background": "rgba(125, 132, 60, 0.12)",
@@ -219,8 +231,8 @@
         "--primary-color": "var(--olive-400)",
         "--primary-contrast-color": "var(--surface-900, #09090b)",
         "--primary-hover-color": "var(--olive-500)",
-        "--surface-context-fixed-primary": "var(--olive-600)",
-        "--surface-context-primary-medium": "var(--olive-600)",
+        "--surface-context-fixed-primary": "var(--primary-color)",
+        "--surface-context-primary-medium": "var(--primary-color)",
         "--surface-context-primary-soft": "var(--olive-900)",
         "--surface-context-primary-subtle": "var(--olive-800)"
       }
@@ -248,7 +260,11 @@
         "--purple-950": "rgba( 25,  11,  39, 1)"
       },
       "components": {
-        "--button-primary-focus-ring-color": "rgba(95, 44, 150, 1)"
+        "--badge-primary-background": "var(--primary-color)",
+        "--button-outlined-plain-color": "var(--primary-700)",
+        "--button-primary-focus-ring-color": "rgba(95, 44, 150, 1)",
+        "--stepper-step-number-active-background": "var(--primary-color)",
+        "--tag-primary-background": "var(--primary-color)"
       },
       "semantic-light": {
         "--highlight-background": "rgba(130,  64, 199, 0.12)",
@@ -294,8 +310,8 @@
         "--primary-color": "var(--purple-400)",
         "--primary-contrast-color": "var(--surface-900, #09090b)",
         "--primary-hover-color": "var(--purple-500)",
-        "--surface-context-fixed-primary": "var(--purple-600)",
-        "--surface-context-primary-medium": "var(--purple-600)",
+        "--surface-context-fixed-primary": "var(--primary-color)",
+        "--surface-context-primary-medium": "var(--primary-color)",
         "--surface-context-primary-soft": "var(--purple-900)",
         "--surface-context-primary-subtle": "var(--purple-800)"
       }
@@ -323,7 +339,11 @@
         "--rose-950": "rgba( 37,  14,  24, 1)"
       },
       "components": {
-        "--button-primary-focus-ring-color": "rgba(132, 51, 86, 1)"
+        "--badge-primary-background": "var(--primary-color)",
+        "--button-outlined-plain-color": "var(--primary-700)",
+        "--button-primary-focus-ring-color": "rgba(132, 51, 86, 1)",
+        "--stepper-step-number-active-background": "var(--primary-color)",
+        "--tag-primary-background": "var(--primary-color)"
       },
       "semantic-light": {
         "--highlight-background": "rgba(176, 68, 114, 0.12)",
@@ -369,8 +389,8 @@
         "--primary-color": "var(--rose-400)",
         "--primary-contrast-color": "var(--surface-900, #09090b)",
         "--primary-hover-color": "var(--rose-500)",
-        "--surface-context-fixed-primary": "var(--rose-600)",
-        "--surface-context-primary-medium": "var(--rose-600)",
+        "--surface-context-fixed-primary": "var(--primary-color)",
+        "--surface-context-primary-medium": "var(--primary-color)",
         "--surface-context-primary-soft": "var(--rose-900)",
         "--surface-context-primary-subtle": "var(--rose-800)"
       }
