@@ -53,7 +53,15 @@ Desde el sidebar de http://localhost:3000, arrastra (mínimo **primitivos** + **
 - `ejemplos/azul/semantic-dark.css` (opcional si ya tienes light)
 - `ejemplos/azul/components.css` (opcional)
 
-Los botones PrimeNG deben actualizar colores al instante (sincroniza el preset PrimeNG vía `updatePrimaryPalette` tras cada upload).
+Los botones PrimeNG deben actualizar colores al instante. Cadena de estilos (último gana en `<p-button>`):
+
+1. `styles/mds-components.css` + `user-components` (upload) → `--button-*`
+2. `styles/primeng-tokens.css` → puente `--p-button-*` ← `--button-*`
+3. Tema Aura PrimeNG (solo paleta base)
+4. `mds-prime-runtime-bridge` → reaplica `--p-button-*` desde MDS
+5. **`mds-button-overrides`** → fuerza filled + outlined + text con `var(--button-*)` y `!important`
+
+Tras cada upload se llama `resyncThemeRuntime()`; el inspector muestra `btn-fill-bg`, `btn-text-sec`, `btn-out-danger` para validar.
 
 Si no ves cambio: sube **primitivos + semántica light** (mínimo), recarga la página y vuelve a subir; comprueba que la paleta del sidebar muestre tonos oliva.
 

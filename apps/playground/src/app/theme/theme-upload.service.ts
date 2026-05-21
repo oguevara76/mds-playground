@@ -9,7 +9,6 @@ import {
   sanitizeUploadedCss,
 } from './css-import-normalize';
 import { ThemeService, type MdsThemeMode } from './theme.service';
-import { MDS_BUTTON_OVERRIDE_STYLE_ID } from './button-mds-overrides';
 import { MDS_OVERLAY_OVERRIDE_STYLE_ID } from './overlay-mds-overrides';
 import { MDS_RUNTIME_BRIDGE_STYLE_ID, syncPrimeUixPalettesFromMds } from './theme-prime-sync';
 import type { LoadedSlotFile, LoadedSlotsMap } from './theme.types';
@@ -40,7 +39,6 @@ const POST_PRIME_STYLE_ORDER: string[] = [
   ...USER_STYLE_ORDER,
   'auto-contrast',
   MDS_RUNTIME_BRIDGE_STYLE_ID,
-  MDS_BUTTON_OVERRIDE_STYLE_ID,
   MDS_OVERLAY_OVERRIDE_STYLE_ID,
 ];
 
@@ -49,6 +47,9 @@ const WATCH_TOKENS = [
   { name: '--primary-color', label: 'primary' },
   { name: '--primary-50', label: 'primary-50' },
   { name: '--primary-900', label: 'primary-900' },
+  { name: '--button-primary-background', label: 'btn-fill-bg' },
+  { name: '--button-text-secondary-color', label: 'btn-text-sec' },
+  { name: '--button-outlined-danger-color', label: 'btn-out-danger' },
   { name: '--p-font-family', label: 'font' },
 ] as const;
 
@@ -148,6 +149,7 @@ export class ThemeUploadService {
 
     this.loadedSlots.set(merged);
     this.ensureUserStylesAfterPrimeTheme();
+    this.resyncThemeRuntime();
     this.validateSlots();
     this.theme.syncToggleFromSlots(merged);
     const labels = Object.keys(bySlot)
@@ -325,6 +327,8 @@ export class ThemeUploadService {
         --button-primary-hover-color: ${text};
         --button-primary-active-color: ${text};
         --p-button-primary-color: ${text};
+        --p-button-primary-hover-color: ${text};
+        --p-button-primary-active-color: ${text};
         --button-primary-focus-ring-color: ${ring};
       }`;
     };

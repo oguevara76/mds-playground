@@ -31,7 +31,8 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
 }
 
 /* Size — label arriba, segmented control abajo */
-.p-popover .button-config-size-field {
+.p-popover .button-config-size-field,
+.form-config-aside-inline .button-config-size-field {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -39,14 +40,25 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
   width: 100%;
 }
 
-.p-popover .button-config-size-field > .input-config-label {
+.p-popover .button-config-size-field > .input-config-label,
+.form-config-aside-inline .button-config-size-field > .input-config-label {
   display: block;
   width: 100%;
 }
 
-.p-popover .button-config-size-toggle-wrap {
+.p-popover .button-config-size-toggle-wrap,
+.p-popover .button-config-select-wrap {
   width: 100%;
   min-width: 0;
+}
+
+.form-config-aside-inline .button-config-size-toggle-wrap {
+  width: auto;
+  min-width: 0;
+}
+
+.p-popover .button-config-select-wrap .p-select {
+  width: 100%;
 }
 
 .p-popover .button-config-size-toggle-wrap .p-selectbutton {
@@ -83,27 +95,75 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
   border-radius: inherit !important;
 }
 
-.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton:not(.p-togglebutton-checked):hover {
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton {
+  display: flex !important;
+  width: auto;
+  max-width: max-content;
+  gap: 2px;
+  padding: 3px;
+  background: var(--togglebutton-background, var(--surface-context-subtle, var(--p-surface-100))) !important;
+  border: 1px solid var(--form-field-border-color, var(--p-input-border-color)) !important;
+  border-radius: var(--border-radius-sm, 4px) !important;
+}
+
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton {
+  flex: 0 1 auto;
+  min-width: 2.125rem;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--togglebutton-color, var(--p-surface-500)) !important;
+  font-weight: var(--togglebutton-font-weight, 500);
+  font-size: 11px;
+  line-height: 1.1;
+  border-radius: calc(var(--border-radius-sm, 4px) - 1px) !important;
+}
+
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton .p-togglebutton-content {
+  width: auto;
+  justify-content: center;
+  padding: 4px 7px !important;
+  background: transparent !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  border-radius: inherit !important;
+}
+
+.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton:not(.p-togglebutton-checked):hover,
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton:not(.p-togglebutton-checked):hover {
   background: transparent !important;
   color: var(--togglebutton-hover-color, var(--p-content-color)) !important;
 }
 
-.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked {
+.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked,
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked {
   background: transparent !important;
   border: none !important;
   color: var(--togglebutton-checked-color, var(--p-content-color)) !important;
 }
 
-.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked .p-togglebutton-content {
+.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked .p-togglebutton-content,
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked .p-togglebutton-content {
   background: var(--togglebutton-content-checked-background, var(--primary-color)) !important;
   color: var(--primary-contrast-color, var(--p-primary-color-text, #fff)) !important;
   box-shadow: var(--togglebutton-content-shadow, 0 1px 2px rgba(0, 0, 0, 0.08)) !important;
 }
 
+.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton {
+  min-width: 2.125rem;
+}
+
 .p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton .p-togglebutton-label {
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton .p-togglebutton-label {
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 /* ToggleSwitch en panel de configuración */

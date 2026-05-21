@@ -1,71 +1,127 @@
 <div class="cards-grid form-catalog-stack">
   @for (block of blocks; track block.kind) {
     <div
-      class="catalog-preview"
+      class="catalog-preview form-showcase"
       [class.inputtext-showcase]="isInputBlock(block)"
     >
-      <section class="preview-section preview-section--flush">
-        <div [class.input-variant-block]="isInputBlock(block)">
-          <h3
-            class="section-title component-title-primary"
-            [class.input-variant-title]="isInputBlock(block)"
-          >
-            {{ block.title }}
-          </h3>
+      <section class="preview-section preview-section--flush catalog-block-section">
+        <header class="catalog-block-head">
+          <h3 class="section-title component-title-primary">{{ block.title }}</h3>
+        </header>
 
-        <!-- Interaction -->
-        <div class="btn-section">
-          <p class="btn-section-title">Interacción</p>
+        <div class="catalog-block-body">
+          <div class="btn-section catalog-interaction-section">
+            <p class="btn-section-title">Interaction</p>
 
           @switch (block.kind) {
             @case ('radio') {
-              <div class="form-choice-row" role="radiogroup" aria-label="Método de pago">
-                @for (opt of radioOptions; track opt.value) {
-                  <div class="form-choice-item">
-                    <p-radiobutton
-                      name="form-catalog-radio"
-                      [value]="opt.value"
-                      [ngModel]="radioValue()"
-                      (ngModelChange)="radioValue.set($event)"
-                      [inputId]="'radio-ix-' + opt.value"
-                    />
-                    <label [for]="'radio-ix-' + opt.value">{{ opt.label }}</label>
+              <div class="input-interaction-row catalog-interaction-row--center">
+                <div class="catalog-showcase-interactive">
+                  <div
+                    class="form-choice-row"
+                    role="radiogroup"
+                    aria-label="Método de pago"
+                    [ngClass]="choiceSizeClass(choiceIx('radio').size)"
+                  >
+                    @for (opt of radioOptions; track opt.value) {
+                      <div class="form-choice-item">
+                        <p-radiobutton
+                          name="form-catalog-radio"
+                          [value]="opt.value"
+                          [ngModel]="radioValue()"
+                          (ngModelChange)="radioValue.set($event)"
+                          [size]="choicePrimeSize(choiceIx('radio').size)"
+                          [inputId]="'radio-ix-' + opt.value"
+                        />
+                        <label [for]="'radio-ix-' + opt.value">{{ opt.label }}</label>
+                      </div>
+                    }
                   </div>
-                }
+                </div>
+                <aside class="button-config-aside form-config-aside-inline">
+                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <div class="button-config-size-field">
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="choiceIx('radio').size"
+                        (ngModelChange)="patchChoiceIx('radio', { size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size"
+                      />
+                    </div>
+                  </div>
+                </aside>
               </div>
             }
             @case ('checkbox') {
-              <div class="form-choice-row" role="group" aria-label="Canales de notificación">
-                @for (opt of checkboxOptions; track opt.key) {
-                  <div class="form-choice-item">
-                    <p-checkbox
-                      [binary]="true"
-                      [ngModel]="checkboxChecked(opt.key)"
-                      (ngModelChange)="patchCheckbox(opt.key, $event)"
-                      [inputId]="'cb-ix-' + opt.key"
-                    />
-                    <label [for]="'cb-ix-' + opt.key">{{ opt.label }}</label>
+              <div class="input-interaction-row catalog-interaction-row--center">
+                <div class="catalog-showcase-interactive">
+                  <div
+                    class="form-choice-row"
+                    role="group"
+                    aria-label="Canales de notificación"
+                    [ngClass]="choiceSizeClass(choiceIx('checkbox').size)"
+                  >
+                    @for (opt of checkboxOptions; track opt.key) {
+                      <div class="form-choice-item">
+                        <p-checkbox
+                          [binary]="true"
+                          [ngModel]="checkboxChecked(opt.key)"
+                          (ngModelChange)="patchCheckbox(opt.key, $event)"
+                          [size]="choicePrimeSize(choiceIx('checkbox').size)"
+                          [inputId]="'cb-ix-' + opt.key"
+                        />
+                        <label [for]="'cb-ix-' + opt.key">{{ opt.label }}</label>
+                      </div>
+                    }
                   </div>
-                }
+                </div>
+                <aside class="button-config-aside form-config-aside-inline">
+                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <div class="button-config-size-field">
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="choiceIx('checkbox').size"
+                        (ngModelChange)="patchChoiceIx('checkbox', { size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size"
+                      />
+                    </div>
+                  </div>
+                </aside>
               </div>
             }
             @case ('toggleswitch') {
-              <div class="form-choice-row" role="group" aria-label="ToggleSwitch interactivo">
+              <div class="input-interaction-row catalog-interaction-row--center">
+                <div class="catalog-showcase-interactive">
+                  <div class="form-choice-row" role="group" aria-label="ToggleSwitch interactivo">
                 <div class="form-choice-item">
                   <p-toggleswitch
+                    inputId="ts-ix-off"
                     [ngModel]="toggleOff()"
                     (ngModelChange)="toggleOff.set($event)"
-                    ariaLabel="Por defecto"
                   />
-                  <span>Por defecto</span>
+                  <label for="ts-ix-off">Por defecto</label>
                 </div>
                 <div class="form-choice-item">
                   <p-toggleswitch
+                    inputId="ts-ix-on"
                     [ngModel]="toggleOn()"
                     (ngModelChange)="toggleOn.set($event)"
-                    ariaLabel="Activado"
                   />
-                  <span>Activado</span>
+                  <label for="ts-ix-on">Activado</label>
+                </div>
+                  </div>
                 </div>
               </div>
             }
@@ -73,17 +129,17 @@
               @if (isInputBlock(block)) {
                 <div class="input-interaction-row">
                   <div
-                    class="catalog-input-interactive input-interaction-scope"
+                    class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope"
                     [ngClass]="interactionScopeClass(asInputKind(block.kind))"
                   >
                     @if (block.kind === 'input-default') {
                       <div class="p-field form-input-interaction-field">
                         <label class="p-label" [for]="'it-live-' + block.kind">Label</label>
-                        @if (ix(asInputKind(block.kind)).iconLeft || ix(asInputKind(block.kind)).iconRight) {
-                          <p-iconfield
-                            [iconPosition]="ix(asInputKind(block.kind)).iconLeft ? 'left' : 'right'"
-                          >
-                            <p-inputicon class="pi pi-search" />
+                        @if (inputShowIcon(asInputKind(block.kind))) {
+                          <p-iconfield [iconPosition]="inputIconPosition(asInputKind(block.kind))">
+                            @if (inputIconPosition(asInputKind(block.kind)) === 'left') {
+                              <p-inputicon class="pi pi-search" />
+                            }
                             <input
                               pInputText
                               [id]="'it-live-' + block.kind"
@@ -94,6 +150,9 @@
                               [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
                               [fluid]="true"
                             />
+                            @if (inputIconPosition(asInputKind(block.kind)) === 'right') {
+                              <p-inputicon class="pi pi-search" />
+                            }
                           </p-iconfield>
                         } @else {
                           <input
@@ -112,11 +171,11 @@
                     } @else {
                       <div class="form-input-interaction-field">
                         <p-floatlabel [variant]="floatVariant(block)!">
-                          @if (ix(asInputKind(block.kind)).iconLeft || ix(asInputKind(block.kind)).iconRight) {
-                            <p-iconfield
-                              [iconPosition]="ix(asInputKind(block.kind)).iconLeft ? 'left' : 'right'"
-                            >
-                              <p-inputicon class="pi pi-search" />
+                          @if (inputShowIcon(asInputKind(block.kind))) {
+                            <p-iconfield [iconPosition]="inputIconPosition(asInputKind(block.kind))">
+                              @if (inputIconPosition(asInputKind(block.kind)) === 'left') {
+                                <p-inputicon class="pi pi-search" />
+                              }
                               <input
                                 pInputText
                                 [id]="'it-live-' + block.kind"
@@ -127,6 +186,9 @@
                                 [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
                                 [fluid]="true"
                               />
+                              @if (inputIconPosition(asInputKind(block.kind)) === 'right') {
+                                <p-inputicon class="pi pi-search" />
+                              }
                             </p-iconfield>
                           } @else {
                             <input
@@ -146,13 +208,13 @@
                       </div>
                     }
                   </div>
-                  <aside class="form-config-aside">
-                    <p class="form-config-aside-title">CONFIGURAR</p>
-                    <p class="form-config-aside-hint">
+                  <aside class="button-config-aside">
+                    <p class="button-config-aside-title">CONFIGURAR</p>
+                    <p class="button-config-aside-hint">
                       Puedes
                       <button
                         type="button"
-                        class="form-config-link"
+                        class="button-config-link"
                         (click)="configPopover.toggle($event)"
                         aria-haspopup="dialog"
                         [attr.aria-expanded]="configPopover.overlayVisible"
@@ -167,7 +229,7 @@
                       appendTo="body"
                       [ariaLabel]="'Configurar ' + block.title"
                     >
-                      <div class="form-config-popover-body input-icon-switches button-config-switches">
+                      <div class="button-config-popover-body input-icon-switches button-config-switches">
                         <div class="button-config-size-field">
                           <span class="input-config-label">Size</span>
                           <div class="button-config-size-toggle-wrap">
@@ -189,14 +251,14 @@
                           <span class="input-config-label">Icon left</span>
                           <p-toggleswitch
                             [ngModel]="ix(asInputKind(block.kind)).iconLeft"
-                            (ngModelChange)="patchIx(asInputKind(block.kind), { iconLeft: $event })"
+                            (ngModelChange)="patchInputIconLeft(asInputKind(block.kind), $event)"
                           />
                         </div>
                         <div class="input-config-row">
                           <span class="input-config-label">Icon right</span>
                           <p-toggleswitch
                             [ngModel]="ix(asInputKind(block.kind)).iconRight"
-                            (ngModelChange)="patchIx(asInputKind(block.kind), { iconRight: $event })"
+                            (ngModelChange)="patchInputIconRight(asInputKind(block.kind), $event)"
                           />
                         </div>
                         <div class="input-config-row">
@@ -215,120 +277,239 @@
           }
         </div>
 
-        <!-- Estados -->
+        <!-- States -->
         <div class="btn-section">
-          <p class="btn-section-title">Estados</p>
+          <p class="btn-section-title">States</p>
 
           @switch (block.kind) {
             @case ('radio') {
-              <div class="btn-row is-static-preview">
-                <div class="form-choice-item">
-                  <p-radiobutton name="radio-st-sel" value="on" [ngModel]="'on'" inputId="radio-st-sel" />
-                  <label for="radio-st-sel">Seleccionado</label>
+              <div class="catalog-button-states-row is-static-preview">
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-radiobutton
+                        name="radio-st-sel"
+                        value="on"
+                        [ngModel]="'on'"
+                        [tabindex]="-1"
+                        inputId="radio-st-sel"
+                      />
+                      <label for="radio-st-sel">Selected</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-radiobutton name="radio-st-off" value="on" [ngModel]="'off'" inputId="radio-st-off" />
-                  <label for="radio-st-off">No seleccionado</label>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-radiobutton
+                        name="radio-st-off"
+                        value="on"
+                        [ngModel]="'off'"
+                        [tabindex]="-1"
+                        inputId="radio-st-off"
+                      />
+                      <label for="radio-st-off">Unselected</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-radiobutton name="radio-st-inv" value="on" [ngModel]="'on'" [invalid]="true" inputId="radio-st-inv" />
-                  <label for="radio-st-inv">Invalid</label>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-radiobutton
+                        name="radio-st-inv"
+                        value="on"
+                        [ngModel]="'off'"
+                        [invalid]="true"
+                        [tabindex]="-1"
+                        inputId="radio-st-inv"
+                      />
+                      <label for="radio-st-inv">Invalid</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-radiobutton
-                    name="radio-st-dis"
-                    value="on"
-                    [ngModel]="'on'"
-                    [disabled]="true"
-                    inputId="radio-st-dis"
-                  />
-                  <label for="radio-st-dis">Disabled</label>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-radiobutton
+                        name="radio-st-dis"
+                        value="on"
+                        [ngModel]="'off'"
+                        [disabled]="true"
+                        [tabindex]="-1"
+                        inputId="radio-st-dis"
+                      />
+                      <label for="radio-st-dis">Disabled</label>
+                    </div>
+                  </div>
                 </div>
               </div>
             }
             @case ('checkbox') {
-              <div class="btn-row is-static-preview">
-                <div class="form-choice-item">
-                  <p-checkbox [ngModel]="true" [binary]="true" inputId="cb-st-on" />
-                  <label for="cb-st-on">Seleccionado</label>
+              <div class="catalog-button-states-row is-static-preview">
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-checkbox
+                        [ngModel]="true"
+                        [binary]="true"
+                        [readonly]="true"
+                        [tabindex]="-1"
+                        inputId="cb-st-on"
+                      />
+                      <label for="cb-st-on">Selected</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-checkbox [ngModel]="false" [binary]="true" inputId="cb-st-off" />
-                  <label for="cb-st-off">No seleccionado</label>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-checkbox
+                        [ngModel]="false"
+                        [binary]="true"
+                        [readonly]="true"
+                        [tabindex]="-1"
+                        inputId="cb-st-off"
+                      />
+                      <label for="cb-st-off">Unselected</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-checkbox [ngModel]="false" [binary]="true" [invalid]="true" inputId="cb-st-inv" />
-                  <label for="cb-st-inv">Invalid</label>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-checkbox
+                        [ngModel]="false"
+                        [binary]="true"
+                        [invalid]="true"
+                        [readonly]="true"
+                        [tabindex]="-1"
+                        inputId="cb-st-inv"
+                      />
+                      <label for="cb-st-inv">Invalid</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-checkbox [ngModel]="true" [binary]="true" [disabled]="true" inputId="cb-st-dis" />
-                  <label for="cb-st-dis">Disabled</label>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-checkbox
+                        [ngModel]="false"
+                        [binary]="true"
+                        [disabled]="true"
+                        [tabindex]="-1"
+                        inputId="cb-st-dis"
+                      />
+                      <label for="cb-st-dis">Disabled</label>
+                    </div>
+                  </div>
                 </div>
               </div>
             }
             @case ('toggleswitch') {
-              <div class="btn-row is-static-preview">
-                <div class="form-choice-item">
-                  <p-toggleswitch [ngModel]="false" ariaLabel="Por defecto" />
-                  <span>Por defecto</span>
+              <div class="catalog-button-states-row is-static-preview">
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-toggleswitch
+                        inputId="ts-st-default"
+                        [ngModel]="false"
+                        [readonly]="true"
+                        [tabindex]="-1"
+                      />
+                      <label for="ts-st-default">Default</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-toggleswitch [ngModel]="true" ariaLabel="Activado" />
-                  <span>Activado</span>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-toggleswitch
+                        inputId="ts-st-on"
+                        [ngModel]="true"
+                        [readonly]="true"
+                        [tabindex]="-1"
+                      />
+                      <label for="ts-st-on">On</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-toggleswitch [ngModel]="false" [disabled]="true" ariaLabel="Deshabilitado" />
-                  <span>Deshabilitado</span>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-toggleswitch
+                        inputId="ts-st-dis"
+                        [ngModel]="false"
+                        [disabled]="true"
+                        [tabindex]="-1"
+                      />
+                      <label for="ts-st-dis">Disabled</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-choice-item">
-                  <p-toggleswitch [ngModel]="false" [invalid]="true" ariaLabel="Inválido" />
-                  <span>Inválido</span>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <div class="form-choice-item">
+                      <p-toggleswitch
+                        inputId="ts-st-inv"
+                        [ngModel]="false"
+                        [invalid]="true"
+                        [readonly]="true"
+                        [tabindex]="-1"
+                      />
+                      <label for="ts-st-inv">Invalid</label>
+                    </div>
+                  </div>
                 </div>
               </div>
             }
             @default {
               @if (isInputBlock(block)) {
-                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
                   @for (st of inputStates(block); track st.key) {
-                    <div class="catalog-input-state">
-                      <span class="catalog-input-state-caption">{{ st.caption }}</span>
-                      @if (block.kind === 'input-default') {
-                        <div class="p-field">
-                          <label class="p-label">Label</label>
-                          <div [ngClass]="inputDemoWrap(st.key)">
-                            <input
-                              pInputText
-                              placeholder="Placeholder"
-                              [value]="inputStateValue(st.key)"
-                              [invalid]="inputStateInvalid(st.key)"
-                              [disabled]="inputStateDisabled(st.key)"
-                              [readonly]="inputStateReadonly(st.key)"
-                              tabindex="-1"
-                              [attr.aria-label]="st.caption"
-                            />
-                          </div>
-                        </div>
-                      } @else {
-                        <div [ngClass]="inputDemoWrap(st.key)">
-                          <p-floatlabel
-                            [variant]="floatVariant(block)!"
-                            [class.is-label-floated]="inputFloatFilled(st.key)"
-                            [class.is-label-invalid]="st.key === 'invalid'"
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (block.kind === 'input-default') {
+                          <div
+                            class="p-field catalog-input-interactive"
+                            [class.is-field-invalid]="inputStateInvalid(st.key)"
                           >
-                            <input
-                              pInputText
-                              [placeholder]="st.key === 'empty' ? ' ' : 'Placeholder'"
-                              [value]="inputStateValue(st.key)"
-                              [invalid]="inputStateInvalid(st.key)"
-                              [disabled]="inputStateDisabled(st.key)"
-                              [readonly]="true"
-                              tabindex="-1"
-                              [attr.aria-label]="st.caption"
-                            />
-                            <label>Label</label>
-                          </p-floatlabel>
-                        </div>
-                      }
+                            <label class="p-label">Label</label>
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <input
+                                pInputText
+                                placeholder="Placeholder"
+                                [value]="inputStateValue(st.key)"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
+                                [readonly]="inputStateReadonly(st.key)"
+                                tabindex="-1"
+                                [attr.aria-label]="st.caption"
+                              />
+                            </div>
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive" [ngClass]="inputDemoWrap(st.key)">
+                            <p-floatlabel
+                              [variant]="floatVariant(block)!"
+                              [class.is-label-floated]="inputFloatFilled(st.key)"
+                              [class.is-label-invalid]="st.key === 'invalid'"
+                            >
+                              <input
+                                pInputText
+                                [placeholder]="st.key === 'empty' ? ' ' : 'Placeholder'"
+                                [value]="inputStateValue(st.key)"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
+                                [readonly]="true"
+                                tabindex="-1"
+                                [attr.aria-label]="st.caption"
+                              />
+                              <label>Label</label>
+                            </p-floatlabel>
+                          </div>
+                        }
+                      </div>
+                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
                     </div>
                   }
                 </div>
@@ -337,86 +518,93 @@
           }
         </div>
 
-        <!-- Tamaños -->
+        <!-- Sizes (ToggleSwitch: un solo tamaño MDS, sin sección) -->
+        @if (block.kind !== 'toggleswitch') {
         <div class="btn-section">
-          <p class="btn-section-title">Tamaños</p>
+          <p class="btn-section-title">Sizes</p>
 
           @switch (block.kind) {
             @case ('radio') {
-              <div class="btn-row is-static-preview">
+              <div class="catalog-button-states-row is-static-preview">
                 @for (sz of sizeOptions; track sz.key) {
-                  <div class="form-choice-item">
-                    <p-radiobutton
-                      name="radio-sz-{{ sz.key }}"
-                      value="on"
-                      [ngModel]="'on'"
-                      [size]="sz.pSize"
-                      [inputId]="'radio-sz-' + sz.key"
-                    />
-                    <label [for]="'radio-sz-' + sz.key">{{ sz.caption }}</label>
+                  <div class="catalog-button-state catalog-button-state--choice-label">
+                    <div class="catalog-button-state-preview">
+                      <div class="form-choice-item" [ngClass]="choiceSizeClass(sz.key)">
+                        <p-radiobutton
+                          name="radio-sz-{{ sz.key }}"
+                          value="on"
+                          [ngModel]="'on'"
+                          [size]="choicePrimeSize(sz.key)"
+                          [tabindex]="-1"
+                          [inputId]="'radio-sz-' + sz.key"
+                        />
+                        <label [for]="'radio-sz-' + sz.key">{{ choiceSizeDisplayLabel(sz.key) }}</label>
+                      </div>
+                    </div>
                   </div>
                 }
               </div>
             }
             @case ('checkbox') {
-              <div class="btn-row is-static-preview">
+              <div class="catalog-button-states-row is-static-preview">
                 @for (sz of sizeOptions; track sz.key) {
-                  <div class="form-choice-item">
-                    <p-checkbox
-                      [ngModel]="true"
-                      [binary]="true"
-                      [size]="sz.pSize"
-                      [inputId]="'cb-sz-' + sz.key"
-                    />
-                    <label [for]="'cb-sz-' + sz.key">{{ sz.caption }}</label>
+                  <div class="catalog-button-state catalog-button-state--choice-label">
+                    <div class="catalog-button-state-preview">
+                      <div class="form-choice-item" [ngClass]="choiceSizeClass(sz.key)">
+                        <p-checkbox
+                          [ngModel]="true"
+                          [binary]="true"
+                          [size]="choicePrimeSize(sz.key)"
+                          [readonly]="true"
+                          [tabindex]="-1"
+                          [inputId]="'cb-sz-' + sz.key"
+                        />
+                        <label [for]="'cb-sz-' + sz.key">{{ choiceSizeDisplayLabel(sz.key) }}</label>
+                      </div>
+                    </div>
                   </div>
                 }
               </div>
             }
-            @case ('toggleswitch') {
-              <p class="btn-section-hint" style="margin: 0; font-size: 12px; color: var(--p-surface-500)">
-                ToggleSwitch no expone tamaños en PrimeNG 20; se muestra un único tamaño.
-              </p>
-              <div class="btn-row is-static-preview">
-                <div class="form-choice-item">
-                  <p-toggleswitch [ngModel]="true" ariaLabel="Normal" />
-                  <span>Normal</span>
-                </div>
-              </div>
-            }
             @default {
               @if (isInputBlock(block)) {
-                <div class="catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
                   @for (sz of sizeOptions; track sz.key) {
-                    <div class="catalog-input-state">
-                      <span class="catalog-input-state-caption">{{ sz.caption }}</span>
-                      @if (block.kind === 'input-default') {
-                        <div class="p-field catalog-input-interactive">
-                          <label class="p-label" [for]="'it-sz-' + block.kind + '-' + sz.key">Label</label>
-                          <input
-                            pInputText
-                            [id]="'it-sz-' + block.kind + '-' + sz.key"
-                            placeholder="Placeholder"
-                            [ngClass]="inputSizeClass(sz.key)"
-                            [fluid]="true"
-                          />
-                          <small class="p-hint">Helper Text</small>
-                        </div>
-                      } @else {
-                        <div class="catalog-input-interactive">
-                          <p-floatlabel [variant]="floatVariant(block)!" class="is-label-floated">
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (block.kind === 'input-default') {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label" [for]="'it-sz-' + block.kind + '-' + sz.key">Label</label>
+                            <input
+                              pInputText
+                              [id]="'it-sz-' + block.kind + '-' + sz.key"
+                              placeholder="Placeholder"
+                              [ngClass]="inputSizeClass(sz.key)"
+                              [readonly]="true"
+                              [fluid]="true"
+                              tabindex="-1"
+                            />
+                            <small class="p-hint">Helper Text</small>
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <p-floatlabel [variant]="floatVariant(block)!" class="is-label-floated">
                             <input
                               pInputText
                               [id]="'it-sz-' + block.kind + '-' + sz.key"
                               placeholder=" "
                               [ngClass]="inputSizeClass(sz.key)"
+                              [readonly]="true"
                               [fluid]="true"
+                              tabindex="-1"
                             />
-                            <label [for]="'it-sz-' + block.kind + '-' + sz.key">Label</label>
-                          </p-floatlabel>
-                          <small class="p-hint">Helper Text</small>
-                        </div>
-                      }
+                              <label [for]="'it-sz-' + block.kind + '-' + sz.key">Label</label>
+                            </p-floatlabel>
+                            <small class="p-hint">Helper Text</small>
+                          </div>
+                        }
+                      </div>
+                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ sz.caption }}</span>
                     </div>
                   }
                 </div>
@@ -424,6 +612,7 @@
             }
           }
         </div>
+        }
         </div>
       </section>
     </div>

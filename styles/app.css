@@ -1083,12 +1083,13 @@ app-playground-sidebar {
   gap: 0;
 }
 
-.inputtext-showcase .input-interaction-scope .p-inputtext {
+/* Legacy: solo si NO hay p-iconfield (catálogo Angular usa PrimeNG IconField) */
+.inputtext-showcase .input-interaction-scope:not(:has(.p-iconfield)) .p-inputtext {
   background-repeat: no-repeat, no-repeat;
   background-size: 16px 16px, 16px 16px;
   background-position: left 12px center, right 12px center;
 }
-.input-variant-block.show-left-icon .input-interaction-scope .p-inputtext {
+.input-variant-block.show-left-icon .input-interaction-scope:not(:has(.p-iconfield)) .p-inputtext {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E"), none;
   padding-left: 40px;
 }
@@ -1096,11 +1097,11 @@ app-playground-sidebar {
 .input-variant-block.show-left-icon .input-interaction-scope .p-iftalabel label {
   left: 40px;
 }
-.input-variant-block.show-right-icon .input-interaction-scope .p-inputtext {
+.input-variant-block.show-right-icon .input-interaction-scope:not(:has(.p-iconfield)) .p-inputtext {
   background-image: none, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
   padding-right: 40px;
 }
-.input-variant-block.show-left-icon.show-right-icon .input-interaction-scope .p-inputtext {
+.input-variant-block.show-left-icon.show-right-icon .input-interaction-scope:not(:has(.p-iconfield)) .p-inputtext {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
 }
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Toast } from 'primeng/toast';
 import { ThemeUploadService } from '../theme/theme-upload.service';
@@ -12,9 +12,14 @@ import { PlaygroundSidebarComponent } from './playground-sidebar.component';
   templateUrl: './app-shell.component.html',
   styleUrl: './app-shell.component.css',
 })
-export class AppShellComponent {
+export class AppShellComponent implements AfterViewInit {
   readonly theme = inject(ThemeService);
   readonly upload = inject(ThemeUploadService);
+
+  /** Tras el primer paint, PrimeNG ya inyectó su tema; recolocamos el puente MDS. */
+  ngAfterViewInit(): void {
+    requestAnimationFrame(() => this.upload.resyncThemeRuntime());
+  }
 
   onThemeToggle(): void {
     this.theme.toggle();

@@ -17,6 +17,7 @@ import {
   FORM_INPUT_DEFAULT_STATES,
   FORM_INPUT_FLOAT_STATES,
   FORM_RADIO_OPTIONS,
+  FORM_CHOICE_SIZE_DISPLAY_LABELS,
   FORM_SIZE_OPTIONS,
   FORM_SIZE_SELECT_OPTIONS,
   type FormBlockConfig,
@@ -37,6 +38,16 @@ export interface FormInputInteractionState {
 }
 
 type FormInputBlockKind = 'input-default' | 'input-float-over' | 'input-float-on' | 'input-float-in';
+
+type FormChoiceBlockKind = 'radio' | 'checkbox';
+
+interface FormChoiceInteractionState {
+  size: FormInteractionSize;
+}
+
+function defaultChoiceInteraction(): FormChoiceInteractionState {
+  return { size: 'normal' };
+}
 
 const INPUT_BLOCK_KINDS: FormInputBlockKind[] = [
   'input-default',
@@ -100,6 +111,11 @@ export class FormCatalogComponent {
     'input-float-in': defaultInputInteraction(),
   });
 
+  private readonly choiceIxByKind = signal<Record<FormChoiceBlockKind, FormChoiceInteractionState>>({
+    radio: defaultChoiceInteraction(),
+    checkbox: defaultChoiceInteraction(),
+  });
+
   isChoiceBlock(block: FormBlockConfig): boolean {
     return block.category === 'choice';
   }
@@ -132,8 +148,54 @@ export class FormCatalogComponent {
     return size === 'normal' ? undefined : size;
   }
 
+  choiceIx(kind: FormChoiceBlockKind): FormChoiceInteractionState {
+    return this.choiceIxByKind()[kind];
+  }
+
+  patchChoiceIx(kind: FormChoiceBlockKind, patch: Partial<FormChoiceInteractionState>): void {
+    this.choiceIxByKind.update((all) => ({
+      ...all,
+      [kind]: { ...all[kind], ...patch },
+    }));
+  }
+
+  /** PrimeNG `size` en Radio/Checkbox: omite en Normal; usa tokens --p-*-sm / --p-*-lg. */
+  choicePrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return size === 'normal' ? undefined : size;
+  }
+
+  /** Label + gap del texto junto al control (tokens form-field-*-font-size). */
+  choiceSizeClass(size: FormInteractionSize): Record<string, boolean> {
+    return {
+      'form-choice--sm': size === 'small',
+      'form-choice--lg': size === 'large',
+    };
+  }
+
+  choiceSizeDisplayLabel(size: FormInteractionSize): string {
+    return FORM_CHOICE_SIZE_DISPLAY_LABELS[size];
+  }
+
   inputRounded(kind: FormInputBlockKind): boolean {
     return this.ix(kind).rounded;
+  }
+
+  inputShowIcon(kind: FormInputBlockKind): boolean {
+    const { iconLeft, iconRight } = this.ix(kind);
+    return iconLeft || iconRight;
+  }
+
+  inputIconPosition(kind: FormInputBlockKind): 'left' | 'right' {
+    const { iconLeft, iconRight } = this.ix(kind);
+    return iconRight && !iconLeft ? 'right' : 'left';
+  }
+
+  patchInputIconLeft(kind: FormInputBlockKind, on: boolean): void {
+    this.patchIx(kind, { iconLeft: on, ...(on ? { iconRight: false } : {}) });
+  }
+
+  patchInputIconRight(kind: FormInputBlockKind, on: boolean): void {
+    this.patchIx(kind, { iconRight: on, ...(on ? { iconLeft: false } : {}) });
   }
 
   inputStates(block: FormBlockConfig): { key: FormInputDemoState; caption: string }[] {
@@ -167,7 +229,7 @@ export class FormCatalogComponent {
       case 'focus':
       case 'normal':
       default:
-        return 'Texto de ejemplo';
+        return 'Placeholder';
     }
   }
 
@@ -188,11 +250,8 @@ export class FormCatalogComponent {
   }
 
   interactionScopeClass(kind: FormInputBlockKind): Record<string, boolean> {
-    const ix = this.ix(kind);
     return {
       'input-variant-block': true,
-      'show-left-icon': ix.iconLeft,
-      'show-right-icon': ix.iconRight,
     };
   }
 

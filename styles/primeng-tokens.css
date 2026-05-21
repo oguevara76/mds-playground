@@ -169,6 +169,12 @@ html[data-theme="light"] {
   --p-button-warning-active-background: var(--button-warn-active-background, color-mix(in srgb, var(--p-warning-color) 65%, black));
   --p-button-warning-border-color:     var(--button-warn-border-color,     var(--p-warning-color));
   --p-button-warning-color:            var(--button-warn-color,            #ffffff);
+  /* PrimeNG 20 usa token/clase `warn`, no `warning` */
+  --p-button-warn-background:          var(--button-warn-background,       var(--p-warning-color));
+  --p-button-warn-hover-background:    var(--button-warn-hover-background, var(--p-button-warning-hover-background));
+  --p-button-warn-active-background:   var(--button-warn-active-background, var(--p-button-warning-active-background));
+  --p-button-warn-border-color:        var(--button-warn-border-color,     var(--p-warning-color));
+  --p-button-warn-color:               var(--button-warn-color,            #ffffff);
 
   /* ── Filled: Info ── */
   --p-button-info-background:       var(--button-info-background,       var(--p-info-color));
@@ -219,6 +225,10 @@ html[data-theme="light"] {
   --p-button-outlined-warning-color:               var(--button-outlined-warn-color,                var(--p-warning-color));
   --p-button-outlined-warning-hover-background:    var(--button-outlined-warn-hover-background,     var(--p-warning-bg));
   --p-button-outlined-warning-active-background:   var(--button-outlined-warn-active-background,    color-mix(in srgb, var(--p-warning-color) 16%, transparent));
+  --p-button-outlined-warn-border-color:           var(--button-outlined-warn-border-color,         var(--p-warning-color));
+  --p-button-outlined-warn-color:                  var(--button-outlined-warn-color,                var(--p-warning-color));
+  --p-button-outlined-warn-hover-background:       var(--button-outlined-warn-hover-background,     var(--p-warning-bg));
+  --p-button-outlined-warn-active-background:      var(--button-outlined-warn-active-background,    color-mix(in srgb, var(--p-warning-color) 16%, transparent));
 
   /* ── Outlined: Info ── */
   --p-button-outlined-info-border-color:           var(--button-outlined-info-border-color,         var(--p-info-color));
@@ -232,39 +242,39 @@ html[data-theme="light"] {
   --p-button-outlined-help-hover-background:       var(--button-outlined-help-hover-background,     var(--p-help-bg));
   --p-button-outlined-help-active-background:      var(--button-outlined-help-active-background,    color-mix(in srgb, var(--p-help-color) 16%, transparent));
 
-  /* ── Text: Primary ── */
-  --p-button-text-primary-color:             var(--p-primary-color);
-  --p-button-text-primary-hover-background:  color-mix(in srgb, var(--p-primary-color) 8%, transparent);
-  --p-button-text-primary-active-background: color-mix(in srgb, var(--p-primary-color) 16%, transparent);
+  /* ── Text (puente MDS --button-text-*) ── */
+  --p-button-text-primary-color:             var(--button-text-primary-color, var(--p-primary-color));
+  --p-button-text-primary-hover-background:  var(--button-text-primary-hover-background, color-mix(in srgb, var(--p-primary-color) 8%, transparent));
+  --p-button-text-primary-active-background: var(--button-text-primary-active-background, color-mix(in srgb, var(--p-primary-color) 16%, transparent));
 
-  /* ── Text: Secondary ── */
-  --p-button-text-secondary-color:             var(--button-text-contrast-color, var(--p-surface-600));
-  --p-button-text-secondary-hover-background:  var(--button-text-contrast-hover-background, var(--p-surface-100));
-  --p-button-text-secondary-active-background: var(--p-surface-200);
+  --p-button-text-secondary-color:             var(--button-text-secondary-color, var(--p-surface-600));
+  --p-button-text-secondary-hover-background:  var(--button-text-secondary-hover-background, var(--p-surface-100));
+  --p-button-text-secondary-active-background: var(--button-text-secondary-active-background, var(--p-surface-200));
 
-  /* ── Text: Contrast ── */
   --p-button-text-contrast-color:             var(--button-text-contrast-color, var(--p-surface-900));
   --p-button-text-contrast-hover-background:  var(--button-text-contrast-hover-background, var(--p-surface-100));
   --p-button-text-contrast-active-background: var(--button-text-contrast-active-background, var(--p-surface-200));
 
-  /* ── Text: Danger ── */
   --p-button-text-danger-color:             var(--button-text-danger-color, var(--p-danger-color));
-  --p-button-text-danger-hover-background:  var(--p-danger-bg);
-  --p-button-text-danger-active-background: color-mix(in srgb, var(--p-danger-color) 16%, transparent);
+  --p-button-text-danger-hover-background:  var(--button-text-danger-hover-background, var(--p-danger-bg));
+  --p-button-text-danger-active-background: var(--button-text-danger-active-background, color-mix(in srgb, var(--p-danger-color) 16%, transparent));
 
   /* ── Text: Success / Warning / Info / Help ── */
-  --p-button-text-success-color:            var(--p-success-color);
-  --p-button-text-success-hover-background: var(--p-success-bg);
-  --p-button-text-success-active-background: color-mix(in srgb, var(--p-success-color) 16%, transparent);
-  --p-button-text-warning-color:            var(--p-warning-color);
-  --p-button-text-warning-hover-background: var(--p-warning-bg);
-  --p-button-text-warning-active-background: color-mix(in srgb, var(--p-warning-color) 16%, transparent);
-  --p-button-text-info-color:               var(--p-info-color);
-  --p-button-text-info-hover-background:    var(--p-info-bg);
-  --p-button-text-info-active-background:    color-mix(in srgb, var(--p-info-color) 16%, transparent);
-  --p-button-text-help-color:               var(--p-help-color);
-  --p-button-text-help-hover-background:    var(--p-help-bg);
-  --p-button-text-help-active-background:    color-mix(in srgb, var(--p-help-color) 16%, transparent);
+  --p-button-text-success-color:            var(--button-text-success-color, var(--p-success-color));
+  --p-button-text-success-hover-background: var(--button-text-success-hover-background, var(--p-success-bg));
+  --p-button-text-success-active-background: var(--button-text-success-active-background, color-mix(in srgb, var(--p-success-color) 16%, transparent));
+  --p-button-text-warning-color:            var(--button-text-warn-color, var(--p-warning-color));
+  --p-button-text-warning-hover-background: var(--button-text-warn-hover-background, var(--p-warning-bg));
+  --p-button-text-warning-active-background: var(--button-text-warn-active-background, color-mix(in srgb, var(--p-warning-color) 16%, transparent));
+  --p-button-text-warn-color:               var(--button-text-warn-color, var(--p-warning-color));
+  --p-button-text-warn-hover-background:    var(--button-text-warn-hover-background, var(--p-warning-bg));
+  --p-button-text-warn-active-background:   var(--button-text-warn-active-background, color-mix(in srgb, var(--p-warning-color) 16%, transparent));
+  --p-button-text-info-color:               var(--button-text-info-color, var(--p-info-color));
+  --p-button-text-info-hover-background:    var(--button-text-info-hover-background, var(--p-info-bg));
+  --p-button-text-info-active-background:    var(--button-text-info-active-background, color-mix(in srgb, var(--p-info-color) 16%, transparent));
+  --p-button-text-help-color:               var(--button-text-help-color, var(--p-help-color));
+  --p-button-text-help-hover-background:    var(--button-text-help-hover-background, var(--p-help-bg));
+  --p-button-text-help-active-background:    var(--button-text-help-active-background, color-mix(in srgb, var(--p-help-color) 16%, transparent));
 
   /* ── Raised shadow ── */
   --p-button-raised-shadow: var(--button-raised-shadow,
@@ -338,6 +348,11 @@ html[data-theme="light"] {
   --p-checkbox-disabled-background:         var(--checkbox-disabled-background, var(--p-surface-200));
   --p-checkbox-icon-disabled-color:         var(--checkbox-icon-disabled-color, var(--p-surface-400));
   --p-checkbox-invalid-border-color:        var(--checkbox-invalid-border-color, var(--p-danger-color));
+  --p-checkbox-icon-size:                   var(--checkbox-icon-size, var(--dimension-scale-x12, 12px));
+  --p-checkbox-icon-sm-size:                var(--checkbox-icon-sm-size, var(--dimension-scale-x8, 8px));
+  --p-checkbox-icon-lg-size:                var(--checkbox-icon-lg-size, var(--dimension-scale-x14, 14px));
+  --p-checkbox-transition-duration:         var(--form-field-transition-duration, 0.2s);
+  --p-checkbox-shadow:                      var(--checkbox-shadow, 0 1px 2px rgba(18, 18, 23, 0.05));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — RadioButton
@@ -362,6 +377,86 @@ html[data-theme="light"] {
   --p-radiobutton-disabled-background:      var(--radiobutton-disabled-background, var(--p-surface-200));
   --p-radiobutton-icon-disabled-color:      var(--radiobutton-icon-disabled-color, var(--p-surface-400));
   --p-radiobutton-invalid-border-color:     var(--radiobutton-invalid-border-color, var(--p-danger-color));
+  --p-radiobutton-icon-size:                var(--radiobutton-icon-size, var(--dimension-scale-x8, 8px));
+  --p-radiobutton-icon-sm-size:             var(--radiobutton-icon-sm-size, var(--dimension-scale-x8, 8px));
+  --p-radiobutton-icon-lg-size:             var(--radiobutton-icon-lg-size, var(--dimension-scale-x12, 12px));
+  --p-radiobutton-icon-checked-hover-color: var(--radiobutton-icon-checked-hover-color, var(--primary-contrast-color));
+  --p-radiobutton-checked-focus-border-color: var(--radiobutton-checked-focus-border-color, var(--primary-color));
+  --p-radiobutton-focus-ring-offset:        var(--radiobutton-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+  --p-radiobutton-focus-ring-shadow:        var(--radiobutton-focus-ring-shadow, 0 0 0 0 transparent);
+  --p-radiobutton-shadow:                   var(--radiobutton-shadow, 0 1px 2px rgba(18, 18, 23, 0.05));
+  --p-radiobutton-transition-duration:      var(--form-field-transition-duration, 0.2s);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — ToggleSwitch
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-toggleswitch-width:                         var(--toggleswitch-width, var(--dimension-scale-x40, 40px));
+  --p-toggleswitch-height:                        var(--toggleswitch-height, var(--dimension-scale-x24, 24px));
+  --p-toggleswitch-gap:                           var(--toggleswitch-gap, var(--dimension-scale-x6, 6px));
+  --p-toggleswitch-border-radius:                 var(--toggleswitch-border-radius, var(--border-radius-pill, 999px));
+  --p-toggleswitch-border-width:                  var(--toggleswitch-border-width, 1px);
+  --p-toggleswitch-border-color:                  var(--toggleswitch-border-color, transparent);
+  --p-toggleswitch-background:                    var(--toggleswitch-background, var(--surface-context-emphasized, var(--p-surface-200)));
+  --p-toggleswitch-shadow:                        var(--toggleswitch-shadow, 0 1px 2px rgba(18, 18, 23, 0.05));
+  --p-toggleswitch-transition-duration:           var(--toggleswitch-transition-duration, var(--form-field-transition-duration, 0.2s));
+  --p-toggleswitch-slide-duration:                var(--toggleswitch-transition-duration, 0.2s);
+  --p-toggleswitch-handle-size:                   var(--toggleswitch-handle-size, var(--dimension-scale-x16, 16px));
+  --p-toggleswitch-handle-border-radius:          var(--toggleswitch-handle-border-radius, var(--border-radius-lg, var(--p-border-radius-lg)));
+  --p-toggleswitch-handle-background:             var(--toggleswitch-handle-background, var(--neutral-white, #fff));
+  --p-toggleswitch-handle-color:                  var(--toggleswitch-handle-color, var(--text-muted-color, var(--p-surface-500)));
+  --p-toggleswitch-handle-hover-background:       var(--toggleswitch-handle-hover-background, var(--surface-context-minimal, var(--p-surface-0)));
+  --p-toggleswitch-handle-hover-color:            var(--toggleswitch-handle-hover-color, var(--text-color, var(--p-content-color)));
+  --p-toggleswitch-handle-checked-background:     var(--toggleswitch-handle-checked-background, var(--surface-context-minimal, var(--p-surface-0)));
+  --p-toggleswitch-handle-checked-color:          var(--toggleswitch-handle-checked-color, var(--primary-color, var(--p-primary-color)));
+  --p-toggleswitch-handle-checked-hover-background: var(--toggleswitch-handle-checked-hover-background, var(--surface-context-minimal, var(--p-surface-0)));
+  --p-toggleswitch-handle-checked-hover-color:    var(--toggleswitch-handle-checked-hover-color, var(--primary-hover-color, var(--p-primary-hover-color)));
+  --p-toggleswitch-handle-disabled-background:    var(--toggleswitch-handle-disabled-background, var(--surface-context-strong, var(--p-surface-300)));
+  --p-toggleswitch-checked-background:            var(--toggleswitch-checked-background, var(--primary-color, var(--p-primary-color)));
+  --p-toggleswitch-checked-border-color:          var(--toggleswitch-checked-border-color, transparent);
+  --p-toggleswitch-checked-hover-background:      var(--toggleswitch-checked-hover-background, var(--primary-700, var(--p-primary-hover-color)));
+  --p-toggleswitch-checked-hover-border-color:    var(--toggleswitch-checked-hover-border-color, transparent);
+  --p-toggleswitch-hover-background:              var(--toggleswitch-hover-background, var(--surface-context-strong, var(--p-surface-300)));
+  --p-toggleswitch-hover-border-color:            var(--toggleswitch-hover-border-color, transparent);
+  --p-toggleswitch-disabled-background:           var(--toggleswitch-disabled-background, var(--surface-context-base, var(--p-surface-100)));
+  --p-toggleswitch-invalid-border-color:          var(--toggleswitch-invalid-border-color, var(--feedback-danger-base, var(--p-danger-color)));
+  --p-toggleswitch-focus-ring-width:              var(--toggleswitch-focus-ring-width, var(--p-focus-ring-width));
+  --p-toggleswitch-focus-ring-style:              solid;
+  --p-toggleswitch-focus-ring-color:              var(--toggleswitch-focus-ring-color, var(--p-focus-ring-color));
+  --p-toggleswitch-focus-ring-offset:             var(--toggleswitch-focus-ring-offset, var(--p-focus-ring-offset));
+  --p-toggleswitch-focus-ring-shadow:             var(--toggleswitch-focus-ring-shadow, 0 0 0 0 transparent);
+
+  /* InputText — PrimeNG 20 dt('inputtext.*') */
+  --p-inputtext-color:                    var(--inputtext-color, var(--form-field-color, var(--p-surface-700)));
+  --p-inputtext-background:               var(--inputtext-background, var(--form-field-background, var(--p-surface-0)));
+  --p-inputtext-border-color:             var(--inputtext-border-color, var(--form-field-border-color, var(--p-surface-300)));
+  --p-inputtext-hover-border-color:       var(--inputtext-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+  --p-inputtext-focus-border-color:       var(--inputtext-focus-border-color, var(--form-field-focus-border-color, var(--p-primary-color)));
+  --p-inputtext-focus-ring-width:         var(--inputtext-focus-ring-width, var(--form-field-focus-ring-width, 0));
+  --p-inputtext-focus-ring-style:         solid;
+  --p-inputtext-focus-ring-color:         var(--inputtext-focus-ring-color, var(--form-field-focus-ring-color, var(--p-primary-color)));
+  --p-inputtext-focus-ring-offset:        var(--inputtext-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+  --p-inputtext-focus-ring-shadow:        var(--inputtext-focus-ring-shadow, none);
+  --p-inputtext-padding-x:                var(--inputtext-padding-x, var(--form-field-padding-x, 12px));
+  --p-inputtext-padding-y:                var(--inputtext-padding-y, var(--form-field-padding-y, 8px));
+  --p-inputtext-border-radius:            var(--inputtext-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+  --p-inputtext-placeholder-color:        var(--inputtext-placeholder-color, var(--form-field-placeholder-color, var(--p-surface-400)));
+  --p-inputtext-invalid-border-color:     var(--inputtext-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+  --p-inputtext-invalid-placeholder-color: var(--inputtext-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+  --p-inputtext-disabled-background:      var(--inputtext-disabled-background, var(--form-field-disabled-background, var(--p-surface-200)));
+  --p-inputtext-disabled-color:           var(--inputtext-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+  --p-inputtext-shadow:                   var(--inputtext-shadow, 0 1px 2px rgba(18, 18, 23, 0.05));
+  --p-inputtext-transition-duration:      var(--form-field-transition-duration, 0.2s);
+  /* FloatLabel — PrimeNG 20 dt('floatlabel.*') */
+  --p-floatlabel-color:         var(--floatlabel-color, var(--form-field-float-label-color, var(--p-surface-500)));
+  --p-floatlabel-focus-color:   var(--floatlabel-focus-color, var(--form-field-float-label-focus-color, var(--p-surface-500)));
+  --p-floatlabel-active-color:  var(--floatlabel-color, var(--form-field-float-label-color, var(--p-surface-500)));
+  --p-floatlabel-invalid-color: var(--floatlabel-invalid-color, var(--form-field-float-label-invalid-color, var(--p-danger-color)));
+  --p-inputtext-sm-font-size:             var(--inputtext-sm-font-size, var(--form-field-sm-font-size, 12px));
+  --p-inputtext-sm-padding-x:             var(--inputtext-sm-padding-x, var(--form-field-sm-padding-x, 10px));
+  --p-inputtext-sm-padding-y:             var(--inputtext-sm-padding-y, var(--form-field-sm-padding-y, 5px));
+  --p-inputtext-lg-font-size:             var(--inputtext-lg-font-size, var(--form-field-lg-font-size, 16px));
+  --p-inputtext-lg-padding-x:             var(--inputtext-lg-padding-x, var(--form-field-lg-padding-x, 22px));
+  --p-inputtext-lg-padding-y:             var(--inputtext-lg-padding-y, var(--form-field-lg-padding-y, 11px));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Card
@@ -783,6 +878,96 @@ html[data-theme="dark"] {
   --p-input-bg:           var(--form-field-background,        var(--p-surface-700));
   --p-input-color:        var(--form-field-color,             var(--p-surface-100));
   --p-input-placeholder:  var(--form-field-placeholder-color, var(--p-surface-500));
+  --p-input-focus-border: var(--form-field-focus-border-color, var(--p-primary-color));
+
+  --p-inputtext-color:                    var(--inputtext-color, var(--form-field-color, var(--p-surface-100)));
+  --p-inputtext-background:               var(--inputtext-background, var(--form-field-background, var(--p-surface-700)));
+  --p-inputtext-border-color:             var(--inputtext-border-color, var(--form-field-border-color, var(--p-surface-600)));
+  --p-inputtext-hover-border-color:       var(--inputtext-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+  --p-inputtext-focus-border-color:       var(--inputtext-focus-border-color, var(--form-field-focus-border-color, var(--p-primary-color)));
+  --p-inputtext-focus-ring-width:         var(--inputtext-focus-ring-width, var(--form-field-focus-ring-width, 0));
+  --p-inputtext-focus-ring-style:         solid;
+  --p-inputtext-focus-ring-color:         var(--inputtext-focus-ring-color, var(--form-field-focus-ring-color, var(--p-primary-color)));
+  --p-inputtext-focus-ring-offset:        var(--inputtext-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+  --p-inputtext-focus-ring-shadow:        var(--inputtext-focus-ring-shadow, none);
+  --p-inputtext-padding-x:                var(--inputtext-padding-x, var(--form-field-padding-x, 12px));
+  --p-inputtext-padding-y:                var(--inputtext-padding-y, var(--form-field-padding-y, 8px));
+  --p-inputtext-border-radius:            var(--inputtext-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+  --p-inputtext-placeholder-color:        var(--inputtext-placeholder-color, var(--form-field-placeholder-color, var(--p-surface-500)));
+  --p-inputtext-invalid-border-color:     var(--inputtext-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+  --p-inputtext-invalid-placeholder-color: var(--inputtext-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+  --p-inputtext-disabled-background:      var(--inputtext-disabled-background, var(--form-field-disabled-background, var(--p-surface-800)));
+  --p-inputtext-disabled-color:           var(--inputtext-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+  --p-inputtext-shadow:                   var(--inputtext-shadow, 0 1px 2px rgba(0, 0, 0, 0.2));
+  --p-floatlabel-color:         var(--floatlabel-color, var(--form-field-float-label-color, var(--p-surface-500)));
+  --p-floatlabel-focus-color:   var(--floatlabel-focus-color, var(--form-field-float-label-focus-color, var(--p-surface-500)));
+  --p-floatlabel-active-color:  var(--floatlabel-color, var(--form-field-float-label-color, var(--p-surface-500)));
+  --p-floatlabel-invalid-color: var(--floatlabel-invalid-color, var(--form-field-float-label-invalid-color, var(--p-danger-color)));
+
+  --p-radiobutton-width:                    var(--radiobutton-width, var(--dimension-spacing-x16, 16px));
+  --p-radiobutton-height:                   var(--radiobutton-height, var(--dimension-spacing-x16, 16px));
+  --p-radiobutton-background:               var(--radiobutton-background, var(--p-input-bg));
+  --p-radiobutton-border-color:             var(--radiobutton-border-color, var(--p-input-border-color));
+  --p-radiobutton-hover-border-color:       var(--radiobutton-hover-border-color, var(--p-input-border-color));
+  --p-radiobutton-focus-border-color:       var(--radiobutton-focus-border-color, var(--p-primary-color));
+  --p-radiobutton-checked-background:       var(--radiobutton-checked-background, var(--p-primary-color));
+  --p-radiobutton-checked-border-color:     var(--radiobutton-checked-border-color, var(--p-primary-color));
+  --p-radiobutton-checked-hover-background: var(--radiobutton-checked-hover-background, var(--p-primary-hover-color));
+  --p-radiobutton-checked-hover-border-color: var(--radiobutton-checked-hover-border-color, var(--p-primary-hover-color));
+  --p-radiobutton-icon-checked-color:       var(--radiobutton-icon-checked-color, var(--p-primary-color-text));
+  --p-radiobutton-icon-checked-hover-color: var(--radiobutton-icon-checked-hover-color, var(--primary-contrast-color));
+  --p-radiobutton-icon-size:                var(--radiobutton-icon-size, var(--dimension-scale-x8, 8px));
+  --p-radiobutton-icon-disabled-color:      var(--radiobutton-icon-disabled-color, var(--p-surface-500));
+  --p-radiobutton-invalid-border-color:     var(--radiobutton-invalid-border-color, var(--p-danger-color));
+  --p-radiobutton-disabled-background:      var(--radiobutton-disabled-background, var(--p-surface-800));
+  --p-radiobutton-sm-width:                 var(--radiobutton-sm-width, var(--dimension-spacing-x14, 14px));
+  --p-radiobutton-sm-height:                var(--radiobutton-sm-height, var(--dimension-spacing-x14, 14px));
+  --p-radiobutton-lg-width:                 var(--radiobutton-lg-width, var(--dimension-spacing-x20, 20px));
+  --p-radiobutton-lg-height:                var(--radiobutton-lg-height, var(--dimension-spacing-x20, 20px));
+  --p-radiobutton-icon-sm-size:             var(--radiobutton-icon-sm-size, var(--dimension-scale-x8, 8px));
+  --p-radiobutton-icon-lg-size:             var(--radiobutton-icon-lg-size, var(--dimension-scale-x12, 12px));
+
+  --p-checkbox-width:                       var(--checkbox-width, var(--dimension-spacing-x16, 16px));
+  --p-checkbox-height:                      var(--checkbox-height, var(--dimension-spacing-x16, 16px));
+  --p-checkbox-sm-width:                    var(--checkbox-sm-width, var(--dimension-spacing-x14, 14px));
+  --p-checkbox-sm-height:                   var(--checkbox-sm-height, var(--dimension-spacing-x14, 14px));
+  --p-checkbox-lg-width:                    var(--checkbox-lg-width, var(--dimension-spacing-x20, 20px));
+  --p-checkbox-lg-height:                   var(--checkbox-lg-height, var(--dimension-spacing-x20, 20px));
+  --p-checkbox-border-radius:               var(--checkbox-border-radius, var(--border-radius-sm, var(--p-border-radius-sm)));
+  --p-checkbox-background:                  var(--checkbox-background, var(--p-input-bg));
+  --p-checkbox-border-color:                var(--checkbox-border-color, var(--p-input-border-color));
+  --p-checkbox-hover-border-color:          var(--checkbox-hover-border-color, var(--p-input-border-color));
+  --p-checkbox-focus-border-color:          var(--checkbox-focus-border-color, var(--p-primary-color));
+  --p-checkbox-checked-background:          var(--checkbox-checked-background, var(--p-primary-color));
+  --p-checkbox-checked-border-color:        var(--checkbox-checked-border-color, var(--p-primary-color));
+  --p-checkbox-checked-hover-background:    var(--checkbox-checked-hover-background, var(--p-primary-hover-color));
+  --p-checkbox-checked-hover-border-color:  var(--checkbox-checked-hover-border-color, var(--p-primary-hover-color));
+  --p-checkbox-icon-color:                  var(--checkbox-icon-color, var(--p-input-color));
+  --p-checkbox-icon-checked-color:          var(--checkbox-icon-checked-color, var(--p-primary-color-text));
+  --p-checkbox-disabled-background:         var(--checkbox-disabled-background, var(--p-surface-800));
+  --p-checkbox-icon-disabled-color:         var(--checkbox-icon-disabled-color, var(--p-surface-500));
+  --p-checkbox-invalid-border-color:        var(--checkbox-invalid-border-color, var(--p-danger-color));
+  --p-checkbox-icon-size:                   var(--checkbox-icon-size, var(--dimension-scale-x12, 12px));
+  --p-checkbox-icon-sm-size:                var(--checkbox-icon-sm-size, var(--dimension-scale-x8, 8px));
+  --p-checkbox-icon-lg-size:                var(--checkbox-icon-lg-size, var(--dimension-scale-x14, 14px));
+
+  --p-toggleswitch-width:                         var(--toggleswitch-width, var(--dimension-scale-x40, 40px));
+  --p-toggleswitch-height:                        var(--toggleswitch-height, var(--dimension-scale-x24, 24px));
+  --p-toggleswitch-gap:                           var(--toggleswitch-gap, var(--dimension-scale-x6, 6px));
+  --p-toggleswitch-border-radius:                 var(--toggleswitch-border-radius, var(--border-radius-pill, 999px));
+  --p-toggleswitch-border-width:                  var(--toggleswitch-border-width, 1px);
+  --p-toggleswitch-border-color:                  var(--toggleswitch-border-color, transparent);
+  --p-toggleswitch-background:                      var(--toggleswitch-background, var(--p-surface-700));
+  --p-toggleswitch-handle-size:                   var(--toggleswitch-handle-size, var(--dimension-scale-x16, 16px));
+  --p-toggleswitch-handle-border-radius:          var(--toggleswitch-handle-border-radius, var(--border-radius-lg, var(--p-border-radius-lg)));
+  --p-toggleswitch-handle-background:             var(--toggleswitch-handle-background, var(--p-surface-0));
+  --p-toggleswitch-handle-checked-background:       var(--toggleswitch-handle-checked-background, var(--p-surface-800));
+  --p-toggleswitch-checked-background:            var(--toggleswitch-checked-background, var(--p-primary-color));
+  --p-toggleswitch-checked-hover-background:      var(--toggleswitch-checked-hover-background, var(--p-primary-hover-color));
+  --p-toggleswitch-hover-background:              var(--toggleswitch-hover-background, var(--p-surface-600));
+  --p-toggleswitch-disabled-background:           var(--toggleswitch-disabled-background, var(--p-surface-800));
+  --p-toggleswitch-handle-disabled-background:    var(--toggleswitch-handle-disabled-background, var(--p-surface-600));
+  --p-toggleswitch-invalid-border-color:          var(--toggleswitch-invalid-border-color, var(--p-danger-color));
 
   --p-form-field-label-color: var(--form-field-label-color, var(--p-surface-400));
   --p-form-field-hint-color:  var(--form-field-hint-color, var(--p-surface-500));
@@ -801,61 +986,77 @@ html[data-theme="dark"] {
   --p-button-primary-active-border-color:var(--button-primary-active-border-color,var(--p-primary-active-color));
   --p-button-primary-color:              var(--button-primary-color,             var(--p-primary-color-text));
 
-  --p-button-danger-background:         var(--button-danger-background,        var(--p-danger-color));
-  --p-button-danger-hover-background:   var(--button-danger-hover-background,  var(--p-danger-color));
-  --p-button-danger-active-background:  var(--button-danger-active-background, var(--p-danger-color));
-  --p-button-danger-border-color:       var(--button-danger-border-color,      var(--p-danger-color));
-  --p-button-danger-color:              var(--button-danger-color,             #ffffff);
-
-  --p-button-outlined-primary-hover-background:  var(--button-outlined-primary-hover-background,  color-mix(in srgb, var(--p-primary-color) 16%, transparent));
-  --p-button-outlined-primary-active-background: var(--button-outlined-primary-active-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent));
-  --p-button-outlined-primary-border-color:      var(--button-outlined-primary-border-color,      var(--p-primary-color));
-  --p-button-outlined-primary-color:             var(--button-outlined-primary-color,             var(--p-primary-color));
-
-  --p-button-text-primary-hover-background:  var(--button-text-primary-hover-background, color-mix(in srgb, var(--p-primary-color) 16%, transparent));
-  --p-button-text-primary-active-background: var(--button-text-primary-active-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent));
-  --p-button-text-primary-color:             var(--button-text-primary-color,             var(--p-primary-color));
-
   --p-button-secondary-background:         var(--button-secondary-background,       var(--p-surface-700));
   --p-button-secondary-hover-background:   var(--button-secondary-hover-background, var(--p-surface-600));
   --p-button-secondary-active-background:  var(--button-secondary-active-background,var(--p-surface-500));
   --p-button-secondary-border-color:       var(--button-secondary-border-color,     var(--p-surface-600));
+  --p-button-secondary-hover-border-color: var(--button-secondary-hover-border-color, var(--p-surface-600));
+  --p-button-secondary-active-border-color: var(--button-secondary-active-border-color, var(--p-surface-500));
   --p-button-secondary-color:              var(--button-secondary-color,            var(--p-surface-100));
+
+  --p-button-danger-background:         var(--button-danger-background,        var(--p-danger-color));
+  --p-button-danger-hover-background:   var(--button-danger-hover-background,  var(--p-danger-color));
+  --p-button-danger-active-background:  var(--button-danger-active-background, var(--p-danger-color));
+  --p-button-danger-border-color:       var(--button-danger-border-color,      var(--p-danger-color));
+  --p-button-danger-hover-border-color: var(--button-danger-hover-border-color, var(--p-danger-color));
+  --p-button-danger-active-border-color: var(--button-danger-active-border-color, var(--p-danger-color));
+  --p-button-danger-color:              var(--button-danger-color,             #ffffff);
 
   --p-button-contrast-background:          var(--button-contrast-background,        var(--p-surface-0));
   --p-button-contrast-hover-background:    var(--button-contrast-hover-background,  var(--p-surface-200));
   --p-button-contrast-active-background:   var(--button-contrast-active-background, var(--p-surface-300));
   --p-button-contrast-border-color:        var(--button-contrast-border-color,      var(--p-surface-0));
+  --p-button-contrast-hover-border-color:  var(--button-contrast-hover-border-color, var(--p-surface-0));
+  --p-button-contrast-active-border-color: var(--button-contrast-active-border-color, var(--p-surface-0));
   --p-button-contrast-color:               var(--button-contrast-color,             var(--p-surface-900));
+
+  --p-button-outlined-primary-border-color:      var(--button-outlined-primary-border-color,      var(--p-primary-color));
+  --p-button-outlined-primary-color:             var(--button-outlined-primary-color,             var(--p-primary-color));
+  --p-button-outlined-primary-hover-background:  var(--button-outlined-primary-hover-background,  color-mix(in srgb, var(--p-primary-color) 16%, transparent));
+  --p-button-outlined-primary-active-background: var(--button-outlined-primary-active-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent));
+
+  --p-button-outlined-secondary-border-color:     var(--button-outlined-secondary-border-color,    var(--p-surface-500));
+  --p-button-outlined-secondary-color:            var(--button-outlined-secondary-color,           var(--p-surface-300));
+  --p-button-outlined-secondary-hover-background: var(--button-outlined-secondary-hover-background,var(--p-surface-700));
+  --p-button-outlined-secondary-active-background: var(--button-outlined-secondary-active-background, var(--p-surface-600));
+
+  --p-button-outlined-danger-border-color:         var(--button-outlined-danger-border-color,       var(--p-danger-color));
+  --p-button-outlined-danger-color:                var(--button-outlined-danger-color,              var(--p-danger-color));
+  --p-button-outlined-danger-hover-background:     var(--button-outlined-danger-hover-background,   color-mix(in srgb, var(--p-danger-color) 12%, transparent));
+  --p-button-outlined-danger-active-background:    var(--button-outlined-danger-active-background,  color-mix(in srgb, var(--p-danger-color) 20%, transparent));
 
   --p-button-outlined-contrast-border-color:      var(--button-outlined-contrast-border-color,     var(--p-surface-0));
   --p-button-outlined-contrast-color:             var(--button-outlined-contrast-color,            var(--p-surface-0));
   --p-button-outlined-contrast-hover-background:  var(--button-outlined-contrast-hover-background, var(--p-surface-700));
   --p-button-outlined-contrast-active-background: var(--button-outlined-contrast-active-background,var(--p-surface-600));
 
-  --p-button-outlined-secondary-border-color:     var(--button-outlined-secondary-border-color,    var(--p-surface-500));
-  --p-button-outlined-secondary-color:            var(--button-outlined-secondary-color,           var(--p-surface-300));
-  --p-button-outlined-secondary-hover-background: var(--button-outlined-secondary-hover-background,var(--p-surface-700));
+  --p-button-text-primary-color:             var(--button-text-primary-color, var(--p-primary-color));
+  --p-button-text-primary-hover-background:  var(--button-text-primary-hover-background, color-mix(in srgb, var(--p-primary-color) 16%, transparent));
+  --p-button-text-primary-active-background: var(--button-text-primary-active-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent));
+
+  --p-button-text-secondary-color:             var(--button-text-secondary-color, var(--p-surface-300));
+  --p-button-text-secondary-hover-background:  var(--button-text-secondary-hover-background, var(--p-surface-700));
+  --p-button-text-secondary-active-background: var(--button-text-secondary-active-background, var(--p-surface-600));
+
+  --p-button-text-danger-color:             var(--button-text-danger-color, var(--p-danger-color));
+  --p-button-text-danger-hover-background:  var(--button-text-danger-hover-background, color-mix(in srgb, var(--p-danger-color) 12%, transparent));
+  --p-button-text-danger-active-background: var(--button-text-danger-active-background, color-mix(in srgb, var(--p-danger-color) 20%, transparent));
 
   --p-button-text-contrast-color:             var(--button-text-contrast-color, var(--p-surface-0));
   --p-button-text-contrast-hover-background:  var(--button-text-contrast-hover-background, var(--p-surface-700));
   --p-button-text-contrast-active-background: var(--button-text-contrast-active-background, var(--p-surface-600));
 
-  --p-button-text-secondary-color:            var(--p-surface-300);
-  --p-button-text-secondary-hover-background: var(--p-surface-700);
+  /* App shell dark — alineado con semántica MDS (surface-950 / content-background) */
+  --app-bg:         var(--surface-950, var(--p-surface-950));
+  --sidebar-bg:     var(--surface-950, var(--p-surface-950));
+  --sidebar-border: var(--surface-700, rgba(255, 255, 255, 0.06));
+  --topbar-bg:      var(--surface-950, var(--p-surface-950));
+  --topbar-border:  var(--surface-700, rgba(255, 255, 255, 0.06));
 
-  /* App shell dark — color único para toda la interfaz */
-  --p-surface-base-dark: #18181b;
-  --app-bg:         var(--p-surface-base-dark);
-  --sidebar-bg:     var(--p-surface-base-dark);
-  --sidebar-border: rgba(255, 255, 255, 0.06);
-  --topbar-bg:      var(--p-surface-base-dark);
-  --topbar-border:  rgba(255, 255, 255, 0.06);
-
-  /* Content (componentes, cards, dialogs) — más oscuro que el shell */
-  --p-content-bg:     #0f1012;
-  --p-content-border: rgba(255, 255, 255, 0.08);
-  --p-content-color:  #f0f0f2;
+  /* Content (componentes, cards, dialogs) */
+  --p-content-bg:     var(--content-background, var(--p-surface-800));
+  --p-content-border: var(--content-border-color, var(--p-surface-700));
+  --p-content-color:  var(--text-color, var(--p-surface-0));
 
   /* Popover / select overlay (MDS dark) */
   --p-popover-background:       var(--popover-background, var(--overlay-popover-background));

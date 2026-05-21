@@ -2,29 +2,150 @@
   display: block;
 }
 
+.form-catalog-stack .catalog-preview + .catalog-preview {
+  margin-top: 0;
+}
+
+.form-showcase .catalog-block-head .section-title.component-title-primary {
+  margin: 0;
+}
+
+/* Radio/Checkbox: Size visible bajo CONFIGURAR (sin popover) */
+.form-config-aside-inline.button-config-aside {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+}
+
+.form-config-aside-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-config-aside-inline .button-config-size-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+/* Toggle múltiple compacto (sm / md / lg) */
+:host ::ng-deep .form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton {
+  gap: 1px !important;
+  padding: 2px !important;
+  border-radius: var(--border-radius-sm, 4px) !important;
+}
+
+:host ::ng-deep .form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton {
+  width: auto !important;
+  max-width: max-content;
+}
+
+:host ::ng-deep .form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton {
+  flex: 0 1 auto !important;
+  min-width: 2.125rem !important;
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+  border-radius: calc(var(--border-radius-sm, 4px) - 1px) !important;
+}
+
+:host ::ng-deep .form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton .p-togglebutton-content {
+  padding: 4px 7px !important;
+  min-height: 0 !important;
+  width: auto !important;
+}
+
+:host ::ng-deep .form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton .p-togglebutton-label {
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+}
+
+.form-config-aside-inline .input-config-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--p-content-color);
+  line-height: 1.2;
+}
+
+/* Radio/Checkbox: cada size fija tokens MDS de texto y gaps (ver FORM_CHOICE_SIZE_LAYOUT) */
+.form-choice-row,
+.form-choice-item {
+  --form-choice-label-font-size: var(--form-field-font-size);
+  --form-choice-label-gap: var(--form-field-gap-space);
+  --form-choice-row-gap-y: var(--dimension-scale-x16);
+  --form-choice-row-gap-x: var(--dimension-scale-x20);
+}
+
 .form-choice-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 16px 20px;
+  gap: var(--form-choice-row-gap-y) var(--form-choice-row-gap-x);
 }
 
 .form-choice-item {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--p-content-color);
+  gap: var(--form-choice-label-gap);
+  min-height: 0;
+  font-size: var(--form-choice-label-font-size);
+  line-height: 1.25;
+  font-weight: 400;
+  color: var(--form-field-color, var(--p-content-color));
   cursor: pointer;
 }
 
-.form-choice-item label {
+.form-choice--sm {
+  --form-choice-label-font-size: var(--form-field-sm-font-size);
+  --form-choice-label-gap: var(--form-field-sm-gap-scale);
+  --form-choice-row-gap-y: var(--dimension-scale-x12);
+  --form-choice-row-gap-x: var(--dimension-scale-x16);
+}
+
+.form-choice--lg {
+  --form-choice-label-font-size: var(--form-field-lg-font-size);
+  --form-choice-label-gap: var(--form-field-lg-gap-space);
+  --form-choice-row-gap-y: var(--dimension-scale-x20);
+  --form-choice-row-gap-x: var(--dimension-scale-x24);
+}
+
+.form-choice-item label,
+.form-choice-item span {
   cursor: pointer;
   margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
 }
 
-.form-catalog-stack .component-title-primary {
-  margin-bottom: 0;
+.form-showcase .catalog-button-state-preview .form-choice-item {
+  justify-content: center;
+}
+
+/* States/Sizes Radio/Checkbox/ToggleSwitch: etiqueta al lado del control (como Interaction) */
+.form-showcase .catalog-button-state--choice-label {
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.form-showcase .catalog-button-state--choice-label .catalog-button-state-preview {
+  justify-content: flex-start;
+}
+
+.form-showcase .catalog-button-state--choice-label .form-choice-item label {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Sizes: el control PrimeNG ya escala vía dt(radiobutton|checkbox.sm|lg.*) → --p-* MDS */
+.form-showcase .catalog-button-state-preview .p-radiobutton,
+.form-showcase .catalog-button-state-preview .p-checkbox {
+  flex-shrink: 0;
 }
 
 .form-input-interaction-field {
@@ -32,55 +153,123 @@
   max-width: 320px;
 }
 
-.form-config-aside {
-  flex: 0 0 auto;
-  min-width: 200px;
-  max-width: 240px;
-  border-left: 1px solid var(--p-content-border);
-  padding-left: 16px;
+/* RadioButton PrimeNG 20: centrar punto interior en el círculo */
+:host ::ng-deep .form-choice-item .p-radiobutton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+  vertical-align: middle;
 }
 
-.form-config-aside-title {
-  margin: 0 0 8px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+:host ::ng-deep .form-choice-item .p-radiobutton-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep .form-choice-item .p-radiobutton-icon {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* InputText States/Sizes: columna como Button, ancho fijo del campo */
+.form-showcase .catalog-input-state.catalog-button-state {
+  align-items: center;
+  min-width: 160px;
+  max-width: 280px;
+}
+
+.form-showcase .catalog-input-state .catalog-button-state-preview {
+  width: 100%;
+  align-items: stretch;
+}
+
+.form-showcase .catalog-input-states-row.catalog-button-states-row {
+  align-items: flex-start;
+}
+
+/* Rounded (MDS; en legacy está en components.css, no cargado en playground) */
+:host ::ng-deep .inputtext-showcase .input-interaction-scope .p-inputtext.p-inputtext-rounded {
+  border-radius: var(
+    --inputtext-border-rounded-radius,
+    var(--form-field-border-radius-rounded, var(--border-radius-pill))
+  );
+}
+
+/* InputText interactivo: iconos vía p-iconfield (sin fondos legacy de app.css) */
+:host ::ng-deep .inputtext-showcase .input-interaction-scope .p-iconfield {
+  width: 100%;
+}
+
+:host ::ng-deep .inputtext-showcase .input-interaction-scope .p-iconfield .p-inputtext {
+  width: 100%;
+  background-image: none;
+}
+
+:host ::ng-deep .inputtext-showcase .input-interaction-scope .p-inputicon {
   color: var(--p-surface-400);
 }
 
-.form-config-aside-hint {
-  margin: 0;
+/* Estados estáticos hover/focus (tokens PrimeNG 20) */
+:host ::ng-deep .p-input-demo-wrap.p-input-demo--hover .p-inputtext:enabled {
+  border-color: var(--p-inputtext-hover-border-color);
+}
+
+:host ::ng-deep .p-input-demo-wrap.p-input-demo--focus .p-inputtext:enabled {
+  border-color: var(--p-inputtext-focus-border-color);
+  box-shadow: var(--p-inputtext-focus-ring-shadow);
+  outline: var(--p-inputtext-focus-ring-width) var(--p-inputtext-focus-ring-style, solid)
+    var(--p-inputtext-focus-ring-color);
+  outline-offset: var(--p-inputtext-focus-ring-offset);
+}
+
+:host ::ng-deep .p-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: var(--p-form-field-label-font-weight, 500);
+  color: var(--p-form-field-label-color);
+}
+
+:host ::ng-deep .p-hint {
+  display: block;
+  margin-top: 6px;
   font-size: 12px;
-  line-height: 1.45;
-  color: var(--p-surface-500);
+  line-height: 1.35;
+  color: var(--p-form-field-hint-color);
 }
 
-.form-config-link {
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  font-weight: 600;
-  color: var(--p-primary-color);
-  text-decoration: underline;
-  cursor: pointer;
+/* InputText States: invalid / hover / focus / disabled (tokens MDS + PrimeNG 20) */
+:host ::ng-deep .catalog-input-states-row .p-inputtext.p-invalid {
+  border-color: var(--form-field-invalid-border-color);
 }
 
-.form-config-link:hover {
-  color: var(--p-primary-hover-color, var(--p-primary-color));
+:host ::ng-deep .catalog-input-states-row .p-inputtext.p-invalid::placeholder {
+  color: var(--form-field-invalid-placeholder-color);
 }
 
-.form-config-link:focus-visible {
-  outline: 2px solid var(--p-primary-color);
-  outline-offset: 2px;
-  border-radius: 2px;
+:host ::ng-deep .catalog-input-states-row .p-field.is-field-invalid > .p-label,
+:host ::ng-deep .catalog-input-states-row .p-floatlabel:has(.p-invalid) label,
+:host ::ng-deep .catalog-input-states-row .p-floatlabel.is-label-invalid label {
+  color: var(--form-field-float-label-invalid-color);
 }
 
-.form-config-popover-body {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 220px;
-  padding: 4px 2px;
+/* Invalid gana sobre active/focus del float label cuando hay p-invalid */
+:host ::ng-deep .catalog-input-states-row .p-floatlabel:has(.p-invalid):has(.p-filled) label,
+:host ::ng-deep .catalog-input-states-row .p-floatlabel.is-label-invalid.is-label-floated label {
+  color: var(--form-field-float-label-invalid-color);
+}
+
+/* Hover/focus simulados no pisan invalid */
+:host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-inputtext.p-invalid:enabled,
+:host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-inputtext.p-invalid:enabled {
+  border-color: var(--form-field-invalid-border-color);
+  box-shadow: none;
+  outline: none;
+}
+
+:host ::ng-deep .catalog-input-states-row .p-inputtext:disabled {
+  opacity: 1;
 }

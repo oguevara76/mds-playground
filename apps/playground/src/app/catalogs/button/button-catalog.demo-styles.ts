@@ -1,48 +1,50 @@
-import type { ButtonDemoState, ButtonVariantSpec } from './button-catalog.config';
+import type { ButtonDemoState, ButtonDsSeverity, ButtonVariantSpec } from './button-catalog.config';
+
+export type ButtonDemoStyleOptions = {
+  text?: boolean;
+  severity?: ButtonDsSeverity;
+  outlined?: boolean;
+};
 
 /**
- * Tokens MDS de componente (--button-*) resueltos por tema activo en <html>.
- * Más fiable que --p-button-* en dark, donde el puente puede estar incompleto.
+ * Simulación hover/active en Variants & States vía tokens --p-button-* (puente MDS).
  */
 export function buttonDemoWrapStyle(
   variant: ButtonVariantSpec,
   state: ButtonDemoState,
-  forceText = false,
+  options: ButtonDemoStyleOptions | boolean = {},
 ): Record<string, string> | null {
+  const opts: ButtonDemoStyleOptions =
+    typeof options === 'boolean' ? { text: options } : options;
+  const isText = !!opts.text;
+  const severity = opts.severity ?? 'primary';
+  const isOutlined = opts.outlined ?? !!variant.outlined;
+
   if (state === 'default' || state === 'disabled') {
     return null;
   }
 
   const phase = state === 'hover' ? 'hover' : 'active';
-  const outlined = !!variant.outlined;
-  const isText = forceText;
 
   if (isText) {
-    if (outlined) {
-      return {
-        '--btn-demo-bg': `var(--button-outlined-primary-${phase}-background)`,
-        '--btn-demo-border': 'var(--button-outlined-primary-border-color)',
-        '--btn-demo-color': 'var(--button-outlined-primary-color)',
-      };
-    }
     return {
-      '--btn-demo-bg': `var(--button-text-primary-${phase}-background)`,
+      '--btn-demo-bg': `var(--p-button-text-${severity}-${phase}-background)`,
       '--btn-demo-border': 'transparent',
-      '--btn-demo-color': 'var(--button-text-primary-color)',
+      '--btn-demo-color': `var(--p-button-text-${severity}-color)`,
     };
   }
 
-  if (outlined) {
+  if (isOutlined) {
     return {
-      '--btn-demo-bg': `var(--button-outlined-primary-${phase}-background)`,
-      '--btn-demo-border': 'var(--button-outlined-primary-border-color)',
-      '--btn-demo-color': 'var(--button-outlined-primary-color)',
+      '--btn-demo-bg': `var(--p-button-outlined-${severity}-${phase}-background)`,
+      '--btn-demo-border': `var(--p-button-outlined-${severity}-border-color)`,
+      '--btn-demo-color': `var(--p-button-outlined-${severity}-color)`,
     };
   }
 
   return {
-    '--btn-demo-bg': `var(--button-primary-${phase}-background)`,
-    '--btn-demo-border': `var(--button-primary-${phase}-border-color)`,
-    '--btn-demo-color': `var(--button-primary-${phase}-color, var(--button-primary-color))`,
+    '--btn-demo-bg': `var(--p-button-${severity}-${phase}-background)`,
+    '--btn-demo-border': `var(--p-button-${severity}-${phase}-border-color, var(--p-button-${severity}-border-color))`,
+    '--btn-demo-color': `var(--p-button-${severity}-${phase}-color, var(--p-button-${severity}-color))`,
   };
 }
