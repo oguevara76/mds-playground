@@ -28,15 +28,20 @@
 
 /* Focus ring color per severity — inherited by :focus-visible */
 .p-button-primary   { --p-focus-ring-color: var(--p-primary-color); }
-.p-button-secondary { --p-focus-ring-color: var(--p-secondary-color); }
-.p-button-contrast  { --p-focus-ring-color: var(--p-surface-800); }
-.p-button-danger    { --p-focus-ring-color: var(--p-danger-color); }
+.p-button-secondary { --p-focus-ring-color: var(--button-secondary-focus-ring-color, var(--p-secondary-color)); }
+.p-button-contrast  { --p-focus-ring-color: var(--button-contrast-focus-ring-color, var(--p-surface-800)); }
+.p-button-danger    { --p-focus-ring-color: var(--button-danger-focus-ring-color, var(--p-danger-color)); }
 .p-button-success   { --p-focus-ring-color: var(--p-success-color); }
 .p-button-info      { --p-focus-ring-color: var(--p-info-color); }
 .p-button-warning   { --p-focus-ring-color: var(--p-warning-color); }
 .p-button-help      { --p-focus-ring-color: var(--p-help-color); }
 
-[data-theme="dark"] .p-button-contrast { --p-focus-ring-color: var(--p-surface-0); }
+[data-theme="dark"] .p-button-contrast {
+  --p-focus-ring-color: var(--button-contrast-focus-ring-color, var(--surface-context-intense, var(--p-surface-0)));
+}
+[data-theme="dark"] .p-button-secondary {
+  --p-focus-ring-color: var(--button-secondary-focus-ring-color, var(--surface-context-contrast, var(--p-surface-200)));
+}
 
 /* ── Dark mode overrides ── */
 [data-theme="dark"] .p-card-body p {
@@ -81,10 +86,15 @@
   border-color: var(--p-button-secondary-border-color);
   color:        var(--p-button-secondary-color);
 }
-.p-button-secondary:hover   { background: var(--p-button-secondary-hover-background); }
+.p-button-secondary:hover {
+  background:   var(--p-button-secondary-hover-background);
+  border-color: var(--p-button-secondary-hover-border-color);
+  color:        var(--p-button-secondary-hover-color, var(--p-button-secondary-color));
+}
 .p-button-secondary:active:not(:disabled) {
-  background: var(--p-button-secondary-active-background);
-  border-color: var(--p-button-secondary-active-background);
+  background:   var(--p-button-secondary-active-background);
+  border-color: var(--p-button-secondary-active-border-color);
+  color:        var(--p-button-secondary-active-color, var(--p-button-secondary-color));
 }
 
 /* ── Filled: Contrast ── */
@@ -95,11 +105,13 @@
 }
 .p-button-contrast:hover {
   background:   var(--p-button-contrast-hover-background);
-  border-color: var(--p-button-contrast-hover-background);
+  border-color: var(--p-button-contrast-hover-border-color);
+  color:        var(--p-button-contrast-hover-color, var(--p-button-contrast-color));
 }
 .p-button-contrast:active:not(:disabled) {
   background:   var(--p-button-contrast-active-background);
-  border-color: var(--p-button-contrast-active-background);
+  border-color: var(--p-button-contrast-active-border-color);
+  color:        var(--p-button-contrast-active-color, var(--p-button-contrast-color));
 }
 
 /* ── Filled: Danger ── */
@@ -110,11 +122,13 @@
 }
 .p-button-danger:hover {
   background:   var(--p-button-danger-hover-background);
-  border-color: var(--p-button-danger-hover-background);
+  border-color: var(--p-button-danger-hover-border-color, var(--p-button-danger-hover-background));
+  color:        var(--p-button-danger-hover-color, var(--p-button-danger-color));
 }
 .p-button-danger:active:not(:disabled) {
   background:   var(--p-button-danger-active-background);
-  border-color: var(--p-button-danger-active-background);
+  border-color: var(--p-button-danger-active-border-color, var(--p-button-danger-active-background));
+  color:        var(--p-button-danger-active-color, var(--p-button-danger-color));
 }
 
 /* ── Filled: Success ── */

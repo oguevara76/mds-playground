@@ -1,5 +1,6 @@
-/* Semantics Light — Ejemplo: Rosa #b04472
-   Ajusta highlight al tono rosa en modo claro.
+/* Semantics Light — Ejemplo: Azul #3b61b5
+   #3b61b5 tiene contraste 5.8:1 con blanco → texto de botones en blanco es válido.
+   Solo se ajusta el highlight para alinearlo con la gama azul.
 */
 
 html[data-theme="light"] {
@@ -90,10 +91,10 @@ html[data-theme="light"] {
   --form-field-sm-position-x: var(--dimension-scale-x10);
   --form-field-sm-position-y: var(--dimension-scale-x4);
   --form-field-xs-font-size: var(--dimension-scale-x10);
-  --highlight-background: rgba(176, 68, 114, 0.12);
-  --highlight-color: rgba(132, 51,  86, 1);
-  --highlight-focus-background: rgba(176, 68, 114, 0.22);
-  --highlight-focus-color: rgba( 92, 36,  60, 1);
+  --highlight-background: rgba( 59,  97, 181, 0.12);
+  --highlight-color: rgba( 44,  73, 135, 1);
+  --highlight-focus-background: rgba( 59,  97, 181, 0.22);
+  --highlight-focus-color: rgba( 30,  50,  93, 1);
   --icon-size: var(--dimension-scale-x16);
   --list-gap: var(--dimension-scale-x2);
   --list-option-border-radius: var(--border-radius-sm);
@@ -147,21 +148,21 @@ html[data-theme="light"] {
   --overlay-select-border-radius: var(--border-radius-md);
   --overlay-select-color: var(--text-color);
   --overlay-title-font-size: 20px;
-  --primary-100: var(--rose-100);
-  --primary-200: var(--rose-200);
-  --primary-300: var(--rose-300);
-  --primary-400: var(--rose-400);
-  --primary-50: var(--rose-50);
-  --primary-500: var(--rose-500);
-  --primary-600: var(--rose-600);
-  --primary-700: var(--rose-700);
-  --primary-800: var(--rose-800);
-  --primary-900: var(--rose-900);
-  --primary-950: var(--rose-950);
-  --primary-active-color: var(--rose-800);
-  --primary-color: var(--rose-600);
-  --primary-contrast-color: var(--rose-950);
-  --primary-hover-color: var(--rose-700);
+  --primary-100: var(--blue-100);
+  --primary-200: var(--blue-200);
+  --primary-300: var(--blue-300);
+  --primary-400: var(--blue-400);
+  --primary-50: var(--blue-50);
+  --primary-500: var(--blue-500);
+  --primary-600: var(--blue-600);
+  --primary-700: var(--blue-700);
+  --primary-800: var(--blue-800);
+  --primary-900: var(--blue-900);
+  --primary-950: var(--blue-950);
+  --primary-active-color: var(--blue-800);
+  --primary-color: var(--blue-600);
+  --primary-contrast-color: rgba(255, 255, 255, 1);
+  --primary-hover-color: var(--blue-700);
   --surface-0: rgba(255, 255, 255, 1);
   --surface-100: var(--slate-100);
   --surface-200: var(--slate-200);
@@ -179,13 +180,13 @@ html[data-theme="light"] {
   --surface-context-emphasized: var(--surface-400);
   --surface-context-fixed-dark: var(--surface-700);
   --surface-context-fixed-light: var(--surface-50);
-  --surface-context-fixed-primary: var(--rose-600);
+  --surface-context-fixed-primary: var(--blue-600);
   --surface-context-intense: var(--surface-900);
   --surface-context-medium: var(--surface-300);
   --surface-context-minimal: var(--surface-0);
-  --surface-context-primary-medium: var(--rose-300);
-  --surface-context-primary-soft: var(--rose-50);
-  --surface-context-primary-subtle: var(--rose-100);
+  --surface-context-primary-medium: var(--blue-300);
+  --surface-context-primary-soft: var(--blue-50);
+  --surface-context-primary-subtle: var(--blue-100);
   --surface-context-soft: var(--surface-50);
   --surface-context-strong: var(--surface-500);
   --surface-context-subtle: var(--surface-100);

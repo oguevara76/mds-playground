@@ -21,7 +21,7 @@ Misma arquitectura que el playground estático: **core en repo** + **upload que 
 | 13 | Auto-contraste primary | `#auto-contrast` |
 | 14 | **Puente runtime PrimeNG** | `#mds-prime-runtime-bridge` (~490 vars `--p-*`) |
 
-Las capas 9–12 son las mismas que en el HTML estático: si subes `ejemplos/oliva/primitives.css`, cambias la rampa oliva; si subes `components.css`, cambian `--button-padding-x`, `--inputtext-*`, etc.
+Las capas 9–12 son las mismas que en el HTML estático: si subes `apps/playground/ejemplos/oliva/primitives.css`, cambias la rampa oliva; si subes `components.css`, cambian `--button-padding-x`, `--inputtext-*`, etc. (En legacy, la ruta equivalente es `ejemplos/oliva/…`.)
 
 ## Validación del upload (igual que legacy)
 

@@ -1,6 +1,6 @@
-/* Components — Ejemplo: Rosa #b04472
-   Brillo percibido ~0.41 sobre rose-600 → texto e iconos OSCUROS en CTAs filled
-   (misma estrategia que Oliva). Focus ring en rose-700.
+/* Components — Ejemplo: Púrpura #8240c7
+   #8240c7 es suficientemente oscuro para mantener texto blanco en botones filled.
+   Solo se ajusta el focus ring al tono oscuro de la rampa púrpura.
 */
 
 html:root {
@@ -144,7 +144,7 @@ html:root {
   --badge-lg-min-width: var(--dimension-scale-x24);
   --badge-min-width: var(--dimension-scale-x20);
   --badge-primary-background: var(--primary-color);
-  --badge-primary-color: var(--rose-950);
+  --badge-primary-color: var(--primary-contrast-color);
   --badge-secondary-background: var(--surface-context-subtle);
   --badge-secondary-color: var(--surface-context-contrast);
   --badge-sm-font-size: 8px;
@@ -266,14 +266,14 @@ html:root {
   --button-padding-y: var(--form-field-padding-y);
   --button-primary-active-background: var(--primary-active-color);
   --button-primary-active-border-color: var(--primary-active-color);
-  --button-primary-active-color: var(--rose-950);
+  --button-primary-active-color: var(--surface-context-fixed-light);
   --button-primary-background: var(--primary-color);
   --button-primary-border-color: var(--primary-color);
-  --button-primary-color: var(--rose-950);
-  --button-primary-focus-ring-color: rgba(132, 51, 86, 1);
+  --button-primary-color: var(--surface-context-fixed-light);
+  --button-primary-focus-ring-color: rgba(95, 44, 150, 1);
   --button-primary-hover-background: var(--primary-hover-color);
   --button-primary-hover-border-color: var(--primary-hover-color);
-  --button-primary-hover-color: var(--rose-950);
+  --button-primary-hover-color: var(--surface-context-fixed-light);
   --button-raised-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2);
   --button-rounded-border-radius: var(--border-radius-pill);
   --button-secondary-active-background: var(--surface-context-medium);
@@ -1280,7 +1280,7 @@ html:root {
   --paginator-nav-button-hover-background: var(--primary-hover-color);
   --paginator-nav-button-hover-color: var(--surface-context-fixed-light);
   --paginator-nav-button-selected-background: var(--highlight-background);
-  --paginator-nav-button-selected-color: var(--rose-950);
+  --paginator-nav-button-selected-color: var(--highlight-color);
   --paginator-nav-button-width: var(--dimension-scale-x32);
   --paginator-padding-x: 14px;
   --paginator-padding-y: 7px;
@@ -1496,7 +1496,7 @@ html:root {
   --stepper-step-header-padding: var(--dimension-scale-x0);
   --stepper-step-number-active-background: var(--primary-color);
   --stepper-step-number-active-border-color: var(--content-border-color);
-  --stepper-step-number-active-color: var(--rose-950);
+  --stepper-step-number-active-color: var(--surface-context-fixed-light);
   --stepper-step-number-background: var(--content-background);
   --stepper-step-number-border-color: var(--content-border-color);
   --stepper-step-number-border-radius: var(--dimension-scale-x14);
@@ -1570,7 +1570,7 @@ html:root {
   --tag-padding-x: var(--dimension-scale-x8);
   --tag-padding-y: var(--dimension-scale-x4);
   --tag-primary-background: var(--primary-color);
-  --tag-primary-color: var(--rose-950);
+  --tag-primary-color: var(--surface-context-fixed-light);
   --tag-rounded-border-radius: var(--border-radius-xl);
   --tag-secondary-background: var(--surface-context-strong);
   --tag-secondary-color: var(--surface-context-minimal);

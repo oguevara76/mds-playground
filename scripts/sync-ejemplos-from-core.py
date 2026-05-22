@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
-Vacía ejemplos/* y regenera primitives, components, semantic-light/dark desde el core MDS,
-aplicando los colores de brand definidos en scripts/ejemplos-brand.json.
+Vacía ejemplos/ (legacy + Angular) y regenera primitives, components, semantic-light/dark
+desde el core MDS, aplicando los colores de brand definidos en scripts/ejemplos-brand.json.
+
+Salidas:
+  - ejemplos/                    → playground HTML estático (raíz)
+  - apps/playground/ejemplos/    → playground Angular (Fase 0)
 """
 from __future__ import annotations
 
@@ -11,7 +15,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLES = ROOT / "styles"
-EJEMPLOS = ROOT / "ejemplos"
+EJEMPLOS_DIRS = (
+    ROOT / "ejemplos",
+    ROOT / "apps" / "playground" / "ejemplos",
+)
 MANIFEST = ROOT / "scripts" / "ejemplos-brand.json"
 
 CORE = {
@@ -78,8 +85,10 @@ def merge_maps(base: dict[str, str], override: dict[str, str]) -> dict[str, str]
     return out
 
 
-def clear_ejemplos() -> None:
-    for d in sorted(EJEMPLOS.iterdir()):
+def clear_ejemplos_dir(ejemplos_root: Path) -> None:
+    if not ejemplos_root.is_dir():
+        return
+    for d in sorted(ejemplos_root.iterdir()):
         if not d.is_dir() or d.name.startswith("."):
             continue
         for f in d.iterdir():
@@ -91,6 +100,11 @@ def clear_ejemplos() -> None:
                 shutil.rmtree(f)
 
 
+def clear_all_ejemplos() -> None:
+    for root in EJEMPLOS_DIRS:
+        clear_ejemplos_dir(root)
+
+
 def load_manifest() -> dict:
     if not MANIFEST.is_file():
         raise SystemExit(
@@ -99,13 +113,12 @@ def load_manifest() -> dict:
     return json.loads(MANIFEST.read_text(encoding="utf-8"))
 
 
-def rebuild_example(name: str, brand: dict) -> None:
-    example_dir = EJEMPLOS / name
+def rebuild_example(name: str, brand: dict, ejemplos_root: Path) -> None:
+    example_dir = ejemplos_root / name
     example_dir.mkdir(parents=True, exist_ok=True)
     headers = brand.get("headers", {})
     overrides = brand.get("overrides", {})
 
-    print(f"  {name}")
     for key, core_path in CORE.items():
         selector = SELECTORS[key]
         core_vars = parse_vars(extract_block(core_path.read_text(encoding="utf-8"), selector))
@@ -118,19 +131,25 @@ def rebuild_example(name: str, brand: dict) -> None:
 
         out_path = example_dir / FILE_NAMES[key]
         out_path.write_text(out, encoding="utf-8")
-        print(f"    {out_path.name}: {len(merged)} vars ({len(brand_vars)} brand)")
 
 
 def main() -> None:
-    if not EJEMPLOS.is_dir():
-        raise SystemExit(f"No existe {EJEMPLOS}")
+    missing = [p for p in EJEMPLOS_DIRS if not p.is_dir()]
+    if missing:
+        for p in missing:
+            p.mkdir(parents=True, exist_ok=True)
+            print(f"Creado {p.relative_to(ROOT)}/")
 
     manifest = load_manifest()
-    print("Limpiando carpetas ejemplos/…")
-    clear_ejemplos()
+    print("Limpiando carpetas ejemplos (legacy + Angular)…")
+    clear_all_ejemplos()
     print("Reconstruyendo desde core + brand…")
     for name in sorted(manifest.keys()):
-        rebuild_example(name, manifest[name])
+        print(f"  {name}")
+        for ejemplos_root in EJEMPLOS_DIRS:
+            rebuild_example(name, manifest[name], ejemplos_root)
+            rel = ejemplos_root.relative_to(ROOT)
+            print(f"    → {rel}/{name}/")
     print("Listo.")
 
 

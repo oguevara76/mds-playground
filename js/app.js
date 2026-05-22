@@ -819,7 +819,8 @@
       const m   = rgb.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/);
       if (!m) return '';
       const lum  = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
-      const text = lum > 0.55 ? '#111111' : '#ffffff';
+      /* Umbral ~0.5: primarias medias (p. ej. rose-600 ~0.41) llevan texto oscuro en CTA */
+      const text = lum > 0.5 ? '#111111' : '#ffffff';
       const ring = text === '#ffffff' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.35)';
       return `html[data-theme="${theme}"] {
         --p-primary-color-text:            ${text};
@@ -841,7 +842,6 @@
     if (!el) {
       el = document.createElement('style');
       el.id = 'auto-contrast';
-      document.head.appendChild(el);
     }
     el.textContent = lightRule + '\n' + darkRule;
     finalizeUserCssOrder();
@@ -920,7 +920,13 @@
     'components':     'Componentes',
   };
 
-  /* Orden en el DOM: prim → sem light → sem dark → comp, siempre delante de #auto-contrast */
+  /*
+   * Cascada en <head> (de menor a mayor prioridad):
+   *   core <link> (mds-*, primeng-tokens, components, app)
+   *   → #auto-contrast (solo sin upload; no debe tapar ficheros subidos)
+   *   → #mds-toast-styles
+   *   → #user-primitives → #user-semantic-light → #user-semantic-dark → #user-components (últimos)
+   */
   const USER_STYLE_IDS_ORDERED = [
     'user-primitives',
     'user-semantic-light',
@@ -930,10 +936,17 @@
 
   function finalizeUserCssOrder() {
     const contrast = document.getElementById('auto-contrast');
-    if (!contrast || !document.head.contains(contrast)) return;
-    [...USER_STYLE_IDS_ORDERED].reverse().forEach(id => {
+    const toast = document.getElementById('mds-toast-styles');
+
+    if (contrast && contrast.parentNode === document.head) contrast.remove();
+    if (toast && toast.parentNode === document.head) toast.remove();
+
+    if (contrast) document.head.appendChild(contrast);
+    if (toast) document.head.appendChild(toast);
+
+    USER_STYLE_IDS_ORDERED.forEach(id => {
       const el = document.getElementById(id);
-      if (el && document.head.contains(el)) document.head.insertBefore(el, contrast);
+      if (el && document.head.contains(el)) document.head.appendChild(el);
     });
   }
 
@@ -1253,6 +1266,7 @@
   }
 
   const toastStyles = document.createElement('style');
+  toastStyles.id = 'mds-toast-styles';
   toastStyles.textContent = `
     .mds-toast {
       position:fixed;bottom:24px;right:24px;padding:10px 18px;border-radius:8px;
@@ -1265,6 +1279,7 @@
     .mds-toast-info   {background:var(--p-surface-700);  color:#fff;}
   `;
   document.head.appendChild(toastStyles);
+  finalizeUserCssOrder();
 
   /* ── SplitButton interactivity ── */
   function closeAllSplitPanels() {

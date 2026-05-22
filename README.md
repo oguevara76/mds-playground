@@ -34,6 +34,8 @@ pnpm run legacy:serve                          # otra terminal → http://localh
 ```
 mds-playground/
 ├── apps/playground/        # Angular 20 + PrimeNG 20 (Fase 0)
+│   └── ejemplos/           # Marcas de ejemplo (upload Angular)
+├── ejemplos/               # Marcas de ejemplo (upload legacy)
 ├── index.html              # App principal (legacy)
 ├── ejemplo-tokens.css      # Ejemplo de fichero CSS para subir
 ├── styles/

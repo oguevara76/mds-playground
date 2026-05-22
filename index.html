@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,10 +26,9 @@
   <link rel="stylesheet" href="styles/app.css" />
 
   <!--
-    Sustitución sobre el core: mismos bloques que el MDS, en cascada.
-    Van después de app.css; el JS reordena si hace falta que queden justo
-    delante de #auto-contrast (texto legible sobre primary) para que los
-    tokens subidos sigan teniendo prioridad sobre primeng-tokens y el core.
+    Sustitución sobre el core (primitives → sem light/dark → components).
+    El JS los reordena al final de <head> para que siempre ganen sobre
+    mds-*, primeng-tokens, components.css, app.css y #auto-contrast.
   -->
   <style id="user-primitives"></style>
   <style id="user-semantic-light"></style>

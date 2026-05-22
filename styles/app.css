@@ -1366,6 +1366,71 @@ app-playground-sidebar {
   color: var(--p-surface-100);
 }
 
+/* ── Shell / contenedor (topbar, sidebar, área de catálogo) ── */
+[data-theme="dark"] .nav-link {
+  color: var(--p-surface-400);
+}
+[data-theme="dark"] .nav-link:hover {
+  color: var(--p-surface-100);
+}
+[data-theme="dark"] .nav-link.active {
+  color: var(--p-primary-color);
+}
+
+[data-theme="dark"] .btn-icon {
+  border-color: var(--p-surface-600);
+  color: var(--p-surface-400);
+}
+[data-theme="dark"] .btn-icon:hover {
+  background: var(--p-surface-800);
+  color: var(--p-surface-200);
+}
+
+[data-theme="dark"] .sidebar-label,
+[data-theme="dark"] .upload-sub,
+[data-theme="dark"] .lf-remove-all {
+  color: var(--p-surface-500);
+}
+
+[data-theme="dark"] .token-name { color: var(--p-surface-400); }
+[data-theme="dark"] .token-value { color: var(--p-surface-500); }
+[data-theme="dark"] .token-swatch {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .token-swatch-font {
+  background: var(--p-surface-800);
+  border-color: var(--p-surface-600);
+  color: var(--p-surface-300);
+}
+
+[data-theme="dark"] .preview-section,
+[data-theme="dark"] .catalog-preview,
+[data-theme="dark"] .catalog-card {
+  background: var(--surface-context-subtle, var(--p-surface-900));
+  border-color: var(--surface-context-base, var(--p-surface-700));
+}
+[data-theme="dark"] .catalog-preview-title {
+  color: var(--p-surface-400);
+}
+[data-theme="dark"] .catalog-name {
+  color: var(--p-surface-200);
+}
+
+[data-theme="dark"] .tv-nav {
+  background: var(--sidebar-bg);
+  border-color: var(--sidebar-border);
+}
+[data-theme="dark"] .tv-nav-link {
+  color: var(--p-surface-400);
+}
+[data-theme="dark"] .tv-toolbar {
+  background: var(--topbar-bg);
+  border-color: var(--topbar-border);
+}
+[data-theme="dark"] .tv-main {
+  background: var(--app-bg);
+}
+
 /* ─── PREVIEW section ───────────────────────────────────────────── */
 .pv-grid {
   padding: 32px;
