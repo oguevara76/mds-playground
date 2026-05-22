@@ -82,9 +82,9 @@ export const BUTTON_DEMO_STATES: { key: ButtonDemoState; caption: string }[] = [
 export type ButtonInteractionSize = 'small' | 'normal' | 'large';
 
 export const BUTTON_SIZE_OPTIONS: { key: ButtonInteractionSize; caption: string; size?: 'small' | 'large' }[] = [
-  { key: 'small', caption: 'sm', size: 'small' },
-  { key: 'normal', caption: 'md' },
-  { key: 'large', caption: 'lg', size: 'large' },
+  { key: 'small', caption: 'Small', size: 'small' },
+  { key: 'normal', caption: 'Normal' },
+  { key: 'large', caption: 'Large', size: 'large' },
 ];
 
 /** Opciones del select en el popover de configuración. */

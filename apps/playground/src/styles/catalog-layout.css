@@ -114,6 +114,15 @@
   font-size: 12px;
 }
 
+/* Más aire entre el título Interaction y el componente (p. ej. FloatLabel elevado) */
+.form-showcase .catalog-interaction-section > .btn-section-title {
+  margin-bottom: 22px;
+}
+
+.form-showcase .catalog-interaction-section .input-interaction-row:has(.p-floatlabel) {
+  padding-top: 10px;
+}
+
 .catalog-interaction-row--center {
   align-items: center;
 }

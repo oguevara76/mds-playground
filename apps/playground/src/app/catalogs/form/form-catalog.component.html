@@ -136,8 +136,11 @@
                       <div class="p-field form-input-interaction-field">
                         <label class="p-label" [for]="'it-live-' + block.kind">Label</label>
                         @if (inputShowIcon(asInputKind(block.kind))) {
-                          <p-iconfield [iconPosition]="inputIconPosition(asInputKind(block.kind))">
-                            @if (inputIconPosition(asInputKind(block.kind)) === 'left') {
+                          <p-iconfield
+                            [iconPosition]="inputIconPosition(asInputKind(block.kind))"
+                            [class.p-iconfield-dual]="inputDualIcons(asInputKind(block.kind))"
+                          >
+                            @if (ix(asInputKind(block.kind)).iconLeft) {
                               <p-inputicon class="pi pi-search" />
                             }
                             <input
@@ -150,7 +153,7 @@
                               [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
                               [fluid]="true"
                             />
-                            @if (inputIconPosition(asInputKind(block.kind)) === 'right') {
+                            @if (ix(asInputKind(block.kind)).iconRight) {
                               <p-inputicon class="pi pi-search" />
                             }
                           </p-iconfield>
@@ -168,25 +171,31 @@
                         }
                         <small class="p-hint">Helper Text</small>
                       </div>
-                    } @else {
+                    } @else if (isIftaLabelBlock(block)) {
                       <div class="form-input-interaction-field">
-                        <p-floatlabel [variant]="floatVariant(block)!">
+                        <span
+                          class="p-iftalabel"
+                          [style]="floatLabelHostVars(asInputKind(block.kind))"
+                        >
                           @if (inputShowIcon(asInputKind(block.kind))) {
-                            <p-iconfield [iconPosition]="inputIconPosition(asInputKind(block.kind))">
-                              @if (inputIconPosition(asInputKind(block.kind)) === 'left') {
+                            <p-iconfield
+                              [iconPosition]="inputIconPosition(asInputKind(block.kind))"
+                              [class.p-iconfield-dual]="inputDualIcons(asInputKind(block.kind))"
+                            >
+                              @if (ix(asInputKind(block.kind)).iconLeft) {
                                 <p-inputicon class="pi pi-search" />
                               }
                               <input
                                 pInputText
                                 [id]="'it-live-' + block.kind"
-                                placeholder=" "
+                                [attr.placeholder]="floatInteractionPlaceholder(asInputKind(block.kind))"
                                 [ngModel]="ix(asInputKind(block.kind)).value"
                                 (ngModelChange)="patchIx(asInputKind(block.kind), { value: $event })"
                                 [ngClass]="inputSizeClass(ix(asInputKind(block.kind)).size)"
                                 [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
                                 [fluid]="true"
                               />
-                              @if (inputIconPosition(asInputKind(block.kind)) === 'right') {
+                              @if (ix(asInputKind(block.kind)).iconRight) {
                                 <p-inputicon class="pi pi-search" />
                               }
                             </p-iconfield>
@@ -194,9 +203,59 @@
                             <input
                               pInputText
                               [id]="'it-live-' + block.kind"
-                              placeholder=" "
+                              [attr.placeholder]="floatInteractionPlaceholder(asInputKind(block.kind))"
                               [ngModel]="ix(asInputKind(block.kind)).value"
                               (ngModelChange)="patchIx(asInputKind(block.kind), { value: $event })"
+                              [ngClass]="inputSizeClass(ix(asInputKind(block.kind)).size)"
+                              [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
+                              [fluid]="true"
+                            />
+                          }
+                          <label [for]="'it-live-' + block.kind">Label</label>
+                        </span>
+                        <small class="p-hint">Helper Text</small>
+                      </div>
+                    } @else {
+                      <div class="form-input-interaction-field">
+                        <p-floatlabel
+                          [variant]="floatVariant(block)!"
+                          [style]="floatLabelHostVars(asInputKind(block.kind))"
+                        >
+                          @if (inputShowIcon(asInputKind(block.kind))) {
+                            <p-iconfield
+                              [iconPosition]="inputIconPosition(asInputKind(block.kind))"
+                              [class.p-iconfield-dual]="inputDualIcons(asInputKind(block.kind))"
+                            >
+                              @if (ix(asInputKind(block.kind)).iconLeft) {
+                                <p-inputicon class="pi pi-search" />
+                              }
+                              <input
+                                pInputText
+                                [id]="'it-live-' + block.kind"
+                                autocomplete="off"
+                                [attr.placeholder]="floatInteractionPlaceholder(asInputKind(block.kind))"
+                                [ngModel]="ix(asInputKind(block.kind)).value"
+                                (ngModelChange)="patchIx(asInputKind(block.kind), { value: $event })"
+                                (focus)="setFloatIxFocused(asInputKind(block.kind), true)"
+                                (blur)="setFloatIxFocused(asInputKind(block.kind), false)"
+                                [ngClass]="inputSizeClass(ix(asInputKind(block.kind)).size)"
+                                [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
+                                [fluid]="true"
+                              />
+                              @if (ix(asInputKind(block.kind)).iconRight) {
+                                <p-inputicon class="pi pi-search" />
+                              }
+                            </p-iconfield>
+                          } @else {
+                            <input
+                              pInputText
+                              [id]="'it-live-' + block.kind"
+                              autocomplete="off"
+                              [attr.placeholder]="floatInteractionPlaceholder(asInputKind(block.kind))"
+                              [ngModel]="ix(asInputKind(block.kind)).value"
+                              (ngModelChange)="patchIx(asInputKind(block.kind), { value: $event })"
+                              (focus)="setFloatIxFocused(asInputKind(block.kind), true)"
+                              (blur)="setFloatIxFocused(asInputKind(block.kind), false)"
                               [ngClass]="inputSizeClass(ix(asInputKind(block.kind)).size)"
                               [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
                               [fluid]="true"
@@ -248,17 +307,17 @@
                         </div>
                         <p-divider styleClass="button-config-divider" />
                         <div class="input-config-row">
-                          <span class="input-config-label">Icon left</span>
+                          <span class="input-config-label">Icono izq.</span>
                           <p-toggleswitch
                             [ngModel]="ix(asInputKind(block.kind)).iconLeft"
-                            (ngModelChange)="patchInputIconLeft(asInputKind(block.kind), $event)"
+                            (ngModelChange)="patchIx(asInputKind(block.kind), { iconLeft: $event })"
                           />
                         </div>
                         <div class="input-config-row">
-                          <span class="input-config-label">Icon right</span>
+                          <span class="input-config-label">Icono der.</span>
                           <p-toggleswitch
                             [ngModel]="ix(asInputKind(block.kind)).iconRight"
-                            (ngModelChange)="patchInputIconRight(asInputKind(block.kind), $event)"
+                            (ngModelChange)="patchIx(asInputKind(block.kind), { iconRight: $event })"
                           />
                         </div>
                         <div class="input-config-row">
@@ -469,43 +528,90 @@
                     <div class="catalog-button-state catalog-input-state">
                       <div class="catalog-button-state-preview">
                         @if (block.kind === 'input-default') {
-                          <div
-                            class="p-field catalog-input-interactive"
-                            [class.is-field-invalid]="inputStateInvalid(st.key)"
-                          >
+                          <div class="p-field catalog-input-interactive">
                             <label class="p-label">Label</label>
                             <div [ngClass]="inputDemoWrap(st.key)">
-                              <input
-                                pInputText
-                                placeholder="Placeholder"
-                                [value]="inputStateValue(st.key)"
-                                [invalid]="inputStateInvalid(st.key)"
-                                [disabled]="inputStateDisabled(st.key)"
-                                [readonly]="inputStateReadonly(st.key)"
-                                tabindex="-1"
-                                [attr.aria-label]="st.caption"
-                              />
+                              @if (st.key === 'readonly') {
+                                <input
+                                  pInputText
+                                  [placeholder]="inputStatePlaceholder"
+                                  [value]="inputStateReadonlyValue"
+                                  [readonly]="true"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                              } @else {
+                                <input
+                                  pInputText
+                                  [placeholder]="inputStatePlaceholder"
+                                  [ngModel]="inputStateValue(st.key, block)"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [readonly]="inputStateReadonly(st.key)"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                              }
                             </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else if (isIftaLabelBlock(block)) {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <span
+                                class="p-iftalabel"
+                                [class.is-label-invalid]="inputStateInvalid(st.key)"
+                                [style]="floatLabelHostVars(asInputKind(block.kind))"
+                              >
+                                <input
+                                  pInputText
+                                  [attr.placeholder]="inputFloatPlaceholderAttr(st.key)"
+                                  [ngModel]="inputStateValue(st.key, block)"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [readonly]="inputStateReadonly(st.key)"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </span>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
                           </div>
                         } @else {
-                          <div class="catalog-input-interactive" [ngClass]="inputDemoWrap(st.key)">
-                            <p-floatlabel
-                              [variant]="floatVariant(block)!"
-                              [class.is-label-floated]="inputFloatFilled(st.key)"
-                              [class.is-label-invalid]="st.key === 'invalid'"
-                            >
-                              <input
-                                pInputText
-                                [placeholder]="st.key === 'empty' ? ' ' : 'Placeholder'"
-                                [value]="inputStateValue(st.key)"
-                                [invalid]="inputStateInvalid(st.key)"
-                                [disabled]="inputStateDisabled(st.key)"
-                                [readonly]="true"
-                                tabindex="-1"
-                                [attr.aria-label]="st.caption"
-                              />
-                              <label>Label</label>
-                            </p-floatlabel>
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-floatlabel
+                                [variant]="floatVariant(block)!"
+                                [class.is-label-floated]="inputFloatFilled(st.key)"
+                                [style]="floatLabelHostVars(asInputKind(block.kind))"
+                              >
+                                <input
+                                  pInputText
+                                  [attr.placeholder]="inputFloatPlaceholderAttr(st.key)"
+                                  [ngModel]="inputStateValue(st.key, block)"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [readonly]="inputStateReadonly(st.key)"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </p-floatlabel>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
                           </div>
                         }
                       </div>
@@ -568,7 +674,7 @@
             }
             @default {
               @if (isInputBlock(block)) {
-                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
                   @for (sz of sizeOptions; track sz.key) {
                     <div class="catalog-button-state catalog-input-state">
                       <div class="catalog-button-state-preview">
@@ -584,23 +690,42 @@
                               [fluid]="true"
                               tabindex="-1"
                             />
-                            <small class="p-hint">Helper Text</small>
+                          </div>
+                        } @else if (isIftaLabelBlock(block)) {
+                          <div class="catalog-input-interactive">
+                            <span
+                              class="p-iftalabel"
+                              [style]="floatLabelHostVarsForSize(sz.key)"
+                            >
+                              <input
+                                pInputText
+                                [id]="'it-sz-' + block.kind + '-' + sz.key"
+                                placeholder="Placeholder"
+                                [ngClass]="inputSizeClass(sz.key)"
+                                [readonly]="true"
+                                [fluid]="true"
+                                tabindex="-1"
+                              />
+                              <label [for]="'it-sz-' + block.kind + '-' + sz.key">Label</label>
+                            </span>
+                            <small class="p-hint">{{ inputStateHint }}</small>
                           </div>
                         } @else {
                           <div class="catalog-input-interactive">
-                            <p-floatlabel [variant]="floatVariant(block)!" class="is-label-floated">
-                            <input
-                              pInputText
-                              [id]="'it-sz-' + block.kind + '-' + sz.key"
-                              placeholder=" "
-                              [ngClass]="inputSizeClass(sz.key)"
-                              [readonly]="true"
-                              [fluid]="true"
-                              tabindex="-1"
-                            />
+                            <p-floatlabel
+                              [variant]="floatVariant(block)!"
+                              [style]="floatLabelHostVarsForSize(sz.key)"
+                            >
+                              <input
+                                pInputText
+                                [id]="'it-sz-' + block.kind + '-' + sz.key"
+                                [ngClass]="inputSizeClass(sz.key)"
+                                [readonly]="true"
+                                [fluid]="true"
+                                tabindex="-1"
+                              />
                               <label [for]="'it-sz-' + block.kind + '-' + sz.key">Label</label>
                             </p-floatlabel>
-                            <small class="p-hint">Helper Text</small>
                           </div>
                         }
                       </div>

@@ -10,6 +10,7 @@
     "regen:prime-bridge": "python3 scripts/regen-prime-runtime-bridge.py",
     "regen:primeng-dark": "python3 scripts/regen-primeng-dark-from-light.py",
     "regen:ejemplos": "python3 scripts/sync-ejemplos-from-core.py",
-    "regen:mds": "python3 scripts/regen-mds-vars-data.py && python3 scripts/regen-prime-runtime-bridge.py"
+    "regen:mds": "python3 scripts/regen-mds-vars-data.py && python3 scripts/regen-prime-runtime-bridge.py",
+    "backup": "bash scripts/create-backup.sh"
   }
 }

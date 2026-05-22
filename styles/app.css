@@ -1093,9 +1093,18 @@ app-playground-sidebar {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E"), none;
   padding-left: 40px;
 }
-.input-variant-block.show-left-icon .input-interaction-scope .p-floatlabel label,
-.input-variant-block.show-left-icon .input-interaction-scope .p-iftalabel label {
-  left: 40px;
+.input-variant-block.show-left-icon .input-interaction-scope .p-floatlabel:has(.p-inputicon:first-child) label,
+.input-variant-block.show-left-icon .input-interaction-scope .p-iftalabel:has(.p-inputicon:first-child) label {
+  inset-inline-start: var(--inputtext-with-icon-padding-start);
+  left: auto;
+}
+.input-variant-block.show-left-icon .input-interaction-scope .p-floatlabel:has(.p-inputicon:first-child):has(.p-inputtext-sm) label,
+.input-variant-block.show-left-icon .input-interaction-scope .p-iftalabel:has(.p-inputicon:first-child):has(.p-inputtext-sm) label {
+  inset-inline-start: var(--inputtext-with-icon-padding-start-sm);
+}
+.input-variant-block.show-left-icon .input-interaction-scope .p-floatlabel:has(.p-inputicon:first-child):has(.p-inputtext-lg) label,
+.input-variant-block.show-left-icon .input-interaction-scope .p-iftalabel:has(.p-inputicon:first-child):has(.p-inputtext-lg) label {
+  inset-inline-start: var(--inputtext-with-icon-padding-start-lg);
 }
 .input-variant-block.show-right-icon .input-interaction-scope:not(:has(.p-iconfield)) .p-inputtext {
   background-image: none, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
@@ -1406,7 +1415,7 @@ app-playground-sidebar {
 [data-theme="dark"] .preview-section,
 [data-theme="dark"] .catalog-preview,
 [data-theme="dark"] .catalog-card {
-  background: var(--surface-context-subtle, var(--p-surface-900));
+  background: var(--surface-context-soft, var(--p-surface-900));
   border-color: var(--surface-context-base, var(--p-surface-700));
 }
 [data-theme="dark"] .catalog-preview-title {

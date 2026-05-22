@@ -1,0 +1,25 @@
+---
+description: Crear punto de control local (ZIP) cuando el usuario pide un backup
+alwaysApply: false
+---
+
+# Backup local del proyecto
+
+Cuando el usuario pida explícitamente un backup con frases como:
+
+- "Hacer un backup" / "Hacer un buckup"
+- "Crear backup" / "Punto de control"
+- "Guardar copia local del proyecto"
+
+## Qué hacer
+
+1. Ejecutar desde la raíz del repositorio: `pnpm backup`
+2. Confirmar en la respuesta la ruta del ZIP y el tamaño que imprime el script.
+3. No commitear archivos en `backups/` ni modificar el código salvo que el usuario pida otra cosa.
+
+## Detalles
+
+- Los ZIP se guardan en `backups/` (ignorado por git).
+- Rotación automática: se conservan los 20 más recientes (`KEEP_LAST`).
+- Carpeta alternativa: `BACKUP_DIR=/ruta/personalizada pnpm backup`
+- Restaurar: descomprimir el ZIP en una carpeta vacía; leer `BACKUP-MANIFEST.txt` dentro del archivo para commit/rama al momento del backup.

@@ -54,7 +54,7 @@ html[data-theme="dark"] {
   --focus-ring-offset: 2px;
   --focus-ring-width: 1px;
   --form-field-background: var(--surface-950);
-  --form-field-border-color: var(--surface-600);
+  --form-field-border-color: var(--surface-500);
   --form-field-border-radius: var(--border-radius-md);
   --form-field-border-radius-rounded: var(--border-radius-pill);
   --form-field-color: var(--surface-0);
@@ -72,7 +72,7 @@ html[data-theme="dark"] {
   --form-field-focus-ring-width: var(--dimension-scale-x0);
   --form-field-font-size: var(--dimension-scale-x14);
   --form-field-gap-space: var(--dimension-scale-x8);
-  --form-field-hover-border-color: var(--surface-context-medium);
+  --form-field-hover-border-color: var(--surface-context-strong);
   --form-field-icon-color: var(--surface-400);
   --form-field-invalid-border-color: var(--red-300);
   --form-field-invalid-placeholder-color: var(--red-400);

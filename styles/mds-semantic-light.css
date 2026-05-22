@@ -1,8 +1,8 @@
-/* Semantics - Theme: ctr--its--light */
+/* Semantics - Theme: ctr--tol--light */
 /* Version: 1.0.0 */
 /* Description: Base light theme. */
 /* Author: UX/UI Design System Team */
-/* Last Updated: 2026-05-21 */
+/* Last Updated: 2026-05-22 */
 
 @layer mds-core;
 
@@ -56,7 +56,7 @@ html[data-theme="light"] {
   --focus-ring-offset: 2px;
   --focus-ring-width: 1px;
   --form-field-background: var(--surface-0);
-  --form-field-border-color: var(--surface-400);
+  --form-field-border-color: var(--surface-500);
   --form-field-border-radius-rounded: var(--border-radius-pill);
   --form-field-border-radius: var(--border-radius-md);
   --form-field-color: var(--surface-700);
@@ -74,7 +74,7 @@ html[data-theme="light"] {
   --form-field-focus-ring-width: var(--dimension-scale-x0);
   --form-field-font-size: var(--dimension-scale-x14);
   --form-field-gap-space: var(--dimension-scale-x8);
-  --form-field-hover-border-color: var(--surface-context-strong);
+  --form-field-hover-border-color: var(--surface-600);
   --form-field-icon-color: var(--surface-400);
   --form-field-invalid-border-color: var(--red-400);
   --form-field-invalid-placeholder-color: var(--red-600);

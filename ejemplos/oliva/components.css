@@ -787,15 +787,27 @@ html:root {
   --floatlabel-focus-color: var(--form-field-float-label-focus-color);
   --floatlabel-in-active-top: var(--form-field-padding-y);
   --floatlabel-in-input-padding-bottom: var(--form-field-padding-y);
-  --floatlabel-in-input-padding-top: 21px;
+  --floatlabel-in-input-padding-top-sm: calc(
+    var(--form-field-sm-padding-y) + var(--form-field-xs-font-size) + var(--dimension-scale-x2)
+  );
+  --floatlabel-in-input-padding-top-lg: calc(
+    var(--form-field-lg-padding-y) + var(--form-field-xs-font-size) + var(--dimension-scale-x4)
+  );
+  --floatlabel-in-input-padding-top: calc(
+    var(--form-field-padding-y) + var(--form-field-xs-font-size) + var(--dimension-scale-x3)
+  );
   --floatlabel-invalid-color: var(--form-field-float-label-invalid-color);
   --floatlabel-on-active-background: var(--form-field-background);
   --floatlabel-on-active-padding-x: 2px;
   --floatlabel-on-active-padding-y: 0px;
   --floatlabel-on-border-radius: var(--dimension-radius-x2);
-  --floatlabel-position-lg-x: var(--form-field-lg-position-x);
-  --floatlabel-position-sm-x: var(--form-field-sm-position-x);
-  --floatlabel-position-x: var(--form-field-position-x);
+  --floatlabel-over-active-background: var(--form-field-background);
+  --floatlabel-on-wrapper-padding-top: calc((var(--form-field-xs-font-size) / 2) + var(--dimension-scale-x2));
+  --floatlabel-over-wrapper-padding-top: calc(var(--form-field-xs-font-size) + var(--dimension-scale-x4));
+  --floatlabel-over-active-top: calc(-1 * (var(--form-field-xs-font-size) + var(--dimension-scale-x4)));
+  --floatlabel-position-lg-x: var(--form-field-lg-padding-x);
+  --floatlabel-position-sm-x: var(--form-field-sm-padding-x);
+  --floatlabel-position-x: var(--form-field-padding-x);
   --focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --form-field-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --form-field-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
@@ -867,12 +879,19 @@ html:root {
   --iftalabel-font-size: var(--form-field-xs-font-size);
   --iftalabel-font-weight: 400;
   --iftalabel-input-padding-bottom: var(--form-field-padding-y);
-  --iftalabel-input-padding-top: var(--dimension-scale-x22);
+  --iftalabel-input-padding-top: var(--floatlabel-in-input-padding-top);
+  --iftalabel-input-padding-top-sm: var(--floatlabel-in-input-padding-top-sm);
+  --iftalabel-input-padding-top-lg: var(--floatlabel-in-input-padding-top-lg);
+    var(--form-field-padding-y) + var(--form-field-xs-font-size) + var(--dimension-scale-x3)
+  );
   --iftalabel-invalid-color: var(--form-field-float-label-invalid-color);
-  --iftalabel-position-lg-x: var(--form-field-lg-position-x);
-  --iftalabel-position-sm-x: var(--form-field-sm-position-x);
-  --iftalabel-position-x: var(--form-field-position-x);
+  --iftalabel-position-lg-x: var(--form-field-lg-padding-x);
+  --iftalabel-position-sm-x: var(--form-field-sm-padding-x);
+  --iftalabel-position-x: var(--form-field-padding-x);
   --iftalabel-top: var(--form-field-padding-y);
+  --iftalabel-input-min-height: 47px;
+  --iftalabel-input-min-height-sm: 45px;
+  --iftalabel-input-min-height-lg: 49px;
   --image-action-border-radius: var(--border-radius-pill);
   --image-action-color: var(--surface-context-fixed-light);
   --image-action-focus-ring-color: var(--focus-ring-color);
@@ -936,6 +955,25 @@ html:root {
   --inputotp-inputotp-input-lg-width: var(--dimension-scale-x42);
   --inputotp-inputotp-input-sm-width: var(--dimension-scale-x28);
   --inputotp-inputotp-input-width: var(--dimension-scale-x32);
+  --inputtext-line-height: 1.25;
+  --inputtext-min-height: calc(
+    (var(--form-field-padding-y) * 2) + (var(--form-field-font-size) * var(--inputtext-line-height)) + 2px
+  );
+  --inputtext-in-min-height: calc(
+    var(--floatlabel-in-input-padding-top) +
+      (var(--form-field-font-size) * var(--inputtext-line-height)) +
+      var(--floatlabel-in-input-padding-bottom) + 2px
+  );
+  --inputtext-in-min-height-sm: calc(
+    var(--floatlabel-in-input-padding-top-sm) +
+      (var(--form-field-sm-font-size) * var(--inputtext-line-height)) +
+      var(--form-field-sm-padding-y) + 2px
+  );
+  --inputtext-in-min-height-lg: calc(
+    var(--floatlabel-in-input-padding-top-lg) +
+      (var(--form-field-lg-font-size) * var(--inputtext-line-height)) +
+      var(--form-field-lg-padding-y) + 2px
+  );
   --inputtext-background: var(--form-field-background);
   --inputtext-border-color: var(--form-field-border-color);
   --inputtext-border-radius: var(--form-field-border-radius);
@@ -1767,13 +1805,13 @@ html:root {
   --toggleswitch-gap: var(--dimension-scale-x6);
   --toggleswitch-handle-background: var(--neutral-white);
   --toggleswitch-handle-border-radius: var(--border-radius-lg);
-  --toggleswitch-handle-checked-background: var(--surface-context-minimal);
+  --toggleswitch-handle-checked-background: var(--neutral-white);
   --toggleswitch-handle-checked-color: var(--primary-color);
-  --toggleswitch-handle-checked-hover-background: var(--surface-context-minimal);
+  --toggleswitch-handle-checked-hover-background: var(--neutral-white);
   --toggleswitch-handle-checked-hover-color: var(--primary-hover-color);
   --toggleswitch-handle-color: var(--text-muted-color);
   --toggleswitch-handle-disabled-background: var(--surface-context-strong);
-  --toggleswitch-handle-hover-background: var(--surface-context-minimal);
+  --toggleswitch-handle-hover-background: var(--neutral-white);
   --toggleswitch-handle-hover-color: var(--text-color);
   --toggleswitch-handle-size: var(--dimension-scale-x16);
   --toggleswitch-height: var(--dimension-scale-x24);

@@ -5,7 +5,8 @@ export type FormBlockKind =
   | 'input-default'
   | 'input-float-over'
   | 'input-float-on'
-  | 'input-float-in';
+  | 'input-float-in'
+  | 'input-iftalabel';
 
 export type FormBlockCategory = 'choice' | 'input';
 
@@ -82,23 +83,38 @@ export const FORM_SIZE_OPTIONS: {
   caption: string;
   pSize?: 'small' | 'large';
 }[] = [
-  { key: 'small', caption: 'sm', pSize: FORM_CHOICE_SIZE_LAYOUT.small.pSize },
-  { key: 'normal', caption: 'md' },
-  { key: 'large', caption: 'lg', pSize: FORM_CHOICE_SIZE_LAYOUT.large.pSize },
+  { key: 'small', caption: 'Small', pSize: FORM_CHOICE_SIZE_LAYOUT.small.pSize },
+  { key: 'normal', caption: 'Normal' },
+  { key: 'large', caption: 'Large', pSize: FORM_CHOICE_SIZE_LAYOUT.large.pSize },
 ];
 
 export const FORM_SIZE_SELECT_OPTIONS: { label: string; value: FormInteractionSize }[] =
   FORM_SIZE_OPTIONS.map((o) => ({ label: o.caption, value: o.key }));
 
-/** Etiquetas de tamaño en States/Sizes (Interaction sigue usando sm/md/lg en el toggle). */
+/** Etiquetas de tamaño en States/Sizes e Interaction (popover). */
 export const FORM_CHOICE_SIZE_DISPLAY_LABELS: Record<FormInteractionSize, string> = {
   small: 'Small',
   normal: 'Normal',
   large: 'Large',
 };
 
+/** Texto visible del placeholder en previews estáticos InputText default. */
+export const FORM_INPUT_STATE_PLACEHOLDER = 'Placeholder';
+
+/** Helper text bajo el campo en la sección States. */
+export const FORM_INPUT_STATE_HINT = 'Helper Text';
+
+/** Mensaje de error bajo el campo en estado Invalid (InputText default y float label). */
+export const FORM_INPUT_STATE_ERROR_MESSAGE = 'Error message';
+
+/** Valor del input en estado Readonly (InputText default). */
+export const FORM_INPUT_STATE_READONLY_VALUE = 'Solo lectura';
+
+/** Valor del input en estado Fill (Float label, sección States). */
+export const FORM_INPUT_STATE_FILLED_VALUE = 'Value';
+
 export const FORM_INPUT_DEFAULT_STATES: { key: FormInputDemoState; caption: string }[] = [
-  { key: 'normal', caption: 'Normal' },
+  { key: 'normal', caption: 'Default' },
   { key: 'hover', caption: 'Hover' },
   { key: 'focus', caption: 'Focus' },
   { key: 'invalid', caption: 'Invalid' },
@@ -107,8 +123,8 @@ export const FORM_INPUT_DEFAULT_STATES: { key: FormInputDemoState; caption: stri
 ];
 
 export const FORM_INPUT_FLOAT_STATES: { key: FormInputDemoState; caption: string }[] = [
-  { key: 'empty', caption: 'Vacío' },
-  { key: 'filled', caption: 'Relleno' },
+  { key: 'empty', caption: 'Default' },
+  { key: 'filled', caption: 'Fill' },
   { key: 'hover', caption: 'Hover' },
   { key: 'focus', caption: 'Focus' },
   { key: 'invalid', caption: 'Invalid' },
@@ -123,4 +139,5 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'input-float-over', title: 'InputText float label Over', category: 'input', floatVariant: 'over' },
   { kind: 'input-float-on', title: 'InputText float label On', category: 'input', floatVariant: 'on' },
   { kind: 'input-float-in', title: 'InputText float label In', category: 'input', floatVariant: 'in' },
+  { kind: 'input-iftalabel', title: 'InputText IftaLabel', category: 'input' },
 ];

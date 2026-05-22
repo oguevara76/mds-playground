@@ -638,7 +638,7 @@
   font-size: var(--p-input-lg-font-size);
 }
 .p-inputtext-rounded {
-  border-radius: var(--inputtext-border-rounded-radius, var(--form-field-border-radius-rounded, 999px));
+  border-radius: var(--p-inputtext-border-rounded-radius, var(--inputtext-border-rounded-radius, var(--form-field-border-radius-rounded, 999px)));
 }
 
 .p-inputtextarea {
@@ -750,10 +750,59 @@
   color: var(--p-float-label-color);
 }
 
-/* IN: al activar, etiqueta sube al interior superior del campo */
-.p-floatlabel--in .p-inputtext {
+/* IN: altura con label interior (padding-block-start; sm/lg no pisan con padding-block) */
+.p-floatlabel--in .p-inputtext,
+.p-floatlabel-in .p-inputtext {
   width: 100%;
-  padding-top: calc(var(--p-input-padding-y) + 10px);
+  box-sizing: border-box;
+  line-height: var(--inputtext-line-height, 1.25);
+  height: var(--p-floatlabel-in-input-min-height, var(--iftalabel-input-min-height, 47px));
+  min-height: var(--p-floatlabel-in-input-min-height, var(--iftalabel-input-min-height, 47px));
+  padding-block-start: var(--p-floatlabel-in-input-padding-top, var(--floatlabel-in-input-padding-top));
+  padding-block-end: var(--p-floatlabel-in-input-padding-bottom, var(--p-inputtext-padding-y, var(--form-field-padding-y)));
+  padding-inline-start: var(--p-inputtext-padding-x, var(--form-field-padding-x));
+  padding-inline-end: var(--p-inputtext-padding-x, var(--form-field-padding-x));
+}
+.p-floatlabel--in .p-iconfield:has(.p-inputicon:first-child) .p-inputtext,
+.p-floatlabel-in .p-iconfield:has(.p-inputicon:first-child) .p-inputtext {
+  padding-inline-start: var(--p-inputtext-with-icon-padding-start, var(--inputtext-with-icon-padding-start));
+}
+.p-floatlabel--in .p-iconfield:has(.p-inputtext-sm):has(.p-inputicon:first-child) .p-inputtext,
+.p-floatlabel-in .p-iconfield:has(.p-inputtext-sm):has(.p-inputicon:first-child) .p-inputtext {
+  padding-inline-start: var(--p-inputtext-with-icon-padding-start-sm, var(--inputtext-with-icon-padding-start-sm));
+}
+.p-floatlabel--in .p-iconfield:has(.p-inputtext-lg):has(.p-inputicon:first-child) .p-inputtext,
+.p-floatlabel-in .p-iconfield:has(.p-inputtext-lg):has(.p-inputicon:first-child) .p-inputtext {
+  padding-inline-start: var(--p-inputtext-with-icon-padding-start-lg, var(--inputtext-with-icon-padding-start-lg));
+}
+.p-floatlabel--in .p-iconfield:has(.p-inputicon:first-child) .p-inputicon:first-child,
+.p-floatlabel-in .p-iconfield:has(.p-inputicon:first-child) .p-inputicon:first-child {
+  top: calc(
+    var(--floatlabel-in-input-padding-top) +
+      (var(--form-field-font-size) * var(--inputtext-line-height, 1.25) / 2)
+  );
+  margin-top: 0;
+  transform: translateY(-50%);
+}
+.p-floatlabel--in .p-inputtext.p-inputtext-sm,
+.p-floatlabel-in .p-inputtext.p-inputtext-sm {
+  height: var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px));
+  min-height: var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px));
+  padding-block-start: var(--p-floatlabel-in-input-padding-top-sm, var(--floatlabel-in-input-padding-top-sm));
+  padding-block-end: var(--p-inputtext-sm-padding-y, var(--form-field-sm-padding-y));
+  padding-inline-start: var(--p-inputtext-sm-padding-x, var(--form-field-sm-padding-x));
+  padding-inline-end: var(--p-inputtext-sm-padding-x, var(--form-field-sm-padding-x));
+  font-size: var(--p-inputtext-sm-font-size, var(--form-field-sm-font-size));
+}
+.p-floatlabel--in .p-inputtext.p-inputtext-lg,
+.p-floatlabel-in .p-inputtext.p-inputtext-lg {
+  height: var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px));
+  min-height: var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px));
+  padding-block-start: var(--p-floatlabel-in-input-padding-top-lg, var(--floatlabel-in-input-padding-top-lg));
+  padding-block-end: var(--p-inputtext-lg-padding-y, var(--form-field-lg-padding-y));
+  padding-inline-start: var(--p-inputtext-lg-padding-x, var(--form-field-lg-padding-x));
+  padding-inline-end: var(--p-inputtext-lg-padding-x, var(--form-field-lg-padding-x));
+  font-size: var(--p-inputtext-lg-font-size, var(--form-field-lg-font-size));
 }
 .p-floatlabel--in .p-inputtext:focus + label,
 .p-floatlabel--in .p-inputtext:not(:placeholder-shown) + label,
@@ -786,15 +835,125 @@
 }
 .p-iftalabel .p-inputtext {
   width: 100%;
-  padding-top: calc(var(--p-input-padding-y) + 10px);
+  box-sizing: border-box;
+  line-height: var(--inputtext-line-height, 1.25);
+  height: var(--p-floatlabel-in-input-min-height, var(--p-iftalabel-input-min-height, 47px));
+  min-height: var(--p-floatlabel-in-input-min-height, var(--p-iftalabel-input-min-height, 47px));
+  padding-block-start: var(--p-iftalabel-input-padding-top, var(--iftalabel-input-padding-top));
+  padding-block-end: var(--p-iftalabel-input-padding-bottom, var(--p-inputtext-padding-y, var(--form-field-padding-y)));
+  padding-inline-start: var(--p-inputtext-padding-x, var(--form-field-padding-x));
+  padding-inline-end: var(--p-inputtext-padding-x, var(--form-field-padding-x));
 }
+.p-iftalabel:has(.p-inputicon:first-child) .p-inputtext {
+  padding-inline-start: var(--p-inputtext-with-icon-padding-start, var(--inputtext-with-icon-padding-start));
+}
+.p-iftalabel:has(.p-inputtext-sm):has(.p-inputicon:first-child) .p-inputtext {
+  padding-inline-start: var(--p-inputtext-with-icon-padding-start-sm, var(--inputtext-with-icon-padding-start-sm));
+}
+.p-iftalabel:has(.p-inputtext-lg):has(.p-inputicon:first-child) .p-inputtext {
+  padding-inline-start: var(--p-inputtext-with-icon-padding-start-lg, var(--inputtext-with-icon-padding-start-lg));
+}
+.p-iftalabel:has(.p-inputicon:first-child) .p-inputicon:first-child {
+  top: calc(
+    var(--iftalabel-input-padding-top) +
+      (var(--form-field-font-size) * var(--inputtext-line-height, 1.25) / 2)
+  );
+  margin-top: 0;
+  transform: translateY(-50%);
+}
+.p-iftalabel:has(.p-inputtext-sm):has(.p-inputicon:first-child) .p-inputicon:first-child {
+  top: calc(
+    var(--iftalabel-input-padding-top-sm) +
+      (var(--form-field-sm-font-size) * var(--inputtext-line-height, 1.25) / 2)
+  );
+}
+.p-iftalabel:has(.p-inputtext-lg):has(.p-inputicon:first-child) .p-inputicon:first-child {
+  top: calc(
+    var(--iftalabel-input-padding-top-lg) +
+      (var(--form-field-lg-font-size) * var(--inputtext-line-height, 1.25) / 2)
+  );
+}
+.p-iftalabel:has(.p-inputicon:first-child) label {
+  inset-inline-start: var(--p-inputtext-with-icon-padding-start, var(--inputtext-with-icon-padding-start));
+}
+.p-iftalabel:has(.p-inputtext-sm):has(.p-inputicon:first-child) label {
+  inset-inline-start: var(--p-inputtext-with-icon-padding-start-sm, var(--inputtext-with-icon-padding-start-sm));
+}
+.p-iftalabel:has(.p-inputtext-lg):has(.p-inputicon:first-child) label {
+  inset-inline-start: var(--p-inputtext-with-icon-padding-start-lg, var(--inputtext-with-icon-padding-start-lg));
+}
+.p-iftalabel .p-inputtext.p-inputtext-sm {
+  height: var(--p-floatlabel-in-input-min-height-sm, var(--p-iftalabel-input-min-height-sm, 45px));
+  min-height: var(--p-floatlabel-in-input-min-height-sm, var(--p-iftalabel-input-min-height-sm, 45px));
+  padding-block-start: var(--p-iftalabel-input-padding-top-sm, var(--iftalabel-input-padding-top-sm));
+  padding-block-end: var(--p-inputtext-sm-padding-y, var(--form-field-sm-padding-y));
+  padding-inline: var(--p-inputtext-sm-padding-x, var(--form-field-sm-padding-x));
+  font-size: var(--p-inputtext-sm-font-size, var(--form-field-sm-font-size));
+}
+.p-iftalabel .p-inputtext.p-inputtext-lg {
+  height: var(--p-floatlabel-in-input-min-height-lg, var(--p-iftalabel-input-min-height-lg, 49px));
+  min-height: var(--p-floatlabel-in-input-min-height-lg, var(--p-iftalabel-input-min-height-lg, 49px));
+  padding-block-start: var(--p-iftalabel-input-padding-top-lg, var(--iftalabel-input-padding-top-lg));
+  padding-block-end: var(--p-inputtext-lg-padding-y, var(--form-field-lg-padding-y));
+  padding-inline: var(--p-inputtext-lg-padding-x, var(--form-field-lg-padding-x));
+  font-size: var(--p-inputtext-lg-font-size, var(--form-field-lg-font-size));
+}
+/* Sizes: label acorde al tamaño del input (no 10px fijo de is-label-floated) */
+.catalog-input-sizes-row .p-floatlabel:has(.p-inputtext-sm) label,
+.catalog-input-sizes-row .p-floatlabel--over:has(.p-inputtext-sm) label,
+.catalog-input-sizes-row .p-floatlabel--on:has(.p-inputtext-sm) label,
+.catalog-input-sizes-row .p-floatlabel--in:has(.p-inputtext-sm) label {
+  font-size: var(--p-inputtext-sm-font-size, var(--form-field-sm-font-size));
+}
+
+.catalog-input-sizes-row .p-floatlabel:has(.p-inputtext-lg) label,
+.catalog-input-sizes-row .p-floatlabel--over:has(.p-inputtext-lg) label,
+.catalog-input-sizes-row .p-floatlabel--on:has(.p-inputtext-lg) label,
+.catalog-input-sizes-row .p-floatlabel--in:has(.p-inputtext-lg) label {
+  font-size: var(--p-inputtext-lg-font-size, var(--form-field-lg-font-size));
+}
+
+.catalog-input-sizes-row .p-floatlabel:not(:has(.p-inputtext-sm)):not(:has(.p-inputtext-lg)) label,
+.catalog-input-sizes-row .p-floatlabel--over:not(:has(.p-inputtext-sm)):not(:has(.p-inputtext-lg)) label,
+.catalog-input-sizes-row .p-floatlabel--on:not(:has(.p-inputtext-sm)):not(:has(.p-inputtext-lg)) label,
+.catalog-input-sizes-row .p-floatlabel--in:not(:has(.p-inputtext-sm)):not(:has(.p-inputtext-lg)) label {
+  font-size: var(--p-inputtext-font-size, var(--form-field-font-size));
+}
+
+.catalog-input-sizes-row .p-iftalabel:has(.p-inputtext-sm) label {
+  font-size: var(--p-inputtext-sm-font-size, var(--form-field-sm-font-size));
+}
+
+.catalog-input-sizes-row .p-iftalabel:has(.p-inputtext-lg) label {
+  font-size: var(--p-inputtext-lg-font-size, var(--form-field-lg-font-size));
+}
+
+.catalog-input-sizes-row .p-iftalabel:not(:has(.p-inputtext-sm)):not(:has(.p-inputtext-lg)) label {
+  font-size: var(--p-inputtext-font-size, var(--form-field-font-size));
+}
+
 .p-iftalabel label {
   position: absolute;
-  top: 6px;
-  left: var(--p-input-padding-x);
-  font-size: 11px;
+  top: var(--p-iftalabel-top, var(--iftalabel-top, var(--form-field-padding-y)));
+  inset-inline-start: var(--p-iftalabel-position-x, var(--iftalabel-position-x, var(--p-inputtext-padding-x)));
+  transform: none;
+  font-size: var(--p-iftalabel-font-size, var(--iftalabel-font-size, var(--form-field-xs-font-size)));
+  font-weight: var(--p-iftalabel-font-weight, var(--iftalabel-font-weight, 400));
+  line-height: 1;
   color: var(--p-float-label-color);
   pointer-events: none;
+}
+
+/* Float In: placeholder en foco no debe usar top Over de PrimeNG */
+.p-floatlabel-in:has(input:focus) label,
+.p-floatlabel-in:has(input.p-filled) label,
+.p-floatlabel-in:has(input[placeholder]) label {
+  top: var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  padding: 0;
+  background: transparent;
 }
 .p-iftalabel .p-inputtext:focus + label {
   color: var(--p-float-label-focus-color);
@@ -875,7 +1034,10 @@
   border: 2px solid var(--p-checkbox-border-color);
   border-radius: var(--p-checkbox-border-radius);
   background: var(--p-checkbox-background);
-  transition: all var(--p-transition-duration);
+  box-shadow: var(--p-checkbox-shadow);
+  transition: background var(--p-checkbox-transition-duration),
+    border-color var(--p-checkbox-transition-duration),
+    color var(--p-checkbox-transition-duration);
   flex-shrink: 0;
 }
 .p-checkbox:hover { border-color: var(--p-checkbox-hover-border-color); }
@@ -887,30 +1049,38 @@
 .p-checkbox-checked:hover {
   background: var(--p-checkbox-checked-hover-background);
   border-color: var(--p-checkbox-checked-hover-border-color);
+  color: var(--p-checkbox-icon-checked-hover-color);
 }
-.p-checkbox-checked .pi { font-size: var(--checkbox-icon-size); }
-.p-checkbox-sm.p-checkbox-checked .pi { font-size: var(--checkbox-icon-sm-size); }
-.p-checkbox-lg.p-checkbox-checked .pi { font-size: var(--checkbox-icon-lg-size); }
+.p-checkbox-checked .pi { font-size: var(--p-checkbox-icon-size); }
+.p-checkbox-sm.p-checkbox-checked .pi { font-size: var(--p-checkbox-icon-sm-size); }
+.p-checkbox-lg.p-checkbox-checked .pi { font-size: var(--p-checkbox-icon-lg-size); }
 .p-checkbox-indeterminate {
   background: var(--p-checkbox-checked-background);
   border-color: var(--p-checkbox-checked-border-color);
   color: var(--p-checkbox-icon-checked-color);
 }
-.p-checkbox-indeterminate .pi { font-size: var(--checkbox-icon-size); }
-.p-checkbox-sm.p-checkbox-indeterminate .pi { font-size: var(--checkbox-icon-sm-size); }
-.p-checkbox-lg.p-checkbox-indeterminate .pi { font-size: var(--checkbox-icon-lg-size); }
+.p-checkbox-indeterminate .pi { font-size: var(--p-checkbox-icon-size); }
+.p-checkbox-sm.p-checkbox-indeterminate .pi { font-size: var(--p-checkbox-icon-sm-size); }
+.p-checkbox-lg.p-checkbox-indeterminate .pi { font-size: var(--p-checkbox-icon-lg-size); }
 .p-checkbox-disabled {
   background: var(--p-checkbox-disabled-background);
-  border-color: var(--p-input-border-color);
+  border-color: var(--p-checkbox-border-color);
   color: var(--p-checkbox-icon-disabled-color);
   cursor: not-allowed;
   opacity: .7;
 }
+.p-checkbox-disabled.p-checkbox-checked {
+  border-color: var(--p-checkbox-checked-disabled-border-color);
+}
 .p-checkbox-invalid { border-color: var(--p-checkbox-invalid-border-color); }
 .p-checkbox:focus-visible {
   outline: var(--p-checkbox-focus-ring-width) solid color-mix(in srgb, var(--p-checkbox-focus-ring-color) 30%, transparent);
-  outline-offset: 1px;
+  outline-offset: var(--p-checkbox-focus-ring-offset, 1px);
+  box-shadow: var(--p-checkbox-focus-ring-shadow);
   border-color: var(--p-checkbox-focus-border-color);
+}
+.p-checkbox-checked:focus-visible {
+  border-color: var(--p-checkbox-checked-focus-border-color);
 }
 .p-checkbox-sm { width: var(--p-checkbox-sm-width); height: var(--p-checkbox-sm-height); }
 .p-checkbox-lg { width: var(--p-checkbox-lg-width); height: var(--p-checkbox-lg-height); }
@@ -1057,7 +1227,7 @@
   width: var(--toggleswitch-handle-size);
   height: var(--toggleswitch-handle-size);
   border-radius: var(--toggleswitch-handle-border-radius);
-  background: var(--toggleswitch-handle-background);
+  background: var(--toggleswitch-handle-background, var(--neutral-white));
   transform: translateY(-50%);
   transition: left var(--p-transition-duration), background var(--p-transition-duration);
 }
@@ -1066,7 +1236,7 @@
   border-color: var(--toggleswitch-hover-border-color);
 }
 .p-toggleswitch:hover:not(.p-toggleswitch-disabled):not(.p-toggleswitch-checked) .p-toggleswitch-slider::before {
-  background: var(--toggleswitch-handle-hover-background);
+  background: var(--toggleswitch-handle-hover-background, var(--neutral-white));
 }
 .p-toggleswitch.p-toggleswitch-checked {
   background: var(--toggleswitch-checked-background);
@@ -1078,10 +1248,10 @@
 }
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider::before {
   left: calc(100% - var(--toggleswitch-handle-size) - 3px);
-  background: var(--toggleswitch-handle-checked-background);
+  background: var(--toggleswitch-handle-checked-background, var(--neutral-white));
 }
 .p-toggleswitch.p-toggleswitch-checked:hover:not(.p-toggleswitch-disabled) .p-toggleswitch-slider::before {
-  background: var(--toggleswitch-handle-checked-hover-background);
+  background: var(--toggleswitch-handle-checked-hover-background, var(--neutral-white));
 }
 .p-toggleswitch .p-toggleswitch-input:focus-visible + .p-toggleswitch-slider {
   outline: var(--toggleswitch-focus-ring-width) solid color-mix(in srgb, var(--toggleswitch-focus-ring-color) 35%, transparent);

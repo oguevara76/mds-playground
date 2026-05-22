@@ -166,22 +166,49 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
   text-overflow: clip;
 }
 
-/* ToggleSwitch en panel de configuración */
+/* ToggleSwitch en panel de configuración — tokens MDS vía --p-toggleswitch-* */
 .p-popover .p-toggleswitch .p-toggleswitch-slider {
-  background: var(--toggleswitch-background, var(--p-surface-300)) !important;
-  border-color: var(--toggleswitch-border-color, transparent) !important;
+  background: var(--p-toggleswitch-background) !important;
+  border-color: var(--p-toggleswitch-border-color) !important;
+  box-shadow: var(--p-toggleswitch-shadow);
+}
+
+.p-popover .p-toggleswitch:hover:not(.p-disabled):not(.p-toggleswitch-checked) .p-toggleswitch-slider {
+  background: var(--p-toggleswitch-hover-background) !important;
+  border-color: var(--p-toggleswitch-hover-border-color) !important;
 }
 
 .p-popover .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
-  background: var(--toggleswitch-checked-background, var(--primary-color)) !important;
-  border-color: var(--toggleswitch-checked-border-color, transparent) !important;
+  background: var(--p-toggleswitch-checked-background) !important;
+  border-color: var(--p-toggleswitch-checked-border-color) !important;
+}
+
+.p-popover .p-toggleswitch.p-toggleswitch-checked:hover:not(.p-disabled) .p-toggleswitch-slider {
+  background: var(--p-toggleswitch-checked-hover-background) !important;
+  border-color: var(--p-toggleswitch-checked-hover-border-color) !important;
 }
 
 .p-popover .p-toggleswitch .p-toggleswitch-handle {
-  background: var(--toggleswitch-handle-background, var(--neutral-white, #fff)) !important;
+  background: var(--p-toggleswitch-handle-background) !important;
+}
+
+.p-popover .p-toggleswitch:hover:not(.p-disabled):not(.p-toggleswitch-checked) .p-toggleswitch-handle {
+  background: var(--p-toggleswitch-handle-hover-background) !important;
 }
 
 .p-popover .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle {
-  background: var(--toggleswitch-handle-checked-background, var(--surface-context-minimal, #fff)) !important;
+  background: var(--p-toggleswitch-handle-checked-background) !important;
+}
+
+.p-popover .p-toggleswitch.p-toggleswitch-checked:hover:not(.p-disabled) .p-toggleswitch-handle {
+  background: var(--p-toggleswitch-handle-checked-hover-background) !important;
+}
+
+.p-popover .p-toggleswitch.p-disabled:not(.p-toggleswitch-checked) .p-toggleswitch-slider {
+  background: var(--p-toggleswitch-disabled-background) !important;
+}
+
+.p-popover .p-toggleswitch.p-disabled .p-toggleswitch-handle {
+  background: var(--p-toggleswitch-handle-disabled-background) !important;
 }
 `;

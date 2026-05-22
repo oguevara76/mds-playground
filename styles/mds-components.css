@@ -2,7 +2,7 @@
 /* Version: 1.0.0 */
 /* Description: Variables and Effect Styles for components. */
 /* Author: UX/UI Design System Team */
-/* Last Updated: 2026-05-21 */
+/* Last Updated: 2026-05-22 */
 
 @layer mds-core;
 
@@ -789,15 +789,39 @@ html:root {
   --floatlabel-focus-color: var(--form-field-float-label-focus-color);
   --floatlabel-in-active-top: var(--form-field-padding-y);
   --floatlabel-in-input-padding-bottom: var(--form-field-padding-y);
-  --floatlabel-in-input-padding-top: 21px;
+  --iftalabel-input-min-height: 47px;
+  --iftalabel-input-min-height-sm: 45px;
+  --iftalabel-input-min-height-lg: 49px;
+  --iftalabel-input-padding-top: calc(
+    var(--iftalabel-input-min-height) - var(--form-field-padding-y) -
+      (var(--form-field-font-size) * var(--inputtext-line-height)) - 2px
+  );
+  --iftalabel-input-padding-top-sm: calc(
+    var(--iftalabel-input-min-height-sm) - var(--form-field-sm-padding-y) -
+      (var(--form-field-sm-font-size) * var(--inputtext-line-height)) - 2px
+  );
+  --iftalabel-input-padding-top-lg: calc(
+    var(--iftalabel-input-min-height-lg) - var(--form-field-lg-padding-y) -
+      (var(--form-field-lg-font-size) * var(--inputtext-line-height)) - 2px
+  );
+  --floatlabel-in-input-padding-top: var(--iftalabel-input-padding-top);
+  --floatlabel-in-input-padding-top-sm: var(--iftalabel-input-padding-top-sm);
+  --floatlabel-in-input-padding-top-lg: var(--iftalabel-input-padding-top-lg);
+  --floatlabel-in-input-min-height: var(--iftalabel-input-min-height);
+  --floatlabel-in-input-min-height-sm: var(--iftalabel-input-min-height-sm);
+  --floatlabel-in-input-min-height-lg: var(--iftalabel-input-min-height-lg);
+  --floatlabel-on-wrapper-padding-top: calc((var(--form-field-xs-font-size) / 2) + var(--dimension-scale-x2));
+  --floatlabel-over-wrapper-padding-top: calc(var(--form-field-xs-font-size) + var(--dimension-scale-x4));
   --floatlabel-invalid-color: var(--form-field-float-label-invalid-color);
   --floatlabel-on-active-background: var(--form-field-background);
   --floatlabel-on-active-padding-x: 2px;
   --floatlabel-on-active-padding-y: 0px;
   --floatlabel-on-border-radius: var(--dimension-radius-x2);
-  --floatlabel-position-lg-x: var(--form-field-lg-position-x);
-  --floatlabel-position-sm-x: var(--form-field-sm-position-x);
-  --floatlabel-position-x: var(--form-field-position-x);
+  --floatlabel-over-active-background: var(--form-field-background);
+  --floatlabel-over-active-top: calc(-1 * (var(--form-field-xs-font-size) + var(--dimension-scale-x4)));
+  --floatlabel-position-lg-x: var(--form-field-lg-padding-x);
+  --floatlabel-position-sm-x: var(--form-field-sm-padding-x);
+  --floatlabel-position-x: var(--form-field-padding-x);
   --focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --form-field-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --form-field-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
@@ -869,11 +893,11 @@ html:root {
   --iftalabel-font-size: var(--form-field-xs-font-size);
   --iftalabel-font-weight: 400;
   --iftalabel-input-padding-bottom: var(--form-field-padding-y);
-  --iftalabel-input-padding-top: var(--dimension-scale-x22);
+  /* padding-top / min-height definidos arriba (Float In comparte tokens) */
   --iftalabel-invalid-color: var(--form-field-float-label-invalid-color);
-  --iftalabel-position-lg-x: var(--form-field-lg-position-x);
-  --iftalabel-position-sm-x: var(--form-field-sm-position-x);
-  --iftalabel-position-x: var(--form-field-position-x);
+  --iftalabel-position-lg-x: var(--form-field-lg-padding-x);
+  --iftalabel-position-sm-x: var(--form-field-sm-padding-x);
+  --iftalabel-position-x: var(--form-field-padding-x);
   --iftalabel-top: var(--form-field-padding-y);
   --image-action-border-radius: var(--border-radius-pill);
   --image-action-color: var(--surface-context-fixed-light);
@@ -960,8 +984,18 @@ html:root {
   --inputtext-lg-font-size: var(--dimension-scale-x16);
   --inputtext-lg-padding-x: var(--form-field-lg-padding-x);
   --inputtext-lg-padding-y: var(--form-field-lg-padding-y);
+  --inputtext-line-height: 1.25;
+  --inputtext-min-height: calc(
+    (var(--form-field-padding-y) * 2) + (var(--form-field-font-size) * var(--inputtext-line-height)) + 2px
+  );
+  --inputtext-in-min-height: var(--iftalabel-input-min-height);
+  --inputtext-in-min-height-sm: var(--iftalabel-input-min-height-sm);
+  --inputtext-in-min-height-lg: var(--iftalabel-input-min-height-lg);
   --inputtext-padding-x: var(--form-field-padding-x);
   --inputtext-padding-y: var(--form-field-padding-y);
+  --inputtext-with-icon-padding-start: calc((var(--form-field-padding-x) * 2) + var(--icon-size));
+  --inputtext-with-icon-padding-start-sm: calc((var(--form-field-sm-padding-x) * 2) + var(--icon-size));
+  --inputtext-with-icon-padding-start-lg: calc((var(--form-field-lg-padding-x) * 2) + var(--icon-size));
   --inputtext-placeholder-color: var(--form-field-placeholder-color);
   --inputtext-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
   --inputtext-sm-font-size: var(--dimension-scale-x12);
@@ -1769,13 +1803,13 @@ html:root {
   --toggleswitch-gap: var(--dimension-scale-x6);
   --toggleswitch-handle-background: var(--neutral-white);
   --toggleswitch-handle-border-radius: var(--border-radius-lg);
-  --toggleswitch-handle-checked-background: var(--surface-context-minimal);
+  --toggleswitch-handle-checked-background: var(--neutral-white);
   --toggleswitch-handle-checked-color: var(--primary-color);
-  --toggleswitch-handle-checked-hover-background: var(--surface-context-minimal);
+  --toggleswitch-handle-checked-hover-background: var(--neutral-white);
   --toggleswitch-handle-checked-hover-color: var(--primary-hover-color);
   --toggleswitch-handle-color: var(--text-muted-color);
   --toggleswitch-handle-disabled-background: var(--surface-context-strong);
-  --toggleswitch-handle-hover-background: var(--surface-context-minimal);
+  --toggleswitch-handle-hover-background: var(--neutral-white);
   --toggleswitch-handle-hover-color: var(--text-color);
   --toggleswitch-handle-size: var(--dimension-scale-x16);
   --toggleswitch-height: var(--dimension-scale-x24);

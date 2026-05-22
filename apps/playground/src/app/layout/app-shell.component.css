@@ -1,3 +1,7 @@
+.topbar-docs-link {
+  margin-right: 4px;
+}
+
 .preview-tab--soon {
   opacity: 0.45;
   cursor: not-allowed;

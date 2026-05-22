@@ -9,6 +9,9 @@ apps/playground/.angular/
 # Local Pages assemble
 _site/
 
+# Backups locales (puntos de control)
+backups/
+
 # OS / IDE
 .DS_Store
 .idea/
