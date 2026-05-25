@@ -17,6 +17,7 @@ pnpm run playground:start
 
 - Catálogo Button: http://localhost:3000/button  
 - Catálogo Form: http://localhost:3000/form  
+- Catálogo Messages: http://localhost:3000/messages  
 - Upload CSS, paleta y tokens activos: sidebar izquierdo (paridad con legacy)
 
 **Terminal 2 — Legacy estático (puerto 5500)**
@@ -31,12 +32,13 @@ pnpm run legacy:serve
 
 ---
 
-## Fase 0 ✓ · Fase 1 ✓ · Fase 2 ✓ Form (actual)
+## Fase 0 ✓ · Fase 1 ✓ · Fase 2 ✓ Form · Fase 3 ✓ Messages + Toast (actual)
 
 | Funcionalidad | Legacy | Angular `apps/playground` |
 |---------------|--------|---------------------------|
 | `<p-button>` real | No | **Sí** (`/button`) |
 | Catálogo Form (Radio, Checkbox, ToggleSwitch, InputText) | Sí | **Sí** (`/form`) |
+| Catálogo Messages (`p-message` + Toast) | Sí | **Sí** (`/messages`) |
 | Shell visual (topbar, sidebar, tabs) | Sí | **Sí** (`styles/app.css`) |
 | Upload 4 capas CSS | Sí | **Sí** |
 | Tokens activos + paleta | Sí | **Sí** |
@@ -111,4 +113,5 @@ Sube **semantic-light y semantic-dark** (o ninguna semántica, para usar el core
 
 - Vista Tokens (listado + mapa) portada de `app.js`
 - Catálogos Data y Panel
+- ~~Toast interactivo en Messages~~ ✓ (`app-toast-catalog` en `/messages`)
 - Preset generado desde `mds-*.css` (`updatePreset`)

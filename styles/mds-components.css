@@ -1145,6 +1145,9 @@ html:root {
   --message-content-padding-y: var(--dimension-scale-x6);
   --message-content-sm-padding-x: var(--dimension-scale-x8);
   --message-content-sm-padding-y: var(--dimension-scale-x4);
+  --message-content-padding: var(--message-content-padding-y) var(--message-content-padding-x);
+  --message-content-sm-padding: var(--message-content-sm-padding-y) var(--message-content-sm-padding-x);
+  --message-content-lg-padding: var(--message-content-lg-padding-y) var(--message-content-lg-padding-x);
   --message-contrast-background: var(--surface-context-intense);
   --message-contrast-border-color: var(--surface-context-intense);
   --message-contrast-close-button-focus-ring-color: var(--surface-context-minimal);

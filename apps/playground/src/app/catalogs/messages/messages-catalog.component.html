@@ -1,0 +1,58 @@
+<div class="cards-grid form-catalog-stack messages-page-stack">
+  <app-toast-catalog />
+
+  <div class="catalog-preview messages-showcase">
+    <section class="preview-section preview-section--flush catalog-block-section">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Message</h3>
+      </header>
+
+      <div class="catalog-block-body messages-catalog-body">
+        <div class="btn-section">
+          <p class="btn-section-title">Variants &amp; States</p>
+          @for (variant of variants; track variant.key) {
+            <div class="btn-variant-states-block">
+              <p class="btn-variant-states-label">{{ variant.caption }}</p>
+              <div class="message-catalog-message-row is-static-preview" [attr.aria-label]="variant.caption">
+                @for (sev of severities; track trackSeverity($index, sev)) {
+                  <p-message
+                    [severity]="sev.key"
+                    [variant]="primeVariant(variant.key)"
+                    [icon]="severityIcon(sev.key)"
+                    [closable]="true"
+                  >
+                    {{ content }}
+                  </p-message>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Sizes</p>
+          <div
+            class="catalog-button-states-row is-static-preview"
+            aria-label="Message relleno en tres tamaños, severidad success"
+          >
+            @for (sz of sizeOptions; track sz.key) {
+              <div class="catalog-button-state">
+                <div class="catalog-button-state-preview">
+                  <p-message
+                    severity="success"
+                    [size]="primeSize(sz.key)"
+                    [icon]="severityIcon('success')"
+                    [closable]="true"
+                  >
+                    {{ content }}
+                  </p-message>
+                </div>
+                <span class="catalog-button-state-caption">{{ sz.caption }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

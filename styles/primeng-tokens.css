@@ -589,16 +589,10 @@ html[data-theme="light"] {
   ═══════════════════════════════════════════════════════════════════ */
   --p-message-border-radius:              var(--message-border-radius, var(--content-border-radius, var(--p-border-radius)));
   --p-message-border-width:               var(--message-border-width, 1px);
-  /* Padding/gap: alineado con mds-components (--message-content-padding-x/y, sm, lg, --message-content-gap) */
-  --p-message-content-padding:
-    var(--message-content-padding-y, var(--dimension-scale-x6, 6px))
-    var(--message-content-padding-x, var(--dimension-scale-x10, 10px));
-  --p-message-content-padding-sm:
-    var(--message-content-sm-padding-y, var(--dimension-scale-x4, 4px))
-    var(--message-content-sm-padding-x, var(--dimension-scale-x8, 8px));
-  --p-message-content-padding-lg:
-    var(--message-content-lg-padding-y, var(--dimension-scale-x8, 8px))
-    var(--message-content-lg-padding-x, var(--dimension-scale-x12, 12px));
+  /* Padding/gap: shorthand MDS (--message-content-padding, sm, lg) */
+  --p-message-content-padding: var(--message-content-padding, var(--message-content-padding-y, var(--dimension-scale-x6, 6px)) var(--message-content-padding-x, var(--dimension-scale-x10, 10px)));
+  --p-message-content-padding-sm: var(--message-content-sm-padding, var(--message-content-sm-padding-y, var(--dimension-scale-x4, 4px)) var(--message-content-sm-padding-x, var(--dimension-scale-x8, 8px)));
+  --p-message-content-padding-lg: var(--message-content-lg-padding, var(--message-content-lg-padding-y, var(--dimension-scale-x8, 8px)) var(--message-content-lg-padding-x, var(--dimension-scale-x12, 12px)));
   --p-message-content-gap:                var(--message-content-gap, var(--dimension-scale-x8, 8px));
   --p-message-simple-content-padding:     var(--message-simple-content-padding, 0px);
   --p-message-outlined-border-width:      var(--message-outlined-border-width, 1px);
@@ -1338,15 +1332,9 @@ html[data-theme="dark"] {
     --p-chip-font-size:         var(--p-font-size);
     --p-message-border-radius:              var(--message-border-radius, var(--content-border-radius, var(--p-border-radius)));
     --p-message-border-width:               var(--message-border-width, 1px);
-    --p-message-content-padding:
-    var(--message-content-padding-y, var(--dimension-scale-x6, 6px))
-    var(--message-content-padding-x, var(--dimension-scale-x10, 10px));
-    --p-message-content-padding-sm:
-    var(--message-content-sm-padding-y, var(--dimension-scale-x4, 4px))
-    var(--message-content-sm-padding-x, var(--dimension-scale-x8, 8px));
-    --p-message-content-padding-lg:
-    var(--message-content-lg-padding-y, var(--dimension-scale-x8, 8px))
-    var(--message-content-lg-padding-x, var(--dimension-scale-x12, 12px));
+    --p-message-content-padding: var(--message-content-padding, var(--message-content-padding-y, var(--dimension-scale-x6, 6px)) var(--message-content-padding-x, var(--dimension-scale-x10, 10px)));
+    --p-message-content-padding-sm: var(--message-content-sm-padding, var(--message-content-sm-padding-y, var(--dimension-scale-x4, 4px)) var(--message-content-sm-padding-x, var(--dimension-scale-x8, 8px)));
+    --p-message-content-padding-lg: var(--message-content-lg-padding, var(--message-content-lg-padding-y, var(--dimension-scale-x8, 8px)) var(--message-content-lg-padding-x, var(--dimension-scale-x12, 12px)));
     --p-message-content-gap:                var(--message-content-gap, var(--dimension-scale-x8, 8px));
     --p-message-simple-content-padding:     var(--message-simple-content-padding, 0px);
     --p-message-outlined-border-width:      var(--message-outlined-border-width, 1px);

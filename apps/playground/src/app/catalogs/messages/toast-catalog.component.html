@@ -1,0 +1,77 @@
+<p-toast
+  [key]="toastKey"
+  position="top-left"
+  styleClass="toast-catalog-live"
+  showTransformOptions="translateX(0)"
+  hideTransformOptions="translateX(0)"
+  showTransitionOptions="0ms linear"
+  hideTransitionOptions="360ms ease-in"
+/>
+
+<div class="catalog-preview toast-showcase">
+  <section class="preview-section preview-section--flush catalog-block-section">
+    <header class="catalog-block-head">
+      <h3 class="section-title component-title-primary">Toast</h3>
+    </header>
+
+    <div class="catalog-block-body toast-catalog-body">
+      <div class="btn-section catalog-interaction-section">
+        <p class="btn-section-title">Interaction</p>
+        <div class="btn-row">
+          @for (sev of severities; track trackSeverity($index, sev)) {
+            <p-button
+              [label]="sev.label"
+              [icon]="sev.buttonIcon"
+              [severity]="sev.buttonSeverity"
+              size="small"
+              (onClick)="pushToast(sev.key)"
+            />
+          }
+        </div>
+        <div class="btn-row toast-catalog-actions-row">
+          <p-button
+            label="Ocultar toast activos"
+            link
+            size="small"
+            (onClick)="hideAllToasts()"
+          />
+        </div>
+      </div>
+
+      <div class="btn-section">
+        <p class="btn-section-title">States</p>
+        <div class="p-toast p-component toast-catalog-stack is-static-preview" aria-label="Toasts de ejemplo por severidad">
+          @for (item of staticToasts; track item.severity) {
+            <div
+              class="p-toast-message p-toast-message-{{ item.severity }}"
+              role="alert"
+              [attr.aria-live]="item.live"
+            >
+              <div class="p-toast-message-content">
+                <i [class]="'p-toast-message-icon ' + staticIcon(item.severity)" aria-hidden="true"></i>
+                <div class="p-toast-message-text">
+                  <span class="p-toast-summary">{{ item.summary }}</span>
+                  <span class="p-toast-detail">{{ item.detail }}</span>
+                </div>
+                <button
+                  type="button"
+                  class="p-toast-close-button"
+                  disabled
+                  tabindex="-1"
+                  title="Solo vista previa"
+                  aria-label="Cerrar (solo vista previa)"
+                >
+                  <svg
+                    data-p-icon="times"
+                    class="p-toast-close-icon"
+                    aria-hidden="true"
+                  ></svg>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

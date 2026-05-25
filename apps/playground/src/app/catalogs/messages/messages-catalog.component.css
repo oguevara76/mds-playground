@@ -1,0 +1,47 @@
+:host {
+  display: block;
+}
+
+.messages-page-stack {
+  gap: 24px;
+}
+
+/* Espacio entre el título del componente (Message) y el contenido del catálogo */
+.messages-catalog-body {
+  padding-top: 24px;
+}
+
+/* Paridad legacy (components.css no está en angular.json) + tokens MDS vía --p-message-* */
+:host ::ng-deep .messages-showcase .p-message.p-component {
+  display: inline-flex;
+  vertical-align: middle;
+  width: fit-content;
+  max-width: 100%;
+}
+
+:host ::ng-deep .messages-showcase .p-message-content {
+  padding: var(--p-message-content-padding);
+  gap: var(--p-message-content-gap);
+  min-width: 0;
+}
+
+:host ::ng-deep .messages-showcase .p-message-sm .p-message-content {
+  padding: var(--p-message-content-padding-sm);
+}
+
+:host ::ng-deep .messages-showcase .p-message-lg .p-message-content {
+  padding: var(--p-message-content-padding-lg);
+}
+
+:host ::ng-deep .messages-showcase .p-message-simple .p-message-content {
+  padding: var(--p-message-simple-content-padding);
+}
+
+:host ::ng-deep .messages-showcase .p-message-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+:host ::ng-deep .is-static-preview .p-message-close-button {
+  pointer-events: none;
+}

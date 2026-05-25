@@ -1,0 +1,355 @@
+:host {
+  display: block;
+  --toast-catalog-max-width: 380px;
+  --toast-catalog-states-gap: 8px;
+}
+
+/* Mismo aire que Message → Variants & States (solo padding del body, sin margin-top extra) */
+.toast-catalog-body {
+  padding-top: 24px;
+}
+
+.toast-showcase .catalog-interaction-section {
+  margin-top: 0;
+}
+
+.toast-catalog-actions-row {
+  margin-top: 10px;
+}
+
+/* Vista previa estática: sin interacción en cierre */
+:host ::ng-deep .is-static-preview .p-toast-close-button {
+  pointer-events: none;
+}
+
+/* States: 3×2, ancho fijo 380px, grid compacto */
+:host ::ng-deep .toast-catalog-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, var(--toast-catalog-max-width)));
+  gap: var(--toast-catalog-states-gap);
+  margin-top: 8px;
+  width: fit-content;
+  max-width: 100%;
+  align-items: stretch;
+}
+
+:host ::ng-deep .toast-catalog-stack .p-toast-message {
+  width: min(100%, var(--toast-catalog-max-width));
+  max-width: var(--toast-catalog-max-width);
+  box-sizing: border-box;
+}
+
+/* Paridad components.css — contenido flex-start; cierre esquina sup. derecha */
+:host ::ng-deep .toast-showcase .p-toast-message,
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message {
+  position: relative;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-content,
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-content {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--p-toast-content-padding);
+  padding-right: calc(
+    var(--p-toast-content-padding) + var(--p-toast-close-button-width) + var(--p-toast-content-gap)
+  );
+  gap: var(--p-toast-content-gap);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: var(--p-toast-text-gap, var(--p-toast-content-gap));
+  min-width: 0;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-icon {
+  flex-shrink: 0;
+  font-size: var(--p-toast-icon-size);
+  line-height: 1;
+  margin-top: 1px;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-summary {
+  font-size: var(--p-toast-summary-font-size);
+  font-weight: var(--p-toast-summary-font-weight);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-detail {
+  font-size: var(--p-toast-detail-font-size);
+  font-weight: var(--p-toast-detail-font-weight);
+}
+
+/* Cierre: sup. derecha con padding del contenido (sin offset -25% del tema) */
+:host ::ng-deep .toast-showcase .p-toast-close-button,
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-close-button {
+  position: absolute;
+  top: var(--p-toast-content-padding);
+  right: var(--p-toast-content-padding);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--p-toast-close-button-width);
+  height: var(--p-toast-close-button-height);
+  margin: 0 !important;
+  padding: 0;
+  border: none;
+  border-radius: var(--p-toast-close-button-border-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.88;
+  overflow: visible;
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-content > div:has(.p-toast-close-button) {
+  position: absolute;
+  top: var(--p-toast-content-padding);
+  right: var(--p-toast-content-padding);
+  margin: 0;
+  padding: 0;
+  width: var(--p-toast-close-button-width);
+  height: var(--p-toast-close-button-height);
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-content > div:has(.p-toast-close-button) .p-toast-close-button {
+  position: static;
+  top: auto;
+  right: auto;
+}
+
+:host ::ng-deep .toast-catalog-stack .p-toast-close-button:disabled {
+  opacity: 1 !important;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-close-icon,
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-close-icon {
+  display: block;
+  flex-shrink: 0;
+  width: var(--p-toast-close-icon-size, 14px);
+  height: var(--p-toast-close-icon-size, 14px);
+  color: currentColor;
+  fill: currentColor;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-close-button:disabled,
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-close-button:disabled {
+  cursor: default;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-success .p-toast-close-button:hover {
+  background: var(--p-toast-success-close-button-hover-background);
+  opacity: 1;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-info .p-toast-close-button:hover {
+  background: var(--p-toast-info-close-button-hover-background);
+  opacity: 1;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-warn .p-toast-close-button:hover {
+  background: var(--p-toast-warn-close-button-hover-background);
+  opacity: 1;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-error .p-toast-close-button:hover {
+  background: var(--p-toast-error-close-button-hover-background);
+  opacity: 1;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-secondary .p-toast-close-button:hover {
+  background: var(--p-toast-secondary-close-button-hover-background);
+  opacity: 1;
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-contrast .p-toast-close-button:hover {
+  background: var(--p-toast-contrast-close-button-hover-background);
+  opacity: 1;
+}
+
+/* Bordes y fondo por severidad (components.css no cargado en playground) */
+:host ::ng-deep .toast-showcase .p-toast-message {
+  border-style: solid;
+  border-width: var(--p-toast-border-width, 1px);
+  border-radius: var(--p-toast-border-radius);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-success {
+  background: var(--p-toast-success-background);
+  border-color: var(--p-toast-success-border-color);
+  color: var(--p-toast-success-color);
+  box-shadow: var(--p-toast-success-shadow);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-info {
+  background: var(--p-toast-info-background);
+  border-color: var(--p-toast-info-border-color);
+  color: var(--p-toast-info-color);
+  box-shadow: var(--p-toast-info-shadow);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-warn {
+  background: var(--p-toast-warn-background);
+  border-color: var(--p-toast-warn-border-color);
+  color: var(--p-toast-warn-color);
+  box-shadow: var(--p-toast-warn-shadow);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-error {
+  background: var(--p-toast-error-background);
+  border-color: var(--p-toast-error-border-color);
+  color: var(--p-toast-error-color);
+  box-shadow: var(--p-toast-error-shadow);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-secondary {
+  background: var(--p-toast-secondary-background);
+  border-color: var(--p-toast-secondary-border-color);
+  color: var(--p-toast-secondary-color);
+  box-shadow: var(--p-toast-secondary-shadow);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-contrast {
+  background: var(--p-toast-contrast-background);
+  border-color: var(--p-toast-contrast-border-color);
+  color: var(--p-toast-contrast-color);
+  box-shadow: var(--p-toast-contrast-shadow);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-success .p-toast-detail {
+  color: var(--p-toast-success-detail-color);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-info .p-toast-detail {
+  color: var(--p-toast-info-detail-color);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-warn .p-toast-detail {
+  color: var(--p-toast-warn-detail-color);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-error .p-toast-detail {
+  color: var(--p-toast-error-detail-color);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-secondary .p-toast-detail {
+  color: var(--p-toast-secondary-detail-color);
+}
+
+:host ::ng-deep .toast-showcase .p-toast-message-contrast .p-toast-detail {
+  color: var(--p-toast-contrast-detail-color);
+}
+
+/* Contenedor vivo top-left: slots absolutos fijos (sin animar top al cerrar) */
+:host ::ng-deep .p-toast.toast-catalog-live {
+  top: calc(72px + 12px);
+  left: 1rem;
+  width: var(--toast-catalog-max-width);
+  max-width: min(calc(100vw - 2rem), var(--toast-catalog-max-width));
+  display: block;
+  min-height: 0;
+  pointer-events: none;
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live p-toastitem {
+  display: block;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  margin: 0 !important;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+/* Entrada: izquierda → derecha con bounce (paridad legacy app.css) */
+@keyframes toast-catalog-bounce-from-left {
+  0% {
+    transform: translate3d(-115%, 0, 0);
+    opacity: 0;
+  }
+  52% {
+    transform: translate3d(12px, 0, 0);
+    opacity: 1;
+  }
+  68% {
+    transform: translate3d(-8px, 0, 0);
+  }
+  82% {
+    transform: translate3d(4px, 0, 0);
+  }
+  94% {
+    transform: translate3d(-2px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message.toast-catalog-bounce-enter,
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message.ng-trigger-messageState-enter {
+  animation: toast-catalog-bounce-from-left 0.68s cubic-bezier(0.34, 1.25, 0.64, 1) both;
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-enter-from {
+  opacity: 0;
+  transform: translate3d(-115%, 0, 0) !important;
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-enter-active {
+  transition: none !important;
+  animation: toast-catalog-bounce-from-left 0.68s cubic-bezier(0.34, 1.25, 0.64, 1) both;
+}
+
+/* Salida: fade en sitio, sin colapso vertical ni movimiento de hermanos */
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message.ng-animating {
+  height: auto !important;
+  max-height: none !important;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0) !important;
+  margin-bottom: 0 !important;
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message.ng-trigger-messageState-leave,
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message.ng-animating.ng-trigger-messageState-leave {
+  transition: opacity 0.36s ease !important;
+}
+
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-leave-active,
+:host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-leave-to {
+  max-height: none !important;
+  margin-bottom: 0 !important;
+  transform: none !important;
+  transition: opacity 0.36s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host ::ng-deep .p-toast.toast-catalog-live .p-toast-message.toast-catalog-bounce-enter,
+  :host ::ng-deep .p-toast.toast-catalog-live .p-toast-message.ng-trigger-messageState-enter,
+  :host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-enter-active {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  :host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-enter-from {
+    transform: none !important;
+    opacity: 1;
+  }
+
+  :host ::ng-deep .p-toast.toast-catalog-live .p-toast-message.ng-animating,
+  :host ::ng-deep .p-toast.toast-catalog-live .p-toast-message-leave-active {
+    transition: none !important;
+  }
+}

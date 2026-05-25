@@ -2,23 +2,6 @@
   margin-top: 0;
 }
 
-.btn-variant-states-block {
-  margin-bottom: 36px;
-  padding-bottom: 4px;
-}
-
-.btn-variant-states-block:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.btn-variant-states-label {
-  margin: 0 0 12px;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 /* Simulación hover/active en previews estáticos (PrimeNG real) */
 .p-button-demo-wrap.p-button-demo--hover ::ng-deep .p-button.p-button-outlined,
 .p-button-demo-wrap.p-button-demo--active ::ng-deep .p-button.p-button-outlined {

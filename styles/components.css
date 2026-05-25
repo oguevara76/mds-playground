@@ -1494,6 +1494,23 @@
 .p-message-lg .p-message-content {
   padding: var(--p-message-content-padding-lg);
 }
+/* Icono de severidad a la derecha del texto (antes del cierre) */
+.p-message-icon-end .p-message-content {
+  display: flex;
+  align-items: center;
+}
+.p-message-icon-end .p-message-text {
+  order: 1;
+  flex: 1 1 auto;
+}
+.p-message-icon-end .p-message-icon {
+  order: 2;
+  margin-inline-start: 0;
+}
+.p-message-icon-end .p-message-close-button {
+  order: 3;
+}
+
 .p-message-icon {
   flex-shrink: 0;
   font-size: var(--p-message-icon-size);

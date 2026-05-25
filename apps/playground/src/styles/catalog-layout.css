@@ -55,6 +55,24 @@
   align-items: center;
 }
 
+/* Subtítulos dentro de un bloque (p. ej. FILLED, OUTLINED en Message / Button) */
+.btn-variant-states-block {
+  margin-bottom: 36px;
+  padding-bottom: 4px;
+}
+
+.btn-variant-states-block:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.btn-variant-states-label {
+  margin: 0 0 12px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 /* States / Sizes: solo visualización, sin interacción */
 .is-static-preview .p-radiobutton,
 .is-static-preview .p-checkbox,
@@ -89,26 +107,33 @@
 
 /* Showcase cards (Button + Form): jerarquía tipográfica y layout de interacción */
 .form-showcase .catalog-block-head .section-title.component-title-primary,
-.button-showcase .catalog-block-head .section-title.component-title-primary {
+.button-showcase .catalog-block-head .section-title.component-title-primary,
+.messages-showcase .catalog-block-head .section-title.component-title-primary,
+.toast-showcase .catalog-block-head .section-title.component-title-primary {
   color: var(--p-content-color);
   font-weight: 800;
 }
 
 .form-showcase .btn-section-title,
-.button-showcase .btn-section-title {
+.button-showcase .btn-section-title,
+.messages-showcase .btn-section-title,
+.toast-showcase .btn-section-title {
   color: var(--p-surface-700);
   font-weight: 700;
   border-bottom-color: color-mix(in srgb, var(--p-content-border) 85%, var(--p-surface-300));
 }
 
 .form-showcase .btn-variant-states-label,
-.button-showcase .btn-variant-states-label {
+.button-showcase .btn-variant-states-label,
+.messages-showcase .btn-variant-states-label {
   color: var(--p-surface-600);
   font-weight: 700;
 }
 
 .form-showcase .catalog-button-state-caption,
-.button-showcase .catalog-button-state-caption {
+.button-showcase .catalog-button-state-caption,
+.messages-showcase .catalog-button-state-caption,
+.toast-showcase .catalog-button-state-caption {
   color: var(--p-surface-600);
   font-weight: 500;
   font-size: 12px;
@@ -232,31 +257,40 @@
 }
 
 [data-theme="dark"] .form-showcase .catalog-block-head .section-title.component-title-primary,
-[data-theme="dark"] .button-showcase .catalog-block-head .section-title.component-title-primary {
+[data-theme="dark"] .button-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .messages-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .toast-showcase .catalog-block-head .section-title.component-title-primary {
   color: var(--p-surface-0);
   font-weight: 800;
 }
 
 [data-theme="dark"] .form-showcase .catalog-block-head,
-[data-theme="dark"] .button-showcase .catalog-block-head {
+[data-theme="dark"] .button-showcase .catalog-block-head,
+[data-theme="dark"] .messages-showcase .catalog-block-head,
+[data-theme="dark"] .toast-showcase .catalog-block-head {
   border-bottom-color: color-mix(in srgb, var(--p-primary-color) 42%, var(--p-surface-600));
 }
 
 [data-theme="dark"] .form-showcase .btn-section-title,
-[data-theme="dark"] .button-showcase .btn-section-title {
+[data-theme="dark"] .button-showcase .btn-section-title,
+[data-theme="dark"] .messages-showcase .btn-section-title,
+[data-theme="dark"] .toast-showcase .btn-section-title {
   color: var(--p-surface-300);
   font-weight: 700;
   border-bottom-color: var(--p-surface-800, var(--p-surface-700));
 }
 
 [data-theme="dark"] .form-showcase .btn-variant-states-label,
-[data-theme="dark"] .button-showcase .btn-variant-states-label {
+[data-theme="dark"] .button-showcase .btn-variant-states-label,
+[data-theme="dark"] .messages-showcase .btn-variant-states-label {
   color: var(--p-surface-400);
   font-weight: 700;
 }
 
 [data-theme="dark"] .form-showcase .catalog-button-state-caption,
-[data-theme="dark"] .button-showcase .catalog-button-state-caption {
+[data-theme="dark"] .button-showcase .catalog-button-state-caption,
+[data-theme="dark"] .messages-showcase .catalog-button-state-caption,
+[data-theme="dark"] .toast-showcase .catalog-button-state-caption {
   color: var(--p-surface-400);
   font-weight: 500;
 }
