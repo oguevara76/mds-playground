@@ -718,7 +718,10 @@
     font-size var(--p-transition-duration),
     color var(--p-transition-duration);
   color: var(--p-float-label-color);
-  font-size: var(--p-font-size);
+  font-size: var(
+    --p-floatlabel-infield-font-size,
+    var(--p-inputtext-font-size, var(--form-field-font-size, var(--p-font-size)))
+  );
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -733,7 +736,7 @@
   transform: translateY(0);
   padding: 0 4px;
   background: var(--p-content-bg);
-  font-size: 11px;
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
   color: var(--p-float-label-color);
   z-index: 1;
 }
@@ -741,12 +744,16 @@
 /* ON: al activar, etiqueta sobre el borde superior */
 .p-floatlabel--on .p-inputtext:focus + label,
 .p-floatlabel--on .p-inputtext:not(:placeholder-shown) + label,
-.p-floatlabel--on.is-label-floated label {
+.p-floatlabel-on .p-inputtext:focus + label,
+.p-floatlabel-on .p-inputtext:not(:placeholder-shown) + label,
+.p-floatlabel--on.is-label-floated label,
+.p-floatlabel-on.is-label-floated label {
   top: 0;
   transform: translateY(-50%);
-  padding: 0 4px;
-  background: var(--p-content-bg);
-  font-size: 11px;
+  padding: var(--p-floatlabel-on-active-padding, var(--floatlabel-on-active-padding-y, 0) var(--floatlabel-on-active-padding-x, 2px));
+  background: var(--p-floatlabel-on-active-background, var(--floatlabel-on-active-background, var(--p-content-bg)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
   color: var(--p-float-label-color);
 }
 
@@ -775,14 +782,101 @@
 .p-floatlabel-in .p-iconfield:has(.p-inputtext-lg):has(.p-inputicon:first-child) .p-inputtext {
   padding-inline-start: var(--p-inputtext-with-icon-padding-start-lg, var(--inputtext-with-icon-padding-start-lg));
 }
+.p-floatlabel--in .p-iconfield.p-iconfield-right,
+.p-floatlabel-in .p-iconfield.p-iconfield-right,
+.p-floatlabel--in .p-iconfield:has(.p-inputtext + .p-inputicon),
+.p-floatlabel-in .p-iconfield:has(.p-inputtext + .p-inputicon) {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: var(--p-floatlabel-in-input-min-height, var(--iftalabel-input-min-height, 47px));
+}
+
+.p-floatlabel--in .p-iconfield.p-iconfield-right:has(.p-inputtext-sm),
+.p-floatlabel-in .p-iconfield.p-iconfield-right:has(.p-inputtext-sm) {
+  min-height: var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px));
+}
+
+.p-floatlabel--in .p-iconfield.p-iconfield-right:has(.p-inputtext-lg),
+.p-floatlabel-in .p-iconfield.p-iconfield-right:has(.p-inputtext-lg) {
+  min-height: var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px));
+}
+
+/* Icono izq. / der.: vacío → centro del campo (label default 50%) */
 .p-floatlabel--in .p-iconfield:has(.p-inputicon:first-child) .p-inputicon:first-child,
 .p-floatlabel-in .p-iconfield:has(.p-inputicon:first-child) .p-inputicon:first-child {
+  top: 50%;
+  margin-top: 0;
+  transform: translateY(-50%);
+}
+
+.p-floatlabel--in .p-iconfield.p-iconfield-right .p-inputtext,
+.p-floatlabel-in .p-iconfield.p-iconfield-right .p-inputtext,
+.p-floatlabel--in .p-iconfield:has(.p-inputtext + .p-inputicon) .p-inputtext,
+.p-floatlabel-in .p-iconfield:has(.p-inputtext + .p-inputicon) .p-inputtext {
+  display: block;
+  width: 100%;
+}
+
+/* Icono der. dentro del campo (overlay sobre el input con borde) */
+.p-floatlabel--in .p-iconfield.p-iconfield-right .p-inputicon,
+.p-floatlabel-in .p-iconfield.p-iconfield-right .p-inputicon,
+.p-floatlabel--in .p-iconfield:has(.p-inputtext + .p-inputicon) .p-inputicon,
+.p-floatlabel-in .p-iconfield:has(.p-inputtext + .p-inputicon) .p-inputicon {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: var(--p-form-field-padding-x, var(--form-field-padding-x));
+  inset-inline-start: auto;
+  margin: 0;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.p-floatlabel--in .p-iconfield.p-iconfield-right:has(.p-inputtext-sm) .p-inputicon,
+.p-floatlabel-in .p-iconfield.p-iconfield-right:has(.p-inputtext-sm) .p-inputicon,
+.p-floatlabel--in .p-iconfield:has(.p-inputtext-sm + .p-inputicon) .p-inputicon,
+.p-floatlabel-in .p-iconfield:has(.p-inputtext-sm + .p-inputicon) .p-inputicon {
+  inset-inline-end: var(--p-form-field-sm-padding-x, var(--form-field-sm-padding-x));
+}
+
+.p-floatlabel--in .p-iconfield.p-iconfield-right:has(.p-inputtext-lg) .p-inputicon,
+.p-floatlabel-in .p-iconfield.p-iconfield-right:has(.p-inputtext-lg) .p-inputicon,
+.p-floatlabel--in .p-iconfield:has(.p-inputtext-lg + .p-inputicon) .p-inputicon,
+.p-floatlabel-in .p-iconfield:has(.p-inputtext-lg + .p-inputicon) .p-inputicon {
+  inset-inline-end: var(--p-form-field-lg-padding-x, var(--form-field-lg-padding-x));
+}
+
+/* Activo: icono izquierdo en la línea de valor */
+.p-floatlabel--in:has(.p-inputtext:focus) .p-iconfield:has(.p-inputicon:first-child) .p-inputicon:first-child,
+.p-floatlabel-in:has(.p-inputtext:focus) .p-iconfield:has(.p-inputicon:first-child) .p-inputicon:first-child,
+.p-floatlabel--in.is-label-floated .p-iconfield:has(.p-inputicon:first-child) .p-inputicon:first-child,
+.p-floatlabel-in.is-label-floated .p-iconfield:has(.p-inputicon:first-child) .p-inputicon:first-child {
   top: calc(
-    var(--floatlabel-in-input-padding-top) +
+    var(--p-floatlabel-in-input-padding-top, var(--floatlabel-in-input-padding-top)) +
       (var(--form-field-font-size) * var(--inputtext-line-height, 1.25) / 2)
   );
   margin-top: 0;
   transform: translateY(-50%);
+}
+
+.p-floatlabel--in:has(.p-inputtext:focus) .p-iconfield:has(.p-inputtext-sm) .p-inputicon:first-child,
+.p-floatlabel-in:has(.p-inputtext:focus) .p-iconfield:has(.p-inputtext-sm) .p-inputicon:first-child,
+.p-floatlabel--in.is-label-floated .p-iconfield:has(.p-inputtext-sm) .p-inputicon:first-child,
+.p-floatlabel-in.is-label-floated .p-iconfield:has(.p-inputtext-sm) .p-inputicon:first-child {
+  top: calc(
+    var(--p-floatlabel-in-input-padding-top-sm, var(--floatlabel-in-input-padding-top-sm)) +
+      (var(--form-field-sm-font-size) * var(--inputtext-line-height, 1.25) / 2)
+  );
+}
+
+.p-floatlabel--in:has(.p-inputtext:focus) .p-iconfield:has(.p-inputtext-lg) .p-inputicon:first-child,
+.p-floatlabel-in:has(.p-inputtext:focus) .p-iconfield:has(.p-inputtext-lg) .p-inputicon:first-child,
+.p-floatlabel--in.is-label-floated .p-iconfield:has(.p-inputtext-lg) .p-inputicon:first-child,
+.p-floatlabel-in.is-label-floated .p-iconfield:has(.p-inputtext-lg) .p-inputicon:first-child {
+  top: calc(
+    var(--p-floatlabel-in-input-padding-top-lg, var(--floatlabel-in-input-padding-top-lg)) +
+      (var(--form-field-lg-font-size) * var(--inputtext-line-height, 1.25) / 2)
+  );
 }
 .p-floatlabel--in .p-inputtext.p-inputtext-sm,
 .p-floatlabel-in .p-inputtext.p-inputtext-sm {
@@ -920,21 +1014,20 @@
   font-size: var(--p-inputtext-font-size, var(--form-field-font-size));
 }
 
-.catalog-input-sizes-row .p-iftalabel:has(.p-inputtext-sm) label {
-  font-size: var(--p-inputtext-sm-font-size, var(--form-field-sm-font-size));
-}
-
-.catalog-input-sizes-row .p-iftalabel:has(.p-inputtext-lg) label {
-  font-size: var(--p-inputtext-lg-font-size, var(--form-field-lg-font-size));
-}
-
-.catalog-input-sizes-row .p-iftalabel:not(:has(.p-inputtext-sm)):not(:has(.p-inputtext-lg)) label {
-  font-size: var(--p-inputtext-font-size, var(--form-field-font-size));
+.catalog-input-sizes-row .p-iftalabel label {
+  top: var(--p-iftalabel-top, var(--p-floatlabel-in-active-top, var(--iftalabel-top)));
+  font-size: var(--p-iftalabel-font-size, var(--iftalabel-font-size, var(--form-field-xs-font-size)));
 }
 
 .p-iftalabel label {
   position: absolute;
-  top: var(--p-iftalabel-top, var(--iftalabel-top, var(--form-field-padding-y)));
+  top: var(
+    --p-iftalabel-top,
+    var(
+      --iftalabel-top,
+      var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top, var(--form-field-padding-y)))
+    )
+  );
   inset-inline-start: var(--p-iftalabel-position-x, var(--iftalabel-position-x, var(--p-inputtext-padding-x)));
   transform: none;
   font-size: var(--p-iftalabel-font-size, var(--iftalabel-font-size, var(--form-field-xs-font-size)));
@@ -948,10 +1041,17 @@
 .p-floatlabel-in:has(input:focus) label,
 .p-floatlabel-in:has(input.p-filled) label,
 .p-floatlabel-in:has(input[placeholder]) label {
-  top: var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top));
+  top: var(
+    --p-floatlabel-in-active-top,
+    calc(
+      var(--p-floatlabel-in-input-padding-top, var(--floatlabel-in-input-padding-top)) -
+        var(--floatlabel-active-font-size) - 2px
+    )
+  );
   transform: translateY(0);
   font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
   font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  line-height: 1;
   padding: 0;
   background: transparent;
 }

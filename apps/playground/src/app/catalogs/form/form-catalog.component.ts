@@ -35,7 +35,6 @@ import {
 import { inputDemoWrapClass } from './form-catalog.demo-styles';
 
 export interface FormInputInteractionState {
-  iconLeft: boolean;
   iconRight: boolean;
   rounded: boolean;
   size: FormInteractionSize;
@@ -69,8 +68,17 @@ const INPUT_BLOCK_KINDS: FormInputBlockKind[] = [
 
 function defaultInputInteraction(): FormInputInteractionState {
   return {
-    iconLeft: false,
     iconRight: false,
+    rounded: false,
+    size: 'normal',
+    value: '',
+  };
+}
+
+/** FloatLabel (Over/On/In): solo icono derecho en el configurador. */
+function defaultFloatInputInteraction(): FormInputInteractionState {
+  return {
+    iconRight: true,
     rounded: false,
     size: 'normal',
     value: '',
@@ -117,9 +125,9 @@ export class FormCatalogComponent {
 
   private readonly inputIxByKind = signal<Record<FormInputBlockKind, FormInputInteractionState>>({
     'input-default': defaultInputInteraction(),
-    'input-float-over': defaultInputInteraction(),
-    'input-float-on': defaultInputInteraction(),
-    'input-float-in': defaultInputInteraction(),
+    'input-float-over': defaultFloatInputInteraction(),
+    'input-float-on': defaultFloatInputInteraction(),
+    'input-float-in': defaultFloatInputInteraction(),
     'input-iftalabel': defaultInputInteraction(),
   });
 
@@ -161,6 +169,12 @@ export class FormCatalogComponent {
     return block.floatVariant != null;
   }
 
+  isFloatInputKind(kind: FormInputBlockKind): boolean {
+    return (
+      kind === 'input-float-over' || kind === 'input-float-on' || kind === 'input-float-in'
+    );
+  }
+
   setFloatIxFocused(kind: FormInputBlockKind, focused: boolean): void {
     if (kind === 'input-default' || kind === 'input-iftalabel') {
       return;
@@ -179,22 +193,163 @@ export class FormCatalogComponent {
     return '--floatlabel-position-x';
   }
 
-  private floatLabelPositionStyleVars(size: FormInteractionSize): Record<string, string> {
-    const mdsToken = this.floatLabelPositionMdsToken(size);
-    const value = `var(${mdsToken})`;
+  /** Tipografía del label dentro del campo (misma cadena que placeholder / valor del input). */
+  floatLabelInfieldFontSizeMdsToken(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return '--inputtext-sm-font-size';
+    }
+    if (size === 'large') {
+      return '--inputtext-lg-font-size';
+    }
+    return '--inputtext-font-size';
+  }
+
+  private floatIconSizeMdsToken(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return '--iconfield-figma-sm-icon-size';
+    }
+    if (size === 'large') {
+      return '--iconfield-figma-lg-icon-size';
+    }
+    return '--iconfield-figma-size';
+  }
+
+  private floatLabelFieldStyleVars(size: FormInteractionSize): Record<string, string> {
+    const positionValue = `var(${this.floatLabelPositionMdsToken(size)})`;
+    const fontValue = `var(${this.floatLabelInfieldFontSizeMdsToken(size)})`;
     return {
-      '--p-floatlabel-position-x': value,
-      '--catalog-floatlabel-position-x': value,
+      '--p-floatlabel-position-x': positionValue,
+      '--catalog-floatlabel-position-x': positionValue,
+      '--p-floatlabel-infield-font-size': fontValue,
+      '--catalog-floatlabel-infield-font-size': fontValue,
     };
   }
 
-  /** Variables en p-floatlabel para dt('floatlabel.position.x') de PrimeNG 20. */
+  /**
+   * Float In: altura MDS (45 / 47 / 49 px) y bloque label+valor centrado verticalmente.
+   * padding-top/bottom simétricos; gap 2px entre label xs y línea de valor.
+   */
+  private floatLabelInHostVars(size: FormInteractionSize): Record<string, string> {
+    const pick = (normal: string, small: string, large: string): string => {
+      if (size === 'small') {
+        return small;
+      }
+      if (size === 'large') {
+        return large;
+      }
+      return normal;
+    };
+    const cssVar = (token: string) => `var(${token})`;
+
+    const minHeight = pick(
+      '--floatlabel-in-input-min-height',
+      '--floatlabel-in-input-min-height-sm',
+      '--floatlabel-in-input-min-height-lg',
+    );
+    const valueLine = pick(
+      'calc(var(--form-field-font-size) * var(--inputtext-line-height, 1.25))',
+      'calc(var(--form-field-sm-font-size) * var(--inputtext-line-height, 1.25))',
+      'calc(var(--form-field-lg-font-size) * var(--inputtext-line-height, 1.25))',
+    );
+    const contentBlock = `calc(var(--floatlabel-active-font-size) + 2px + ${valueLine})`;
+    const activeTop = `calc((${cssVar(minHeight)} - ${contentBlock}) / 2)`;
+    const paddingTop = `calc(${activeTop} + var(--floatlabel-active-font-size) + 2px)`;
+    const paddingBottom = activeTop;
+    const paddingX = pick(
+      '--inputtext-padding-x',
+      '--inputtext-sm-padding-x',
+      '--inputtext-lg-padding-x',
+    );
+    const iconPaddingEnd = pick(
+      '--inputtext-with-icon-padding-start',
+      '--inputtext-with-icon-padding-start-sm',
+      '--inputtext-with-icon-padding-start-lg',
+    );
+
+    return {
+      '--catalog-floatlabel-in-input-padding-top': paddingTop,
+      '--p-floatlabel-in-input-padding-top': paddingTop,
+      '--catalog-floatlabel-in-input-min-height': cssVar(minHeight),
+      '--p-floatlabel-in-input-min-height': cssVar(minHeight),
+      '--catalog-floatlabel-in-input-padding-bottom': paddingBottom,
+      '--p-floatlabel-in-input-padding-bottom': paddingBottom,
+      '--catalog-floatlabel-in-active-top': activeTop,
+      '--p-floatlabel-in-active-top': activeTop,
+      '--catalog-floatlabel-in-input-padding-x': cssVar(paddingX),
+      '--catalog-floatlabel-in-icon-padding-end': cssVar(iconPaddingEnd),
+    };
+  }
+
+  /**
+   * IftaLabel: misma geometría que Float IN (fill) — label fijo arriba, placeholder en la línea de valor.
+   * Reutiliza --catalog-floatlabel-in-* y los expone también como --p-iftalabel-*.
+   */
+  private iftaLabelHostVars(size: FormInteractionSize): Record<string, string> {
+    const field = this.floatLabelFieldStyleVars(size);
+    const inVars = this.floatLabelInHostVars(size);
+    const iconSize = `var(${this.floatIconSizeMdsToken(size)})`;
+    return {
+      ...field,
+      ...inVars,
+      '--p-iftalabel-top': inVars['--catalog-floatlabel-in-active-top'],
+      '--catalog-iftalabel-top': inVars['--catalog-floatlabel-in-active-top'],
+      '--p-iftalabel-font-size': 'var(--floatlabel-active-font-size)',
+      '--p-iftalabel-font-weight': 'var(--floatlabel-active-font-weight)',
+      '--p-iftalabel-input-padding-top': inVars['--p-floatlabel-in-input-padding-top'],
+      '--p-iftalabel-input-padding-bottom': inVars['--p-floatlabel-in-input-padding-bottom'],
+      '--p-iftalabel-input-min-height': inVars['--p-floatlabel-in-input-min-height'],
+      '--p-iftalabel-position-x': field['--p-floatlabel-position-x'],
+      '--p-iconfield-icon-size': iconSize,
+      '--p-iconfield-sm-icon-size': 'var(--iconfield-figma-sm-icon-size)',
+      '--p-iconfield-lg-icon-size': 'var(--iconfield-figma-lg-icon-size)',
+    };
+  }
+
+  /** Variables en p-floatlabel / p-iftalabel (PrimeNG 20 + catálogo MDS). */
   floatLabelHostVars(kind: FormInputBlockKind): Record<string, string> {
-    return this.floatLabelPositionStyleVars(this.ix(kind).size);
+    if (kind === 'input-iftalabel') {
+      return this.iftaLabelHostVars(this.ix(kind).size);
+    }
+    const size = this.ix(kind).size;
+    const vars = this.floatLabelFieldStyleVars(size);
+    if (!this.isFloatInputKind(kind)) {
+      return vars;
+    }
+    const iconSize = `var(${this.floatIconSizeMdsToken(size)})`;
+    const shared = {
+      ...vars,
+      '--p-iconfield-icon-size': iconSize,
+      '--p-iconfield-sm-icon-size': 'var(--iconfield-figma-sm-icon-size)',
+      '--p-iconfield-lg-icon-size': 'var(--iconfield-figma-lg-icon-size)',
+    };
+    if (kind === 'input-float-in') {
+      return { ...shared, ...this.floatLabelInHostVars(size) };
+    }
+    return shared;
+  }
+
+  iftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    return this.iftaLabelHostVars(size);
   }
 
   floatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
-    return this.floatLabelPositionStyleVars(size);
+    return {
+      ...this.floatLabelFieldStyleVars(size),
+      ...this.floatLabelInHostVars(size),
+    };
+  }
+
+  /** Fila States: siempre tamaño Normal (no sigue el selector Size de Interacción). */
+  floatLabelStatesHostVars(kind: FormInputBlockKind): Record<string, string> {
+    const size: FormInteractionSize = 'normal';
+    if (kind === 'input-iftalabel') {
+      return this.iftaLabelHostVars(size);
+    }
+    const vars = this.floatLabelFieldStyleVars(size);
+    if (kind === 'input-float-in') {
+      return { ...vars, ...this.floatLabelInHostVars(size) };
+    }
+    return vars;
   }
 
   /** Placeholder en foco (token --p-inputtext-placeholder-color); sin foco y vacío, sin atributo. */
@@ -257,18 +412,15 @@ export class FormCatalogComponent {
   }
 
   inputShowIcon(kind: FormInputBlockKind): boolean {
-    const { iconLeft, iconRight } = this.ix(kind);
-    return iconLeft || iconRight;
+    return this.ix(kind).iconRight;
   }
 
-  inputIconPosition(kind: FormInputBlockKind): 'left' | 'right' {
-    const { iconLeft, iconRight } = this.ix(kind);
-    return iconRight && !iconLeft ? 'right' : 'left';
+  inputIconPosition(_kind: FormInputBlockKind): 'left' | 'right' {
+    return 'right';
   }
 
-  inputDualIcons(kind: FormInputBlockKind): boolean {
-    const { iconLeft, iconRight } = this.ix(kind);
-    return iconLeft && iconRight;
+  inputDualIcons(_kind: FormInputBlockKind): boolean {
+    return false;
   }
 
   inputStates(block: FormBlockConfig): { key: FormInputDemoState; caption: string }[] {
@@ -313,7 +465,13 @@ export class FormCatalogComponent {
    * FloatLabel interactivo: sin atributo placeholder (PrimeNG 20 flota el label si existe
    * `placeholder`, aunque sea un espacio). Estados estáticos vacíos tampoco llevan placeholder.
    */
-  inputFloatPlaceholderAttr(state: FormInputDemoState): string | null {
+  inputFloatPlaceholderAttr(state: FormInputDemoState, block: FormBlockConfig): string | null {
+    if (this.isIftaLabelBlock(block)) {
+      if (state === 'filled') {
+        return null;
+      }
+      return this.inputStatePlaceholder;
+    }
     if (state === 'empty' || state === 'filled') {
       return null;
     }
@@ -371,7 +529,6 @@ export class FormCatalogComponent {
       'floatlabel-variant-on': kind === 'input-float-on',
       'floatlabel-variant-in': kind === 'input-float-in',
       'iftalabel-variant': kind === 'input-iftalabel',
-      'show-left-icon': ix.iconLeft,
       'show-right-icon': ix.iconRight,
     };
   }

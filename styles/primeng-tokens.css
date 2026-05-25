@@ -490,6 +490,7 @@ html[data-theme="light"] {
   --p-floatlabel-position-x:    var(--floatlabel-position-x, var(--p-inputtext-padding-x));
   --p-floatlabel-position-sm-x: var(--floatlabel-position-sm-x, var(--p-inputtext-sm-padding-x));
   --p-floatlabel-position-lg-x: var(--floatlabel-position-lg-x, var(--p-inputtext-lg-padding-x));
+  --p-floatlabel-infield-font-size: var(--inputtext-font-size, var(--form-field-font-size));
   --p-floatlabel-in-input-padding-top:    var(--floatlabel-in-input-padding-top);
   --p-floatlabel-in-input-padding-top-sm: var(--floatlabel-in-input-padding-top-sm);
   --p-floatlabel-in-input-padding-top-lg: var(--floatlabel-in-input-padding-top-lg);
@@ -977,6 +978,7 @@ html[data-theme="dark"] {
     --p-floatlabel-position-x:    var(--floatlabel-position-x, var(--p-inputtext-padding-x));
     --p-floatlabel-position-sm-x: var(--floatlabel-position-sm-x, var(--p-inputtext-sm-padding-x));
     --p-floatlabel-position-lg-x: var(--floatlabel-position-lg-x, var(--p-inputtext-lg-padding-x));
+    --p-floatlabel-infield-font-size: var(--inputtext-font-size, var(--form-field-font-size));
     --p-floatlabel-in-input-padding-top:    var(--floatlabel-in-input-padding-top);
     --p-floatlabel-in-input-padding-top-sm: var(--floatlabel-in-input-padding-top-sm);
     --p-floatlabel-in-input-padding-top-lg: var(--floatlabel-in-input-padding-top-lg);

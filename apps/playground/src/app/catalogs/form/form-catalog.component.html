@@ -140,9 +140,6 @@
                             [iconPosition]="inputIconPosition(asInputKind(block.kind))"
                             [class.p-iconfield-dual]="inputDualIcons(asInputKind(block.kind))"
                           >
-                            @if (ix(asInputKind(block.kind)).iconLeft) {
-                              <p-inputicon class="pi pi-search" />
-                            }
                             <input
                               pInputText
                               [id]="'it-live-' + block.kind"
@@ -172,7 +169,7 @@
                         <small class="p-hint">Helper Text</small>
                       </div>
                     } @else if (isIftaLabelBlock(block)) {
-                      <div class="form-input-interaction-field">
+                      <div class="form-input-interaction-control">
                         <span
                           class="p-iftalabel"
                           [style]="floatLabelHostVars(asInputKind(block.kind))"
@@ -182,9 +179,6 @@
                               [iconPosition]="inputIconPosition(asInputKind(block.kind))"
                               [class.p-iconfield-dual]="inputDualIcons(asInputKind(block.kind))"
                             >
-                              @if (ix(asInputKind(block.kind)).iconLeft) {
-                                <p-inputicon class="pi pi-search" />
-                              }
                               <input
                                 pInputText
                                 [id]="'it-live-' + block.kind"
@@ -213,22 +207,16 @@
                           }
                           <label [for]="'it-live-' + block.kind">Label</label>
                         </span>
-                        <small class="p-hint">Helper Text</small>
                       </div>
+                      <small class="p-hint">Helper Text</small>
                     } @else {
-                      <div class="form-input-interaction-field">
+                      <div class="form-input-interaction-control">
                         <p-floatlabel
                           [variant]="floatVariant(block)!"
                           [style]="floatLabelHostVars(asInputKind(block.kind))"
                         >
                           @if (inputShowIcon(asInputKind(block.kind))) {
-                            <p-iconfield
-                              [iconPosition]="inputIconPosition(asInputKind(block.kind))"
-                              [class.p-iconfield-dual]="inputDualIcons(asInputKind(block.kind))"
-                            >
-                              @if (ix(asInputKind(block.kind)).iconLeft) {
-                                <p-inputicon class="pi pi-search" />
-                              }
+                            <p-iconfield [iconPosition]="inputIconPosition(asInputKind(block.kind))">
                               <input
                                 pInputText
                                 [id]="'it-live-' + block.kind"
@@ -242,9 +230,7 @@
                                 [class.p-inputtext-rounded]="inputRounded(asInputKind(block.kind))"
                                 [fluid]="true"
                               />
-                              @if (ix(asInputKind(block.kind)).iconRight) {
-                                <p-inputicon class="pi pi-search" />
-                              }
+                              <p-inputicon class="pi pi-search" />
                             </p-iconfield>
                           } @else {
                             <input
@@ -263,8 +249,8 @@
                           }
                           <label [for]="'it-live-' + block.kind">Label</label>
                         </p-floatlabel>
-                        <small class="p-hint">Helper Text</small>
                       </div>
+                      <small class="p-hint">Helper Text</small>
                     }
                   </div>
                   <aside class="button-config-aside">
@@ -306,13 +292,6 @@
                           </div>
                         </div>
                         <p-divider styleClass="button-config-divider" />
-                        <div class="input-config-row">
-                          <span class="input-config-label">Icono izq.</span>
-                          <p-toggleswitch
-                            [ngModel]="ix(asInputKind(block.kind)).iconLeft"
-                            (ngModelChange)="patchIx(asInputKind(block.kind), { iconLeft: $event })"
-                          />
-                        </div>
                         <div class="input-config-row">
                           <span class="input-config-label">Icono der.</span>
                           <p-toggleswitch
@@ -565,11 +544,11 @@
                               <span
                                 class="p-iftalabel"
                                 [class.is-label-invalid]="inputStateInvalid(st.key)"
-                                [style]="floatLabelHostVars(asInputKind(block.kind))"
+                                [style]="floatLabelStatesHostVars(asInputKind(block.kind))"
                               >
                                 <input
                                   pInputText
-                                  [attr.placeholder]="inputFloatPlaceholderAttr(st.key)"
+                                  [attr.placeholder]="inputFloatPlaceholderAttr(st.key, block)"
                                   [ngModel]="inputStateValue(st.key, block)"
                                   [invalid]="inputStateInvalid(st.key)"
                                   [disabled]="inputStateDisabled(st.key)"
@@ -592,11 +571,11 @@
                               <p-floatlabel
                                 [variant]="floatVariant(block)!"
                                 [class.is-label-floated]="inputFloatFilled(st.key)"
-                                [style]="floatLabelHostVars(asInputKind(block.kind))"
+                                [style]="floatLabelStatesHostVars(asInputKind(block.kind))"
                               >
                                 <input
                                   pInputText
-                                  [attr.placeholder]="inputFloatPlaceholderAttr(st.key)"
+                                  [attr.placeholder]="inputFloatPlaceholderAttr(st.key, block)"
                                   [ngModel]="inputStateValue(st.key, block)"
                                   [invalid]="inputStateInvalid(st.key)"
                                   [disabled]="inputStateDisabled(st.key)"
@@ -695,7 +674,7 @@
                           <div class="catalog-input-interactive">
                             <span
                               class="p-iftalabel"
-                              [style]="floatLabelHostVarsForSize(sz.key)"
+                              [style]="iftaLabelHostVarsForSize(sz.key)"
                             >
                               <input
                                 pInputText
