@@ -18,6 +18,8 @@ pnpm run playground:start
 - Catálogo Button: http://localhost:3000/button  
 - Catálogo Form: http://localhost:3000/form  
 - Catálogo Messages: http://localhost:3000/messages  
+- Catálogo Data: http://localhost:3000/data  
+- Catálogo Panel: http://localhost:3000/panel  
 - Upload CSS, paleta y tokens activos: sidebar izquierdo (paridad con legacy)
 
 **Terminal 2 — Legacy estático (puerto 5500)**
@@ -32,19 +34,21 @@ pnpm run legacy:serve
 
 ---
 
-## Fase 0 ✓ · Fase 1 ✓ · Fase 2 ✓ Form · Fase 3 ✓ Messages + Toast (actual)
+## Fase 0 ✓ · Fase 1 ✓ · Fase 2 ✓ Form · Fase 3 ✓ Messages · Fase 4 ✓ Data + Panel (actual)
 
 | Funcionalidad | Legacy | Angular `apps/playground` |
 |---------------|--------|---------------------------|
 | `<p-button>` real | No | **Sí** (`/button`) |
 | Catálogo Form (Radio, Checkbox, ToggleSwitch, InputText) | Sí | **Sí** (`/form`) |
 | Catálogo Messages (`p-message` + Toast) | Sí | **Sí** (`/messages`) |
+| Catálogo Data (Paginator) | Sí | **Sí** (`/data`) |
+| Catálogo Panel (Tabs) | Sí | **Sí** (`/panel`) |
 | Shell visual (topbar, sidebar, tabs) | Sí | **Sí** (`styles/app.css`) |
 | Upload 4 capas CSS | Sí | **Sí** |
 | Tokens activos + paleta | Sí | **Sí** |
 | Dark / light | Sí | **Sí** |
 | Mapa / vista Tokens completa | Sí | Pendiente |
-| Data / Panel catálogos | Sí | Pendiente |
+| Data / Panel catálogos | Sí | **Sí** |
 
 ### Probar upload con marcas de ejemplo
 
@@ -112,6 +116,6 @@ Sube **semantic-light y semantic-dark** (o ninguna semántica, para usar el core
 ## Siguiente fase
 
 - Vista Tokens (listado + mapa) portada de `app.js`
-- Catálogos Data y Panel
+- ~~Catálogos Data y Panel~~ ✓ (`/data`, `/panel`)
 - ~~Toast interactivo en Messages~~ ✓ (`app-toast-catalog` en `/messages`)
 - Preset generado desde `mds-*.css` (`updatePreset`)

@@ -35,6 +35,8 @@ import {
 import { inputDemoWrapClass } from './form-catalog.demo-styles';
 
 export interface FormInputInteractionState {
+  /** Solo InputText default: icono de búsqueda a la izquierda. */
+  iconLeft: boolean;
   iconRight: boolean;
   rounded: boolean;
   size: FormInteractionSize;
@@ -68,6 +70,7 @@ const INPUT_BLOCK_KINDS: FormInputBlockKind[] = [
 
 function defaultInputInteraction(): FormInputInteractionState {
   return {
+    iconLeft: false,
     iconRight: false,
     rounded: false,
     size: 'normal',
@@ -75,14 +78,9 @@ function defaultInputInteraction(): FormInputInteractionState {
   };
 }
 
-/** FloatLabel (Over/On/In): solo icono derecho en el configurador. */
+/** FloatLabel (Over/On/In): mismos defaults que default (switches en off). */
 function defaultFloatInputInteraction(): FormInputInteractionState {
-  return {
-    iconRight: true,
-    rounded: false,
-    size: 'normal',
-    value: '',
-  };
+  return defaultInputInteraction();
 }
 
 function defaultCheckboxState(): Record<FormCheckboxKey, boolean> {
@@ -412,15 +410,37 @@ export class FormCatalogComponent {
   }
 
   inputShowIcon(kind: FormInputBlockKind): boolean {
-    return this.ix(kind).iconRight;
+    const ix = this.ix(kind);
+    if (kind === 'input-default') {
+      return ix.iconLeft || ix.iconRight;
+    }
+    return ix.iconRight;
   }
 
-  inputIconPosition(_kind: FormInputBlockKind): 'left' | 'right' {
+  inputIconPosition(kind: FormInputBlockKind): 'left' | 'right' {
+    if (kind === 'input-default') {
+      const ix = this.ix(kind);
+      if (ix.iconLeft && !ix.iconRight) {
+        return 'left';
+      }
+    }
     return 'right';
   }
 
-  inputDualIcons(_kind: FormInputBlockKind): boolean {
+  inputDualIcons(kind: FormInputBlockKind): boolean {
+    if (kind === 'input-default') {
+      const ix = this.ix(kind);
+      return ix.iconLeft && ix.iconRight;
+    }
     return false;
+  }
+
+  inputShowIconLeft(kind: FormInputBlockKind): boolean {
+    return kind === 'input-default' && this.ix(kind).iconLeft;
+  }
+
+  inputShowIconRight(kind: FormInputBlockKind): boolean {
+    return this.ix(kind).iconRight;
   }
 
   inputStates(block: FormBlockConfig): { key: FormInputDemoState; caption: string }[] {
@@ -529,6 +549,7 @@ export class FormCatalogComponent {
       'floatlabel-variant-on': kind === 'input-float-on',
       'floatlabel-variant-in': kind === 'input-float-in',
       'iftalabel-variant': kind === 'input-iftalabel',
+      'show-left-icon': kind === 'input-default' && ix.iconLeft,
       'show-right-icon': ix.iconRight,
     };
   }

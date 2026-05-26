@@ -1,0 +1,101 @@
+<div class="cards-grid form-catalog-stack">
+  <div class="catalog-preview paginator-showcase">
+    <section class="preview-section preview-section--flush catalog-block-section">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Paginator</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="paginator-catalog-live-shell">
+            <p-paginator
+              class="paginator-catalog-live"
+              [first]="first()"
+              [rows]="rows()"
+              [totalRecords]="totalRecords"
+              [rowsPerPageOptions]="rowsPerPageOptions"
+              [showCurrentPageReport]="true"
+              [currentPageReportTemplate]="pageReportTemplate"
+              [showFirstLastIcon]="true"
+              appendTo="body"
+              (onPageChange)="onPageChange($event)"
+              ariaLabel="Paginator interactivo del catálogo"
+            />
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">States</p>
+          <div
+            class="paginator-catalog-states-row is-static-preview"
+            aria-label="Botones del paginator por estado"
+          >
+            @for (state of stateDemos; track trackState($index, state)) {
+              <div
+                class="paginator-catalog-state"
+                [class.paginator-catalog-state--informe]="state.key === 'report'"
+              >
+                <span class="paginator-catalog-state-caption">{{ state.caption }}</span>
+                <div class="p-paginator p-component paginator-catalog-state-demo" role="presentation">
+                  <div class="p-paginator-content">
+                    @switch (state.key) {
+                      @case ('inactive') {
+                        <span class="p-paginator-pages" role="presentation">
+                          <button
+                            type="button"
+                            class="p-paginator-page p-paginator-nav-button"
+                            tabindex="-1"
+                          >
+                            2
+                          </button>
+                        </span>
+                      }
+                      @case ('active') {
+                        <span class="p-paginator-pages" role="presentation">
+                          <button
+                            type="button"
+                            class="p-paginator-page p-paginator-nav-button p-paginator-page-selected"
+                            tabindex="-1"
+                            aria-current="page"
+                          >
+                            3
+                          </button>
+                        </span>
+                      }
+                      @case ('hover') {
+                        <span class="p-paginator-pages" role="presentation">
+                          <button
+                            type="button"
+                            class="p-paginator-page p-paginator-nav-button paginator-catalog-nav-hover-demo"
+                            tabindex="-1"
+                          >
+                            4
+                          </button>
+                        </span>
+                      }
+                      @case ('disabled') {
+                        <button
+                          type="button"
+                          class="p-paginator-prev p-paginator-nav-button p-disabled"
+                          tabindex="-1"
+                          disabled
+                          aria-label="Página anterior"
+                        >
+                          <i class="p-paginator-prev-icon pi pi-angle-left" aria-hidden="true"></i>
+                        </button>
+                      }
+                      @case ('report') {
+                        <span class="p-paginator-current">11 - 20 de 120</span>
+                      }
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

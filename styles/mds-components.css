@@ -1576,6 +1576,7 @@ html:root {
   --tabs-tab-focus-ring-width: var(--focus-ring-width);
   --tabs-tab-font-weight: 600;
   --tabs-tab-gap: var(--dimension-scale-x8);
+  --tabs-tab-icon-size: var(--icon-size);
   --tabs-tab-hover-background: rgba(0, 0, 0, 0);
   --tabs-tab-hover-border-color: var(--content-border-color);
   --tabs-tab-hover-color: var(--text-color);

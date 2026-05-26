@@ -847,9 +847,12 @@ app-playground-sidebar {
 
 /* ── Catálogo Data: Paginator ── */
 #tab-data-catalog .paginator-catalog-live {
-  width: 100%;
-  max-width: 42rem;
+  width: fit-content;
+  max-width: 100%;
   margin-top: 4px;
+}
+#tab-data-catalog .paginator-catalog-live .p-paginator-content {
+  flex-wrap: nowrap;
 }
 #tab-data-catalog .paginator-catalog-states-row {
   display: flex;

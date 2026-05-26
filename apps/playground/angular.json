@@ -38,6 +38,8 @@
               "../../styles/mds-semantic-dark.css",
               "../../styles/mds-components.css",
               "../../styles/primeng-tokens.css",
+              "src/styles/primeng-tabs-parity.css",
+              "src/styles/primeng-paginator-parity.css",
               "../../styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"
@@ -124,6 +126,8 @@
               "../../styles/mds-semantic-dark.css",
               "../../styles/mds-components.css",
               "../../styles/primeng-tokens.css",
+              "src/styles/primeng-tabs-parity.css",
+              "src/styles/primeng-paginator-parity.css",
               "../../styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"

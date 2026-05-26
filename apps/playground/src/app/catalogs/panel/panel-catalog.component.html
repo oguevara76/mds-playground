@@ -1,0 +1,105 @@
+<div class="cards-grid form-catalog-stack">
+  <div class="catalog-preview tabs-variant-block" [ngClass]="iconVisibilityClass()">
+    <section class="preview-section preview-section--flush catalog-block-section">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Tabs</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="tabs-interaction-row">
+            <p-tabs
+              class="tabs-catalog-live"
+              [value]="activeTab()"
+              (valueChange)="onTabChange($event)"
+              ariaLabel="Tabs interactivos del catálogo"
+            >
+              <p-tablist>
+                @for (tab of tabs; track trackTab($index, tab)) {
+                  <p-tab [value]="tab.value">
+                    <i
+                      class="tabs-tab-icon tabs-tab-icon-left"
+                      [ngClass]="tab.leftIcon"
+                      aria-hidden="true"
+                    ></i>
+                    <span class="tabs-tab-label">{{ tab.label }}</span>
+                    <i
+                      class="tabs-tab-icon tabs-tab-icon-right"
+                      [ngClass]="tab.rightIcon"
+                      aria-hidden="true"
+                    ></i>
+                  </p-tab>
+                }
+              </p-tablist>
+              <p-tabpanels>
+                @for (tab of tabs; track trackTab($index, tab)) {
+                  <p-tabpanel [value]="tab.value">
+                    <p class="tabs-catalog-panel-text">{{ tab.content }}</p>
+                  </p-tabpanel>
+                }
+              </p-tabpanels>
+            </p-tabs>
+
+            <aside class="button-config-aside form-config-aside-inline input-icon-panel">
+              <p class="button-config-aside-title">CONFIGURAR</p>
+              <div class="input-icon-switches">
+                <div class="input-config-row">
+                  <span class="input-config-label">Icono izq.</span>
+                  <p-toggleswitch
+                    [ngModel]="showLeftIcon()"
+                    (ngModelChange)="setShowLeftIcon($event)"
+                    ariaLabel="Mostrar icono izquierdo"
+                  />
+                </div>
+                <div class="input-config-row">
+                  <span class="input-config-label">Icono der.</span>
+                  <p-toggleswitch
+                    [ngModel]="showRightIcon()"
+                    (ngModelChange)="setShowRightIcon($event)"
+                    ariaLabel="Mostrar icono derecho"
+                  />
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">States</p>
+          <div
+            class="tabs-catalog-states-row is-static-preview"
+            aria-label="Tabs por estado activa e inactiva"
+          >
+            @for (demo of tabStateDemos; track trackTabState($index, demo)) {
+              <div class="tabs-catalog-state">
+                <span class="tabs-catalog-state-caption">{{ demo.caption }}</span>
+                <div class="p-tabs p-component tabs-catalog-state-demo">
+                  <div class="p-tablist p-component">
+                    <div class="p-tablist-content">
+                      <div class="p-tablist-tab-list" role="presentation">
+                        <span
+                          class="p-tab p-component"
+                          [class.p-tab-active]="demo.key === 'active'"
+                          role="presentation"
+                        >
+                          <span class="tabs-tab-label">General</span>
+                        </span>
+                        <span class="p-tab p-component" role="presentation">
+                          <span class="tabs-tab-label">Detalles</span>
+                        </span>
+                        @if (demo.key === 'active') {
+                          <span class="p-tablist-active-bar" aria-hidden="true"></span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

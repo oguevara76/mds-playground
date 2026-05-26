@@ -109,7 +109,9 @@
 .form-showcase .catalog-block-head .section-title.component-title-primary,
 .button-showcase .catalog-block-head .section-title.component-title-primary,
 .messages-showcase .catalog-block-head .section-title.component-title-primary,
-.toast-showcase .catalog-block-head .section-title.component-title-primary {
+.toast-showcase .catalog-block-head .section-title.component-title-primary,
+.paginator-showcase .catalog-block-head .section-title.component-title-primary,
+.tabs-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--p-content-color);
   font-weight: 800;
 }
@@ -117,7 +119,9 @@
 .form-showcase .btn-section-title,
 .button-showcase .btn-section-title,
 .messages-showcase .btn-section-title,
-.toast-showcase .btn-section-title {
+.toast-showcase .btn-section-title,
+.paginator-showcase .btn-section-title,
+.tabs-variant-block .btn-section-title {
   color: var(--p-surface-700);
   font-weight: 700;
   border-bottom-color: color-mix(in srgb, var(--p-content-border) 85%, var(--p-surface-300));
@@ -133,7 +137,9 @@
 .form-showcase .catalog-button-state-caption,
 .button-showcase .catalog-button-state-caption,
 .messages-showcase .catalog-button-state-caption,
-.toast-showcase .catalog-button-state-caption {
+.toast-showcase .catalog-button-state-caption,
+.paginator-showcase .paginator-catalog-state-caption,
+.tabs-variant-block .tabs-catalog-state-caption {
   color: var(--p-surface-600);
   font-weight: 500;
   font-size: 12px;

@@ -792,6 +792,7 @@ html[data-theme="light"] {
   --p-tabs-tab-font-weight:                       var(--tabs-tab-font-weight, 600);
   --p-tabs-tab-margin:                            var(--tabs-tab-margin, 0);
   --p-tabs-tab-gap:                               var(--tabs-tab-gap, 8px);
+  --p-tabs-tab-icon-size:                         var(--tabs-tab-icon-size, var(--icon-size, 16px));
   --p-tabs-tab-focus-ring-width:                  var(--tabs-tab-focus-ring-width, var(--p-focus-ring-width, 2px));
   --p-tabs-tab-focus-ring-style:                  var(--tabs-tab-focus-ring-style, solid);
   --p-tabs-tab-focus-ring-color:                  var(--tabs-tab-focus-ring-color, var(--p-focus-ring-color));
@@ -1491,6 +1492,7 @@ html[data-theme="dark"] {
     --p-tabs-tab-font-weight:                       var(--tabs-tab-font-weight, 600);
     --p-tabs-tab-margin:                            var(--tabs-tab-margin, 0);
     --p-tabs-tab-gap:                               var(--tabs-tab-gap, 8px);
+    --p-tabs-tab-icon-size:                         var(--tabs-tab-icon-size, var(--icon-size, 16px));
     --p-tabs-tab-focus-ring-width:                  var(--tabs-tab-focus-ring-width, var(--p-focus-ring-width, 2px));
     --p-tabs-tab-focus-ring-style:                  var(--tabs-tab-focus-ring-style, solid);
     --p-tabs-tab-focus-ring-color:                  var(--tabs-tab-focus-ring-color, var(--p-focus-ring-color));

@@ -10,7 +10,11 @@ import {
 } from './css-import-normalize';
 import { ThemeService, type MdsThemeMode } from './theme.service';
 import { MDS_OVERLAY_OVERRIDE_STYLE_ID } from './overlay-mds-overrides';
-import { MDS_RUNTIME_BRIDGE_STYLE_ID, syncPrimeUixPalettesFromMds } from './theme-prime-sync';
+import {
+  MDS_RUNTIME_BRIDGE_STYLE_ID,
+  MDS_TABS_OVERRIDE_STYLE_ID,
+  syncPrimeUixPalettesFromMds,
+} from './theme-prime-sync';
 import type { LoadedSlotFile, LoadedSlotsMap } from './theme.types';
 
 const SLOT_STYLE_ID: Record<UploadSlot, string> = {
@@ -40,6 +44,7 @@ const POST_PRIME_STYLE_ORDER: string[] = [
   'auto-contrast',
   MDS_RUNTIME_BRIDGE_STYLE_ID,
   MDS_OVERLAY_OVERRIDE_STYLE_ID,
+  MDS_TABS_OVERRIDE_STYLE_ID,
 ];
 
 /** Tokens MDS (no los --p-* generados por PrimeNG, que pisan el upload). */

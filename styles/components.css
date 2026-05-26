@@ -2082,6 +2082,13 @@ button.p-tab {
 }
 .p-tab .tabs-tab-icon {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--p-tabs-tab-icon-size, var(--icon-size, 16px));
+  line-height: 1;
+  width: 1em;
+  height: 1em;
 }
 .p-tab .tabs-tab-label {
   line-height: 1.25;
@@ -2109,12 +2116,14 @@ button.p-tab {
   width: 0;
 }
 
-/* ── Paginator (paridad PrimeNG v19, tokens --p-paginator-* ← --paginator-* vía primeng-tokens.css) ── */
+/* ── Paginator (tokens --p-paginator-* ← --paginator-* vía primeng-tokens.css) ── */
+/* PrimeNG v20+: controles planos en .p-paginator (sin .p-paginator-content). nowrap evita
+   partir first/prev/pages/next/last/rpp en dos filas; el catálogo estático agrupaba todo en content. */
 .p-paginator.p-component {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   font-family: var(--p-font-family);
   background: var(--p-paginator-background);
   color: var(--p-paginator-color);
@@ -2126,14 +2135,17 @@ button.p-tab {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--p-paginator-gap);
 }
-.p-paginator-rpp-dropdown.p-dropdown {
+.p-paginator-rpp-dropdown.p-dropdown,
+.p-paginator-rpp-dropdown.p-select {
   width: auto;
   min-width: 4.5rem;
+  flex-shrink: 0;
 }
-.p-paginator-rpp-dropdown .p-dropdown-select {
+.p-paginator-rpp-dropdown .p-dropdown-select,
+.p-paginator-rpp-dropdown .p-select-label {
   min-height: var(--p-paginator-nav-button-height);
   padding-top: 6px;
   padding-bottom: 6px;
@@ -2142,6 +2154,8 @@ button.p-tab {
 .p-paginator-pages {
   display: inline-flex;
   align-items: center;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
   gap: var(--p-paginator-gap);
 }
 .p-paginator-nav-button,

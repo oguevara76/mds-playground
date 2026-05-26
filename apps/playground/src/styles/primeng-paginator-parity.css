@@ -1,0 +1,187 @@
+/* Paridad PrimeNG Paginator (extraído de styles/components.css).
+   El playground no carga components.css completo; tokens --p-paginator-* vía primeng-tokens.css.
+   PrimeNG v20: hijos planos en .p-paginator (first/prev/pages/next/last + p-select RPP). */
+
+.p-paginator.p-component {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  font-family: var(--p-font-family);
+  background: var(--p-paginator-background);
+  color: var(--p-paginator-color);
+  padding: var(--p-paginator-padding);
+  border-radius: var(--p-paginator-border-radius);
+  gap: var(--p-paginator-gap);
+}
+
+.p-paginator-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: var(--p-paginator-gap);
+}
+
+.p-paginator-rpp-dropdown.p-dropdown,
+.p-paginator-rpp-dropdown.p-select {
+  width: auto;
+  min-width: 4.5rem;
+  flex-shrink: 0;
+}
+
+.p-paginator-rpp-dropdown .p-dropdown-select,
+.p-paginator-rpp-dropdown .p-select-label {
+  min-height: var(--p-paginator-nav-button-height);
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-size: 13px;
+}
+
+.p-paginator-pages {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  gap: var(--p-paginator-gap);
+}
+
+.p-paginator-first,
+.p-paginator-prev,
+.p-paginator-next,
+.p-paginator-last,
+.p-paginator-nav-button,
+button.p-paginator-page {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--p-paginator-nav-button-width);
+  height: var(--p-paginator-nav-button-height);
+  min-width: var(--p-paginator-nav-button-width);
+  border-radius: var(--p-paginator-nav-button-border-radius);
+  background: var(--p-paginator-nav-button-background);
+  color: var(--p-paginator-nav-button-color);
+  border: 0 none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  outline-color: transparent;
+  transition:
+    background var(--p-paginator-transition-duration),
+    color var(--p-paginator-transition-duration),
+    outline-color var(--p-paginator-transition-duration),
+    box-shadow var(--p-paginator-transition-duration);
+}
+
+button.p-paginator-page {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--p-paginator-nav-button-width);
+  height: var(--p-paginator-nav-button-height);
+  border-radius: var(--p-paginator-nav-button-border-radius);
+  background: var(--p-paginator-nav-button-background);
+  color: var(--p-paginator-nav-button-color);
+  cursor: pointer;
+  user-select: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  outline-color: transparent;
+  transition:
+    background var(--p-paginator-transition-duration),
+    color var(--p-paginator-transition-duration),
+    outline-color var(--p-paginator-transition-duration),
+    box-shadow var(--p-paginator-transition-duration);
+}
+
+.p-paginator-first .pi,
+.p-paginator-prev .pi,
+.p-paginator-next .pi,
+.p-paginator-last .pi,
+.p-paginator-nav-button .pi,
+.p-paginator-page .pi {
+  font-size: 14px;
+}
+
+.p-paginator-first:not(.p-disabled):hover,
+.p-paginator-prev:not(.p-disabled):hover,
+.p-paginator-next:not(.p-disabled):hover,
+.p-paginator-last:not(.p-disabled):hover,
+.p-paginator-nav-button:not(.p-disabled):not(:disabled):hover,
+.p-paginator-page:not(.p-disabled):not(:disabled):not(.p-paginator-page-selected):hover {
+  background: var(--p-paginator-nav-button-hover-background);
+  color: var(--p-paginator-nav-button-hover-color);
+}
+
+.p-paginator-page-selected,
+.p-paginator-page.p-paginator-page-selected {
+  background: var(--p-paginator-nav-button-selected-background);
+  color: var(--p-paginator-nav-button-selected-color);
+}
+
+.p-paginator-first:focus-visible,
+.p-paginator-prev:focus-visible,
+.p-paginator-next:focus-visible,
+.p-paginator-last:focus-visible,
+.p-paginator-nav-button:focus-visible,
+.p-paginator-page:focus-visible {
+  box-shadow: var(--p-paginator-nav-button-focus-ring-shadow);
+  outline: var(--p-paginator-nav-button-focus-ring-width) var(--p-paginator-nav-button-focus-ring-style)
+    var(--p-paginator-nav-button-focus-ring-color);
+  outline-offset: var(--p-paginator-nav-button-focus-ring-offset);
+}
+
+.p-paginator-first.p-disabled,
+.p-paginator-first:disabled,
+.p-paginator-prev.p-disabled,
+.p-paginator-prev:disabled,
+.p-paginator-next.p-disabled,
+.p-paginator-next:disabled,
+.p-paginator-last.p-disabled,
+.p-paginator-last:disabled,
+.p-paginator-nav-button.p-disabled,
+.p-paginator-nav-button:disabled,
+.p-paginator-page:disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+.p-paginator-current {
+  color: var(--p-paginator-current-page-report-color);
+  font-size: 14px;
+  line-height: 1.25;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.p-paginator-jtp-input {
+  max-width: var(--p-paginator-jump-to-page-input-max-width);
+  text-align: center;
+}
+
+/* Catálogo Data: orden como legacy (RPP → nav → informe) */
+.paginator-catalog-live.p-paginator.p-component {
+  justify-content: flex-start;
+}
+
+.paginator-catalog-live.p-paginator .p-paginator-rpp-dropdown {
+  order: -1;
+}
+
+.paginator-catalog-live.p-paginator .p-paginator-current {
+  order: 10;
+  margin-inline-start: auto;
+}

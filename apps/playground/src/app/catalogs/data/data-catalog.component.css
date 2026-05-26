@@ -1,0 +1,73 @@
+:host.data-catalog-page .paginator-catalog-live-shell {
+  max-width: 100%;
+  margin-top: 4px;
+  overflow-x: auto;
+}
+
+:host.data-catalog-page .paginator-catalog-live {
+  display: flex;
+  width: fit-content;
+  min-width: min-content;
+}
+
+:host.data-catalog-page .paginator-catalog-states-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 12px;
+  align-items: flex-end;
+  margin-top: 8px;
+}
+
+:host.data-catalog-page .paginator-catalog-state {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 auto;
+  width: fit-content;
+  min-width: 0;
+  max-width: none;
+}
+
+:host.data-catalog-page .paginator-catalog-state--informe {
+  flex: 0 0 auto;
+  width: fit-content;
+  min-width: 0;
+  max-width: 11rem;
+}
+
+:host.data-catalog-page
+  .paginator-catalog-state:not(.paginator-catalog-state--informe)
+  .paginator-catalog-state-demo {
+  width: fit-content;
+}
+
+:host.data-catalog-page .paginator-catalog-state-caption {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--p-surface-400);
+}
+
+:host.data-catalog-page .paginator-catalog-state-demo {
+  width: 100%;
+  pointer-events: none;
+}
+
+:host.data-catalog-page .paginator-catalog-state-demo .p-paginator-content {
+  justify-content: flex-start;
+  align-items: center;
+  min-height: var(--p-paginator-nav-button-height, 32px);
+}
+
+:host.data-catalog-page .paginator-catalog-nav-hover-demo {
+  background: var(--p-paginator-nav-button-hover-background);
+  color: var(--p-paginator-nav-button-hover-color);
+}
+
+:host.data-catalog-page
+  .paginator-catalog-state-demo
+  .p-paginator-page:not(.p-disabled):not(:disabled) {
+  opacity: 1;
+  cursor: default;
+}
