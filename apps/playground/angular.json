@@ -40,6 +40,7 @@
               "../../styles/primeng-tokens.css",
               "src/styles/primeng-tabs-parity.css",
               "src/styles/primeng-paginator-parity.css",
+              "src/styles/primeng-tooltip-parity.css",
               "../../styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"
@@ -128,6 +129,7 @@
               "../../styles/primeng-tokens.css",
               "src/styles/primeng-tabs-parity.css",
               "src/styles/primeng-paginator-parity.css",
+              "src/styles/primeng-tooltip-parity.css",
               "../../styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"

@@ -1,0 +1,65 @@
+<div class="cards-grid form-catalog-stack">
+  <div class="catalog-preview tooltip-variant-block">
+    <section class="preview-section preview-section--flush catalog-block-section">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Tooltip</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="tooltip-interaction-row">
+            <div class="catalog-input-interactive tooltip-interaction-scope">
+              <div class="p-field">
+                <div class="p-label-row">
+                  <label class="p-label" for="tooltip-it-live">Nombre del proyecto</label>
+                  <button
+                    type="button"
+                    class="tooltip-help-trigger"
+                    [pTooltip]="tooltipText"
+                    tooltipPosition="top"
+                    appendTo="body"
+                    aria-label="Ayuda sobre nombre del proyecto"
+                  >
+                    <i class="pi pi-question-circle" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <input
+                  id="tooltip-it-live"
+                  type="text"
+                  pInputText
+                  [(ngModel)]="projectName"
+                  placeholder="Mi proyecto"
+                />
+                <small class="p-hint">Identificador visible en el listado.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Posiciones</p>
+          <div
+            class="tooltip-catalog-positions-row is-static-preview"
+            aria-label="Tooltip en las cuatro posiciones"
+          >
+            @for (demo of positionDemos; track trackPosition($index, demo)) {
+              <div class="tooltip-catalog-position-item">
+                <span class="tooltip-catalog-position-caption">{{ demo.caption }}</span>
+                <div [class]="'tooltip-catalog-position-frame ' + demo.frameClass">
+                  <div
+                    [class]="'p-tooltip p-component tooltip-catalog-static-demo ' + demo.tooltipClass"
+                    role="tooltip"
+                  >
+                    <div class="p-tooltip-arrow" data-pc-section="arrow"></div>
+                    <div class="p-tooltip-text" data-pc-section="text">{{ demo.text }}</div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

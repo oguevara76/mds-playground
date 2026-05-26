@@ -3,6 +3,7 @@ import { ButtonCatalogComponent } from './catalogs/button/button-catalog.compone
 import { FormCatalogComponent } from './catalogs/form/form-catalog.component';
 import { DataCatalogComponent } from './catalogs/data/data-catalog.component';
 import { MessagesCatalogComponent } from './catalogs/messages/messages-catalog.component';
+import { OverlayCatalogComponent } from './catalogs/overlay/overlay-catalog.component';
 import { PanelCatalogComponent } from './catalogs/panel/panel-catalog.component';
 import { AppShellComponent } from './layout/app-shell.component';
 
@@ -17,6 +18,7 @@ export const routes: Routes = [
       { path: 'messages', component: MessagesCatalogComponent },
       { path: 'data', component: DataCatalogComponent },
       { path: 'panel', component: PanelCatalogComponent },
+      { path: 'overlay', component: OverlayCatalogComponent },
     ],
   },
   { path: '**', redirectTo: 'button' },
