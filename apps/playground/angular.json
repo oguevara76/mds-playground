@@ -41,6 +41,7 @@
               "src/styles/primeng-tabs-parity.css",
               "src/styles/primeng-paginator-parity.css",
               "src/styles/primeng-tooltip-parity.css",
+              "src/styles/primeng-tag-parity.css",
               "../../styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"
@@ -130,6 +131,7 @@
               "src/styles/primeng-tabs-parity.css",
               "src/styles/primeng-paginator-parity.css",
               "src/styles/primeng-tooltip-parity.css",
+              "src/styles/primeng-tag-parity.css",
               "../../styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"

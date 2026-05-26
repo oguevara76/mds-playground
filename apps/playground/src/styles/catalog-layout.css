@@ -111,7 +111,9 @@
 .messages-showcase .catalog-block-head .section-title.component-title-primary,
 .toast-showcase .catalog-block-head .section-title.component-title-primary,
 .paginator-showcase .catalog-block-head .section-title.component-title-primary,
-.tabs-variant-block .catalog-block-head .section-title.component-title-primary {
+.tabs-variant-block .catalog-block-head .section-title.component-title-primary,
+.tag-showcase .catalog-block-head .section-title.component-title-primary,
+.tooltip-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--p-content-color);
   font-weight: 800;
 }
@@ -121,7 +123,9 @@
 .messages-showcase .btn-section-title,
 .toast-showcase .btn-section-title,
 .paginator-showcase .btn-section-title,
-.tabs-variant-block .btn-section-title {
+.tabs-variant-block .btn-section-title,
+.tag-showcase .btn-section-title,
+.tooltip-variant-block .btn-section-title {
   color: var(--p-surface-700);
   font-weight: 700;
   border-bottom-color: color-mix(in srgb, var(--p-content-border) 85%, var(--p-surface-300));
@@ -139,10 +143,13 @@
 .messages-showcase .catalog-button-state-caption,
 .toast-showcase .catalog-button-state-caption,
 .paginator-showcase .paginator-catalog-state-caption,
-.tabs-variant-block .tabs-catalog-state-caption {
+.tabs-variant-block .tabs-catalog-state-caption,
+.tooltip-variant-block .tooltip-catalog-position-caption {
   color: var(--p-surface-600);
   font-weight: 500;
   font-size: 12px;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 /* Más aire entre el título Interaction y el componente (p. ej. FloatLabel elevado) */
@@ -265,7 +272,11 @@
 [data-theme="dark"] .form-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .button-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .messages-showcase .catalog-block-head .section-title.component-title-primary,
-[data-theme="dark"] .toast-showcase .catalog-block-head .section-title.component-title-primary {
+[data-theme="dark"] .toast-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .tag-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .tooltip-variant-block .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .paginator-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--p-surface-0);
   font-weight: 800;
 }
@@ -273,14 +284,22 @@
 [data-theme="dark"] .form-showcase .catalog-block-head,
 [data-theme="dark"] .button-showcase .catalog-block-head,
 [data-theme="dark"] .messages-showcase .catalog-block-head,
-[data-theme="dark"] .toast-showcase .catalog-block-head {
+[data-theme="dark"] .toast-showcase .catalog-block-head,
+[data-theme="dark"] .tag-showcase .catalog-block-head,
+[data-theme="dark"] .tooltip-variant-block .catalog-block-head,
+[data-theme="dark"] .paginator-showcase .catalog-block-head,
+[data-theme="dark"] .tabs-variant-block .catalog-block-head {
   border-bottom-color: color-mix(in srgb, var(--p-primary-color) 42%, var(--p-surface-600));
 }
 
 [data-theme="dark"] .form-showcase .btn-section-title,
 [data-theme="dark"] .button-showcase .btn-section-title,
 [data-theme="dark"] .messages-showcase .btn-section-title,
-[data-theme="dark"] .toast-showcase .btn-section-title {
+[data-theme="dark"] .toast-showcase .btn-section-title,
+[data-theme="dark"] .tag-showcase .btn-section-title,
+[data-theme="dark"] .tooltip-variant-block .btn-section-title,
+[data-theme="dark"] .paginator-showcase .btn-section-title,
+[data-theme="dark"] .tabs-variant-block .btn-section-title {
   color: var(--p-surface-300);
   font-weight: 700;
   border-bottom-color: var(--p-surface-800, var(--p-surface-700));
@@ -296,7 +315,10 @@
 [data-theme="dark"] .form-showcase .catalog-button-state-caption,
 [data-theme="dark"] .button-showcase .catalog-button-state-caption,
 [data-theme="dark"] .messages-showcase .catalog-button-state-caption,
-[data-theme="dark"] .toast-showcase .catalog-button-state-caption {
+[data-theme="dark"] .toast-showcase .catalog-button-state-caption,
+[data-theme="dark"] .paginator-showcase .paginator-catalog-state-caption,
+[data-theme="dark"] .tabs-variant-block .tabs-catalog-state-caption,
+[data-theme="dark"] .tooltip-variant-block .tooltip-catalog-position-caption {
   color: var(--p-surface-400);
   font-weight: 500;
 }

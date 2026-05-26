@@ -785,25 +785,22 @@ html:root {
   --floatlabel-color: var(--form-field-float-label-color);
   --floatlabel-focus-color: var(--form-field-float-label-focus-color);
   --floatlabel-in-active-top: var(--form-field-padding-y);
+  --floatlabel-in-input-min-height: var(--iftalabel-input-min-height);
+  --floatlabel-in-input-min-height-lg: var(--iftalabel-input-min-height-lg);
+  --floatlabel-in-input-min-height-sm: var(--iftalabel-input-min-height-sm);
   --floatlabel-in-input-padding-bottom: var(--form-field-padding-y);
-  --floatlabel-in-input-padding-top-sm: calc(
-    var(--form-field-sm-padding-y) + var(--form-field-xs-font-size) + var(--dimension-scale-x2)
-  );
-  --floatlabel-in-input-padding-top-lg: calc(
-    var(--form-field-lg-padding-y) + var(--form-field-xs-font-size) + var(--dimension-scale-x4)
-  );
-  --floatlabel-in-input-padding-top: calc(
-    var(--form-field-padding-y) + var(--form-field-xs-font-size) + var(--dimension-scale-x3)
-  );
+  --floatlabel-in-input-padding-top: var(--iftalabel-input-padding-top);
+  --floatlabel-in-input-padding-top-lg: var(--iftalabel-input-padding-top-lg);
+  --floatlabel-in-input-padding-top-sm: var(--iftalabel-input-padding-top-sm);
   --floatlabel-invalid-color: var(--form-field-float-label-invalid-color);
   --floatlabel-on-active-background: var(--form-field-background);
   --floatlabel-on-active-padding-x: 2px;
   --floatlabel-on-active-padding-y: 0px;
   --floatlabel-on-border-radius: var(--dimension-radius-x2);
-  --floatlabel-over-active-background: var(--form-field-background);
   --floatlabel-on-wrapper-padding-top: calc((var(--form-field-xs-font-size) / 2) + var(--dimension-scale-x2));
-  --floatlabel-over-wrapper-padding-top: calc(var(--form-field-xs-font-size) + var(--dimension-scale-x4));
+  --floatlabel-over-active-background: var(--form-field-background);
   --floatlabel-over-active-top: calc(-1 * (var(--form-field-xs-font-size) + var(--dimension-scale-x4)));
+  --floatlabel-over-wrapper-padding-top: calc(var(--form-field-xs-font-size) + var(--dimension-scale-x4));
   --floatlabel-position-lg-x: var(--form-field-lg-padding-x);
   --floatlabel-position-sm-x: var(--form-field-sm-padding-x);
   --floatlabel-position-x: var(--form-field-padding-x);
@@ -877,20 +874,15 @@ html:root {
   --iftalabel-focus-color: var(--form-field-float-label-focus-color);
   --iftalabel-font-size: var(--form-field-xs-font-size);
   --iftalabel-font-weight: 400;
+  --iftalabel-input-min-height: 47px;
+  --iftalabel-input-min-height-lg: 49px;
+  --iftalabel-input-min-height-sm: 45px;
   --iftalabel-input-padding-bottom: var(--form-field-padding-y);
-  --iftalabel-input-padding-top: var(--floatlabel-in-input-padding-top);
-  --iftalabel-input-padding-top-sm: var(--floatlabel-in-input-padding-top-sm);
-  --iftalabel-input-padding-top-lg: var(--floatlabel-in-input-padding-top-lg);
-    var(--form-field-padding-y) + var(--form-field-xs-font-size) + var(--dimension-scale-x3)
-  );
   --iftalabel-invalid-color: var(--form-field-float-label-invalid-color);
   --iftalabel-position-lg-x: var(--form-field-lg-padding-x);
   --iftalabel-position-sm-x: var(--form-field-sm-padding-x);
   --iftalabel-position-x: var(--form-field-padding-x);
   --iftalabel-top: var(--form-field-padding-y);
-  --iftalabel-input-min-height: 47px;
-  --iftalabel-input-min-height-sm: 45px;
-  --iftalabel-input-min-height-lg: 49px;
   --image-action-border-radius: var(--border-radius-pill);
   --image-action-color: var(--surface-context-fixed-light);
   --image-action-focus-ring-color: var(--focus-ring-color);
@@ -954,25 +946,6 @@ html:root {
   --inputotp-inputotp-input-lg-width: var(--dimension-scale-x42);
   --inputotp-inputotp-input-sm-width: var(--dimension-scale-x28);
   --inputotp-inputotp-input-width: var(--dimension-scale-x32);
-  --inputtext-line-height: 1.25;
-  --inputtext-min-height: calc(
-    (var(--form-field-padding-y) * 2) + (var(--form-field-font-size) * var(--inputtext-line-height)) + 2px
-  );
-  --inputtext-in-min-height: calc(
-    var(--floatlabel-in-input-padding-top) +
-      (var(--form-field-font-size) * var(--inputtext-line-height)) +
-      var(--floatlabel-in-input-padding-bottom) + 2px
-  );
-  --inputtext-in-min-height-sm: calc(
-    var(--floatlabel-in-input-padding-top-sm) +
-      (var(--form-field-sm-font-size) * var(--inputtext-line-height)) +
-      var(--form-field-sm-padding-y) + 2px
-  );
-  --inputtext-in-min-height-lg: calc(
-    var(--floatlabel-in-input-padding-top-lg) +
-      (var(--form-field-lg-font-size) * var(--inputtext-line-height)) +
-      var(--form-field-lg-padding-y) + 2px
-  );
   --inputtext-background: var(--form-field-background);
   --inputtext-border-color: var(--form-field-border-color);
   --inputtext-border-radius: var(--form-field-border-radius);
@@ -990,11 +963,15 @@ html:root {
   --inputtext-focus-ring-width: var(--form-field-focus-ring-width);
   --inputtext-font-size: var(--form-field-font-size);
   --inputtext-hover-border-color: var(--form-field-hover-border-color);
+  --inputtext-in-min-height: var(--iftalabel-input-min-height);
+  --inputtext-in-min-height-lg: var(--iftalabel-input-min-height-lg);
+  --inputtext-in-min-height-sm: var(--iftalabel-input-min-height-sm);
   --inputtext-invalid-border-color: var(--form-field-invalid-border-color);
   --inputtext-invalid-placeholder-color: var(--form-field-invalid-placeholder-color);
   --inputtext-lg-font-size: var(--dimension-scale-x16);
   --inputtext-lg-padding-x: var(--form-field-lg-padding-x);
   --inputtext-lg-padding-y: var(--form-field-lg-padding-y);
+  --inputtext-line-height: 1.25;
   --inputtext-padding-x: var(--form-field-padding-x);
   --inputtext-padding-y: var(--form-field-padding-y);
   --inputtext-placeholder-color: var(--form-field-placeholder-color);
@@ -1002,6 +979,9 @@ html:root {
   --inputtext-sm-font-size: var(--dimension-scale-x12);
   --inputtext-sm-padding-x: var(--form-field-sm-padding-x);
   --inputtext-sm-padding-y: var(--form-field-sm-padding-y);
+  --inputtext-with-icon-padding-start: calc((var(--form-field-padding-x) * 2) + var(--icon-size));
+  --inputtext-with-icon-padding-start-lg: calc((var(--form-field-lg-padding-x) * 2) + var(--icon-size));
+  --inputtext-with-icon-padding-start-sm: calc((var(--form-field-sm-padding-x) * 2) + var(--icon-size));
   --knob-focus-ring-color: var(--focus-ring-color);
   --knob-focus-ring-offset: var(--focus-ring-offset);
   --knob-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
@@ -1140,10 +1120,13 @@ html:root {
   --message-close-icon-size: var(--dimension-scale-x14);
   --message-close-icon-sm-size: var(--dimension-scale-x12);
   --message-content-gap: var(--dimension-scale-x8);
+  --message-content-lg-padding: var(--message-content-lg-padding-y) var(--message-content-lg-padding-x);
   --message-content-lg-padding-x: var(--dimension-scale-x12);
   --message-content-lg-padding-y: var(--dimension-scale-x8);
+  --message-content-padding: var(--message-content-padding-y) var(--message-content-padding-x);
   --message-content-padding-x: var(--dimension-scale-x10);
   --message-content-padding-y: var(--dimension-scale-x6);
+  --message-content-sm-padding: var(--message-content-sm-padding-y) var(--message-content-sm-padding-x);
   --message-content-sm-padding-x: var(--dimension-scale-x8);
   --message-content-sm-padding-y: var(--dimension-scale-x4);
   --message-contrast-background: var(--surface-context-intense);
@@ -1577,6 +1560,7 @@ html:root {
   --tabs-tab-hover-background: rgba(0, 0, 0, 0);
   --tabs-tab-hover-border-color: var(--content-border-color);
   --tabs-tab-hover-color: var(--text-color);
+  --tabs-tab-icon-size: var(--icon-size);
   --tabs-tab-padding-x: var(--dimension-scale-x16);
   --tabs-tab-padding-y: var(--dimension-scale-x14);
   --tabs-tablist-background: var(--opacity-transparent);
@@ -1605,6 +1589,7 @@ html:root {
   --tag-icon-size: var(--dimension-scale-x12);
   --tag-info-background: var(--feedback-info-medium);
   --tag-info-color: var(--feedback-info-minimal);
+  --tag-padding: var(--tag-padding-y) var(--tag-padding-x);
   --tag-padding-x: var(--dimension-scale-x8);
   --tag-padding-y: var(--dimension-scale-x4);
   --tag-primary-background: var(--primary-color);
@@ -1830,6 +1815,7 @@ html:root {
   --tooltip-color: var(--surface-context-fixed-light);
   --tooltip-gutter: var(--dimension-scale-x4);
   --tooltip-max-width: var(--dimension-scale-x192);
+  --tooltip-padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
   --tooltip-padding-x: var(--dimension-scale-x8);
   --tooltip-padding-y: var(--dimension-scale-x8);
   --tooltip-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);

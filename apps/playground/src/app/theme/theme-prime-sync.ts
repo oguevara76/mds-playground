@@ -3,6 +3,8 @@ import {
   OVERLAY_MDS_OVERRIDE_CSS,
 } from './overlay-mds-overrides';
 import { MDS_TABS_OVERRIDE_STYLE_ID, TABS_MDS_OVERRIDE_CSS } from './tabs-mds-overrides';
+import { MDS_TAG_OVERRIDE_STYLE_ID, TAG_MDS_OVERRIDE_CSS } from './tag-mds-overrides';
+import { MDS_TOOLTIP_OVERRIDE_STYLE_ID, TOOLTIP_MDS_OVERRIDE_CSS } from './tooltip-mds-overrides';
 import {
   MDS_RUNTIME_BRIDGE_STYLE_ID,
   PRIME_RUNTIME_BRIDGE_CSS,
@@ -27,4 +29,6 @@ export function syncPrimeUixPalettesFromMds(
   injectStyle(MDS_RUNTIME_BRIDGE_STYLE_ID, PRIME_RUNTIME_BRIDGE_CSS);
   injectStyle(MDS_OVERLAY_OVERRIDE_STYLE_ID, OVERLAY_MDS_OVERRIDE_CSS);
   injectStyle(MDS_TABS_OVERRIDE_STYLE_ID, TABS_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_TOOLTIP_OVERRIDE_STYLE_ID, TOOLTIP_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_TAG_OVERRIDE_STYLE_ID, TAG_MDS_OVERRIDE_CSS);
 }

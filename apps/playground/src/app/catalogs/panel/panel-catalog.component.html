@@ -73,7 +73,7 @@
           >
             @for (demo of tabStateDemos; track trackTabState($index, demo)) {
               <div class="tabs-catalog-state">
-                <span class="tabs-catalog-state-caption">{{ demo.caption }}</span>
+                <div class="tabs-catalog-state-preview">
                 <div class="p-tabs p-component tabs-catalog-state-demo">
                   <div class="p-tablist p-component">
                     <div class="p-tablist-content">
@@ -95,6 +95,10 @@
                     </div>
                   </div>
                 </div>
+                </div>
+                <span class="tabs-catalog-state-caption catalog-button-state-caption">{{
+                  demo.caption
+                }}</span>
               </div>
             }
           </div>

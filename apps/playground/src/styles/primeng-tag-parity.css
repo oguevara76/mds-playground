@@ -1,0 +1,69 @@
+/* Paridad PrimeNG Tag (extraído de styles/components.css).
+   Tokens --p-tag-* ← --tag-* vía primeng-tokens.css; refuerzo con ejes MDS en padding. */
+
+.p-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tag-gap, var(--p-tag-gap));
+  padding: var(--tag-padding-y, var(--p-tag-padding-y))
+    var(--tag-padding-x, var(--p-tag-padding-x));
+  border-radius: var(--tag-border-radius, var(--p-tag-border-radius));
+  font-size: var(--tag-font-size, var(--p-tag-font-size));
+  font-weight: var(--tag-font-weight, var(--p-tag-font-weight));
+  font-family: var(--p-font-family);
+}
+
+.p-tag-rounded {
+  border-radius: var(--tag-rounded-border-radius, var(--p-tag-rounded-border-radius));
+}
+
+.p-tag-icon,
+.p-tag > .pi,
+.p-tag .p-tag-icon {
+  font-size: var(--tag-icon-size, var(--p-tag-icon-size));
+  line-height: 1;
+}
+
+.p-tag-label {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.2;
+}
+
+.p-tag-primary,
+.p-tag:not(.p-tag-success):not(.p-tag-info):not(.p-tag-warn):not(.p-tag-danger):not(.p-tag-secondary):not(.p-tag-contrast) {
+  background: var(--tag-primary-background, var(--p-tag-primary-background));
+  color: var(--tag-primary-color, var(--p-tag-primary-color));
+}
+
+.p-tag-success {
+  background: var(--tag-success-background, var(--p-tag-success-background));
+  color: var(--tag-success-color, var(--p-tag-success-color));
+}
+
+.p-tag-info {
+  background: var(--tag-info-background, var(--p-tag-info-background));
+  color: var(--tag-info-color, var(--p-tag-info-color));
+}
+
+.p-tag-warn,
+.p-tag-warning {
+  background: var(--tag-warn-background, var(--p-tag-warning-background));
+  color: var(--tag-warn-color, var(--p-tag-warning-color));
+}
+
+.p-tag-danger {
+  background: var(--tag-danger-background, var(--p-tag-danger-background));
+  color: var(--tag-danger-color, var(--p-tag-danger-color));
+}
+
+.p-tag-secondary {
+  background: var(--tag-secondary-background, var(--p-tag-secondary-background));
+  color: var(--tag-secondary-color, var(--p-tag-secondary-color));
+}
+
+.p-tag-contrast {
+  background: var(--tag-contrast-background, var(--p-tag-contrast-background));
+  color: var(--tag-contrast-color, var(--p-tag-contrast-color));
+}

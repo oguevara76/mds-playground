@@ -1,0 +1,33 @@
+:host.misc-catalog-page .catalog-block-body > .btn-section {
+  margin-bottom: 48px;
+}
+
+:host.misc-catalog-page .catalog-block-body > .btn-section:last-child {
+  margin-bottom: 0;
+}
+
+:host.misc-catalog-page .tag-catalog-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 2px;
+}
+
+/* Refuerzo catálogo: mismas variables MDS que tag-mds-overrides / primeng-tag-parity */
+:host.misc-catalog-page ::ng-deep .p-tag {
+  gap: var(--tag-gap, var(--p-tag-gap));
+  padding: var(--tag-padding-y, var(--p-tag-padding-y))
+    var(--tag-padding-x, var(--p-tag-padding-x));
+  font-size: var(--tag-font-size, var(--p-tag-font-size));
+  font-weight: var(--tag-font-weight, var(--p-tag-font-weight));
+}
+
+:host.misc-catalog-page ::ng-deep .p-tag-rounded {
+  border-radius: var(--tag-rounded-border-radius, var(--p-tag-rounded-border-radius));
+}
+
+:host.misc-catalog-page ::ng-deep .p-tag-icon,
+:host.misc-catalog-page ::ng-deep .p-tag .p-tag-icon {
+  font-size: var(--tag-icon-size, var(--p-tag-icon-size));
+}

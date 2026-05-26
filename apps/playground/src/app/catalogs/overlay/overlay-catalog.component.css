@@ -16,3 +16,81 @@
 :host.overlay-catalog-page ::ng-deep .tooltip-interaction-scope .p-inputtext {
   width: 100%;
 }
+
+/* Refuerzo: padding desde variables de componente MDS */
+:host.overlay-catalog-page ::ng-deep .p-tooltip-text {
+  padding: var(--tooltip-padding-y, var(--dimension-scale-x8, 8px))
+    var(--tooltip-padding-x, var(--dimension-scale-x8, 8px));
+}
+
+:host.overlay-catalog-page .tooltip-catalog-positions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+:host.overlay-catalog-page .tooltip-catalog-position-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: auto;
+  max-width: none;
+}
+
+:host.overlay-catalog-page .tooltip-catalog-position-preview {
+  display: flex;
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 0;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Marco punteado: mismo alto en todas las celdas; ancho según tooltip + margen */
+:host.overlay-catalog-page .tooltip-catalog-position-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: fit-content;
+  max-width: calc(100% - 4px);
+  min-height: 0;
+  padding: 20px 24px;
+  box-sizing: border-box;
+}
+
+:host.overlay-catalog-page .tooltip-catalog-static-demo {
+  display: block !important;
+  position: relative;
+  flex-shrink: 0;
+  width: max-content;
+  max-width: max-content;
+}
+
+/* Una sola línea en Positions ("Tooltip text") */
+:host.overlay-catalog-page ::ng-deep .tooltip-catalog-static-demo .p-tooltip-text {
+  white-space: nowrap;
+  word-break: normal;
+  width: max-content;
+  max-width: max-content;
+}
+
+:host.overlay-catalog-page .tooltip-catalog-position-caption {
+  flex-shrink: 0;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: left;
+  color: var(--p-surface-600);
+}

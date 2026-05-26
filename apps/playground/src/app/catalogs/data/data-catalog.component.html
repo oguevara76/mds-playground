@@ -36,7 +36,7 @@
                 class="paginator-catalog-state"
                 [class.paginator-catalog-state--informe]="state.key === 'report'"
               >
-                <span class="paginator-catalog-state-caption">{{ state.caption }}</span>
+                <div class="paginator-catalog-state-preview">
                 <div class="p-paginator p-component paginator-catalog-state-demo" role="presentation">
                   <div class="p-paginator-content">
                     @switch (state.key) {
@@ -91,6 +91,10 @@
                     }
                   </div>
                 </div>
+                </div>
+                <span class="paginator-catalog-state-caption catalog-button-state-caption">{{
+                  state.caption
+                }}</span>
               </div>
             }
           </div>

@@ -21,6 +21,7 @@ pnpm run playground:start
 - Catálogo Data: http://localhost:3000/data  
 - Catálogo Panel: http://localhost:3000/panel  
 - Catálogo Overlay: http://localhost:3000/overlay  
+- Catálogo Misc (Tag): http://localhost:3000/misc  
 - Upload CSS, paleta y tokens activos: sidebar izquierdo (paridad con legacy)
 
 **Terminal 2 — Legacy estático (puerto 5500)**
@@ -45,6 +46,7 @@ pnpm run legacy:serve
 | Catálogo Data (Paginator) | Sí | **Sí** (`/data`) |
 | Catálogo Panel (Tabs) | Sí | **Sí** (`/panel`) |
 | Catálogo Overlay (Tooltip) | Sí | **Sí** (`/overlay`) |
+| Catálogo Misc (Tag) | Sí | **Sí** (`/misc`) |
 | Shell visual (topbar, sidebar, tabs) | Sí | **Sí** (`styles/app.css`) |
 | Upload 4 capas CSS | Sí | **Sí** |
 | Tokens activos + paleta | Sí | **Sí** |

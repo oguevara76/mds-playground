@@ -1,0 +1,50 @@
+<div class="cards-grid form-catalog-stack">
+  <div class="catalog-preview tag-showcase">
+    <section class="preview-section preview-section--flush catalog-block-section">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Tag</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Severity</p>
+          <div class="tag-catalog-row is-static-preview" aria-label="Tag, all severities">
+            @for (sev of severities; track trackSeverity($index, sev)) {
+              @if (isPrimary(sev)) {
+                <p-tag [value]="sev.label" class="p-tag-primary" />
+              } @else {
+                <p-tag [severity]="sev.primeSeverity" [value]="sev.label" />
+              }
+            }
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Rounded</p>
+          <div class="tag-catalog-row is-static-preview" aria-label="Tag rounded, all severities">
+            @for (sev of severities; track trackSeverity($index, sev)) {
+              @if (isPrimary(sev)) {
+                <p-tag [value]="sev.label" [rounded]="true" class="p-tag-primary" />
+              } @else {
+                <p-tag [severity]="sev.primeSeverity" [value]="sev.label" [rounded]="true" />
+              }
+            }
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Icon</p>
+          <div class="tag-catalog-row is-static-preview" aria-label="Tag with icon, all severities">
+            @for (sev of severities; track trackSeverity($index, sev)) {
+              @if (isPrimary(sev)) {
+                <p-tag [icon]="sev.icon" [value]="sev.label" class="p-tag-primary" />
+              } @else {
+                <p-tag [icon]="sev.icon" [severity]="sev.primeSeverity" [value]="sev.label" />
+              }
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
