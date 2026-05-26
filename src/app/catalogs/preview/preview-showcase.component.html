@@ -1,0 +1,425 @@
+<div class="pv-grid">
+  <!-- ROW 1: Schedule + Bar chart + Jobs -->
+  <div class="pv-row pv-3col">
+    <p-card styleClass="pv-card-root pv-schedule-card">
+      <h3 class="pv-schedule-date">Wednesday, April 29</h3>
+      <div class="pv-schedule-list">
+        @for (item of schedule; track item.title) {
+          <div [class]="scheduleToneClass(item)">
+            <div class="pv-schedule-body">
+              <div class="pv-schedule-row">
+                <p class="pv-schedule-title">{{ item.title }}</p>
+                <p-button
+                  type="button"
+                  icon="pi pi-ellipsis-v"
+                  [text]="true"
+                  severity="secondary"
+                  styleClass="pv-schedule-menu-btn"
+                  [attr.aria-label]="'Opciones de ' + item.title"
+                />
+              </div>
+              <p class="pv-schedule-time">{{ item.time }}</p>
+              @if (item.avatars?.length) {
+                <p-avatarGroup styleClass="pv-avatar-group">
+                  @for (src of item.avatars; track src) {
+                    <p-avatar [image]="src" shape="circle" />
+                  }
+                </p-avatarGroup>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </p-card>
+
+    <p-card styleClass="pv-card-root pv-chart-card">
+      <div class="pv-chart-header">
+        <div>
+          <p class="pv-label">Expenses</p>
+          <div class="pv-stat-num">$12,543</div>
+        </div>
+        <div class="pv-chart-legend">
+          <span class="pv-chart-legend-item">
+            <span class="pv-chart-legend-dot" style="background: var(--p-primary-500)"></span>
+            Actual
+          </span>
+          <span class="pv-chart-legend-item">
+            <span class="pv-chart-legend-dot" style="background: var(--p-primary-300)"></span>
+            Target
+          </span>
+        </div>
+      </div>
+      <svg class="pv-bar-svg" viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="10" y="51" width="15" height="109" rx="3" fill="var(--p-primary-500)" />
+        <rect x="27" y="95" width="15" height="65" rx="3" fill="var(--p-primary-300)" />
+        <rect x="57" y="80" width="15" height="80" rx="3" fill="var(--p-primary-500)" />
+        <rect x="74" y="105" width="15" height="55" rx="3" fill="var(--p-primary-300)" />
+        <rect x="104" y="131" width="15" height="29" rx="3" fill="var(--p-primary-500)" />
+        <rect x="121" y="87" width="15" height="73" rx="3" fill="var(--p-primary-300)" />
+        <rect x="151" y="32" width="15" height="128" rx="3" fill="var(--p-primary-500)" />
+        <rect x="168" y="109" width="15" height="51" rx="3" fill="var(--p-primary-300)" />
+        <rect x="198" y="12" width="15" height="148" rx="3" fill="var(--p-primary-500)" />
+        <rect x="215" y="55" width="15" height="105" rx="3" fill="var(--p-primary-300)" />
+        <rect x="245" y="84" width="15" height="76" rx="3" fill="var(--p-primary-500)" />
+        <rect x="262" y="108" width="15" height="52" rx="3" fill="var(--p-primary-300)" />
+      </svg>
+      <div class="pv-month-labels">
+        <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+      </div>
+      <div class="pv-chart-stats">
+        <div class="pv-chart-stat">
+          <p class="pv-label">Promedio</p>
+          <p class="pv-chart-stat-val">$2,090</p>
+        </div>
+        <div class="pv-chart-stat">
+          <p class="pv-label">Máximo</p>
+          <p class="pv-chart-stat-val">$3,840</p>
+        </div>
+        <div class="pv-chart-stat">
+          <p class="pv-label">Mínimo</p>
+          <p class="pv-chart-stat-val">$980</p>
+        </div>
+        <div class="pv-chart-stat">
+          <p class="pv-label">Tendencia</p>
+          <p class="pv-chart-stat-val" style="color: var(--p-danger-color)">↑ 8%</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card styleClass="pv-card-root pv-jobs-card">
+      <div class="pv-card-header pv-jobs-card-header">
+        <p class="pv-label">Jobs</p>
+        <p-button label="Browse all" size="small" styleClass="pv-jobs-browse" />
+      </div>
+      <div class="pv-job-list">
+        @for (job of jobs; track job.title) {
+          <div class="pv-job-item">
+            <div class="pv-job-logo" [class]="job.logoClass ?? ''">
+              <i [class]="job.icon" style="font-size: 16px" aria-hidden="true"></i>
+            </div>
+            <div class="pv-job-info">
+              <div class="pv-job-title-row">
+                <p class="pv-job-title">{{ job.title }}</p>
+                @if (job.isNew) {
+                  <p-tag value="New" styleClass="pv-job-tag pv-job-tag-new" />
+                }
+              </div>
+              <p class="pv-job-type">{{ job.company }} · {{ job.type }}</p>
+              <div class="pv-job-footer">
+                <span class="pv-job-salary">{{ job.salary }}</span>
+                <p-button
+                  label="Apply"
+                  size="small"
+                  [outlined]="true"
+                  styleClass="pv-job-apply"
+                />
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </p-card>
+  </div>
+
+  <!-- ROW 2: Donut + Top Products + Hero -->
+  <div class="pv-row pv-3col pv-row--compact">
+    <p-card styleClass="pv-card-root pv-donut-card">
+      <div class="pv-card-header" style="margin-bottom: 0">
+        <div>
+          <p class="pv-label">Expenses</p>
+          <div class="pv-stat-num" style="margin-bottom: 0">$14,919</div>
+        </div>
+        <p-tag value="↑ 12%" severity="danger" [rounded]="true" />
+      </div>
+      <p class="pv-sub" style="margin-bottom: 10px">vs $13,312 last month</p>
+      <div class="pv-donut-wrap">
+        <svg class="pv-donut-svg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle
+            cx="70"
+            cy="70"
+            r="52"
+            fill="none"
+            stroke="var(--p-primary-100)"
+            stroke-width="20"
+            transform="rotate(-90 70 70)"
+            stroke-dasharray="32 295"
+          />
+          <circle
+            cx="70"
+            cy="70"
+            r="52"
+            fill="none"
+            stroke="var(--p-primary-200)"
+            stroke-width="20"
+            transform="rotate(-90 70 70)"
+            stroke-dasharray="79 295"
+            stroke-dashoffset="-32"
+          />
+          <circle
+            cx="70"
+            cy="70"
+            r="52"
+            fill="none"
+            stroke="var(--p-primary-400)"
+            stroke-width="20"
+            transform="rotate(-90 70 70)"
+            stroke-dasharray="94 295"
+            stroke-dashoffset="-111"
+          />
+          <circle
+            cx="70"
+            cy="70"
+            r="52"
+            fill="none"
+            stroke="var(--p-primary-600)"
+            stroke-width="20"
+            transform="rotate(-90 70 70)"
+            stroke-dasharray="90 295"
+            stroke-dashoffset="-205"
+          />
+        </svg>
+        <div class="pv-donut-center">
+          <span class="pv-donut-value">$&nbsp;14,919</span>
+        </div>
+      </div>
+      <div class="pv-legend">
+        @for (row of expenseLegend; track row.label) {
+          <div class="pv-legend-row">
+            <span class="pv-dot" [style.background]="row.color"></span>
+            <span class="pv-legend-label">{{ row.label }}</span>
+            <div class="pv-legend-bar">
+              <div
+                class="pv-legend-bar-fill"
+                [style.width]="row.width"
+                [style.background]="row.color"
+              ></div>
+            </div>
+            <span class="pv-legend-val">{{ row.value }}</span>
+          </div>
+        }
+      </div>
+      <div class="pv-donut-footer">
+        <div class="pv-donut-stat">
+          <p class="pv-label">Avg mensual</p>
+          <p class="pv-donut-stat-val">$1,243</p>
+        </div>
+        <div class="pv-donut-stat">
+          <p class="pv-label">Categorías</p>
+          <p class="pv-donut-stat-val">4</p>
+        </div>
+        <div class="pv-donut-stat">
+          <p class="pv-label">Mayor gasto</p>
+          <p class="pv-donut-stat-val">Household</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card styleClass="pv-card-root pv-products-card">
+      <p class="pv-label pv-products-title">Top Products</p>
+      <div class="pv-product-list">
+        @for (product of products; track product.name) {
+          <div class="pv-product-item">
+            <img class="pv-product-img" [src]="product.image" [alt]="product.name" />
+            <div class="pv-product-info">
+              <p class="pv-product-name">{{ product.name }}</p>
+              <p-rating
+                [ngModel]="product.rating"
+                [readonly]="true"
+                [stars]="5"
+                styleClass="pv-product-rating"
+              />
+            </div>
+            <span class="pv-product-price">{{ product.price }}</span>
+          </div>
+        }
+      </div>
+    </p-card>
+
+    <div class="pv-hero pv-hero-1 pv-hero--compact">
+      <img
+        class="pv-hero-img"
+        [src]="budgetHeroImage"
+        alt="Create budgets"
+      />
+      <div class="pv-hero-content">
+        <div>
+          <h2 class="pv-hero-title">Create budgets</h2>
+          <p class="pv-hero-subtitle">Take control of your monthly expenses and savings goals</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: KPI Sparklines + Payment Form -->
+  <div class="pv-row pv-2col">
+    <div class="pv-kpi-stack pv-kpi-stack--compact">
+      @for (kpi of kpis; track kpi.label) {
+        <p-card styleClass="pv-card-root pv-kpi-card">
+          <div class="pv-kpi-row">
+            <div class="pv-kpi-left">
+              <p class="pv-label">{{ kpi.label }}</p>
+              <div class="pv-stat-num pv-stat-lg">{{ kpi.value }}</div>
+              <p class="pv-sub">{{ kpi.sub }}</p>
+            </div>
+            <div class="pv-kpi-chart">
+              <svg
+                class="pv-sparkline"
+                viewBox="0 0 120 42"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path [attr.d]="kpi.sparkArea" fill="var(--p-primary-50)" />
+                <path
+                  [attr.d]="kpi.sparkPath"
+                  fill="none"
+                  stroke="var(--p-primary-color)"
+                  stroke-width="1.5"
+                />
+              </svg>
+            </div>
+          </div>
+        </p-card>
+      }
+    </div>
+
+    <p-card styleClass="pv-card-root pv-form-card">
+      <h3 class="pv-form-title">Payment Method</h3>
+      <p class="pv-sub pv-mb">All transactions are secure and encrypted</p>
+      <div class="pv-form-row">
+        <div class="pv-field pv-field-grow">
+          <label class="pv-field-label" for="pv-card-number">Card Number</label>
+          <input
+            pInputText
+            id="pv-card-number"
+            style="width: 100%"
+            placeholder="1234 5678 9012 3456"
+            autocomplete="off"
+          />
+        </div>
+        <div class="pv-field pv-field-cvv">
+          <label class="pv-field-label" for="pv-card-cvv">CVV</label>
+          <input
+            pInputText
+            id="pv-card-cvv"
+            style="width: 100%"
+            placeholder="123"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+      <p class="pv-hint">Enter your 16-digit number.</p>
+      <div class="pv-form-row">
+        <div class="pv-field pv-field-half">
+          <label class="pv-field-label" for="pv-card-month">Month</label>
+          <p-select
+            inputId="pv-card-month"
+            [options]="monthOptions"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="month"
+            placeholder="MM"
+            styleClass="pv-month-select"
+          />
+        </div>
+        <div class="pv-field pv-field-half">
+          <label class="pv-field-label" for="pv-card-year">Year</label>
+          <p-select
+            inputId="pv-card-year"
+            [options]="yearOptions"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="year"
+            placeholder="YYYY"
+            styleClass="pv-year-select"
+          />
+        </div>
+      </div>
+      <hr class="pv-form-divider" />
+      <h3 class="pv-form-title">Billing Address</h3>
+      <p class="pv-sub pv-mb">The billing address associated with your payment method</p>
+      <label class="pv-billing-check">
+        <p-checkbox
+          [binary]="true"
+          inputId="pv-billing-same"
+          [ngModel]="billingSame()"
+          (ngModelChange)="billingSame.set($event)"
+        />
+        <span>Same as shipping address</span>
+      </label>
+      <div class="pv-form-actions">
+        <p-button label="Submit" type="button" />
+        <p-button label="Cancel" type="button" severity="secondary" />
+      </div>
+    </p-card>
+  </div>
+
+  <!-- ROW 4: Recent Sales -->
+  <div class="pv-row pv-1col">
+    <p-card styleClass="pv-card-root">
+      <div class="pv-sales-header">
+        <h3 class="pv-form-title">Recent Sales</h3>
+        <div class="pv-sales-actions">
+          <p-iconfield styleClass="pv-search-field">
+            <p-inputicon class="pi pi-search" />
+            <input
+              pInputText
+              type="search"
+              placeholder="Search"
+              [ngModel]="salesSearch()"
+              (ngModelChange)="onSalesSearch($event)"
+            />
+          </p-iconfield>
+          <p-button icon="pi pi-upload" [rounded]="true" [attr.aria-label]="'Exportar ventas'" />
+        </div>
+      </div>
+      <p-table
+        #salesTable
+        [value]="sales"
+        styleClass="pv-sales-table"
+        [globalFilterFields]="['name', 'category', 'price', 'status']"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name <i class="pi pi-sort-alt pv-sort-icon" aria-hidden="true"></i></th>
+            <th>Category <i class="pi pi-sort-alt pv-sort-icon" aria-hidden="true"></i></th>
+            <th>Price <i class="pi pi-sort-alt pv-sort-icon" aria-hidden="true"></i></th>
+            <th>Status <i class="pi pi-sort-alt pv-sort-icon" aria-hidden="true"></i></th>
+            <th>View</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.category }}</td>
+            <td>{{ row.price }}</td>
+            <td>
+              <p-tag
+                [value]="row.status"
+                [severity]="saleStatusSeverity(row)"
+                styleClass="pv-status-tag"
+              />
+            </td>
+            <td>
+              <p-button
+                icon="pi pi-search"
+                [rounded]="true"
+                [outlined]="true"
+                severity="success"
+                styleClass="pv-view-btn"
+                [attr.aria-label]="'Ver ' + row.name"
+              />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <div class="pv-pagination">
+        <p-button icon="pi pi-angle-double-left" [text]="true" styleClass="pv-page-btn" />
+        <p-button icon="pi pi-angle-left" [text]="true" styleClass="pv-page-btn" />
+        <p-button label="1" [text]="true" styleClass="pv-page-btn pv-page-active" />
+        <p-button label="2" [text]="true" styleClass="pv-page-btn" />
+        <p-button icon="pi pi-angle-right" [text]="true" styleClass="pv-page-btn" />
+        <p-button icon="pi pi-angle-double-right" [text]="true" styleClass="pv-page-btn" />
+      </div>
+    </p-card>
+  </div>
+</div>

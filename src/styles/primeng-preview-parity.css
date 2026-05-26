@@ -1,0 +1,199 @@
+/* Paridad Preview: p-card, p-select, p-table, p-tag, p-button, p-rating, p-avatar.
+   Tokens --p-* ← MDS vía primeng-tokens.css + runtime bridge.
+   Ámbito: dashboard Preview (componentes PrimeNG reales). */
+
+.preview-showcase-page {
+  --preview-info-font: 'Inter', var(--p-font-family, system-ui, sans-serif);
+}
+
+.preview-showcase-page .pv-grid {
+  color: var(--p-content-color);
+  font-family: var(--preview-info-font);
+}
+
+/* Valores de métricas / KPI (evitan fallback serif en cifras grandes) */
+.preview-showcase-page .pv-grid .p-card-content,
+.preview-showcase-page .pv-stat-num,
+.preview-showcase-page .pv-stat-lg,
+.preview-showcase-page .pv-chart-stat-val,
+.preview-showcase-page .pv-donut-value,
+.preview-showcase-page .pv-donut-stat-val,
+.preview-showcase-page .pv-kpi-left .pv-stat-num,
+.preview-showcase-page .pv-kpi-left .pv-stat-lg {
+  font-family: var(--preview-info-font);
+}
+
+/* ── Card (legacy .p-card en components.css) ── */
+.preview-showcase-page .pv-card-root.p-card {
+  background: var(--p-card-background, var(--card-background, var(--p-content-bg)));
+  color: var(--p-card-color, var(--card-color, var(--p-content-color)));
+  box-shadow: var(--p-card-shadow, var(--card-shadow));
+  border-radius: var(--p-card-border-radius, var(--card-border-radius));
+  border: 1px solid var(--p-content-border);
+  overflow: hidden;
+}
+
+.preview-showcase-page .pv-card-root.p-card .p-card-body {
+  padding: var(--p-card-body-padding, var(--card-body-padding, 16px));
+  gap: var(--p-card-body-gap, var(--card-body-gap, 16px));
+}
+
+.preview-showcase-page .pv-chart-card.p-card .p-card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-showcase-page .pv-kpi-card.p-card .p-card-body {
+  padding: 12px 14px;
+}
+
+.preview-showcase-page .pv-kpi-card.p-card .p-card-content,
+.preview-showcase-page .pv-kpi-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  font-family: var(--preview-info-font);
+}
+
+/* ── Select (formulario de pago) ── */
+.preview-showcase-page .pv-grid .p-select {
+  width: 100%;
+  font-family: var(--p-font-family);
+  font-size: var(--p-select-padding-y, var(--form-field-font-size, var(--p-font-size)));
+}
+
+.preview-showcase-page .pv-grid .p-select .p-select-label {
+  font-size: var(--p-inputtext-font-size, var(--form-field-font-size, 13px));
+}
+
+/* ── Input + iconfield (búsqueda ventas) ── */
+.preview-showcase-page .pv-grid .p-inputtext {
+  font-family: var(--p-font-family);
+  font-size: var(--p-inputtext-font-size, 13px);
+  background: var(--p-inputtext-background);
+  border-color: var(--p-inputtext-border-color);
+  color: var(--p-inputtext-color);
+  border-radius: var(--p-inputtext-border-radius);
+  box-shadow: var(--p-inputtext-shadow);
+}
+
+.preview-showcase-page .pv-grid .p-iconfield .p-inputicon {
+  color: var(--p-iconfield-icon-color, var(--form-field-icon-color, var(--p-surface-400)));
+}
+
+/* ── Checkbox ── */
+.preview-showcase-page .pv-grid .p-checkbox {
+  flex-shrink: 0;
+}
+
+/* ── Tag (estado ventas + badge jobs) ── */
+.preview-showcase-page .pv-grid .p-tag {
+  font-family: var(--p-font-family);
+}
+
+.preview-showcase-page .pv-grid .p-tag.pv-job-tag-new {
+  background: var(--tag-primary-background, var(--p-tag-primary-background, var(--p-primary-50))) !important;
+  color: var(--tag-primary-color, var(--p-tag-primary-color, var(--p-primary-600))) !important;
+  border: 1px solid var(--p-primary-200) !important;
+}
+
+[data-theme="dark"] .preview-showcase-page .pv-grid .p-tag.pv-job-tag-new {
+  background: color-mix(in srgb, var(--p-primary-color) 18%, transparent) !important;
+  color: var(--p-primary-300) !important;
+  border-color: var(--p-primary-700) !important;
+}
+
+/* ── Rating (productos) ── */
+.preview-showcase-page .pv-grid .p-rating .p-rating-icon {
+  color: var(--p-rating-icon-active-color, var(--rating-active-color, var(--p-primary-color)));
+}
+
+.preview-showcase-page .pv-grid .p-rating .p-rating-option:not(.p-rating-option-active) .p-rating-icon {
+  color: var(--p-rating-icon-color, var(--rating-color, var(--p-surface-300)));
+}
+
+/* ── Avatar group (agenda) ── */
+.preview-showcase-page .pv-grid .p-avatar-group .p-avatar {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--p-avatar-group-border-color, var(--avatar-group-border-color, var(--p-content-bg)));
+}
+
+.preview-showcase-page .pv-grid .p-avatar-group .p-avatar + .p-avatar {
+  margin-inline-start: var(--p-avatar-group-offset, var(--avatar-group-offset, -12px));
+}
+
+/* ── DataTable (Recent Sales) ── */
+.preview-showcase-page .pv-sales-table.p-datatable {
+  font-family: var(--p-font-family);
+}
+
+.preview-showcase-page .pv-sales-table .p-datatable-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.preview-showcase-page .pv-sales-table .p-datatable-thead > tr > th {
+  background: transparent;
+  border-bottom: 1px solid var(--p-datatable-header-cell-border-color, var(--p-content-border));
+  color: var(--p-datatable-header-cell-color, var(--p-content-color));
+  font-size: 12px;
+  font-weight: 700;
+  padding: var(--p-datatable-header-cell-padding, 12px);
+}
+
+.preview-showcase-page .pv-sales-table .p-datatable-tbody > tr > td {
+  border-bottom: 1px solid var(--p-datatable-body-cell-border-color, var(--p-content-border));
+  color: var(--p-content-color);
+  font-size: 13px;
+  padding: var(--p-datatable-body-cell-padding, 12px);
+}
+
+.preview-showcase-page .pv-sales-table .p-datatable-tbody > tr:last-child > td {
+  border-bottom: none;
+}
+
+.preview-showcase-page .pv-sales-table .p-datatable-wrapper,
+.preview-showcase-page .pv-sales-table .p-datatable-table-container {
+  border: none;
+  background: transparent;
+}
+
+/* ── Botones Preview (jobs, paginación, acciones) ── */
+.preview-showcase-page .pv-grid .p-button {
+  font-family: var(--p-font-family);
+}
+
+.preview-showcase-page .pv-grid .pv-schedule-menu-btn.p-button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  color: var(--p-surface-400);
+}
+
+.preview-showcase-page .pv-grid .pv-page-btn.p-button {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  border-radius: 50%;
+  color: var(--p-content-color);
+  background: transparent;
+}
+
+.preview-showcase-page .pv-grid .pv-page-btn.p-button:hover {
+  background: var(--p-surface-100);
+}
+
+.preview-showcase-page .pv-grid .pv-page-btn.pv-page-active.p-button,
+.preview-showcase-page .pv-grid .pv-page-btn.pv-page-active.p-button:hover {
+  background: var(--p-primary-color) !important;
+  color: var(--p-primary-color-text, #fff) !important;
+}
+
+[data-theme="dark"] .preview-showcase-page .pv-grid .pv-page-btn.p-button:hover {
+  background: var(--p-surface-800);
+}

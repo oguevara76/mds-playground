@@ -38,6 +38,10 @@ html, body {
   color: inherit;
   outline: none;
 }
+.topbar-brand-logo {
+  flex-shrink: 0;
+  display: block;
+}
 .brand-mark {
   width: 42px;
   height: 42px;

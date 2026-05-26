@@ -531,11 +531,20 @@ html[data-theme="light"] {
   --p-inputtext-lg-padding-y:             var(--inputtext-lg-padding-y, var(--form-field-lg-padding-y, 11px));
 
   /* ═══════════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — Card
+     COMPONENT TOKENS — Card (PrimeNG v20: card.*)
      ═══════════════════════════════════════════════════════════════════ */
-  --p-card-padding:           var(--card-body-padding,  var(--dimension-spacing-x20, 20px));
-  --p-card-gap:               var(--card-body-gap,      var(--dimension-spacing-x12, 12px));
-  --p-card-border-radius:     var(--card-border-radius, var(--border-radius-xl, var(--p-border-radius-xl)));
+  --p-card-background:          var(--card-background, var(--p-content-bg));
+  --p-card-color:               var(--card-color, var(--p-content-color));
+  --p-card-shadow:              var(--card-shadow, 0 1px 2px -1px rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1));
+  --p-card-border-radius:       var(--card-border-radius, var(--border-radius-xl, var(--p-border-radius-xl)));
+  --p-card-body-padding:        var(--card-body-padding, var(--dimension-spacing-x16, 16px));
+  --p-card-body-gap:            var(--card-body-gap, var(--dimension-spacing-x16, 16px));
+  --p-card-padding:             var(--card-body-padding, var(--dimension-spacing-x16, 16px));
+  --p-card-gap:                 var(--card-body-gap, var(--dimension-spacing-x16, 16px));
+  --p-card-caption-gap:         var(--card-caption-gap, var(--dimension-scale-x8, 8px));
+  --p-card-title-font-size:     var(--card-title-font-size, 18px);
+  --p-card-title-font-weight:   var(--card-title-font-weight, 500);
+  --p-card-subtitle-color:      var(--card-subtitle-color, var(--text-muted-color, var(--p-surface-500)));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tag
@@ -766,11 +775,66 @@ html[data-theme="light"] {
   --p-popover-border-radius:    var(--popover-border-radius, var(--overlay-popover-border-radius, var(--p-border-radius)));
   --p-popover-content-padding:  var(--popover-content-padding, var(--overlay-popover-padding, 12px));
   --p-popover-shadow:           var(--popover-shadow, var(--overlay-popover-shadow));
-  --p-select-overlay-background:  var(--overlay-select-background, var(--overlay-popover-background));
-  --p-select-overlay-border-color: var(--overlay-select-border-color, var(--overlay-popover-border-color));
-  --p-select-overlay-color:     var(--overlay-select-color, var(--overlay-popover-color));
-  --p-select-overlay-border-radius: var(--overlay-select-border-radius, var(--p-border-radius));
-  --p-select-overlay-shadow:    var(--overlay-select-shadow, var(--popover-shadow));
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Select (PrimeNG v20: select.*)
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-select-background:                  var(--select-background, var(--form-field-background, var(--p-input-bg)));
+  --p-select-disabled-background:         var(--select-disabled-background, var(--form-field-disabled-background, var(--p-surface-200)));
+  --p-select-filled-background:           var(--select-filled-background, var(--form-field-filled-background, var(--p-input-bg)));
+  --p-select-filled-hover-background:     var(--select-filled-hover-background, var(--form-field-filled-hover-background, var(--p-input-bg)));
+  --p-select-filled-focus-background:     var(--select-filled-focus-background, var(--form-field-filled-focus-background, var(--p-input-bg)));
+  --p-select-border-color:                var(--select-border-color, var(--form-field-border-color, var(--p-input-border-color)));
+  --p-select-hover-border-color:          var(--select-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+  --p-select-focus-border-color:          var(--select-focus-border-color, var(--form-field-focus-border-color, var(--p-primary-color)));
+  --p-select-invalid-border-color:        var(--select-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+  --p-select-color:                       var(--select-color, var(--form-field-color, var(--p-input-color)));
+  --p-select-disabled-color:              var(--select-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+  --p-select-placeholder-color:           var(--select-placeholder-color, var(--form-field-placeholder-color, var(--p-input-placeholder)));
+  --p-select-invalid-placeholder-color:   var(--select-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+  --p-select-shadow:                      var(--select-shadow, var(--inputtext-shadow, 0 1px 2px rgba(18, 18, 23, 0.05)));
+  --p-select-padding-x:                   var(--select-padding-x, var(--form-field-padding-x, 12px));
+  --p-select-padding-y:                   var(--select-padding-y, var(--form-field-padding-y, 8px));
+  --p-select-border-radius:               var(--select-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+  --p-select-focus-ring-width:            var(--select-focus-ring-width, var(--form-field-focus-ring-width, 0));
+  --p-select-focus-ring-style:            solid;
+  --p-select-focus-ring-color:            var(--select-focus-ring-color, var(--form-field-focus-ring-color, var(--p-primary-color)));
+  --p-select-focus-ring-offset:           var(--select-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+  --p-select-focus-ring-shadow:           var(--select-focus-ring-shadow, 0 0 0 0 transparent);
+  --p-select-transition-duration:         var(--form-field-transition-duration, 0.2s);
+  --p-select-dropdown-color:              var(--select-dropdown-color, var(--form-field-icon-color, var(--p-surface-500)));
+  --p-select-dropdown-width:              var(--select-dropdown-width, var(--dimension-scale-x32, 32px));
+  --p-select-sm-font-size:                var(--select-sm-font-size, var(--form-field-sm-font-size, 12px));
+  --p-select-sm-padding-x:                var(--select-sm-padding-x, var(--form-field-sm-padding-x, 10px));
+  --p-select-sm-padding-y:                var(--select-sm-padding-y, var(--form-field-sm-padding-y, 5px));
+  --p-select-lg-font-size:                var(--select-lg-font-size, var(--form-field-lg-font-size, 16px));
+  --p-select-lg-padding-x:                var(--select-lg-padding-x, var(--form-field-lg-padding-x, 22px));
+  --p-select-lg-padding-y:                var(--select-lg-padding-y, var(--form-field-lg-padding-y, 11px));
+  --p-select-overlay-background:          var(--select-overlay-background, var(--overlay-select-background, var(--overlay-popover-background)));
+  --p-select-overlay-border-color:        var(--select-overlay-border-color, var(--overlay-select-border-color, var(--overlay-popover-border-color)));
+  --p-select-overlay-color:               var(--select-overlay-color, var(--overlay-select-color, var(--overlay-popover-color)));
+  --p-select-overlay-border-radius:         var(--select-overlay-border-radius, var(--overlay-select-border-radius, var(--p-border-radius)));
+  --p-select-overlay-shadow:              var(--select-overlay-shadow, var(--overlay-select-shadow, var(--popover-shadow)));
+  --p-select-list-padding:                var(--list-padding, 8px);
+  --p-select-list-gap:                    var(--select-list-gap, var(--list-gap, 4px));
+  --p-select-list-header-padding:         var(--list-header-padding, 8px 12px);
+  --p-select-option-padding:              var(--list-option-padding, 8px 12px);
+  --p-select-option-border-radius:        var(--select-option-border-radius, var(--list-option-border-radius, var(--p-border-radius-sm)));
+  --p-select-option-color:                var(--select-option-color, var(--list-option-color, var(--p-content-color)));
+  --p-select-option-focus-background:     var(--select-option-focus-background, var(--list-option-focus-background, var(--p-surface-100)));
+  --p-select-option-focus-color:          var(--select-option-focus-color, var(--list-option-focus-color, var(--p-content-color)));
+  --p-select-option-selected-background:  var(--select-option-selected-background, var(--list-option-selected-background, var(--p-primary-50)));
+  --p-select-option-selected-color:       var(--select-option-selected-color, var(--list-option-selected-color, var(--p-primary-color)));
+  --p-select-option-selected-focus-background: var(--select-option-selected-focus-background, var(--list-option-selected-focus-background, var(--p-primary-100)));
+  --p-select-option-selected-focus-color:   var(--select-option-selected-focus-color, var(--list-option-selected-focus-color, var(--p-primary-color)));
+  --p-select-option-group-background:     var(--select-option-group-background, var(--list-option-group-background, transparent));
+  --p-select-option-group-color:          var(--select-option-group-color, var(--list-option-group-color, var(--p-surface-500)));
+  --p-select-option-group-font-weight:    var(--select-option-group-font-weight, var(--list-option-group-font-weight, 600));
+  --p-select-option-group-padding:        var(--list-option-group-padding, 8px 12px);
+  --p-select-checkmark-color:             var(--select-checkmark-color, var(--list-option-color, var(--p-primary-color)));
+  --p-select-checkmark-gutter-start:      var(--select-checkmark-gutter-start, -6px);
+  --p-select-checkmark-gutter-end:        var(--select-checkmark-gutter-end, 6px);
+  --p-select-empty-message-padding:       var(--list-option-padding, 8px 12px);
+  --p-select-clear-icon-color:            var(--select-clear-icon-color, var(--form-field-icon-color, var(--p-surface-500)));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tabs
@@ -861,12 +925,60 @@ html[data-theme="light"] {
   --p-dialog-footer-gap:           var(--dialog-footer-gap, var(--dimension-spacing-x8, 8px));
 
   /* ═══════════════════════════════════════════════════════════════════
-     COMPONENT TOKENS — DataTable
+     COMPONENT TOKENS — DataTable (PrimeNG v20: datatable.*)
      ═══════════════════════════════════════════════════════════════════ */
-  --p-datatable-th-padding-x:      var(--dimension-spacing-x14, 14px);
-  --p-datatable-th-padding-y:      var(--dimension-spacing-x10, 10px);
-  --p-datatable-td-padding-x:      var(--dimension-spacing-x14, 14px);
-  --p-datatable-td-padding-y:      var(--dimension-spacing-x10, 10px);
+  --p-datatable-transition-duration:        var(--p-transition-duration, 180ms);
+  --p-datatable-border-color:             var(--datatable-border-color, var(--p-content-border));
+  --p-datatable-header-background:        var(--datatable-header-background, transparent);
+  --p-datatable-header-border-color:      var(--datatable-header-border-color, var(--datatable-border-color, var(--p-content-border)));
+  --p-datatable-header-color:             var(--datatable-header-color, var(--p-content-color));
+  --p-datatable-header-cell-background:     var(--datatable-header-cell-background, transparent);
+  --p-datatable-header-cell-hover-background: var(--datatable-header-cell-hover-background, var(--content-hover-background, var(--p-surface-100)));
+  --p-datatable-header-cell-color:        var(--datatable-header-cell-color, var(--p-content-color));
+  --p-datatable-header-cell-border-color: var(--datatable-header-cell-border-color, var(--datatable-border-color, var(--p-content-border)));
+  --p-datatable-header-cell-padding:      var(--dimension-spacing-x12, 12px) var(--dimension-spacing-x12, 12px);
+  --p-datatable-body-cell-background:     var(--content-background, var(--p-content-bg));
+  --p-datatable-body-cell-border-color:   var(--datatable-body-cell-border-color, var(--datatable-border-color, var(--p-content-border)));
+  --p-datatable-body-cell-padding:        var(--dimension-spacing-x12, 12px) var(--dimension-spacing-x12, 12px);
+  --p-datatable-row-background:           var(--content-background, var(--p-content-bg));
+  --p-datatable-row-hover-background:     var(--content-hover-background, var(--p-surface-50));
+  --p-datatable-th-padding-x:             var(--dimension-spacing-x12, 12px);
+  --p-datatable-th-padding-y:             var(--dimension-spacing-x12, 12px);
+  --p-datatable-td-padding-x:             var(--dimension-spacing-x12, 12px);
+  --p-datatable-td-padding-y:             var(--dimension-spacing-x12, 12px);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Rating (PrimeNG v20: rating.*)
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-rating-gap:                         var(--rating-gap, var(--dimension-scale-x4, 4px));
+  --p-rating-transition-duration:         var(--p-transition-duration, 180ms);
+  --p-rating-focus-ring-width:            var(--rating-focus-ring-width, var(--p-focus-ring-width));
+  --p-rating-focus-ring-style:            solid;
+  --p-rating-focus-ring-color:            var(--rating-focus-ring-color, var(--p-focus-ring-color));
+  --p-rating-focus-ring-offset:           var(--rating-focus-ring-offset, var(--p-focus-ring-offset));
+  --p-rating-focus-ring-shadow:           var(--rating-focus-ring-shadow, 0 0 0 0 transparent);
+  --p-rating-icon-size:                   var(--rating-icon-size, var(--dimension-scale-x14, 14px));
+  --p-rating-icon-color:                  var(--rating-color, var(--text-muted-color, var(--p-surface-400)));
+  --p-rating-icon-hover-color:            var(--rating-hover-color, var(--primary-color, var(--p-primary-color)));
+  --p-rating-icon-active-color:           var(--rating-active-color, var(--primary-color, var(--p-primary-color)));
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Avatar (PrimeNG v20: avatar.*)
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-avatar-width:                       var(--avatar-width, var(--dimension-scale-x28, 28px));
+  --p-avatar-height:                      var(--avatar-height, var(--dimension-scale-x28, 28px));
+  --p-avatar-font-size:                   var(--avatar-font-size, 14px);
+  --p-avatar-background:                  var(--avatar-background, var(--content-border-color, var(--p-surface-200)));
+  --p-avatar-color:                       var(--avatar-color, var(--content-color, var(--p-content-color)));
+  --p-avatar-border-radius:               var(--avatar-border-radius, var(--content-border-radius, var(--p-border-radius)));
+  --p-avatar-icon-size:                   var(--avatar-icon-size, var(--dimension-scale-x14, 14px));
+  --p-avatar-group-border-color:          var(--avatar-group-border-color, var(--content-background, var(--p-content-bg)));
+  --p-avatar-group-offset:                var(--avatar-group-offset, -12px);
+  --p-avatar-lg-width:                    var(--avatar-lg-width, var(--dimension-scale-x42, 42px));
+  --p-avatar-lg-height:                   var(--avatar-lg-height, var(--dimension-scale-x42, 42px));
+  --p-avatar-lg-font-size:                var(--avatar-lg-font-size, 20px);
+  --p-avatar-lg-icon-size:                var(--avatar-lg-icon-size, var(--dimension-scale-x20, 20px));
+  --p-avatar-lg-group-offset:             var(--avatar-lg-group-offset, -14px);
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — SplitButton panel
@@ -1146,11 +1258,39 @@ html[data-theme="dark"] {
     --p-popover-border-radius:    var(--popover-border-radius, var(--overlay-popover-border-radius, var(--p-border-radius)));
     --p-popover-content-padding:  var(--popover-content-padding, var(--overlay-popover-padding, 12px));
     --p-popover-shadow:           var(--popover-shadow, var(--overlay-popover-shadow));
-    --p-select-overlay-background:  var(--overlay-select-background, var(--overlay-popover-background));
-    --p-select-overlay-border-color: var(--overlay-select-border-color, var(--overlay-popover-border-color));
-    --p-select-overlay-color:     var(--overlay-select-color, var(--overlay-popover-color));
-    --p-select-overlay-border-radius: var(--overlay-select-border-radius, var(--p-border-radius));
-    --p-select-overlay-shadow:    var(--overlay-select-shadow, var(--popover-shadow));
+    --p-select-background:                  var(--select-background, var(--form-field-background, var(--p-input-bg)));
+    --p-select-disabled-background:         var(--select-disabled-background, var(--form-field-disabled-background, var(--p-surface-800)));
+    --p-select-filled-background:           var(--select-filled-background, var(--form-field-filled-background, var(--p-input-bg)));
+    --p-select-filled-hover-background:     var(--select-filled-hover-background, var(--form-field-filled-hover-background, var(--p-input-bg)));
+    --p-select-filled-focus-background:     var(--select-filled-focus-background, var(--form-field-filled-focus-background, var(--p-input-bg)));
+    --p-select-border-color:                var(--select-border-color, var(--form-field-border-color, var(--p-input-border-color)));
+    --p-select-hover-border-color:          var(--select-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+    --p-select-focus-border-color:          var(--select-focus-border-color, var(--form-field-focus-border-color, var(--p-primary-color)));
+    --p-select-invalid-border-color:        var(--select-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+    --p-select-color:                       var(--select-color, var(--form-field-color, var(--p-input-color)));
+    --p-select-disabled-color:              var(--select-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+    --p-select-placeholder-color:           var(--select-placeholder-color, var(--form-field-placeholder-color, var(--p-input-placeholder)));
+    --p-select-invalid-placeholder-color:   var(--select-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+    --p-select-shadow:                      var(--select-shadow, 0 1px 2px rgba(0, 0, 0, 0.2));
+    --p-select-padding-x:                   var(--select-padding-x, var(--form-field-padding-x, 12px));
+    --p-select-padding-y:                   var(--select-padding-y, var(--form-field-padding-y, 8px));
+    --p-select-border-radius:               var(--select-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+    --p-select-focus-ring-width:            var(--select-focus-ring-width, var(--form-field-focus-ring-width, 0));
+    --p-select-focus-ring-style:            solid;
+    --p-select-focus-ring-color:            var(--select-focus-ring-color, var(--form-field-focus-ring-color, var(--p-primary-color)));
+    --p-select-focus-ring-offset:           var(--select-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+    --p-select-focus-ring-shadow:           var(--select-focus-ring-shadow, 0 0 0 0 transparent);
+    --p-select-transition-duration:         var(--form-field-transition-duration, 0.2s);
+    --p-select-dropdown-color:              var(--select-dropdown-color, var(--form-field-icon-color, var(--p-surface-500)));
+    --p-select-dropdown-width:              var(--select-dropdown-width, var(--dimension-scale-x32, 32px));
+    --p-select-overlay-background:          var(--select-overlay-background, var(--overlay-select-background, var(--overlay-popover-background)));
+    --p-select-overlay-border-color:        var(--select-overlay-border-color, var(--overlay-select-border-color, var(--overlay-popover-border-color)));
+    --p-select-overlay-color:               var(--select-overlay-color, var(--overlay-select-color, var(--overlay-popover-color)));
+    --p-select-overlay-border-radius:       var(--select-overlay-border-radius, var(--overlay-select-border-radius, var(--p-border-radius)));
+    --p-select-overlay-shadow:              var(--select-overlay-shadow, var(--overlay-select-shadow, var(--popover-shadow)));
+    --p-select-option-focus-background:     var(--select-option-focus-background, var(--list-option-focus-background, var(--p-surface-800)));
+    --p-select-option-selected-background:  var(--select-option-selected-background, var(--list-option-selected-background, color-mix(in srgb, var(--p-primary-color) 18%, transparent)));
+    --p-select-option-selected-focus-background: var(--select-option-selected-focus-background, var(--list-option-selected-focus-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent)));
     --p-font-family: 'Inter', system-ui, sans-serif;
     --p-font-size:   14px;
     --p-transition-duration: 180ms;
@@ -1298,9 +1438,18 @@ html[data-theme="dark"] {
     --p-inputtext-lg-font-size:             var(--inputtext-lg-font-size, var(--form-field-lg-font-size, 16px));
     --p-inputtext-lg-padding-x:             var(--inputtext-lg-padding-x, var(--form-field-lg-padding-x, 22px));
     --p-inputtext-lg-padding-y:             var(--inputtext-lg-padding-y, var(--form-field-lg-padding-y, 11px));
-    --p-card-padding:           var(--card-body-padding,  var(--dimension-spacing-x20, 20px));
-    --p-card-gap:               var(--card-body-gap,      var(--dimension-spacing-x12, 12px));
-    --p-card-border-radius:     var(--card-border-radius, var(--border-radius-xl, var(--p-border-radius-xl)));
+    --p-card-background:          var(--card-background, var(--p-content-bg));
+    --p-card-color:               var(--card-color, var(--p-content-color));
+    --p-card-shadow:              var(--card-shadow, 0 1px 2px rgba(0, 0, 0, 0.35));
+    --p-card-border-radius:       var(--card-border-radius, var(--border-radius-xl, var(--p-border-radius-xl)));
+    --p-card-body-padding:        var(--card-body-padding, var(--dimension-spacing-x16, 16px));
+    --p-card-body-gap:            var(--card-body-gap, var(--dimension-spacing-x16, 16px));
+    --p-card-padding:             var(--card-body-padding, var(--dimension-spacing-x16, 16px));
+    --p-card-gap:                 var(--card-body-gap, var(--dimension-spacing-x16, 16px));
+    --p-card-caption-gap:         var(--card-caption-gap, var(--dimension-scale-x8, 8px));
+    --p-card-title-font-size:     var(--card-title-font-size, 18px);
+    --p-card-title-font-weight:   var(--card-title-font-weight, 500);
+    --p-card-subtitle-color:      var(--card-subtitle-color, var(--text-muted-color, var(--p-surface-500)));
     --p-tag-padding-y:          var(--tag-padding-y, var(--dimension-scale-x4, 4px));
     --p-tag-padding-x:          var(--tag-padding-x, var(--dimension-scale-x8, 8px));
     --p-tag-padding:            var(--tag-padding, var(--tag-padding-y, var(--dimension-scale-x4, 4px)) var(--tag-padding-x, var(--dimension-scale-x8, 8px)));
@@ -1552,10 +1701,22 @@ html[data-theme="dark"] {
     --p-dialog-footer-padding-x:     var(--overlay-modal-padding, 20px);
     --p-dialog-footer-padding-y:     var(--dimension-spacing-x12, 12px);
     --p-dialog-footer-gap:           var(--dialog-footer-gap, var(--dimension-spacing-x8, 8px));
-    --p-datatable-th-padding-x:      var(--dimension-spacing-x14, 14px);
-    --p-datatable-th-padding-y:      var(--dimension-spacing-x10, 10px);
-    --p-datatable-td-padding-x:      var(--dimension-spacing-x14, 14px);
-    --p-datatable-td-padding-y:      var(--dimension-spacing-x10, 10px);
+    --p-datatable-border-color:             var(--datatable-border-color, var(--p-content-border));
+    --p-datatable-header-background:        var(--datatable-header-background, transparent);
+    --p-datatable-header-cell-background:   var(--datatable-header-cell-background, transparent);
+    --p-datatable-header-cell-color:        var(--datatable-header-cell-color, var(--p-content-color));
+    --p-datatable-header-cell-border-color: var(--datatable-header-cell-border-color, var(--datatable-border-color, var(--p-content-border)));
+    --p-datatable-body-cell-border-color:   var(--datatable-body-cell-border-color, var(--datatable-border-color, var(--p-content-border)));
+    --p-datatable-header-cell-padding:      var(--dimension-spacing-x12, 12px) var(--dimension-spacing-x12, 12px);
+    --p-datatable-body-cell-padding:        var(--dimension-spacing-x12, 12px) var(--dimension-spacing-x12, 12px);
+    --p-datatable-th-padding-x:             var(--dimension-spacing-x12, 12px);
+    --p-datatable-th-padding-y:             var(--dimension-spacing-x12, 12px);
+    --p-datatable-td-padding-x:             var(--dimension-spacing-x12, 12px);
+    --p-datatable-td-padding-y:             var(--dimension-spacing-x12, 12px);
+    --p-rating-icon-color:                  var(--rating-color, var(--text-muted-color, var(--p-surface-500)));
+    --p-rating-icon-hover-color:            var(--rating-hover-color, var(--primary-color, var(--p-primary-color)));
+    --p-rating-icon-active-color:           var(--rating-active-color, var(--primary-color, var(--p-primary-color)));
+    --p-avatar-group-border-color:          var(--avatar-group-border-color, var(--content-background, var(--p-content-bg)));
     --p-splitbutton-panel-border-radius: var(--overlay-select-border-radius, var(--p-border-radius));
     --p-splitbutton-item-padding-x:      var(--dimension-spacing-x16, 16px);
     --p-splitbutton-item-padding-y:      var(--dimension-spacing-x8,   9px);
