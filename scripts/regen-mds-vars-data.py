@@ -1,14 +1,23 @@
 #!/usr/bin/env python3
-"""Regenera js/mds-vars-data.js desde styles/mds-primitives.css, mds-semantic-*.css y mds-components.css.
+"""Regenera js/mds-vars-data.js y el catálogo TypeScript del playground Angular.
 
-Alimenta la vista Tokens (listado + mapa) vía MDS_VARS en js/app.js.
+Alimenta la vista Tokens (listado + mapa) en legacy y Angular.
 """
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLES = ROOT / "styles"
-OUT = ROOT / "js" / "mds-vars-data.js"
+OUT_JS = ROOT / "js" / "mds-vars-data.js"
+OUT_TS = (
+    ROOT
+    / "apps"
+    / "playground"
+    / "src"
+    / "app"
+    / "theme"
+    / "mds-vars-catalog.generated.ts"
+)
 
 
 def extract_block(css: str, selector: str) -> str:
@@ -46,6 +55,28 @@ def emit_arr(pairs, indent="    "):
     return "\n".join(lines)
 
 
+def emit_ts_arr(pairs, indent="    "):
+    lines = [f'{indent}{{ name: "{n}", value: "{esc_js_string(v)}" }},' for n, v in pairs]
+    return "\n".join(lines)
+
+
+def emit_ts_catalog(prim, light, dark, comp) -> str:
+    return (
+        "/* AUTO-GENERATED — do not edit. Run: pnpm run regen:mds */\n"
+        "import type { MdsVarEntry } from './token-catalog.types';\n\n"
+        "export const MDS_VARS_CATALOG = {\n"
+        "  prim: [\n"
+        + emit_ts_arr(prim)
+        + "\n  ] as MdsVarEntry[],\n  light: [\n"
+        + emit_ts_arr(light)
+        + "\n  ] as MdsVarEntry[],\n  dark: [\n"
+        + emit_ts_arr(dark)
+        + "\n  ] as MdsVarEntry[],\n  comp: [\n"
+        + emit_ts_arr(comp)
+        + "\n  ] as MdsVarEntry[],\n};\n"
+    )
+
+
 def main():
     prim_css = (STYLES / "mds-primitives.css").read_text(encoding="utf-8")
     comp_css = (STYLES / "mds-components.css").read_text(encoding="utf-8")
@@ -69,8 +100,14 @@ def main():
         + emit_arr(comp)
         + "\n  ]\n};\n"
     )
-    OUT.write_text(out, encoding="utf-8")
-    print(f"OK: prim={len(prim)} light={len(light)} dark={len(dark)} comp={len(comp)} → {OUT}")
+    OUT_JS.write_text(out, encoding="utf-8")
+    OUT_TS.parent.mkdir(parents=True, exist_ok=True)
+    OUT_TS.write_text(emit_ts_catalog(prim, light, dark, comp), encoding="utf-8")
+    print(
+        f"OK: prim={len(prim)} light={len(light)} dark={len(dark)} comp={len(comp)}"
+        f"\n  → {OUT_JS}"
+        f"\n  → {OUT_TS}"
+    )
 
 
 if __name__ == "__main__":

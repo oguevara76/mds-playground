@@ -1931,7 +1931,7 @@
     const affects = tokenMaps?.semAffects?.[t.name];
     const src     = tokenMaps?.compSources?.[t.name];
     if (sec.id === 'semanticos' && affects?.length) {
-      meta = `<div class="tva-meta tva-meta-sem"><i class="pi pi-arrow-right"></i>${affects.join(' · ')}</div>`;
+      meta = `<div class="tva-meta tva-meta-sem"><span class="p-tag p-tag-info tva-meta-components-tag">Components</span><span class="tva-meta-components-list">${affects.join(' · ')}</span></div>`;
     } else if (sec.id === 'componentes' && src) {
       meta = `<div class="tva-meta tva-meta-comp"><i class="pi pi-link"></i><code>${src.label}</code><em>${src.group}</em></div>`;
     }
@@ -2353,6 +2353,7 @@
       vvPosStore.sem  = { ...VV_DEFAULT_POS.sem  };
       vvPosStore.comp = { ...VV_DEFAULT_POS.comp };
       vvCompPosStore.clear();
+      vvMapSearchQuery = '';
       /* Re-render so comp panels are repositioned from scratch */
       renderTvMap();
     });

@@ -11,3 +11,20 @@
 a.preview-tab {
   text-decoration: none;
 }
+
+.nav-link-active {
+  color: var(--p-primary-color);
+  font-weight: 600;
+}
+
+.preview-area--tokens {
+  overflow: hidden;
+}
+
+.preview-area--tokens .tab-panel--tokens.active {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}

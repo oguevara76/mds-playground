@@ -1,0 +1,123 @@
+<div id="tokens-view" class="tokens-view-root">
+  <div class="tv-layout">
+    <div class="tv-main">
+      <div class="tv-toolbar">
+        @if (!catalog.mapMode()) {
+        <div class="tv-search-wrap">
+          <i class="pi pi-search tv-search-icon" aria-hidden="true"></i>
+          <input
+            type="text"
+            class="tv-search"
+            placeholder="Buscar token…"
+            autocomplete="off"
+            [ngModel]="catalog.searchQuery()"
+            (ngModelChange)="onSearchInput($event)"
+          />
+          @if (catalog.searchQuery()) {
+            <button type="button" class="tv-search-clear" title="Limpiar" (click)="clearSearch()">
+              <i class="pi pi-times" aria-hidden="true"></i>
+            </button>
+          }
+        </div>
+        <span class="tv-count">
+          {{ listView().total }} token{{ listView().total !== 1 ? 's' : '' }}
+        </span>
+        }
+        @if (primaryBadge()) {
+          <span class="tv-badge">{{ primaryBadge() }}</span>
+        }
+        <div class="tv-view-toggle">
+          <button
+            type="button"
+            class="tv-view-btn"
+            (click)="showList()"
+            [class.tv-view-btn-on]="!catalog.mapMode()"
+          >
+            <i class="pi pi-list" aria-hidden="true"></i> Lista
+          </button>
+          <button
+            type="button"
+            class="tv-view-btn"
+            (click)="showMap()"
+            [class.tv-view-btn-on]="catalog.mapMode()"
+          >
+            <i class="pi pi-share-alt" aria-hidden="true"></i> Mapa
+          </button>
+        </div>
+      </div>
+
+      @if (catalog.mapMode()) {
+        <app-tokens-map />
+      } @else {
+      <div class="tv-content">
+        @for (sec of listView().sections; track sec.section.id) {
+          <details class="tva tva-section {{ sec.section.cls }}" [open]="sec.open">
+            <summary class="tva-summary">
+              <i class="pi pi-chevron-right tva-chev" aria-hidden="true"></i>
+              <span class="tva-glabel">{{ sec.section.label }}</span>
+              <span class="tva-badge">{{ sec.total }}</span>
+            </summary>
+            <div class="tva-body">
+              @for (sg of sec.subGroups; track sg.subGroup.label) {
+                <div
+                  class="tva-subgroup"
+                  [class.tva-sg-light]="sg.subGroup.mode === 'light'"
+                  [class.tva-sg-dark]="sg.subGroup.mode === 'dark'"
+                >
+                  @if (!sg.subGroup.mode) {
+                    <div class="tva-sg-hdr">
+                      {{ sg.subGroup.label }}
+                      <span class="tva-sg-count">{{ sg.subGroup.tokens.length }}</span>
+                    </div>
+                  }
+                  @for (row of sg.rows; track row.token.name) {
+                    <div class="tva-row">
+                      <div class="tva-row-top">
+                        @if (row.token.type === 'color') {
+                          <span
+                            class="{{ row.swatchClass }}"
+                            [style.background]="row.swatchBg"
+                          ></span>
+                        } @else {
+                          <span class="{{ row.swatchClass }}"></span>
+                        }
+                        <span class="tva-name">
+                          @for (part of row.nameParts; track $index) {
+                            @if (part.mark) {
+                              <mark>{{ part.text }}</mark>
+                            } @else {
+                              {{ part.text }}
+                            }
+                          }
+                        </span>
+                        <span class="tva-val">{{ row.displayValue }}</span>
+                      </div>
+                      @if (row.metaKind === 'sem' && row.metaParts?.length) {
+                        <div class="tva-meta tva-meta-sem">
+                          <span class="p-tag p-tag-info tva-meta-components-tag">Components</span>
+                          <span class="tva-meta-components-list">{{
+                            row.metaParts!.join(' · ')
+                          }}</span>
+                        </div>
+                      }
+                      @if (row.compSource) {
+                        <div class="tva-meta tva-meta-comp">
+                          <i class="pi pi-link" aria-hidden="true"></i>
+                          <code>{{ row.compSource.label }}</code>
+                          <em>{{ row.compSource.group }}</em>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </details>
+        } @empty {
+          <p class="tokens-empty">No hay tokens que coincidan con la búsqueda.</p>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>

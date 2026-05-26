@@ -15,6 +15,7 @@
     <span class="brand-name">Playground</span>
   </a>
   <div class="topbar-actions">
+    <a routerLink="/tokens" routerLinkActive="nav-link-active" class="nav-link">Tokens</a>
     <a
       href="https://primeng.org/installation"
       target="_blank"
@@ -40,7 +41,8 @@
 <div class="layout">
   <app-playground-sidebar />
 
-  <main class="preview-area">
+  <main class="preview-area" [class.preview-area--tokens]="isTokensView()">
+    @if (!isTokensView()) {
     <div class="preview-tabs">
       <a routerLink="/button" routerLinkActive="active" class="preview-tab">Button</a>
       <a routerLink="/form" routerLinkActive="active" class="preview-tab">Form</a>
@@ -50,8 +52,9 @@
       <a routerLink="/overlay" routerLinkActive="active" class="preview-tab">Overlay</a>
       <a routerLink="/misc" routerLinkActive="active" class="preview-tab">Misc</a>
     </div>
+    }
 
-    <div class="tab-panel active">
+    <div class="tab-panel active" [class.tab-panel--tokens]="isTokensView()">
       <router-outlet />
     </div>
   </main>

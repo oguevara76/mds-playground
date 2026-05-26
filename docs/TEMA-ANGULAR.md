@@ -41,7 +41,10 @@ pnpm run regen:prime-bridge
 pnpm run regen:mds
 ```
 
-Salida: `apps/playground/src/app/theme/prime-runtime-bridge.generated.ts`
+Salidas:
+
+- `apps/playground/src/app/theme/prime-runtime-bridge.generated.ts`
+- `apps/playground/src/app/theme/mds-vars-catalog.generated.ts` (vista Tokens /listado)
 
 ## Qué NO usa el Angular playground
 

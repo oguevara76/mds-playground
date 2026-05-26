@@ -1,0 +1,9 @@
+<div class="tv-map-area" [class.is-refreshing]="mapLoading()">
+  @if (mapLoading()) {
+    <div class="tv-map-loader" role="status" aria-live="polite" aria-busy="true">
+      <i class="pi pi-spin pi-spinner" aria-hidden="true"></i>
+      <span>Actualizando mapa…</span>
+    </div>
+  }
+  <div class="tv-map-host" #mapHost></div>
+</div>

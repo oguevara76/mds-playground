@@ -1,5 +1,7 @@
-/* AUTO-GENERATED — do not edit by hand. Run: python3 scripts/regen-mds-vars-data.py */
-const MDS_VARS = {
+/* AUTO-GENERATED — do not edit. Run: pnpm run regen:mds */
+import type { MdsVarEntry } from './token-catalog.types';
+
+export const MDS_VARS_CATALOG = {
   prim: [
     { name: "--amber-100", value: "rgba(254, 243, 199, 1)" },
     { name: "--amber-200", value: "rgba(253, 230, 138, 1)" },
@@ -277,7 +279,7 @@ const MDS_VARS = {
     { name: "--zinc-800", value: "rgba(39, 39, 42, 1)" },
     { name: "--zinc-900", value: "rgba(24, 24, 27, 1)" },
     { name: "--zinc-950", value: "rgba(9, 9, 11, 1)" },
-  ],
+  ] as MdsVarEntry[],
   light: [
     { name: "--anchor-gutter", value: "var(--dimension-scale-x2)" },
     { name: "--border-radius-lg", value: "var(--dimension-radius-x8)" },
@@ -469,7 +471,7 @@ const MDS_VARS = {
     { name: "--text-hover-color", value: "var(--surface-800)" },
     { name: "--text-hover-muted-color", value: "var(--surface-600)" },
     { name: "--text-muted-color", value: "var(--surface-500)" },
-  ],
+  ] as MdsVarEntry[],
   dark: [
     { name: "--anchor-gutter", value: "var(--dimension-scale-x2)" },
     { name: "--border-radius-lg", value: "var(--dimension-radius-x8)" },
@@ -661,7 +663,7 @@ const MDS_VARS = {
     { name: "--text-hover-color", value: "var(--surface-0)" },
     { name: "--text-hover-muted-color", value: "var(--surface-300)" },
     { name: "--text-muted-color", value: "var(--surface-400)" },
-  ],
+  ] as MdsVarEntry[],
   comp: [
     { name: "--accordion-content-background", value: "var(--content-background)" },
     { name: "--accordion-content-border-color", value: "var(--content-border-color)" },
@@ -2623,5 +2625,5 @@ const MDS_VARS = {
     { name: "--virtualscroller-loader-icon-size", value: "28px" },
     { name: "--virtualscroller-loader-mask-background", value: "var(--content-background)" },
     { name: "--virtualscroller-loader-mask-color", value: "var(--text-muted-color)" },
-  ]
+  ] as MdsVarEntry[],
 };

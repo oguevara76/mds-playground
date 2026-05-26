@@ -119,7 +119,7 @@ Sube **semantic-light y semantic-dark** (o ninguna semántica, para usar el core
 
 ## Siguiente fase
 
-- Vista Tokens (listado + mapa) portada de `app.js`
+- Vista Tokens: listado + mapa ✓ (`/tokens`)
 - ~~Catálogos Data y Panel~~ ✓ (`/data`, `/panel`)
 - ~~Catálogo Overlay (Tooltip)~~ ✓ (`/overlay`)
 - ~~Toast interactivo en Messages~~ ✓ (`app-toast-catalog` en `/messages`)

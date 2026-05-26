@@ -1,0 +1,94 @@
+:host {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tokens-view-root {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+:host .tv-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tokens-empty {
+  padding: 32px 0;
+  font-size: 13px;
+  color: var(--p-surface-500);
+  text-align: center;
+}
+
+.tv-view-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Columna de acordeones alineada a la izquierda (~1000px) */
+:host .tv-content > .tva,
+:host .tv-content > .tokens-empty {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Nombre + valor juntos (evita 1fr que separa el valor al borde) */
+:host .tva-row-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+:host .tva-name {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: min(32rem, 100%);
+}
+
+:host .tva-val {
+  flex: 0 0 auto;
+  text-align: left;
+  padding-left: 12px;
+  border-left: 1px solid var(--p-surface-200);
+}
+
+:host-context([data-theme='dark']) .tva-val {
+  border-left-color: var(--p-surface-700);
+}
+
+:host .tva-meta {
+  max-width: 100%;
+}
+
+:host .tva-meta-sem {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+:host .tva-meta-components-tag {
+  font-size: 10px;
+  line-height: 1.2;
+  padding: 2px 8px;
+}
+
+:host .tva-meta-components-list {
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: #6366f1;
+}
+
+:host-context([data-theme='dark']) .tva-meta-components-list {
+  color: #818cf8;
+}

@@ -7,13 +7,17 @@ import { MiscCatalogComponent } from './catalogs/misc/misc-catalog.component';
 import { OverlayCatalogComponent } from './catalogs/overlay/overlay-catalog.component';
 import { PanelCatalogComponent } from './catalogs/panel/panel-catalog.component';
 import { AppShellComponent } from './layout/app-shell.component';
-
 export const routes: Routes = [
   {
     path: '',
     component: AppShellComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'button' },
+      {
+        path: 'tokens',
+        loadComponent: () =>
+          import('./tokens/tokens-view.component').then((m) => m.TokensViewComponent),
+      },
       { path: 'button', component: ButtonCatalogComponent },
       { path: 'form', component: FormCatalogComponent },
       { path: 'messages', component: MessagesCatalogComponent },

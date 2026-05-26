@@ -2609,9 +2609,22 @@ app-playground-sidebar {
   flex-wrap: wrap;
 }
 .tva-meta .pi { font-size: 9px; flex-shrink: 0; }
-.tva-meta-sem { color: #6366f1; }
-.tva-meta-sem .pi { color: #6366f1; }
-[data-theme="dark"] .tva-meta-sem { color: #818cf8; }
+.tva-meta-sem {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.tva-meta-components-tag {
+  font-size: 10px;
+  line-height: 1.2;
+  padding: 2px 8px;
+}
+.tva-meta-components-list {
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: #6366f1;
+}
+[data-theme="dark"] .tva-meta-components-list { color: #818cf8; }
 .tva-meta-comp { color: #0ea5e9; gap: 4px; flex-wrap: wrap; }
 .tva-meta-comp .pi { color: #0ea5e9; }
 [data-theme="dark"] .tva-meta-comp { color: #38bdf8; }
