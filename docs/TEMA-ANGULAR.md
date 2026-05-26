@@ -21,7 +21,7 @@ Misma arquitectura que el playground estático: **core en repo** + **upload que 
 | 13 | Auto-contraste primary | `#auto-contrast` |
 | 14 | **Puente runtime PrimeNG** | `#mds-prime-runtime-bridge` (~490 vars `--p-*`) |
 
-Las capas 9–12 son las mismas que en el HTML estático: si subes `apps/playground/ejemplos/oliva/primitives.css`, cambias la rampa oliva; si subes `components.css`, cambian `--button-padding-x`, `--inputtext-*`, etc. (En legacy, la ruta equivalente es `ejemplos/oliva/…`.)
+Las capas 9–12: si subes `ejemplos/oliva/primitives.css`, cambias la rampa oliva; si subes `components.css`, cambian `--button-padding-x`, `--inputtext-*`, etc.
 
 ## Validación del upload (igual que legacy)
 
@@ -43,8 +43,8 @@ pnpm run regen:mds
 
 Salidas:
 
-- `apps/playground/src/app/theme/prime-runtime-bridge.generated.ts`
-- `apps/playground/src/app/theme/mds-vars-catalog.generated.ts` (vista Tokens /listado)
+- `src/app/theme/prime-runtime-bridge.generated.ts`
+- `src/app/theme/mds-vars-catalog.generated.ts` (vista Tokens /listado)
 
 ## Qué NO usa el Angular playground
 
@@ -54,4 +54,4 @@ Salidas:
 
 1. Importar core desde Figma: `./scripts/import-mds-core-from-desktop.sh`
 2. Regenerar datos y puente: `pnpm run regen:mds`
-3. Reiniciar `pnpm run playground:start`
+3. Reiniciar `pnpm start`

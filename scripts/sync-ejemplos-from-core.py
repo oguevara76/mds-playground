@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """
-Vacía ejemplos/ (legacy + Angular) y regenera primitives, components, semantic-light/dark
+Vacía ejemplos/ y regenera primitives, components, semantic-light/dark
 desde el core MDS, aplicando los colores de brand definidos en scripts/ejemplos-brand.json.
 
-Salidas:
-  - ejemplos/                    → playground HTML estático (raíz)
-  - apps/playground/ejemplos/    → playground Angular (Fase 0)
+Salida:
+  - ejemplos/                    → marcas de ejemplo del playground Angular
 """
 from __future__ import annotations
 
@@ -15,10 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLES = ROOT / "styles"
-EJEMPLOS_DIRS = (
-    ROOT / "ejemplos",
-    ROOT / "apps" / "playground" / "ejemplos",
-)
+EJEMPLOS_DIRS = (ROOT / "ejemplos",)
 MANIFEST = ROOT / "scripts" / "ejemplos-brand.json"
 
 CORE = {

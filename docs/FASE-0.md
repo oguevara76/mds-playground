@@ -11,8 +11,8 @@ cd ~/Desktop/Github/mds-playground
 **Terminal 1 — Angular (PrimeNG real, puerto 3000)**
 
 ```bash
-pnpm run setup
-pnpm run playground:start
+pnpm install
+pnpm start
 ```
 
 - Catálogo Button: http://localhost:3000/button  
@@ -24,53 +24,33 @@ pnpm run playground:start
 - Catálogo Misc (Tag): http://localhost:3000/misc  
 - Upload CSS, paleta y tokens activos: sidebar izquierdo (paridad con legacy)
 
-**Terminal 2 — Legacy estático (puerto 5500)**
-
-```bash
-pnpm run legacy:serve
-```
-
-- http://localhost:5500/
-
-> En local **no** uses `http://localhost:5500/phase0/` — Fase 0 Angular va en el puerto **3000**.
-
 ---
 
 ## Fase 0 ✓ · Fase 1 ✓ · Fase 2 ✓ Form · Fase 3 ✓ Messages · Fase 4 ✓ Data + Panel · Fase 5 ✓ Overlay (actual)
 
-| Funcionalidad | Legacy | Angular `apps/playground` |
-|---------------|--------|---------------------------|
-| `<p-button>` real | No | **Sí** (`/button`) |
-| Catálogo Form (Radio, Checkbox, ToggleSwitch, InputText) | Sí | **Sí** (`/form`) |
-| Catálogo Messages (`p-message` + Toast) | Sí | **Sí** (`/messages`) |
-| Catálogo Data (Paginator) | Sí | **Sí** (`/data`) |
-| Catálogo Panel (Tabs) | Sí | **Sí** (`/panel`) |
-| Catálogo Overlay (Tooltip) | Sí | **Sí** (`/overlay`) |
-| Catálogo Misc (Tag) | Sí | **Sí** (`/misc`) |
-| Shell visual (topbar, sidebar, tabs) | Sí | **Sí** (`styles/app.css`) |
-| Upload 4 capas CSS | Sí | **Sí** |
-| Tokens activos + paleta | Sí | **Sí** |
-| Dark / light | Sí | **Sí** |
-| Mapa / vista Tokens completa | Sí | Pendiente |
-| Data / Panel catálogos | Sí | **Sí** |
+| Funcionalidad | Estado |
+|---------------|--------|
+| `<p-button>` real | **Sí** (`/button`) |
+| Catálogo Form | **Sí** (`/form`) |
+| Catálogo Messages | **Sí** (`/messages`) |
+| Catálogo Data | **Sí** (`/data`) |
+| Catálogo Panel | **Sí** (`/panel`) |
+| Catálogo Overlay | **Sí** (`/overlay`) |
+| Catálogo Misc (Tag) | **Sí** (`/misc`) |
+| Shell visual | **Sí** (`styles/app.css`) |
+| Upload 4 capas CSS | **Sí** |
+| Tokens activos + paleta | **Sí** |
+| Dark / light | **Sí** |
+| Mapa / vista Tokens completa | Pendiente |
 
 ### Probar upload con marcas de ejemplo
 
-Hay **dos copias** de las marcas de ejemplo (mismo contenido tras `pnpm run regen:ejemplos`):
-
-| Playground | Carpeta |
-|------------|---------|
-| Legacy (HTML, puerto 5500) | `ejemplos/` en la raíz del repo |
-| Angular (puerto 3000) | `apps/playground/ejemplos/` |
-
 Desde el sidebar de http://localhost:3000, arrastra (mínimo **primitivos** + **semántica** light o dark), por ejemplo:
 
-- `apps/playground/ejemplos/azul/primitives.css`
-- `apps/playground/ejemplos/azul/semantic-light.css`
-- `apps/playground/ejemplos/azul/semantic-dark.css` (recomendado junto con light para el toggle)
-- `apps/playground/ejemplos/azul/components.css` (opcional)
-
-En el legacy usa la misma estructura bajo `ejemplos/azul/…`.
+- `ejemplos/azul/primitives.css`
+- `ejemplos/azul/semantic-light.css`
+- `ejemplos/azul/semantic-dark.css` (recomendado junto con light para el toggle)
+- `ejemplos/azul/components.css` (opcional)
 
 Los botones PrimeNG deben actualizar colores al instante. Cadena de estilos (último gana en `<p-button>`):
 
@@ -84,9 +64,9 @@ Tras cada upload se llama `resyncThemeRuntime()`; el inspector muestra `btn-fill
 
 Si no ves cambio: sube **primitivos + semántica light** (mínimo), recarga la página y vuelve a subir; comprueba que la paleta del sidebar muestre tonos oliva.
 
-### Modo oscuro en el legacy
+### Modo oscuro
 
-Los estilos de componentes del HTML estático dependen de `--p-*` definidos en `styles/primeng-tokens.css` **por tema**. El bloque `html[data-theme="dark"]` debe incluir los mismos tokens que el bloque light (mensajes, tabs, paginator, etc.); si faltan, en dark se pierden fondos, bordes y tipografía.
+Los estilos dependen de `--p-*` definidos en `styles/primeng-tokens.css` **por tema**. El bloque `html[data-theme="dark"]` debe incluir los mismos tokens que el bloque light (mensajes, tabs, paginator, etc.); si faltan, en dark se pierden fondos, bordes y tipografía.
 
 Tras ampliar el bloque light, sincroniza dark:
 
@@ -105,9 +85,7 @@ Sube **semantic-light y semantic-dark** (o ninguna semántica, para usar el core
 | Error | Solución |
 |-------|----------|
 | `ENOENT .../Users/omguevara/apps` | `cd ~/Desktop/Github/mds-playground` |
-| `phase0/` 404 en :5500 | Usar http://localhost:3000 |
-| Legacy en `/Desktop/Github/...` | `serve` lanzado desde `~` — reiniciar con `pnpm run legacy:serve` en el repo |
-| Componentes rotos solo en **Dark** (legacy) | Comprobar `primeng-tokens.css` bloque dark; ejecutar `pnpm run regen:primeng-dark` |
+| Componentes rotos solo en **Dark** | Comprobar `primeng-tokens.css` bloque dark; ejecutar `pnpm run regen:primeng-dark` |
 
 ---
 

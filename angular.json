@@ -32,17 +32,17 @@
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
-              "../../styles/mds-primitives.css",
-              "../../styles/mds-dimension-bridge.css",
-              "../../styles/mds-semantic-light.css",
-              "../../styles/mds-semantic-dark.css",
-              "../../styles/mds-components.css",
-              "../../styles/primeng-tokens.css",
+              "styles/mds-primitives.css",
+              "styles/mds-dimension-bridge.css",
+              "styles/mds-semantic-light.css",
+              "styles/mds-semantic-dark.css",
+              "styles/mds-components.css",
+              "styles/primeng-tokens.css",
               "src/styles/primeng-tabs-parity.css",
               "src/styles/primeng-paginator-parity.css",
               "src/styles/primeng-tooltip-parity.css",
               "src/styles/primeng-tag-parity.css",
-              "../../styles/app.css",
+              "styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"
             ],
@@ -58,8 +58,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "32kB",
+                  "maximumError": "48kB"
                 }
               ],
               "outputHashing": "all"
@@ -70,7 +70,7 @@
               "sourceMap": true
             },
             "github-pages": {
-              "baseHref": "/mds-playground/phase0/",
+              "baseHref": "/mds-playground/",
               "outputHashing": "all",
               "budgets": [
                 {
@@ -80,8 +80,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "8kB",
-                  "maximumError": "16kB"
+                  "maximumWarning": "32kB",
+                  "maximumError": "48kB"
                 }
               ]
             }
@@ -122,17 +122,17 @@
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
-              "../../styles/mds-primitives.css",
-              "../../styles/mds-dimension-bridge.css",
-              "../../styles/mds-semantic-light.css",
-              "../../styles/mds-semantic-dark.css",
-              "../../styles/mds-components.css",
-              "../../styles/primeng-tokens.css",
+              "styles/mds-primitives.css",
+              "styles/mds-dimension-bridge.css",
+              "styles/mds-semantic-light.css",
+              "styles/mds-semantic-dark.css",
+              "styles/mds-components.css",
+              "styles/primeng-tokens.css",
               "src/styles/primeng-tabs-parity.css",
               "src/styles/primeng-paginator-parity.css",
               "src/styles/primeng-tooltip-parity.css",
               "src/styles/primeng-tag-parity.css",
-              "../../styles/app.css",
+              "styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"
             ],

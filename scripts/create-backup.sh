@@ -41,8 +41,8 @@ cd "$ROOT"
 zip -rq "$ARCHIVE_PATH" . \
   -x "node_modules/*" \
   -x "*/node_modules/*" \
-  -x "apps/playground/dist/*" \
-  -x "apps/playground/.angular/*" \
+  -x "dist/*" \
+  -x ".angular/*" \
   -x "_site/*" \
   -x "backups/*" \
   -x ".git/*" \

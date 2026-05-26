@@ -1,11 +1,14 @@
-# Marcas de ejemplo — Playground legacy
+# Marcas de ejemplo — Playground Angular
 
-Ficheros CSS de prueba para el playground **HTML estático** (`pnpm run legacy:serve` → http://localhost:5500/).
+Copia dedicada al playground **Angular + PrimeNG** (`http://localhost:3000`).
 
-El playground **Angular** usa su propia copia en [`apps/playground/ejemplos/`](../apps/playground/ejemplos/) para no mezclar rutas ni versiones entre plataformas.
-
-Regenerar ambas carpetas desde el core MDS:
+Regenerar desde el core MDS:
 
 ```bash
+cd ~/Desktop/Github/mds-playground
 pnpm run regen:ejemplos
 ```
+
+Cada subcarpeta (`azul`, `oliva`, …) incluye hasta cuatro ficheros: `primitives.css`, `semantic-light.css`, `semantic-dark.css`, `components.css`.
+
+El playground HTML estático anterior está archivado en `backups/playground-static-*.zip`.

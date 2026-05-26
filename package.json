@@ -1,16 +1,47 @@
 {
   "name": "mds-playground",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "setup": "pnpm install --dir apps/playground",
-    "playground:start": "pnpm --dir apps/playground start",
-    "playground:build": "pnpm --dir apps/playground build",
-    "playground:build:pages": "pnpm --dir apps/playground build:pages",
-    "legacy:serve": "pnpm dlx serve . -l 5500",
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:pages": "ng build --configuration=github-pages",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
     "regen:prime-bridge": "python3 scripts/regen-prime-runtime-bridge.py",
     "regen:primeng-dark": "python3 scripts/regen-primeng-dark-from-light.py",
     "regen:ejemplos": "python3 scripts/sync-ejemplos-from-core.py",
     "regen:mds": "python3 scripts/regen-mds-vars-data.py && python3 scripts/regen-prime-runtime-bridge.py",
     "backup": "bash scripts/create-backup.sh"
+  },
+  "dependencies": {
+    "@angular/animations": "^20.3.21",
+    "@angular/common": "^20.3.21",
+    "@angular/compiler": "^20.3.21",
+    "@angular/core": "^20.3.21",
+    "@angular/forms": "^20.3.21",
+    "@angular/platform-browser": "^20.3.21",
+    "@angular/platform-browser-dynamic": "^20.3.21",
+    "@angular/router": "^20.3.21",
+    "@primeuix/themes": "^2.0.3",
+    "primeicons": "^7.0.0",
+    "primeng": "^20.4.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^20.3.26",
+    "@angular/cli": "^20.3.26",
+    "@angular/compiler-cli": "^20.3.21",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.8.3"
   }
 }

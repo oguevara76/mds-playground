@@ -2,7 +2,7 @@
 """Genera el puente runtime MDS → PrimeNG (--p-*) sin fallbacks Aura.
 
 Lee styles/primeng-tokens.css (misma fuente que el playground estático) y produce
-apps/playground/src/app/theme/prime-runtime-bridge.generated.ts
+src/app/theme/prime-runtime-bridge.generated.ts
 
 Tras el tema inyectado por @primeuix, Angular reaplica todas las variables --p-*
 desde los tokens MDS (--button-*, --form-field-*, --primary-*, etc.) que viven
@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "styles" / "primeng-tokens.css"
-OUT = ROOT / "apps" / "playground" / "src" / "app" / "theme" / "prime-runtime-bridge.generated.ts"
+OUT = ROOT / "src" / "app" / "theme" / "prime-runtime-bridge.generated.ts"
 
 # Variables de shell que también deben seguir al core MDS
 SHELL_VARS = frozenset(

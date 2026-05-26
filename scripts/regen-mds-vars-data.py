@@ -1,23 +1,11 @@
 #!/usr/bin/env python3
-"""Regenera js/mds-vars-data.js y el catálogo TypeScript del playground Angular.
-
-Alimenta la vista Tokens (listado + mapa) en legacy y Angular.
-"""
+"""Regenera el catálogo TypeScript del playground Angular (vista Tokens)."""
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLES = ROOT / "styles"
-OUT_JS = ROOT / "js" / "mds-vars-data.js"
-OUT_TS = (
-    ROOT
-    / "apps"
-    / "playground"
-    / "src"
-    / "app"
-    / "theme"
-    / "mds-vars-catalog.generated.ts"
-)
+OUT_TS = ROOT / "src" / "app" / "theme" / "mds-vars-catalog.generated.ts"
 
 
 def extract_block(css: str, selector: str) -> str:
@@ -88,24 +76,10 @@ def main():
     light = parse_vars(extract_block(light_css, 'html[data-theme="light"]'))
     dark = parse_vars(extract_block(dark_css, 'html[data-theme="dark"]'))
 
-    out = (
-        "/* AUTO-GENERATED — do not edit by hand. Run: python3 scripts/regen-mds-vars-data.py */\n"
-        "const MDS_VARS = {\n  prim: [\n"
-        + emit_arr(prim)
-        + "\n  ],\n  light: [\n"
-        + emit_arr(light)
-        + "\n  ],\n  dark: [\n"
-        + emit_arr(dark)
-        + "\n  ],\n  comp: [\n"
-        + emit_arr(comp)
-        + "\n  ]\n};\n"
-    )
-    OUT_JS.write_text(out, encoding="utf-8")
     OUT_TS.parent.mkdir(parents=True, exist_ok=True)
     OUT_TS.write_text(emit_ts_catalog(prim, light, dark, comp), encoding="utf-8")
     print(
         f"OK: prim={len(prim)} light={len(light)} dark={len(dark)} comp={len(comp)}"
-        f"\n  → {OUT_JS}"
         f"\n  → {OUT_TS}"
     )
 

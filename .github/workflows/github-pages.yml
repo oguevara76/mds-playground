@@ -1,4 +1,4 @@
-# Publica legacy (raíz) + Fase 0 Angular en /phase0/
+# Publica el playground Angular en la raíz del sitio Pages
 # Requiere: Settings → Pages → Source: GitHub Actions
 
 name: Deploy GitHub Pages
@@ -37,26 +37,18 @@ jobs:
         with:
           node-version: '22'
           cache: 'pnpm'
-          cache-dependency-path: apps/playground/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install (Angular app)
+      - name: Install
         run: pnpm install --frozen-lockfile
-        working-directory: apps/playground
 
       - name: Build Angular (github-pages)
         run: pnpm run build:pages
-        working-directory: apps/playground
 
-      - name: Assemble site (legacy + phase0)
+      - name: Assemble site
         run: |
-          mkdir -p _site/phase0
-          rsync -a \
-            --exclude apps \
-            --exclude node_modules \
-            --exclude _site \
-            --exclude .git \
-            ./ _site/
-          cp -r apps/playground/dist/playground/browser/* _site/phase0/
+          mkdir -p _site
+          cp -r dist/playground/browser/* _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
