@@ -1,0 +1,74 @@
+/* Paridad PrimeNG Textarea — tokens --p-textarea-* ← --textarea-* (mds-components + primeng-tokens). */
+
+.p-textarea {
+  font-family: var(--p-font-family);
+  font-size: var(--textarea-font-size, var(--p-textarea-font-size, var(--form-field-font-size)));
+  color: var(--textarea-color, var(--p-textarea-color));
+  background: var(--textarea-background, var(--p-textarea-background));
+  padding-block: var(--textarea-padding-y, var(--p-textarea-padding-y));
+  padding-inline: var(--textarea-padding-x, var(--p-textarea-padding-x));
+  border: 1px solid var(--textarea-border-color, var(--p-textarea-border-color));
+  border-radius: var(--textarea-border-radius, var(--p-textarea-border-radius));
+  box-shadow: var(--textarea-shadow, var(--p-textarea-shadow));
+  transition:
+    background var(--textarea-transition-duration, var(--p-textarea-transition-duration)),
+    color var(--textarea-transition-duration, var(--p-textarea-transition-duration)),
+    border-color var(--textarea-transition-duration, var(--p-textarea-transition-duration)),
+    outline-color var(--textarea-transition-duration, var(--p-textarea-transition-duration)),
+    box-shadow var(--textarea-transition-duration, var(--p-textarea-transition-duration));
+}
+
+.p-textarea:enabled:hover {
+  border-color: var(--textarea-hover-border-color, var(--p-textarea-hover-border-color));
+}
+
+.p-textarea:enabled:focus {
+  border-color: var(--textarea-focus-border-color, var(--p-textarea-focus-border-color));
+  box-shadow: var(--textarea-focus-ring-shadow, var(--p-textarea-focus-ring-shadow));
+  outline: var(--textarea-focus-ring-width, var(--p-textarea-focus-ring-width))
+    var(--p-textarea-focus-ring-style, solid)
+    var(--textarea-focus-ring-color, var(--p-textarea-focus-ring-color));
+  outline-offset: var(--textarea-focus-ring-offset, var(--p-textarea-focus-ring-offset));
+}
+
+.p-textarea.p-invalid {
+  border-color: var(--textarea-invalid-border-color, var(--p-textarea-invalid-border-color));
+}
+
+.p-textarea.p-variant-filled {
+  background: var(--textarea-filled-background, var(--p-textarea-filled-background));
+}
+
+.p-textarea.p-variant-filled:enabled:hover {
+  background: var(--textarea-filled-hover-background, var(--p-textarea-filled-hover-background));
+}
+
+.p-textarea.p-variant-filled:enabled:focus {
+  background: var(--textarea-filled-focus-background, var(--p-textarea-filled-focus-background));
+}
+
+.p-textarea:disabled {
+  opacity: 1;
+  background: var(--textarea-disabled-background, var(--p-textarea-disabled-background));
+  color: var(--textarea-disabled-color, var(--p-textarea-disabled-color));
+}
+
+.p-textarea::placeholder {
+  color: var(--textarea-placeholder-color, var(--p-textarea-placeholder-color));
+}
+
+.p-textarea.p-invalid::placeholder {
+  color: var(--textarea-invalid-placeholder-color, var(--p-textarea-invalid-placeholder-color));
+}
+
+.p-textarea-sm {
+  font-size: var(--textarea-sm-font-size, var(--p-textarea-sm-font-size));
+  padding-block: var(--textarea-sm-padding-y, var(--p-textarea-sm-padding-y));
+  padding-inline: var(--textarea-sm-padding-x, var(--p-textarea-sm-padding-x));
+}
+
+.p-textarea-lg {
+  font-size: var(--textarea-lg-font-size, var(--p-textarea-lg-font-size));
+  padding-block: var(--textarea-lg-padding-y, var(--p-textarea-lg-padding-y));
+  padding-inline: var(--textarea-lg-padding-x, var(--p-textarea-lg-padding-x));
+}

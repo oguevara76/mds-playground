@@ -1627,13 +1627,16 @@ html:root {
   --terminal-height: 252px;
   --terminal-prompt-gap: var(--dimension-scale-x4);
   --textarea-background: var(--form-field-background);
+  --textarea-font-size: var(--form-field-font-size);
   --textarea-border-color: var(--form-field-border-color);
   --textarea-border-radius: var(--form-field-border-radius);
   --textarea-color: var(--form-field-color);
   --textarea-disabled-background: var(--form-field-disabled-background);
   --textarea-disabled-color: var(--form-field-disabled-color);
   --textarea-filled-background: var(--form-field-filled-background);
+  --textarea-filled-hover-background: var(--form-field-filled-hover-background);
   --textarea-filled-focus-background: var(--form-field-filled-focus-background);
+  --textarea-transition-duration: var(--form-field-transition-duration, 0.2s);
   --textarea-focus-border-color: var(--form-field-focus-border-color);
   --textarea-focus-ring-color: var(--form-field-focus-ring-color);
   --textarea-focus-ring-offset: var(--form-field-focus-ring-offset);

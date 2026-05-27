@@ -1,0 +1,57 @@
+/* Paridad PrimeNG Chip — tokens --p-chip-* ← --chip-* (mds-components + primeng-tokens). */
+
+.p-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--chip-gap, var(--p-chip-gap));
+  padding: var(--chip-padding-y, var(--p-chip-padding-y))
+    var(--chip-padding-x, var(--p-chip-padding-x));
+  border-radius: var(--chip-border-radius, var(--p-chip-border-radius));
+  background: var(--chip-background, var(--p-chip-background));
+  color: var(--chip-color, var(--p-chip-color));
+  font-size: var(--chip-font-size, var(--p-chip-font-size, var(--p-font-size)));
+  font-family: var(--p-font-family);
+  border: none;
+}
+
+.p-chip-icon {
+  color: var(--chip-icon-color, var(--p-chip-icon-color));
+  font-size: var(--chip-icon-size, var(--p-chip-icon-size));
+  width: var(--chip-icon-size, var(--p-chip-icon-size));
+  height: var(--chip-icon-size, var(--p-chip-icon-size));
+  line-height: 1;
+}
+
+.p-chip-image {
+  border-radius: 50%;
+  width: var(--chip-image-width, var(--p-chip-image-width));
+  height: var(--chip-image-height, var(--p-chip-image-height));
+  object-fit: cover;
+}
+
+.p-chip-label {
+  color: inherit;
+  line-height: 1.25;
+}
+
+.p-chip-remove-icon {
+  color: var(--chip-remove-icon-color, var(--p-chip-remove-icon-color));
+  font-size: var(--chip-remove-icon-size, var(--p-chip-remove-icon-size));
+  width: var(--chip-remove-icon-size, var(--p-chip-remove-icon-size));
+  height: var(--chip-remove-icon-size, var(--p-chip-remove-icon-size));
+}
+
+.p-chip-remove-icon:focus-visible {
+  outline: var(--chip-remove-icon-focus-ring-width, var(--p-chip-remove-icon-focus-ring-width))
+    solid var(--chip-remove-icon-focus-ring-color, var(--p-chip-remove-icon-focus-ring-color));
+  outline-offset: var(
+    --chip-remove-icon-focus-ring-offset,
+    var(--p-chip-remove-icon-focus-ring-offset)
+  );
+  box-shadow: var(--chip-remove-icon-shadow, var(--p-chip-remove-icon-shadow));
+}
+
+.p-chip-primary {
+  background: color-mix(in srgb, var(--p-primary-color) 12%, transparent);
+  color: var(--p-primary-700);
+}

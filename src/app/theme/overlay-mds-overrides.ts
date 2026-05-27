@@ -211,4 +211,89 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
 .p-popover .p-toggleswitch.p-disabled .p-toggleswitch-handle {
   background: var(--p-toggleswitch-handle-disabled-background) !important;
 }
+
+/* p-select overlay (configuradores: appendTo="body") — padding en lista y opciones */
+.p-select-overlay {
+  background: var(--select-overlay-background, var(--p-select-overlay-background)) !important;
+  border: 1px solid var(--select-overlay-border-color, var(--p-select-overlay-border-color)) !important;
+  color: var(--select-overlay-color, var(--p-select-overlay-color)) !important;
+  border-radius: var(--select-overlay-border-radius, var(--p-select-overlay-border-radius)) !important;
+  box-shadow: var(--select-overlay-shadow, var(--p-select-overlay-shadow)) !important;
+}
+
+.p-select-overlay .p-select-list-container,
+.p-select-overlay .p-select-list {
+  padding: var(--list-padding, var(--p-select-list-padding, 8px)) !important;
+}
+
+.p-select-overlay .p-select-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--select-list-gap, var(--list-gap, var(--p-select-list-gap, 2px))) !important;
+}
+
+.p-select-overlay .p-select-option {
+  padding: var(
+    --select-option-padding,
+    var(--p-select-option-padding, var(--list-option-padding, 6px 12px))
+  ) !important;
+  border-radius: var(
+    --select-option-border-radius,
+    var(--p-select-option-border-radius, var(--list-option-border-radius))
+  ) !important;
+  background: transparent !important;
+  color: var(--select-option-color, var(--p-select-option-color)) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition:
+    background var(--p-transition-duration, 0.2s),
+    color var(--p-transition-duration, 0.2s);
+}
+
+.p-select-overlay .p-select-option-label {
+  line-height: 1.25 !important;
+}
+
+/* Solo HOVER y ACTIVE: sin estilos extra de focus / selected+focus de PrimeNG */
+.p-select-overlay .p-select-option:not(.p-disabled):not(.p-select-option-selected).p-focus,
+.p-select-overlay .p-select-option:not(.p-disabled):not(.p-select-option-selected):focus,
+.p-select-overlay .p-select-option:not(.p-disabled):not(.p-select-option-selected):focus-visible {
+  background: transparent !important;
+  color: var(--select-option-color, var(--p-select-option-color)) !important;
+  box-shadow: none !important;
+}
+
+/* HOVER — opciones no seleccionadas (tokens MDS list-option-focus = superficie hover) */
+.p-select-overlay .p-select-option:not(.p-disabled):not(.p-select-option-selected):hover {
+  background: var(--select-option-focus-background, var(--p-select-option-focus-background)) !important;
+  color: var(--select-option-focus-color, var(--p-select-option-focus-color)) !important;
+}
+
+/* ACTIVE — valor seleccionado en el desplegable */
+.p-select-overlay .p-select-option.p-select-option-selected,
+.p-select-overlay .p-select-option.p-select-option-selected.p-focus,
+.p-select-overlay .p-select-option.p-select-option-selected:focus,
+.p-select-overlay .p-select-option.p-select-option-selected:focus-visible {
+  background: var(--select-option-selected-background, var(--p-select-option-selected-background)) !important;
+  color: var(--select-option-selected-color, var(--p-select-option-selected-color)) !important;
+  box-shadow: none !important;
+}
+
+.p-select-overlay .p-select-option.p-select-option-selected:hover {
+  background: var(--select-option-selected-background, var(--p-select-option-selected-background)) !important;
+  color: var(--select-option-selected-color, var(--p-select-option-selected-color)) !important;
+}
+
+.p-select-overlay .p-select-option-group,
+.p-select-overlay .p-select-option-group-label {
+  padding: var(
+    --list-option-group-padding,
+    var(--p-select-option-group-padding, var(--list-option-padding, 6px 12px))
+  ) !important;
+}
+
+.p-select-overlay .p-select-empty-message {
+  padding: var(--list-option-padding, var(--p-select-empty-message-padding, 6px 12px)) !important;
+}
 `;

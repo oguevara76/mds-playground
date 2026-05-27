@@ -2,17 +2,27 @@ export type FormBlockKind =
   | 'radio'
   | 'checkbox'
   | 'toggleswitch'
-  | 'input-default'
-  | 'input-float-over'
-  | 'input-float-on'
-  | 'input-float-in'
-  | 'input-iftalabel';
+  | 'inputtext'
+  | 'textarea';
 
-export type FormBlockCategory = 'choice' | 'input';
+/** Variante del showcase unificado InputText / Textarea. */
+export type FormInputTextVariant = 'default' | 'floatlabel' | 'iftalabel';
+
+export type FormTextareaVariant = FormInputTextVariant;
+
+export type FormBlockCategory = 'choice' | 'input' | 'textarea';
 
 export type FormInputFloatVariant = 'over' | 'on' | 'in';
 
 export type FormInteractionSize = 'small' | 'normal' | 'large';
+
+/** Tema visual del campo: borde (Outlined) o fondo filled (alto contraste). */
+export type FormFieldTheme = 'outlined' | 'filled';
+
+export const FORM_THEME_SELECT_OPTIONS: { label: string; value: FormFieldTheme }[] = [
+  { label: 'Outlined', value: 'outlined' },
+  { label: 'Filled', value: 'filled' },
+];
 
 export type FormInputDemoState =
   | 'normal'
@@ -28,8 +38,37 @@ export interface FormBlockConfig {
   kind: FormBlockKind;
   title: string;
   category: FormBlockCategory;
-  floatVariant?: FormInputFloatVariant;
 }
+
+export const FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS: {
+  label: string;
+  value: FormInputTextVariant;
+}[] = [
+  { label: 'Default', value: 'default' },
+  { label: 'Float Label', value: 'floatlabel' },
+  { label: 'IftaLabel', value: 'iftalabel' },
+];
+
+export const FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS: {
+  label: string;
+  value: FormInputFloatVariant;
+}[] = [
+  { label: 'Over', value: 'over' },
+  { label: 'On', value: 'on' },
+  { label: 'In', value: 'in' },
+];
+
+export const FORM_TEXTAREA_VARIANT_SELECT_OPTIONS: {
+  label: string;
+  value: FormTextareaVariant;
+}[] = [
+  { label: 'Default', value: 'default' },
+  { label: 'Float Label', value: 'floatlabel' },
+  { label: 'IftaLabel', value: 'iftalabel' },
+];
+
+export const FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS =
+  FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS;
 
 export const FORM_RADIO_OPTIONS = [
   { label: 'Visa', value: 'visa' },
@@ -135,9 +174,6 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'radio', title: 'RadioButton', category: 'choice' },
   { kind: 'checkbox', title: 'Checkbox', category: 'choice' },
   { kind: 'toggleswitch', title: 'ToggleSwitch', category: 'choice' },
-  { kind: 'input-default', title: 'InputText default', category: 'input' },
-  { kind: 'input-float-over', title: 'InputText float label Over', category: 'input', floatVariant: 'over' },
-  { kind: 'input-float-on', title: 'InputText float label On', category: 'input', floatVariant: 'on' },
-  { kind: 'input-float-in', title: 'InputText float label In', category: 'input', floatVariant: 'in' },
-  { kind: 'input-iftalabel', title: 'InputText IftaLabel', category: 'input' },
+  { kind: 'inputtext', title: 'InputText', category: 'input' },
+  { kind: 'textarea', title: 'Textarea', category: 'textarea' },
 ];

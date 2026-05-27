@@ -230,17 +230,56 @@
   margin-top: 2px;
 }
 
-/* Interacción FloatLabel / IftaLabel: control + hint como en States (sin flex gap entre ambos) */
-.form-showcase .catalog-showcase-interactive.input-interaction-scope.catalog-input-interactive:has(.form-input-interaction-control) {
-  display: flex;
+/* Interacción FloatLabel / IftaLabel: columna (evita hint al lado por flex row del showcase) */
+.form-showcase .catalog-showcase-interactive.catalog-input-interactive.form-input-interaction--stacked {
   flex-direction: column;
   align-items: stretch;
   flex-wrap: nowrap;
   gap: 0;
 }
 
-:host ::ng-deep .form-showcase .input-interaction-scope.catalog-input-interactive .form-input-interaction-control {
+:host ::ng-deep .form-showcase .catalog-input-interactive.form-input-interaction--stacked .form-input-interaction-control {
   width: 100%;
+}
+
+.form-showcase .catalog-input-interactive.form-input-interaction--stacked > .p-hint {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  flex: 0 0 auto;
+  align-self: stretch;
+}
+
+/* States / Sizes: FloatLabel e IftaLabel + helper en columna */
+.form-showcase .catalog-input-interactive:has(.p-floatlabel),
+.form-showcase .catalog-input-interactive:has(.p-iftalabel) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  gap: 6px;
+}
+
+.form-showcase .catalog-input-interactive:has(.p-floatlabel) > .p-hint,
+.form-showcase .catalog-input-interactive:has(.p-iftalabel) > .p-hint {
+  display: block;
+  width: 100%;
+  margin-top: 0;
+  flex: 0 0 auto;
+}
+
+:host ::ng-deep .form-showcase .catalog-input-interactive p-floatlabel,
+:host ::ng-deep .form-showcase .catalog-input-interactive .p-floatlabel,
+:host ::ng-deep .form-showcase .catalog-input-interactive .p-iftalabel {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.form-showcase .catalog-input-state .catalog-button-state-preview:has(.catalog-input-interactive) {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
 }
 
 :host ::ng-deep .form-showcase .input-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
@@ -860,6 +899,23 @@
   );
 }
 
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-floatlabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-x, var(--floatlabel-position-x, var(--textarea-padding-x, var(--form-field-padding-x))))
+  );
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--textarea-font-size, var(--form-field-font-size)))
+  );
+}
+
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-floatlabel.is-label-floated label,
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-floatlabel-in.is-label-floated label {
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
 /* Rounded (MDS; en legacy está en components.css, no cargado en playground) */
 :host ::ng-deep .inputtext-showcase .input-interaction-scope .p-inputtext.p-inputtext-rounded {
   border-radius: var(
@@ -971,4 +1027,227 @@
 :host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-floatlabel.is-label-floated label,
 :host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-floatlabel.is-label-floated label {
   color: var(--p-floatlabel-focus-color);
+}
+
+/* Theme — Outlined (default) / Filled (fondo alto contraste vía tokens MDS) */
+:host ::ng-deep .form-theme-filled .p-inputtext.p-variant-filled,
+:host ::ng-deep .form-theme-filled .p-textarea.p-variant-filled {
+  background: var(
+    --p-inputtext-filled-background,
+    var(--inputtext-filled-background, var(--form-field-filled-background))
+  );
+}
+
+:host ::ng-deep .form-theme-filled .p-textarea.p-variant-filled {
+  background: var(
+    --p-textarea-filled-background,
+    var(--textarea-filled-background, var(--form-field-filled-background))
+  );
+}
+
+/* Checkbox / Radio — Filled: caja sin seleccionar usa --*-filled-background (light/dark vía --form-field-filled-background) */
+:host ::ng-deep .form-theme-filled .p-checkbox.p-variant-filled:not(.p-checkbox-checked) .p-checkbox-box {
+  background: var(--p-checkbox-filled-background, var(--checkbox-filled-background, var(--form-field-filled-background)));
+}
+
+:host ::ng-deep .form-theme-filled .p-radiobutton.p-variant-filled:not(.p-radiobutton-checked) .p-radiobutton-box {
+  background: var(--p-radiobutton-filled-background, var(--radiobutton-filled-background, var(--form-field-filled-background)));
+}
+
+/* Checkbox / Radio — Outlined: caja sin seleccionar usa --*-background estándar */
+:host ::ng-deep .form-theme-outlined .p-checkbox:not(.p-checkbox-checked) .p-checkbox-box {
+  background: var(--p-checkbox-background, var(--checkbox-background, var(--form-field-background)));
+}
+
+:host ::ng-deep .form-theme-outlined .p-radiobutton:not(.p-radiobutton-checked) .p-radiobutton-box {
+  background: var(--p-radiobutton-background, var(--radiobutton-background, var(--form-field-background)));
+}
+
+/* Textarea — Interacción: altura mínima fija, crece con contenido (autoResize) y asa vertical */
+:host ::ng-deep .textarea-showcase {
+  --catalog-textarea-interaction-min-height: 5rem;
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-textarea,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel .p-textarea,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-iftalabel .p-textarea {
+  width: 100%;
+  min-height: var(--catalog-textarea-interaction-min-height);
+  resize: vertical !important;
+  /* PrimeNG autoResize ponía overflow:hidden inline; auto mantiene el asa visible y sólo muestra scroll cuando hace falta */
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+:host ::ng-deep .p-input-demo-wrap.p-input-demo--hover .p-textarea:enabled {
+  border-color: var(--p-textarea-hover-border-color);
+}
+
+:host ::ng-deep .p-input-demo-wrap.p-input-demo--focus .p-textarea:enabled {
+  border-color: var(--p-textarea-focus-border-color);
+  box-shadow: var(--p-textarea-focus-ring-shadow);
+  outline: var(--p-textarea-focus-ring-width) var(--p-textarea-focus-ring-style, solid)
+    var(--p-textarea-focus-ring-color);
+  outline-offset: var(--p-textarea-focus-ring-offset);
+}
+
+:host ::ng-deep .catalog-input-states-row .p-textarea::placeholder {
+  color: var(--p-textarea-placeholder-color, var(--form-field-placeholder-color));
+}
+
+:host ::ng-deep .catalog-input-states-row .p-textarea:disabled::placeholder {
+  color: var(--p-textarea-disabled-color, var(--form-field-disabled-color));
+}
+
+:host ::ng-deep .catalog-input-states-row .p-textarea.p-invalid {
+  border-color: var(--p-textarea-invalid-border-color);
+}
+
+:host ::ng-deep .catalog-input-states-row .p-textarea.p-invalid::placeholder {
+  color: var(--p-textarea-invalid-placeholder-color);
+}
+
+:host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-textarea.p-invalid:enabled,
+:host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-textarea.p-invalid:enabled {
+  border-color: var(--p-textarea-invalid-border-color);
+  box-shadow: none;
+  outline: none;
+}
+
+:host ::ng-deep .catalog-input-states-row .p-textarea:disabled {
+  background: var(--p-textarea-disabled-background);
+  color: var(--p-textarea-disabled-color);
+  opacity: 1;
+}
+
+/* Textarea — Float / Ifta: label y campo según tokens --textarea-* del host [style] */
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-x, var(--floatlabel-position-x, var(--textarea-padding-x, var(--form-field-padding-x))))
+  );
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--textarea-font-size, var(--form-field-font-size)))
+  );
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-iftalabel label,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-iftalabel label,
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-iftalabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-iftalabel-position-x, var(--iftalabel-position-x, var(--textarea-padding-x, var(--form-field-padding-x))))
+  );
+  top: var(--catalog-floatlabel-in-active-top, var(--p-iftalabel-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top))));
+  transform: translateY(0);
+  font-size: var(--p-iftalabel-font-size, var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size)));
+  font-weight: var(--p-iftalabel-font-weight, var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight)));
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+}
+
+/* Textarea Float In: label fijo arriba (Default/empty en States e Interaction; no centrado en el campo) */
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-in label,
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-floatlabel-in label,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel-in label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-floatlabel-in:not(.is-label-floated) label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+}
+
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel label {
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--textarea-font-size, var(--form-field-font-size)))
+  );
+}
+
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel.is-label-floated label,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel-in.is-label-floated label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel:has(textarea:focus) label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel:has(textarea.p-filled) label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel:has(textarea[placeholder]) label {
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-field:has(.p-textarea-sm) > .p-label,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-field:has(.p-textarea-sm) > .p-label {
+  font-size: var(--textarea-sm-font-size, var(--form-field-sm-font-size));
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-field:has(.p-textarea-lg) > .p-label,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-field:has(.p-textarea-lg) > .p-label {
+  font-size: var(--textarea-lg-font-size, var(--form-field-lg-font-size));
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-field:has(.p-textarea:not(.p-textarea-sm):not(.p-textarea-lg)) > .p-label,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-field:has(.p-textarea:not(.p-textarea-sm):not(.p-textarea-lg)) > .p-label {
+  font-size: var(--textarea-font-size, var(--form-field-font-size));
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-field .p-textarea::placeholder,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-field .p-textarea::placeholder {
+  font-size: inherit;
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-in .p-textarea,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-iftalabel .p-textarea,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel-in .p-textarea,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-iftalabel .p-textarea,
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-floatlabel-in .p-textarea,
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-iftalabel .p-textarea {
+  box-sizing: border-box;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--textarea-font-size, var(--form-field-font-size)))
+  );
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-top,
+    var(--p-floatlabel-in-input-padding-top, var(--p-iftalabel-input-padding-top))
+  );
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom))
+  );
+  padding-inline-start: var(
+    --catalog-floatlabel-in-input-padding-x,
+    var(--textarea-padding-x, var(--form-field-padding-x))
+  );
+  padding-inline-end: var(
+    --catalog-floatlabel-in-input-padding-x,
+    var(--textarea-padding-x, var(--form-field-padding-x))
+  );
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-in .p-textarea.p-textarea-sm,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-iftalabel .p-textarea.p-textarea-sm,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel-in .p-textarea.p-textarea-sm,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-iftalabel .p-textarea.p-textarea-sm {
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--textarea-sm-font-size, var(--form-field-sm-font-size)))
+  ) !important;
+}
+
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-in .p-textarea.p-textarea-lg,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-iftalabel .p-textarea.p-textarea-lg,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel-in .p-textarea.p-textarea-lg,
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-iftalabel .p-textarea.p-textarea-lg {
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--textarea-lg-font-size, var(--form-field-lg-font-size)))
+  ) !important;
 }

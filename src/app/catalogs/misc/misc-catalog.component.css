@@ -31,3 +31,37 @@
 :host.misc-catalog-page ::ng-deep .p-tag .p-tag-icon {
   font-size: var(--tag-icon-size, var(--p-tag-icon-size));
 }
+
+:host.misc-catalog-page .chip-interaction-row {
+  align-items: flex-start;
+}
+
+:host.misc-catalog-page .chip-catalog-row {
+  min-height: 40px;
+}
+
+/* Refuerzo catálogo: mismas variables MDS que chip-mds-overrides / primeng-chip-parity */
+:host.misc-catalog-page ::ng-deep .p-chip {
+  gap: var(--chip-gap, var(--p-chip-gap));
+  padding: var(--chip-padding-y, var(--p-chip-padding-y))
+    var(--chip-padding-x, var(--p-chip-padding-x));
+  border-radius: var(--chip-border-radius, var(--p-chip-border-radius));
+  background: var(--chip-background, var(--p-chip-background));
+  color: var(--chip-color, var(--p-chip-color));
+  font-size: var(--chip-font-size, var(--p-chip-font-size));
+}
+
+:host.misc-catalog-page ::ng-deep .p-chip-icon {
+  color: var(--chip-icon-color, var(--p-chip-icon-color));
+  font-size: var(--chip-icon-size, var(--p-chip-icon-size));
+}
+
+:host.misc-catalog-page ::ng-deep .p-chip-image {
+  width: var(--chip-image-width, var(--p-chip-image-width));
+  height: var(--chip-image-height, var(--p-chip-image-height));
+}
+
+:host.misc-catalog-page ::ng-deep .p-chip-remove-icon {
+  color: var(--chip-remove-icon-color, var(--p-chip-remove-icon-color));
+  font-size: var(--chip-remove-icon-size, var(--p-chip-remove-icon-size));
+}

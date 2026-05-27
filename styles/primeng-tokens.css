@@ -383,6 +383,7 @@ html[data-theme="light"] {
   --p-radiobutton-lg-width:                 var(--radiobutton-lg-width, var(--dimension-spacing-x20, 20px));
   --p-radiobutton-lg-height:                var(--radiobutton-lg-height, var(--dimension-spacing-x20, 20px));
   --p-radiobutton-background:               var(--radiobutton-background, var(--p-input-bg));
+  --p-radiobutton-filled-background:        var(--radiobutton-filled-background, var(--form-field-filled-background, var(--p-input-bg)));
   --p-radiobutton-border-color:             var(--radiobutton-border-color, var(--p-input-border-color));
   --p-radiobutton-hover-border-color:       var(--radiobutton-hover-border-color, var(--p-input-border-color));
   --p-radiobutton-focus-border-color:       var(--radiobutton-focus-border-color, var(--p-primary-color));
@@ -530,6 +531,38 @@ html[data-theme="light"] {
   --p-inputtext-lg-padding-x:             var(--inputtext-lg-padding-x, var(--form-field-lg-padding-x, 22px));
   --p-inputtext-lg-padding-y:             var(--inputtext-lg-padding-y, var(--form-field-lg-padding-y, 11px));
 
+  /* Textarea — PrimeNG 20 dt('textarea.*') */
+  --p-textarea-color:                      var(--textarea-color, var(--form-field-color, var(--p-surface-700)));
+  --p-textarea-background:                 var(--textarea-background, var(--form-field-background, var(--p-surface-0)));
+  --p-textarea-filled-background:          var(--textarea-filled-background, var(--form-field-filled-background, var(--p-input-bg)));
+  --p-textarea-filled-hover-background:    var(--textarea-filled-hover-background, var(--form-field-filled-hover-background, var(--p-input-bg)));
+  --p-textarea-filled-focus-background:    var(--textarea-filled-focus-background, var(--form-field-filled-focus-background, var(--p-input-bg)));
+  --p-textarea-border-color:               var(--textarea-border-color, var(--form-field-border-color, var(--p-surface-300)));
+  --p-textarea-hover-border-color:         var(--textarea-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+  --p-textarea-focus-border-color:         var(--textarea-focus-border-color, var(--form-field-focus-border-color, var(--p-primary-color)));
+  --p-textarea-focus-ring-width:           var(--textarea-focus-ring-width, var(--form-field-focus-ring-width, 0));
+  --p-textarea-focus-ring-style:           solid;
+  --p-textarea-focus-ring-color:           var(--textarea-focus-ring-color, var(--form-field-focus-ring-color, var(--p-primary-color)));
+  --p-textarea-focus-ring-offset:          var(--textarea-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+  --p-textarea-focus-ring-shadow:          var(--textarea-focus-ring-shadow, 0 0 0 0 transparent);
+  --p-textarea-padding-x:                  var(--textarea-padding-x, var(--form-field-padding-x, 12px));
+  --p-textarea-padding-y:                  var(--textarea-padding-y, var(--form-field-padding-y, 8px));
+  --p-textarea-font-size:                  var(--textarea-font-size, var(--form-field-font-size, var(--p-font-size)));
+  --p-textarea-border-radius:              var(--textarea-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+  --p-textarea-placeholder-color:          var(--textarea-placeholder-color, var(--form-field-placeholder-color, var(--p-surface-400)));
+  --p-textarea-invalid-border-color:       var(--textarea-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+  --p-textarea-invalid-placeholder-color:  var(--textarea-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+  --p-textarea-disabled-background:        var(--textarea-disabled-background, var(--form-field-disabled-background, var(--p-surface-200)));
+  --p-textarea-disabled-color:             var(--textarea-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+  --p-textarea-shadow:                     var(--textarea-shadow, 0 1px 2px rgba(18, 18, 23, 0.05));
+  --p-textarea-transition-duration:        var(--textarea-transition-duration, var(--form-field-transition-duration, 0.2s));
+  --p-textarea-sm-font-size:               var(--textarea-sm-font-size, var(--form-field-sm-font-size, 12px));
+  --p-textarea-sm-padding-x:               var(--textarea-sm-padding-x, var(--form-field-sm-padding-x, 10px));
+  --p-textarea-sm-padding-y:               var(--textarea-sm-padding-y, var(--form-field-sm-padding-y, 5px));
+  --p-textarea-lg-font-size:               var(--textarea-lg-font-size, var(--form-field-lg-font-size, 16px));
+  --p-textarea-lg-padding-x:               var(--textarea-lg-padding-x, var(--form-field-lg-padding-x, 22px));
+  --p-textarea-lg-padding-y:               var(--textarea-lg-padding-y, var(--form-field-lg-padding-y, 11px));
+
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Card (PrimeNG v20: card.*)
      ═══════════════════════════════════════════════════════════════════ */
@@ -592,6 +625,18 @@ html[data-theme="light"] {
   --p-chip-gap:               var(--chip-gap,       var(--dimension-spacing-x8,   6px));
   --p-chip-border-radius:     var(--chip-border-radius, var(--border-radius-pill,  999px));
   --p-chip-font-size:         var(--p-font-size);
+  --p-chip-background:        var(--chip-background);
+  --p-chip-color:             var(--chip-color);
+  --p-chip-icon-color:        var(--chip-icon-color);
+  --p-chip-icon-size:         var(--chip-icon-size);
+  --p-chip-image-width:       var(--chip-image-width);
+  --p-chip-image-height:      var(--chip-image-height);
+  --p-chip-remove-icon-color: var(--chip-remove-icon-color);
+  --p-chip-remove-icon-size:  var(--chip-remove-icon-size);
+  --p-chip-remove-icon-focus-ring-color:   var(--chip-remove-icon-focus-ring-color);
+  --p-chip-remove-icon-focus-ring-offset:  var(--chip-remove-icon-focus-ring-offset);
+  --p-chip-remove-icon-focus-ring-width:   var(--chip-remove-icon-focus-ring-width);
+  --p-chip-remove-icon-shadow:             var(--chip-remove-icon-shadow);
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Message
@@ -1122,6 +1167,7 @@ html[data-theme="dark"] {
     --p-radiobutton-width:                    var(--radiobutton-width, var(--dimension-spacing-x16, 16px));
     --p-radiobutton-height:                   var(--radiobutton-height, var(--dimension-spacing-x16, 16px));
     --p-radiobutton-background:               var(--radiobutton-background, var(--p-input-bg));
+    --p-radiobutton-filled-background:        var(--radiobutton-filled-background, var(--form-field-filled-background, var(--p-input-bg)));
     --p-radiobutton-border-color:             var(--radiobutton-border-color, var(--p-input-border-color));
     --p-radiobutton-hover-border-color:       var(--radiobutton-hover-border-color, var(--p-input-border-color));
     --p-radiobutton-focus-border-color:       var(--radiobutton-focus-border-color, var(--p-primary-color));
@@ -1438,6 +1484,36 @@ html[data-theme="dark"] {
     --p-inputtext-lg-font-size:             var(--inputtext-lg-font-size, var(--form-field-lg-font-size, 16px));
     --p-inputtext-lg-padding-x:             var(--inputtext-lg-padding-x, var(--form-field-lg-padding-x, 22px));
     --p-inputtext-lg-padding-y:             var(--inputtext-lg-padding-y, var(--form-field-lg-padding-y, 11px));
+    --p-textarea-color:                      var(--textarea-color, var(--form-field-color, var(--p-surface-100)));
+    --p-textarea-background:                 var(--textarea-background, var(--form-field-background, var(--p-surface-700)));
+    --p-textarea-filled-background:          var(--textarea-filled-background, var(--form-field-filled-background, var(--p-input-bg)));
+    --p-textarea-filled-hover-background:    var(--textarea-filled-hover-background, var(--form-field-filled-hover-background, var(--p-input-bg)));
+    --p-textarea-filled-focus-background:    var(--textarea-filled-focus-background, var(--form-field-filled-focus-background, var(--p-input-bg)));
+    --p-textarea-border-color:               var(--textarea-border-color, var(--form-field-border-color, var(--p-surface-600)));
+    --p-textarea-hover-border-color:         var(--textarea-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+    --p-textarea-focus-border-color:         var(--textarea-focus-border-color, var(--form-field-focus-border-color, var(--p-primary-color)));
+    --p-textarea-focus-ring-width:           var(--textarea-focus-ring-width, var(--form-field-focus-ring-width, 0));
+    --p-textarea-focus-ring-style:           solid;
+    --p-textarea-focus-ring-color:           var(--textarea-focus-ring-color, var(--form-field-focus-ring-color, var(--p-primary-color)));
+    --p-textarea-focus-ring-offset:          var(--textarea-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+    --p-textarea-focus-ring-shadow:          var(--textarea-focus-ring-shadow, 0 0 0 0 transparent);
+    --p-textarea-padding-x:                  var(--textarea-padding-x, var(--form-field-padding-x, 12px));
+    --p-textarea-padding-y:                  var(--textarea-padding-y, var(--form-field-padding-y, 8px));
+    --p-textarea-font-size:                  var(--textarea-font-size, var(--form-field-font-size, var(--p-font-size)));
+    --p-textarea-border-radius:              var(--textarea-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+    --p-textarea-placeholder-color:          var(--textarea-placeholder-color, var(--form-field-placeholder-color, var(--p-surface-500)));
+    --p-textarea-invalid-border-color:       var(--textarea-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+    --p-textarea-invalid-placeholder-color:  var(--textarea-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+    --p-textarea-disabled-background:        var(--textarea-disabled-background, var(--form-field-disabled-background, var(--p-surface-800)));
+    --p-textarea-disabled-color:             var(--textarea-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+    --p-textarea-shadow:                     var(--textarea-shadow, 0 1px 2px rgba(0, 0, 0, 0.2));
+    --p-textarea-transition-duration:        var(--textarea-transition-duration, var(--form-field-transition-duration, 0.2s));
+    --p-textarea-sm-font-size:               var(--textarea-sm-font-size, var(--form-field-sm-font-size, 12px));
+    --p-textarea-sm-padding-x:               var(--textarea-sm-padding-x, var(--form-field-sm-padding-x, 10px));
+    --p-textarea-sm-padding-y:               var(--textarea-sm-padding-y, var(--form-field-sm-padding-y, 5px));
+    --p-textarea-lg-font-size:               var(--textarea-lg-font-size, var(--form-field-lg-font-size, 16px));
+    --p-textarea-lg-padding-x:               var(--textarea-lg-padding-x, var(--form-field-lg-padding-x, 22px));
+    --p-textarea-lg-padding-y:               var(--textarea-lg-padding-y, var(--form-field-lg-padding-y, 11px));
     --p-card-background:          var(--card-background, var(--p-content-bg));
     --p-card-color:               var(--card-color, var(--p-content-color));
     --p-card-shadow:              var(--card-shadow, 0 1px 2px rgba(0, 0, 0, 0.35));
@@ -1483,6 +1559,18 @@ html[data-theme="dark"] {
     --p-chip-gap:               var(--chip-gap,       var(--dimension-spacing-x8,   6px));
     --p-chip-border-radius:     var(--chip-border-radius, var(--border-radius-pill,  999px));
     --p-chip-font-size:         var(--p-font-size);
+    --p-chip-background:        var(--chip-background);
+    --p-chip-color:             var(--chip-color);
+    --p-chip-icon-color:        var(--chip-icon-color);
+    --p-chip-icon-size:         var(--chip-icon-size);
+    --p-chip-image-width:       var(--chip-image-width);
+    --p-chip-image-height:      var(--chip-image-height);
+    --p-chip-remove-icon-color: var(--chip-remove-icon-color);
+    --p-chip-remove-icon-size:  var(--chip-remove-icon-size);
+    --p-chip-remove-icon-focus-ring-color:   var(--chip-remove-icon-focus-ring-color);
+    --p-chip-remove-icon-focus-ring-offset:  var(--chip-remove-icon-focus-ring-offset);
+    --p-chip-remove-icon-focus-ring-width:   var(--chip-remove-icon-focus-ring-width);
+    --p-chip-remove-icon-shadow:             var(--chip-remove-icon-shadow);
     --p-message-border-radius:              var(--message-border-radius, var(--content-border-radius, var(--p-border-radius)));
     --p-message-border-width:               var(--message-border-width, 1px);
     --p-message-content-padding: var(--message-content-padding, var(--message-content-padding-y, var(--dimension-scale-x6, 6px)) var(--message-content-padding-x, var(--dimension-scale-x10, 10px)));

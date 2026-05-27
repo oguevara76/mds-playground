@@ -1014,20 +1014,23 @@ app-playground-sidebar {
   gap: 16px 20px;
   align-items: flex-end;
 }
-/* FloatLabel: más aire entre leyenda (Vacío/Small), etiqueta flotante y helper en Form */
-#tab-form-catalog .catalog-input-state:has(.p-floatlabel) {
+/* FloatLabel / IftaLabel: helper debajo del campo (Form catalog) */
+.form-showcase .catalog-input-state:has(.p-floatlabel),
+.form-showcase .catalog-input-state:has(.p-iftalabel) {
   gap: 14px;
 }
-#tab-form-catalog .catalog-input-state .p-floatlabel {
+.form-showcase .catalog-input-state .p-floatlabel {
   margin-top: 6px;
 }
-#tab-form-catalog .catalog-input-interactive:has(.p-floatlabel) {
+.form-showcase .catalog-input-interactive:has(.p-floatlabel),
+.form-showcase .catalog-input-interactive:has(.p-iftalabel) {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
+  gap: 6px;
 }
-#tab-form-catalog .catalog-input-interactive:has(.p-floatlabel) .p-hint {
+.form-showcase .catalog-input-interactive:has(.p-floatlabel) > .p-hint,
+.form-showcase .catalog-input-interactive:has(.p-iftalabel) > .p-hint {
   margin-top: 0;
 }
 .catalog-input-state {

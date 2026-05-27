@@ -26,3 +26,19 @@ export const TAG_CATALOG_SEVERITIES: TagCatalogSeverityDemo[] = [
   { key: 'danger', label: 'Danger', primeSeverity: 'danger', icon: 'pi pi-times-circle' },
   { key: 'contrast', label: 'Contrast', primeSeverity: 'contrast', icon: 'pi pi-bolt' },
 ];
+
+/** Variante del chip en Interaction (popover). */
+export type ChipCatalogVariant = 'simple' | 'icon' | 'avatar';
+
+export const CHIP_CATALOG_VARIANT_SELECT_OPTIONS: { label: string; value: ChipCatalogVariant }[] = [
+  { label: 'Simple', value: 'simple' },
+  { label: 'Icon', value: 'icon' },
+  { label: 'Avatar', value: 'avatar' },
+];
+
+/** Avatar demo PrimeNG (prop `image`, no `icon`). */
+export const CHIP_CATALOG_DEMO_AVATAR_URL =
+  'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png';
+
+export const CHIP_CATALOG_DEMO_ICON = 'pi pi-bookmark';
+export const CHIP_CATALOG_INTERACTION_LABEL = 'Chip interactivo';

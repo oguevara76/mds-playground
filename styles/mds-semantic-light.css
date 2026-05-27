@@ -100,6 +100,9 @@ html[data-theme="light"] {
   --highlight-focus-color: var(--primary-800);
   --icon-size: var(--dimension-scale-x16);
   --list-gap: var(--dimension-scale-x2);
+  --list-padding: var(--dimension-scale-x4);
+  --list-option-padding: var(--dimension-scale-x6) var(--dimension-scale-x12);
+  --list-option-group-padding: var(--dimension-scale-x6) var(--dimension-scale-x12);
   --list-option-border-radius: var(--border-radius-sm);
   --list-option-color: var(--text-color);
   --list-option-focus-background: var(--surface-100);

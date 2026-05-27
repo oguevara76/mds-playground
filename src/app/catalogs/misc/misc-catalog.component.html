@@ -47,4 +47,102 @@
       </div>
     </section>
   </div>
+
+  <div class="catalog-preview chip-showcase">
+    <section class="preview-section preview-section--flush catalog-block-section">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Chip</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="input-interaction-row chip-interaction-row">
+            <div class="catalog-showcase-interactive tag-catalog-row chip-catalog-row">
+              @for (_ of [chipInteractionKey]; track chipInteractionKey) {
+                <p-chip
+                  [label]="chipInteractionLabel"
+                  [icon]="chipShowsIcon() ? chipDemoIcon : undefined"
+                  [image]="chipShowsAvatar() ? chipDemoAvatarUrl : undefined"
+                  [alt]="chipShowsAvatar() ? 'Avatar' : undefined"
+                  [removable]="chipIx.removable"
+                  (onRemove)="onChipRemove()"
+                />
+              }
+            </div>
+            <aside class="button-config-aside">
+              <p class="button-config-aside-title">CONFIGURAR</p>
+              <p class="button-config-aside-hint">
+                Puedes
+                <button
+                  type="button"
+                  class="button-config-link"
+                  (click)="chipConfigPopover.toggle($event)"
+                  aria-haspopup="dialog"
+                  [attr.aria-expanded]="chipConfigPopover.overlayVisible"
+                >
+                  configurar este componente
+                </button>
+                la variante (Simple, Icon o Avatar) y el cierre opcional.
+              </p>
+              <p-popover
+                #chipConfigPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                ariaLabel="Configurar Chip"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="chipVariantSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="chipIx.variant"
+                        (ngModelChange)="patchChipIx({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                    <span class="input-config-label">Icono de cierre</span>
+                    <p-toggleswitch
+                      [ngModel]="chipIx.removable"
+                      (ngModelChange)="patchChipIx({ removable: $event })"
+                    />
+                  </div>
+                </div>
+              </p-popover>
+            </aside>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Básico</p>
+          <div class="tag-catalog-row is-static-preview" aria-label="Chip, basic examples">
+            <p-chip label="Default" />
+            <p-chip label="Primary" styleClass="p-chip-primary" />
+            <p-chip label="Con icono" icon="pi pi-user" />
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Icon, Avatar &amp; Close</p>
+          <div class="tag-catalog-row is-static-preview" aria-label="Chip with icon, avatar and remove">
+            <p-chip label="Bookmark" [icon]="chipDemoIcon" [removable]="true" />
+            <p-chip
+              label="Amy Elsner"
+              [image]="chipDemoAvatarUrl"
+              alt="Avatar"
+              [removable]="true"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
