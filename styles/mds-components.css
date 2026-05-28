@@ -2,7 +2,7 @@
 /* Version: 1.0.0 */
 /* Description: Variables and Effect Styles for components. */
 /* Author: UX/UI Design System Team */
-/* Last Updated: 2026-05-22 */
+/* Last Updated: 2026-05-28 */
 
 @layer mds-core;
 
@@ -134,29 +134,31 @@ html:root {
   --badge-border-radius: var(--border-radius-sm);
   --badge-contrast-background: var(--surface-context-intense);
   --badge-contrast-color: var(--surface-context-minimal);
-  --badge-danger-background: var(--feedback-danger-medium);
-  --badge-danger-color: var(--surface-context-minimal);
+  --badge-danger-background: var(--surface-context-fixed-feedback-danger-minimal);
+  --badge-danger-color: var(--surface-context-fixed-feedback-danger-intense);
   --badge-dot-size: var(--dimension-scale-x8);
   --badge-font-size: 10px;
   --badge-font-weight: 700;
   --badge-height: var(--dimension-scale-x20);
-  --badge-info-background: var(--feedback-info-medium);
-  --badge-info-color: var(--surface-context-minimal);
+  --badge-info-background: var(--surface-context-fixed-feedback-info-minimal);
+  --badge-info-color: var(--surface-context-fixed-feedback-info-intense);
   --badge-lg-font-size: 12px;
   --badge-lg-height: var(--dimension-scale-x24);
   --badge-lg-min-width: var(--dimension-scale-x24);
   --badge-min-width: var(--dimension-scale-x20);
-  --badge-primary-background: var(--primary-color);
-  --badge-primary-color: var(--primary-contrast-color);
-  --badge-secondary-background: var(--surface-context-subtle);
-  --badge-secondary-color: var(--surface-context-contrast);
+  --badge-padding-x: 7px;
+  --badge-padding-y: 0px;
+  --badge-primary-background: var(--surface-context-fixed-feedback-info-minimal);
+  --badge-primary-color: var(--surface-context-fixed-feedback-info-intense);
+  --badge-secondary-background: var(--surface-context-fixed-base);
+  --badge-secondary-color: var(--surface-context-fixed-dark);
   --badge-sm-font-size: 8px;
   --badge-sm-height: var(--dimension-scale-x18);
   --badge-sm-min-width: var(--dimension-scale-x18);
-  --badge-success-background: var(--feedback-success-medium);
-  --badge-success-color: var(--surface-context-minimal);
-  --badge-warn-background: var(--feedback-warn-base);
-  --badge-warn-color: var(--surface-context-minimal);
+  --badge-success-background: var(--surface-context-fixed-feedback-success-minimal);
+  --badge-success-color: var(--surface-context-fixed-feedback-success-intense);
+  --badge-warn-background: var(--surface-context-fixed-feedback-warn-minimal);
+  --badge-warn-color: var(--surface-context-fixed-feedback-warn-intense);
   --badge-xl-font-size: 14px;
   --badge-xl-height: var(--dimension-scale-x28);
   --badge-xl-min-width: var(--dimension-scale-x28);
@@ -303,10 +305,10 @@ html:root {
   --button-success-hover-background: var(--feedback-success-strong);
   --button-success-hover-border-color: var(--feedback-success-strong);
   --button-success-hover-color: var(--primary-contrast-color);
-  --button-text-contrast-active-background: var(--surface-context-medium);
+  --button-text-contrast-active-background: var(--surface-context-base);
   --button-text-contrast-color: var(--surface-context-intense);
-  --button-text-contrast-hover-background: var(--surface-context-subtle);
-  --button-text-danger-active-background: var(--feedback-danger-subtle);
+  --button-text-contrast-hover-background: var(--surface-context-base);
+  --button-text-danger-active-background: var(--feedback-danger-minimal);
   --button-text-danger-color: var(--feedback-danger-medium);
   --button-text-danger-hover-background: var(--feedback-danger-minimal);
   --button-text-help-active-background: var(--feedback-help-subtle);
@@ -318,10 +320,10 @@ html:root {
   --button-text-plain-active-background: var(--surface-context-base);
   --button-text-plain-color: var(--primary-color);
   --button-text-plain-hover-background: var(--surface-context-subtle);
-  --button-text-primary-active-background: var(--surface-context-primary-medium);
+  --button-text-primary-active-background: var(--surface-context-primary-soft);
   --button-text-primary-color: var(--primary-color);
-  --button-text-primary-hover-background: var(--surface-context-primary-subtle);
-  --button-text-secondary-active-background: var(--surface-context-medium);
+  --button-text-primary-hover-background: var(--surface-context-primary-soft);
+  --button-text-secondary-active-background: var(--surface-context-subtle);
   --button-text-secondary-color: var(--surface-context-contrast);
   --button-text-secondary-hover-background: var(--surface-context-subtle);
   --button-text-success-active-background: var(--feedback-success-subtle);
@@ -701,7 +703,15 @@ html:root {
   --divider-border-color: var(--content-border-color);
   --divider-content-background: var(--content-background);
   --divider-content-color: var(--text-color);
+  --divider-horizontal-content-padding-x: var(--dimension-scale-x8);
+  --divider-horizontal-content-padding-y: var(--dimension-scale-x0);
+  --divider-horizontal-margin-x: var(--dimension-scale-x0);
+  --divider-horizontal-margin-y: var(--dimension-scale-x8);
   --divider-horizontal-padding: var(--dimension-scale-x0);
+  --divider-vertical-content-padding-x: var(--dimension-scale-x0);
+  --divider-vertical-content-padding-y: var(--dimension-scale-x8);
+  --divider-vertical-margin-x: var(--dimension-scale-x8);
+  --divider-vertical-margin-y: var(--dimension-scale-x0);
   --divider-vertical-padding: var(--dimension-scale-x0);
   --dock-background: rgba(255, 255, 255, 0.1);
   --dock-border-color: rgba(255, 255, 255, 0.2);
@@ -789,39 +799,15 @@ html:root {
   --floatlabel-focus-color: var(--form-field-float-label-focus-color);
   --floatlabel-in-active-top: var(--form-field-padding-y);
   --floatlabel-in-input-padding-bottom: var(--form-field-padding-y);
-  --iftalabel-input-min-height: 47px;
-  --iftalabel-input-min-height-sm: 45px;
-  --iftalabel-input-min-height-lg: 49px;
-  --iftalabel-input-padding-top: calc(
-    var(--iftalabel-input-min-height) - var(--form-field-padding-y) -
-      (var(--form-field-font-size) * var(--inputtext-line-height)) - 2px
-  );
-  --iftalabel-input-padding-top-sm: calc(
-    var(--iftalabel-input-min-height-sm) - var(--form-field-sm-padding-y) -
-      (var(--form-field-sm-font-size) * var(--inputtext-line-height)) - 2px
-  );
-  --iftalabel-input-padding-top-lg: calc(
-    var(--iftalabel-input-min-height-lg) - var(--form-field-lg-padding-y) -
-      (var(--form-field-lg-font-size) * var(--inputtext-line-height)) - 2px
-  );
-  --floatlabel-in-input-padding-top: var(--iftalabel-input-padding-top);
-  --floatlabel-in-input-padding-top-sm: var(--iftalabel-input-padding-top-sm);
-  --floatlabel-in-input-padding-top-lg: var(--iftalabel-input-padding-top-lg);
-  --floatlabel-in-input-min-height: var(--iftalabel-input-min-height);
-  --floatlabel-in-input-min-height-sm: var(--iftalabel-input-min-height-sm);
-  --floatlabel-in-input-min-height-lg: var(--iftalabel-input-min-height-lg);
-  --floatlabel-on-wrapper-padding-top: calc((var(--form-field-xs-font-size) / 2) + var(--dimension-scale-x2));
-  --floatlabel-over-wrapper-padding-top: calc(var(--form-field-xs-font-size) + var(--dimension-scale-x4));
+  --floatlabel-in-input-padding-top: 21px;
   --floatlabel-invalid-color: var(--form-field-float-label-invalid-color);
   --floatlabel-on-active-background: var(--form-field-background);
   --floatlabel-on-active-padding-x: 2px;
   --floatlabel-on-active-padding-y: 0px;
   --floatlabel-on-border-radius: var(--dimension-radius-x2);
-  --floatlabel-over-active-background: var(--form-field-background);
-  --floatlabel-over-active-top: calc(-1 * (var(--form-field-xs-font-size) + var(--dimension-scale-x4)));
-  --floatlabel-position-lg-x: var(--form-field-lg-padding-x);
-  --floatlabel-position-sm-x: var(--form-field-sm-padding-x);
-  --floatlabel-position-x: var(--form-field-padding-x);
+  --floatlabel-position-lg-x: var(--form-field-lg-position-x);
+  --floatlabel-position-sm-x: var(--form-field-sm-position-x);
+  --floatlabel-position-x: var(--form-field-position-x);
   --focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --form-field-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --form-field-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
@@ -893,11 +879,11 @@ html:root {
   --iftalabel-font-size: var(--form-field-xs-font-size);
   --iftalabel-font-weight: 400;
   --iftalabel-input-padding-bottom: var(--form-field-padding-y);
-  /* padding-top / min-height definidos arriba (Float In comparte tokens) */
+  --iftalabel-input-padding-top: var(--dimension-scale-x22);
   --iftalabel-invalid-color: var(--form-field-float-label-invalid-color);
-  --iftalabel-position-lg-x: var(--form-field-lg-padding-x);
-  --iftalabel-position-sm-x: var(--form-field-sm-padding-x);
-  --iftalabel-position-x: var(--form-field-padding-x);
+  --iftalabel-position-lg-x: var(--form-field-lg-position-x);
+  --iftalabel-position-sm-x: var(--form-field-sm-position-x);
+  --iftalabel-position-x: var(--form-field-position-x);
   --iftalabel-top: var(--form-field-padding-y);
   --image-action-border-radius: var(--border-radius-pill);
   --image-action-color: var(--surface-context-fixed-light);
@@ -958,10 +944,10 @@ html:root {
   --inputnumber-button-hover-color: var(--surface-context-strong);
   --inputnumber-button-vertical-padding: var(--form-field-padding-y);
   --inputnumber-button-width: var(--dimension-scale-x32);
-  --inputotp-inputotp-gap: var(--dimension-scale-x8);
-  --inputotp-inputotp-input-lg-width: var(--dimension-scale-x42);
-  --inputotp-inputotp-input-sm-width: var(--dimension-scale-x28);
-  --inputotp-inputotp-input-width: var(--dimension-scale-x32);
+  --inputotp-input-gap: var(--dimension-scale-x8);
+  --inputotp-input-lg-width: var(--dimension-scale-x42);
+  --inputotp-input-sm-width: var(--dimension-scale-x28);
+  --inputotp-input-width: var(--dimension-scale-x32);
   --inputtext-background: var(--form-field-background);
   --inputtext-border-color: var(--form-field-border-color);
   --inputtext-border-radius: var(--form-field-border-radius);
@@ -984,18 +970,8 @@ html:root {
   --inputtext-lg-font-size: var(--dimension-scale-x16);
   --inputtext-lg-padding-x: var(--form-field-lg-padding-x);
   --inputtext-lg-padding-y: var(--form-field-lg-padding-y);
-  --inputtext-line-height: 1.25;
-  --inputtext-min-height: calc(
-    (var(--form-field-padding-y) * 2) + (var(--form-field-font-size) * var(--inputtext-line-height)) + 2px
-  );
-  --inputtext-in-min-height: var(--iftalabel-input-min-height);
-  --inputtext-in-min-height-sm: var(--iftalabel-input-min-height-sm);
-  --inputtext-in-min-height-lg: var(--iftalabel-input-min-height-lg);
   --inputtext-padding-x: var(--form-field-padding-x);
   --inputtext-padding-y: var(--form-field-padding-y);
-  --inputtext-with-icon-padding-start: calc((var(--form-field-padding-x) * 2) + var(--icon-size));
-  --inputtext-with-icon-padding-start-sm: calc((var(--form-field-sm-padding-x) * 2) + var(--icon-size));
-  --inputtext-with-icon-padding-start-lg: calc((var(--form-field-lg-padding-x) * 2) + var(--icon-size));
   --inputtext-placeholder-color: var(--form-field-placeholder-color);
   --inputtext-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
   --inputtext-sm-font-size: var(--dimension-scale-x12);
@@ -1145,9 +1121,6 @@ html:root {
   --message-content-padding-y: var(--dimension-scale-x6);
   --message-content-sm-padding-x: var(--dimension-scale-x8);
   --message-content-sm-padding-y: var(--dimension-scale-x4);
-  --message-content-padding: var(--message-content-padding-y) var(--message-content-padding-x);
-  --message-content-sm-padding: var(--message-content-sm-padding-y) var(--message-content-sm-padding-x);
-  --message-content-lg-padding: var(--message-content-lg-padding-y) var(--message-content-lg-padding-x);
   --message-contrast-background: var(--surface-context-intense);
   --message-contrast-border-color: var(--surface-context-intense);
   --message-contrast-close-button-focus-ring-color: var(--surface-context-minimal);
@@ -1419,14 +1392,15 @@ html:root {
   --radiobutton-sm-height: var(--dimension-scale-x14);
   --radiobutton-sm-width: var(--dimension-scale-x14);
   --radiobutton-width: var(--dimension-scale-x16);
-  --rating-active-color: var(--primary-color);
-  --rating-color: var(--text-muted-color);
   --rating-focus-ring-color: var(--focus-ring-color);
   --rating-focus-ring-offset: var(--focus-ring-offset);
   --rating-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --rating-focus-ring-width: var(--focus-ring-width);
   --rating-gap: var(--dimension-scale-x4);
-  --rating-hover-color: var(--primary-color);
+  --rating-icon-active-color: var(--primary-color);
+  --rating-icon-color: var(--text-muted-color);
+  --rating-icon-disabled-color: var(--form-field-disabled-color);
+  --rating-icon-hover-color: var(--primary-color);
   --rating-icon-size: var(--dimension-scale-x14);
   --scrollpanel-bar-background: var(--surface-context-subtle);
   --scrollpanel-bar-border-radius: var(--border-radius-sm);
@@ -1534,7 +1508,7 @@ html:root {
   --stepper-step-header-focus-ring-width: var(--focus-ring-width);
   --stepper-step-header-gap: var(--dimension-scale-x8);
   --stepper-step-header-padding: var(--dimension-scale-x0);
-  --stepper-step-number-active-background: var(--surface-context-fixed-primary);
+  --stepper-step-number-active-background: var(--surface-context-fixed-primary-default);
   --stepper-step-number-active-border-color: var(--content-border-color);
   --stepper-step-number-active-color: var(--surface-context-fixed-light);
   --stepper-step-number-background: var(--content-background);
@@ -1576,7 +1550,6 @@ html:root {
   --tabs-tab-focus-ring-width: var(--focus-ring-width);
   --tabs-tab-font-weight: 600;
   --tabs-tab-gap: var(--dimension-scale-x8);
-  --tabs-tab-icon-size: var(--icon-size);
   --tabs-tab-hover-background: rgba(0, 0, 0, 0);
   --tabs-tab-hover-border-color: var(--content-border-color);
   --tabs-tab-hover-color: var(--text-color);
@@ -1599,27 +1572,26 @@ html:root {
   --tag-border-radius: var(--content-border-radius);
   --tag-contrast-background: var(--surface-context-intense);
   --tag-contrast-color: var(--surface-context-minimal);
-  --tag-danger-background: var(--feedback-danger-medium);
-  --tag-danger-color: var(--feedback-danger-minimal);
+  --tag-danger-background: var(--surface-context-fixed-feedback-danger-minimal);
+  --tag-danger-color: var(--surface-context-fixed-feedback-danger-intense);
   --tag-figma-container-background: rgba(0, 0, 0, 0);
   --tag-font-size: 14px;
   --tag-font-weight: 700;
   --tag-gap: var(--dimension-scale-x4);
   --tag-icon-size: var(--dimension-scale-x12);
-  --tag-info-background: var(--feedback-info-medium);
-  --tag-info-color: var(--feedback-info-minimal);
+  --tag-info-background: var(--surface-context-fixed-feedback-info-minimal);
+  --tag-info-color: var(--surface-context-fixed-feedback-info-intense);
   --tag-padding-x: var(--dimension-scale-x8);
   --tag-padding-y: var(--dimension-scale-x4);
-  --tag-padding: var(--tag-padding-y) var(--tag-padding-x);
-  --tag-primary-background: var(--surface-context-fixed-primary);
-  --tag-primary-color: var(--surface-context-fixed-light);
+  --tag-primary-background: var(--surface-context-fixed-feedback-info-minimal);
+  --tag-primary-color: var(--surface-context-fixed-primary-strong);
   --tag-rounded-border-radius: var(--border-radius-xl);
-  --tag-secondary-background: var(--surface-context-strong);
-  --tag-secondary-color: var(--surface-context-minimal);
-  --tag-success-background: var(--feedback-success-medium);
-  --tag-success-color: var(--feedback-success-minimal);
-  --tag-warn-background: var(--feedback-warn-medium);
-  --tag-warn-color: var(--feedback-warn-minimal);
+  --tag-secondary-background: var(--surface-context-fixed-base);
+  --tag-secondary-color: var(--surface-context-fixed-dark);
+  --tag-success-background: var(--surface-context-fixed-feedback-success-minimal);
+  --tag-success-color: var(--surface-context-fixed-feedback-success-intense);
+  --tag-warn-background: var(--surface-context-fixed-feedback-warn-minimal);
+  --tag-warn-color: var(--surface-context-fixed-feedback-warn-intense);
   --terminal-background: var(--form-field-background);
   --terminal-border-color: var(--form-field-border-color);
   --terminal-border-radius: var(--form-field-border-radius);
@@ -1627,16 +1599,14 @@ html:root {
   --terminal-height: 252px;
   --terminal-prompt-gap: var(--dimension-scale-x4);
   --textarea-background: var(--form-field-background);
-  --textarea-font-size: var(--form-field-font-size);
   --textarea-border-color: var(--form-field-border-color);
   --textarea-border-radius: var(--form-field-border-radius);
   --textarea-color: var(--form-field-color);
   --textarea-disabled-background: var(--form-field-disabled-background);
   --textarea-disabled-color: var(--form-field-disabled-color);
+  --textarea-filled-Hover-background: var(--form-field-filled-hover-background);
   --textarea-filled-background: var(--form-field-filled-background);
-  --textarea-filled-hover-background: var(--form-field-filled-hover-background);
   --textarea-filled-focus-background: var(--form-field-filled-focus-background);
-  --textarea-transition-duration: var(--form-field-transition-duration, 0.2s);
   --textarea-focus-border-color: var(--form-field-focus-border-color);
   --textarea-focus-ring-color: var(--form-field-focus-ring-color);
   --textarea-focus-ring-offset: var(--form-field-focus-ring-offset);
@@ -1644,7 +1614,7 @@ html:root {
   --textarea-focus-ring-width: var(--form-field-focus-ring-width);
   --textarea-hover-border-color: var(--form-field-hover-border-color);
   --textarea-invalid-border-color: var(--form-field-invalid-border-color);
-  --textarea-invalid-placeholder-color: var(--form-field-invalid-border-color);
+  --textarea-invalid-placeholder-color: var(--form-field-invalid-placeholder-color);
   --textarea-lg-font-size: var(--form-field-lg-font-size);
   --textarea-lg-padding-x: var(--form-field-lg-padding-x);
   --textarea-lg-padding-y: var(--form-field-lg-padding-y);
@@ -1755,7 +1725,7 @@ html:root {
   --togglebutton-checked-border-color: var(--surface-context-subtle);
   --togglebutton-checked-color: var(--surface-context-fixed-light);
   --togglebutton-color: var(--surface-context-strong);
-  --togglebutton-content-checked-background: var(--surface-context-fixed-primary);
+  --togglebutton-content-checked-background: var(--surface-context-fixed-primary-default);
   --togglebutton-content-left: var(--dimension-scale-x4);
   --togglebutton-content-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.02);
   --togglebutton-content-top: var(--dimension-scale-x4);
@@ -1795,8 +1765,8 @@ html:root {
   --togglebutton-sm-font-size: var(--form-field-sm-font-size);
   --togglebutton-sm-padding-x: var(--dimension-scale-x8);
   --togglebutton-sm-padding-y: var(--dimension-scale-x6);
-  --toggleswitch-background: var(--surface-context-emphasized);
-  --toggleswitch-border-color: rgba(0, 0, 0, 0);
+  --toggleswitch-background: var(--surface-context-base);
+  --toggleswitch-border-color: var(--surface-context-strong);
   --toggleswitch-border-radius: var(--border-radius-pill);
   --toggleswitch-border-width: 1px;
   --toggleswitch-checked-background: var(--primary-color);
@@ -1809,21 +1779,21 @@ html:root {
   --toggleswitch-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --toggleswitch-focus-ring-width: var(--focus-ring-width);
   --toggleswitch-gap: var(--dimension-scale-x6);
-  --toggleswitch-handle-background: var(--neutral-white);
+  --toggleswitch-handle-background: var(--surface-context-strong);
   --toggleswitch-handle-border-radius: var(--border-radius-lg);
-  --toggleswitch-handle-checked-background: var(--neutral-white);
+  --toggleswitch-handle-checked-background: var(--surface-context-minimal);
   --toggleswitch-handle-checked-color: var(--primary-color);
-  --toggleswitch-handle-checked-hover-background: var(--neutral-white);
+  --toggleswitch-handle-checked-hover-background: var(--surface-context-minimal);
   --toggleswitch-handle-checked-hover-color: var(--primary-hover-color);
   --toggleswitch-handle-color: var(--text-muted-color);
-  --toggleswitch-handle-disabled-background: var(--surface-context-strong);
-  --toggleswitch-handle-hover-background: var(--neutral-white);
+  --toggleswitch-handle-disabled-background: var(--surface-context-emphasized);
+  --toggleswitch-handle-hover-background: var(--toggleswitch-handle-background);
   --toggleswitch-handle-hover-color: var(--text-color);
   --toggleswitch-handle-size: var(--dimension-scale-x16);
   --toggleswitch-height: var(--dimension-scale-x24);
-  --toggleswitch-hover-background: var(--surface-context-strong);
-  --toggleswitch-hover-border-color: rgba(0, 0, 0, 0);
-  --toggleswitch-invalid-border-color: var(--feedback-danger-base);
+  --toggleswitch-hover-background: var(--surface-context-medium);
+  --toggleswitch-hover-border-color: var(--surface-context-strong);
+  --toggleswitch-invalid-border-color: var(--feedback-danger-medium);
   --toggleswitch-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
   --toggleswitch-width: var(--dimension-scale-x40);
   --toolbar-background: var(--content-background);
@@ -1832,14 +1802,13 @@ html:root {
   --toolbar-color: var(--content-color);
   --toolbar-gap: var(--dimension-scale-x8);
   --toolbar-padding: var(--dimension-scale-x12);
-  --tooltip-background: var(--surface-context-fixed-dark);
+  --tooltip-background: var(--surface-context-contrast);
   --tooltip-border-radius: var(--overlay-popover-border-radius);
-  --tooltip-color: var(--surface-context-fixed-light);
+  --tooltip-color: var(--surface-context-minimal);
   --tooltip-gutter: var(--dimension-scale-x4);
   --tooltip-max-width: var(--dimension-scale-x192);
   --tooltip-padding-x: var(--dimension-scale-x8);
   --tooltip-padding-y: var(--dimension-scale-x8);
-  --tooltip-padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
   --tooltip-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);
   --tree-background: var(--content-background);
   --tree-color: var(--content-color);
@@ -1986,4 +1955,5 @@ html:root {
   --virtualscroller-loader-icon-size: 28px;
   --virtualscroller-loader-mask-background: var(--content-background);
   --virtualscroller-loader-mask-color: var(--text-muted-color);
+  --width: var(--dimension-scale-x32);
 }

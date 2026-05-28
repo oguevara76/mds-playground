@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Badge } from 'primeng/badge';
+import { Button } from 'primeng/button';
 import { Chip } from 'primeng/chip';
 import { Divider } from 'primeng/divider';
+import { OverlayBadge } from 'primeng/overlaybadge';
 import { Popover } from 'primeng/popover';
 import { Select } from 'primeng/select';
 import { Tag } from 'primeng/tag';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import {
+  BADGE_CATALOG_SIZE_OPTIONS,
   CHIP_CATALOG_DEMO_AVATAR_URL,
   CHIP_CATALOG_DEMO_ICON,
   CHIP_CATALOG_INTERACTION_LABEL,
@@ -22,16 +26,33 @@ interface ChipInteractionState {
   removable: boolean;
 }
 
+interface BadgeSeverityOption {
+  label: string;
+  severity?: 'secondary' | 'success' | 'info' | 'warn' | 'danger' | 'contrast';
+  styleClass?: string;
+}
+
 @Component({
   selector: 'app-misc-catalog',
   standalone: true,
-  imports: [Tag, Chip, FormsModule, Popover, Select, ToggleSwitch, Divider],
+  imports: [Tag, Chip, Badge, OverlayBadge, Button, FormsModule, Popover, Select, ToggleSwitch, Divider],
   templateUrl: './misc-catalog.component.html',
   styleUrl: './misc-catalog.component.css',
   host: { class: 'misc-catalog-page' },
 })
 export class MiscCatalogComponent {
   readonly severities = TAG_CATALOG_SEVERITIES;
+  readonly badgeSizeOptions = BADGE_CATALOG_SIZE_OPTIONS;
+  readonly badgeSeverityOptions: ReadonlyArray<BadgeSeverityOption> = [
+    { label: 'Primary', styleClass: 'p-badge-primary' },
+    { label: 'Secondary', severity: 'secondary' },
+    { label: 'Success', severity: 'success' },
+    { label: 'Info', severity: 'info' },
+    { label: 'Warn', severity: 'warn' },
+    { label: 'Danger', severity: 'danger' },
+    { label: 'Contrast', severity: 'contrast' },
+  ];
+  readonly badgeDemoValue = 8;
   readonly chipVariantSelectOptions = CHIP_CATALOG_VARIANT_SELECT_OPTIONS;
   readonly chipDemoAvatarUrl = CHIP_CATALOG_DEMO_AVATAR_URL;
   readonly chipDemoIcon = CHIP_CATALOG_DEMO_ICON;

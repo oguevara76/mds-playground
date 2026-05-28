@@ -322,3 +322,32 @@
   color: var(--p-surface-400);
   font-weight: 500;
 }
+
+/* Message parity global (PrimeNG 20): usa tokens MDS x/y por tamaño. */
+.messages-showcase .p-message.p-component,
+.messages-showcase [data-pc-name='message'].p-component {
+  padding-block: var(--message-content-padding-y, 6px) !important;
+  padding-inline: var(--message-content-padding-x, 10px) !important;
+  gap: var(--message-content-gap, 8px) !important;
+  box-sizing: border-box;
+}
+
+.messages-showcase .p-message-sm.p-component {
+  padding-block: var(--message-content-sm-padding-y, 4px) !important;
+  padding-inline: var(--message-content-sm-padding-x, 8px) !important;
+}
+
+.messages-showcase .p-message-lg.p-component {
+  padding-block: var(--message-content-lg-padding-y, 8px) !important;
+  padding-inline: var(--message-content-lg-padding-x, 12px) !important;
+}
+
+.messages-showcase .p-message-simple.p-component {
+  padding: var(--p-message-simple-content-padding, 0px) !important;
+}
+
+.messages-showcase .p-message-content,
+.messages-showcase [data-pc-name='message'] > [data-pc-section='content'] {
+  padding: 0 !important;
+  gap: var(--message-content-gap, 8px) !important;
+}

@@ -27,6 +27,30 @@ export const TAG_CATALOG_SEVERITIES: TagCatalogSeverityDemo[] = [
   { key: 'contrast', label: 'Contrast', primeSeverity: 'contrast', icon: 'pi pi-bolt' },
 ];
 
+export interface BadgeCatalogSeverityDemo {
+  key: TagCatalogSeverityKey;
+  label: string;
+  primeSeverity?: TagCatalogPrimeSeverity;
+}
+
+export const BADGE_CATALOG_SEVERITIES: BadgeCatalogSeverityDemo[] = [
+  { key: 'primary', label: 'Primary' },
+  { key: 'secondary', label: 'Secondary', primeSeverity: 'secondary' },
+  { key: 'success', label: 'Success', primeSeverity: 'success' },
+  { key: 'info', label: 'Info', primeSeverity: 'info' },
+  { key: 'warn', label: 'Warn', primeSeverity: 'warn' },
+  { key: 'danger', label: 'Danger', primeSeverity: 'danger' },
+  { key: 'contrast', label: 'Contrast', primeSeverity: 'contrast' },
+];
+
+export type BadgeCatalogSize = 'small' | 'large' | 'xlarge';
+
+export const BADGE_CATALOG_SIZE_OPTIONS: { label: string; value: BadgeCatalogSize }[] = [
+  { label: 'Small', value: 'small' },
+  { label: 'Large', value: 'large' },
+  { label: 'XLarge', value: 'xlarge' },
+];
+
 /** Variante del chip en Interaction (popover). */
 export type ChipCatalogVariant = 'simple' | 'icon' | 'avatar';
 

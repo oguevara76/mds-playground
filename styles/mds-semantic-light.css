@@ -1,8 +1,8 @@
-/* Semantics - Theme: ctr--tol--light */
+/* Semantics - Theme: ctr--its--light */
 /* Version: 1.0.0 */
 /* Description: Base light theme. */
 /* Author: UX/UI Design System Team */
-/* Last Updated: 2026-05-22 */
+/* Last Updated: 2026-05-28 */
 
 @layer mds-core;
 
@@ -24,30 +24,35 @@ html[data-theme="light"] {
   --disabled-opacity: 0.6;
   --feedback-danger-base: var(--red-200);
   --feedback-danger-contrast: var(--red-800);
+  --feedback-danger-intense: var(--red-900);
   --feedback-danger-medium: var(--red-600);
   --feedback-danger-minimal: var(--red-50);
   --feedback-danger-strong: var(--red-700);
   --feedback-danger-subtle: var(--red-100);
   --feedback-help-base: var(--purple-200);
   --feedback-help-contrast: var(--purple-800);
+  --feedback-help-intense: var(--purple-900);
   --feedback-help-medium: var(--purple-600);
   --feedback-help-minimal: var(--purple-50);
   --feedback-help-strong: var(--purple-700);
   --feedback-help-subtle: var(--purple-100);
   --feedback-info-base: var(--blue-200);
   --feedback-info-contrast: var(--blue-800);
+  --feedback-info-intense: var(--blue-900);
   --feedback-info-medium: var(--blue-600);
   --feedback-info-minimal: var(--blue-50);
   --feedback-info-strong: var(--blue-700);
   --feedback-info-subtle: var(--blue-100);
   --feedback-success-base: var(--green-200);
   --feedback-success-contrast: var(--green-800);
+  --feedback-success-intense: var(--green-900);
   --feedback-success-medium: var(--green-600);
   --feedback-success-minimal: var(--green-50);
   --feedback-success-strong: var(--green-700);
   --feedback-success-subtle: var(--green-100);
   --feedback-warn-base: var(--yellow-200);
   --feedback-warn-contrast: var(--yellow-800);
+  --feedback-warn-intense: var(--yellow-900);
   --feedback-warn-medium: var(--yellow-600);
   --feedback-warn-minimal: var(--yellow-50);
   --feedback-warn-strong: var(--yellow-700);
@@ -82,15 +87,15 @@ html[data-theme="light"] {
   --form-field-lg-gap-space: var(--dimension-scale-x10);
   --form-field-lg-padding-x: var(--dimension-scale-x14);
   --form-field-lg-padding-y: var(--dimension-scale-x12);
-  --form-field-lg-position-x: var(--dimension-scale-x16);
-  --form-field-padding-x: var(--dimension-scale-x10);
+  --form-field-lg-position-x: var(--dimension-scale-x14);
+  --form-field-padding-x: var(--dimension-scale-x12);
   --form-field-padding-y: var(--dimension-scale-x8);
   --form-field-placeholder-color: var(--surface-500);
-  --form-field-position-x: var(--dimension-scale-x14);
+  --form-field-position-x: var(--dimension-scale-x12);
   --form-field-sm-font-size: var(--dimension-scale-x12);
   --form-field-sm-gap-scale: var(--dimension-scale-x6);
   --form-field-sm-padding-x: var(--dimension-scale-x10);
-  --form-field-sm-padding-y: var(--dimension-scale-x4);
+  --form-field-sm-padding-y: var(--dimension-scale-x6);
   --form-field-sm-position-x: var(--dimension-scale-x10);
   --form-field-sm-position-y: var(--dimension-scale-x4);
   --form-field-xs-font-size: var(--dimension-scale-x10);
@@ -100,9 +105,6 @@ html[data-theme="light"] {
   --highlight-focus-color: var(--primary-800);
   --icon-size: var(--dimension-scale-x16);
   --list-gap: var(--dimension-scale-x2);
-  --list-padding: var(--dimension-scale-x4);
-  --list-option-padding: var(--dimension-scale-x6) var(--dimension-scale-x12);
-  --list-option-group-padding: var(--dimension-scale-x6) var(--dimension-scale-x12);
   --list-option-border-radius: var(--border-radius-sm);
   --list-option-color: var(--text-color);
   --list-option-focus-background: var(--surface-100);
@@ -184,9 +186,20 @@ html[data-theme="light"] {
   --surface-context-base: var(--surface-200);
   --surface-context-contrast: var(--surface-700);
   --surface-context-emphasized: var(--surface-400);
+  --surface-context-fixed-base: var(--surface-200);
   --surface-context-fixed-dark: var(--surface-700);
+  --surface-context-fixed-feedback-danger-intense: var(--red-900);
+  --surface-context-fixed-feedback-danger-minimal: var(--red-100);
+  --surface-context-fixed-feedback-info-intense: var(--blue-800);
+  --surface-context-fixed-feedback-info-minimal: var(--blue-100);
+  --surface-context-fixed-feedback-success-intense: var(--green-900);
+  --surface-context-fixed-feedback-success-minimal: var(--green-100);
+  --surface-context-fixed-feedback-warn-intense: var(--yellow-900);
+  --surface-context-fixed-feedback-warn-minimal: var(--yellow-100);
   --surface-context-fixed-light: var(--surface-50);
-  --surface-context-fixed-primary: var(--teal-600);
+  --surface-context-fixed-primary-default: var(--teal-600);
+  --surface-context-fixed-primary-strong: var(--teal-800);
+  --surface-context-fixed-primary-subtle: var(--teal-100);
   --surface-context-intense: var(--surface-900);
   --surface-context-medium: var(--surface-300);
   --surface-context-minimal: var(--surface-0);

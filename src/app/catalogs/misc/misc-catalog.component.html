@@ -122,7 +122,7 @@
         </div>
 
         <div class="btn-section">
-          <p class="btn-section-title">Básico</p>
+          <p class="btn-section-title">Basic</p>
           <div class="tag-catalog-row is-static-preview" aria-label="Chip, basic examples">
             <p-chip label="Default" />
             <p-chip label="Primary" styleClass="p-chip-primary" />
@@ -131,7 +131,7 @@
         </div>
 
         <div class="btn-section">
-          <p class="btn-section-title">Icon, Avatar &amp; Close</p>
+          <p class="btn-section-title">Icon, Avatar &amp; Remove</p>
           <div class="tag-catalog-row is-static-preview" aria-label="Chip with icon, avatar and remove">
             <p-chip label="Bookmark" [icon]="chipDemoIcon" [removable]="true" />
             <p-chip
@@ -140,6 +140,62 @@
               alt="Avatar"
               [removable]="true"
             />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="catalog-preview badge-showcase">
+    <section class="preview-section preview-section--flush catalog-block-section">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Badge</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section">
+          <p class="btn-section-title">Severity</p>
+          <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge, severity variants">
+            @for (option of badgeSeverityOptions; track option.label) {
+              <p-badge [severity]="option.severity" [styleClass]="option.styleClass" [value]="badgeDemoValue" />
+            }
+          </div>
+          <div
+            class="tag-catalog-row badge-catalog-row badge-catalog-row-rect is-static-preview"
+            aria-label="Badge rectangular, severity variants"
+          >
+            @for (option of badgeSeverityOptions; track option.label) {
+              <p-badge [severity]="option.severity" [styleClass]="option.styleClass" [value]="badgeDemoValue" />
+            }
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Size</p>
+          <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge, size variants">
+            @for (sizeOpt of badgeSizeOptions; track sizeOpt.value) {
+              <p-badge [value]="badgeDemoValue" [badgeSize]="sizeOpt.value" />
+            }
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Overlay (p-overlayBadge)</p>
+          <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge overlay variants">
+            <p-overlayBadge [value]="2" badgeSize="small">
+              <i class="pi pi-bell badge-overlay-target" aria-hidden="true"></i>
+            </p-overlayBadge>
+            <p-overlayBadge [value]="4" severity="danger" badgeSize="small">
+              <i class="pi pi-envelope badge-overlay-target" aria-hidden="true"></i>
+            </p-overlayBadge>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Button Badge</p>
+          <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge on buttons">
+            <p-button label="Notifications" badge="2" />
+            <p-button label="Inbox" icon="pi pi-envelope" badge="2" badgeSeverity="contrast" />
           </div>
         </div>
       </div>

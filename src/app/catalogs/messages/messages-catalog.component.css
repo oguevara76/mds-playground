@@ -11,30 +11,37 @@
   padding-top: 24px;
 }
 
-/* Paridad legacy (components.css no está en angular.json) + tokens MDS vía --p-message-* */
-:host ::ng-deep .messages-showcase .p-message.p-component {
+/* Paridad Message: usa tokens MDS x/y por tamaño (sm, normal, lg). */
+:host ::ng-deep .messages-showcase .p-message.p-component.mds-message-fix,
+:host ::ng-deep .messages-showcase [data-pc-name='message'].mds-message-fix {
   display: inline-flex;
   vertical-align: middle;
   width: fit-content;
   max-width: 100%;
+  padding-block: var(--message-content-padding-y, 6px) !important;
+  padding-inline: var(--message-content-padding-x, 10px) !important;
+  gap: var(--message-content-gap, 8px) !important;
 }
 
-:host ::ng-deep .messages-showcase .p-message-content {
-  padding: var(--p-message-content-padding);
-  gap: var(--p-message-content-gap);
+:host ::ng-deep .messages-showcase .mds-message-fix .p-message-content,
+:host ::ng-deep .messages-showcase .mds-message-fix > [data-pc-section='content'] {
+  padding: 0 !important;
+  gap: var(--message-content-gap, 8px) !important;
   min-width: 0;
 }
 
-:host ::ng-deep .messages-showcase .p-message-sm .p-message-content {
-  padding: var(--p-message-content-padding-sm);
+:host ::ng-deep .messages-showcase .mds-message-fix.p-message-sm {
+  padding-block: var(--message-content-sm-padding-y, 4px) !important;
+  padding-inline: var(--message-content-sm-padding-x, 8px) !important;
 }
 
-:host ::ng-deep .messages-showcase .p-message-lg .p-message-content {
-  padding: var(--p-message-content-padding-lg);
+:host ::ng-deep .messages-showcase .mds-message-fix.p-message-lg {
+  padding-block: var(--message-content-lg-padding-y, 8px) !important;
+  padding-inline: var(--message-content-lg-padding-x, 12px) !important;
 }
 
-:host ::ng-deep .messages-showcase .p-message-simple .p-message-content {
-  padding: var(--p-message-simple-content-padding);
+:host ::ng-deep .messages-showcase .mds-message-fix.p-message-simple {
+  padding: var(--p-message-simple-content-padding) !important;
 }
 
 :host ::ng-deep .messages-showcase .p-message-text {

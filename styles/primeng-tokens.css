@@ -616,6 +616,8 @@ html[data-theme="light"] {
   --p-badge-border-radius:    var(--badge-border-radius, var(--border-radius-sm, var(--p-border-radius-sm)));
   --p-badge-font-size:        var(--badge-font-size, 12px);
   --p-badge-font-weight:      var(--badge-font-weight, 600);
+  --p-overlaybadge-outline-width: var(--overlaybadge-outline-width, 0);
+  --p-overlaybadge-outline-color: var(--overlaybadge-outline-color, transparent);
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Chip
@@ -1554,6 +1556,8 @@ html[data-theme="dark"] {
     --p-badge-border-radius:    var(--badge-border-radius, var(--border-radius-sm, var(--p-border-radius-sm)));
     --p-badge-font-size:        var(--badge-font-size, 12px);
     --p-badge-font-weight:      var(--badge-font-weight, 600);
+    --p-overlaybadge-outline-width: var(--overlaybadge-outline-width, 0);
+    --p-overlaybadge-outline-color: var(--overlaybadge-outline-color, transparent);
     --p-chip-padding-x:         var(--chip-padding-x, var(--dimension-spacing-x12, 12px));
     --p-chip-padding-y:         var(--chip-padding-y, var(--dimension-spacing-x6,   4px));
     --p-chip-gap:               var(--chip-gap,       var(--dimension-spacing-x8,   6px));

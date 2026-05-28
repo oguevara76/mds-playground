@@ -36,6 +36,10 @@
   align-items: flex-start;
 }
 
+:host.misc-catalog-page .badge-interaction-section {
+  margin-top: 24px;
+}
+
 :host.misc-catalog-page .chip-catalog-row {
   min-height: 40px;
 }
@@ -64,4 +68,27 @@
 :host.misc-catalog-page ::ng-deep .p-chip-remove-icon {
   color: var(--chip-remove-icon-color, var(--p-chip-remove-icon-color));
   font-size: var(--chip-remove-icon-size, var(--p-chip-remove-icon-size));
+}
+
+:host.misc-catalog-page .badge-catalog-row {
+  min-height: 28px;
+}
+
+:host.misc-catalog-page .badge-catalog-row-rect {
+  margin-top: 10px;
+}
+
+:host.misc-catalog-page ::ng-deep .badge-catalog-row-rect .p-badge {
+  border-radius: var(--border-radius-sm, 4px) !important;
+  min-width: var(--badge-height, 20px) !important;
+  width: var(--badge-height, 20px) !important;
+}
+
+:host.misc-catalog-page .badge-showcase .catalog-block-head {
+  margin-bottom: 20px;
+}
+
+:host.misc-catalog-page .badge-overlay-target {
+  font-size: 1.25rem;
+  color: var(--surface-context-contrast, var(--p-text-color));
 }
