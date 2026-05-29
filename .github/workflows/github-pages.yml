@@ -49,6 +49,7 @@ jobs:
         run: |
           mkdir -p _site
           cp -r dist/playground/browser/* _site/
+          cp _site/index.html _site/404.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
