@@ -4,6 +4,7 @@
       class="catalog-preview form-showcase"
       [class.inputtext-showcase]="isInputTextBlock(block)"
       [class.inputotp-showcase]="isInputOtpBlock(block)"
+      [class.rating-showcase]="isRatingBlock(block)"
       [class.textarea-showcase]="isTextareaBlock(block)"
     >
       <section
@@ -768,6 +769,75 @@
                 </aside>
               </div>
             }
+            @case ('rating') {
+              <div class="input-interaction-row catalog-interaction-row--center">
+                <div class="catalog-showcase-interactive">
+                  <p-rating
+                    [stars]="5"
+                    [style]="ratingHostVars()"
+                    [ngModel]="ratingIx().value"
+                    (ngModelChange)="patchRating({ value: $event })"
+                    [disabled]="ratingIx().disabled"
+                    [readonly]="ratingIx().readonly"
+                    aria-label="Rating interactivo"
+                  />
+                </div>
+                <aside class="button-config-aside">
+                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <p class="button-config-aside-hint">
+                    Puedes
+                    <button
+                      type="button"
+                      class="button-config-link"
+                      (click)="ratingConfigPopover.toggle($event)"
+                      aria-haspopup="dialog"
+                      [attr.aria-expanded]="ratingConfigPopover.overlayVisible"
+                    >
+                      configurar este componente
+                    </button>
+                    con las diferentes opciones disponibles.
+                  </p>
+                  <p-popover
+                    #ratingConfigPopover
+                    styleClass="button-config-popover"
+                    appendTo="body"
+                    ariaLabel="Configurar Rating"
+                  >
+                    <div class="button-config-popover-body button-config-switches">
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Rating</span>
+                        <div class="button-config-select-wrap">
+                          <p-select
+                            [options]="ratingValueSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="ratingIx().value"
+                            (ngModelChange)="patchRating({ value: $event })"
+                            size="small"
+                            appendTo="body"
+                            ariaLabel="Valor Rating"
+                          />
+                        </div>
+                      </div>
+                      <div class="input-config-row">
+                        <span class="input-config-label">Readonly</span>
+                        <p-toggleswitch
+                          [ngModel]="ratingIx().readonly"
+                          (ngModelChange)="patchRating({ readonly: $event })"
+                        />
+                      </div>
+                      <div class="input-config-row">
+                        <span class="input-config-label">Disabled</span>
+                        <p-toggleswitch
+                          [ngModel]="ratingIx().disabled"
+                          (ngModelChange)="patchRating({ disabled: $event })"
+                        />
+                      </div>
+                    </div>
+                  </p-popover>
+                </aside>
+              </div>
+            }
             @default {}
           }
         </div>
@@ -1217,13 +1287,50 @@
                     </div>
                   }
                 </div>
+              } @else if (isRatingBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of ratingDemoStates; track st.key) {
+                    <div class="catalog-button-state catalog-input-state catalog-input-state--rating">
+                      <div class="catalog-button-state-preview">
+                        <div [ngClass]="ratingIconStateWrapClass(st.key)">
+                          <span
+                            class="p-rating rating-icon-state-demo"
+                            [class.p-disabled]="ratingStateDisabled(st.key)"
+                            [style]="ratingHostVars()"
+                          >
+                            <span
+                              class="p-rating-option"
+                              [class.p-rating-option-active]="ratingIconActive(st.key)"
+                              [class.p-focus-visible]="st.key === 'focus'"
+                            >
+                              @if (ratingIconActive(st.key)) {
+                                <svg
+                                  data-p-icon="star-fill"
+                                  class="p-rating-icon p-rating-on-icon"
+                                  aria-hidden="true"
+                                ></svg>
+                              } @else {
+                                <svg
+                                  data-p-icon="star"
+                                  class="p-rating-icon p-rating-off-icon"
+                                  aria-hidden="true"
+                                ></svg>
+                              }
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
+                    </div>
+                  }
+                </div>
               }
             }
           }
         </div>
 
-        <!-- Sizes (ToggleSwitch: un solo tamaño MDS, sin sección) -->
-        @if (block.kind !== 'toggleswitch') {
+        <!-- Sizes (ToggleSwitch y Rating: un solo tamaño MDS, sin sección) -->
+        @if (block.kind !== 'toggleswitch' && block.kind !== 'rating') {
         <div class="btn-section">
           <p class="btn-section-title">Sizes</p>
 

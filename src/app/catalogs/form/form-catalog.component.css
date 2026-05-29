@@ -1326,3 +1326,54 @@
     var(--inputtext-filled-background, var(--form-field-filled-background))
   );
 }
+
+/* Rating — States/Sizes: preview compacto y captions centradas */
+.form-showcase.rating-showcase .catalog-input-state--rating {
+  align-items: center;
+  min-width: 0;
+  max-width: none;
+}
+
+.form-showcase.rating-showcase .catalog-input-state--rating .catalog-button-state-preview {
+  width: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Rating — tokens MDS --rating-* → --p-rating-* (PrimeNG 20) */
+:host ::ng-deep .rating-showcase .p-rating {
+  gap: var(--p-rating-gap, var(--rating-gap));
+}
+
+:host ::ng-deep .rating-showcase .p-rating .p-rating-icon,
+:host ::ng-deep .rating-showcase .p-rating .p-rating-on-icon,
+:host ::ng-deep .rating-showcase .p-rating .p-rating-off-icon {
+  width: var(--p-rating-icon-size, var(--rating-icon-size));
+  height: var(--p-rating-icon-size, var(--rating-icon-size));
+}
+
+:host ::ng-deep .rating-showcase .p-rating .p-rating-option-active .p-rating-on-icon {
+  color: var(--p-rating-icon-active-color, var(--rating-icon-active-color));
+}
+
+:host ::ng-deep .rating-showcase .p-rating .p-rating-option:not(.p-rating-option-active) .p-rating-off-icon {
+  color: var(--p-rating-icon-color, var(--rating-icon-color));
+}
+
+:host ::ng-deep .rating-showcase .p-rating.p-disabled .p-rating-on-icon,
+:host ::ng-deep .rating-showcase .p-rating.p-disabled .p-rating-off-icon {
+  color: var(--p-rating-icon-disabled-color, var(--rating-icon-disabled-color));
+  opacity: 1;
+}
+
+:host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .rating-icon-state-demo:not(.p-disabled) .p-rating-option:not(.p-rating-option-active) .p-rating-off-icon {
+  color: var(--p-rating-icon-hover-color, var(--rating-icon-hover-color));
+}
+
+/* Focus (States): anillo en la opción del icono (PrimeNG rating-option) */
+:host ::ng-deep .catalog-input-states-row .rating-icon-state-demo .p-rating-option.p-focus-visible {
+  box-shadow: var(--p-rating-focus-ring-shadow, var(--rating-focus-ring-shadow));
+  outline: var(--p-rating-focus-ring-width, var(--rating-focus-ring-width)) solid
+    var(--p-rating-focus-ring-color, var(--rating-focus-ring-color));
+  outline-offset: var(--p-rating-focus-ring-offset, var(--rating-focus-ring-offset));
+}

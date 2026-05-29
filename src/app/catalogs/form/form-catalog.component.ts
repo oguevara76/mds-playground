@@ -11,6 +11,9 @@ import { InputOtp } from 'primeng/inputotp';
 import { InputText } from 'primeng/inputtext';
 import { Popover } from 'primeng/popover';
 import { RadioButton } from 'primeng/radiobutton';
+import { Rating } from 'primeng/rating';
+import { StarFillIcon } from 'primeng/icons/starfill';
+import { StarIcon } from 'primeng/icons/star';
 import { Select } from 'primeng/select';
 import { SelectButton } from 'primeng/selectbutton';
 import { Textarea } from 'primeng/textarea';
@@ -30,6 +33,8 @@ import {
   FORM_INPUT_OTP_STATE_READONLY_VALUE,
   FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS,
   FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS,
+  FORM_RATING_DEMO_STATES,
+  FORM_RATING_VALUE_SELECT_OPTIONS,
   FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS,
   FORM_TEXTAREA_VARIANT_SELECT_OPTIONS,
   FORM_RADIO_OPTIONS,
@@ -45,6 +50,7 @@ import {
   type FormInputFloatVariant,
   type FormInputTextVariant,
   type FormInteractionSize,
+  type FormRatingDemoState,
 } from './form-catalog.config';
 import { inputDemoWrapClass } from './form-catalog.demo-styles';
 
@@ -68,6 +74,12 @@ export interface FormInputOtpInteractionState {
   showHelperText: boolean;
   size: FormInteractionSize;
   value: string;
+}
+
+export interface FormRatingInteractionState {
+  value: number;
+  disabled: boolean;
+  readonly: boolean;
 }
 
 export interface FormTextareaInteractionState {
@@ -100,6 +112,14 @@ function defaultInputOtpInteraction(): FormInputOtpInteractionState {
     showHelperText: false,
     size: 'normal',
     value: '',
+  };
+}
+
+function defaultRatingInteraction(): FormRatingInteractionState {
+  return {
+    value: 3,
+    disabled: false,
+    readonly: false,
   };
 }
 
@@ -145,6 +165,9 @@ function defaultCheckboxState(): Record<FormCheckboxKey, boolean> {
     NgClass,
     Popover,
     RadioButton,
+    Rating,
+    StarFillIcon,
+    StarIcon,
     Select,
     SelectButton,
     Textarea,
@@ -163,6 +186,8 @@ export class FormCatalogComponent {
   readonly inputDefaultStates = FORM_INPUT_DEFAULT_STATES;
   readonly inputFloatStates = FORM_INPUT_FLOAT_STATES;
   readonly inputotpLengthSelectOptions = FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS;
+  readonly ratingValueSelectOptions = FORM_RATING_VALUE_SELECT_OPTIONS;
+  readonly ratingDemoStates = FORM_RATING_DEMO_STATES;
   readonly inputtextVariantSelectOptions = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
   readonly inputtextFloatPositionSelectOptions = FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS;
   readonly textareaVariantSelectOptions = FORM_TEXTAREA_VARIANT_SELECT_OPTIONS;
@@ -175,6 +200,7 @@ export class FormCatalogComponent {
     toggleswitch: 'outlined',
     inputtext: 'outlined',
     inputotp: 'outlined',
+    rating: 'outlined',
     textarea: 'outlined',
   });
 
@@ -185,6 +211,7 @@ export class FormCatalogComponent {
 
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
+  readonly ratingIx = signal<FormRatingInteractionState>(defaultRatingInteraction());
 
   /** Float Label interactivo: placeholder solo mientras el campo tiene foco. */
   private readonly floatIxFocused = signal(false);
@@ -213,6 +240,10 @@ export class FormCatalogComponent {
 
   isInputOtpBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputotp' } {
     return block.kind === 'inputotp';
+  }
+
+  isRatingBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'rating' } {
+    return block.kind === 'rating';
   }
 
   formTheme(kind: FormBlockKind): FormFieldTheme {
@@ -272,6 +303,10 @@ export class FormCatalogComponent {
     });
   }
 
+  patchRating(patch: Partial<FormRatingInteractionState>): void {
+    this.ratingIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
   /** PrimeNG `size` en InputOtp: omite en Normal. */
   inputotpPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
     return size === 'normal' ? undefined : size;
@@ -301,6 +336,37 @@ export class FormCatalogComponent {
       '--p-inputotp-input-sm-width': 'var(--inputotp-input-sm-width)',
       '--p-inputotp-input-lg-width': 'var(--inputotp-input-lg-width)',
     };
+  }
+
+  /**
+   * Variables en p-rating: puente explícito Core MDS → PrimeNG (--p-rating-*).
+   */
+  ratingHostVars(): Record<string, string> {
+    return {
+      '--p-rating-gap': 'var(--rating-gap)',
+      '--p-rating-icon-size': 'var(--rating-icon-size)',
+      '--p-rating-icon-color': 'var(--rating-icon-color)',
+      '--p-rating-icon-hover-color': 'var(--rating-icon-hover-color)',
+      '--p-rating-icon-active-color': 'var(--rating-icon-active-color)',
+      '--p-rating-icon-disabled-color': 'var(--rating-icon-disabled-color)',
+      '--p-rating-focus-ring-width': 'var(--rating-focus-ring-width)',
+      '--p-rating-focus-ring-color': 'var(--rating-focus-ring-color)',
+      '--p-rating-focus-ring-offset': 'var(--rating-focus-ring-offset)',
+      '--p-rating-focus-ring-shadow': 'var(--rating-focus-ring-shadow)',
+    };
+  }
+
+  ratingStateDisabled(state: FormRatingDemoState): boolean {
+    return state === 'disabled';
+  }
+
+  /** States: icono relleno solo en Disabled; resto usa estrella vacía. */
+  ratingIconActive(state: FormRatingDemoState): boolean {
+    return state === 'disabled';
+  }
+
+  ratingIconStateWrapClass(state: FormRatingDemoState): string {
+    return state === 'hover' ? 'p-input-demo-wrap p-input-demo--hover' : '';
   }
 
   inputOtpDemoValue(length: number, state: FormInputDemoState): string {
@@ -717,8 +783,8 @@ export class FormCatalogComponent {
     };
   }
 
-  inputDemoWrap(state: FormInputDemoState): string {
-    return inputDemoWrapClass(state);
+  inputDemoWrap(state: FormInputDemoState | FormRatingDemoState): string {
+    return inputDemoWrapClass(state as FormInputDemoState);
   }
 
   checkboxChecked(key: FormCheckboxKey): boolean {

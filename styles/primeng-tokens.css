@@ -1011,9 +1011,10 @@ html[data-theme="light"] {
   --p-rating-focus-ring-offset:           var(--rating-focus-ring-offset, var(--p-focus-ring-offset));
   --p-rating-focus-ring-shadow:           var(--rating-focus-ring-shadow, 0 0 0 0 transparent);
   --p-rating-icon-size:                   var(--rating-icon-size, var(--dimension-scale-x14, 14px));
-  --p-rating-icon-color:                  var(--rating-color, var(--text-muted-color, var(--p-surface-400)));
-  --p-rating-icon-hover-color:            var(--rating-hover-color, var(--primary-color, var(--p-primary-color)));
-  --p-rating-icon-active-color:           var(--rating-active-color, var(--primary-color, var(--p-primary-color)));
+  --p-rating-icon-color:                  var(--rating-icon-color, var(--text-muted-color, var(--p-surface-400)));
+  --p-rating-icon-hover-color:            var(--rating-icon-hover-color, var(--primary-color, var(--p-primary-color)));
+  --p-rating-icon-active-color:           var(--rating-icon-active-color, var(--primary-color, var(--p-primary-color)));
+  --p-rating-icon-disabled-color:         var(--rating-icon-disabled-color, var(--form-field-disabled-color, var(--p-form-field-disabled-color)));
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Avatar (PrimeNG v20: avatar.*)
@@ -1825,9 +1826,10 @@ html[data-theme="dark"] {
     --p-datatable-th-padding-y:             var(--dimension-spacing-x12, 12px);
     --p-datatable-td-padding-x:             var(--dimension-spacing-x12, 12px);
     --p-datatable-td-padding-y:             var(--dimension-spacing-x12, 12px);
-    --p-rating-icon-color:                  var(--rating-color, var(--text-muted-color, var(--p-surface-500)));
-    --p-rating-icon-hover-color:            var(--rating-hover-color, var(--primary-color, var(--p-primary-color)));
-    --p-rating-icon-active-color:           var(--rating-active-color, var(--primary-color, var(--p-primary-color)));
+    --p-rating-icon-color:                  var(--rating-icon-color, var(--text-muted-color, var(--p-surface-500)));
+    --p-rating-icon-hover-color:            var(--rating-icon-hover-color, var(--primary-color, var(--p-primary-color)));
+    --p-rating-icon-active-color:           var(--rating-icon-active-color, var(--primary-color, var(--p-primary-color)));
+    --p-rating-icon-disabled-color:         var(--rating-icon-disabled-color, var(--form-field-disabled-color, var(--p-form-field-disabled-color)));
     --p-avatar-group-border-color:          var(--avatar-group-border-color, var(--content-background, var(--p-content-bg)));
     --p-splitbutton-panel-border-radius: var(--overlay-select-border-radius, var(--p-border-radius));
     --p-splitbutton-item-padding-x:      var(--dimension-spacing-x16, 16px);

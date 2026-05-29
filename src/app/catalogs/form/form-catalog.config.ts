@@ -4,6 +4,7 @@ export type FormBlockKind =
   | 'toggleswitch'
   | 'inputtext'
   | 'inputotp'
+  | 'rating'
   | 'textarea';
 
 /** Variante del showcase unificado InputText / Textarea. */
@@ -158,6 +159,23 @@ export const FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS: { label: string; value: numbe
   { label: '6 dígitos', value: 6 },
 ];
 
+export type FormRatingDemoState = 'normal' | 'hover' | 'focus' | 'disabled';
+
+export const FORM_RATING_DEMO_STATES: { key: FormRatingDemoState; caption: string }[] = [
+  { key: 'normal', caption: 'Default' },
+  { key: 'hover', caption: 'Hover' },
+  { key: 'focus', caption: 'Focus' },
+  { key: 'disabled', caption: 'Disabled' },
+];
+
+export const FORM_RATING_VALUE_SELECT_OPTIONS: { label: string; value: number }[] = [
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
+];
+
 /** Valor de demostración en estado Readonly (InputOtp). */
 export const FORM_INPUT_OTP_STATE_READONLY_VALUE = '1234';
 
@@ -188,5 +206,6 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'toggleswitch', title: 'ToggleSwitch', category: 'choice' },
   { kind: 'inputtext', title: 'InputText', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },
+  { kind: 'rating', title: 'Rating', category: 'input' },
   { kind: 'textarea', title: 'Textarea', category: 'textarea' },
 ];
