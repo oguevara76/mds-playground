@@ -1,3 +1,77 @@
+/* ─── Divider ─────────────────────────────────────────────────────────────── */
+
+:host.panel-catalog-page .divider-interaction-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+:host.panel-catalog-page .divider-catalog-demo-area {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 32rem;
+  display: flex;
+  flex-direction: column;
+}
+
+:host.panel-catalog-page .divider-demo-body-text {
+  margin: 0;
+  padding: 12px 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--p-surface-600);
+}
+
+:host.panel-catalog-page .divider-catalog-content-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--p-surface-500);
+  white-space: nowrap;
+}
+
+:host.panel-catalog-page .divider-catalog-states-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: flex-start;
+}
+
+:host.panel-catalog-page .divider-catalog-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 180px;
+  min-width: 180px;
+  max-width: 280px;
+}
+
+:host.panel-catalog-page .divider-catalog-state-preview {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+:host.panel-catalog-page .divider-catalog-state-demo {
+  width: 100%;
+  pointer-events: none;
+}
+
+:host.panel-catalog-page .divider-catalog-state-caption {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  text-align: center;
+  color: var(--p-surface-600);
+}
+
+/* ─── Tabs ────────────────────────────────────────────────────────────────── */
+
 :host.panel-catalog-page .tabs-interaction-row {
   display: flex;
   align-items: flex-start;

@@ -1,0 +1,180 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.pg-search {
+  position: relative;
+  width: 100%;
+}
+
+.pg-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pg-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pg-search-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--p-surface-400);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.pg-search-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 36px 0 36px;
+  border: 1px solid var(--p-surface-300);
+  border-radius: 999px;
+  font-family: var(--p-font-family);
+  font-size: 13px;
+  background: var(--p-surface-0);
+  color: var(--p-content-color);
+  outline: none;
+  transition: border-color var(--p-transition-duration), box-shadow var(--p-transition-duration);
+}
+
+.pg-search-input::placeholder {
+  color: var(--p-surface-400);
+}
+
+.pg-search-input:focus {
+  border-color: var(--p-primary-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--p-primary-color) 18%, transparent);
+}
+
+.pg-search-clear {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--p-surface-400);
+  cursor: pointer;
+  transition: color var(--p-transition-duration), background var(--p-transition-duration);
+}
+
+.pg-search-clear:hover {
+  color: var(--p-surface-700);
+  background: var(--p-surface-100);
+}
+
+.pg-search-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: min(360px, 50vh);
+  overflow-y: auto;
+  background: var(--p-surface-0);
+  border: 1px solid var(--p-surface-200);
+  border-radius: var(--p-border-radius-lg);
+  box-shadow:
+    0 8px 24px color-mix(in srgb, var(--p-surface-900) 12%, transparent),
+    0 2px 6px color-mix(in srgb, var(--p-surface-900) 6%, transparent);
+}
+
+.pg-search-option {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 2px 12px;
+  padding: 10px 12px;
+  border-radius: var(--p-border-radius);
+  cursor: pointer;
+  transition: background var(--p-transition-duration);
+}
+
+.pg-search-option:hover,
+.pg-search-option--active {
+  background: color-mix(in srgb, var(--p-primary-color) 10%, var(--p-surface-50));
+}
+
+.pg-search-option-name {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--p-surface-800);
+  line-height: 1.3;
+}
+
+.pg-search-option-meta {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: 11px;
+  color: var(--p-surface-500);
+  line-height: 1.35;
+}
+
+.pg-search-option-section {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--p-surface-400);
+  white-space: nowrap;
+}
+
+.pg-search-empty {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--p-surface-500);
+  background: var(--p-surface-0);
+  border: 1px solid var(--p-surface-200);
+  border-radius: var(--p-border-radius-lg);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--p-surface-900) 8%, transparent);
+}
+
+[data-theme='dark'] .pg-search-input {
+  background: var(--p-surface-900);
+  border-color: var(--p-surface-700);
+}
+
+[data-theme='dark'] .pg-search-panel,
+[data-theme='dark'] .pg-search-empty {
+  background: var(--p-surface-900);
+  border-color: var(--p-surface-700);
+}
+
+[data-theme='dark'] .pg-search-option-name {
+  color: var(--p-surface-100);
+}
+
+[data-theme='dark'] .pg-search-option:hover,
+[data-theme='dark'] .pg-search-option--active {
+  background: color-mix(in srgb, var(--p-primary-color) 16%, var(--p-surface-800));
+}

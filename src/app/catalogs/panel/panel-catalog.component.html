@@ -1,6 +1,143 @@
 <div class="cards-grid form-catalog-stack">
+  <!-- ─── Divider ─────────────────────────────────────────────────────────── -->
+  <div class="catalog-preview divider-variant-block">
+    <section id="pg-divider" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Divider</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="divider-interaction-row">
+            <div class="divider-catalog-demo-area">
+              <p class="divider-demo-body-text">
+                Resumen del expediente y acciones rápidas para el equipo de gestión.
+              </p>
+              <p-divider
+                [type]="dividerIx().type"
+                [align]="dividerIx().showLabel ? dividerIx().align : undefined"
+                ariaLabel="Separador de secciones"
+              >
+                @if (dividerIx().showLabel) {
+                  <span class="divider-catalog-content-label">Sección</span>
+                }
+              </p-divider>
+              <p class="divider-demo-body-text">
+                Datos de contacto, dirección fiscal y preferencias de notificación.
+              </p>
+            </div>
+
+            <aside class="button-config-aside">
+              <p class="button-config-aside-title">CONFIGURAR</p>
+              <p class="button-config-aside-hint">
+                Puedes
+                <button
+                  type="button"
+                  class="button-config-link"
+                  (click)="dividerConfigPopover.toggle($event)"
+                  aria-haspopup="dialog"
+                  [attr.aria-expanded]="dividerConfigPopover.overlayVisible"
+                >
+                  configurar este componente
+                </button>
+                con el tipo de borde, la etiqueta y su alineación.
+              </p>
+              <p-popover
+                #dividerConfigPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                ariaLabel="Configurar Divider"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Tipo de borde</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="dividerBorderTypeOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="dividerIx().type"
+                        (ngModelChange)="patchDividerIx({ type: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Tipo de borde del divider"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                    <span class="input-config-label">Etiqueta</span>
+                    <p-toggleswitch
+                      [ngModel]="dividerIx().showLabel"
+                      (ngModelChange)="patchDividerIx({ showLabel: $event })"
+                      ariaLabel="Mostrar etiqueta en el divider"
+                    />
+                  </div>
+                  @if (dividerIx().showLabel) {
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">Alineación</span>
+                      <div class="button-config-select-wrap">
+                        <p-select
+                          [options]="dividerAlignOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          [ngModel]="dividerIx().align"
+                          (ngModelChange)="patchDividerIx({ align: $event })"
+                          size="small"
+                          appendTo="body"
+                          ariaLabel="Alineación del contenido del divider"
+                        />
+                      </div>
+                    </div>
+                  }
+                </div>
+              </p-popover>
+            </aside>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">States</p>
+          <div
+            class="divider-catalog-states-row is-static-preview"
+            aria-label="Divider por estado"
+          >
+            @for (demo of dividerStateDemos; track trackDividerState($index, demo)) {
+              <div class="divider-catalog-state">
+                <div class="divider-catalog-state-preview">
+                  <div class="divider-catalog-state-demo">
+                    <div
+                      class="p-divider p-component p-divider-horizontal p-divider-solid"
+                      [class.p-divider-center]="demo.key !== 'default'"
+                    >
+                      @if (demo.label) {
+                        <div class="p-divider-content">
+                          <span class="divider-catalog-content-label">{{ demo.label }}</span>
+                        </div>
+                      }
+                      @if (demo.icon) {
+                        <div class="p-divider-content">
+                          <i [ngClass]="demo.icon" aria-hidden="true"></i>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+                <span class="divider-catalog-state-caption catalog-button-state-caption">{{
+                  demo.caption
+                }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ─── Tabs ──────────────────────────────────────────────────────────────── -->
   <div class="catalog-preview tabs-variant-block" [ngClass]="iconVisibilityClass()">
-    <section class="preview-section preview-section--flush catalog-block-section">
+    <section id="pg-tabs" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
         <h3 class="section-title component-title-primary">Tabs</h3>
       </header>
@@ -41,26 +178,46 @@
               </p-tabpanels>
             </p-tabs>
 
-            <aside class="button-config-aside form-config-aside-inline input-icon-panel">
+            <aside class="button-config-aside">
               <p class="button-config-aside-title">CONFIGURAR</p>
-              <div class="input-icon-switches">
-                <div class="input-config-row">
-                  <span class="input-config-label">Icon left</span>
-                  <p-toggleswitch
-                    [ngModel]="showLeftIcon()"
-                    (ngModelChange)="setShowLeftIcon($event)"
-                    ariaLabel="Mostrar icono izquierdo"
-                  />
+              <p class="button-config-aside-hint">
+                Puedes
+                <button
+                  type="button"
+                  class="button-config-link"
+                  (click)="tabsConfigPopover.toggle($event)"
+                  aria-haspopup="dialog"
+                  [attr.aria-expanded]="tabsConfigPopover.overlayVisible"
+                >
+                  configurar este componente
+                </button>
+                con los iconos izquierdo y derecho de cada pestaña.
+              </p>
+              <p-popover
+                #tabsConfigPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                ariaLabel="Configurar Tabs"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="input-config-row">
+                    <span class="input-config-label">Icon left</span>
+                    <p-toggleswitch
+                      [ngModel]="showLeftIcon()"
+                      (ngModelChange)="setShowLeftIcon($event)"
+                      ariaLabel="Mostrar icono izquierdo"
+                    />
+                  </div>
+                  <div class="input-config-row">
+                    <span class="input-config-label">Icon right</span>
+                    <p-toggleswitch
+                      [ngModel]="showRightIcon()"
+                      (ngModelChange)="setShowRightIcon($event)"
+                      ariaLabel="Mostrar icono derecho"
+                    />
+                  </div>
                 </div>
-                <div class="input-config-row">
-                  <span class="input-config-label">Icon right</span>
-                  <p-toggleswitch
-                    [ngModel]="showRightIcon()"
-                    (ngModelChange)="setShowRightIcon($event)"
-                    ariaLabel="Mostrar icono derecho"
-                  />
-                </div>
-              </div>
+              </p-popover>
             </aside>
           </div>
         </div>

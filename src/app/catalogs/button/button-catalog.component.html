@@ -4,7 +4,11 @@
       class="catalog-preview button-showcase"
       [class.button-showcase--icon-only]="block.kind === 'icon'"
     >
-      <section class="preview-section preview-section--flush catalog-block-section">
+      <section
+        class="preview-section preview-section--flush catalog-block-section"
+        [attr.id]="buttonAnchorId(block.kind)"
+        tabindex="-1"
+      >
         <header class="catalog-block-head">
           <h3 class="section-title component-title-primary">{{ block.title }}</h3>
         </header>

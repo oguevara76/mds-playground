@@ -1,5 +1,48 @@
 /* Helpers de catálogo (extraído de styles/components.css — solo layout, no réplica .p-button) */
 
+/* Resaltado tras seleccionar en el buscador del playground (hasta clic fuera) */
+.catalog-preview.pg-component-focus {
+  position: relative;
+  z-index: 1;
+  background: color-mix(in srgb, var(--p-primary-color) 5%, var(--surface-context-minimal));
+  border-width: 1px;
+  border-color: color-mix(in srgb, var(--p-primary-color) 38%, var(--surface-context-emphasized));
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--p-primary-color) 18%, transparent),
+    0 4px 14px color-mix(in srgb, var(--p-primary-color) 14%, transparent);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.catalog-preview.pg-component-focus .preview-section,
+.catalog-preview.pg-component-focus .catalog-block-section,
+.catalog-preview.pg-component-focus .catalog-block-body,
+.catalog-preview.pg-component-focus .btn-section {
+  background: transparent;
+}
+
+.catalog-preview.pg-component-focus .catalog-block-section:focus,
+.catalog-preview.pg-component-focus .catalog-block-section:focus-visible {
+  outline: none;
+}
+
+[data-theme='dark'] .catalog-preview.pg-component-focus {
+  background: color-mix(in srgb, var(--p-primary-color) 8%, var(--surface-context-minimal));
+  border-color: color-mix(in srgb, var(--p-primary-color) 32%, var(--surface-context-emphasized));
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--p-primary-color) 22%, transparent),
+    0 4px 16px color-mix(in srgb, var(--p-primary-color) 18%, transparent);
+}
+
+[data-theme='dark'] .catalog-preview.pg-component-focus .preview-section,
+[data-theme='dark'] .catalog-preview.pg-component-focus .catalog-block-section,
+[data-theme='dark'] .catalog-preview.pg-component-focus .catalog-block-body,
+[data-theme='dark'] .catalog-preview.pg-component-focus .btn-section {
+  background: transparent;
+}
+
 /* Título del componente (bloque) separado de subsecciones Interaction / States / Sizes */
 .catalog-block-head {
   margin-bottom: 0;
@@ -112,6 +155,7 @@
 .toast-showcase .catalog-block-head .section-title.component-title-primary,
 .paginator-showcase .catalog-block-head .section-title.component-title-primary,
 .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
+.divider-variant-block .catalog-block-head .section-title.component-title-primary,
 .tag-showcase .catalog-block-head .section-title.component-title-primary,
 .tooltip-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--p-content-color);
@@ -124,6 +168,7 @@
 .toast-showcase .btn-section-title,
 .paginator-showcase .btn-section-title,
 .tabs-variant-block .btn-section-title,
+.divider-variant-block .btn-section-title,
 .tag-showcase .btn-section-title,
 .tooltip-variant-block .btn-section-title {
   color: var(--p-surface-700);
@@ -144,6 +189,7 @@
 .toast-showcase .catalog-button-state-caption,
 .paginator-showcase .paginator-catalog-state-caption,
 .tabs-variant-block .tabs-catalog-state-caption,
+.divider-variant-block .divider-catalog-state-caption,
 .tooltip-variant-block .tooltip-catalog-position-caption {
   color: var(--p-surface-600);
   font-weight: 500;
@@ -276,7 +322,8 @@
 [data-theme="dark"] .tag-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tooltip-variant-block .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .paginator-showcase .catalog-block-head .section-title.component-title-primary,
-[data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary {
+[data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .divider-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--p-surface-0);
   font-weight: 800;
 }
@@ -288,7 +335,8 @@
 [data-theme="dark"] .tag-showcase .catalog-block-head,
 [data-theme="dark"] .tooltip-variant-block .catalog-block-head,
 [data-theme="dark"] .paginator-showcase .catalog-block-head,
-[data-theme="dark"] .tabs-variant-block .catalog-block-head {
+[data-theme="dark"] .tabs-variant-block .catalog-block-head,
+[data-theme="dark"] .divider-variant-block .catalog-block-head {
   border-bottom-color: color-mix(in srgb, var(--p-primary-color) 42%, var(--p-surface-600));
 }
 
@@ -299,7 +347,8 @@
 [data-theme="dark"] .tag-showcase .btn-section-title,
 [data-theme="dark"] .tooltip-variant-block .btn-section-title,
 [data-theme="dark"] .paginator-showcase .btn-section-title,
-[data-theme="dark"] .tabs-variant-block .btn-section-title {
+[data-theme="dark"] .tabs-variant-block .btn-section-title,
+[data-theme="dark"] .divider-variant-block .btn-section-title {
   color: var(--p-surface-300);
   font-weight: 700;
   border-bottom-color: var(--p-surface-800, var(--p-surface-700));
@@ -318,6 +367,7 @@
 [data-theme="dark"] .toast-showcase .catalog-button-state-caption,
 [data-theme="dark"] .paginator-showcase .paginator-catalog-state-caption,
 [data-theme="dark"] .tabs-variant-block .tabs-catalog-state-caption,
+[data-theme="dark"] .divider-variant-block .divider-catalog-state-caption,
 [data-theme="dark"] .tooltip-variant-block .tooltip-catalog-position-caption {
   color: var(--p-surface-400);
   font-weight: 500;

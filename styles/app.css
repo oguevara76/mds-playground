@@ -15,6 +15,14 @@ html, body {
   transition: background .25s, color .25s;
 }
 
+:root {
+  --playground-sidebar-width: 280px;
+  --playground-preview-tabs-pad-x: 24px;
+  --topbar-pad-x: 20px;
+  --playground-search-width: 280px;
+  --playground-content-pad-y: 32px;
+}
+
 /* ── Topbar ── */
 .topbar {
   position: fixed;
@@ -24,7 +32,7 @@ html, body {
   border-bottom: 1px solid var(--topbar-border);
   display: flex;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 var(--topbar-pad-x);
   gap: 24px;
   z-index: 100;
 }
@@ -80,12 +88,6 @@ html, body {
 }
 .brand-sub { font-weight: 400; opacity: .5; }
 
-.topbar-nav {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  flex: 1;
-}
 .nav-link {
   padding: 7px 12px;
   border-bottom: 2px solid transparent;
@@ -99,10 +101,10 @@ html, body {
 .nav-link.active { color: var(--p-primary-color); border-bottom-color: var(--p-primary-color); }
 
 .topbar-actions {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
 }
 .btn-icon {
   width: 32px; height: 32px;
@@ -167,7 +169,7 @@ app-playground-sidebar {
 
 /* ── Sidebar ── */
 .sidebar {
-  width: 280px;
+  width: var(--playground-sidebar-width);
   flex-shrink: 0;
   align-self: stretch;
   height: 100%;
@@ -415,17 +417,37 @@ app-playground-sidebar {
   background: transparent;
 }
 
-/* Preview tabs */
-.preview-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px 24px;
+/* Preview tabs + buscador de componentes */
+.preview-tabs-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--playground-search-width);
+  align-items: center;
+  column-gap: 16px;
+  /* Izq. tabs; der. buscador alineado con theme switch del topbar (mismo pad-x) */
+  padding: 12px var(--topbar-pad-x) 12px var(--playground-preview-tabs-pad-x);
   border-bottom: 1px solid var(--sidebar-border);
   background: var(--topbar-bg);
   position: sticky;
   top: 0;
   z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.preview-tabs {
+  grid-column: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+  align-items: center;
+}
+
+.preview-tabs-search {
+  grid-column: 2;
+  justify-self: end;
+  width: var(--playground-search-width);
+  max-width: 100%;
 }
 .preview-tab {
   padding: 6px 14px;
@@ -446,9 +468,14 @@ app-playground-sidebar {
   border-color: var(--p-primary-color);
 }
 
-/* Tab panels */
-.tab-panel { display: none; padding: 32px; }
-.tab-panel { background: transparent; }
+/* Tab panels — mismos inset horizontales que preview-tabs-bar / topbar */
+.tab-panel {
+  display: none;
+  box-sizing: border-box;
+  padding: var(--playground-content-pad-y) var(--topbar-pad-x) var(--playground-content-pad-y)
+    var(--playground-preview-tabs-pad-x);
+  background: transparent;
+}
 .tab-panel.active { display: block; }
 
 /* Sections */
@@ -1457,7 +1484,7 @@ app-playground-sidebar {
 
 /* ─── PREVIEW section ───────────────────────────────────────────── */
 .pv-grid {
-  padding: 32px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;

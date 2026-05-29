@@ -26,6 +26,7 @@ import {
   type ButtonInteractionSize,
   type ButtonVariantSpec,
 } from './button-catalog.config';
+import { buttonPlaygroundAnchorId } from '../../layout/playground-component-index';
 import { buttonDemoWrapStyle } from './button-catalog.demo-styles';
 
 export interface ButtonInteractionState {
@@ -58,6 +59,7 @@ function defaultInteraction(): ButtonInteractionState {
   styleUrl: './button-catalog.component.css',
 })
 export class ButtonCatalogComponent {
+  readonly buttonAnchorId = buttonPlaygroundAnchorId;
   readonly blocks = BUTTON_BLOCKS;
   readonly typeSelectOptions = BUTTON_TYPE_SELECT_OPTIONS;
   readonly severitySelectOptions = BUTTON_SEVERITY_SELECT_OPTIONS;

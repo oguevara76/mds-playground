@@ -531,6 +531,12 @@ html[data-theme="light"] {
   --p-inputtext-lg-padding-x:             var(--inputtext-lg-padding-x, var(--form-field-lg-padding-x, 22px));
   --p-inputtext-lg-padding-y:             var(--inputtext-lg-padding-y, var(--form-field-lg-padding-y, 11px));
 
+  /* InputOtp — PrimeNG 20 dt('inputotp.*') */
+  --p-inputotp-gap:              var(--inputotp-input-gap, var(--dimension-scale-x8, 8px));
+  --p-inputotp-input-width:      var(--inputotp-input-width, var(--dimension-scale-x32, 32px));
+  --p-inputotp-input-sm-width:   var(--inputotp-input-sm-width, var(--dimension-scale-x28, 28px));
+  --p-inputotp-input-lg-width:   var(--inputotp-input-lg-width, var(--dimension-scale-x42, 42px));
+
   /* Textarea — PrimeNG 20 dt('textarea.*') */
   --p-textarea-color:                      var(--textarea-color, var(--form-field-color, var(--p-surface-700)));
   --p-textarea-background:                 var(--textarea-background, var(--form-field-background, var(--p-surface-0)));
@@ -1034,6 +1040,20 @@ html[data-theme="light"] {
   --p-splitbutton-item-padding-x:      var(--dimension-spacing-x16, 16px);
   --p-splitbutton-item-padding-y:      var(--dimension-spacing-x8,   9px);
   --p-splitbutton-item-gap:            var(--dimension-spacing-x10,  10px);
+
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Divider
+     Bridge: var(--divider-*, fallback) ← MDS components
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-divider-border-color:               var(--divider-border-color,       var(--p-content-border));
+  --p-divider-content-background:         var(--divider-content-background, var(--p-content-bg));
+  --p-divider-content-color:              var(--divider-content-color,      var(--p-text-color));
+  --p-divider-horizontal-margin:          var(--divider-horizontal-margin-y, 1rem) var(--divider-horizontal-margin-x, 0);
+  --p-divider-horizontal-padding:         var(--divider-horizontal-padding, 0) var(--divider-horizontal-margin-y, 1rem);
+  --p-divider-horizontal-content-padding: var(--divider-horizontal-content-padding-y, 0) var(--divider-horizontal-content-padding-x, var(--dimension-scale-x8, 8px));
+  --p-divider-vertical-margin:            var(--divider-vertical-margin-y, 0) var(--divider-vertical-margin-x, 1rem);
+  --p-divider-vertical-padding:           var(--divider-vertical-padding, 0.5rem) var(--divider-vertical-margin-x, 1rem);
+  --p-divider-vertical-content-padding:   var(--divider-vertical-content-padding-y, var(--dimension-scale-x8, 8px)) var(--divider-vertical-content-padding-x, 0);
 }
 
 
@@ -1813,6 +1833,11 @@ html[data-theme="dark"] {
     --p-splitbutton-item-padding-x:      var(--dimension-spacing-x16, 16px);
     --p-splitbutton-item-padding-y:      var(--dimension-spacing-x8,   9px);
     --p-splitbutton-item-gap:            var(--dimension-spacing-x10,  10px);
+    /* ── Divider (dark) ── */
+    --p-divider-border-color:       var(--divider-border-color,       var(--p-content-border));
+    --p-divider-content-background: var(--divider-content-background, var(--p-content-bg));
+    --p-divider-content-color:      var(--divider-content-color,      var(--p-text-color));
+
 /* ── App shell (contenedor legacy: body, topbar, sidebar, preview-tabs) ── */
   --app-bg:         var(--surface-950, var(--p-surface-950));
   --sidebar-bg:     var(--surface-950, var(--p-surface-950));

@@ -34,15 +34,20 @@
 
   <main class="preview-area" [class.preview-area--tokens]="isTokensView()">
     @if (!isTokensView()) {
-    <div class="preview-tabs">
-      <a routerLink="/preview" routerLinkActive="active" class="preview-tab">Preview</a>
-      <a routerLink="/button" routerLinkActive="active" class="preview-tab">Button</a>
-      <a routerLink="/form" routerLinkActive="active" class="preview-tab">Form</a>
-      <a routerLink="/messages" routerLinkActive="active" class="preview-tab">Messages</a>
-      <a routerLink="/data" routerLinkActive="active" class="preview-tab">Data</a>
-      <a routerLink="/panel" routerLinkActive="active" class="preview-tab">Panel</a>
-      <a routerLink="/overlay" routerLinkActive="active" class="preview-tab">Overlay</a>
-      <a routerLink="/misc" routerLinkActive="active" class="preview-tab">Misc</a>
+    <div class="preview-tabs-bar">
+      <nav class="preview-tabs" aria-label="Secciones del playground">
+        <a routerLink="/preview" routerLinkActive="active" class="preview-tab">Preview</a>
+        <a routerLink="/button" routerLinkActive="active" class="preview-tab">Button</a>
+        <a routerLink="/form" routerLinkActive="active" class="preview-tab">Form</a>
+        <a routerLink="/messages" routerLinkActive="active" class="preview-tab">Messages</a>
+        <a routerLink="/data" routerLinkActive="active" class="preview-tab">Data</a>
+        <a routerLink="/panel" routerLinkActive="active" class="preview-tab">Panel</a>
+        <a routerLink="/overlay" routerLinkActive="active" class="preview-tab">Overlay</a>
+        <a routerLink="/misc" routerLinkActive="active" class="preview-tab">Misc</a>
+      </nav>
+      <div class="preview-tabs-search">
+        <app-playground-component-search />
+      </div>
     </div>
     }
 

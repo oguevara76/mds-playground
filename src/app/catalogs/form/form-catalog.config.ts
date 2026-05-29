@@ -3,6 +3,7 @@ export type FormBlockKind =
   | 'checkbox'
   | 'toggleswitch'
   | 'inputtext'
+  | 'inputotp'
   | 'textarea';
 
 /** Variante del showcase unificado InputText / Textarea. */
@@ -149,6 +150,17 @@ export const FORM_INPUT_STATE_ERROR_MESSAGE = 'Error message';
 /** Valor del input en estado Readonly (InputText default). */
 export const FORM_INPUT_STATE_READONLY_VALUE = 'Solo lectura';
 
+/** Longitud por defecto del showcase InputOtp. */
+export const FORM_INPUT_OTP_DEFAULT_LENGTH = 4;
+
+export const FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS: { label: string; value: number }[] = [
+  { label: '4 dígitos', value: 4 },
+  { label: '6 dígitos', value: 6 },
+];
+
+/** Valor de demostración en estado Readonly (InputOtp). */
+export const FORM_INPUT_OTP_STATE_READONLY_VALUE = '1234';
+
 /** Valor del input en estado Fill (Float label, sección States). */
 export const FORM_INPUT_STATE_FILLED_VALUE = 'Value';
 
@@ -175,5 +187,6 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'checkbox', title: 'Checkbox', category: 'choice' },
   { kind: 'toggleswitch', title: 'ToggleSwitch', category: 'choice' },
   { kind: 'inputtext', title: 'InputText', category: 'input' },
+  { kind: 'inputotp', title: 'InputOtp', category: 'input' },
   { kind: 'textarea', title: 'Textarea', category: 'textarea' },
 ];

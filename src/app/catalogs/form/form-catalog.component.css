@@ -1251,3 +1251,78 @@
     var(--p-floatlabel-infield-font-size, var(--textarea-lg-font-size, var(--form-field-lg-font-size)))
   ) !important;
 }
+
+/* InputOtp — layout y estados (tokens MDS --inputotp-* → --p-inputotp-*)
+   PrimeNG aplica p-inputtext-sm|lg en cada celda (.p-inputotp-input), no en el root. */
+:host ::ng-deep .inputotp-showcase .p-inputotp {
+  gap: var(--p-inputotp-gap, var(--inputotp-input-gap));
+  align-items: center;
+}
+
+:host ::ng-deep .inputotp-showcase .p-inputotp .p-inputotp-input {
+  box-sizing: border-box;
+  width: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-width, var(--inputotp-input-width)));
+  height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-width, var(--inputotp-input-width)));
+  min-height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-width, var(--inputotp-input-width)));
+  max-height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-width, var(--inputotp-input-width)));
+  padding-block: 0;
+  padding-inline: 0;
+  font-size: var(--p-inputtext-font-size, var(--inputtext-font-size, var(--form-field-font-size)));
+  line-height: 1;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep .inputotp-showcase .p-inputotp .p-inputotp-input.p-inputtext-sm {
+  width: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-sm-width, var(--inputotp-input-sm-width)));
+  height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-sm-width, var(--inputotp-input-sm-width)));
+  min-height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-sm-width, var(--inputotp-input-sm-width)));
+  max-height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-sm-width, var(--inputotp-input-sm-width)));
+  font-size: var(--p-inputtext-sm-font-size, var(--inputtext-sm-font-size, var(--form-field-sm-font-size)));
+}
+
+:host ::ng-deep .inputotp-showcase .p-inputotp .p-inputotp-input.p-inputtext-lg {
+  width: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-lg-width, var(--inputotp-input-lg-width)));
+  height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-lg-width, var(--inputotp-input-lg-width)));
+  min-height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-lg-width, var(--inputotp-input-lg-width)));
+  max-height: var(--catalog-inputotp-cell-size, var(--p-inputotp-input-lg-width, var(--inputotp-input-lg-width)));
+  font-size: var(--p-inputtext-lg-font-size, var(--inputtext-lg-font-size, var(--form-field-lg-font-size)));
+}
+
+:host ::ng-deep .p-input-demo-wrap.p-input-demo--hover .p-inputotp .p-inputotp-input:enabled {
+  border-color: var(--p-inputtext-hover-border-color);
+}
+
+:host ::ng-deep .p-input-demo-wrap.p-input-demo--focus .p-inputotp .p-inputotp-input:enabled {
+  border-color: var(--p-inputtext-focus-border-color);
+  box-shadow: var(--p-inputtext-focus-ring-shadow);
+  outline: var(--p-inputtext-focus-ring-width) var(--p-inputtext-focus-ring-style, solid)
+    var(--p-inputtext-focus-ring-color);
+  outline-offset: var(--p-inputtext-focus-ring-offset);
+}
+
+:host ::ng-deep .catalog-input-states-row .p-inputotp .p-inputotp-input.p-invalid {
+  border-color: var(--p-inputtext-invalid-border-color);
+}
+
+:host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-inputotp .p-inputotp-input.p-invalid:enabled,
+:host ::ng-deep .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-inputotp .p-inputotp-input.p-invalid:enabled {
+  border-color: var(--p-inputtext-invalid-border-color);
+  box-shadow: none;
+  outline: none;
+}
+
+:host ::ng-deep .catalog-input-states-row .p-inputotp .p-inputotp-input:disabled {
+  background: var(--p-inputtext-disabled-background);
+  color: var(--p-inputtext-disabled-color);
+  opacity: 1;
+}
+
+:host ::ng-deep .form-theme-filled .p-inputotp .p-inputotp-input.p-variant-filled {
+  background: var(
+    --p-inputtext-filled-background,
+    var(--inputtext-filled-background, var(--form-field-filled-background))
+  );
+}

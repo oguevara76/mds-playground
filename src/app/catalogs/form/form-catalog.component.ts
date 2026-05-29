@@ -1,11 +1,13 @@
 import { NgClass } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { formPlaygroundAnchorId } from '../../layout/playground-component-index';
 import { FormsModule } from '@angular/forms';
 import { Checkbox } from 'primeng/checkbox';
 import { Divider } from 'primeng/divider';
 import { FloatLabel } from 'primeng/floatlabel';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
+import { InputOtp } from 'primeng/inputotp';
 import { InputText } from 'primeng/inputtext';
 import { Popover } from 'primeng/popover';
 import { RadioButton } from 'primeng/radiobutton';
@@ -23,6 +25,9 @@ import {
   FORM_INPUT_STATE_HINT,
   FORM_INPUT_STATE_FILLED_VALUE,
   FORM_INPUT_STATE_READONLY_VALUE,
+  FORM_INPUT_OTP_DEFAULT_LENGTH,
+  FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS,
+  FORM_INPUT_OTP_STATE_READONLY_VALUE,
   FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS,
   FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS,
   FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS,
@@ -56,6 +61,15 @@ export interface FormInputTextInteractionState {
   value: string;
 }
 
+export interface FormInputOtpInteractionState {
+  length: number;
+  mask: boolean;
+  integerOnly: boolean;
+  showHelperText: boolean;
+  size: FormInteractionSize;
+  value: string;
+}
+
 export interface FormTextareaInteractionState {
   variant: FormInputTextVariant;
   floatPosition: FormInputFloatVariant;
@@ -76,6 +90,17 @@ interface FormChoiceInteractionState {
 
 function defaultChoiceInteraction(): FormChoiceInteractionState {
   return { size: 'normal' };
+}
+
+function defaultInputOtpInteraction(): FormInputOtpInteractionState {
+  return {
+    length: FORM_INPUT_OTP_DEFAULT_LENGTH,
+    mask: false,
+    integerOnly: false,
+    showHelperText: false,
+    size: 'normal',
+    value: '',
+  };
 }
 
 function defaultInputTextInteraction(): FormInputTextInteractionState {
@@ -115,6 +140,7 @@ function defaultCheckboxState(): Record<FormCheckboxKey, boolean> {
     FormsModule,
     IconField,
     InputIcon,
+    InputOtp,
     InputText,
     NgClass,
     Popover,
@@ -128,6 +154,7 @@ function defaultCheckboxState(): Record<FormCheckboxKey, boolean> {
   styleUrl: './form-catalog.component.css',
 })
 export class FormCatalogComponent {
+  readonly formAnchorId = formPlaygroundAnchorId;
   readonly blocks = FORM_BLOCKS;
   readonly radioOptions = FORM_RADIO_OPTIONS;
   readonly checkboxOptions = FORM_CHECKBOX_OPTIONS;
@@ -135,6 +162,7 @@ export class FormCatalogComponent {
   readonly sizeSelectOptions = FORM_SIZE_SELECT_OPTIONS;
   readonly inputDefaultStates = FORM_INPUT_DEFAULT_STATES;
   readonly inputFloatStates = FORM_INPUT_FLOAT_STATES;
+  readonly inputotpLengthSelectOptions = FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS;
   readonly inputtextVariantSelectOptions = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
   readonly inputtextFloatPositionSelectOptions = FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS;
   readonly textareaVariantSelectOptions = FORM_TEXTAREA_VARIANT_SELECT_OPTIONS;
@@ -146,6 +174,7 @@ export class FormCatalogComponent {
     checkbox: 'outlined',
     toggleswitch: 'outlined',
     inputtext: 'outlined',
+    inputotp: 'outlined',
     textarea: 'outlined',
   });
 
@@ -155,6 +184,7 @@ export class FormCatalogComponent {
   readonly toggleOn = signal(true);
 
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
+  readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
 
   /** Float Label interactivo: placeholder solo mientras el campo tiene foco. */
   private readonly floatIxFocused = signal(false);
@@ -181,6 +211,10 @@ export class FormCatalogComponent {
     return block.kind === 'inputtext';
   }
 
+  isInputOtpBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputotp' } {
+    return block.kind === 'inputotp';
+  }
+
   formTheme(kind: FormBlockKind): FormFieldTheme {
     if (kind === 'toggleswitch') {
       return 'outlined';
@@ -195,7 +229,7 @@ export class FormCatalogComponent {
     this.formThemeByKind.update((prev) => ({ ...prev, [kind]: theme }));
   }
 
-  /** PrimeNG `variant` en InputText, Textarea, Checkbox y RadioButton. */
+  /** PrimeNG `variant` en InputText, InputOtp, Textarea, Checkbox y RadioButton. */
   formThemePrimeVariant(kind: FormBlockKind): 'filled' | undefined {
     return this.formTheme(kind) === 'filled' ? 'filled' : undefined;
   }
@@ -226,6 +260,55 @@ export class FormCatalogComponent {
 
   patchInputtext(patch: Partial<FormInputTextInteractionState>): void {
     this.inputtextIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  patchInputotp(patch: Partial<FormInputOtpInteractionState>): void {
+    this.inputotpIx.update((prev) => {
+      const next = { ...prev, ...patch };
+      if (patch.length !== undefined && next.value.length > patch.length) {
+        next.value = next.value.slice(0, patch.length);
+      }
+      return next;
+    });
+  }
+
+  /** PrimeNG `size` en InputOtp: omite en Normal. */
+  inputotpPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return size === 'normal' ? undefined : size;
+  }
+
+  /** Token MDS de lado de celda OTP (ancho = alto) según tamaño. */
+  private inputOtpCellWidthMdsToken(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return '--inputotp-input-sm-width';
+    }
+    if (size === 'large') {
+      return '--inputotp-input-lg-width';
+    }
+    return '--inputotp-input-width';
+  }
+
+  /**
+   * Variables en p-inputotp: puente explícito Core MDS → PrimeNG (--p-inputotp-*)
+   * y tamaño cuadrado compartido por las celdas.
+   */
+  inputOtpHostVars(size: FormInteractionSize): Record<string, string> {
+    const cell = `var(${this.inputOtpCellWidthMdsToken(size)})`;
+    return {
+      '--catalog-inputotp-cell-size': cell,
+      '--p-inputotp-gap': 'var(--inputotp-input-gap)',
+      '--p-inputotp-input-width': 'var(--inputotp-input-width)',
+      '--p-inputotp-input-sm-width': 'var(--inputotp-input-sm-width)',
+      '--p-inputotp-input-lg-width': 'var(--inputotp-input-lg-width)',
+    };
+  }
+
+  inputOtpDemoValue(length: number, state: FormInputDemoState): string {
+    if (state === 'readonly') {
+      const seed = FORM_INPUT_OTP_STATE_READONLY_VALUE;
+      return seed.slice(0, length).padEnd(length, seed.slice(-1));
+    }
+    return '';
   }
 
   setFloatIxFocused(focused: boolean): void {
@@ -621,6 +704,9 @@ export class FormCatalogComponent {
     if (this.isInputTextBlock(block)) {
       return this.inputtextIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
+    if (this.isInputOtpBlock(block)) {
+      return this.inputDefaultStates;
+    }
     return this.inputDefaultStates;
   }
 
@@ -647,6 +733,7 @@ export class FormCatalogComponent {
   readonly inputStateHint = FORM_INPUT_STATE_HINT;
   readonly inputStateErrorMessage = FORM_INPUT_STATE_ERROR_MESSAGE;
   readonly inputStateReadonlyValue = FORM_INPUT_STATE_READONLY_VALUE;
+  readonly inputOtpStateReadonlyValue = FORM_INPUT_OTP_STATE_READONLY_VALUE;
 
   /** Preview estático: el input no lleva valor, solo placeholder (tokens). */
   inputStateShowsPlaceholderOnly(block: FormBlockConfig, state: FormInputDemoState): boolean {
@@ -654,6 +741,15 @@ export class FormCatalogComponent {
       (this.isTextareaBlock(block) && this.textareaIsDefault()) ||
       (this.isInputTextBlock(block) && this.inputtextIsDefault());
     if (isDefaultField) {
+      return (
+        state === 'normal' ||
+        state === 'hover' ||
+        state === 'focus' ||
+        state === 'invalid' ||
+        state === 'disabled'
+      );
+    }
+    if (this.isInputOtpBlock(block)) {
       return (
         state === 'normal' ||
         state === 'hover' ||
@@ -702,7 +798,7 @@ export class FormCatalogComponent {
     if (state !== 'invalid') {
       return false;
     }
-    return this.isTextareaBlock(block) || this.isInputTextBlock(block);
+    return this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isInputOtpBlock(block);
   }
 
   inputStateShowHint(block: FormBlockConfig, state: FormInputDemoState): boolean {
@@ -724,6 +820,9 @@ export class FormCatalogComponent {
     }
     if (this.isInputTextBlock(block) && !this.inputtextIsDefault()) {
       return '';
+    }
+    if (this.isInputOtpBlock(block)) {
+      return this.inputOtpDemoValue(this.inputotpIx().length, state);
     }
     switch (state) {
       case 'readonly':

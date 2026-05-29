@@ -11,12 +11,20 @@ import { filter, map, startWith } from 'rxjs/operators';
 import { Toast } from 'primeng/toast';
 import { ThemeUploadService } from '../theme/theme-upload.service';
 import { ThemeService } from '../theme/theme.service';
+import { PlaygroundComponentSearchComponent } from './playground-component-search.component';
 import { PlaygroundSidebarComponent } from './playground-sidebar.component';
 
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, PlaygroundSidebarComponent, Toast],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    PlaygroundSidebarComponent,
+    PlaygroundComponentSearchComponent,
+    Toast,
+  ],
   templateUrl: './app-shell.component.html',
   styleUrl: './app-shell.component.css',
 })

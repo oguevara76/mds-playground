@@ -3,9 +3,14 @@
     <div
       class="catalog-preview form-showcase"
       [class.inputtext-showcase]="isInputTextBlock(block)"
+      [class.inputotp-showcase]="isInputOtpBlock(block)"
       [class.textarea-showcase]="isTextareaBlock(block)"
     >
-      <section class="preview-section preview-section--flush catalog-block-section">
+      <section
+        class="preview-section preview-section--flush catalog-block-section"
+        [attr.id]="formAnchorId(block.kind)"
+        tabindex="-1"
+      >
         <header class="catalog-block-head">
           <h3 class="section-title component-title-primary">{{ block.title }}</h3>
         </header>
@@ -645,6 +650,124 @@
                 </aside>
               </div>
             }
+            @case ('inputotp') {
+              <div class="input-interaction-row">
+                <div
+                  class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope"
+                  [ngClass]="formThemeContainerClass('inputotp')"
+                >
+                  <div class="p-field form-input-interaction-field">
+                    <p-inputotp
+                      [length]="inputotpIx().length"
+                      [mask]="inputotpIx().mask"
+                      [integerOnly]="inputotpIx().integerOnly"
+                      [size]="inputotpPrimeSize(inputotpIx().size)"
+                      [variant]="formThemePrimeVariant('inputotp')"
+                      [style]="inputOtpHostVars(inputotpIx().size)"
+                      [ngModel]="inputotpIx().value"
+                      (ngModelChange)="patchInputotp({ value: $event })"
+                    />
+                    @if (inputotpIx().showHelperText) {
+                      <small class="p-hint">Helper Text</small>
+                    }
+                  </div>
+                </div>
+                <aside class="button-config-aside">
+                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <p class="button-config-aside-hint">
+                    Puedes
+                    <button
+                      type="button"
+                      class="button-config-link"
+                      (click)="inputotpConfigPopover.toggle($event)"
+                      aria-haspopup="dialog"
+                      [attr.aria-expanded]="inputotpConfigPopover.overlayVisible"
+                    >
+                      configurar este componente
+                    </button>
+                    con las diferentes opciones disponibles.
+                  </p>
+                  <p-popover
+                    #inputotpConfigPopover
+                    styleClass="button-config-popover"
+                    appendTo="body"
+                    ariaLabel="Configurar InputOtp"
+                  >
+                    <div class="button-config-popover-body button-config-switches">
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Theme</span>
+                        <div class="button-config-select-wrap">
+                          <p-select
+                            [options]="themeSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="formTheme('inputotp')"
+                            (ngModelChange)="patchFormTheme('inputotp', $event)"
+                            size="small"
+                            appendTo="body"
+                            ariaLabel="Theme InputOtp"
+                          />
+                        </div>
+                      </div>
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Longitud</span>
+                        <div class="button-config-select-wrap">
+                          <p-select
+                            [options]="inputotpLengthSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="inputotpIx().length"
+                            (ngModelChange)="patchInputotp({ length: $event })"
+                            size="small"
+                            appendTo="body"
+                            ariaLabel="Longitud InputOtp"
+                          />
+                        </div>
+                      </div>
+                      <p-divider styleClass="button-config-divider" />
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Size</span>
+                        <div class="button-config-size-toggle-wrap">
+                          <p-selectbutton
+                            [options]="sizeSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="inputotpIx().size"
+                            (ngModelChange)="patchInputotp({ size: $event })"
+                            [allowEmpty]="false"
+                            [fluid]="true"
+                            size="small"
+                            ariaLabel="Size"
+                          />
+                        </div>
+                      </div>
+                      <p-divider styleClass="button-config-divider" />
+                      <div class="input-config-row">
+                        <span class="input-config-label">Mask</span>
+                        <p-toggleswitch
+                          [ngModel]="inputotpIx().mask"
+                          (ngModelChange)="patchInputotp({ mask: $event })"
+                        />
+                      </div>
+                      <div class="input-config-row">
+                        <span class="input-config-label">Solo enteros</span>
+                        <p-toggleswitch
+                          [ngModel]="inputotpIx().integerOnly"
+                          (ngModelChange)="patchInputotp({ integerOnly: $event })"
+                        />
+                      </div>
+                      <div class="input-config-row">
+                        <span class="input-config-label">Helper text</span>
+                        <p-toggleswitch
+                          [ngModel]="inputotpIx().showHelperText"
+                          (ngModelChange)="patchInputotp({ showHelperText: $event })"
+                        />
+                      </div>
+                    </div>
+                  </p-popover>
+                </aside>
+              </div>
+            }
             @default {}
           }
         </div>
@@ -1049,6 +1172,51 @@
                     </div>
                   }
                 </div>
+              } @else if (isInputOtpBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        <div class="p-field catalog-input-interactive">
+                          <div [ngClass]="inputDemoWrap(st.key)">
+                            @if (st.key === 'readonly') {
+                              <p-inputotp
+                                [length]="inputotpIx().length"
+                                [variant]="formThemePrimeVariant('inputotp')"
+                                [style]="inputOtpHostVars('normal')"
+                                [ngModel]="inputOtpDemoValue(inputotpIx().length, st.key)"
+                                [readonly]="true"
+                                [tabindex]="-1"
+                                [attr.aria-label]="st.caption"
+                              />
+                            } @else {
+                              <p-inputotp
+                                [length]="inputotpIx().length"
+                                [mask]="inputotpIx().mask"
+                                [integerOnly]="inputotpIx().integerOnly"
+                                [size]="inputotpPrimeSize('normal')"
+                                [variant]="formThemePrimeVariant('inputotp')"
+                                [style]="inputOtpHostVars('normal')"
+                                [ngModel]="inputStateValue(st.key, block)"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
+                                [readonly]="inputStateReadonly(st.key)"
+                                [tabindex]="-1"
+                                [attr.aria-label]="st.caption"
+                              />
+                            }
+                          </div>
+                          @if (inputStateShowErrorMessage(block, st.key)) {
+                            <small class="p-error">{{ inputStateErrorMessage }}</small>
+                          } @else if (inputStateShowHint(block, st.key)) {
+                            <small class="p-hint">{{ inputStateHint }}</small>
+                          }
+                        </div>
+                      </div>
+                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
+                    </div>
+                  }
+                </div>
               }
             }
           }
@@ -1225,6 +1393,26 @@
                             </p-floatlabel>
                           </div>
                         }
+                      </div>
+                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ sz.caption }}</span>
+                    </div>
+                  }
+                </div>
+              } @else if (isInputOtpBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        <div class="p-field catalog-input-interactive">
+                          <p-inputotp
+                            [length]="inputotpIx().length"
+                            [size]="inputotpPrimeSize(sz.key)"
+                            [variant]="formThemePrimeVariant('inputotp')"
+                            [style]="inputOtpHostVars(sz.key)"
+                            [readonly]="true"
+                            [tabindex]="-1"
+                          />
+                        </div>
                       </div>
                       <span class="catalog-button-state-caption catalog-input-state-caption">{{ sz.caption }}</span>
                     </div>

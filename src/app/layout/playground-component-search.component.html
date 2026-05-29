@@ -1,0 +1,56 @@
+<div
+  class="pg-search"
+  role="combobox"
+  [attr.aria-expanded]="panelOpen()"
+  aria-haspopup="listbox"
+>
+  <label class="pg-search-label" for="pg-component-search">Buscar componente</label>
+  <div class="pg-search-wrap">
+    <i class="pi pi-search pg-search-icon" aria-hidden="true"></i>
+    <input
+      #searchInput
+      id="pg-component-search"
+      type="search"
+      class="pg-search-input"
+      [placeholder]="'Buscar entre ' + totalComponents + ' componentes…'"
+      autocomplete="off"
+      spellcheck="false"
+      [ngModel]="query()"
+      (ngModelChange)="onQueryChange($event)"
+      (focus)="openPanel()"
+      (keydown)="onKeydown($event)"
+      aria-autocomplete="list"
+      [attr.aria-controls]="panelOpen() ? 'pg-component-search-list' : null"
+      [attr.aria-activedescendant]="
+        panelOpen() && results().length ? 'pg-search-opt-' + highlightIndex() : null
+      "
+    />
+    @if (query()) {
+      <button type="button" class="pg-search-clear" title="Limpiar búsqueda" (click)="clear()">
+        <i class="pi pi-times" aria-hidden="true"></i>
+      </button>
+    }
+  </div>
+
+  @if (panelOpen() && results().length) {
+    <ul id="pg-component-search-list" class="pg-search-panel" role="listbox">
+      @for (item of results(); track item.id; let i = $index) {
+        <li
+          role="option"
+          [id]="'pg-search-opt-' + i"
+          class="pg-search-option"
+          [class.pg-search-option--active]="highlightIndex() === i"
+          [attr.aria-selected]="highlightIndex() === i"
+          (mousedown)="$event.preventDefault()"
+          (click)="select(item)"
+        >
+          <span class="pg-search-option-name">{{ item.name }}</span>
+          <span class="pg-search-option-meta">{{ metaLine(item) }}</span>
+          <span class="pg-search-option-section">{{ item.sectionLabel }}</span>
+        </li>
+      }
+    </ul>
+  } @else if (panelOpen() && query().trim() && !results().length) {
+    <div class="pg-search-empty" role="status">Sin resultados para «{{ query().trim() }}»</div>
+  }
+</div>

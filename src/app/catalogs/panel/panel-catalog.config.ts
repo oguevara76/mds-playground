@@ -6,6 +6,44 @@ export interface PanelCatalogTab {
   content: string;
 }
 
+// ─── Divider ──────────────────────────────────────────────────────────────────
+
+export type DividerBorderType = 'solid' | 'dashed' | 'dotted';
+export type DividerAlignOption = 'left' | 'center' | 'right';
+
+export interface DividerInteractionState {
+  type: DividerBorderType;
+  align: DividerAlignOption;
+  showLabel: boolean;
+}
+
+export const DIVIDER_BORDER_TYPE_OPTIONS: { label: string; value: DividerBorderType }[] = [
+  { label: 'Solid', value: 'solid' },
+  { label: 'Dashed', value: 'dashed' },
+  { label: 'Dotted', value: 'dotted' },
+];
+
+export const DIVIDER_ALIGN_OPTIONS: { label: string; value: DividerAlignOption }[] = [
+  { label: 'Left', value: 'left' },
+  { label: 'Center', value: 'center' },
+  { label: 'Right', value: 'right' },
+];
+
+export type DividerStateKey = 'default' | 'labeled' | 'icon';
+
+export interface DividerStateDemo {
+  key: DividerStateKey;
+  caption: string;
+  label?: string;
+  icon?: string;
+}
+
+export const DIVIDER_STATE_DEMOS: DividerStateDemo[] = [
+  { key: 'default', caption: 'Default' },
+  { key: 'labeled', caption: 'Con etiqueta', label: 'Sección' },
+  { key: 'icon', caption: 'Con icono', icon: 'pi pi-star' },
+];
+
 export const PANEL_CATALOG_TABS: PanelCatalogTab[] = [
   {
     value: '0',
