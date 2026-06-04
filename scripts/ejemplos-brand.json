@@ -320,7 +320,7 @@
   "rosa": {
     "headers": {
       "primitives": "/* Primitives — Ejemplo: Rosa #b04472\n   Remapea --rose-* a la rampa rosa con base #b04472 en posición 600.\n\n   Base: #b04472 → HSL(334°, 44%, 48%)  Contraste con blanco: 5.3:1 ✓ WCAG AA (texto grande)\n\n   50  #fff0f6   HSL(334, 100%, 97%)\n   100 #fdd8e8   HSL(334,  90%, 92%)\n   200 #f6accc   HSL(334,  80%, 82%)\n   300 #e87dab   HSL(334,  70%, 70%)\n   400 #d45e91   HSL(334,  58%, 60%)\n   500 #c44f82   HSL(334,  50%, 54%)\n   600 #b04472 ← HSL(334,  44%, 48%)  COLOR BASE\n   700 #843356   HSL(334,  44%, 36%)\n   800 #5c243c   HSL(334,  44%, 25%)\n   900 #3b1726   HSL(334,  44%, 16%)\n   950 #250e18   HSL(334,  44%, 10%)\n*/",
-      "components": "/* Components — Ejemplo: Rosa #b04472\n   Brillo percibido ~0.41 sobre rose-600 → texto e iconos OSCUROS en CTAs filled\n   (misma estrategia que Oliva). Focus ring en rose-700.\n*/",
+      "components": "/* Components — Ejemplo: Rosa #b04472\n   Brillo percibido ~0.41 sobre rose-600 → texto e iconos OSCUROS en CTAs filled\n   (misma estrategia que Oliva). Focus ring en rose-700.\n\n   Smoke test overwrite (verificar upload en playground):\n   /button  → --button-border-radius, --button-padding-y\n   /form    → --inputtext-border-radius, --toggleswitch-border-width\n   /messages → --message-border-width\n*/",
       "semantic-light": "/* Semantics Light — Ejemplo: Rosa #b04472\n   Ajusta highlight al tono rosa en modo claro.\n*/",
       "semantic-dark": "/* Semantics Dark — Ejemplo: Rosa #b04472\n   En dark mode el primary usa --rose-400, tono más claro\n   de la rampa rosa — visible sobre fondos oscuros.\n*/"
     },
@@ -341,16 +341,21 @@
       "components": {
         "--badge-primary-background": "var(--primary-color)",
         "--badge-primary-color": "var(--rose-950)",
+        "--button-border-radius": "24px",
         "--button-outlined-plain-color": "var(--primary-700)",
+        "--button-padding-y": "16px",
         "--button-primary-active-color": "var(--rose-950)",
         "--button-primary-color": "var(--rose-950)",
         "--button-primary-focus-ring-color": "rgba(132, 51, 86, 1)",
         "--button-primary-hover-color": "var(--rose-950)",
+        "--inputtext-border-radius": "20px",
+        "--message-border-width": "4px",
         "--paginator-nav-button-selected-color": "var(--rose-950)",
         "--stepper-step-number-active-background": "var(--primary-color)",
         "--stepper-step-number-active-color": "var(--rose-950)",
         "--tag-primary-background": "var(--primary-color)",
-        "--tag-primary-color": "var(--rose-950)"
+        "--tag-primary-color": "var(--rose-950)",
+        "--toggleswitch-border-width": "3px"
       },
       "semantic-light": {
         "--highlight-background": "rgba(176, 68, 114, 0.12)",

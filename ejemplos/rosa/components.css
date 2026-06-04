@@ -1,6 +1,11 @@
 /* Components — Ejemplo: Rosa #b04472
    Brillo percibido ~0.41 sobre rose-600 → texto e iconos OSCUROS en CTAs filled
    (misma estrategia que Oliva). Focus ring en rose-700.
+
+   Smoke test overwrite (verificar upload en playground):
+   /button  → --button-border-radius, --button-padding-y
+   /form    → --inputtext-border-radius, --toggleswitch-border-width
+   /messages → --message-border-width
 */
 
 html:root {
@@ -173,7 +178,7 @@ html:root {
   --breadcrumb-item-icon-hover-color: var(--navigation-item-icon-focus-color);
   --breadcrumb-padding: var(--dimension-scale-x14);
   --breadcrumb-separator-color: var(--navigation-item-icon-color);
-  --button-border-radius: var(--form-field-border-radius);
+  --button-border-radius: 24px;
   --button-contrast-active-background: var(--surface-context-intense);
   --button-contrast-active-border-color: var(--surface-context-intense);
   --button-contrast-active-color: var(--surface-context-minimal);
@@ -265,7 +270,7 @@ html:root {
   --button-outlined-warn-color: var(--feedback-warn-strong);
   --button-outlined-warn-hover-background: var(--feedback-warn-minimal);
   --button-padding-x: var(--form-field-padding-x);
-  --button-padding-y: var(--form-field-padding-y);
+  --button-padding-y: 16px;
   --button-primary-active-background: var(--primary-active-color);
   --button-primary-active-border-color: var(--primary-active-color);
   --button-primary-active-color: var(--rose-950);
@@ -947,7 +952,7 @@ html:root {
   --inputotp-input-width: var(--dimension-scale-x32);
   --inputtext-background: var(--form-field-background);
   --inputtext-border-color: var(--form-field-border-color);
-  --inputtext-border-radius: var(--form-field-border-radius);
+  --inputtext-border-radius: 20px;
   --inputtext-border-rounded-radius: var(--form-field-border-radius-rounded);
   --inputtext-color: var(--form-field-color);
   --inputtext-disabled-background: var(--form-field-disabled-background);
@@ -1102,7 +1107,7 @@ html:root {
   --menubar-submenu-mobile-indent: var(--dimension-scale-x14);
   --menubar-submenu-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);
   --message-border-radius: var(--content-border-radius);
-  --message-border-width: 1px;
+  --message-border-width: 4px;
   --message-close-button-border-radius: var(--dimension-radius-x12);
   --message-close-button-focus-ring-offset: var(--focus-ring-offset);
   --message-close-button-focus-ring-width: var(--focus-ring-width);
@@ -1765,7 +1770,7 @@ html:root {
   --toggleswitch-background: var(--surface-context-base);
   --toggleswitch-border-color: var(--surface-context-strong);
   --toggleswitch-border-radius: var(--border-radius-pill);
-  --toggleswitch-border-width: 1px;
+  --toggleswitch-border-width: 3px;
   --toggleswitch-checked-background: var(--primary-color);
   --toggleswitch-checked-border-color: rgba(0, 0, 0, 0);
   --toggleswitch-checked-hover-background: var(--primary-700);
