@@ -25,7 +25,7 @@ Abre en el navegador: http://localhost:3000/button
 ```
 mds-playground/
 ├── src/                 # App Angular
-├── ejemplos/            # Marcas de ejemplo (upload)
+├── ejemplos/            # Marcas de ejemplo (local, no en git — ver regen:ejemplos)
 ├── styles/              # Core MDS + shell
 ├── scripts/             # Regeneración de tokens y ejemplos
 ├── docs/
