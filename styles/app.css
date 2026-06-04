@@ -432,6 +432,7 @@ app-playground-sidebar {
   z-index: 10;
   width: 100%;
   box-sizing: border-box;
+  overflow: visible;
 }
 
 .preview-tabs {
@@ -448,7 +449,11 @@ app-playground-sidebar {
   justify-self: end;
   width: var(--playground-search-width);
   max-width: 100%;
+  position: relative;
+  z-index: 30;
+  overflow: visible;
 }
+
 .preview-tab {
   padding: 6px 14px;
   background: transparent;
@@ -2217,8 +2222,27 @@ app-playground-sidebar {
   color: var(--p-button-primary-color);
   border-color: var(--p-primary-color);
 }
-[data-theme="dark"] .tv-view-btn { border-color: var(--p-surface-600); color: var(--p-surface-400); }
-[data-theme="dark"] .tv-view-btn:hover { background: rgba(255,255,255,.07); color: var(--p-surface-200); }
+[data-theme="dark"] .tv-view-btn:not(.tv-view-btn-on) {
+  border-color: var(--p-surface-600);
+  color: var(--p-surface-400);
+}
+[data-theme="dark"] .tv-view-btn:not(.tv-view-btn-on):hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--p-surface-200);
+  border-color: var(--p-surface-500);
+}
+/* Activo: misma lógica que preview-tab.active (el selector .tv-view-btn dark pisaba color/borde) */
+[data-theme="dark"] .tv-view-btn.tv-view-btn-on {
+  background: var(--p-primary-color);
+  color: var(--p-primary-color-text, var(--p-button-primary-color, var(--primary-contrast-color)));
+  border-color: var(--p-primary-color);
+  font-weight: 600;
+}
+[data-theme="dark"] .tv-view-btn.tv-view-btn-on:hover {
+  background: var(--p-primary-hover-color, var(--p-primary-color));
+  color: var(--p-primary-color-text, var(--p-button-primary-color, var(--primary-contrast-color)));
+  border-color: var(--p-primary-hover-color, var(--p-primary-color));
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    TOKENS MIND MAP
