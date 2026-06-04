@@ -525,6 +525,25 @@ export class FormCatalogComponent {
     return '--inputtext-padding-x';
   }
 
+  private fieldPaddingYToken(field: FormFieldKind, size: FormInteractionSize): string {
+    if (field === 'textarea') {
+      if (size === 'small') {
+        return '--textarea-sm-padding-y';
+      }
+      if (size === 'large') {
+        return '--textarea-lg-padding-y';
+      }
+      return '--textarea-padding-y';
+    }
+    if (size === 'small') {
+      return '--inputtext-sm-padding-y';
+    }
+    if (size === 'large') {
+      return '--inputtext-lg-padding-y';
+    }
+    return '--inputtext-padding-y';
+  }
+
   private floatIconSizeMdsToken(size: FormInteractionSize): string {
     if (size === 'small') {
       return '--iconfield-figma-sm-icon-size';
@@ -541,11 +560,18 @@ export class FormCatalogComponent {
   ): Record<string, string> {
     const positionValue = `var(${this.floatLabelPositionMdsToken(size)})`;
     const fontValue = `var(${this.fieldInfieldFontSizeMdsToken(field, size)})`;
+    const positionYValue = `var(${this.fieldPaddingYToken(field, size)})`;
+    const overActiveBackground =
+      field === 'textarea'
+        ? 'var(--textarea-background, var(--p-textarea-background, var(--form-field-background)))'
+        : 'var(--inputtext-background, var(--p-inputtext-background, var(--form-field-background)))';
     return {
       '--p-floatlabel-position-x': positionValue,
       '--catalog-floatlabel-position-x': positionValue,
+      '--p-floatlabel-position-y': positionYValue,
       '--p-floatlabel-infield-font-size': fontValue,
       '--catalog-floatlabel-infield-font-size': fontValue,
+      '--p-floatlabel-over-active-background': overActiveBackground,
     };
   }
 

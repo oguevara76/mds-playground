@@ -1174,11 +1174,48 @@
   );
 }
 
+/* Textarea Float Over/On: espacio para label fuera del borde (paridad InputText) */
+:host ::ng-deep .form-showcase .textarea-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
+:host ::ng-deep .form-showcase .textarea-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-over-wrapper-padding-top, var(--floatlabel-over-wrapper-padding-top, 14px));
+}
+
+:host ::ng-deep .form-showcase .textarea-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-on-wrapper-padding-top, var(--floatlabel-on-wrapper-padding-top, 7px));
+}
+
+/* Textarea Float Over: label activo por encima del borde (PrimeNG :has(.p-textarea) no debe ganar especificidad) */
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-over:has(textarea:focus) label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-over:has(textarea.p-filled) label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-over:has(textarea[placeholder]) label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top, -0.875rem));
+  transform: translateY(0);
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(--p-floatlabel-over-active-background, var(--floatlabel-over-active-background, var(--textarea-background, var(--form-field-background))));
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+/* Textarea Float On activo: label sobre el borde superior */
+:host ::ng-deep .textarea-showcase .catalog-input-states-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-on:has(textarea:focus) label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-on:has(textarea.p-filled) label,
+:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel-on:has(textarea[placeholder]) label {
+  top: 0;
+  transform: translateY(-50%);
+  padding: var(--p-floatlabel-on-active-padding, var(--floatlabel-on-active-padding-y, 0) var(--floatlabel-on-active-padding-x, 2px));
+  background: var(--p-floatlabel-on-active-background, var(--floatlabel-on-active-background, var(--textarea-background, var(--form-field-background))));
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
 :host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel.is-label-floated label,
-:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel-in.is-label-floated label,
-:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel:has(textarea:focus) label,
-:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel:has(textarea.p-filled) label,
-:host ::ng-deep .textarea-showcase .textarea-interaction-scope .p-floatlabel:has(textarea[placeholder]) label {
+:host ::ng-deep .textarea-showcase .catalog-input-sizes-row .p-floatlabel-in.is-label-floated label {
   font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
   font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
 }
