@@ -43,6 +43,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-radiobutton': 'radiobutton',
   'pg-checkbox': 'checkbox',
   'pg-toggleswitch': 'toggleswitch',
+  'pg-togglebutton': 'togglebutton',
   'pg-inputtext': 'inputtext',
   'pg-inputotp': 'inputotp',
   'pg-rating': 'rating',
@@ -73,6 +74,7 @@ const FORM_VARIANT_COUNTS: Record<string, number> = {
   radio: 4,
   checkbox: 4,
   toggleswitch: 4,
+  togglebutton: 4,
   inputtext: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputotp: 6,
   rating: 4,
@@ -188,7 +190,15 @@ export function buttonPlaygroundAnchorId(kind: 'standard' | 'icon' | 'text'): st
 }
 
 export function formPlaygroundAnchorId(
-  kind: 'radio' | 'checkbox' | 'toggleswitch' | 'inputtext' | 'inputotp' | 'rating' | 'textarea',
+  kind:
+    | 'radio'
+    | 'checkbox'
+    | 'toggleswitch'
+    | 'togglebutton'
+    | 'inputtext'
+    | 'inputotp'
+    | 'rating'
+    | 'textarea',
 ): string {
   return `pg-${kind}`;
 }

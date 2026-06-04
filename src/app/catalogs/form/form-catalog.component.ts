@@ -17,6 +17,7 @@ import { StarIcon } from 'primeng/icons/star';
 import { Select } from 'primeng/select';
 import { SelectButton } from 'primeng/selectbutton';
 import { Textarea } from 'primeng/textarea';
+import { ToggleButton } from 'primeng/togglebutton';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import {
   FORM_BLOCKS,
@@ -41,6 +42,7 @@ import {
   FORM_CHOICE_SIZE_DISPLAY_LABELS,
   FORM_SIZE_OPTIONS,
   FORM_SIZE_SELECT_OPTIONS,
+  FORM_TOGGLEBUTTON_ICON_POS_OPTIONS,
   FORM_THEME_SELECT_OPTIONS,
   type FormBlockConfig,
   type FormBlockKind,
@@ -92,6 +94,12 @@ export interface FormTextareaInteractionState {
 }
 
 type FormChoiceBlockKind = 'radio' | 'checkbox';
+
+interface FormToggleButtonInteractionState {
+  size: FormInteractionSize;
+  withIcons: boolean;
+  iconPos: 'left' | 'right';
+}
 
 /** Campo al que aplican los tokens MDS de float label / ifta (input vs textarea). */
 type FormFieldKind = 'inputtext' | 'textarea';
@@ -150,6 +158,10 @@ function defaultCheckboxState(): Record<FormCheckboxKey, boolean> {
   return { email: true, sms: false, push: true };
 }
 
+function defaultToggleButtonInteraction(): FormToggleButtonInteractionState {
+  return { size: 'normal', withIcons: false, iconPos: 'left' };
+}
+
 @Component({
   selector: 'app-form-catalog',
   standalone: true,
@@ -171,6 +183,7 @@ function defaultCheckboxState(): Record<FormCheckboxKey, boolean> {
     Select,
     SelectButton,
     Textarea,
+    ToggleButton,
     ToggleSwitch,
   ],
   templateUrl: './form-catalog.component.html',
@@ -193,11 +206,13 @@ export class FormCatalogComponent {
   readonly textareaVariantSelectOptions = FORM_TEXTAREA_VARIANT_SELECT_OPTIONS;
   readonly textareaFloatPositionSelectOptions = FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS;
   readonly themeSelectOptions = FORM_THEME_SELECT_OPTIONS;
+  readonly toggleButtonIconPosOptions = FORM_TOGGLEBUTTON_ICON_POS_OPTIONS;
 
   private readonly formThemeByKind = signal<Record<FormBlockKind, FormFieldTheme>>({
     radio: 'outlined',
     checkbox: 'outlined',
     toggleswitch: 'outlined',
+    togglebutton: 'outlined',
     inputtext: 'outlined',
     inputotp: 'outlined',
     rating: 'outlined',
@@ -208,6 +223,9 @@ export class FormCatalogComponent {
   readonly checkboxIx = signal<Record<FormCheckboxKey, boolean>>(defaultCheckboxState());
   readonly toggleOff = signal(false);
   readonly toggleOn = signal(true);
+  readonly toggleButtonIx = signal(defaultToggleButtonInteraction());
+  readonly toggleButtonOff = signal(false);
+  readonly toggleButtonOn = signal(true);
 
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
@@ -246,15 +264,90 @@ export class FormCatalogComponent {
     return block.kind === 'rating';
   }
 
+  isToggleButtonBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'togglebutton' } {
+    return block.kind === 'togglebutton';
+  }
+
+  patchToggleButtonIx(patch: Partial<FormToggleButtonInteractionState>): void {
+    this.toggleButtonIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  toggleButtonOnIcon(): string | undefined {
+    return this.toggleButtonIx().withIcons ? 'pi pi-check' : undefined;
+  }
+
+  toggleButtonOffIcon(): string | undefined {
+    return this.toggleButtonIx().withIcons ? 'pi pi-times' : undefined;
+  }
+
+  /** PrimeNG `size` en ToggleButton: solo small | large (normal = sin atributo). */
+  toggleButtonPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return size === 'normal' ? undefined : size;
+  }
+
+  /**
+   * Puente MDS → PrimeNG en el host de cada p-togglebutton.
+   * Track (root): siempre --togglebutton-padding (2px). Área activa (.p-togglebutton-content):
+   * normal → content-padding; sm/lg → sm-padding / lg-padding (ver primeng-togglebutton-parity.css).
+   */
+  toggleButtonHostVars(size: FormInteractionSize): Record<string, string> {
+    const base: Record<string, string> = {
+      '--p-togglebutton-padding': 'var(--togglebutton-padding)',
+      '--p-togglebutton-content-padding': 'var(--togglebutton-content-padding)',
+      '--p-togglebutton-gap': 'var(--togglebutton-gap)',
+      '--p-togglebutton-font-weight': 'var(--togglebutton-font-weight)',
+      '--p-togglebutton-border-radius': 'var(--togglebutton-border-radius)',
+      '--p-togglebutton-content-border-radius': 'var(--togglebutton-content-border-radius)',
+      '--p-togglebutton-background': 'var(--togglebutton-background)',
+      '--p-togglebutton-border-color': 'var(--togglebutton-border-color)',
+      '--p-togglebutton-color': 'var(--togglebutton-color)',
+      '--p-togglebutton-hover-background': 'var(--togglebutton-hover-background)',
+      '--p-togglebutton-hover-color': 'var(--togglebutton-hover-color)',
+      '--p-togglebutton-checked-background': 'var(--togglebutton-checked-background)',
+      '--p-togglebutton-checked-border-color': 'var(--togglebutton-checked-border-color)',
+      '--p-togglebutton-checked-color': 'var(--togglebutton-checked-color)',
+      '--p-togglebutton-content-checked-background': 'var(--togglebutton-content-checked-background)',
+      '--p-togglebutton-content-checked-shadow': 'var(--togglebutton-content-shadow)',
+      '--p-togglebutton-icon-color': 'var(--togglebutton-icon-color)',
+      '--p-togglebutton-icon-hover-color': 'var(--togglebutton-icon-hover-color)',
+      '--p-togglebutton-icon-checked-color': 'var(--togglebutton-icon-checked-color)',
+    };
+
+    if (size === 'small') {
+      return {
+        ...base,
+        '--p-togglebutton-font-size': 'var(--togglebutton-sm-font-size)',
+        '--p-togglebutton-sm-font-size': 'var(--togglebutton-sm-font-size)',
+        '--p-togglebutton-sm-padding': 'var(--togglebutton-padding)',
+        '--p-togglebutton-content-sm-padding': 'var(--togglebutton-sm-padding)',
+      };
+    }
+
+    if (size === 'large') {
+      return {
+        ...base,
+        '--p-togglebutton-font-size': 'var(--togglebutton-lg-font-size)',
+        '--p-togglebutton-lg-font-size': 'var(--togglebutton-lg-font-size)',
+        '--p-togglebutton-lg-padding': 'var(--togglebutton-padding)',
+        '--p-togglebutton-content-lg-padding': 'var(--togglebutton-lg-padding)',
+      };
+    }
+
+    return {
+      ...base,
+      '--p-togglebutton-font-size': 'var(--togglebutton-font-size)',
+    };
+  }
+
   formTheme(kind: FormBlockKind): FormFieldTheme {
-    if (kind === 'toggleswitch') {
+    if (kind === 'toggleswitch' || kind === 'togglebutton') {
       return 'outlined';
     }
     return this.formThemeByKind()[kind];
   }
 
   patchFormTheme(kind: FormBlockKind, theme: FormFieldTheme): void {
-    if (kind === 'toggleswitch') {
+    if (kind === 'toggleswitch' || kind === 'togglebutton') {
       return;
     }
     this.formThemeByKind.update((prev) => ({ ...prev, [kind]: theme }));

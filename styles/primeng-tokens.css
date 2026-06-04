@@ -445,6 +445,48 @@ html[data-theme="light"] {
   --p-toggleswitch-focus-ring-offset:             var(--toggleswitch-focus-ring-offset, var(--p-focus-ring-offset));
   --p-toggleswitch-focus-ring-shadow:             var(--toggleswitch-focus-ring-shadow, 0 0 0 0 transparent);
 
+  /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — ToggleButton (core MDS / Figma ctr--tol)
+     ═══════════════════════════════════════════════════════════════════ */
+  --p-togglebutton-padding:                       var(--togglebutton-padding);
+  --p-togglebutton-border-radius:                 var(--togglebutton-border-radius, var(--content-border-radius, var(--p-border-radius)));
+  --p-togglebutton-gap:                           var(--togglebutton-gap, var(--dimension-scale-x8, 8px));
+  --p-togglebutton-font-size:                     var(--togglebutton-font-size, var(--dimension-scale-x14, var(--p-font-size)));
+  --p-togglebutton-font-weight:                   var(--togglebutton-font-weight, 500);
+  --p-togglebutton-background:                    var(--togglebutton-background, var(--surface-context-subtle, var(--p-surface-100)));
+  --p-togglebutton-border-color:                  var(--togglebutton-border-color, var(--surface-context-subtle, var(--p-surface-200)));
+  --p-togglebutton-color:                         var(--togglebutton-color, var(--surface-context-contrast, var(--p-content-color)));
+  --p-togglebutton-hover-background:              var(--togglebutton-hover-background, var(--surface-context-subtle, var(--p-surface-100)));
+  --p-togglebutton-hover-color:                   var(--togglebutton-hover-color, var(--surface-context-strong, var(--p-content-color)));
+  --p-togglebutton-checked-background:            var(--togglebutton-checked-background, var(--surface-context-subtle, var(--p-surface-100)));
+  --p-togglebutton-checked-border-color:          var(--togglebutton-checked-border-color, var(--surface-context-subtle, var(--p-surface-200)));
+  --p-togglebutton-checked-color:                 var(--togglebutton-checked-color, var(--surface-context-intense, var(--p-content-color)));
+  --p-togglebutton-disabled-background:           var(--togglebutton-disabled-background, var(--form-field-disabled-background, var(--p-surface-200)));
+  --p-togglebutton-disabled-border-color:         var(--togglebutton-disabled-border-color, var(--form-field-disabled-background, var(--p-surface-200)));
+  --p-togglebutton-disabled-color:                var(--togglebutton-disabled-color, var(--form-field-disabled-color, var(--p-surface-400)));
+  --p-togglebutton-invalid-border-color:          var(--togglebutton-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+  --p-togglebutton-transition-duration:           var(--form-field-transition-duration, 0.2s);
+  --p-togglebutton-focus-ring-width:              var(--togglebutton-focus-ring-width, var(--p-focus-ring-width));
+  --p-togglebutton-focus-ring-style:              solid;
+  --p-togglebutton-focus-ring-color:              var(--togglebutton-focus-ring-color, var(--p-focus-ring-color));
+  --p-togglebutton-focus-ring-offset:             var(--togglebutton-focus-ring-offset, var(--p-focus-ring-offset));
+  --p-togglebutton-focus-ring-shadow:             var(--togglebutton-focus-ring-shadow, 0 0 0 0 transparent);
+  --p-togglebutton-sm-font-size:                  var(--togglebutton-sm-font-size, var(--form-field-sm-font-size, var(--p-font-size-sm)));
+  /* PrimeNG aplica sm|lg padding al root; en MDS es siempre 2px — parity CSS fuerza el track */
+  --p-togglebutton-sm-padding:                    var(--togglebutton-padding);
+  --p-togglebutton-lg-font-size:                  var(--togglebutton-lg-font-size, var(--form-field-lg-font-size, var(--p-font-size-lg)));
+  --p-togglebutton-lg-padding:                    var(--togglebutton-padding);
+  --p-togglebutton-icon-color:                    var(--togglebutton-icon-color, var(--surface-context-contrast, var(--p-content-color)));
+  --p-togglebutton-icon-hover-color:              var(--togglebutton-icon-hover-color, var(--surface-context-strong, var(--p-content-color)));
+  --p-togglebutton-icon-checked-color:            var(--togglebutton-icon-checked-color, var(--surface-context-intense, var(--p-content-color)));
+  --p-togglebutton-icon-disabled-color:           var(--togglebutton-icon-disabled-color, var(--form-field-disabled-color, var(--p-surface-400)));
+  --p-togglebutton-content-padding:               var(--togglebutton-content-padding, var(--togglebutton-content-padding-y) var(--togglebutton-content-padding-x));
+  --p-togglebutton-content-border-radius:         var(--togglebutton-content-border-radius, var(--dimension-radius-x4, var(--p-border-radius)));
+  --p-togglebutton-content-checked-background:    var(--togglebutton-content-checked-background, var(--surface-context-minimal, var(--p-surface-0)));
+  --p-togglebutton-content-checked-shadow:        var(--togglebutton-content-shadow, 0 1px 2px rgba(0, 0, 0, 0.08));
+  --p-togglebutton-content-sm-padding:            var(--togglebutton-content-sm-padding);
+  --p-togglebutton-content-lg-padding:            var(--togglebutton-content-lg-padding);
+
   /* InputText — PrimeNG 20 dt('inputtext.*') */
   --p-inputtext-color:                    var(--inputtext-color, var(--form-field-color, var(--p-surface-700)));
   --p-inputtext-background:               var(--inputtext-background, var(--form-field-background, var(--p-surface-0)));
@@ -1061,6 +1103,10 @@ html[data-theme="light"] {
 /* ─── DARK MODE ─────────────────────────────────────────────────────── */
 /* Modo oscuro: data-theme="dark" en <html> — shell + tokens de componente */
 html[data-theme="dark"] {
+    /* Tipografía (Inter cargada en index.html) — al inicio del bloque dark */
+    --p-font-family: 'Inter', system-ui, sans-serif;
+    --p-font-size:   14px;
+
     --p-border-radius:      var(--border-radius-md,   6px);
     --p-border-radius-sm:   var(--border-radius-sm,   4px);
     --p-border-radius-lg:   var(--border-radius-lg,   8px);

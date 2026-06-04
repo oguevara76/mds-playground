@@ -88,7 +88,8 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
 .p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton .p-togglebutton-content {
   width: 100%;
   justify-content: center;
-  padding: var(--togglebutton-sm-padding-y, 6px) var(--togglebutton-sm-padding-x, 8px) !important;
+  padding: var(--togglebutton-content-sm-padding-y) var(--togglebutton-content-sm-padding-x) !important;
+  border-radius: var(--togglebutton-content-border-radius) !important;
   background: transparent !important;
   color: inherit !important;
   box-shadow: none !important;
@@ -145,9 +146,20 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
 
 .p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked .p-togglebutton-content,
 .form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked .p-togglebutton-content {
-  background: var(--togglebutton-content-checked-background, var(--primary-color)) !important;
-  color: var(--primary-contrast-color, var(--p-primary-color-text, #fff)) !important;
-  box-shadow: var(--togglebutton-content-shadow, 0 1px 2px rgba(0, 0, 0, 0.08)) !important;
+  background: var(--togglebutton-content-checked-background) !important;
+  color: var(--togglebutton-checked-color) !important;
+  box-shadow: var(--togglebutton-content-shadow) !important;
+  border-radius: var(--togglebutton-content-border-radius) !important;
+}
+
+.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton:not(.p-togglebutton-checked):hover .p-togglebutton-icon,
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton:not(.p-togglebutton-checked):hover .p-togglebutton-icon {
+  color: var(--togglebutton-icon-hover-color) !important;
+}
+
+.p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked .p-togglebutton-icon,
+.form-config-aside-inline .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton.p-togglebutton-checked .p-togglebutton-icon {
+  color: var(--togglebutton-icon-checked-color) !important;
 }
 
 .p-popover .button-config-size-toggle-wrap .p-selectbutton .p-togglebutton {

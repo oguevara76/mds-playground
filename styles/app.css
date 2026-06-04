@@ -8,8 +8,8 @@
 html, body {
   height: 100%;
   overflow: hidden;
-  font-family: var(--p-font-family);
-  font-size: var(--p-font-size);
+  font-family: 'Inter', var(--p-font-family, system-ui, sans-serif);
+  font-size: var(--p-font-size, 14px);
   background: var(--app-bg);
   color: var(--p-content-color);
   transition: background .25s, color .25s;

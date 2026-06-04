@@ -26,6 +26,12 @@ SHELL_VARS = frozenset(
     }
 )
 
+# PrimeNG Aura puede pisar --p-font-family en runtime (sobre todo en dark).
+# No existe token MDS --font-family; fijamos la tipografía del playground tras el puente.
+TYPOGRAPHY_LOCK: dict[str, str] = {
+    "--p-font-family": "'Inter', system-ui, sans-serif",
+}
+
 
 def extract_block(css: str, selector: str) -> str:
     i = css.find(selector)
@@ -122,7 +128,8 @@ def main() -> None:
         if shell in dark_shell:
             merged_dark[shell] = dark_shell[shell]
 
-    dark_pairs = sorted(merged_dark.items(), key=lambda x: x[0])
+    dark_pairs = sorted({**merged_dark, **TYPOGRAPHY_LOCK}.items(), key=lambda x: x[0])
+    light_pairs = sorted({**dict(light_pairs), **TYPOGRAPHY_LOCK}.items(), key=lambda x: x[0])
 
     css_out = (
         "/* Auto-generated — NO EDITAR. scripts/regen-prime-runtime-bridge.py */\n"

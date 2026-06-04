@@ -73,6 +73,15 @@
 }
 
 /* Radio/Checkbox: cada size fija tokens MDS de texto y gaps (ver FORM_CHOICE_SIZE_LAYOUT) */
+.form-togglebutton-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--togglebutton-gap, var(--dimension-scale-x8, 8px));
+}
+
+/* Padding track/content y estados checked: src/styles/primeng-togglebutton-parity.css */
+
 .form-choice-row,
 .form-choice-item {
   --form-choice-label-font-size: var(--form-field-font-size);

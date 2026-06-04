@@ -2,7 +2,7 @@
 /* Version: 1.0.0 */
 /* Description: Variables and Effect Styles for components. */
 /* Author: UX/UI Design System Team */
-/* Last Updated: 2026-05-28 */
+/* Last Updated: 2026-06-04 */
 
 @layer mds-core;
 
@@ -1723,11 +1723,22 @@ html:root {
   --togglebutton-border-radius: var(--content-border-radius);
   --togglebutton-checked-background: var(--surface-context-subtle);
   --togglebutton-checked-border-color: var(--surface-context-subtle);
-  --togglebutton-checked-color: var(--surface-context-fixed-light);
-  --togglebutton-color: var(--surface-context-strong);
-  --togglebutton-content-checked-background: var(--surface-context-fixed-primary-default);
+  --togglebutton-checked-color: var(--surface-context-intense);
+  --togglebutton-color: var(--surface-context-contrast);
+  --togglebutton-content-border-radius: var(--dimension-radius-x4);
+  --togglebutton-content-checked-background: var(--surface-context-minimal);
   --togglebutton-content-left: var(--dimension-scale-x4);
+  --togglebutton-content-lg-padding-x: var(--dimension-scale-x10);
+  --togglebutton-content-lg-padding-y: var(--dimension-scale-x4);
+  --togglebutton-content-lg-padding: var(--togglebutton-lg-padding);
+  --togglebutton-content-padding-x: var(--togglebutton-figma-content-padding-x);
+  --togglebutton-content-padding-y: var(--togglebutton-figma-content-padding-y);
+  --togglebutton-content-padding: var(--togglebutton-content-padding-y) var(--togglebutton-content-padding-x);
   --togglebutton-content-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.02);
+  --togglebutton-content-sm-padding-x: var(--dimension-scale-x10);
+  --togglebutton-content-sm-padding-y: var(--dimension-scale-x4);
+  /* En MDS/Figma sm|lg padding escala el área activa (.p-togglebutton-content), no el track */
+  --togglebutton-content-sm-padding: var(--togglebutton-sm-padding);
   --togglebutton-content-top: var(--dimension-scale-x4);
   --togglebutton-disabled-background: var(--form-field-disabled-background);
   --togglebutton-disabled-border-color: var(--form-field-disabled-background);
@@ -1748,23 +1759,31 @@ html:root {
   --togglebutton-focus-ring-offset: var(--focus-ring-offset);
   --togglebutton-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --togglebutton-focus-ring-width: var(--focus-ring-width);
+  --togglebutton-font-size: var(--dimension-scale-x14);
   --togglebutton-font-weight: 500;
   --togglebutton-gap: var(--dimension-scale-x8);
   --togglebutton-hover-background: var(--surface-context-subtle);
-  --togglebutton-hover-color: var(--surface-context-contrast);
+  --togglebutton-hover-color: var(--surface-context-strong);
   --togglebutton-icon-checked-color: var(--surface-context-intense);
-  --togglebutton-icon-color: var(--surface-context-strong);
+  --togglebutton-icon-checked-hover-color: var(--surface-context-strong);
+  --togglebutton-icon-color: var(--surface-context-contrast);
   --togglebutton-icon-disabled-color: var(--form-field-disabled-color);
-  --togglebutton-icon-hover-color: var(--surface-context-contrast);
+  --togglebutton-icon-hover-color: var(--surface-context-strong);
+  --togglebutton-icon-size: var(--togglebutton-font-size);
+  --togglebutton-sm-icon-size: var(--togglebutton-sm-font-size);
+  --togglebutton-lg-icon-size: var(--togglebutton-lg-font-size);
   --togglebutton-invalid-border-color: var(--form-field-invalid-border-color);
   --togglebutton-lg-font-size: var(--form-field-lg-font-size);
   --togglebutton-lg-padding-x: var(--dimension-scale-x18);
   --togglebutton-lg-padding-y: var(--dimension-scale-x8);
-  --togglebutton-padding-x: var(--dimension-scale-x14);
-  --togglebutton-padding-y: var(--dimension-scale-x8);
+  --togglebutton-lg-padding: var(--togglebutton-lg-padding-y) var(--togglebutton-lg-padding-x);
+  --togglebutton-padding-x: var(--dimension-scale-x2);
+  --togglebutton-padding-y: var(--dimension-scale-x2);
+  --togglebutton-padding: var(--togglebutton-padding-y) var(--togglebutton-padding-x);
   --togglebutton-sm-font-size: var(--form-field-sm-font-size);
-  --togglebutton-sm-padding-x: var(--dimension-scale-x8);
-  --togglebutton-sm-padding-y: var(--dimension-scale-x6);
+  --togglebutton-sm-padding-x: var(--togglebutton-figma-content-sm-padding-x);
+  --togglebutton-sm-padding-y: var(--togglebutton-figma-content-sm-padding-y);
+  --togglebutton-sm-padding: var(--togglebutton-sm-padding-y) var(--togglebutton-sm-padding-x);
   --toggleswitch-background: var(--surface-context-base);
   --toggleswitch-border-color: var(--surface-context-strong);
   --toggleswitch-border-radius: var(--border-radius-pill);
@@ -1787,7 +1806,7 @@ html:root {
   --toggleswitch-handle-checked-hover-color: var(--primary-hover-color);
   --toggleswitch-handle-color: var(--text-muted-color);
   --toggleswitch-handle-disabled-background: var(--surface-context-emphasized);
-  --toggleswitch-handle-hover-background: var(--toggleswitch-handle-background);
+  --toggleswitch-handle-hover-background: var(--surface-context-minimal);
   --toggleswitch-handle-hover-color: var(--text-color);
   --toggleswitch-handle-size: var(--dimension-scale-x16);
   --toggleswitch-height: var(--dimension-scale-x24);

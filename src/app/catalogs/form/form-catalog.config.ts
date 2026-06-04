@@ -2,6 +2,7 @@ export type FormBlockKind =
   | 'radio'
   | 'checkbox'
   | 'toggleswitch'
+  | 'togglebutton'
   | 'inputtext'
   | 'inputotp'
   | 'rating'
@@ -139,6 +140,12 @@ export const FORM_CHOICE_SIZE_DISPLAY_LABELS: Record<FormInteractionSize, string
   large: 'Large',
 };
 
+/** Posición del icono en ToggleButton (PrimeNG `iconPos`). */
+export const FORM_TOGGLEBUTTON_ICON_POS_OPTIONS: { label: string; value: 'left' | 'right' }[] = [
+  { label: 'Izquierda', value: 'left' },
+  { label: 'Derecha', value: 'right' },
+];
+
 /** Texto visible del placeholder en previews estáticos InputText default. */
 export const FORM_INPUT_STATE_PLACEHOLDER = 'Placeholder';
 
@@ -204,6 +211,7 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'radio', title: 'RadioButton', category: 'choice' },
   { kind: 'checkbox', title: 'Checkbox', category: 'choice' },
   { kind: 'toggleswitch', title: 'ToggleSwitch', category: 'choice' },
+  { kind: 'togglebutton', title: 'ToggleButton', category: 'choice' },
   { kind: 'inputtext', title: 'InputText', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },
   { kind: 'rating', title: 'Rating', category: 'input' },

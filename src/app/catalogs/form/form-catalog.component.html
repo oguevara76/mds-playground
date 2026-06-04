@@ -212,6 +212,159 @@
                 </div>
               </div>
             }
+            @case ('togglebutton') {
+              <div class="input-interaction-row catalog-interaction-row--center">
+                <div class="catalog-showcase-interactive">
+                  <div class="form-togglebutton-row" role="group" aria-label="ToggleButton interactivo">
+                    @if (toggleButtonIx().size === 'small') {
+                      <p-togglebutton
+                        inputId="tb-ix-off"
+                        onLabel="On"
+                        offLabel="Off"
+                        size="small"
+                        [iconPos]="toggleButtonIx().iconPos"
+                        [onIcon]="toggleButtonOnIcon()"
+                        [offIcon]="toggleButtonOffIcon()"
+                        [ngModel]="toggleButtonOff()"
+                        (ngModelChange)="toggleButtonOff.set($event)"
+                        [style]="toggleButtonHostVars('small')"
+                        ariaLabel="ToggleButton apagado"
+                      />
+                      <p-togglebutton
+                        inputId="tb-ix-on"
+                        onLabel="On"
+                        offLabel="Off"
+                        size="small"
+                        [iconPos]="toggleButtonIx().iconPos"
+                        [onIcon]="toggleButtonOnIcon()"
+                        [offIcon]="toggleButtonOffIcon()"
+                        [ngModel]="toggleButtonOn()"
+                        (ngModelChange)="toggleButtonOn.set($event)"
+                        [style]="toggleButtonHostVars('small')"
+                        ariaLabel="ToggleButton encendido"
+                      />
+                    } @else if (toggleButtonIx().size === 'large') {
+                      <p-togglebutton
+                        inputId="tb-ix-off"
+                        onLabel="On"
+                        offLabel="Off"
+                        size="large"
+                        [onIcon]="toggleButtonOnIcon()"
+                        [offIcon]="toggleButtonOffIcon()"
+                        [ngModel]="toggleButtonOff()"
+                        (ngModelChange)="toggleButtonOff.set($event)"
+                        [style]="toggleButtonHostVars('large')"
+                        ariaLabel="ToggleButton apagado"
+                      />
+                      <p-togglebutton
+                        inputId="tb-ix-on"
+                        onLabel="On"
+                        offLabel="Off"
+                        size="large"
+                        [onIcon]="toggleButtonOnIcon()"
+                        [offIcon]="toggleButtonOffIcon()"
+                        [ngModel]="toggleButtonOn()"
+                        (ngModelChange)="toggleButtonOn.set($event)"
+                        [style]="toggleButtonHostVars('large')"
+                        ariaLabel="ToggleButton encendido"
+                      />
+                    } @else {
+                      <p-togglebutton
+                        inputId="tb-ix-off"
+                        onLabel="On"
+                        offLabel="Off"
+                        [iconPos]="toggleButtonIx().iconPos"
+                        [onIcon]="toggleButtonOnIcon()"
+                        [offIcon]="toggleButtonOffIcon()"
+                        [ngModel]="toggleButtonOff()"
+                        (ngModelChange)="toggleButtonOff.set($event)"
+                        [style]="toggleButtonHostVars('normal')"
+                        ariaLabel="ToggleButton apagado"
+                      />
+                      <p-togglebutton
+                        inputId="tb-ix-on"
+                        onLabel="On"
+                        offLabel="Off"
+                        [iconPos]="toggleButtonIx().iconPos"
+                        [onIcon]="toggleButtonOnIcon()"
+                        [offIcon]="toggleButtonOffIcon()"
+                        [ngModel]="toggleButtonOn()"
+                        (ngModelChange)="toggleButtonOn.set($event)"
+                        [style]="toggleButtonHostVars('normal')"
+                        ariaLabel="ToggleButton encendido"
+                      />
+                    }
+                  </div>
+                </div>
+                <aside class="button-config-aside">
+                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <p class="button-config-aside-hint">
+                    Puedes
+                    <button
+                      type="button"
+                      class="button-config-link"
+                      (click)="toggleButtonConfigPopover.toggle($event)"
+                      aria-haspopup="dialog"
+                      [attr.aria-expanded]="toggleButtonConfigPopover.overlayVisible"
+                    >
+                      configurar este componente
+                    </button>
+                    con las diferentes opciones disponibles.
+                  </p>
+                  <p-popover
+                    #toggleButtonConfigPopover
+                    styleClass="button-config-popover"
+                    appendTo="body"
+                    ariaLabel="Configurar ToggleButton"
+                  >
+                    <div class="button-config-popover-body button-config-switches">
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Size</span>
+                        <div class="button-config-size-toggle-wrap">
+                          <p-selectbutton
+                            [options]="sizeSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="toggleButtonIx().size"
+                            (ngModelChange)="patchToggleButtonIx({ size: $event })"
+                            [allowEmpty]="false"
+                            [fluid]="true"
+                            size="small"
+                            ariaLabel="Size ToggleButton"
+                          />
+                        </div>
+                      </div>
+                      <p-divider styleClass="button-config-divider" />
+                      <div class="input-config-row">
+                        <span class="input-config-label">Iconos</span>
+                        <p-toggleswitch
+                          [ngModel]="toggleButtonIx().withIcons"
+                          (ngModelChange)="patchToggleButtonIx({ withIcons: $event })"
+                        />
+                      </div>
+                      @if (toggleButtonIx().withIcons) {
+                        <div class="button-config-size-field">
+                          <span class="input-config-label">Posición icono</span>
+                          <div class="button-config-size-toggle-wrap">
+                            <p-selectbutton
+                              [options]="toggleButtonIconPosOptions"
+                              optionLabel="label"
+                              optionValue="value"
+                              [ngModel]="toggleButtonIx().iconPos"
+                              (ngModelChange)="patchToggleButtonIx({ iconPos: $event })"
+                              [allowEmpty]="false"
+                              [fluid]="true"
+                              size="small"
+                              ariaLabel="Posición del icono ToggleButton"
+                            />
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  </p-popover>
+                </aside>
+              </div>
+            }
             @case ('textarea') {
               <div class="input-interaction-row">
                 <div
@@ -1035,6 +1188,64 @@
                 </div>
               </div>
             }
+            @case ('togglebutton') {
+              <div class="catalog-button-states-row is-static-preview">
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <p-togglebutton
+                      onLabel="On"
+                      offLabel="Off"
+                      [ngModel]="false"
+                      [tabindex]="-1"
+                      [style]="toggleButtonHostVars('normal')"
+                      ariaLabel="Default"
+                    />
+                  </div>
+                  <span class="catalog-button-state-caption">Default</span>
+                </div>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <p-togglebutton
+                      onLabel="On"
+                      offLabel="Off"
+                      [ngModel]="true"
+                      [tabindex]="-1"
+                      [style]="toggleButtonHostVars('normal')"
+                      ariaLabel="On"
+                    />
+                  </div>
+                  <span class="catalog-button-state-caption">On</span>
+                </div>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <p-togglebutton
+                      onLabel="On"
+                      offLabel="Off"
+                      [ngModel]="false"
+                      [disabled]="true"
+                      [tabindex]="-1"
+                      [style]="toggleButtonHostVars('normal')"
+                      ariaLabel="Disabled"
+                    />
+                  </div>
+                  <span class="catalog-button-state-caption">Disabled</span>
+                </div>
+                <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state-preview">
+                    <p-togglebutton
+                      onLabel="On"
+                      offLabel="Off"
+                      [ngModel]="false"
+                      [invalid]="true"
+                      [tabindex]="-1"
+                      [style]="toggleButtonHostVars('normal')"
+                      ariaLabel="Invalid"
+                    />
+                  </div>
+                  <span class="catalog-button-state-caption">Invalid</span>
+                </div>
+              </div>
+            }
             @default {
               @if (isTextareaBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
@@ -1375,6 +1586,51 @@
                         <label [for]="'cb-sz-' + sz.key">{{ choiceSizeDisplayLabel(sz.key) }}</label>
                       </div>
                     </div>
+                  </div>
+                }
+              </div>
+            }
+            @case ('togglebutton') {
+              <div class="catalog-button-states-row is-static-preview">
+                @for (sz of sizeOptions; track sz.key) {
+                  <div class="catalog-button-state catalog-button-state--choice-label">
+                    <div class="catalog-button-state-preview">
+                      @switch (sz.key) {
+                        @case ('small') {
+                          <p-togglebutton
+                            onLabel="On"
+                            offLabel="Off"
+                            size="small"
+                            [ngModel]="true"
+                            [tabindex]="-1"
+                            [style]="toggleButtonHostVars(sz.key)"
+                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
+                          />
+                        }
+                        @case ('large') {
+                          <p-togglebutton
+                            onLabel="On"
+                            offLabel="Off"
+                            size="large"
+                            [ngModel]="true"
+                            [tabindex]="-1"
+                            [style]="toggleButtonHostVars(sz.key)"
+                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
+                          />
+                        }
+                        @default {
+                          <p-togglebutton
+                            onLabel="On"
+                            offLabel="Off"
+                            [ngModel]="true"
+                            [tabindex]="-1"
+                            [style]="toggleButtonHostVars(sz.key)"
+                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
+                          />
+                        }
+                      }
+                    </div>
+                    <span class="catalog-button-state-caption">{{ choiceSizeDisplayLabel(sz.key) }}</span>
                   </div>
                 }
               </div>

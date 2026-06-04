@@ -1,0 +1,80 @@
+/**
+ * ToggleButton — alineación MDS vs PrimeNG 20
+ *
+ * Figma/MDS: --togglebutton-padding (2px) = gutter del track (root), constante en todos los tamaños.
+ * --togglebutton-sm|lg-padding = padding del área activa (.p-togglebutton-content).
+ *
+ * PrimeNG por defecto aplica sm|lg padding al root (.p-togglebutton-sm); esto lo corrige.
+ */
+.p-togglebutton,
+.p-togglebutton.p-togglebutton-sm,
+.p-togglebutton.p-togglebutton-lg {
+  padding: var(--p-togglebutton-padding, var(--togglebutton-padding)) !important;
+}
+
+.p-togglebutton:not(.p-togglebutton-sm):not(.p-togglebutton-lg) {
+  font-size: var(--p-togglebutton-font-size, var(--togglebutton-font-size)) !important;
+}
+
+.p-togglebutton.p-togglebutton-sm {
+  font-size: var(--p-togglebutton-sm-font-size, var(--togglebutton-sm-font-size)) !important;
+}
+
+.p-togglebutton.p-togglebutton-lg {
+  font-size: var(--p-togglebutton-lg-font-size, var(--togglebutton-lg-font-size)) !important;
+}
+
+/* Label + icon (PrimeIcons): tamaño explícito por variante — no heredan bien solo del root */
+.p-togglebutton:not(.p-togglebutton-sm):not(.p-togglebutton-lg) .p-togglebutton-content,
+.p-togglebutton:not(.p-togglebutton-sm):not(.p-togglebutton-lg) .p-togglebutton-label,
+.p-togglebutton:not(.p-togglebutton-sm):not(.p-togglebutton-lg) .p-togglebutton-icon {
+  font-size: var(--p-togglebutton-font-size, var(--togglebutton-icon-size)) !important;
+}
+
+.p-togglebutton.p-togglebutton-sm .p-togglebutton-content,
+.p-togglebutton.p-togglebutton-sm .p-togglebutton-label,
+.p-togglebutton.p-togglebutton-sm .p-togglebutton-icon {
+  font-size: var(--p-togglebutton-sm-font-size, var(--togglebutton-sm-icon-size)) !important;
+}
+
+.p-togglebutton.p-togglebutton-lg .p-togglebutton-content,
+.p-togglebutton.p-togglebutton-lg .p-togglebutton-label,
+.p-togglebutton.p-togglebutton-lg .p-togglebutton-icon {
+  font-size: var(--p-togglebutton-lg-font-size, var(--togglebutton-lg-icon-size)) !important;
+}
+
+.p-togglebutton .p-togglebutton-content {
+  border-radius: var(
+    --p-togglebutton-content-border-radius,
+    var(--togglebutton-content-border-radius)
+  );
+}
+
+/* PrimeNG inyecta padding en runtime; !important en los tres tamaños */
+.p-togglebutton:not(.p-togglebutton-sm):not(.p-togglebutton-lg) .p-togglebutton-content {
+  padding: var(--p-togglebutton-content-padding, var(--togglebutton-content-padding)) !important;
+}
+
+.p-togglebutton.p-togglebutton-sm .p-togglebutton-content {
+  padding: var(--p-togglebutton-content-sm-padding, var(--togglebutton-sm-padding)) !important;
+}
+
+.p-togglebutton.p-togglebutton-lg .p-togglebutton-content {
+  padding: var(--p-togglebutton-content-lg-padding, var(--togglebutton-lg-padding)) !important;
+}
+
+.p-togglebutton.p-togglebutton-checked .p-togglebutton-content {
+  background: var(
+    --p-togglebutton-content-checked-background,
+    var(--togglebutton-content-checked-background)
+  ) !important;
+  box-shadow: var(--p-togglebutton-content-checked-shadow, var(--togglebutton-content-shadow)) !important;
+}
+
+.p-togglebutton.p-togglebutton-checked:hover:not(:disabled) .p-togglebutton-icon {
+  color: var(--togglebutton-icon-checked-hover-color);
+}
+
+.p-togglebutton:not(.p-togglebutton-checked):hover:not(:disabled) .p-togglebutton-icon {
+  color: var(--togglebutton-icon-hover-color);
+}
