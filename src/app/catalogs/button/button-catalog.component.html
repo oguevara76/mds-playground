@@ -49,24 +49,21 @@
               }
             </div>
             <aside class="button-config-aside">
-              <p class="button-config-aside-title">CONFIGURAR</p>
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="configPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="configPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
               <p class="button-config-aside-hint">
-                Puedes
-                <button
-                  type="button"
-                  class="button-config-link"
-                  (click)="configPopover.toggle($event)"
-                  aria-haspopup="dialog"
-                  [attr.aria-expanded]="configPopover.overlayVisible"
-                >
-                  configurar este componente
-                </button>
                 @if (showType(block)) {
-                  Type y Variant en Interaction;
+                  Type, Variant, Size, Icon left, Icon right, Rounded, Raised
                 } @else {
-                  Variant en Interaction;
+                  Variant, Size, Icon left, Icon right, Rounded, Raised
                 }
-                Variant también en Variants &amp; States y Sizes.
               </p>
               <p-popover
                 #configPopover

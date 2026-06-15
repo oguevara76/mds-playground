@@ -47,19 +47,17 @@
                   </div>
                 </div>
                 <aside class="button-config-aside">
-                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="radioConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="radioConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
                   <p class="button-config-aside-hint">
-                    Puedes
-                    <button
-                      type="button"
-                      class="button-config-link"
-                      (click)="radioConfigPopover.toggle($event)"
-                      aria-haspopup="dialog"
-                      [attr.aria-expanded]="radioConfigPopover.overlayVisible"
-                    >
-                      configurar este componente
-                    </button>
-                    con las diferentes opciones disponibles.
+                    Theme, Size
                   </p>
                   <p-popover
                     #radioConfigPopover
@@ -130,19 +128,17 @@
                   </div>
                 </div>
                 <aside class="button-config-aside">
-                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="checkboxConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="checkboxConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
                   <p class="button-config-aside-hint">
-                    Puedes
-                    <button
-                      type="button"
-                      class="button-config-link"
-                      (click)="checkboxConfigPopover.toggle($event)"
-                      aria-haspopup="dialog"
-                      [attr.aria-expanded]="checkboxConfigPopover.overlayVisible"
-                    >
-                      configurar este componente
-                    </button>
-                    con las diferentes opciones disponibles.
+                    Theme, Size
                   </p>
                   <p-popover
                     #checkboxConfigPopover
@@ -297,19 +293,17 @@
                   </div>
                 </div>
                 <aside class="button-config-aside">
-                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="toggleButtonConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="toggleButtonConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
                   <p class="button-config-aside-hint">
-                    Puedes
-                    <button
-                      type="button"
-                      class="button-config-link"
-                      (click)="toggleButtonConfigPopover.toggle($event)"
-                      aria-haspopup="dialog"
-                      [attr.aria-expanded]="toggleButtonConfigPopover.overlayVisible"
-                    >
-                      configurar este componente
-                    </button>
-                    con las diferentes opciones disponibles.
+                    Size, Iconos, Posición icono
                   </p>
                   <p-popover
                     #toggleButtonConfigPopover
@@ -445,19 +439,17 @@
                   }
                 </div>
                 <aside class="button-config-aside">
-                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="textareaConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="textareaConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
                   <p class="button-config-aside-hint">
-                    Puedes
-                    <button
-                      type="button"
-                      class="button-config-link"
-                      (click)="textareaConfigPopover.toggle($event)"
-                      aria-haspopup="dialog"
-                      [attr.aria-expanded]="textareaConfigPopover.overlayVisible"
-                    >
-                      configurar este componente
-                    </button>
-                    con las diferentes variantes disponibles.
+                    Theme, Variant, Float variant, Size, Helper text
                   </p>
                   <p-popover
                     #textareaConfigPopover
@@ -683,19 +675,17 @@
                   }
                 </div>
                 <aside class="button-config-aside">
-                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="inputtextConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="inputtextConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
                   <p class="button-config-aside-hint">
-                    Puedes
-                    <button
-                      type="button"
-                      class="button-config-link"
-                      (click)="inputtextConfigPopover.toggle($event)"
-                      aria-haspopup="dialog"
-                      [attr.aria-expanded]="inputtextConfigPopover.overlayVisible"
-                    >
-                      configurar este componente
-                    </button>
-                    con las diferentes variantes disponibles.
+                    Theme, Variant, Float variant, Size, Icono izq., Icono der., Rounded, Helper text
                   </p>
                   <p-popover
                     #inputtextConfigPopover
@@ -827,19 +817,17 @@
                   </div>
                 </div>
                 <aside class="button-config-aside">
-                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="inputotpConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="inputotpConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
                   <p class="button-config-aside-hint">
-                    Puedes
-                    <button
-                      type="button"
-                      class="button-config-link"
-                      (click)="inputotpConfigPopover.toggle($event)"
-                      aria-haspopup="dialog"
-                      [attr.aria-expanded]="inputotpConfigPopover.overlayVisible"
-                    >
-                      configurar este componente
-                    </button>
-                    con las diferentes opciones disponibles.
+                    Theme, Longitud, Size, Mask, Solo enteros, Helper text
                   </p>
                   <p-popover
                     #inputotpConfigPopover
@@ -936,19 +924,17 @@
                   />
                 </div>
                 <aside class="button-config-aside">
-                  <p class="button-config-aside-title">CONFIGURAR</p>
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="ratingConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="ratingConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
                   <p class="button-config-aside-hint">
-                    Puedes
-                    <button
-                      type="button"
-                      class="button-config-link"
-                      (click)="ratingConfigPopover.toggle($event)"
-                      aria-haspopup="dialog"
-                      [attr.aria-expanded]="ratingConfigPopover.overlayVisible"
-                    >
-                      configurar este componente
-                    </button>
-                    con las diferentes opciones disponibles.
+                    Rating, Readonly, Disabled
                   </p>
                   <p-popover
                     #ratingConfigPopover

@@ -71,19 +71,17 @@
               }
             </div>
             <aside class="button-config-aside">
-              <p class="button-config-aside-title">CONFIGURAR</p>
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="chipConfigPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="chipConfigPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
               <p class="button-config-aside-hint">
-                Puedes
-                <button
-                  type="button"
-                  class="button-config-link"
-                  (click)="chipConfigPopover.toggle($event)"
-                  aria-haspopup="dialog"
-                  [attr.aria-expanded]="chipConfigPopover.overlayVisible"
-                >
-                  configurar este componente
-                </button>
-                la variante (Simple, Icon o Avatar) y el cierre opcional.
+                Variant, Icono de cierre
               </p>
               <p-popover
                 #chipConfigPopover
@@ -153,7 +151,7 @@
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section">
+        <div class="btn-section catalog-interaction-section">
           <p class="btn-section-title">Severity</p>
           <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge, severity variants">
             @for (option of badgeSeverityOptions; track option.label) {
@@ -194,8 +192,314 @@
         <div class="btn-section">
           <p class="btn-section-title">Button Badge</p>
           <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge on buttons">
-            <p-button label="Notifications" badge="2" />
-            <p-button label="Inbox" icon="pi pi-envelope" badge="2" badgeSeverity="contrast" />
+            <p-button label="Notifications" badge="2" badgeSeverity="primary" />
+            <p-button label="Inbox" icon="pi pi-envelope" badge="2" badgeSeverity="primary" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="catalog-preview avatar-showcase">
+    <section id="pg-avatar" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Avatar</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="input-interaction-row avatar-interaction-row">
+            <div class="catalog-showcase-interactive tag-catalog-row avatar-catalog-row">
+              <p-overlayBadge
+                [value]="avatarBadgeDemoValue"
+                [badgeDisabled]="!avatarIx.showBadge"
+                badgeSize="small"
+                styleClass="p-badge-primary"
+              >
+                <p-avatar
+                  [label]="avatarShowsLabel() ? avatarDemoLabel : undefined"
+                  [icon]="avatarShowsIcon() ? avatarDemoIcon : undefined"
+                  [image]="avatarShowsImage() ? avatarDemoImageUrl : undefined"
+                  [size]="avatarPrimeSize(avatarIx.size)"
+                  [shape]="avatarPrimeShape()"
+                  [attr.aria-label]="avatarShowsImage() ? 'Avatar demo' : undefined"
+                />
+              </p-overlayBadge>
+            </div>
+            <aside class="button-config-aside">
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="avatarConfigPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="avatarConfigPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
+              <p class="button-config-aside-hint">
+                Variant, Size, Circle, Badge
+              </p>
+              <p-popover
+                #avatarConfigPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                ariaLabel="Configurar Avatar"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="avatarVariantOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="avatarIx.variant"
+                        (ngModelChange)="patchAvatarIx({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant Avatar"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="avatarSizeOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="avatarIx.size"
+                        (ngModelChange)="patchAvatarIx({ size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size Avatar"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                    <span class="input-config-label">Circle</span>
+                    <p-toggleswitch
+                      [ngModel]="avatarIx.shape === 'circle'"
+                      (ngModelChange)="patchAvatarIx({ shape: $event ? 'circle' : 'square' })"
+                      ariaLabel="Avatar circular"
+                    />
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                    <span class="input-config-label">Badge</span>
+                    <p-toggleswitch
+                      [ngModel]="avatarIx.showBadge"
+                      (ngModelChange)="patchAvatarIx({ showBadge: $event })"
+                      ariaLabel="Mostrar badge en avatar"
+                    />
+                  </div>
+                </div>
+              </p-popover>
+            </aside>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Label, Icon &amp; Image</p>
+          <div class="avatar-group-size-demos is-static-preview" aria-label="Avatar, content and shape variants">
+            <div class="avatar-group-size-demo">
+              <span class="btn-variant-states-label avatar-group-size-label">Square</span>
+              <div class="tag-catalog-row">
+                <p-avatar [label]="avatarDemoLabel" shape="square" />
+                <p-avatar [icon]="avatarDemoIcon" shape="square" />
+                <p-avatar [image]="avatarDemoImageUrl" shape="square" ariaLabel="Avatar demo" />
+              </div>
+            </div>
+            <div class="avatar-group-size-demo">
+              <span class="btn-variant-states-label avatar-group-size-label">Circle</span>
+              <div class="tag-catalog-row">
+                <p-avatar [label]="avatarDemoLabel" shape="circle" />
+                <p-avatar [icon]="avatarDemoIcon" shape="circle" />
+                <p-avatar [image]="avatarDemoImageUrl" shape="circle" ariaLabel="Avatar demo" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Size</p>
+          <div class="tag-catalog-row is-static-preview" aria-label="Avatar, size variants">
+            <p-avatar [label]="avatarDemoLabel" />
+            <p-avatar [label]="avatarDemoLabel" size="large" />
+            <p-avatar [label]="avatarDemoLabel" size="xlarge" />
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="catalog-preview avatargroup-showcase">
+    <section
+      id="pg-avatargroup"
+      class="preview-section preview-section--flush catalog-block-section"
+      tabindex="-1"
+    >
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Avatar Group</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="input-interaction-row avatar-interaction-row">
+            <div class="catalog-showcase-interactive tag-catalog-row avatar-catalog-row">
+              @for (_ of [avatarGroupInteractionKey]; track avatarGroupInteractionKey) {
+                <p-avatarGroup>
+                  @for (src of avatarGroupVisiblePhotos(); track $index) {
+                    <p-avatar
+                      [image]="src"
+                      [size]="avatarPrimeSize(avatarGroupIx.size)"
+                      [shape]="avatarGroupIx.shape"
+                      [styleClass]="avatarGroupLayerStyleClass($index)"
+                      ariaLabel="Avatar en grupo"
+                    />
+                  }
+                  @if (avatarGroupIx.showTextAvatar) {
+                    <p-avatar
+                      [label]="avatarGroupOverflowDemoLabel"
+                      [size]="avatarPrimeSize(avatarGroupIx.size)"
+                      [shape]="avatarGroupIx.shape"
+                      [styleClass]="avatarGroupLayerStyleClass(avatarGroupVisiblePhotos().length, true)"
+                      ariaLabel="Avatares adicionales en grupo"
+                    />
+                  }
+                </p-avatarGroup>
+              }
+            </div>
+            <aside class="button-config-aside">
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="avatarGroupConfigPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="avatarGroupConfigPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
+              <p class="button-config-aside-hint">
+                Cantidad, Size, Circle, Avatar de texto
+              </p>
+              <p-popover
+                #avatarGroupConfigPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                ariaLabel="Configurar Avatar Group"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Cantidad</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="avatarGroupCountOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="avatarGroupIx.count"
+                        (ngModelChange)="patchAvatarGroupIx({ count: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Cantidad Avatar Group"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="avatarSizeOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="avatarGroupIx.size"
+                        (ngModelChange)="patchAvatarGroupIx({ size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size Avatar Group"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                    <span class="input-config-label">Circle</span>
+                    <p-toggleswitch
+                      [ngModel]="avatarGroupIx.shape === 'circle'"
+                      (ngModelChange)="patchAvatarGroupIx({ shape: $event ? 'circle' : 'square' })"
+                      ariaLabel="Avatar group circular"
+                    />
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                    <span class="input-config-label">Avatar de texto</span>
+                    <p-toggleswitch
+                      [ngModel]="avatarGroupIx.showTextAvatar"
+                      (ngModelChange)="patchAvatarGroupIx({ showTextAvatar: $event })"
+                      ariaLabel="Mostrar avatar de texto al final"
+                    />
+                  </div>
+                </div>
+              </p-popover>
+            </aside>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Basic</p>
+          <div class="tag-catalog-row is-static-preview" aria-label="Avatar group, basic">
+            <p-avatarGroup>
+              @for (src of avatarGroupImages.slice(0, avatarGroupMaxVisible); track $index) {
+                <p-avatar
+                  [image]="src"
+                  shape="circle"
+                  [styleClass]="avatarGroupLayerStyleClass($index)"
+                  ariaLabel="Avatar en grupo"
+                />
+              }
+              <p-avatar
+                [label]="avatarGroupOverflowDemoLabel"
+                shape="circle"
+                [styleClass]="avatarGroupLayerStyleClass(avatarGroupMaxVisible, true)"
+                ariaLabel="Avatares adicionales en grupo"
+              />
+            </p-avatarGroup>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Size</p>
+          <div class="avatar-group-size-demos is-static-preview" aria-label="Avatar group, size variants">
+            @for (row of avatarGroupSizeDemoRows; track row.size) {
+              <div class="avatar-group-size-demo">
+                <span class="btn-variant-states-label avatar-group-size-label">{{ row.label }}</span>
+                <p-avatarGroup>
+                  @for (src of avatarGroupImages.slice(0, avatarGroupMaxVisible); track $index) {
+                    <p-avatar
+                      [image]="src"
+                      shape="circle"
+                      [size]="avatarPrimeSize(row.size)"
+                      [styleClass]="avatarGroupLayerStyleClass($index)"
+                      ariaLabel="Avatar en grupo"
+                    />
+                  }
+                  <p-avatar
+                    [label]="avatarGroupOverflowDemoLabel"
+                    shape="circle"
+                    [size]="avatarPrimeSize(row.size)"
+                    [styleClass]="avatarGroupLayerStyleClass(avatarGroupMaxVisible, true)"
+                    ariaLabel="Avatares adicionales en grupo"
+                  />
+                </p-avatarGroup>
+              </div>
+            }
           </div>
         </div>
       </div>

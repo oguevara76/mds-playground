@@ -29,19 +29,17 @@
             </div>
 
             <aside class="button-config-aside">
-              <p class="button-config-aside-title">CONFIGURAR</p>
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="dividerConfigPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="dividerConfigPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
               <p class="button-config-aside-hint">
-                Puedes
-                <button
-                  type="button"
-                  class="button-config-link"
-                  (click)="dividerConfigPopover.toggle($event)"
-                  aria-haspopup="dialog"
-                  [attr.aria-expanded]="dividerConfigPopover.overlayVisible"
-                >
-                  configurar este componente
-                </button>
-                con el tipo de borde, la etiqueta y su alineación.
+                Tipo de borde, Etiqueta, Alineación
               </p>
               <p-popover
                 #dividerConfigPopover
@@ -179,19 +177,17 @@
             </p-tabs>
 
             <aside class="button-config-aside">
-              <p class="button-config-aside-title">CONFIGURAR</p>
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="tabsConfigPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="tabsConfigPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
               <p class="button-config-aside-hint">
-                Puedes
-                <button
-                  type="button"
-                  class="button-config-link"
-                  (click)="tabsConfigPopover.toggle($event)"
-                  aria-haspopup="dialog"
-                  [attr.aria-expanded]="tabsConfigPopover.overlayVisible"
-                >
-                  configurar este componente
-                </button>
-                con los iconos izquierdo y derecho de cada pestaña.
+                Icon left, Icon right
               </p>
               <p-popover
                 #tabsConfigPopover

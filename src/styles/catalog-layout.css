@@ -157,6 +157,10 @@
 .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
 .divider-variant-block .catalog-block-head .section-title.component-title-primary,
 .tag-showcase .catalog-block-head .section-title.component-title-primary,
+.chip-showcase .catalog-block-head .section-title.component-title-primary,
+.badge-showcase .catalog-block-head .section-title.component-title-primary,
+.avatar-showcase .catalog-block-head .section-title.component-title-primary,
+.avatargroup-showcase .catalog-block-head .section-title.component-title-primary,
 .tooltip-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--p-content-color);
   font-weight: 800;
@@ -170,6 +174,10 @@
 .tabs-variant-block .btn-section-title,
 .divider-variant-block .btn-section-title,
 .tag-showcase .btn-section-title,
+.chip-showcase .btn-section-title,
+.badge-showcase .btn-section-title,
+.avatar-showcase .btn-section-title,
+.avatargroup-showcase .btn-section-title,
 .tooltip-variant-block .btn-section-title {
   color: var(--p-surface-700);
   font-weight: 700;
@@ -178,7 +186,11 @@
 
 .form-showcase .btn-variant-states-label,
 .button-showcase .btn-variant-states-label,
-.messages-showcase .btn-variant-states-label {
+.messages-showcase .btn-variant-states-label,
+.chip-showcase .btn-variant-states-label,
+.badge-showcase .btn-variant-states-label,
+.avatar-showcase .btn-variant-states-label,
+.avatargroup-showcase .btn-variant-states-label {
   color: var(--p-surface-600);
   font-weight: 700;
 }
@@ -229,21 +241,40 @@
   text-align: left;
 }
 
-.button-config-aside-title {
+.button-config-aside-title.button-config-link {
+  display: block;
+  width: fit-content;
   margin: 0 0 6px;
+  padding: 0;
+  border: none;
+  background: none;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--p-surface-400);
+  color: var(--p-primary-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.button-config-aside-title.button-config-link:hover {
+  color: var(--p-primary-hover-color, var(--p-primary-color));
+}
+
+.button-config-aside-title.button-config-link:focus-visible {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .button-config-aside-hint {
   margin: 0;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 400;
   line-height: 1.45;
-  color: var(--p-surface-500);
+  color: var(--p-surface-400);
 }
 
 .button-config-link {
@@ -320,6 +351,10 @@
 [data-theme="dark"] .messages-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .toast-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tag-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .chip-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .badge-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .avatar-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .avatargroup-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tooltip-variant-block .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .paginator-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
@@ -333,6 +368,10 @@
 [data-theme="dark"] .messages-showcase .catalog-block-head,
 [data-theme="dark"] .toast-showcase .catalog-block-head,
 [data-theme="dark"] .tag-showcase .catalog-block-head,
+[data-theme="dark"] .chip-showcase .catalog-block-head,
+[data-theme="dark"] .badge-showcase .catalog-block-head,
+[data-theme="dark"] .avatar-showcase .catalog-block-head,
+[data-theme="dark"] .avatargroup-showcase .catalog-block-head,
 [data-theme="dark"] .tooltip-variant-block .catalog-block-head,
 [data-theme="dark"] .paginator-showcase .catalog-block-head,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head,
@@ -345,6 +384,10 @@
 [data-theme="dark"] .messages-showcase .btn-section-title,
 [data-theme="dark"] .toast-showcase .btn-section-title,
 [data-theme="dark"] .tag-showcase .btn-section-title,
+[data-theme="dark"] .chip-showcase .btn-section-title,
+[data-theme="dark"] .badge-showcase .btn-section-title,
+[data-theme="dark"] .avatar-showcase .btn-section-title,
+[data-theme="dark"] .avatargroup-showcase .btn-section-title,
 [data-theme="dark"] .tooltip-variant-block .btn-section-title,
 [data-theme="dark"] .paginator-showcase .btn-section-title,
 [data-theme="dark"] .tabs-variant-block .btn-section-title,
@@ -356,7 +399,11 @@
 
 [data-theme="dark"] .form-showcase .btn-variant-states-label,
 [data-theme="dark"] .button-showcase .btn-variant-states-label,
-[data-theme="dark"] .messages-showcase .btn-variant-states-label {
+[data-theme="dark"] .messages-showcase .btn-variant-states-label,
+[data-theme="dark"] .chip-showcase .btn-variant-states-label,
+[data-theme="dark"] .badge-showcase .btn-variant-states-label,
+[data-theme="dark"] .avatar-showcase .btn-variant-states-label,
+[data-theme="dark"] .avatargroup-showcase .btn-variant-states-label {
   color: var(--p-surface-400);
   font-weight: 700;
 }

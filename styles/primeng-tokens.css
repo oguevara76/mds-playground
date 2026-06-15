@@ -659,11 +659,37 @@ html[data-theme="light"] {
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Badge
      ═══════════════════════════════════════════════════════════════════ */
-  --p-badge-padding-x:        var(--dimension-spacing-x8,  8px);
-  --p-badge-padding-y:        2px;
+  --p-badge-padding-x:        var(--badge-padding-x, var(--dimension-spacing-x8, 8px));
+  --p-badge-padding-y:        var(--badge-padding-y, 2px);
   --p-badge-border-radius:    var(--badge-border-radius, var(--border-radius-sm, var(--p-border-radius-sm)));
   --p-badge-font-size:        var(--badge-font-size, 12px);
   --p-badge-font-weight:      var(--badge-font-weight, 600);
+  --p-badge-min-width:        var(--badge-min-width, 1.25rem);
+  --p-badge-height:           var(--badge-height, 1.25rem);
+  --p-badge-sm-min-width:     var(--badge-sm-min-width, 1.125rem);
+  --p-badge-sm-height:        var(--badge-sm-height, 1.125rem);
+  --p-badge-sm-font-size:     var(--badge-sm-font-size, 0.5rem);
+  --p-badge-lg-min-width:     var(--badge-lg-min-width, 1.5rem);
+  --p-badge-lg-height:        var(--badge-lg-height, 1.5rem);
+  --p-badge-lg-font-size:     var(--badge-lg-font-size, 0.75rem);
+  --p-badge-xl-min-width:     var(--badge-xl-min-width, 1.75rem);
+  --p-badge-xl-height:        var(--badge-xl-height, 1.75rem);
+  --p-badge-xl-font-size:     var(--badge-xl-font-size, 0.875rem);
+  --p-badge-dot-size:         var(--badge-dot-size, 0.5rem);
+  --p-badge-primary-background:   var(--badge-primary-background, color-mix(in srgb, var(--p-primary-color) 12%, transparent));
+  --p-badge-primary-color:        var(--badge-primary-color, var(--p-primary-700));
+  --p-badge-secondary-background: var(--badge-secondary-background, var(--p-secondary-bg));
+  --p-badge-secondary-color:      var(--badge-secondary-color, var(--p-secondary-color));
+  --p-badge-success-background:   var(--badge-success-background, var(--p-success-bg));
+  --p-badge-success-color:        var(--badge-success-color, var(--p-success-color));
+  --p-badge-info-background:      var(--badge-info-background, var(--p-info-bg));
+  --p-badge-info-color:           var(--badge-info-color, var(--p-info-color));
+  --p-badge-warning-background:   var(--badge-warn-background, var(--p-warning-bg));
+  --p-badge-warning-color:        var(--badge-warn-color, var(--p-warning-color));
+  --p-badge-danger-background:    var(--badge-danger-background, var(--p-danger-bg));
+  --p-badge-danger-color:         var(--badge-danger-color, var(--p-danger-color));
+  --p-badge-contrast-background:  var(--badge-contrast-background, var(--p-surface-800));
+  --p-badge-contrast-color:       var(--badge-contrast-color, var(--p-surface-100));
   --p-overlaybadge-outline-width: var(--overlaybadge-outline-width, 0);
   --p-overlaybadge-outline-color: var(--overlaybadge-outline-color, transparent);
 
@@ -1075,6 +1101,11 @@ html[data-theme="light"] {
   --p-avatar-lg-font-size:                var(--avatar-lg-font-size, 20px);
   --p-avatar-lg-icon-size:                var(--avatar-lg-icon-size, var(--dimension-scale-x20, 20px));
   --p-avatar-lg-group-offset:             var(--avatar-lg-group-offset, -14px);
+  --p-avatar-xl-width:                    var(--avatar-xl-width, var(--dimension-scale-x56, 56px));
+  --p-avatar-xl-height:                   var(--avatar-xl-height, var(--dimension-scale-x56, 56px));
+  --p-avatar-xl-font-size:                var(--avatar-xl-font-size, 28px);
+  --p-avatar-xl-icon-size:                var(--avatar-xl-icon-size, var(--dimension-scale-x28, 28px));
+  --p-avatar-xl-group-offset:             var(--avatar-xl-group-offset, -20px);
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — SplitButton panel
@@ -1618,11 +1649,37 @@ html[data-theme="dark"] {
     --p-tag-danger-color:         var(--tag-danger-color, var(--p-danger-color));
     --p-tag-contrast-background:  var(--tag-contrast-background, var(--p-surface-800));
     --p-tag-contrast-color:       var(--tag-contrast-color, var(--p-surface-100));
-    --p-badge-padding-x:        var(--dimension-spacing-x8,  8px);
-    --p-badge-padding-y:        2px;
+    --p-badge-padding-x:        var(--badge-padding-x, var(--dimension-spacing-x8, 8px));
+    --p-badge-padding-y:        var(--badge-padding-y, 2px);
     --p-badge-border-radius:    var(--badge-border-radius, var(--border-radius-sm, var(--p-border-radius-sm)));
     --p-badge-font-size:        var(--badge-font-size, 12px);
     --p-badge-font-weight:      var(--badge-font-weight, 600);
+    --p-badge-min-width:        var(--badge-min-width, 1.25rem);
+    --p-badge-height:           var(--badge-height, 1.25rem);
+    --p-badge-sm-min-width:     var(--badge-sm-min-width, 1.125rem);
+    --p-badge-sm-height:        var(--badge-sm-height, 1.125rem);
+    --p-badge-sm-font-size:     var(--badge-sm-font-size, 0.5rem);
+    --p-badge-lg-min-width:     var(--badge-lg-min-width, 1.5rem);
+    --p-badge-lg-height:        var(--badge-lg-height, 1.5rem);
+    --p-badge-lg-font-size:     var(--badge-lg-font-size, 0.75rem);
+    --p-badge-xl-min-width:     var(--badge-xl-min-width, 1.75rem);
+    --p-badge-xl-height:        var(--badge-xl-height, 1.75rem);
+    --p-badge-xl-font-size:     var(--badge-xl-font-size, 0.875rem);
+    --p-badge-dot-size:         var(--badge-dot-size, 0.5rem);
+    --p-badge-primary-background:   var(--badge-primary-background, color-mix(in srgb, var(--p-primary-color) 12%, transparent));
+    --p-badge-primary-color:        var(--badge-primary-color, var(--p-primary-700));
+    --p-badge-secondary-background: var(--badge-secondary-background, var(--p-secondary-bg));
+    --p-badge-secondary-color:      var(--badge-secondary-color, var(--p-secondary-color));
+    --p-badge-success-background:   var(--badge-success-background, var(--p-success-bg));
+    --p-badge-success-color:        var(--badge-success-color, var(--p-success-color));
+    --p-badge-info-background:      var(--badge-info-background, var(--p-info-bg));
+    --p-badge-info-color:           var(--badge-info-color, var(--p-info-color));
+    --p-badge-warning-background:   var(--badge-warn-background, var(--p-warning-bg));
+    --p-badge-warning-color:        var(--badge-warn-color, var(--p-warning-color));
+    --p-badge-danger-background:    var(--badge-danger-background, var(--p-danger-bg));
+    --p-badge-danger-color:         var(--badge-danger-color, var(--p-danger-color));
+    --p-badge-contrast-background:  var(--badge-contrast-background, var(--p-surface-800));
+    --p-badge-contrast-color:       var(--badge-contrast-color, var(--p-surface-100));
     --p-overlaybadge-outline-width: var(--overlaybadge-outline-width, 0);
     --p-overlaybadge-outline-color: var(--overlaybadge-outline-color, transparent);
     --p-chip-padding-x:         var(--chip-padding-x, var(--dimension-spacing-x12, 12px));

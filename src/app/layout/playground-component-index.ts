@@ -2,6 +2,8 @@ import { BUTTON_BLOCKS, BUTTON_TEXT_VARIANT_SPECS, BUTTON_VARIANT_SPECS } from '
 import { FORM_BLOCKS, FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS, FORM_SIZE_OPTIONS } from '../catalogs/form/form-catalog.config';
 import { PAGINATOR_CATALOG_STATE_DEMOS } from '../catalogs/data/data-catalog.config';
 import {
+  AVATAR_CATALOG_VARIANT_OPTIONS,
+  AVATAR_GROUP_CATALOG_COUNT_OPTIONS,
   BADGE_CATALOG_SEVERITIES,
   CHIP_CATALOG_VARIANT_SELECT_OPTIONS,
   TAG_CATALOG_SEVERITIES,
@@ -57,6 +59,8 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-tag': 'tag',
   'pg-chip': 'chip',
   'pg-badge': 'badge',
+  'pg-avatar': 'avatar',
+  'pg-avatargroup': 'avatar',
 };
 
 function countComponentVariables(anchorId: string): number {
@@ -170,6 +174,22 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Misc',
       keywords: ['p-badge', 'overlaybadge'],
       variantCount: BADGE_CATALOG_SEVERITIES.length,
+    },
+    {
+      id: 'pg-avatar',
+      name: 'Avatar',
+      route: 'misc',
+      sectionLabel: 'Misc',
+      keywords: ['p-avatar', 'avatar'],
+      variantCount: AVATAR_CATALOG_VARIANT_OPTIONS.length,
+    },
+    {
+      id: 'pg-avatargroup',
+      name: 'Avatar Group',
+      route: 'misc',
+      sectionLabel: 'Misc',
+      keywords: ['p-avatargroup', 'avatar group', 'grupo'],
+      variantCount: AVATAR_GROUP_CATALOG_COUNT_OPTIONS.length,
     },
   ];
 
