@@ -874,6 +874,28 @@ html[data-theme="light"] {
   --p-toast-contrast-close-button-focus-ring-color: var(--toast-contrast-close-button-focus-ring-color, var(--p-surface-0));
 
   /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — Breadcrumb
+     Bridge: var(--breadcrumb-*, fallback) ← MDS components.css
+  ═══════════════════════════════════════════════════════════════════ */
+  --p-breadcrumb-background:                  var(--breadcrumb-background, var(--p-content-background));
+  --p-breadcrumb-border-radius:               var(--breadcrumb-border-radius, var(--p-content-border-radius, var(--p-border-radius)));
+  --p-breadcrumb-padding:                     var(--breadcrumb-padding, var(--dimension-scale-x14, 14px));
+  --p-breadcrumb-gap:                         var(--breadcrumb-gap, var(--dimension-scale-x8, 8px));
+  --p-breadcrumb-transition-duration:         var(--form-field-transition-duration, 0.2s);
+  --p-breadcrumb-item-color:                  var(--breadcrumb-item-color, var(--text-muted-color, var(--p-text-muted-color)));
+  --p-breadcrumb-item-hover-color:            var(--breadcrumb-item-hover-color, var(--text-color, var(--p-text-color)));
+  --p-breadcrumb-item-border-radius:          var(--breadcrumb-item-border-radius, var(--navigation-item-border-radius, var(--p-border-radius-sm)));
+  --p-breadcrumb-item-gap:                    var(--navigation-item-gap, var(--dimension-scale-x8, 8px));
+  --p-breadcrumb-item-icon-color:             var(--breadcrumb-item-icon-color, var(--navigation-item-icon-color));
+  --p-breadcrumb-item-icon-hover-color:       var(--breadcrumb-item-icon-hover-color, var(--navigation-item-icon-focus-color));
+  --p-breadcrumb-item-focus-ring-width:       var(--breadcrumb-item-focus-ring-width, var(--focus-ring-width, 0));
+  --p-breadcrumb-item-focus-ring-style:       solid;
+  --p-breadcrumb-item-focus-ring-color:       var(--breadcrumb-item-focus-ring-color, var(--focus-ring-color));
+  --p-breadcrumb-item-focus-ring-offset:      var(--breadcrumb-item-focus-ring-offset, var(--focus-ring-offset, 0));
+  --p-breadcrumb-item-focus-ring-shadow:      var(--breadcrumb-item-focus-ring-shadow, 0 0 0 0 transparent);
+  --p-breadcrumb-separator-color:             var(--breadcrumb-separator-color, var(--navigation-item-icon-color));
+
+  /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tooltip
      Bridge: var(--tooltip-*, fallback) ← MDS components.css
   ═══════════════════════════════════════════════════════════════════ */
@@ -1835,6 +1857,23 @@ html[data-theme="dark"] {
     --p-toast-contrast-shadow:                    var(--toast-contrast-shadow, 0 4px 8px rgba(0, 0, 0, 0.12));
     --p-toast-contrast-close-button-hover-background: var(--toast-contrast-close-button-hover-background, var(--p-surface-700));
     --p-toast-contrast-close-button-focus-ring-color: var(--toast-contrast-close-button-focus-ring-color, var(--p-surface-0));
+    --p-breadcrumb-background:                  var(--breadcrumb-background, var(--p-content-background));
+    --p-breadcrumb-border-radius:               var(--breadcrumb-border-radius, var(--p-content-border-radius, var(--p-border-radius)));
+    --p-breadcrumb-padding:                     var(--breadcrumb-padding, var(--dimension-scale-x14, 14px));
+    --p-breadcrumb-gap:                         var(--breadcrumb-gap, var(--dimension-scale-x8, 8px));
+    --p-breadcrumb-transition-duration:         var(--form-field-transition-duration, 0.2s);
+    --p-breadcrumb-item-color:                  var(--breadcrumb-item-color, var(--text-muted-color, var(--p-text-muted-color)));
+    --p-breadcrumb-item-hover-color:            var(--breadcrumb-item-hover-color, var(--text-color, var(--p-text-color)));
+    --p-breadcrumb-item-border-radius:          var(--breadcrumb-item-border-radius, var(--navigation-item-border-radius, var(--p-border-radius-sm)));
+    --p-breadcrumb-item-gap:                    var(--navigation-item-gap, var(--dimension-scale-x8, 8px));
+    --p-breadcrumb-item-icon-color:             var(--breadcrumb-item-icon-color, var(--navigation-item-icon-color));
+    --p-breadcrumb-item-icon-hover-color:       var(--breadcrumb-item-icon-hover-color, var(--navigation-item-icon-focus-color));
+    --p-breadcrumb-item-focus-ring-width:       var(--breadcrumb-item-focus-ring-width, var(--focus-ring-width, 0));
+    --p-breadcrumb-item-focus-ring-style:       solid;
+    --p-breadcrumb-item-focus-ring-color:       var(--breadcrumb-item-focus-ring-color, var(--focus-ring-color));
+    --p-breadcrumb-item-focus-ring-offset:      var(--breadcrumb-item-focus-ring-offset, var(--focus-ring-offset, 0));
+    --p-breadcrumb-item-focus-ring-shadow:      var(--breadcrumb-item-focus-ring-shadow, 0 0 0 0 transparent);
+    --p-breadcrumb-separator-color:             var(--breadcrumb-separator-color, var(--navigation-item-icon-color));
     --p-tooltip-max-width:    var(--tooltip-max-width, 184px);
     --p-tooltip-gutter:       var(--tooltip-gutter, 4px);
     --p-tooltip-shadow:       var(--tooltip-shadow, 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1));

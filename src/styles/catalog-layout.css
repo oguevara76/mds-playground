@@ -138,6 +138,19 @@
   box-shadow: none;
 }
 
+.is-static-preview .p-breadcrumb-item-link,
+.is-static-preview .p-breadcrumb-home-item a {
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
+}
+
+.is-static-preview .p-breadcrumb-item-link:focus-visible,
+.is-static-preview .p-breadcrumb-home-item a:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Paridad con app.css — subtítulos del catálogo en dark */
 [data-theme="dark"] .btn-section-title {
   color: var(--p-surface-600, var(--surface-600));
@@ -161,6 +174,7 @@
 .badge-showcase .catalog-block-head .section-title.component-title-primary,
 .avatar-showcase .catalog-block-head .section-title.component-title-primary,
 .avatargroup-showcase .catalog-block-head .section-title.component-title-primary,
+.breadcrumb-showcase .catalog-block-head .section-title.component-title-primary,
 .tooltip-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--p-content-color);
   font-weight: 800;
@@ -178,6 +192,7 @@
 .badge-showcase .btn-section-title,
 .avatar-showcase .btn-section-title,
 .avatargroup-showcase .btn-section-title,
+.breadcrumb-showcase .btn-section-title,
 .tooltip-variant-block .btn-section-title {
   color: var(--p-surface-700);
   font-weight: 700;
@@ -202,6 +217,7 @@
 .paginator-showcase .paginator-catalog-state-caption,
 .tabs-variant-block .tabs-catalog-state-caption,
 .divider-variant-block .divider-catalog-state-caption,
+.breadcrumb-showcase .breadcrumb-catalog-state-caption,
 .tooltip-variant-block .tooltip-catalog-position-caption {
   color: var(--p-surface-600);
   font-weight: 500;
@@ -304,8 +320,58 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  min-width: 220px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: 4px 2px;
+  box-sizing: border-box;
+}
+
+/* Popovers CONFIGURAR: ancho uniforme (referencia Chip, #pg-chip) */
+:root {
+  --playground-config-popover-body-width: 220px;
+  --playground-config-popover-width: calc(
+    var(--playground-config-popover-body-width) +
+      2 * var(--popover-content-padding, var(--overlay-popover-padding, 12px))
+  );
+}
+
+.p-popover.button-config-popover {
+  width: var(--playground-config-popover-width);
+  max-width: calc(100vw - 24px);
+  box-sizing: border-box;
+}
+
+.p-popover.button-config-popover .p-popover-content {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.p-popover.button-config-popover .p-select-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.p-popover.button-config-popover .button-config-tooltip-note {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--p-surface-400);
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.p-popover.button-config-popover .button-config-tooltip-note strong {
+  font-weight: 700;
+  color: inherit;
 }
 
 .button-config-switches .button-config-divider.p-divider {
@@ -355,6 +421,7 @@
 [data-theme="dark"] .badge-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .avatar-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .avatargroup-showcase .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .breadcrumb-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tooltip-variant-block .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .paginator-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
@@ -372,6 +439,7 @@
 [data-theme="dark"] .badge-showcase .catalog-block-head,
 [data-theme="dark"] .avatar-showcase .catalog-block-head,
 [data-theme="dark"] .avatargroup-showcase .catalog-block-head,
+[data-theme="dark"] .breadcrumb-showcase .catalog-block-head,
 [data-theme="dark"] .tooltip-variant-block .catalog-block-head,
 [data-theme="dark"] .paginator-showcase .catalog-block-head,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head,
@@ -388,6 +456,7 @@
 [data-theme="dark"] .badge-showcase .btn-section-title,
 [data-theme="dark"] .avatar-showcase .btn-section-title,
 [data-theme="dark"] .avatargroup-showcase .btn-section-title,
+[data-theme="dark"] .breadcrumb-showcase .btn-section-title,
 [data-theme="dark"] .tooltip-variant-block .btn-section-title,
 [data-theme="dark"] .paginator-showcase .btn-section-title,
 [data-theme="dark"] .tabs-variant-block .btn-section-title,
@@ -415,6 +484,7 @@
 [data-theme="dark"] .paginator-showcase .paginator-catalog-state-caption,
 [data-theme="dark"] .tabs-variant-block .tabs-catalog-state-caption,
 [data-theme="dark"] .divider-variant-block .divider-catalog-state-caption,
+[data-theme="dark"] .breadcrumb-showcase .breadcrumb-catalog-state-caption,
 [data-theme="dark"] .tooltip-variant-block .tooltip-catalog-position-caption {
   color: var(--p-surface-400);
   font-weight: 500;

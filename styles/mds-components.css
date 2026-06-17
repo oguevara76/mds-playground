@@ -164,8 +164,9 @@ html:root {
   --badge-xl-min-width: var(--dimension-scale-x28);
   --blockui-border-radius: var(--content-border-radius);
   --breadcrumb-background: var(--content-background);
+  --breadcrumb-border-radius: var(--content-border-radius);
   --breadcrumb-gap: var(--dimension-scale-x8);
-  --breadcrumb-item-border-radius: var(--content-border-radius);
+  --breadcrumb-item-border-radius: var(--navigation-item-border-radius);
   --breadcrumb-item-color: var(--text-muted-color);
   --breadcrumb-item-focus-ring-color: var(--focus-ring-color);
   --breadcrumb-item-focus-ring-offset: var(--focus-ring-offset);

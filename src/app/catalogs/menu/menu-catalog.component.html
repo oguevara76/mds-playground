@@ -1,0 +1,112 @@
+<div class="cards-grid form-catalog-stack">
+  <div class="catalog-preview breadcrumb-showcase">
+    <section id="pg-breadcrumb" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Breadcrumb</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="breadcrumb-interaction-row">
+            <div class="breadcrumb-catalog-demo-area catalog-showcase-interactive">
+              <p-breadcrumb
+                [class]="breadcrumbDisplayClass()"
+                [home]="breadcrumbHome()"
+                [model]="breadcrumbModel()"
+                [homeAriaLabel]="homeAriaLabel"
+              />
+            </div>
+
+            <aside class="button-config-aside">
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="breadcrumbConfigPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="breadcrumbConfigPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
+              <p class="button-config-aside-hint">
+                {{ configAsideHint }}
+              </p>
+              <p-popover
+                #breadcrumbConfigPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                ariaLabel="Configurar Breadcrumb"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Items</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="itemCountOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="breadcrumbIx().itemCount"
+                        (ngModelChange)="patchBreadcrumbIx({ itemCount: $event })"
+                        size="small"
+                        ariaLabel="Cantidad de items del breadcrumb"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Display mode</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="displayModeOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="breadcrumbIx().displayMode"
+                        (ngModelChange)="patchBreadcrumbIx({ displayMode: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Modo de visualización del breadcrumb"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">NOTA</span>
+                    <p class="button-config-tooltip-note">
+                      El componente <strong>Tooltip</strong> que hemos implementado en la variante
+                      seleccionada, <strong>no es nativo del componente Breadcrumb</strong>. Esta
+                      alternativa deberá implementarla desarrollo.
+                    </p>
+                  </div>
+                </div>
+              </p-popover>
+            </aside>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Variants</p>
+          <div
+            class="breadcrumb-catalog-states-row is-static-preview"
+            aria-label="Breadcrumb display variants including custom mode"
+          >
+            @for (demo of displayModeDemos; track trackDisplayMode($index, demo)) {
+              <div class="breadcrumb-catalog-state">
+                <div class="breadcrumb-catalog-state-preview">
+                  <p-breadcrumb
+                    [class]="demoDisplayClass(demo.key)"
+                    [home]="demoHome(demo.key)"
+                    [model]="demoModel(demo.key)"
+                    [homeAriaLabel]="homeAriaLabel"
+                  />
+                </div>
+                <span class="breadcrumb-catalog-state-caption catalog-button-state-caption">{{
+                  demo.caption
+                }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

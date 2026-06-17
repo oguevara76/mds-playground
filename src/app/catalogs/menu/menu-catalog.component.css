@@ -1,0 +1,79 @@
+:host.menu-catalog-page .breadcrumb-interaction-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+:host.menu-catalog-page .breadcrumb-catalog-demo-area {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+:host.menu-catalog-page .breadcrumb-catalog-states-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+:host.menu-catalog-page .breadcrumb-catalog-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+:host.menu-catalog-page .breadcrumb-catalog-state-preview {
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+:host.menu-catalog-page .breadcrumb-catalog-state-preview ::ng-deep .p-breadcrumb {
+  width: fit-content;
+  max-width: max-content;
+}
+
+/* Solo texto: ocultar icono por defecto del home de PrimeNG */
+:host.menu-catalog-page ::ng-deep .breadcrumb-display-text .p-breadcrumb-home-item .p-breadcrumb-item-icon,
+:host.menu-catalog-page ::ng-deep .breadcrumb-display-text .p-breadcrumb-home-item svg[data-p-icon='home'] {
+  display: none !important;
+}
+
+/* Refuerzo catálogo: mismas variables MDS que breadcrumb-mds-overrides / primeng-tokens */
+:host.menu-catalog-page ::ng-deep .p-breadcrumb {
+  background: var(--breadcrumb-background, var(--p-breadcrumb-background));
+  padding: var(--breadcrumb-padding, var(--p-breadcrumb-padding));
+  border-radius: var(--breadcrumb-border-radius, var(--p-breadcrumb-border-radius));
+}
+
+:host.menu-catalog-page ::ng-deep .p-breadcrumb-list {
+  gap: var(--breadcrumb-gap, var(--p-breadcrumb-gap));
+}
+
+:host.menu-catalog-page ::ng-deep .p-breadcrumb-separator {
+  color: var(--breadcrumb-separator-color, var(--p-breadcrumb-separator-color));
+}
+
+:host.menu-catalog-page ::ng-deep .p-breadcrumb-item-link {
+  gap: var(--breadcrumb-item-gap, var(--p-breadcrumb-item-gap));
+  border-radius: var(--breadcrumb-item-border-radius, var(--p-breadcrumb-item-border-radius));
+  color: var(--breadcrumb-item-color, var(--p-breadcrumb-item-color));
+}
+
+:host.menu-catalog-page ::ng-deep .p-breadcrumb-item-link:hover .p-breadcrumb-item-label {
+  color: var(--breadcrumb-item-hover-color, var(--p-breadcrumb-item-hover-color));
+}
+
+:host.menu-catalog-page ::ng-deep .p-breadcrumb-item-icon {
+  color: var(--breadcrumb-item-icon-color, var(--p-breadcrumb-item-icon-color));
+}
+
+:host.menu-catalog-page ::ng-deep .p-breadcrumb-item-link:hover .p-breadcrumb-item-icon {
+  color: var(--breadcrumb-item-icon-hover-color, var(--p-breadcrumb-item-icon-hover-color));
+}

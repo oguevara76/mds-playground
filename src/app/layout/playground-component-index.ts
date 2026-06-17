@@ -14,6 +14,7 @@ import {
   DIVIDER_STATE_DEMOS,
   PANEL_CATALOG_TAB_STATE_DEMOS,
 } from '../catalogs/panel/panel-catalog.config';
+import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
 import { MDS_VARS_CATALOG } from '../theme/mds-vars-catalog.generated';
 
@@ -23,6 +24,7 @@ export type PlaygroundCatalogRoute =
   | 'messages'
   | 'data'
   | 'panel'
+  | 'menu'
   | 'overlay'
   | 'misc';
 
@@ -55,6 +57,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-paginator': 'paginator',
   'pg-divider': 'divider',
   'pg-tabs': 'tabs',
+  'pg-breadcrumb': 'breadcrumb',
   'pg-tooltip': 'tooltip',
   'pg-tag': 'tag',
   'pg-chip': 'chip',
@@ -142,6 +145,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Panel',
       keywords: ['p-tabs', 'tabview', 'pestañas'],
       variantCount: PANEL_CATALOG_TAB_STATE_DEMOS.length,
+    },
+    {
+      id: 'pg-breadcrumb',
+      name: 'Breadcrumb',
+      route: 'menu',
+      sectionLabel: 'Menu',
+      keywords: ['p-breadcrumb', 'miga de pan', 'navegación', 'navigation'],
+      variantCount: BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS.length,
     },
     {
       id: 'pg-tooltip',
