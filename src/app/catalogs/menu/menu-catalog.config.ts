@@ -63,6 +63,12 @@ export interface BreadcrumbCatalogInteractionState {
   displayMode: BreadcrumbCatalogDisplayMode;
 }
 
+export function breadcrumbCatalogShowsTooltipNote(
+  displayMode: BreadcrumbCatalogDisplayMode,
+): boolean {
+  return displayMode === 'icon' || displayMode === 'custom';
+}
+
 function breadcrumbItemTooltipOptions(label: string): TooltipOptions {
   return {
     tooltipLabel: label,

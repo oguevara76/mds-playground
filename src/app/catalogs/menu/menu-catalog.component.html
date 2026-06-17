@@ -68,15 +68,17 @@
                       />
                     </div>
                   </div>
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="button-config-size-field">
-                    <span class="input-config-label">NOTA</span>
-                    <p class="button-config-tooltip-note">
-                      El componente <strong>Tooltip</strong> que hemos implementado en la variante
-                      seleccionada, <strong>no es nativo del componente Breadcrumb</strong>. Esta
-                      alternativa deberá implementarla desarrollo.
-                    </p>
-                  </div>
+                  @if (breadcrumbTooltipNoteVisible()) {
+                    <p-divider styleClass="button-config-divider" />
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">NOTA</span>
+                      <p class="button-config-tooltip-note">
+                        El componente <strong>Tooltip</strong> que hemos implementado en la variante
+                        seleccionada, <strong>no es nativo del componente Breadcrumb</strong>. Esta
+                        alternativa deberá implementarla desarrollo.
+                      </p>
+                    </div>
+                  }
                 </div>
               </p-popover>
             </aside>

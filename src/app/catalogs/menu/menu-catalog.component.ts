@@ -13,6 +13,7 @@ import {
   BREADCRUMB_CATALOG_ITEM_COUNT_OPTIONS,
   buildBreadcrumbHomeItem,
   buildBreadcrumbModel,
+  breadcrumbCatalogShowsTooltipNote,
   breadcrumbDisplayModeClass,
   type BreadcrumbCatalogDisplayMode,
   type BreadcrumbCatalogInteractionState,
@@ -54,6 +55,10 @@ export class MenuCatalogComponent {
   );
 
   readonly configAsideHint = 'Items, Display mode';
+
+  readonly breadcrumbTooltipNoteVisible = computed(() =>
+    breadcrumbCatalogShowsTooltipNote(this.breadcrumbIx().displayMode),
+  );
 
   patchBreadcrumbIx(patch: Partial<BreadcrumbCatalogInteractionState>): void {
     this.breadcrumbIx.update((state) => ({ ...state, ...patch }));
