@@ -14,7 +14,7 @@ export const routes: Routes = [
     path: '',
     component: AppShellComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'button' },
+      { path: '', pathMatch: 'full', redirectTo: 'preview' },
       {
         path: 'tokens',
         loadComponent: () =>
@@ -31,5 +31,5 @@ export const routes: Routes = [
       { path: 'misc', component: MiscCatalogComponent },
     ],
   },
-  { path: '**', redirectTo: 'button' },
+  { path: '**', redirectTo: 'preview' },
 ];
