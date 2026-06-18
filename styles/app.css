@@ -1062,7 +1062,9 @@ app-playground-sidebar {
   gap: 6px;
 }
 .form-showcase .catalog-input-interactive:has(.p-floatlabel) > .p-hint,
-.form-showcase .catalog-input-interactive:has(.p-iftalabel) > .p-hint {
+.form-showcase .catalog-input-interactive:has(.p-iftalabel) > .p-hint,
+.form-showcase .catalog-input-interactive:has(.p-floatlabel) > .p-error,
+.form-showcase .catalog-input-interactive:has(.p-iftalabel) > .p-error {
   margin-top: 0;
 }
 .catalog-input-state {

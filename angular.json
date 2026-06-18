@@ -46,6 +46,7 @@
               "src/styles/primeng-badge-parity.css",
               "src/styles/primeng-textarea-parity.css",
               "src/styles/primeng-togglebutton-parity.css",
+              "src/styles/primeng-toggleswitch-parity.css",
               "src/styles/primeng-preview-parity.css",
               "styles/app.css",
               "src/styles/catalog-layout.css",
@@ -63,8 +64,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "32kB",
-                  "maximumError": "48kB"
+                  "maximumWarning": "64kB",
+                  "maximumError": "80kB"
                 }
               ],
               "outputHashing": "all"
@@ -141,6 +142,7 @@
               "src/styles/primeng-badge-parity.css",
               "src/styles/primeng-textarea-parity.css",
               "src/styles/primeng-togglebutton-parity.css",
+              "src/styles/primeng-toggleswitch-parity.css",
               "src/styles/primeng-preview-parity.css",
               "styles/app.css",
               "src/styles/catalog-layout.css",

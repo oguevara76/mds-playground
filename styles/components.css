@@ -139,11 +139,13 @@
 }
 .p-button-success:hover {
   background:   var(--p-button-success-hover-background);
-  border-color: var(--p-button-success-hover-background);
+  border-color: var(--p-button-success-hover-border-color, var(--p-button-success-hover-background));
+  color:        var(--p-button-success-hover-color, var(--p-button-success-color));
 }
 .p-button-success:active:not(:disabled) {
   background:   var(--p-button-success-active-background);
-  border-color: var(--p-button-success-active-background);
+  border-color: var(--p-button-success-active-border-color, var(--p-button-success-active-background));
+  color:        var(--p-button-success-active-color, var(--p-button-success-color));
 }
 
 /* ── Filled: Warning ── */
@@ -154,11 +156,13 @@
 }
 .p-button-warning:hover {
   background:   var(--p-button-warning-hover-background);
-  border-color: var(--p-button-warning-hover-background);
+  border-color: var(--p-button-warning-hover-border-color, var(--p-button-warning-hover-background));
+  color:        var(--p-button-warning-hover-color, var(--p-button-warning-color));
 }
 .p-button-warning:active:not(:disabled) {
   background:   var(--p-button-warning-active-background);
-  border-color: var(--p-button-warning-active-background);
+  border-color: var(--p-button-warning-active-border-color, var(--p-button-warning-active-background));
+  color:        var(--p-button-warning-active-color, var(--p-button-warning-color));
 }
 
 /* ── Filled: Info ── */
@@ -169,11 +173,13 @@
 }
 .p-button-info:hover {
   background:   var(--p-button-info-hover-background);
-  border-color: var(--p-button-info-hover-background);
+  border-color: var(--p-button-info-hover-border-color, var(--p-button-info-hover-background));
+  color:        var(--p-button-info-hover-color, var(--p-button-info-color));
 }
 .p-button-info:active:not(:disabled) {
   background:   var(--p-button-info-active-background);
-  border-color: var(--p-button-info-active-background);
+  border-color: var(--p-button-info-active-border-color, var(--p-button-info-active-background));
+  color:        var(--p-button-info-active-color, var(--p-button-info-color));
 }
 
 /* ── Filled: Help ── */
@@ -184,11 +190,13 @@
 }
 .p-button-help:hover {
   background:   var(--p-button-help-hover-background);
-  border-color: var(--p-button-help-hover-background);
+  border-color: var(--p-button-help-hover-border-color, var(--p-button-help-hover-background));
+  color:        var(--p-button-help-hover-color, var(--p-button-help-color));
 }
 .p-button-help:active:not(:disabled) {
   background:   var(--p-button-help-active-background);
-  border-color: var(--p-button-help-active-background);
+  border-color: var(--p-button-help-active-border-color, var(--p-button-help-active-background));
+  color:        var(--p-button-help-active-color, var(--p-button-help-color));
 }
 
 /* ── Outlined: Primary ── */
@@ -1336,7 +1344,7 @@
   border-color: var(--toggleswitch-hover-border-color);
 }
 .p-toggleswitch:hover:not(.p-toggleswitch-disabled):not(.p-toggleswitch-checked) .p-toggleswitch-slider::before {
-  background: var(--toggleswitch-handle-hover-background, var(--neutral-white));
+  background: var(--toggleswitch-handle-hover-background, var(--toggleswitch-handle-background, var(--surface-context-strong)));
 }
 .p-toggleswitch.p-toggleswitch-checked {
   background: var(--toggleswitch-checked-background);

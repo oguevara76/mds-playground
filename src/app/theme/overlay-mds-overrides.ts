@@ -178,52 +178,6 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
   text-overflow: clip;
 }
 
-/* ToggleSwitch en panel de configuración — tokens MDS vía --p-toggleswitch-* */
-.p-popover .p-toggleswitch .p-toggleswitch-slider {
-  background: var(--p-toggleswitch-background) !important;
-  border-color: var(--p-toggleswitch-border-color) !important;
-  box-shadow: var(--p-toggleswitch-shadow);
-}
-
-.p-popover .p-toggleswitch:hover:not(.p-disabled):not(.p-toggleswitch-checked) .p-toggleswitch-slider {
-  background: var(--p-toggleswitch-hover-background) !important;
-  border-color: var(--p-toggleswitch-hover-border-color) !important;
-}
-
-.p-popover .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
-  background: var(--p-toggleswitch-checked-background) !important;
-  border-color: var(--p-toggleswitch-checked-border-color) !important;
-}
-
-.p-popover .p-toggleswitch.p-toggleswitch-checked:hover:not(.p-disabled) .p-toggleswitch-slider {
-  background: var(--p-toggleswitch-checked-hover-background) !important;
-  border-color: var(--p-toggleswitch-checked-hover-border-color) !important;
-}
-
-.p-popover .p-toggleswitch .p-toggleswitch-handle {
-  background: var(--p-toggleswitch-handle-background) !important;
-}
-
-.p-popover .p-toggleswitch:hover:not(.p-disabled):not(.p-toggleswitch-checked) .p-toggleswitch-handle {
-  background: var(--p-toggleswitch-handle-hover-background) !important;
-}
-
-.p-popover .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle {
-  background: var(--p-toggleswitch-handle-checked-background) !important;
-}
-
-.p-popover .p-toggleswitch.p-toggleswitch-checked:hover:not(.p-disabled) .p-toggleswitch-handle {
-  background: var(--p-toggleswitch-handle-checked-hover-background) !important;
-}
-
-.p-popover .p-toggleswitch.p-disabled:not(.p-toggleswitch-checked) .p-toggleswitch-slider {
-  background: var(--p-toggleswitch-disabled-background) !important;
-}
-
-.p-popover .p-toggleswitch.p-disabled .p-toggleswitch-handle {
-  background: var(--p-toggleswitch-handle-disabled-background) !important;
-}
-
 /* p-select overlay (configuradores: appendTo="body") — padding en lista y opciones */
 .p-select-overlay {
   background: var(--select-overlay-background, var(--p-select-overlay-background)) !important;

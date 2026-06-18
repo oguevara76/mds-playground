@@ -2,7 +2,7 @@
  * ToggleButton — alineación MDS vs PrimeNG 20
  *
  * Figma/MDS: --togglebutton-padding (2px) = gutter del track (root), constante en todos los tamaños.
- * --togglebutton-sm|lg-padding = padding del área activa (.p-togglebutton-content).
+ * --togglebutton-content-*-padding = padding del área activa (.p-togglebutton-content).
  *
  * PrimeNG por defecto aplica sm|lg padding al root (.p-togglebutton-sm); esto lo corrige.
  */
@@ -52,15 +52,24 @@
 
 /* PrimeNG inyecta padding en runtime; !important en los tres tamaños */
 .p-togglebutton:not(.p-togglebutton-sm):not(.p-togglebutton-lg) .p-togglebutton-content {
-  padding: var(--p-togglebutton-content-padding, var(--togglebutton-content-padding)) !important;
+  padding: var(
+    --p-togglebutton-content-padding,
+    var(--togglebutton-content-padding, var(--togglebutton-content-padding-y) var(--togglebutton-content-padding-x))
+  ) !important;
 }
 
 .p-togglebutton.p-togglebutton-sm .p-togglebutton-content {
-  padding: var(--p-togglebutton-content-sm-padding, var(--togglebutton-sm-padding)) !important;
+  padding: var(
+    --p-togglebutton-content-sm-padding,
+    var(--togglebutton-content-sm-padding, var(--togglebutton-content-sm-padding-y) var(--togglebutton-content-sm-padding-x))
+  ) !important;
 }
 
 .p-togglebutton.p-togglebutton-lg .p-togglebutton-content {
-  padding: var(--p-togglebutton-content-lg-padding, var(--togglebutton-lg-padding)) !important;
+  padding: var(
+    --p-togglebutton-content-lg-padding,
+    var(--togglebutton-content-lg-padding, var(--togglebutton-content-lg-padding-y) var(--togglebutton-content-lg-padding-x))
+  ) !important;
 }
 
 .p-togglebutton.p-togglebutton-checked .p-togglebutton-content {

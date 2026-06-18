@@ -42,6 +42,54 @@ export const BADGE_MDS_OVERRIDE_CSS = `
   padding: 0 !important;
 }
 
+.p-badge.p-badge-circle {
+  border-radius: 50% !important;
+  min-width: var(--badge-height, var(--p-badge-height, 1.25rem)) !important;
+  width: var(--badge-height, var(--p-badge-height, 1.25rem)) !important;
+  padding: 0 !important;
+}
+
+.p-badge-sm.p-badge-circle {
+  min-width: var(--badge-sm-height, var(--p-badge-sm-height, 1.125rem)) !important;
+  width: var(--badge-sm-height, var(--p-badge-sm-height, 1.125rem)) !important;
+}
+
+.p-badge-lg.p-badge-circle {
+  min-width: var(--badge-lg-height, var(--p-badge-lg-height, 1.5rem)) !important;
+  width: var(--badge-lg-height, var(--p-badge-lg-height, 1.5rem)) !important;
+}
+
+.p-badge-xl.p-badge-circle {
+  min-width: var(--badge-xl-height, var(--p-badge-xl-height, 1.75rem)) !important;
+  width: var(--badge-xl-height, var(--p-badge-xl-height, 1.75rem)) !important;
+}
+
+.p-badge.p-badge-square,
+.p-badge.p-badge-square.p-badge-circle {
+  border-radius: var(--badge-border-radius, var(--p-badge-border-radius)) !important;
+  min-width: var(--badge-height, var(--p-badge-height, 1.25rem)) !important;
+  width: var(--badge-height, var(--p-badge-height, 1.25rem)) !important;
+  padding: 0 !important;
+}
+
+.p-badge-sm.p-badge-square,
+.p-badge-sm.p-badge-square.p-badge-circle {
+  min-width: var(--badge-sm-height, var(--p-badge-sm-height, 1.125rem)) !important;
+  width: var(--badge-sm-height, var(--p-badge-sm-height, 1.125rem)) !important;
+}
+
+.p-badge-lg.p-badge-square,
+.p-badge-lg.p-badge-square.p-badge-circle {
+  min-width: var(--badge-lg-height, var(--p-badge-lg-height, 1.5rem)) !important;
+  width: var(--badge-lg-height, var(--p-badge-lg-height, 1.5rem)) !important;
+}
+
+.p-badge-xl.p-badge-square,
+.p-badge-xl.p-badge-square.p-badge-circle {
+  min-width: var(--badge-xl-height, var(--p-badge-xl-height, 1.75rem)) !important;
+  width: var(--badge-xl-height, var(--p-badge-xl-height, 1.75rem)) !important;
+}
+
 .p-badge-primary,
 .p-badge:not(.p-badge-success):not(.p-badge-info):not(.p-badge-warn):not(.p-badge-danger):not(.p-badge-secondary):not(.p-badge-contrast) {
   background: var(--badge-primary-background, var(--p-badge-primary-background)) !important;
@@ -90,5 +138,11 @@ export const BADGE_MDS_OVERRIDE_CSS = `
   outline-width: var(--overlaybadge-outline-width, var(--p-overlaybadge-outline-width, 0)) !important;
   outline-style: solid !important;
   outline-color: var(--overlaybadge-outline-color, var(--p-overlaybadge-outline-color, transparent)) !important;
+}
+
+/* PrimeNG badgeDisabled usa display:none inline; debe ganar sobre display:inline-flex !important */
+.p-badge[style*='display: none'],
+.p-badge[style*='display:none'] {
+  display: none !important;
 }
 `;

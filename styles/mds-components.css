@@ -1298,6 +1298,7 @@ html:root {
   --paginator-nav-button-width: var(--dimension-scale-x32);
   --paginator-padding-x: 14px;
   --paginator-padding-y: 7px;
+  --paginator-padding: var(--paginator-padding-y) var(--paginator-padding-x);
   --panel-background: var(--content-background);
   --panel-border-color: var(--content-border-color);
   --panel-border-radius: var(--content-border-radius);

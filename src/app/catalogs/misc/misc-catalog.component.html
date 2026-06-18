@@ -153,18 +153,31 @@
       <div class="catalog-block-body">
         <div class="btn-section catalog-interaction-section">
           <p class="btn-section-title">Severity</p>
-          <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge, severity variants">
-            @for (option of badgeSeverityOptions; track option.label) {
-              <p-badge [severity]="option.severity" [styleClass]="option.styleClass" [value]="badgeDemoValue" />
-            }
-          </div>
-          <div
-            class="tag-catalog-row badge-catalog-row badge-catalog-row-rect is-static-preview"
-            aria-label="Badge rectangular, severity variants"
-          >
-            @for (option of badgeSeverityOptions; track option.label) {
-              <p-badge [severity]="option.severity" [styleClass]="option.styleClass" [value]="badgeDemoValue" />
-            }
+          <div class="badge-severity-shape-demos is-static-preview" aria-label="Badge, severity circle and square">
+            <div class="badge-severity-shape-demo">
+              <span class="btn-variant-states-label avatar-group-size-label">Circle</span>
+              <div class="tag-catalog-row badge-catalog-row badge-catalog-row-circle">
+                @for (sev of badgeSeverities; track trackBadgeSeverity($index, sev)) {
+                  <p-badge
+                    [value]="badgeDemoValue"
+                    [severity]="sev.primeSeverity"
+                    [styleClass]="badgeSeverityStyleClass(sev, 'circle')"
+                  />
+                }
+              </div>
+            </div>
+            <div class="badge-severity-shape-demo">
+              <span class="btn-variant-states-label avatar-group-size-label">Square</span>
+              <div class="tag-catalog-row badge-catalog-row badge-catalog-row-square">
+                @for (sev of badgeSeverities; track trackBadgeSeverity($index, sev)) {
+                  <p-badge
+                    [value]="badgeDemoValue"
+                    [severity]="sev.primeSeverity"
+                    [styleClass]="badgeSeverityStyleClass(sev, 'square')"
+                  />
+                }
+              </div>
+            </div>
           </div>
         </div>
 
@@ -178,7 +191,7 @@
         </div>
 
         <div class="btn-section">
-          <p class="btn-section-title">Overlay (p-overlayBadge)</p>
+          <p class="btn-section-title">Overlay</p>
           <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge overlay variants">
             <p-overlayBadge [value]="2" badgeSize="small">
               <i class="pi pi-bell badge-overlay-target" aria-hidden="true"></i>
@@ -215,7 +228,7 @@
                 [value]="avatarBadgeDemoValue"
                 [badgeDisabled]="!avatarIx.showBadge"
                 badgeSize="small"
-                styleClass="p-badge-primary"
+                [styleClass]="avatarBadgeStyleClass()"
               >
                 <p-avatar
                   [label]="avatarShowsLabel() ? avatarDemoLabel : undefined"
@@ -238,7 +251,7 @@
                 CONFIGURAR
               </button>
               <p class="button-config-aside-hint">
-                Variant, Size, Circle, Badge
+                Variant, Size, Circle, Badge y forma del badge
               </p>
               <p-popover
                 #avatarConfigPopover
@@ -297,6 +310,25 @@
                       ariaLabel="Mostrar badge en avatar"
                     />
                   </div>
+                  @if (avatarIx.showBadge) {
+                    <p-divider styleClass="button-config-divider" />
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">Badge shape</span>
+                      <div class="button-config-size-toggle-wrap">
+                        <p-selectbutton
+                          [options]="avatarBadgeShapeOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          [ngModel]="avatarIx.badgeShape"
+                          (ngModelChange)="patchAvatarIx({ badgeShape: $event })"
+                          [allowEmpty]="false"
+                          [fluid]="true"
+                          size="small"
+                          ariaLabel="Forma del badge en avatar"
+                        />
+                      </div>
+                    </div>
+                  }
                 </div>
               </p-popover>
             </aside>

@@ -17,12 +17,14 @@ import {
   AVATAR_CATALOG_DEMO_ICON,
   AVATAR_CATALOG_DEMO_IMAGE_URL,
   AVATAR_CATALOG_DEMO_LABEL,
+  AVATAR_CATALOG_SHAPE_OPTIONS,
   AVATAR_CATALOG_SIZE_OPTIONS,
   AVATAR_CATALOG_VARIANT_OPTIONS,
   AVATAR_GROUP_CATALOG_COUNT_OPTIONS,
   AVATAR_GROUP_CATALOG_IMAGES,
   AVATAR_GROUP_CATALOG_MAX_VISIBLE,
   AVATAR_GROUP_CATALOG_OVERFLOW_LABEL,
+  BADGE_CATALOG_SEVERITIES,
   BADGE_CATALOG_SIZE_OPTIONS,
   CHIP_CATALOG_DEMO_AVATAR_URL,
   CHIP_CATALOG_DEMO_ICON,
@@ -34,6 +36,7 @@ import {
   type AvatarCatalogVariant,
   type AvatarGroupCatalogCount,
   type ChipCatalogVariant,
+  type BadgeCatalogSeverityDemo,
   type TagCatalogSeverityDemo,
   type TagCatalogSeverityKey,
 } from './misc-catalog.config';
@@ -48,6 +51,7 @@ interface AvatarInteractionState {
   size: AvatarCatalogSize;
   shape: AvatarCatalogShape;
   showBadge: boolean;
+  badgeShape: AvatarCatalogShape;
 }
 
 interface AvatarGroupInteractionState {
@@ -55,12 +59,6 @@ interface AvatarGroupInteractionState {
   size: AvatarCatalogSize;
   shape: AvatarCatalogShape;
   showTextAvatar: boolean;
-}
-
-interface BadgeSeverityOption {
-  label: string;
-  severity?: 'secondary' | 'success' | 'info' | 'warn' | 'danger' | 'contrast';
-  styleClass?: string;
 }
 
 @Component({
@@ -88,15 +86,8 @@ interface BadgeSeverityOption {
 export class MiscCatalogComponent {
   readonly severities = TAG_CATALOG_SEVERITIES;
   readonly badgeSizeOptions = BADGE_CATALOG_SIZE_OPTIONS;
-  readonly badgeSeverityOptions: ReadonlyArray<BadgeSeverityOption> = [
-    { label: 'Primary', styleClass: 'p-badge-primary' },
-    { label: 'Secondary', severity: 'secondary' },
-    { label: 'Success', severity: 'success' },
-    { label: 'Info', severity: 'info' },
-    { label: 'Warn', severity: 'warn' },
-    { label: 'Danger', severity: 'danger' },
-    { label: 'Contrast', severity: 'contrast' },
-  ];
+  readonly badgeSeverities = BADGE_CATALOG_SEVERITIES;
+  /** Un dígito → PrimeNG aplica `.p-badge-circle`. */
   readonly badgeDemoValue = 8;
   readonly chipVariantSelectOptions = CHIP_CATALOG_VARIANT_SELECT_OPTIONS;
   readonly chipDemoAvatarUrl = CHIP_CATALOG_DEMO_AVATAR_URL;
@@ -105,6 +96,7 @@ export class MiscCatalogComponent {
 
   readonly avatarVariantOptions = AVATAR_CATALOG_VARIANT_OPTIONS;
   readonly avatarSizeOptions = AVATAR_CATALOG_SIZE_OPTIONS;
+  readonly avatarBadgeShapeOptions = AVATAR_CATALOG_SHAPE_OPTIONS;
   readonly avatarDemoLabel = AVATAR_CATALOG_DEMO_LABEL;
   readonly avatarDemoIcon = AVATAR_CATALOG_DEMO_ICON;
   readonly avatarDemoImageUrl = AVATAR_CATALOG_DEMO_IMAGE_URL;
@@ -122,7 +114,13 @@ export class MiscCatalogComponent {
   chipIx: ChipInteractionState = { variant: 'simple', removable: false };
   chipInteractionKey = 0;
 
-  avatarIx: AvatarInteractionState = { variant: 'label', size: 'normal', shape: 'square', showBadge: false };
+  avatarIx: AvatarInteractionState = {
+    variant: 'label',
+    size: 'normal',
+    shape: 'square',
+    showBadge: false,
+    badgeShape: 'circle',
+  };
   avatarGroupIx: AvatarGroupInteractionState = {
     count: 5,
     size: 'normal',
@@ -137,6 +135,25 @@ export class MiscCatalogComponent {
 
   isPrimary(sev: TagCatalogSeverityDemo): boolean {
     return sev.key === 'primary';
+  }
+
+  trackBadgeSeverity(_: number, sev: BadgeCatalogSeverityDemo): string {
+    return sev.key;
+  }
+
+  badgeIsPrimary(sev: BadgeCatalogSeverityDemo): boolean {
+    return sev.key === 'primary';
+  }
+
+  badgeSeverityStyleClass(sev: BadgeCatalogSeverityDemo, shape: 'circle' | 'square'): string | undefined {
+    const classes: string[] = [];
+    if (this.badgeIsPrimary(sev)) {
+      classes.push('p-badge-primary');
+    }
+    if (shape === 'square') {
+      classes.push('p-badge-square');
+    }
+    return classes.length ? classes.join(' ') : undefined;
   }
 
   chipShowsIcon(): boolean {
@@ -166,6 +183,14 @@ export class MiscCatalogComponent {
 
   avatarPrimeShape(): AvatarCatalogShape {
     return this.avatarIsCircle() ? 'circle' : 'square';
+  }
+
+  avatarBadgeStyleClass(): string {
+    const classes = ['p-badge-primary'];
+    if (this.avatarIx.badgeShape === 'square') {
+      classes.push('p-badge-square');
+    }
+    return classes.join(' ');
   }
 
   patchAvatarGroupIx(patch: Partial<AvatarGroupInteractionState>): void {

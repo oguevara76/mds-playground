@@ -16,6 +16,15 @@ import {
   MDS_RUNTIME_BRIDGE_STYLE_ID,
   PRIME_RUNTIME_BRIDGE_CSS,
 } from './prime-runtime-bridge.generated';
+import {
+  MDS_TOGGLESWITCH_OVERRIDE_STYLE_ID,
+  TOGGLESWITCH_MDS_OVERRIDE_CSS,
+} from './toggleswitch-mds-overrides';
+import { MDS_BUTTON_OVERRIDE_STYLE_ID, BUTTON_MDS_OVERRIDE_CSS } from './button-mds-overrides';
+import {
+  MDS_PAGINATOR_OVERRIDE_STYLE_ID,
+  PAGINATOR_MDS_OVERRIDE_CSS,
+} from './paginator-mds-overrides';
 
 export type CssColorReader = (varName: string) => string;
 export type InjectStyleFn = (id: string, css: string) => void;
@@ -42,4 +51,7 @@ export function syncPrimeUixPalettesFromMds(
   injectStyle(MDS_BADGE_OVERRIDE_STYLE_ID, BADGE_MDS_OVERRIDE_CSS);
   injectStyle(MDS_CHIP_OVERRIDE_STYLE_ID, CHIP_MDS_OVERRIDE_CSS);
   injectStyle(MDS_AVATAR_OVERRIDE_STYLE_ID, AVATAR_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_TOGGLESWITCH_OVERRIDE_STYLE_ID, TOGGLESWITCH_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_BUTTON_OVERRIDE_STYLE_ID, BUTTON_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_PAGINATOR_OVERRIDE_STYLE_ID, PAGINATOR_MDS_OVERRIDE_CSS);
 }

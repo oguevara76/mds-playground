@@ -1986,6 +1986,7 @@ export const MDS_VARS_CATALOG = {
     { name: "--paginator-nav-button-selected-background", value: "var(--highlight-background)" },
     { name: "--paginator-nav-button-selected-color", value: "var(--highlight-color)" },
     { name: "--paginator-nav-button-width", value: "var(--dimension-scale-x32)" },
+    { name: "--paginator-padding", value: "var(--paginator-padding-y) var(--paginator-padding-x)" },
     { name: "--paginator-padding-x", value: "14px" },
     { name: "--paginator-padding-y", value: "7px" },
     { name: "--panel-background", value: "var(--content-background)" },

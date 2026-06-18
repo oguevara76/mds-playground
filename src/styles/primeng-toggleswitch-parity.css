@@ -1,0 +1,77 @@
+/**
+ * ToggleSwitch — paridad MDS vs PrimeNG 20 (Aura).
+ *
+ * Figma (estado off/default): el handle es oscuro (surface-context-strong) y NO cambia en hover;
+ * solo la pista usa toggleswitch-hover-background. El handle blanco (minimal) aplica solo en checked.
+ */
+.p-toggleswitch .p-toggleswitch-slider {
+  background: var(--p-toggleswitch-background, var(--toggleswitch-background)) !important;
+  border-color: var(--p-toggleswitch-border-color, var(--toggleswitch-border-color)) !important;
+  box-shadow: var(--p-toggleswitch-shadow, var(--toggleswitch-shadow));
+}
+
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover):not(.p-toggleswitch-checked) .p-toggleswitch-slider {
+  background: var(--p-toggleswitch-hover-background, var(--toggleswitch-hover-background)) !important;
+  border-color: var(--p-toggleswitch-hover-border-color, var(--toggleswitch-hover-border-color)) !important;
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+  background: var(--p-toggleswitch-checked-background, var(--toggleswitch-checked-background)) !important;
+  border-color: var(--p-toggleswitch-checked-border-color, var(--toggleswitch-checked-border-color)) !important;
+}
+
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover).p-toggleswitch-checked .p-toggleswitch-slider {
+  background: var(
+    --p-toggleswitch-checked-hover-background,
+    var(--toggleswitch-checked-hover-background)
+  ) !important;
+  border-color: var(
+    --p-toggleswitch-checked-hover-border-color,
+    var(--toggleswitch-checked-hover-border-color)
+  ) !important;
+}
+
+.p-toggleswitch .p-toggleswitch-handle {
+  background: var(--p-toggleswitch-handle-background, var(--toggleswitch-handle-background)) !important;
+  color: var(--p-toggleswitch-handle-color, var(--toggleswitch-handle-color)) !important;
+}
+
+/* Off + hover: handle oscuro (igual que default); --toggleswitch-handle-hover-* en MDS no aplica al estado off */
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover):not(.p-toggleswitch-checked) .p-toggleswitch-handle {
+  background: var(--p-toggleswitch-handle-background, var(--toggleswitch-handle-background)) !important;
+  color: var(--p-toggleswitch-handle-color, var(--toggleswitch-handle-color)) !important;
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle {
+  background: var(
+    --p-toggleswitch-handle-checked-background,
+    var(--toggleswitch-handle-checked-background)
+  ) !important;
+  color: var(--p-toggleswitch-handle-checked-color, var(--toggleswitch-handle-checked-color)) !important;
+}
+
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover).p-toggleswitch-checked .p-toggleswitch-handle {
+  background: var(
+    --p-toggleswitch-handle-checked-hover-background,
+    var(--toggleswitch-handle-checked-hover-background)
+  ) !important;
+  color: var(
+    --p-toggleswitch-handle-checked-hover-color,
+    var(--toggleswitch-handle-checked-hover-color)
+  ) !important;
+}
+
+.p-toggleswitch.p-disabled:not(.p-toggleswitch-checked) .p-toggleswitch-slider {
+  background: var(--p-toggleswitch-disabled-background, var(--toggleswitch-disabled-background)) !important;
+}
+
+.p-toggleswitch.p-disabled .p-toggleswitch-handle {
+  background: var(
+    --p-toggleswitch-handle-disabled-background,
+    var(--toggleswitch-handle-disabled-background)
+  ) !important;
+}
+
+.p-toggleswitch.p-invalid > .p-toggleswitch-slider {
+  border-color: var(--p-toggleswitch-invalid-border-color, var(--toggleswitch-invalid-border-color)) !important;
+}

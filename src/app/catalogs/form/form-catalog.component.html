@@ -245,6 +245,7 @@
                         onLabel="On"
                         offLabel="Off"
                         size="large"
+                        [iconPos]="toggleButtonIx().iconPos"
                         [onIcon]="toggleButtonOnIcon()"
                         [offIcon]="toggleButtonOffIcon()"
                         [ngModel]="toggleButtonOff()"
@@ -257,6 +258,7 @@
                         onLabel="On"
                         offLabel="Off"
                         size="large"
+                        [iconPos]="toggleButtonIx().iconPos"
                         [onIcon]="toggleButtonOnIcon()"
                         [offIcon]="toggleButtonOffIcon()"
                         [ngModel]="toggleButtonOn()"
@@ -630,6 +632,7 @@
                     <div class="form-input-interaction-control">
                       <p-floatlabel
                         [variant]="inputtextFloatPosition()"
+                        [class.is-label-floated]="inputInteractionLabelFloated()"
                         [style]="floatLabelHostVars()"
                       >
                         @if (inputtextShowIcon()) {
@@ -1176,7 +1179,7 @@
             }
             @case ('togglebutton') {
               <div class="catalog-button-states-row is-static-preview">
-                <div class="catalog-button-state catalog-button-state--choice-label">
+                <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
                     <p-togglebutton
                       onLabel="On"
@@ -1189,7 +1192,7 @@
                   </div>
                   <span class="catalog-button-state-caption">Default</span>
                 </div>
-                <div class="catalog-button-state catalog-button-state--choice-label">
+                <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
                     <p-togglebutton
                       onLabel="On"
@@ -1202,7 +1205,7 @@
                   </div>
                   <span class="catalog-button-state-caption">On</span>
                 </div>
-                <div class="catalog-button-state catalog-button-state--choice-label">
+                <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
                     <p-togglebutton
                       onLabel="On"
@@ -1216,7 +1219,7 @@
                   </div>
                   <span class="catalog-button-state-caption">Disabled</span>
                 </div>
-                <div class="catalog-button-state catalog-button-state--choice-label">
+                <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
                     <p-togglebutton
                       onLabel="On"
@@ -1410,7 +1413,7 @@
                             <div [ngClass]="inputDemoWrap(st.key)">
                               <p-floatlabel
                                 [variant]="inputtextFloatPosition()"
-                                [class.is-label-floated]="inputFloatFilled(st.key)"
+                                [class.is-label-floated]="inputFloatStateLabelFloated(st.key)"
                                 [style]="floatLabelStatesHostVars()"
                               >
                                 <input
@@ -1579,7 +1582,7 @@
             @case ('togglebutton') {
               <div class="catalog-button-states-row is-static-preview">
                 @for (sz of sizeOptions; track sz.key) {
-                  <div class="catalog-button-state catalog-button-state--choice-label">
+                  <div class="catalog-button-state">
                     <div class="catalog-button-state-preview">
                       @switch (sz.key) {
                         @case ('small') {
@@ -1658,13 +1661,12 @@
                               ></textarea>
                               <label [for]="'ta-sz-' + sz.key">Label</label>
                             </span>
-                            <small class="p-hint">{{ inputStateHint }}</small>
                           </div>
                         } @else {
                           <div class="catalog-input-interactive">
                             <p-floatlabel
                               [variant]="textareaFloatPosition()"
-                              [class.is-label-floated]="textareaFloatPosition() === 'in'"
+                              [class.is-label-floated]="textareaFloatSizeLabelFloated()"
                               [style]="textareaFloatLabelHostVarsForSize(sz.key)"
                             >
                               <textarea
@@ -1721,18 +1723,19 @@
                               />
                               <label [for]="'it-sz-' + sz.key">Label</label>
                             </span>
-                            <small class="p-hint">{{ inputStateHint }}</small>
                           </div>
                         } @else {
                           <div class="catalog-input-interactive">
                             <p-floatlabel
                               [variant]="inputtextFloatPosition()"
+                              [class.is-label-floated]="inputFloatSizeLabelFloated()"
                               [style]="floatLabelHostVarsForSize(sz.key)"
                             >
                               <input
                                 pInputText
                                 [variant]="formThemePrimeVariant('inputtext')"
                                 [id]="'it-sz-' + sz.key"
+                                placeholder="Placeholder"
                                 [ngClass]="inputSizeClass(sz.key)"
                                 [readonly]="true"
                                 [fluid]="true"

@@ -288,12 +288,13 @@ export class FormCatalogComponent {
   /**
    * Puente MDS → PrimeNG en el host de cada p-togglebutton.
    * Track (root): siempre --togglebutton-padding (2px). Área activa (.p-togglebutton-content):
-   * normal → content-padding; sm/lg → sm-padding / lg-padding (ver primeng-togglebutton-parity.css).
+   * normal / sm / lg → content-padding-* (x + y).
    */
   toggleButtonHostVars(size: FormInteractionSize): Record<string, string> {
     const base: Record<string, string> = {
       '--p-togglebutton-padding': 'var(--togglebutton-padding)',
-      '--p-togglebutton-content-padding': 'var(--togglebutton-content-padding)',
+      '--p-togglebutton-content-padding':
+        'var(--togglebutton-content-padding-y) var(--togglebutton-content-padding-x)',
       '--p-togglebutton-gap': 'var(--togglebutton-gap)',
       '--p-togglebutton-font-weight': 'var(--togglebutton-font-weight)',
       '--p-togglebutton-border-radius': 'var(--togglebutton-border-radius)',
@@ -311,6 +312,10 @@ export class FormCatalogComponent {
       '--p-togglebutton-icon-color': 'var(--togglebutton-icon-color)',
       '--p-togglebutton-icon-hover-color': 'var(--togglebutton-icon-hover-color)',
       '--p-togglebutton-icon-checked-color': 'var(--togglebutton-icon-checked-color)',
+      '--p-togglebutton-invalid-border-color': 'var(--togglebutton-invalid-border-color)',
+      '--p-togglebutton-disabled-background': 'var(--togglebutton-disabled-background)',
+      '--p-togglebutton-disabled-border-color': 'var(--togglebutton-disabled-border-color)',
+      '--p-togglebutton-disabled-color': 'var(--togglebutton-disabled-color)',
     };
 
     if (size === 'small') {
@@ -319,7 +324,8 @@ export class FormCatalogComponent {
         '--p-togglebutton-font-size': 'var(--togglebutton-sm-font-size)',
         '--p-togglebutton-sm-font-size': 'var(--togglebutton-sm-font-size)',
         '--p-togglebutton-sm-padding': 'var(--togglebutton-padding)',
-        '--p-togglebutton-content-sm-padding': 'var(--togglebutton-sm-padding)',
+        '--p-togglebutton-content-sm-padding':
+          'var(--togglebutton-content-sm-padding-y) var(--togglebutton-content-sm-padding-x)',
       };
     }
 
@@ -329,7 +335,8 @@ export class FormCatalogComponent {
         '--p-togglebutton-font-size': 'var(--togglebutton-lg-font-size)',
         '--p-togglebutton-lg-font-size': 'var(--togglebutton-lg-font-size)',
         '--p-togglebutton-lg-padding': 'var(--togglebutton-padding)',
-        '--p-togglebutton-content-lg-padding': 'var(--togglebutton-lg-padding)',
+        '--p-togglebutton-content-lg-padding':
+          'var(--togglebutton-content-lg-padding-y) var(--togglebutton-content-lg-padding-x)',
       };
     }
 
@@ -380,6 +387,36 @@ export class FormCatalogComponent {
 
   inputtextFloatPosition(): FormInputFloatVariant {
     return this.inputtextIx().floatPosition;
+  }
+
+  inputtextIsFloatIn(): boolean {
+    return this.inputtextIsFloatLabel() && this.inputtextFloatPosition() === 'in';
+  }
+
+  /** Float In: label arriba siempre; Over/On solo con valor o foco. */
+  inputInteractionLabelFloated(): boolean {
+    if (this.inputtextIsFloatIn()) {
+      return true;
+    }
+    if (!this.inputtextIsFloatLabel()) {
+      return false;
+    }
+    return !!this.inputtextIx().value || this.floatIxFocused();
+  }
+
+  inputFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    if (this.inputtextFloatPosition() === 'in') {
+      return true;
+    }
+    return this.inputFloatFilled(state);
+  }
+
+  /** Sizes: Over/On elevan label; In siempre arriba. */
+  inputFloatSizeLabelFloated(): boolean {
+    if (!this.inputtextIsFloatLabel()) {
+      return false;
+    }
+    return true;
   }
 
   patchInputtext(patch: Partial<FormInputTextInteractionState>): void {
@@ -513,6 +550,14 @@ export class FormCatalogComponent {
       return true;
     }
     return this.inputFloatFilled(state);
+  }
+
+  /** Sizes: Over/On elevan label; In siempre arriba. */
+  textareaFloatSizeLabelFloated(): boolean {
+    if (!this.textareaIsFloatLabel()) {
+      return false;
+    }
+    return true;
   }
 
   patchTextarea(patch: Partial<FormTextareaInteractionState>): void {
@@ -662,9 +707,14 @@ export class FormCatalogComponent {
       '--p-floatlabel-position-x': positionValue,
       '--catalog-floatlabel-position-x': positionValue,
       '--p-floatlabel-position-y': positionYValue,
+      '--catalog-floatlabel-position-y': positionYValue,
       '--p-floatlabel-infield-font-size': fontValue,
       '--catalog-floatlabel-infield-font-size': fontValue,
       '--p-floatlabel-over-active-background': overActiveBackground,
+      '--p-floatlabel-over-active-top':
+        'var(--floatlabel-over-active-top, calc(-1 * (var(--floatlabel-active-font-size, var(--form-field-xs-font-size)) + var(--floatlabel-over-active-gap, var(--dimension-scale-x6))))',
+      '--catalog-floatlabel-over-active-top':
+        'var(--floatlabel-over-active-top, calc(-1 * (var(--floatlabel-active-font-size, var(--form-field-xs-font-size)) + var(--floatlabel-over-active-gap, var(--dimension-scale-x6))))',
     };
   }
 
@@ -690,7 +740,8 @@ export class FormCatalogComponent {
       '--floatlabel-in-input-min-height-lg',
     );
     const infieldFont = this.fieldInfieldFontSizeMdsToken(field, size);
-    const valueLine = `calc(var(${infieldFont}) * var(--inputtext-line-height, 1.25))`;
+    const lineHeightVar = field === 'textarea' ? '--textarea-line-height' : '--inputtext-line-height';
+    const valueLine = `calc(var(${infieldFont}) * var(${lineHeightVar}, 1.25))`;
     const contentBlock = `calc(var(--floatlabel-active-font-size) + 2px + ${valueLine})`;
     const activeTop = `calc((${cssVar(minHeight)} - ${contentBlock}) / 2)`;
     const paddingTop = `calc(${activeTop} + var(--floatlabel-active-font-size) + 2px)`;
@@ -719,28 +770,109 @@ export class FormCatalogComponent {
     };
   }
 
+  /** Textarea + label in-field (IftaLabel / Float In): padding-top bajo label xs + gap. */
+  private textareaInfieldLabelHostVars(size: FormInteractionSize): Record<string, string> {
+    const paddingY = `var(${this.fieldPaddingYToken('textarea', size)})`;
+    const paddingX = `var(${this.fieldPaddingXToken('textarea', size)})`;
+    const activeFont = 'var(--floatlabel-active-font-size)';
+    const labelTop = paddingY;
+    const paddingTop = `calc(${labelTop} + ${activeFont} + 2px)`;
+
+    return {
+      '--catalog-floatlabel-in-active-top': labelTop,
+      '--p-floatlabel-in-active-top': labelTop,
+      '--catalog-iftalabel-top': labelTop,
+      '--p-iftalabel-top': labelTop,
+      '--catalog-floatlabel-in-input-padding-top': paddingTop,
+      '--p-floatlabel-in-input-padding-top': paddingTop,
+      '--p-iftalabel-input-padding-top': paddingTop,
+      '--catalog-floatlabel-in-input-padding-bottom': paddingY,
+      '--p-floatlabel-in-input-padding-bottom': paddingY,
+      '--p-iftalabel-input-padding-bottom': paddingY,
+      '--catalog-floatlabel-in-input-padding-x': paddingX,
+    };
+  }
+
   /**
-   * IftaLabel: misma geometría que Float IN (fill) — label fijo arriba, placeholder en la línea de valor.
-   * Reutiliza --catalog-floatlabel-in-* y los expone también como --p-iftalabel-*.
+   * IftaLabel + Textarea: label en padding-y; valor/placeholder debajo (label xs + 2px gap).
    */
-  private iftaLabelHostVars(size: FormInteractionSize, fieldKind: FormFieldKind): Record<string, string> {
-    const field = this.floatLabelFieldStyleVars(size, fieldKind);
-    const inVars = this.floatLabelInHostVars(size, fieldKind);
-    const iconSize = `var(${this.floatIconSizeMdsToken(size)})`;
+  private iftaLabelTextareaHostVars(size: FormInteractionSize): Record<string, string> {
+    const field = this.floatLabelFieldStyleVars(size, 'textarea');
     return {
       ...field,
-      ...inVars,
-      '--p-iftalabel-top': inVars['--catalog-floatlabel-in-active-top'],
-      '--catalog-iftalabel-top': inVars['--catalog-floatlabel-in-active-top'],
+      ...this.textareaInfieldLabelHostVars(size),
       '--p-iftalabel-font-size': 'var(--floatlabel-active-font-size)',
       '--p-iftalabel-font-weight': 'var(--floatlabel-active-font-weight)',
-      '--p-iftalabel-input-padding-top': inVars['--p-floatlabel-in-input-padding-top'],
-      '--p-iftalabel-input-padding-bottom': inVars['--p-floatlabel-in-input-padding-bottom'],
-      '--p-iftalabel-input-min-height': inVars['--p-floatlabel-in-input-min-height'],
       '--p-iftalabel-position-x': field['--p-floatlabel-position-x'],
-      '--p-iconfield-icon-size': iconSize,
+    };
+  }
+
+  /**
+   * IftaLabel + InputText: label en --iftalabel-top (padding-y); valor debajo con
+   * --iftalabel-input-padding-top (22px normal) o padding-y + label xs + gap x4 (sm/lg).
+   */
+  private iftaLabelInputtextHostVars(size: FormInteractionSize): Record<string, string> {
+    const field = this.floatLabelFieldStyleVars(size, 'inputtext');
+    const paddingYToken = this.fieldPaddingYToken('inputtext', size);
+    const paddingY = `var(${paddingYToken})`;
+    const paddingX = `var(${this.fieldPaddingXToken('inputtext', size)})`;
+    const labelTop = `var(--iftalabel-top, ${paddingY})`;
+    const gap = 'var(--dimension-scale-x4)';
+    const activeFont = 'var(--floatlabel-active-font-size)';
+    const paddingTop =
+      size === 'normal'
+        ? 'var(--iftalabel-input-padding-top)'
+        : `calc(${paddingY} + ${activeFont} + ${gap})`;
+
+    const pick = (normal: string, small: string, large: string): string => {
+      if (size === 'small') {
+        return small;
+      }
+      if (size === 'large') {
+        return large;
+      }
+      return normal;
+    };
+    const minHeight = `var(${pick(
+      '--iftalabel-input-min-height',
+      '--iftalabel-input-min-height-sm',
+      '--iftalabel-input-min-height-lg',
+    )})`;
+
+    return {
+      ...field,
+      '--catalog-iftalabel-top': labelTop,
+      '--p-iftalabel-top': labelTop,
+      '--catalog-floatlabel-in-active-top': labelTop,
+      '--p-floatlabel-in-active-top': labelTop,
+      '--catalog-floatlabel-in-input-padding-top': paddingTop,
+      '--p-floatlabel-in-input-padding-top': paddingTop,
+      '--p-iftalabel-input-padding-top': paddingTop,
+      '--catalog-floatlabel-in-input-padding-bottom': paddingY,
+      '--p-floatlabel-in-input-padding-bottom': paddingY,
+      '--p-iftalabel-input-padding-bottom': 'var(--iftalabel-input-padding-bottom, var(--form-field-padding-y))',
+      '--catalog-floatlabel-in-input-min-height': minHeight,
+      '--p-floatlabel-in-input-min-height': minHeight,
+      '--p-iftalabel-input-min-height': minHeight,
+      '--catalog-floatlabel-in-input-padding-x': paddingX,
+      '--p-iftalabel-font-size': activeFont,
+      '--p-iftalabel-font-weight': 'var(--floatlabel-active-font-weight)',
+      '--p-iftalabel-position-x': field['--p-floatlabel-position-x'],
+    };
+  }
+
+  private iftaLabelHostVars(size: FormInteractionSize, fieldKind: FormFieldKind): Record<string, string> {
+    const iconVars = {
+      '--p-iconfield-icon-size': `var(${this.floatIconSizeMdsToken(size)})`,
       '--p-iconfield-sm-icon-size': 'var(--iconfield-figma-sm-icon-size)',
       '--p-iconfield-lg-icon-size': 'var(--iconfield-figma-lg-icon-size)',
+    };
+    if (fieldKind === 'textarea') {
+      return { ...this.iftaLabelTextareaHostVars(size), ...iconVars };
+    }
+    return {
+      ...this.iftaLabelInputtextHostVars(size),
+      ...iconVars,
     };
   }
 
@@ -766,6 +898,12 @@ export class FormCatalogComponent {
       '--p-iconfield-lg-icon-size': 'var(--iconfield-figma-lg-icon-size)',
     };
     if (floatPosition === 'in') {
+      if (field === 'textarea') {
+        return {
+          ...shared,
+          ...this.textareaInfieldLabelHostVars(size),
+        };
+      }
       return { ...shared, ...this.floatLabelInHostVars(size, field) };
     }
     return shared;
