@@ -17,6 +17,10 @@
     "mds:diff": "python3 scripts/mds-core-diff.py --staging .mds-core-staging --format markdown",
     "mds:apply": "python3 scripts/mds-core-apply.py --staging .mds-core-staging",
     "mds:qa": "python3 scripts/mds-core-qa.py --format markdown",
+    "mds:component-analyze": "python3 scripts/mds-component-analyze.py",
+    "mds:component-qa": "python3 scripts/mds-component-qa.py",
+    "mds:component-pending": "python3 scripts/mds-component-pending.py",
+    "mds:component-session": "python3 scripts/mds-component-session.py",
     "backup": "bash scripts/create-backup.sh"
   },
   "dependencies": {
