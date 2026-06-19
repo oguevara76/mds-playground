@@ -77,3 +77,20 @@
 :host.menu-catalog-page ::ng-deep .p-breadcrumb-item-link:hover .p-breadcrumb-item-icon {
   color: var(--breadcrumb-item-icon-hover-color, var(--p-breadcrumb-item-icon-hover-color));
 }
+
+:host.menu-catalog-page ::ng-deep .mds-breadcrumb-item-active .p-breadcrumb-item-link,
+:host.menu-catalog-page ::ng-deep .mds-breadcrumb-item-active .p-breadcrumb-item-link .p-breadcrumb-item-label {
+  color: var(--breadcrumb-item-active-color, var(--p-breadcrumb-item-active-color, var(--primary-600, var(--p-primary-600))));
+}
+
+:host.menu-catalog-page ::ng-deep .mds-breadcrumb-item-active .p-breadcrumb-item-icon {
+  color: var(--breadcrumb-item-icon-active-color, var(--p-breadcrumb-item-icon-active-color, var(--primary-600, var(--p-primary-600))));
+}
+
+:host.menu-catalog-page ::ng-deep .mds-breadcrumb-item-active .p-breadcrumb-item-link:hover .p-breadcrumb-item-label {
+  color: var(--breadcrumb-item-active-hover-color, var(--p-breadcrumb-item-active-hover-color, var(--primary-700, var(--p-primary-700))));
+}
+
+:host.menu-catalog-page ::ng-deep .mds-breadcrumb-item-active .p-breadcrumb-item-link:hover .p-breadcrumb-item-icon {
+  color: var(--breadcrumb-item-icon-active-hover-color, var(--p-breadcrumb-item-icon-active-hover-color, var(--primary-700, var(--p-primary-700))));
+}

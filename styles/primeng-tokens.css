@@ -909,6 +909,10 @@ html[data-theme="light"] {
   --p-breadcrumb-item-gap:                    var(--navigation-item-gap, var(--dimension-scale-x8, 8px));
   --p-breadcrumb-item-icon-color:             var(--breadcrumb-item-icon-color, var(--navigation-item-icon-color));
   --p-breadcrumb-item-icon-hover-color:       var(--breadcrumb-item-icon-hover-color, var(--navigation-item-icon-focus-color));
+  --p-breadcrumb-item-active-color:           var(--breadcrumb-item-active-color, var(--primary-600, var(--p-primary-600)));
+  --p-breadcrumb-item-icon-active-color:      var(--breadcrumb-item-icon-active-color, var(--primary-600, var(--p-primary-600)));
+  --p-breadcrumb-item-active-hover-color:     var(--breadcrumb-item-active-hover-color, var(--primary-700, var(--p-primary-700)));
+  --p-breadcrumb-item-icon-active-hover-color: var(--breadcrumb-item-icon-active-hover-color, var(--primary-700, var(--p-primary-700)));
   --p-breadcrumb-item-focus-ring-width:       var(--breadcrumb-item-focus-ring-width, var(--focus-ring-width, 0));
   --p-breadcrumb-item-focus-ring-style:       solid;
   --p-breadcrumb-item-focus-ring-color:       var(--breadcrumb-item-focus-ring-color, var(--focus-ring-color));
@@ -1056,7 +1060,7 @@ html[data-theme="light"] {
   ═══════════════════════════════════════════════════════════════════ */
   --p-paginator-padding:                          var(--paginator-padding, var(--paginator-padding-y, var(--dimension-scale-x8, 8px)) var(--paginator-padding-x, var(--dimension-scale-x16, 16px)));
   --p-paginator-padding-x:                        var(--paginator-padding-x, var(--dimension-scale-x14, 14px));
-  --p-paginator-padding-y:                        var(--paginator-padding-y, var(--dimension-scale-x8, 7px));
+  --p-paginator-padding-y:                        var(--paginator-padding-y, var(--dimension-scale-x8));
   --p-paginator-gap:                              var(--paginator-gap, 4px);
   --p-paginator-border-radius:                    var(--paginator-border-radius, var(--p-border-radius));
   --p-paginator-background:                       var(--paginator-background, var(--p-content-bg));
@@ -1912,6 +1916,10 @@ html[data-theme="dark"] {
     --p-breadcrumb-item-gap:                    var(--navigation-item-gap, var(--dimension-scale-x8, 8px));
     --p-breadcrumb-item-icon-color:             var(--breadcrumb-item-icon-color, var(--navigation-item-icon-color));
     --p-breadcrumb-item-icon-hover-color:       var(--breadcrumb-item-icon-hover-color, var(--navigation-item-icon-focus-color));
+    --p-breadcrumb-item-active-color:           var(--breadcrumb-item-active-color, var(--primary-600, var(--p-primary-600)));
+    --p-breadcrumb-item-icon-active-color:      var(--breadcrumb-item-icon-active-color, var(--primary-600, var(--p-primary-600)));
+    --p-breadcrumb-item-active-hover-color:     var(--breadcrumb-item-active-hover-color, var(--primary-700, var(--p-primary-700)));
+    --p-breadcrumb-item-icon-active-hover-color: var(--breadcrumb-item-icon-active-hover-color, var(--primary-700, var(--p-primary-700)));
     --p-breadcrumb-item-focus-ring-width:       var(--breadcrumb-item-focus-ring-width, var(--focus-ring-width, 0));
     --p-breadcrumb-item-focus-ring-style:       solid;
     --p-breadcrumb-item-focus-ring-color:       var(--breadcrumb-item-focus-ring-color, var(--focus-ring-color));
@@ -1973,7 +1981,7 @@ html[data-theme="dark"] {
     --p-tabs-active-bar-background:                 var(--tabs-active-bar-background, var(--p-primary-color));
     --p-paginator-padding:                          var(--paginator-padding, var(--paginator-padding-y, var(--dimension-scale-x8, 8px)) var(--paginator-padding-x, var(--dimension-scale-x16, 16px)));
   --p-paginator-padding-x:                        var(--paginator-padding-x, var(--dimension-scale-x14, 14px));
-  --p-paginator-padding-y:                        var(--paginator-padding-y, var(--dimension-scale-x8, 7px));
+  --p-paginator-padding-y:                        var(--paginator-padding-y, var(--dimension-scale-x8));
     --p-paginator-gap:                              var(--paginator-gap, 4px);
     --p-paginator-border-radius:                    var(--paginator-border-radius, var(--p-border-radius));
     --p-paginator-background:                       var(--paginator-background, var(--p-content-bg));

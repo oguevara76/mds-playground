@@ -718,9 +718,31 @@ export class FormCatalogComponent {
     };
   }
 
+  /** Altura Float In con cadena MDS → puente PrimeNG → px (tokens sm/lg no vienen en export). */
+  private floatLabelInMinHeightExpr(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return 'var(--floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px))';
+    }
+    if (size === 'large') {
+      return 'var(--floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px))';
+    }
+    return 'var(--floatlabel-in-input-min-height, var(--iftalabel-input-min-height, 47px))';
+  }
+
+  /** Gap label xs ↔ valor en Float In (normal 2px; sm gap semántico; lg más compacto que lg-gap-space). */
+  private floatLabelInGapExpr(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return 'var(--form-field-sm-gap-scale)';
+    }
+    if (size === 'large') {
+      return 'var(--dimension-scale-x4)';
+    }
+    return 'var(--dimension-scale-x2)';
+  }
+
   /**
-   * Float In: altura MDS (45 / 47 / 49 px) y bloque label+valor centrado verticalmente.
-   * padding-top/bottom simétricos; gap 2px entre label xs y línea de valor.
+   * Float In: Normal usa tokens estáticos del core MDS; sm/lg derivan padding-y + label xs + gap
+   * (misma lógica que IftaLabel). Large además centra con calc plano (sin calc anidados).
    */
   private floatLabelInHostVars(size: FormInteractionSize, field: FormFieldKind): Record<string, string> {
     const pick = (normal: string, small: string, large: string): string => {
@@ -734,18 +756,32 @@ export class FormCatalogComponent {
     };
     const cssVar = (token: string) => `var(${token})`;
 
-    const minHeight = pick(
-      '--floatlabel-in-input-min-height',
-      '--floatlabel-in-input-min-height-sm',
-      '--floatlabel-in-input-min-height-lg',
-    );
+    const minHeight = this.floatLabelInMinHeightExpr(size);
+    const gap = this.floatLabelInGapExpr(size);
+    const paddingY = cssVar(this.fieldPaddingYToken(field, size));
+    const activeFont = 'var(--floatlabel-active-font-size)';
     const infieldFont = this.fieldInfieldFontSizeMdsToken(field, size);
     const lineHeightVar = field === 'textarea' ? '--textarea-line-height' : '--inputtext-line-height';
-    const valueLine = `calc(var(${infieldFont}) * var(${lineHeightVar}, 1.25))`;
-    const contentBlock = `calc(var(--floatlabel-active-font-size) + 2px + ${valueLine})`;
-    const activeTop = `calc((${cssVar(minHeight)} - ${contentBlock}) / 2)`;
-    const paddingTop = `calc(${activeTop} + var(--floatlabel-active-font-size) + 2px)`;
-    const paddingBottom = activeTop;
+
+    let activeTop: string;
+    let paddingTop: string;
+    let paddingBottom: string;
+
+    if (size === 'normal') {
+      activeTop = 'var(--floatlabel-in-active-top, var(--form-field-padding-y))';
+      paddingTop = 'var(--floatlabel-in-input-padding-top, var(--iftalabel-input-padding-top))';
+      paddingBottom = 'var(--floatlabel-in-input-padding-bottom, var(--form-field-padding-y))';
+    } else if (size === 'small') {
+      activeTop = paddingY;
+      paddingTop = `calc(${paddingY} + ${activeFont} + ${gap})`;
+      paddingBottom = paddingY;
+    } else {
+      const activeTopExpr = `((${minHeight} - ${activeFont} - ${gap} - (var(${infieldFont}) * var(${lineHeightVar}, 1.25))) / 2)`;
+      activeTop = `calc(${activeTopExpr})`;
+      paddingBottom = activeTop;
+      paddingTop = `calc(${activeTopExpr} + ${activeFont} + ${gap})`;
+    }
+
     const paddingX = this.fieldPaddingXToken(field, size);
     const iconPaddingEnd =
       field === 'textarea'
@@ -756,11 +792,11 @@ export class FormCatalogComponent {
             '--inputtext-with-icon-padding-start-lg',
           );
 
-    return {
+    const vars: Record<string, string> = {
       '--catalog-floatlabel-in-input-padding-top': paddingTop,
       '--p-floatlabel-in-input-padding-top': paddingTop,
-      '--catalog-floatlabel-in-input-min-height': cssVar(minHeight),
-      '--p-floatlabel-in-input-min-height': cssVar(minHeight),
+      '--catalog-floatlabel-in-input-min-height': minHeight,
+      '--p-floatlabel-in-input-min-height': minHeight,
       '--catalog-floatlabel-in-input-padding-bottom': paddingBottom,
       '--p-floatlabel-in-input-padding-bottom': paddingBottom,
       '--catalog-floatlabel-in-active-top': activeTop,
@@ -768,6 +804,18 @@ export class FormCatalogComponent {
       '--catalog-floatlabel-in-input-padding-x': cssVar(paddingX),
       '--catalog-floatlabel-in-icon-padding-end': cssVar(iconPaddingEnd),
     };
+
+    if (size === 'small') {
+      vars['--p-floatlabel-in-input-min-height-sm'] = minHeight;
+      vars['--p-floatlabel-in-input-padding-top-sm'] = paddingTop;
+      vars['--p-floatlabel-in-input-padding-bottom-sm'] = paddingBottom;
+    } else if (size === 'large') {
+      vars['--p-floatlabel-in-input-min-height-lg'] = minHeight;
+      vars['--p-floatlabel-in-input-padding-top-lg'] = paddingTop;
+      vars['--p-floatlabel-in-input-padding-bottom-lg'] = paddingBottom;
+    }
+
+    return vars;
   }
 
   /** Textarea + label in-field (IftaLabel / Float In): padding-top bajo label xs + gap. */
@@ -775,8 +823,9 @@ export class FormCatalogComponent {
     const paddingY = `var(${this.fieldPaddingYToken('textarea', size)})`;
     const paddingX = `var(${this.fieldPaddingXToken('textarea', size)})`;
     const activeFont = 'var(--floatlabel-active-font-size)';
+    const gap = this.floatLabelInGapExpr(size);
     const labelTop = paddingY;
-    const paddingTop = `calc(${labelTop} + ${activeFont} + 2px)`;
+    const paddingTop = `calc(${labelTop} + ${activeFont} + ${gap})`;
 
     return {
       '--catalog-floatlabel-in-active-top': labelTop,
@@ -817,27 +866,14 @@ export class FormCatalogComponent {
     const paddingY = `var(${paddingYToken})`;
     const paddingX = `var(${this.fieldPaddingXToken('inputtext', size)})`;
     const labelTop = `var(--iftalabel-top, ${paddingY})`;
-    const gap = 'var(--dimension-scale-x4)';
+    const gap = this.floatLabelInGapExpr(size);
     const activeFont = 'var(--floatlabel-active-font-size)';
     const paddingTop =
       size === 'normal'
         ? 'var(--iftalabel-input-padding-top)'
         : `calc(${paddingY} + ${activeFont} + ${gap})`;
 
-    const pick = (normal: string, small: string, large: string): string => {
-      if (size === 'small') {
-        return small;
-      }
-      if (size === 'large') {
-        return large;
-      }
-      return normal;
-    };
-    const minHeight = `var(${pick(
-      '--iftalabel-input-min-height',
-      '--iftalabel-input-min-height-sm',
-      '--iftalabel-input-min-height-lg',
-    )})`;
+    const minHeight = this.floatLabelInMinHeightExpr(size);
 
     return {
       ...field,

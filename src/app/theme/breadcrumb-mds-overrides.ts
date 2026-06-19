@@ -41,4 +41,21 @@ export const BREADCRUMB_MDS_OVERRIDE_CSS = `
 .p-breadcrumb-item-link:hover .p-breadcrumb-item-icon {
   color: var(--breadcrumb-item-icon-hover-color, var(--p-breadcrumb-item-icon-hover-color)) !important;
 }
+
+.mds-breadcrumb-item-active .p-breadcrumb-item-link,
+.mds-breadcrumb-item-active .p-breadcrumb-item-link .p-breadcrumb-item-label {
+  color: var(--breadcrumb-item-active-color, var(--p-breadcrumb-item-active-color, var(--primary-600, var(--p-primary-600)))) !important;
+}
+
+.mds-breadcrumb-item-active .p-breadcrumb-item-icon {
+  color: var(--breadcrumb-item-icon-active-color, var(--p-breadcrumb-item-icon-active-color, var(--primary-600, var(--p-primary-600)))) !important;
+}
+
+.mds-breadcrumb-item-active .p-breadcrumb-item-link:hover .p-breadcrumb-item-label {
+  color: var(--breadcrumb-item-active-hover-color, var(--p-breadcrumb-item-active-hover-color, var(--primary-700, var(--p-primary-700)))) !important;
+}
+
+.mds-breadcrumb-item-active .p-breadcrumb-item-link:hover .p-breadcrumb-item-icon {
+  color: var(--breadcrumb-item-icon-active-hover-color, var(--p-breadcrumb-item-icon-active-hover-color, var(--primary-700, var(--p-primary-700)))) !important;
+}
 `;

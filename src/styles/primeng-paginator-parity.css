@@ -10,8 +10,8 @@
   font-family: var(--p-font-family);
   background: var(--p-paginator-background);
   color: var(--p-paginator-color);
-  padding-block: var(--p-paginator-padding-y, var(--paginator-padding-y, 7px));
-  padding-inline: var(--p-paginator-padding-x, var(--paginator-padding-x, 14px));
+  padding-block: var(--p-paginator-padding-y, var(--paginator-padding-y, var(--dimension-scale-x8)));
+  padding-inline: var(--p-paginator-padding-x, var(--paginator-padding-x, var(--dimension-scale-x14)));
   border-radius: var(--p-paginator-border-radius);
   gap: var(--p-paginator-gap);
 }

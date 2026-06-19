@@ -147,6 +147,10 @@ function applyBreadcrumbItemFields(
   if (interactive && shouldAttachBreadcrumbItemTooltip(displayMode, hasVisibleLabel)) {
     attachBreadcrumbItemTooltip(item, template.label);
   }
+
+  if (isLast) {
+    item.styleClass = 'mds-breadcrumb-item-active';
+  }
 }
 
 export function buildBreadcrumbModel(

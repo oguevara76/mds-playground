@@ -62,8 +62,8 @@ html[data-theme="light"] {
   --focus-ring-width: 1px;
   --form-field-background: var(--surface-0);
   --form-field-border-color: var(--surface-500);
-  --form-field-border-radius-rounded: var(--border-radius-pill);
   --form-field-border-radius: var(--border-radius-md);
+  --form-field-border-radius-rounded: var(--border-radius-pill);
   --form-field-color: var(--surface-700);
   --form-field-disabled-background: var(--surface-200);
   --form-field-disabled-color: var(--surface-500);
@@ -160,8 +160,8 @@ html[data-theme="light"] {
   --primary-200: var(--teal-200);
   --primary-300: var(--teal-300);
   --primary-400: var(--teal-400);
-  --primary-500: var(--teal-500);
   --primary-50: var(--teal-50);
+  --primary-500: var(--teal-500);
   --primary-600: var(--teal-600);
   --primary-700: var(--teal-700);
   --primary-800: var(--teal-800);
@@ -176,8 +176,8 @@ html[data-theme="light"] {
   --surface-200: var(--slate-200);
   --surface-300: var(--slate-300);
   --surface-400: var(--slate-400);
-  --surface-500: var(--slate-500);
   --surface-50: var(--slate-50);
+  --surface-500: var(--slate-500);
   --surface-600: var(--slate-600);
   --surface-700: var(--slate-700);
   --surface-800: var(--slate-800);
@@ -203,8 +203,10 @@ html[data-theme="light"] {
   --surface-context-intense: var(--surface-900);
   --surface-context-medium: var(--surface-300);
   --surface-context-minimal: var(--surface-0);
+  --surface-context-primary-default: var(--teal-600);
   --surface-context-primary-medium: var(--teal-300);
   --surface-context-primary-soft: var(--teal-50);
+  --surface-context-primary-strong: var(--teal-700);
   --surface-context-primary-subtle: var(--teal-100);
   --surface-context-soft: var(--surface-50);
   --surface-context-strong: var(--surface-500);
