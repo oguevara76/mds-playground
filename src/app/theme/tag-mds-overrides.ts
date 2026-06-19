@@ -7,8 +7,7 @@ export const TAG_MDS_OVERRIDE_CSS = `
   align-items: center !important;
   justify-content: center !important;
   gap: var(--tag-gap, var(--p-tag-gap, var(--dimension-scale-x4, 4px))) !important;
-  padding: var(--tag-padding-y, var(--p-tag-padding-y, var(--dimension-scale-x4, 4px)))
-    var(--tag-padding-x, var(--p-tag-padding-x, var(--dimension-scale-x8, 8px))) !important;
+  padding: var(--tag-padding-y) var(--tag-padding-x) !important;
   border-radius: var(--tag-border-radius, var(--p-tag-border-radius)) !important;
   font-size: var(--tag-font-size, var(--p-tag-font-size, 14px)) !important;
   font-weight: var(--tag-font-weight, var(--p-tag-font-weight, 700)) !important;

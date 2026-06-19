@@ -156,7 +156,6 @@ def run_apply(staging_dir: Path, plan: dict, skip_backup: bool = False) -> dict:
             dest,
             CORE_SELECTORS[slot],
             final,
-            synthesize=(slot == "components"),
         )
         applied[slot] = len(final)
 

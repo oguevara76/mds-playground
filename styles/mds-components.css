@@ -1586,7 +1586,6 @@ html:root {
   --tag-icon-size: var(--dimension-scale-x12);
   --tag-info-background: var(--surface-context-fixed-feedback-info-minimal);
   --tag-info-color: var(--surface-context-fixed-feedback-info-intense);
-  --tag-padding: var(--tag-padding-y) var(--tag-padding-x);
   --tag-padding-x: var(--dimension-scale-x8);
   --tag-padding-y: var(--dimension-scale-x4);
   --tag-primary-background: var(--surface-context-fixed-feedback-info-minimal);
@@ -1825,7 +1824,6 @@ html:root {
   --tooltip-color: var(--surface-context-minimal);
   --tooltip-gutter: var(--dimension-scale-x4);
   --tooltip-max-width: var(--dimension-scale-x192);
-  --tooltip-padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
   --tooltip-padding-x: var(--dimension-scale-x8);
   --tooltip-padding-y: var(--dimension-scale-x8);
   --tooltip-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1);

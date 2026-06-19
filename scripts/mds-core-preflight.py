@@ -15,7 +15,6 @@ from mds_core_lib import (
     parse_metadata,
     parse_vars_from_css,
     resolve_staging_files,
-    synthesize_shorthands,
     transform_export,
     CORE_SELECTORS,
 )
@@ -54,14 +53,6 @@ def run_preflight(staging_dir: Path) -> dict:
 
         if not vars_map:
             errors.append(f"{path.name}: sin variables CSS en bloque {CORE_SELECTORS[slot]}")
-
-        if slot == "components":
-            decl = "\n".join(f"  {k}: {v};" for k, v in vars_map.items())
-            synth = synthesize_shorthands(decl)
-            if "--tag-padding:" not in decl and "--tag-padding-x:" in decl:
-                warnings.append(f"{path.name}: se sintetizará --tag-padding en apply")
-            if "--tooltip-padding:" not in decl and "--tooltip-padding-x:" in decl:
-                warnings.append(f"{path.name}: se sintetizará --tooltip-padding en apply")
 
     return {
         "ok": len(errors) == 0,

@@ -652,9 +652,8 @@ html[data-theme="light"] {
      COMPONENT TOKENS — Tag
      Bridge: var(--tag-*, fallback) ← MDS components
      ═══════════════════════════════════════════════════════════════════ */
-  --p-tag-padding-y:          var(--tag-padding-y, var(--dimension-scale-x4, 4px));
-  --p-tag-padding-x:          var(--tag-padding-x, var(--dimension-scale-x8, 8px));
-  --p-tag-padding:            var(--tag-padding, var(--tag-padding-y, var(--dimension-scale-x4, 4px)) var(--tag-padding-x, var(--dimension-scale-x8, 8px)));
+  --p-tag-padding-y:          var(--tag-padding-y);
+  --p-tag-padding-x:          var(--tag-padding-x);
   --p-tag-gap:                var(--tag-gap, var(--dimension-scale-x4, 4px));
   --p-tag-border-radius:      var(--tag-border-radius, var(--content-border-radius, var(--p-border-radius-sm)));
   --p-tag-rounded-border-radius: var(--tag-rounded-border-radius, var(--border-radius-pill, 999px));
@@ -927,8 +926,9 @@ html[data-theme="light"] {
   --p-tooltip-max-width:    var(--tooltip-max-width, 184px);
   --p-tooltip-gutter:       var(--tooltip-gutter, 4px);
   --p-tooltip-shadow:       var(--tooltip-shadow, 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1));
-  /* Shorthand --tooltip-padding en mds-components; si falta, ejes --tooltip-padding-y / -x */
-  --p-tooltip-padding:      var(--tooltip-padding, var(--tooltip-padding-y, var(--dimension-scale-x8, 8px)) var(--tooltip-padding-x, var(--dimension-scale-x8, 8px)));
+  --p-tooltip-padding-y:    var(--tooltip-padding-y);
+  --p-tooltip-padding-x:    var(--tooltip-padding-x);
+  --p-tooltip-padding:      var(--p-tooltip-padding-y) var(--p-tooltip-padding-x);
   --p-tooltip-border-radius: var(--tooltip-border-radius, var(--p-border-radius));
   --p-tooltip-background:   var(--tooltip-background, var(--p-surface-900));
   --p-tooltip-color:        var(--tooltip-color, var(--p-surface-0));
@@ -1696,9 +1696,8 @@ html[data-theme="dark"] {
     --p-card-title-font-size:     var(--card-title-font-size, 18px);
     --p-card-title-font-weight:   var(--card-title-font-weight, 500);
     --p-card-subtitle-color:      var(--card-subtitle-color, var(--text-muted-color, var(--p-surface-500)));
-    --p-tag-padding-y:          var(--tag-padding-y, var(--dimension-scale-x4, 4px));
-    --p-tag-padding-x:          var(--tag-padding-x, var(--dimension-scale-x8, 8px));
-    --p-tag-padding:            var(--tag-padding, var(--tag-padding-y, var(--dimension-scale-x4, 4px)) var(--tag-padding-x, var(--dimension-scale-x8, 8px)));
+    --p-tag-padding-y:          var(--tag-padding-y);
+    --p-tag-padding-x:          var(--tag-padding-x);
     --p-tag-gap:                var(--tag-gap, var(--dimension-scale-x4, 4px));
     --p-tag-border-radius:      var(--tag-border-radius, var(--content-border-radius, var(--p-border-radius-sm)));
     --p-tag-rounded-border-radius: var(--tag-rounded-border-radius, var(--border-radius-pill, 999px));
@@ -1929,8 +1928,9 @@ html[data-theme="dark"] {
     --p-tooltip-max-width:    var(--tooltip-max-width, 184px);
     --p-tooltip-gutter:       var(--tooltip-gutter, 4px);
     --p-tooltip-shadow:       var(--tooltip-shadow, 0px 2px 4px -2px rgba(0, 0, 0, 0.1), 0px 4px 6px -1px rgba(0, 0, 0, 0.1));
-    /* Shorthand --tooltip-padding en mds-components; si falta, ejes --tooltip-padding-y / -x */
-  --p-tooltip-padding:      var(--tooltip-padding, var(--tooltip-padding-y, var(--dimension-scale-x8, 8px)) var(--tooltip-padding-x, var(--dimension-scale-x8, 8px)));
+    --p-tooltip-padding-y:    var(--tooltip-padding-y);
+    --p-tooltip-padding-x:    var(--tooltip-padding-x);
+    --p-tooltip-padding:      var(--p-tooltip-padding-y) var(--p-tooltip-padding-x);
     --p-tooltip-border-radius: var(--tooltip-border-radius, var(--p-border-radius));
     --p-tooltip-background:   var(--tooltip-background, var(--p-surface-900));
     --p-tooltip-color:        var(--tooltip-color, var(--p-surface-0));

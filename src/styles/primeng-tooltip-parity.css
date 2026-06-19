@@ -28,9 +28,7 @@
   word-break: break-word;
   background: var(--p-tooltip-background);
   color: var(--p-tooltip-color);
-  /* Padding: ejes del componente MDS (--tooltip-padding-y / -x en mds-components.css) */
-  padding: var(--tooltip-padding-y, var(--dimension-scale-x8, 8px))
-    var(--tooltip-padding-x, var(--dimension-scale-x8, 8px));
+  padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
   box-shadow: var(--p-tooltip-shadow);
   border-radius: var(--p-tooltip-border-radius);
   font-size: 12px;

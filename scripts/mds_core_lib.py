@@ -226,21 +226,6 @@ def detect_renames(
     return renames
 
 
-def synthesize_shorthands(decl: str) -> str:
-    out = decl
-    if "--tag-padding:" not in out and "--tag-padding-x:" in out and "--tag-padding-y:" in out:
-        out = out.rstrip() + "\n  --tag-padding: var(--tag-padding-y) var(--tag-padding-x);\n"
-    if (
-        "--tooltip-padding:" not in out
-        and "--tooltip-padding-x:" in out
-        and "--tooltip-padding-y:" in out
-    ):
-        out = (
-            out.rstrip() + "\n  --tooltip-padding: var(--tooltip-padding-y) var(--tooltip-padding-x);\n"
-        )
-    return out
-
-
 def detect_slot_content(css: str) -> Slot | None:
     if 'html[data-theme="light"]' in css or re.search(r'data-theme="[^"]*light', css):
         return "semantic-light"
@@ -351,15 +336,9 @@ def apply_vars_to_core_file(
     dest_path: Path,
     selector: str,
     final_vars: dict[str, str],
-    synthesize: bool = False,
 ) -> None:
     css = dest_path.read_text(encoding="utf-8") if dest_path.is_file() else ""
     header = read_file_header(css) if css else ""
-
-    decl_body = "\n".join(f"  {k}: {v};" for k, v in sorted(final_vars.items()))
-    if synthesize:
-        decl_body = synthesize_shorthands(decl_body)
-        final_vars = parse_vars_from_css(decl_body)
 
     if css and selector in css:
         idx = css.find(selector)
@@ -381,8 +360,6 @@ def apply_vars_to_core_file(
     else:
         layer = "@layer mds-core;\n\n" if "@layer" not in (header or "") else ""
         decl = "\n".join(f"  {k}: {v};" for k, v in sorted(final_vars.items()))
-        if synthesize:
-            decl = synthesize_shorthands(decl)
         body = f"{selector} {{\n{decl}\n}}\n"
         content = (header + "\n\n" if header else "") + layer + body
         dest_path.write_text(content, encoding="utf-8")

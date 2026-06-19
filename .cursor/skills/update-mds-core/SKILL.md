@@ -21,6 +21,7 @@ description: >-
 - Comparación de nombre **case-insensitive**
 - Exactamente 4 ficheros; ni más ni menos
 - La nomenclatura CTR/Tol (`ctr--tol--light`, etc.) puede aparecer **dentro** del CSS; se normaliza en silencio. No preguntar al usuario sobre ello.
+- Padding de Tag/Tooltip: el export Figma trae solo ejes (`--tag-padding-x/y`, `--tooltip-padding-x/y`). No se sintetizan shorthands en apply.
 
 ## Flujo obligatorio (7 pasos)
 

@@ -19,8 +19,7 @@
 
 /* Refuerzo: padding desde variables de componente MDS */
 :host.overlay-catalog-page ::ng-deep .p-tooltip-text {
-  padding: var(--tooltip-padding-y, var(--dimension-scale-x8, 8px))
-    var(--tooltip-padding-x, var(--dimension-scale-x8, 8px));
+  padding: var(--tooltip-padding-y) var(--tooltip-padding-x);
 }
 
 :host.overlay-catalog-page .tooltip-catalog-positions-row {

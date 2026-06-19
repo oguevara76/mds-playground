@@ -115,33 +115,6 @@ function wrapRoot(decl: string): string {
   return `html:root {\n${decl}\n}`;
 }
 
-/** Si el upload trae --tag-padding-x/y sin shorthand, añade --tag-padding (core MDS). */
-function synthesizeTagPaddingShorthand(decl: string): string {
-  if (/--tag-padding\s*:/.test(decl)) {
-    return decl;
-  }
-  if (!/--tag-padding-x\s*:/.test(decl) || !/--tag-padding-y\s*:/.test(decl)) {
-    return decl;
-  }
-  const line = '  --tag-padding: var(--tag-padding-y) var(--tag-padding-x);';
-  return decl.trimEnd() + (decl.endsWith('\n') ? '' : '\n') + line + '\n';
-}
-
-/** Si el upload trae --tooltip-padding-x/y sin shorthand, añade --tooltip-padding (core MDS). */
-function synthesizeTooltipPaddingShorthand(decl: string): string {
-  if (/--tooltip-padding\s*:/.test(decl)) {
-    return decl;
-  }
-  if (
-    !/--tooltip-padding-x\s*:/.test(decl) ||
-    !/--tooltip-padding-y\s*:/.test(decl)
-  ) {
-    return decl;
-  }
-  const line = '  --tooltip-padding: var(--tooltip-padding-y) var(--tooltip-padding-x);';
-  return decl.trimEnd() + (decl.endsWith('\n') ? '' : '\n') + line + '\n';
-}
-
 export function normalizeUploaded(css: string): NormalizeResult {
   const raw = String(css || '');
   if (!raw.trim()) return { ok: false, injects: [], reason: 'vacío' };
@@ -176,9 +149,7 @@ export function normalizeUploaded(css: string): NormalizeResult {
   if (looksLikeComponentsCss(raw)) {
     const innerC = extractRootInner(raw);
     if (innerC) {
-      const declC = synthesizeTagPaddingShorthand(
-        synthesizeTooltipPaddingShorthand(extractCustomDeclarations(innerC)),
-      );
+      const declC = extractCustomDeclarations(innerC);
       if (declC) return { ok: true, injects: [{ slot: 'components', css: wrapRoot(declC) }] };
     }
     return { ok: false, injects: [], reason: 'componentes: no hay bloque :root con variables' };
@@ -192,7 +163,7 @@ export function normalizeUploaded(css: string): NormalizeResult {
         return { ok: true, injects: [{ slot: 'primitives', css: wrapRoot(declP) }] };
       }
       if (COMPONENT_VAR_RE.test(innerP)) {
-        const declC = synthesizeTagPaddingShorthand(synthesizeTooltipPaddingShorthand(declP));
+        const declC = declP;
         return { ok: true, injects: [{ slot: 'components', css: wrapRoot(declC) }] };
       }
       return { ok: true, injects: [{ slot: 'primitives', css: wrapRoot(declP) }] };
