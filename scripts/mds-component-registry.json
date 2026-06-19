@@ -1,0 +1,55 @@
+{
+  "toggleswitch": {
+    "playground_anchor": "pg-toggleswitch",
+    "primeng_prefix": "toggleswitch",
+    "override": "src/app/theme/toggleswitch-mds-overrides.ts",
+    "parity": "src/styles/primeng-toggleswitch-parity.css",
+    "watch_vars": ["--toggleswitch-handle-*", "--p-toggleswitch-handle-*", "--toggleswitch-*"]
+  },
+  "inputtext": {
+    "playground_anchor": "pg-inputtext",
+    "related_semantic": ["--form-field-*", "--form-field-float-label-*"],
+    "parity": "src/styles/primeng-preview-parity.css",
+    "watch_vars": ["--inputtext-*", "--p-inputtext-*", "--p-floatlabel-*", "--p-iftalabel-*"]
+  },
+  "button": {
+    "playground_anchor": "pg-button",
+    "override": "src/app/theme/button-mds-overrides.ts",
+    "parity": "src/styles/primeng-preview-parity.css",
+    "watch_vars": ["--button-*", "--p-button-*"]
+  },
+  "textarea": {
+    "playground_anchor": "pg-textarea",
+    "parity": "src/styles/primeng-preview-parity.css",
+    "watch_vars": ["--textarea-*", "--p-textarea-*", "--p-floatlabel-*"]
+  },
+  "checkbox": {
+    "playground_anchor": "pg-checkbox",
+    "watch_vars": ["--checkbox-*", "--p-checkbox-*"]
+  },
+  "radiobutton": {
+    "playground_anchor": "pg-radiobutton",
+    "watch_vars": ["--radiobutton-*", "--p-radiobutton-*"]
+  },
+  "tabs": {
+    "playground_anchor": "pg-tabs",
+    "override": "src/app/theme/tabs-mds-overrides.ts",
+    "parity": "src/styles/primeng-tabs-parity.css",
+    "watch_vars": ["--tabs-*", "--p-tabs-*"]
+  },
+  "badge": {
+    "playground_anchor": "pg-badge",
+    "override": "src/app/theme/badge-mds-overrides.ts",
+    "watch_vars": ["--badge-*", "--p-badge-*"]
+  },
+  "tag": {
+    "playground_anchor": "pg-tag",
+    "override": "src/app/theme/tag-mds-overrides.ts",
+    "watch_vars": ["--tag-*", "--p-tag-*"]
+  },
+  "tooltip": {
+    "playground_anchor": "pg-tooltip",
+    "override": "src/app/theme/tooltip-mds-overrides.ts",
+    "watch_vars": ["--tooltip-*", "--p-tooltip-*"]
+  }
+}

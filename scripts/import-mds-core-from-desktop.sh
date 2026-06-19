@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Importa los 4 CSS del MDS desde el Escritorio al playground.
-# Requisitos: ficheros en $DESKTOP con los nombres que exporta Figma/tokens.
-# Ajusta tema (ctr--its-* | ctr--tol-* → light/dark) y capa (@layer csisarqref → mds-core)
-# para que sigan funcionando index.html y js/app.js (data-theme="light"|"dark").
+# Importa los 4 CSS del MDS al playground (contrato de nombre fijo).
+#
+# Ficheros esperados en $DESKTOP:
+#   Primitives.css, Semantic-light.css, Semantic-dark.css, Components.css
 #
 # Uso:
 #   ./scripts/import-mds-core-from-desktop.sh
@@ -12,57 +12,47 @@ set -euo pipefail
 
 DESKTOP="${DESKTOP:-$HOME/Desktop}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+STAGING="$ROOT/.mds-core-staging"
 
 require() {
   local p="$1"
   if [[ ! -f "$p" ]]; then
     echo "No existe: $p" >&2
+    echo "Contrato: Primitives.css, Semantic-light.css, Semantic-dark.css, Components.css" >&2
     exit 1
   fi
 }
 
-pick_semantic_light() {
-  if [[ -f "$DESKTOP/ctr--its--light.css" ]]; then echo "$DESKTOP/ctr--its--light.css"
-  elif [[ -f "$DESKTOP/ctr--tol--light.css" ]]; then echo "$DESKTOP/ctr--tol--light.css"
-  elif [[ -f "$DESKTOP/ctr--tol--lan--light.css" ]]; then echo "$DESKTOP/ctr--tol--lan--light.css"
-  else echo ""; fi
+pick_file() {
+  local base="$1"
+  if [[ -f "$DESKTOP/$base" ]]; then
+    echo "$DESKTOP/$base"
+    return
+  fi
+  local lower
+  lower="$(echo "$base" | tr '[:upper:]' '[:lower:]')"
+  if [[ -f "$DESKTOP/$lower" ]]; then
+    echo "$DESKTOP/$lower"
+    return
+  fi
+  echo ""
 }
 
-pick_semantic_dark() {
-  if [[ -f "$DESKTOP/ctr--its--dark.css" ]]; then echo "$DESKTOP/ctr--its--dark.css"
-  elif [[ -f "$DESKTOP/ctr--tol--dark.css" ]]; then echo "$DESKTOP/ctr--tol--dark.css"
-  elif [[ -f "$DESKTOP/ctr--tol--lan--darkbrand.css" ]]; then echo "$DESKTOP/ctr--tol--lan--darkbrand.css"
-  elif [[ -f "$DESKTOP/ctr--tol--lan--dark.css" ]]; then echo "$DESKTOP/ctr--tol--lan--dark.css"
-  else echo ""; fi
-}
+mkdir -p "$STAGING"
 
-require "$DESKTOP/primitives.css"
-require "$DESKTOP/components.css"
+for name in Primitives.css Semantic-light.css Semantic-dark.css Components.css; do
+  src="$(pick_file "$name")"
+  [[ -n "$src" ]] || { echo "Falta: $name en $DESKTOP" >&2; exit 1; }
+  cp "$src" "$STAGING/$name"
+done
 
-LIGHT_SRC="$(pick_semantic_light)"
-DARK_SRC="$(pick_semantic_dark)"
-[[ -n "$LIGHT_SRC" ]] || { echo "Falta semántica light: $DESKTOP/ctr--its--light.css o ctr--tol--light.css" >&2; exit 1; }
-[[ -n "$DARK_SRC" ]]  || { echo "Falta semántica dark:  $DESKTOP/ctr--its--dark.css o ctr--tol--dark.css" >&2; exit 1; }
-
-transform() {
-  sed -e 's/@layer csisarqref/@layer mds-core/g' \
-      -e 's/html\[data-theme="ctr--its--light"\]/html[data-theme="light"]/g' \
-      -e 's/html\[data-theme="ctr--its--dark"\]/html[data-theme="dark"]/g' \
-      -e 's/html\[data-theme="ctr--tol--light"\]/html[data-theme="light"]/g' \
-      -e 's/html\[data-theme="ctr--tol--dark"\]/html[data-theme="dark"]/g' \
-      -e 's/html\[data-theme="ctr--tol--lan--light"\]/html[data-theme="light"]/g' \
-      -e 's/html\[data-theme="ctr--tol--lan--darkbrand"\]/html[data-theme="dark"]/g' \
-      -e 's/html\[data-theme="ctr--tol--lan--dark"\]/html[data-theme="dark"]/g' \
-      "$1"
-}
-
-transform "$DESKTOP/primitives.css" > "$ROOT/styles/mds-primitives.css"
-transform "$DESKTOP/components.css" > "$ROOT/styles/mds-components.css"
-transform "$LIGHT_SRC" > "$ROOT/styles/mds-semantic-light.css"
-transform "$DARK_SRC"  > "$ROOT/styles/mds-semantic-dark.css"
-
+python3 "$ROOT/scripts/mds-core-preflight.py" --staging "$STAGING"
+python3 "$ROOT/scripts/mds-core-apply.py" --staging "$STAGING" --mode all
+python3 "$ROOT/scripts/regen-primeng-dark-from-light.py"
 python3 "$ROOT/scripts/regen-mds-vars-data.py"
+python3 "$ROOT/scripts/regen-prime-runtime-bridge.py"
+python3 "$ROOT/scripts/mds-core-qa.py" --format markdown || true
 
-echo "Importado en $ROOT/styles/ (mds-*.css) y regenerado js/mds-vars-data.js (listado + mapa de tokens)."
-echo "  light: $(basename "$LIGHT_SRC")"
-echo "  dark:  $(basename "$DARK_SRC")"
+echo "Importado en $ROOT/styles/ (mds-*.css) y regenerado catálogo + puente runtime."
+echo "  staging: $STAGING"
+echo "  Siguiente: pnpm start (puerto 3000) y revisar checklist visual"

@@ -50,8 +50,46 @@ Salidas:
 
 - `styles/components.css` — réplica manual de botones; aquí los componentes son `<p-button>`, `<p-inputtext>`, etc. reales.
 
-## Regenerar tras cambiar el core
+## Actualizar core con diff selectivo
 
-1. Importar core desde Figma: `./scripts/import-mds-core-from-desktop.sh`
+### Contrato de export (4 ficheros fijos)
+
+| Export del plugin | Destino en repo |
+|-------------------|-----------------|
+| `Primitives.css` | `styles/mds-primitives.css` |
+| `Semantic-light.css` | `styles/mds-semantic-light.css` |
+| `Semantic-dark.css` | `styles/mds-semantic-dark.css` |
+| `Components.css` | `styles/mds-components.css` |
+
+La nomenclatura CTR/Tol (`ctr--tol--light`, etc.) puede aparecer **dentro** del CSS exportado; el sistema la normaliza a `html[data-theme="light|dark"]` al aplicar. No forma parte del flujo del usuario.
+
+### Guión (chat o CLI)
+
+1. Subir los 4 ficheros al chat y pedir **"actualizar core"** (skill `update-mds-core`), o copiarlos a `.mds-core-staging/`
+2. Pre-validación: `pnpm run mds:preflight`
+3. Diff y resumen: `pnpm run mds:diff`
+4. Decidir alcance (todo / solo modificadas / por colección / por componente / con exclusiones)
+5. Apply: `pnpm run mds:apply -- --plan .mds-core-staging/plan.json`
+6. Regenerar: `pnpm run regen:primeng-dark` (si hubo bridge nuevo) + `pnpm run regen:mds` + `pnpm run build`
+7. QA: `pnpm run mds:qa` + checklist visual en catálogos (ToggleSwitch, InputText, Button…)
+
+### Import rápido (todo de golpe)
+
+```bash
+# Ficheros en Desktop con nombres del contrato
+./scripts/import-mds-core-from-desktop.sh
+pnpm start
+```
+
+### Qué NO se modifica automáticamente
+
+- `src/app/theme/*-mds-overrides.ts`
+- `src/styles/primeng-*-parity.css`
+- `src/app/catalogs/**`
+- Capas de upload runtime del usuario
+
+## Regenerar tras cambiar el core (manual)
+
+1. Importar core: `./scripts/import-mds-core-from-desktop.sh` o flujo diff selectivo arriba
 2. Regenerar datos y puente: `pnpm run regen:mds`
 3. Reiniciar `pnpm start`

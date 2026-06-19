@@ -13,6 +13,10 @@
     "regen:primeng-dark": "python3 scripts/regen-primeng-dark-from-light.py",
     "regen:ejemplos": "python3 scripts/sync-ejemplos-from-core.py",
     "regen:mds": "python3 scripts/regen-mds-vars-data.py && python3 scripts/regen-prime-runtime-bridge.py",
+    "mds:preflight": "python3 scripts/mds-core-preflight.py --staging .mds-core-staging",
+    "mds:diff": "python3 scripts/mds-core-diff.py --staging .mds-core-staging --format markdown",
+    "mds:apply": "python3 scripts/mds-core-apply.py --staging .mds-core-staging",
+    "mds:qa": "python3 scripts/mds-core-qa.py --format markdown",
     "backup": "bash scripts/create-backup.sh"
   },
   "dependencies": {
