@@ -67,16 +67,16 @@ PRIMITIVE_PALETTE_RE = re.compile(
     re.I,
 )
 
-THEME_TRANSFORM_REPLACEMENTS: list[tuple[re.Pattern[str], str]] = [
-    (re.compile(r"@layer\s+csisarqref", re.I), "@layer mds-core"),
-    (re.compile(r'html\[data-theme="ctr--its--light"\]'), 'html[data-theme="light"]'),
-    (re.compile(r'html\[data-theme="ctr--its--dark"\]'), 'html[data-theme="dark"]'),
-    (re.compile(r'html\[data-theme="ctr--tol--light"\]'), 'html[data-theme="light"]'),
-    (re.compile(r'html\[data-theme="ctr--tol--dark"\]'), 'html[data-theme="dark"]'),
-    (re.compile(r'html\[data-theme="ctr--tol--lan--light"\]'), 'html[data-theme="light"]'),
-    (re.compile(r'html\[data-theme="ctr--tol--lan--darkbrand"\]'), 'html[data-theme="dark"]'),
-    (re.compile(r'html\[data-theme="ctr--tol--lan--dark"\]'), 'html[data-theme="dark"]'),
-]
+DATA_THEME_SELECTOR_RE = re.compile(r'html\[data-theme="([^"]+)"\]')
+SEMANTICS_THEME_COMMENT_RE = re.compile(
+    r'(/\*\s*Semantics\s*-\s*Theme:\s*)([^*\n]+)(\s*\*/)',
+    re.I,
+)
+
+# Sufijos de tema reconocidos en exports con prefijo de producto (core--*, ctr--*, …).
+# Cualquier otro valor de data-theme no se toca.
+SEMANTIC_LIGHT_SUFFIXES = frozenset({"light"})
+SEMANTIC_DARK_SUFFIXES = frozenset({"dark", "darkbrand"})
 
 VAR_DECL_RE = re.compile(r"(--[\w-]+)\s*:\s*([^;}\n]+);")
 VAR_REF_RE = re.compile(r"var\(\s*(--[^,\s)]+)")
@@ -141,10 +141,48 @@ def resolve_staging_files(staging_dir: Path) -> tuple[dict[Slot, Path] | None, l
     return mapped, []
 
 
+def semantic_mode_from_theme_id(theme_id: str) -> Literal["light", "dark"] | None:
+    """Deriva light/dark ignorando prefijos de producto en el id de tema."""
+    if theme_id == "light":
+        return "light"
+    if theme_id == "dark":
+        return "dark"
+    segment = theme_id.rsplit("--", 1)[-1]
+    if segment in SEMANTIC_LIGHT_SUFFIXES:
+        return "light"
+    if segment in SEMANTIC_DARK_SUFFIXES:
+        return "dark"
+    return None
+
+
+def normalize_project_metadata(css: str) -> str:
+    """Elimina prefijos de producto en comentarios Semantics - Theme: …"""
+
+    def repl(m: re.Match[str]) -> str:
+        mode = semantic_mode_from_theme_id(m.group(2).strip())
+        if mode:
+            return f"{m.group(1)}{mode}{m.group(3)}"
+        return m.group(0)
+
+    return SEMANTICS_THEME_COMMENT_RE.sub(repl, css)
+
+
+def normalize_project_theme_selectors(css: str) -> str:
+    """Convierte data-theme con prefijo de proyecto al selector canónico light/dark."""
+
+    def repl(m: re.Match[str]) -> str:
+        mode = semantic_mode_from_theme_id(m.group(1))
+        if mode:
+            return f'html[data-theme="{mode}"]'
+        return m.group(0)
+
+    return DATA_THEME_SELECTOR_RE.sub(repl, css)
+
+
 def transform_export(css: str) -> str:
-    out = css
-    for pattern, repl in THEME_TRANSFORM_REPLACEMENTS:
-        out = pattern.sub(repl, out)
+    out = re.sub(r"@layer\s+csisarqref", "@layer mds-core", css, flags=re.I)
+    out = normalize_project_metadata(out)
+    out = normalize_project_theme_selectors(out)
     return out
 
 
