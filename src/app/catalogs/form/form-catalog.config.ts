@@ -3,7 +3,9 @@ export type FormBlockKind =
   | 'checkbox'
   | 'toggleswitch'
   | 'togglebutton'
+  | 'selectbutton'
   | 'inputtext'
+  | 'password'
   | 'inputotp'
   | 'rating'
   | 'textarea';
@@ -146,6 +148,25 @@ export const FORM_TOGGLEBUTTON_ICON_POS_OPTIONS: { label: string; value: 'left' 
   { label: 'Derecha', value: 'right' },
 ];
 
+export const FORM_SELECTBUTTON_OPTIONS = [
+  { label: 'Item 1', value: 'item-1' },
+  { label: 'Item 2', value: 'item-2' },
+  { label: 'Item 3', value: 'item-3' },
+  { label: 'Item 4', value: 'item-4' },
+] as const;
+
+export type FormSelectButtonActiveItem = 1 | 2 | 3 | 4;
+
+export const FORM_SELECTBUTTON_ACTIVE_ITEM_OPTIONS: {
+  label: string;
+  value: FormSelectButtonActiveItem;
+}[] = [
+  { label: 'Item 1', value: 1 },
+  { label: 'Item 2', value: 2 },
+  { label: 'Item 3', value: 3 },
+  { label: 'Item 4', value: 4 },
+];
+
 /** Texto visible del placeholder en previews estáticos InputText default. */
 export const FORM_INPUT_STATE_PLACEHOLDER = 'Placeholder';
 
@@ -189,6 +210,31 @@ export const FORM_INPUT_OTP_STATE_READONLY_VALUE = '1234';
 /** Valor del input en estado Fill (Float label, sección States). */
 export const FORM_INPUT_STATE_FILLED_VALUE = 'Value';
 
+/** Valor enmascarado en estados Fill e Invalid (Password, sección States). */
+export const FORM_PASSWORD_STATE_MASKED_VALUE = '********';
+
+/** Cabecera del overlay de feedback (variante Template). */
+export const FORM_PASSWORD_FEEDBACK_HEADER = 'Reset Password';
+
+/** Texto del medidor cuando el campo está vacío. */
+export const FORM_PASSWORD_FEEDBACK_PROMPT = 'Enter a password';
+
+export type FormPasswordStrengthRuleId = 'lowercase' | 'uppercase' | 'numeric' | 'minLength';
+
+/** Reglas del listado bajo el medidor; cada ítem aporta 25 % al strength. */
+export const FORM_PASSWORD_STRENGTH_RULES: ReadonlyArray<{
+  id: FormPasswordStrengthRuleId;
+  label: string;
+}> = [
+  { id: 'lowercase', label: 'At least one lowercase' },
+  { id: 'uppercase', label: 'At least one uppercase' },
+  { id: 'numeric', label: 'At least one numeric' },
+  { id: 'minLength', label: 'Minimum 8 characters' },
+];
+
+/** @deprecated Usar FORM_PASSWORD_STRENGTH_RULES */
+export const FORM_PASSWORD_STRENGTH_REQUIREMENTS = FORM_PASSWORD_STRENGTH_RULES.map((rule) => rule.label);
+
 export const FORM_INPUT_DEFAULT_STATES: { key: FormInputDemoState; caption: string }[] = [
   { key: 'normal', caption: 'Default' },
   { key: 'hover', caption: 'Hover' },
@@ -212,7 +258,9 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'checkbox', title: 'Checkbox', category: 'choice' },
   { kind: 'toggleswitch', title: 'ToggleSwitch', category: 'choice' },
   { kind: 'togglebutton', title: 'ToggleButton', category: 'choice' },
+  { kind: 'selectbutton', title: 'SelectButton', category: 'choice' },
   { kind: 'inputtext', title: 'InputText', category: 'input' },
+  { kind: 'password', title: 'Password', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },
   { kind: 'rating', title: 'Rating', category: 'input' },
   { kind: 'textarea', title: 'Textarea', category: 'textarea' },

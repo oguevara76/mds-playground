@@ -48,7 +48,9 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-checkbox': 'checkbox',
   'pg-toggleswitch': 'toggleswitch',
   'pg-togglebutton': 'togglebutton',
+  'pg-selectbutton': 'selectbutton',
   'pg-inputtext': 'inputtext',
+  'pg-password': 'password',
   'pg-inputotp': 'inputotp',
   'pg-rating': 'rating',
   'pg-textarea': 'textarea',
@@ -82,7 +84,9 @@ const FORM_VARIANT_COUNTS: Record<string, number> = {
   checkbox: 4,
   toggleswitch: 4,
   togglebutton: 4,
+  selectbutton: 4,
   inputtext: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
+  password: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputotp: 6,
   rating: 4,
   textarea: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
@@ -212,6 +216,11 @@ function buildIndex(): PlaygroundComponentEntry[] {
 
 export const PLAYGROUND_COMPONENT_INDEX: PlaygroundComponentEntry[] = buildIndex();
 
+/** Componentes únicos (variantes del mismo componente cuentan como uno). */
+export const PLAYGROUND_COMPONENT_COUNT = new Set(
+  PLAYGROUND_COMPONENT_INDEX.map((e) => TOKEN_PREFIXES[e.id] ?? e.id),
+).size;
+
 export function playgroundAnchorId(id: string): string {
   return id;
 }
@@ -226,7 +235,9 @@ export function formPlaygroundAnchorId(
     | 'checkbox'
     | 'toggleswitch'
     | 'togglebutton'
+    | 'selectbutton'
     | 'inputtext'
+    | 'password'
     | 'inputotp'
     | 'rating'
     | 'textarea',

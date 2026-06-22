@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  PLAYGROUND_COMPONENT_INDEX,
+  PLAYGROUND_COMPONENT_COUNT,
   type PlaygroundComponentEntry,
 } from './playground-component-index';
 import { PlaygroundComponentSearchService } from './playground-component-search.service';
@@ -112,6 +112,6 @@ export class PlaygroundComponentSearchComponent {
     }
   }
 
-  /** Placeholder con conteo total de componentes indexados. */
-  readonly totalComponents = PLAYGROUND_COMPONENT_INDEX.length;
+  /** Placeholder con conteo total de componentes únicos (sin duplicar variantes). */
+  readonly totalComponents = PLAYGROUND_COMPONENT_COUNT;
 }

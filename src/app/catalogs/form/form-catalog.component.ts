@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { formPlaygroundAnchorId } from '../../layout/playground-component-index';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,7 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputOtp } from 'primeng/inputotp';
 import { InputText } from 'primeng/inputtext';
+import { Password } from 'primeng/password';
 import { Popover } from 'primeng/popover';
 import { RadioButton } from 'primeng/radiobutton';
 import { Rating } from 'primeng/rating';
@@ -29,6 +30,11 @@ import {
   FORM_INPUT_STATE_HINT,
   FORM_INPUT_STATE_FILLED_VALUE,
   FORM_INPUT_STATE_READONLY_VALUE,
+  FORM_PASSWORD_STATE_MASKED_VALUE,
+  FORM_PASSWORD_FEEDBACK_HEADER,
+  FORM_PASSWORD_FEEDBACK_PROMPT,
+  FORM_PASSWORD_STRENGTH_RULES,
+  type FormPasswordStrengthRuleId,
   FORM_INPUT_OTP_DEFAULT_LENGTH,
   FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS,
   FORM_INPUT_OTP_STATE_READONLY_VALUE,
@@ -39,6 +45,8 @@ import {
   FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS,
   FORM_TEXTAREA_VARIANT_SELECT_OPTIONS,
   FORM_RADIO_OPTIONS,
+  FORM_SELECTBUTTON_ACTIVE_ITEM_OPTIONS,
+  FORM_SELECTBUTTON_OPTIONS,
   FORM_CHOICE_SIZE_DISPLAY_LABELS,
   FORM_SIZE_OPTIONS,
   FORM_SIZE_SELECT_OPTIONS,
@@ -53,6 +61,7 @@ import {
   type FormInputTextVariant,
   type FormInteractionSize,
   type FormRatingDemoState,
+  type FormSelectButtonActiveItem,
 } from './form-catalog.config';
 import { inputDemoWrapClass } from './form-catalog.demo-styles';
 
@@ -64,6 +73,19 @@ export interface FormInputTextInteractionState {
   iconRight: boolean;
   rounded: boolean;
   /** Muestra el helper text bajo el campo en Interaction. */
+  showHelperText: boolean;
+  size: FormInteractionSize;
+  value: string;
+}
+
+export interface FormPasswordInteractionState {
+  variant: FormInputTextVariant;
+  floatPosition: FormInputFloatVariant;
+  toggleMask: boolean;
+  feedback: boolean;
+  /** Muestra el listado de requisitos bajo el medidor (footer del overlay). */
+  showStrengthList: boolean;
+  showClear: boolean;
   showHelperText: boolean;
   size: FormInteractionSize;
   value: string;
@@ -101,8 +123,16 @@ interface FormToggleButtonInteractionState {
   iconPos: 'left' | 'right';
 }
 
-/** Campo al que aplican los tokens MDS de float label / ifta (input vs textarea). */
-type FormFieldKind = 'inputtext' | 'textarea';
+interface FormSelectButtonInteractionState {
+  size: FormInteractionSize;
+  multiple: boolean;
+  activeItem: FormSelectButtonActiveItem;
+}
+
+/** Campo al que aplican los tokens MDS de float label / ifta (input vs textarea vs password). */
+type FormFieldKind = 'inputtext' | 'textarea' | 'password';
+
+type PasswordStrengthLevel = 'none' | 'weak' | 'medium' | 'strong';
 
 interface FormChoiceInteractionState {
   size: FormInteractionSize;
@@ -144,6 +174,20 @@ function defaultInputTextInteraction(): FormInputTextInteractionState {
   };
 }
 
+function defaultPasswordInteraction(): FormPasswordInteractionState {
+  return {
+    variant: 'default',
+    floatPosition: 'over',
+    toggleMask: true,
+    feedback: true,
+    showStrengthList: true,
+    showClear: false,
+    showHelperText: false,
+    size: 'normal',
+    value: '',
+  };
+}
+
 function defaultTextareaInteraction(): FormTextareaInteractionState {
   return {
     variant: 'default',
@@ -162,6 +206,10 @@ function defaultToggleButtonInteraction(): FormToggleButtonInteractionState {
   return { size: 'normal', withIcons: false, iconPos: 'left' };
 }
 
+function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
+  return { size: 'normal', multiple: false, activeItem: 1 };
+}
+
 @Component({
   selector: 'app-form-catalog',
   standalone: true,
@@ -175,6 +223,8 @@ function defaultToggleButtonInteraction(): FormToggleButtonInteractionState {
     InputOtp,
     InputText,
     NgClass,
+    NgTemplateOutlet,
+    Password,
     Popover,
     RadioButton,
     Rating,
@@ -207,13 +257,17 @@ export class FormCatalogComponent {
   readonly textareaFloatPositionSelectOptions = FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS;
   readonly themeSelectOptions = FORM_THEME_SELECT_OPTIONS;
   readonly toggleButtonIconPosOptions = FORM_TOGGLEBUTTON_ICON_POS_OPTIONS;
+  readonly selectButtonOptions = [...FORM_SELECTBUTTON_OPTIONS];
+  readonly selectButtonActiveItemOptions = FORM_SELECTBUTTON_ACTIVE_ITEM_OPTIONS;
 
   private readonly formThemeByKind = signal<Record<FormBlockKind, FormFieldTheme>>({
     radio: 'outlined',
     checkbox: 'outlined',
     toggleswitch: 'outlined',
     togglebutton: 'outlined',
+    selectbutton: 'outlined',
     inputtext: 'outlined',
+    password: 'outlined',
     inputotp: 'outlined',
     rating: 'outlined',
     textarea: 'outlined',
@@ -226,8 +280,12 @@ export class FormCatalogComponent {
   readonly toggleButtonIx = signal(defaultToggleButtonInteraction());
   readonly toggleButtonOff = signal(false);
   readonly toggleButtonOn = signal(true);
+  readonly selectButtonIx = signal(defaultSelectButtonInteraction());
+  /** Valor estable del showcase interactivo (evita bucle ngModel con arrays). */
+  readonly selectButtonLiveValue = signal<string | string[]>(FORM_SELECTBUTTON_OPTIONS[0].value);
 
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
+  readonly passwordIx = signal<FormPasswordInteractionState>(defaultPasswordInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
   readonly ratingIx = signal<FormRatingInteractionState>(defaultRatingInteraction());
 
@@ -244,6 +302,9 @@ export class FormCatalogComponent {
   /** Float Label interactivo (Textarea): placeholder solo con foco. */
   private readonly textareaFloatIxFocused = signal(false);
 
+  /** Float Label interactivo (Password): placeholder solo con foco. */
+  private readonly passwordFloatIxFocused = signal(false);
+
   isChoiceBlock(block: FormBlockConfig): boolean {
     return block.category === 'choice';
   }
@@ -254,6 +315,10 @@ export class FormCatalogComponent {
 
   isInputTextBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputtext' } {
     return block.kind === 'inputtext';
+  }
+
+  isPasswordBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'password' } {
+    return block.kind === 'password';
   }
 
   isInputOtpBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputotp' } {
@@ -268,8 +333,61 @@ export class FormCatalogComponent {
     return block.kind === 'togglebutton';
   }
 
+  isSelectButtonBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'selectbutton' } {
+    return block.kind === 'selectbutton';
+  }
+
   patchToggleButtonIx(patch: Partial<FormToggleButtonInteractionState>): void {
     this.toggleButtonIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  patchSelectButtonIx(patch: Partial<FormSelectButtonInteractionState>): void {
+    this.selectButtonIx.update((prev) => ({ ...prev, ...patch }));
+    this.syncSelectButtonLiveValue();
+  }
+
+  private syncSelectButtonLiveValue(): void {
+    const { multiple, activeItem } = this.selectButtonIx();
+    if (multiple) {
+      this.selectButtonLiveValue.set(
+        FORM_SELECTBUTTON_OPTIONS.slice(0, activeItem).map((opt) => opt.value),
+      );
+      return;
+    }
+    this.selectButtonLiveValue.set(FORM_SELECTBUTTON_OPTIONS[activeItem - 1].value);
+  }
+
+  onSelectButtonValueChange(value: string | string[]): void {
+    this.selectButtonLiveValue.set(value);
+    const ix = this.selectButtonIx();
+    if (ix.multiple && Array.isArray(value)) {
+      const count = Math.min(Math.max(value.length, 1), 4) as FormSelectButtonActiveItem;
+      if (count !== ix.activeItem) {
+        this.selectButtonIx.update((prev) => ({ ...prev, activeItem: count }));
+      }
+      return;
+    }
+    if (!ix.multiple && typeof value === 'string') {
+      const idx = FORM_SELECTBUTTON_OPTIONS.findIndex((opt) => opt.value === value);
+      if (idx >= 0) {
+        const activeItem = (idx + 1) as FormSelectButtonActiveItem;
+        if (activeItem !== ix.activeItem) {
+          this.selectButtonIx.update((prev) => ({ ...prev, activeItem }));
+        }
+      }
+    }
+  }
+
+  selectButtonPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return size === 'normal' ? undefined : size;
+  }
+
+  selectButtonHostVars(size: FormInteractionSize): Record<string, string> {
+    return {
+      ...this.toggleButtonHostVars(size),
+      '--p-selectbutton-border-radius': 'var(--selectbutton-border-radius)',
+      '--p-selectbutton-invalid-border-color': 'var(--selectbutton-invalid-border-color)',
+    };
   }
 
   toggleButtonOnIcon(): string | undefined {
@@ -347,14 +465,14 @@ export class FormCatalogComponent {
   }
 
   formTheme(kind: FormBlockKind): FormFieldTheme {
-    if (kind === 'toggleswitch' || kind === 'togglebutton') {
+    if (kind === 'toggleswitch' || kind === 'togglebutton' || kind === 'selectbutton') {
       return 'outlined';
     }
     return this.formThemeByKind()[kind];
   }
 
   patchFormTheme(kind: FormBlockKind, theme: FormFieldTheme): void {
-    if (kind === 'toggleswitch' || kind === 'togglebutton') {
+    if (kind === 'toggleswitch' || kind === 'togglebutton' || kind === 'selectbutton') {
       return;
     }
     this.formThemeByKind.update((prev) => ({ ...prev, [kind]: theme }));
@@ -423,6 +541,94 @@ export class FormCatalogComponent {
     this.inputtextIx.update((prev) => ({ ...prev, ...patch }));
   }
 
+  patchPassword(patch: Partial<FormPasswordInteractionState>): void {
+    this.passwordIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  passwordIsDefault(): boolean {
+    return this.passwordIx().variant === 'default';
+  }
+
+  passwordIsFloatLabel(): boolean {
+    return this.passwordIx().variant === 'floatlabel';
+  }
+
+  passwordIsIftaLabel(): boolean {
+    return this.passwordIx().variant === 'iftalabel';
+  }
+
+  passwordFloatPosition(): FormInputFloatVariant {
+    return this.passwordIx().floatPosition;
+  }
+
+  passwordIsFloatIn(): boolean {
+    return this.passwordIsFloatLabel() && this.passwordFloatPosition() === 'in';
+  }
+
+  passwordInteractionLabelFloated(): boolean {
+    if (this.passwordIsFloatIn()) {
+      return true;
+    }
+    if (!this.passwordIsFloatLabel()) {
+      return false;
+    }
+    return !!this.passwordIx().value || this.passwordFloatIxFocused();
+  }
+
+  passwordFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    if (this.passwordFloatPosition() === 'in') {
+      return true;
+    }
+    return this.inputFloatFilled(state);
+  }
+
+  passwordFloatSizeLabelFloated(): boolean {
+    if (!this.passwordIsFloatLabel()) {
+      return false;
+    }
+    return true;
+  }
+
+  setPasswordFloatIxFocused(focused: boolean): void {
+    if (!this.passwordIsFloatLabel()) {
+      return;
+    }
+    this.passwordFloatIxFocused.set(focused);
+  }
+
+  passwordInteractionScopeClass(): Record<string, boolean> {
+    const pw = this.passwordIx();
+    return {
+      ...this.formThemeContainerClass('password'),
+      'input-variant-block': true,
+      'form-input-interaction--stacked': pw.variant === 'floatlabel' || pw.variant === 'iftalabel',
+      'floatlabel-variant-over': pw.variant === 'floatlabel' && pw.floatPosition === 'over',
+      'floatlabel-variant-on': pw.variant === 'floatlabel' && pw.floatPosition === 'on',
+      'floatlabel-variant-in': pw.variant === 'floatlabel' && pw.floatPosition === 'in',
+      'iftalabel-variant': pw.variant === 'iftalabel',
+      'show-right-icon': pw.toggleMask,
+    };
+  }
+
+  passwordFloatLabelHostVars(): Record<string, string> {
+    const ix = this.passwordIx();
+    return this.floatLabelHostVarsForVariant(ix.variant, ix.floatPosition, ix.size, 'password');
+  }
+
+  passwordFloatLabelStatesHostVars(): Record<string, string> {
+    const ix = this.passwordIx();
+    return this.floatLabelHostVarsForVariant(ix.variant, ix.floatPosition, 'normal', 'password');
+  }
+
+  passwordFloatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    const ix = this.passwordIx();
+    return this.floatLabelHostVarsForVariant(ix.variant, ix.floatPosition, size, 'password');
+  }
+
+  passwordIftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    return this.iftaLabelHostVars(size, 'password');
+  }
+
   patchInputotp(patch: Partial<FormInputOtpInteractionState>): void {
     this.inputotpIx.update((prev) => {
       const next = { ...prev, ...patch };
@@ -437,9 +643,123 @@ export class FormCatalogComponent {
     this.ratingIx.update((prev) => ({ ...prev, ...patch }));
   }
 
-  /** PrimeNG `size` en InputOtp: omite en Normal. */
+  /** PrimeNG `size` en InputOtp / Password: omite en Normal. */
   inputotpPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
     return size === 'normal' ? undefined : size;
+  }
+
+  passwordPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return this.inputotpPrimeSize(size);
+  }
+
+  /** Icono toggle mask: escala MDS alineada con IconField / InputText por tamaño. */
+  private passwordMaskIconSizeMdsToken(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return '--iconfield-figma-sm-icon-size';
+    }
+    if (size === 'large') {
+      return '--iconfield-figma-lg-icon-size';
+    }
+    return '--iconfield-figma-size';
+  }
+
+  private passwordMaskIconInsetMdsToken(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return '--inputtext-sm-padding-x';
+    }
+    if (size === 'large') {
+      return '--inputtext-lg-padding-x';
+    }
+    return '--inputtext-padding-x';
+  }
+
+  private passwordInputIconPaddingEndMdsToken(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return '--inputtext-with-icon-padding-start-sm';
+    }
+    if (size === 'large') {
+      return '--inputtext-with-icon-padding-start-lg';
+    }
+    return '--inputtext-with-icon-padding-start';
+  }
+
+  /**
+   * Variables en p-password: puente Core MDS → PrimeNG (--p-password-*)
+   * + icono toggle mask dimensionado por size (PrimeNG usa icon.size fijo).
+   */
+  passwordHostVars(size: FormInteractionSize = 'normal'): Record<string, string> {
+    const iconSize = `var(${this.passwordMaskIconSizeMdsToken(size)})`;
+    const iconInset = `var(${this.passwordMaskIconInsetMdsToken(size)})`;
+    const inputPaddingEnd = `var(${this.passwordInputIconPaddingEndMdsToken(size)})`;
+    return {
+      '--p-password-content-gap': 'var(--password-content-gap)',
+      '--p-password-icon-color': 'var(--password-icon-color)',
+      '--p-password-meter-background': 'var(--password-meter-background)',
+      '--p-password-meter-border-radius': 'var(--password-meter-border-radius)',
+      '--p-password-meter-height': 'var(--password-meter-height)',
+      '--p-password-overlay-background': 'var(--password-overlay-background)',
+      '--p-password-overlay-border-color': 'var(--password-overlay-border-color)',
+      '--p-password-overlay-border-radius': 'var(--password-overlay-border-radius)',
+      '--p-password-overlay-color': 'var(--password-overlay-color)',
+      '--p-password-overlay-padding': 'var(--password-overlay-padding)',
+      '--p-password-overlay-shadow': 'var(--password-overlay-shadow)',
+      '--p-password-strength-weak-background': 'var(--password-strength-week-background)',
+      '--p-password-strength-medium-background': 'var(--password-strength-medium-background)',
+      '--p-password-strength-strong-background': 'var(--password-strength-strong-background)',
+      '--catalog-password-mask-icon-size': iconSize,
+      '--catalog-password-mask-icon-inset': iconInset,
+      '--catalog-password-input-icon-padding-end': inputPaddingEnd,
+    };
+  }
+
+  readonly passwordStrengthRules = FORM_PASSWORD_STRENGTH_RULES;
+
+  passwordStrengthRuleMet(ruleId: FormPasswordStrengthRuleId, value: string): boolean {
+    switch (ruleId) {
+      case 'lowercase':
+        return /[a-z]/.test(value);
+      case 'uppercase':
+        return /[A-Z]/.test(value);
+      case 'numeric':
+        return /\d/.test(value);
+      case 'minLength':
+        return value.length >= 8;
+    }
+  }
+
+  passwordStrengthMetCount(value: string): number {
+    return FORM_PASSWORD_STRENGTH_RULES.filter((rule) => this.passwordStrengthRuleMet(rule.id, value)).length;
+  }
+
+  passwordStrengthLevel(value: string): PasswordStrengthLevel {
+    const met = this.passwordStrengthMetCount(value);
+    if (met === 0) {
+      return 'none';
+    }
+    if (met <= 2) {
+      return 'weak';
+    }
+    if (met === 3) {
+      return 'medium';
+    }
+    return 'strong';
+  }
+
+  passwordStrengthMeterWidth(value: string): number {
+    return (this.passwordStrengthMetCount(value) / FORM_PASSWORD_STRENGTH_RULES.length) * 100;
+  }
+
+  passwordStrengthMeterLabel(value: string): string {
+    switch (this.passwordStrengthLevel(value)) {
+      case 'weak':
+        return 'Weak';
+      case 'medium':
+        return 'Medium';
+      case 'strong':
+        return 'Strong';
+      default:
+        return FORM_PASSWORD_FEEDBACK_PROMPT;
+    }
   }
 
   /** Token MDS de lado de celda OTP (ancho = alto) según tamaño. */
@@ -857,14 +1177,17 @@ export class FormCatalogComponent {
   }
 
   /**
-   * IftaLabel + InputText: label en --iftalabel-top (padding-y); valor debajo con
+   * IftaLabel + InputText / Password: label en --iftalabel-top (padding-y); valor debajo con
    * --iftalabel-input-padding-top (22px normal) o padding-y + label xs + gap x4 (sm/lg).
    */
-  private iftaLabelInputtextHostVars(size: FormInteractionSize): Record<string, string> {
-    const field = this.floatLabelFieldStyleVars(size, 'inputtext');
-    const paddingYToken = this.fieldPaddingYToken('inputtext', size);
+  private iftaLabelInputtextHostVars(
+    size: FormInteractionSize,
+    field: 'inputtext' | 'password' = 'inputtext',
+  ): Record<string, string> {
+    const fieldVars = this.floatLabelFieldStyleVars(size, field);
+    const paddingYToken = this.fieldPaddingYToken(field, size);
     const paddingY = `var(${paddingYToken})`;
-    const paddingX = `var(${this.fieldPaddingXToken('inputtext', size)})`;
+    const paddingX = `var(${this.fieldPaddingXToken(field, size)})`;
     const labelTop = `var(--iftalabel-top, ${paddingY})`;
     const gap = this.floatLabelInGapExpr(size);
     const activeFont = 'var(--floatlabel-active-font-size)';
@@ -876,7 +1199,7 @@ export class FormCatalogComponent {
     const minHeight = this.floatLabelInMinHeightExpr(size);
 
     return {
-      ...field,
+      ...fieldVars,
       '--catalog-iftalabel-top': labelTop,
       '--p-iftalabel-top': labelTop,
       '--catalog-floatlabel-in-active-top': labelTop,
@@ -893,7 +1216,7 @@ export class FormCatalogComponent {
       '--catalog-floatlabel-in-input-padding-x': paddingX,
       '--p-iftalabel-font-size': activeFont,
       '--p-iftalabel-font-weight': 'var(--floatlabel-active-font-weight)',
-      '--p-iftalabel-position-x': field['--p-floatlabel-position-x'],
+      '--p-iftalabel-position-x': fieldVars['--p-floatlabel-position-x'],
     };
   }
 
@@ -907,7 +1230,7 @@ export class FormCatalogComponent {
       return { ...this.iftaLabelTextareaHostVars(size), ...iconVars };
     }
     return {
-      ...this.iftaLabelInputtextHostVars(size),
+      ...this.iftaLabelInputtextHostVars(size, fieldKind === 'password' ? 'password' : 'inputtext'),
       ...iconVars,
     };
   }
@@ -1063,6 +1386,9 @@ export class FormCatalogComponent {
     if (this.isInputTextBlock(block)) {
       return this.inputtextIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
+    if (this.isPasswordBlock(block)) {
+      return this.passwordIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
+    }
     if (this.isInputOtpBlock(block)) {
       return this.inputDefaultStates;
     }
@@ -1093,6 +1419,7 @@ export class FormCatalogComponent {
   readonly inputStateErrorMessage = FORM_INPUT_STATE_ERROR_MESSAGE;
   readonly inputStateReadonlyValue = FORM_INPUT_STATE_READONLY_VALUE;
   readonly inputOtpStateReadonlyValue = FORM_INPUT_OTP_STATE_READONLY_VALUE;
+  readonly passwordFeedbackHeader = FORM_PASSWORD_FEEDBACK_HEADER;
 
   /** Preview estático: el input no lleva valor, solo placeholder (tokens). */
   inputStateShowsPlaceholderOnly(block: FormBlockConfig, state: FormInputDemoState): boolean {
@@ -1157,7 +1484,7 @@ export class FormCatalogComponent {
     if (state !== 'invalid') {
       return false;
     }
-    return this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isInputOtpBlock(block);
+    return this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isPasswordBlock(block) || this.isInputOtpBlock(block);
   }
 
   inputStateShowHint(block: FormBlockConfig, state: FormInputDemoState): boolean {
@@ -1165,6 +1492,15 @@ export class FormCatalogComponent {
   }
 
   inputStateValue(state: FormInputDemoState, block: FormBlockConfig): string {
+    if (this.isPasswordBlock(block)) {
+      if (state === 'filled' || state === 'invalid') {
+        return FORM_PASSWORD_STATE_MASKED_VALUE;
+      }
+      if (state === 'readonly') {
+        return this.inputStateReadonlyValue;
+      }
+      return '';
+    }
     if (this.inputStateShowsPlaceholderOnly(block, state)) {
       return '';
     }

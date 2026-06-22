@@ -3,9 +3,11 @@
     <div
       class="catalog-preview form-showcase"
       [class.inputtext-showcase]="isInputTextBlock(block)"
+      [class.password-showcase]="isPasswordBlock(block)"
       [class.inputotp-showcase]="isInputOtpBlock(block)"
       [class.rating-showcase]="isRatingBlock(block)"
       [class.textarea-showcase]="isTextareaBlock(block)"
+      [class.selectbutton-showcase]="isSelectButtonBlock(block)"
     >
       <section
         class="preview-section preview-section--flush catalog-block-section"
@@ -356,6 +358,89 @@
                           </div>
                         </div>
                       }
+                    </div>
+                  </p-popover>
+                </aside>
+              </div>
+            }
+            @case ('selectbutton') {
+              <div class="input-interaction-row catalog-interaction-row--center">
+                <div class="catalog-showcase-interactive">
+                  <p-selectbutton
+                    [options]="selectButtonOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="selectButtonLiveValue()"
+                    (ngModelChange)="onSelectButtonValueChange($event)"
+                    [multiple]="selectButtonIx().multiple"
+                    [allowEmpty]="!selectButtonIx().multiple"
+                    [size]="selectButtonPrimeSize(selectButtonIx().size)"
+                    [style]="selectButtonHostVars(selectButtonIx().size)"
+                    ariaLabel="SelectButton interactivo"
+                  />
+                </div>
+                <aside class="button-config-aside">
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="selectButtonConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="selectButtonConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
+                  <p class="button-config-aside-hint">
+                    Item activo, Multiple, Size
+                  </p>
+                  <p-popover
+                    #selectButtonConfigPopover
+                    styleClass="button-config-popover"
+                    appendTo="body"
+                    ariaLabel="Configurar SelectButton"
+                  >
+                    <div class="button-config-popover-body button-config-switches">
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Item activo</span>
+                        <div class="button-config-size-toggle-wrap">
+                          <p-selectbutton
+                            [options]="selectButtonActiveItemOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="selectButtonIx().activeItem"
+                            (ngModelChange)="patchSelectButtonIx({ activeItem: $event })"
+                            [allowEmpty]="false"
+                            [fluid]="true"
+                            size="small"
+                            ariaLabel="Item activo SelectButton"
+                          />
+                        </div>
+                      </div>
+                      <p-divider styleClass="button-config-divider" />
+                      <div class="input-config-row">
+                        <span class="input-config-label">Multiple</span>
+                        <p-toggleswitch
+                          [ngModel]="selectButtonIx().multiple"
+                          (ngModelChange)="patchSelectButtonIx({ multiple: $event })"
+                          ariaLabel="Selección múltiple SelectButton"
+                        />
+                      </div>
+                      <p-divider styleClass="button-config-divider" />
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Size</span>
+                        <div class="button-config-size-toggle-wrap">
+                          <p-selectbutton
+                            [options]="sizeSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="selectButtonIx().size"
+                            (ngModelChange)="patchSelectButtonIx({ size: $event })"
+                            [allowEmpty]="false"
+                            [fluid]="true"
+                            size="small"
+                            ariaLabel="Size SelectButton"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </p-popover>
                 </aside>
@@ -790,6 +875,223 @@
                         <p-toggleswitch
                           [ngModel]="inputtextIx().showHelperText"
                           (ngModelChange)="patchInputtext({ showHelperText: $event })"
+                        />
+                      </div>
+                    </div>
+                  </p-popover>
+                </aside>
+              </div>
+            }
+            @case ('password') {
+              <ng-template #passwordInteractionField>
+                <p-password
+                  inputId="pw-live"
+                  autocomplete="off"
+                  [ngModel]="passwordIx().value"
+                  (ngModelChange)="patchPassword({ value: $event })"
+                  [toggleMask]="passwordIx().toggleMask"
+                  [feedback]="passwordIx().feedback"
+                  [showClear]="passwordIx().showClear"
+                  [size]="passwordPrimeSize(passwordIx().size)"
+                  [variant]="formThemePrimeVariant('password')"
+                  [style]="passwordHostVars(passwordIx().size)"
+                  [fluid]="true"
+                  ariaLabel="Password interactivo"
+                >
+                  @if (passwordIx().feedback) {
+                    <ng-template #header>
+                      <div class="catalog-password-feedback-header">{{ passwordFeedbackHeader }}</div>
+                    </ng-template>
+                    <ng-template #content>
+                      <div class="p-password-content catalog-password-feedback-content">
+                        <div class="p-password-meter">
+                          <div
+                            class="p-password-meter-label"
+                            [class.p-password-meter-weak]="passwordStrengthLevel(passwordIx().value) === 'weak'"
+                            [class.p-password-meter-medium]="passwordStrengthLevel(passwordIx().value) === 'medium'"
+                            [class.p-password-meter-strong]="passwordStrengthLevel(passwordIx().value) === 'strong'"
+                            [style.width.%]="passwordStrengthMeterWidth(passwordIx().value)"
+                          ></div>
+                        </div>
+                        <div class="p-password-meter-text">{{ passwordStrengthMeterLabel(passwordIx().value) }}</div>
+                      </div>
+                    </ng-template>
+                    @if (passwordIx().showStrengthList) {
+                      <ng-template #footer>
+                        <hr class="catalog-password-feedback-divider" />
+                        <ul class="catalog-password-feedback-list">
+                          @for (rule of passwordStrengthRules; track rule.id) {
+                            <li [class.is-met]="passwordStrengthRuleMet(rule.id, passwordIx().value)">
+                              {{ rule.label }}
+                            </li>
+                          }
+                        </ul>
+                      </ng-template>
+                    }
+                  }
+                </p-password>
+              </ng-template>
+              <div class="input-interaction-row">
+                <div
+                  class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope password-interaction-scope"
+                  [ngClass]="passwordInteractionScopeClass()"
+                >
+                  @if (passwordIsDefault()) {
+                    <div class="p-field form-input-interaction-field">
+                      <label class="p-label" for="pw-live">Label</label>
+                      <ng-container *ngTemplateOutlet="passwordInteractionField" />
+                      @if (passwordIx().showHelperText) {
+                        <small class="p-hint">Helper Text</small>
+                      }
+                    </div>
+                  } @else if (passwordIsIftaLabel()) {
+                    <div class="form-input-interaction-control">
+                      <span class="p-iftalabel" [style]="passwordFloatLabelHostVars()">
+                        <ng-container *ngTemplateOutlet="passwordInteractionField" />
+                        <label for="pw-live">Label</label>
+                      </span>
+                    </div>
+                    @if (passwordIx().showHelperText) {
+                      <small class="p-hint">Helper Text</small>
+                    }
+                  } @else {
+                    <div class="form-input-interaction-control">
+                      <p-floatlabel
+                        [variant]="passwordFloatPosition()"
+                        [class.is-label-floated]="passwordInteractionLabelFloated()"
+                        [style]="passwordFloatLabelHostVars()"
+                        (focusin)="setPasswordFloatIxFocused(true)"
+                        (focusout)="setPasswordFloatIxFocused(false)"
+                      >
+                        <ng-container *ngTemplateOutlet="passwordInteractionField" />
+                        <label for="pw-live">Label</label>
+                      </p-floatlabel>
+                    </div>
+                    @if (passwordIx().showHelperText) {
+                      <small class="p-hint">Helper Text</small>
+                    }
+                  }
+                </div>
+                <aside class="button-config-aside">
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="passwordConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="passwordConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
+                  <p class="button-config-aside-hint">
+                    Theme, Variant, Float variant, Size, Toggle mask, Feedback, Strength list, Show clear, Helper text
+                  </p>
+                  <p-popover
+                    #passwordConfigPopover
+                    styleClass="button-config-popover"
+                    appendTo="body"
+                    ariaLabel="Configurar Password"
+                  >
+                    <div class="button-config-popover-body button-config-switches">
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Theme</span>
+                        <div class="button-config-select-wrap">
+                          <p-select
+                            [options]="themeSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="formTheme('password')"
+                            (ngModelChange)="patchFormTheme('password', $event)"
+                            size="small"
+                            appendTo="body"
+                            ariaLabel="Theme Password"
+                          />
+                        </div>
+                      </div>
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Variant</span>
+                        <div class="button-config-select-wrap">
+                          <p-select
+                            [options]="inputtextVariantSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="passwordIx().variant"
+                            (ngModelChange)="patchPassword({ variant: $event })"
+                            size="small"
+                            appendTo="body"
+                            ariaLabel="Variant Password"
+                          />
+                        </div>
+                      </div>
+                      @if (passwordIsFloatLabel()) {
+                        <div class="button-config-size-field">
+                          <span class="input-config-label">Float variant</span>
+                          <div class="button-config-select-wrap">
+                            <p-select
+                              [options]="inputtextFloatPositionSelectOptions"
+                              optionLabel="label"
+                              optionValue="value"
+                              [ngModel]="passwordIx().floatPosition"
+                              (ngModelChange)="patchPassword({ floatPosition: $event })"
+                              size="small"
+                              appendTo="body"
+                              ariaLabel="Float variant Password"
+                            />
+                          </div>
+                        </div>
+                      }
+                      <p-divider styleClass="button-config-divider" />
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Size</span>
+                        <div class="button-config-size-toggle-wrap">
+                          <p-selectbutton
+                            [options]="sizeSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="passwordIx().size"
+                            (ngModelChange)="patchPassword({ size: $event })"
+                            [allowEmpty]="false"
+                            [fluid]="true"
+                            size="small"
+                            ariaLabel="Size Password"
+                          />
+                        </div>
+                      </div>
+                      <p-divider styleClass="button-config-divider" />
+                      <div class="input-config-row">
+                        <span class="input-config-label">Toggle mask</span>
+                        <p-toggleswitch
+                          [ngModel]="passwordIx().toggleMask"
+                          (ngModelChange)="patchPassword({ toggleMask: $event })"
+                        />
+                      </div>
+                      <div class="input-config-row">
+                        <span class="input-config-label">Feedback</span>
+                        <p-toggleswitch
+                          [ngModel]="passwordIx().feedback"
+                          (ngModelChange)="patchPassword({ feedback: $event })"
+                        />
+                      </div>
+                      @if (passwordIx().feedback) {
+                        <div class="input-config-row">
+                          <span class="input-config-label">Strength list</span>
+                          <p-toggleswitch
+                            [ngModel]="passwordIx().showStrengthList"
+                            (ngModelChange)="patchPassword({ showStrengthList: $event })"
+                          />
+                        </div>
+                      }
+                      <div class="input-config-row">
+                        <span class="input-config-label">Show clear</span>
+                        <p-toggleswitch
+                          [ngModel]="passwordIx().showClear"
+                          (ngModelChange)="patchPassword({ showClear: $event })"
+                        />
+                      </div>
+                      <div class="input-config-row">
+                        <span class="input-config-label">Helper text</span>
+                        <p-toggleswitch
+                          [ngModel]="passwordIx().showHelperText"
+                          (ngModelChange)="patchPassword({ showHelperText: $event })"
                         />
                       </div>
                     </div>
@@ -1235,6 +1537,72 @@
                 </div>
               </div>
             }
+            @case ('selectbutton') {
+              <div class="catalog-button-states-row is-static-preview">
+                <div class="catalog-button-state">
+                  <div class="catalog-button-state-preview">
+                    <p-selectbutton
+                      [options]="selectButtonOptions"
+                      optionLabel="label"
+                      optionValue="value"
+                      [ngModel]="'item-1'"
+                      [allowEmpty]="false"
+                      [tabindex]="-1"
+                      [style]="selectButtonHostVars('normal')"
+                      ariaLabel="Item 1 seleccionado"
+                    />
+                  </div>
+                  <span class="catalog-button-state-caption">Item 1</span>
+                </div>
+                <div class="catalog-button-state">
+                  <div class="catalog-button-state-preview">
+                    <p-selectbutton
+                      [options]="selectButtonOptions"
+                      optionLabel="label"
+                      optionValue="value"
+                      [ngModel]="'item-3'"
+                      [allowEmpty]="false"
+                      [tabindex]="-1"
+                      [style]="selectButtonHostVars('normal')"
+                      ariaLabel="Item 3 seleccionado"
+                    />
+                  </div>
+                  <span class="catalog-button-state-caption">Item 3</span>
+                </div>
+                <div class="catalog-button-state">
+                  <div class="catalog-button-state-preview">
+                    <p-selectbutton
+                      [options]="selectButtonOptions"
+                      optionLabel="label"
+                      optionValue="value"
+                      [ngModel]="'item-2'"
+                      [disabled]="true"
+                      [allowEmpty]="false"
+                      [tabindex]="-1"
+                      [style]="selectButtonHostVars('normal')"
+                      ariaLabel="Disabled"
+                    />
+                  </div>
+                  <span class="catalog-button-state-caption">Disabled</span>
+                </div>
+                <div class="catalog-button-state">
+                  <div class="catalog-button-state-preview">
+                    <p-selectbutton
+                      [options]="selectButtonOptions"
+                      optionLabel="label"
+                      optionValue="value"
+                      [ngModel]="'item-2'"
+                      [invalid]="true"
+                      [allowEmpty]="false"
+                      [tabindex]="-1"
+                      [style]="selectButtonHostVars('normal')"
+                      ariaLabel="Invalid"
+                    />
+                  </div>
+                  <span class="catalog-button-state-caption">Invalid</span>
+                </div>
+              </div>
+            }
             @default {
               @if (isTextareaBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
@@ -1442,6 +1810,118 @@
                     </div>
                   }
                 </div>
+              } @else if (isPasswordBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (passwordIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label">Label</label>
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              @if (st.key === 'readonly') {
+                                <p-password
+                                  [ngModel]="inputStateReadonlyValue"
+                                  [toggleMask]="passwordIx().toggleMask"
+                                  [feedback]="false"
+                                  [size]="passwordPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('password')"
+                                  [style]="passwordHostVars('normal')"
+                                  [fluid]="true"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                              } @else {
+                                <p-password
+                                  [ngModel]="inputStateValue(st.key, block)"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [toggleMask]="passwordIx().toggleMask"
+                                  [feedback]="false"
+                                  [showClear]="passwordIx().showClear"
+                                  [size]="passwordPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('password')"
+                                  [style]="passwordHostVars('normal')"
+                                  [fluid]="true"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                              }
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else if (passwordIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <span
+                                class="p-iftalabel"
+                                [class.is-label-invalid]="inputStateInvalid(st.key)"
+                                [style]="passwordFloatLabelStatesHostVars()"
+                              >
+                                <p-password
+                                  [ngModel]="inputStateValue(st.key, block)"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [toggleMask]="passwordIx().toggleMask"
+                                  [feedback]="false"
+                                  [showClear]="passwordIx().showClear"
+                                  [size]="passwordPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('password')"
+                                  [style]="passwordHostVars('normal')"
+                                  [fluid]="true"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </span>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-floatlabel
+                                [variant]="passwordFloatPosition()"
+                                [class.is-label-floated]="passwordFloatStateLabelFloated(st.key)"
+                                [style]="passwordFloatLabelStatesHostVars()"
+                              >
+                                <p-password
+                                  [ngModel]="inputStateValue(st.key, block)"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [toggleMask]="passwordIx().toggleMask"
+                                  [feedback]="false"
+                                  [showClear]="passwordIx().showClear"
+                                  [size]="passwordPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('password')"
+                                  [style]="passwordHostVars('normal')"
+                                  [fluid]="true"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </p-floatlabel>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
+                    </div>
+                  }
+                </div>
               } @else if (isInputOtpBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
                   @for (st of inputStates(block); track st.key) {
@@ -1624,6 +2104,57 @@
                 }
               </div>
             }
+            @case ('selectbutton') {
+              <div class="catalog-button-states-row is-static-preview">
+                @for (sz of sizeOptions; track sz.key) {
+                  <div class="catalog-button-state">
+                    <div class="catalog-button-state-preview">
+                      @switch (sz.key) {
+                        @case ('small') {
+                          <p-selectbutton
+                            [options]="selectButtonOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="'item-2'"
+                            size="small"
+                            [allowEmpty]="false"
+                            [tabindex]="-1"
+                            [style]="selectButtonHostVars(sz.key)"
+                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
+                          />
+                        }
+                        @case ('large') {
+                          <p-selectbutton
+                            [options]="selectButtonOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="'item-2'"
+                            size="large"
+                            [allowEmpty]="false"
+                            [tabindex]="-1"
+                            [style]="selectButtonHostVars(sz.key)"
+                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
+                          />
+                        }
+                        @default {
+                          <p-selectbutton
+                            [options]="selectButtonOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="'item-2'"
+                            [allowEmpty]="false"
+                            [tabindex]="-1"
+                            [style]="selectButtonHostVars(sz.key)"
+                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
+                          />
+                        }
+                      }
+                    </div>
+                    <span class="catalog-button-state-caption">{{ choiceSizeDisplayLabel(sz.key) }}</span>
+                  </div>
+                }
+              </div>
+            }
             @default {
               @if (isTextareaBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
@@ -1742,6 +2273,70 @@
                                 tabindex="-1"
                               />
                               <label [for]="'it-sz-' + sz.key">Label</label>
+                            </p-floatlabel>
+                          </div>
+                        }
+                      </div>
+                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ sz.caption }}</span>
+                    </div>
+                  }
+                </div>
+              } @else if (isPasswordBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (passwordIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label" [for]="'pw-sz-' + sz.key">Label</label>
+                            <p-password
+                              [inputId]="'pw-sz-' + sz.key"
+                              [toggleMask]="true"
+                              [feedback]="false"
+                              [size]="passwordPrimeSize(sz.key)"
+                              [variant]="formThemePrimeVariant('password')"
+                              [style]="passwordHostVars(sz.key)"
+                              [fluid]="true"
+                              tabindex="-1"
+                              [attr.aria-label]="sz.caption"
+                            />
+                          </div>
+                        } @else if (passwordIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <span class="p-iftalabel" [style]="passwordIftaLabelHostVarsForSize(sz.key)">
+                              <p-password
+                                [inputId]="'pw-sz-' + sz.key"
+                                [toggleMask]="true"
+                                [feedback]="false"
+                                [size]="passwordPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('password')"
+                                [style]="passwordHostVars(sz.key)"
+                                [fluid]="true"
+                                tabindex="-1"
+                                [attr.aria-label]="sz.caption"
+                              />
+                              <label [for]="'pw-sz-' + sz.key">Label</label>
+                            </span>
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <p-floatlabel
+                              [variant]="passwordFloatPosition()"
+                              [class.is-label-floated]="passwordFloatSizeLabelFloated()"
+                              [style]="passwordFloatLabelHostVarsForSize(sz.key)"
+                            >
+                              <p-password
+                                [inputId]="'pw-sz-' + sz.key"
+                                [toggleMask]="true"
+                                [feedback]="false"
+                                [size]="passwordPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('password')"
+                                [style]="passwordHostVars(sz.key)"
+                                [fluid]="true"
+                                tabindex="-1"
+                                [attr.aria-label]="sz.caption"
+                              />
+                              <label [for]="'pw-sz-' + sz.key">Label</label>
                             </p-floatlabel>
                           </div>
                         }
