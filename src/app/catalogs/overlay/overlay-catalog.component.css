@@ -93,3 +93,88 @@
   text-align: left;
   color: var(--p-surface-600);
 }
+
+:host.overlay-catalog-page .drawer-catalog-positions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+:host.overlay-catalog-page .drawer-catalog-position-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: auto;
+  max-width: none;
+}
+
+:host.overlay-catalog-page .drawer-catalog-position-preview {
+  display: flex;
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 0;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+:host.overlay-catalog-page .drawer-catalog-position-viewport {
+  position: relative;
+  width: 168px;
+  height: 120px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid var(--surface-context-emphasized, var(--p-content-border));
+  border-radius: var(--drawer-border-radius, var(--p-border-radius));
+  background: var(--surface-context-subtle, var(--content-hover-background, var(--p-surface-100)));
+}
+
+:host.overlay-catalog-page .drawer-catalog-position-shape {
+  position: absolute;
+  background: var(--surface-context-minimal, var(--content-background, var(--p-content-bg)));
+  box-shadow: var(--drawer-shadow, none);
+  box-sizing: border-box;
+}
+
+:host.overlay-catalog-page .drawer-catalog-position-shape--left {
+  top: 0;
+  left: 0;
+  width: 38%;
+  height: 100%;
+  border-right: 1px solid var(--surface-context-emphasized, var(--p-content-border));
+  border-radius: 0 var(--drawer-border-radius, var(--p-border-radius)) var(--drawer-border-radius, var(--p-border-radius)) 0;
+}
+
+:host.overlay-catalog-page .drawer-catalog-position-shape--right {
+  top: 0;
+  right: 0;
+  width: 38%;
+  height: 100%;
+  border-left: 1px solid var(--surface-context-emphasized, var(--p-content-border));
+  border-radius: var(--drawer-border-radius, var(--p-border-radius)) 0 0 var(--drawer-border-radius, var(--p-border-radius));
+}
+
+:host.overlay-catalog-page .drawer-catalog-position-shape--top {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 34%;
+  border-bottom: 1px solid var(--surface-context-emphasized, var(--p-content-border));
+  border-radius: 0 0 var(--drawer-border-radius, var(--p-border-radius)) var(--drawer-border-radius, var(--p-border-radius));
+}
+
+:host.overlay-catalog-page .drawer-catalog-position-shape--bottom {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 34%;
+  border-top: 1px solid var(--surface-context-emphasized, var(--p-content-border));
+  border-radius: var(--drawer-border-radius, var(--p-border-radius)) var(--drawer-border-radius, var(--p-border-radius)) 0 0;
+}

@@ -65,5 +65,10 @@
     "playground_anchor": "pg-tooltip",
     "override": "src/app/theme/tooltip-mds-overrides.ts",
     "watch_vars": ["--tooltip-*", "--p-tooltip-*"]
+  },
+  "drawer": {
+    "playground_anchor": "pg-drawer",
+    "primeng_prefix": "drawer",
+    "watch_vars": ["--drawer-*", "--p-drawer-*"]
   }
 }

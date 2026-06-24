@@ -13,6 +13,62 @@ export interface TooltipPositionDemo {
   tooltipClass: string;
 }
 
+export type DrawerPositionKey = 'left' | 'right' | 'top' | 'bottom';
+
+export interface DrawerCatalogInteractionState {
+  position: DrawerPositionKey;
+  fullScreen: boolean;
+  modal: boolean;
+}
+
+export interface DrawerPositionDemo {
+  key: DrawerPositionKey;
+  label: string;
+  buttonIcon: string;
+  caption: string;
+  shapeClass: string;
+}
+
+export const OVERLAY_CATALOG_DRAWER_CONFIG_HINT = 'Modal';
+
+export const OVERLAY_CATALOG_DRAWER_FULLSCREEN_LABEL = 'Full screen';
+export const OVERLAY_CATALOG_DRAWER_FULLSCREEN_ICON = 'pi pi-window-maximize';
+
+export const OVERLAY_CATALOG_DRAWER_POSITIONS: DrawerPositionDemo[] = [
+  {
+    key: 'left',
+    label: 'Left',
+    buttonIcon: 'pi pi-arrow-left',
+    caption: 'Left',
+    shapeClass: 'drawer-catalog-position-shape--left',
+  },
+  {
+    key: 'right',
+    label: 'Right',
+    buttonIcon: 'pi pi-arrow-right',
+    caption: 'Right',
+    shapeClass: 'drawer-catalog-position-shape--right',
+  },
+  {
+    key: 'top',
+    label: 'Top',
+    buttonIcon: 'pi pi-arrow-up',
+    caption: 'Top',
+    shapeClass: 'drawer-catalog-position-shape--top',
+  },
+  {
+    key: 'bottom',
+    label: 'Bottom',
+    buttonIcon: 'pi pi-arrow-down',
+    caption: 'Bottom',
+    shapeClass: 'drawer-catalog-position-shape--bottom',
+  },
+];
+
+export const OVERLAY_CATALOG_DRAWER_HEADER = 'Panel lateral';
+export const OVERLAY_CATALOG_DRAWER_CONTENT =
+  'Contenido del drawer con acciones secundarias y texto de apoyo para validar padding, tipografía y contraste del overlay.';
+
 export const OVERLAY_CATALOG_TOOLTIP_POSITIONS: TooltipPositionDemo[] = [
   {
     key: 'top',

@@ -66,4 +66,104 @@
       </div>
     </section>
   </div>
+
+  <p-drawer
+    [(visible)]="drawerVisible"
+    [position]="drawerIx().position"
+    [fullScreen]="drawerIx().fullScreen"
+    [modal]="drawerIx().modal"
+    [dismissible]="drawerIx().modal"
+    [header]="drawerHeader"
+    appendTo="body"
+    styleClass="drawer-catalog-live"
+  >
+    <p>{{ drawerContent }}</p>
+  </p-drawer>
+
+  <div class="catalog-preview drawer-variant-block">
+    <section id="pg-drawer" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">Drawer</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="input-interaction-row catalog-interaction-row--center">
+            <div class="catalog-showcase-interactive">
+              <div class="btn-row">
+                @for (demo of drawerPositionDemos; track trackDrawerPosition($index, demo)) {
+                  <p-button
+                    [label]="demo.label"
+                    [icon]="demo.buttonIcon"
+                    iconPos="right"
+                    size="small"
+                    (onClick)="openDrawer(demo.key)"
+                  />
+                }
+                <p-button
+                  [label]="drawerFullScreenLabel"
+                  [icon]="drawerFullScreenIcon"
+                  iconPos="right"
+                  size="small"
+                  (onClick)="openDrawerFullScreen()"
+                />
+              </div>
+            </div>
+
+            <aside class="button-config-aside">
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="drawerConfigPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="drawerConfigPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
+              <p class="button-config-aside-hint">{{ drawerConfigHint }}</p>
+              <p-popover
+                #drawerConfigPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                ariaLabel="Configurar Drawer"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="input-config-row">
+                    <span class="input-config-label">Modal</span>
+                    <p-toggleswitch
+                      [ngModel]="drawerIx().modal"
+                      (ngModelChange)="patchDrawerIx({ modal: $event })"
+                      ariaLabel="Mostrar máscara modal"
+                    />
+                  </div>
+                </div>
+              </p-popover>
+            </aside>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Positions</p>
+          <div
+            class="drawer-catalog-positions-row is-static-preview"
+            aria-label="Drawer en las cuatro posiciones"
+          >
+            @for (demo of drawerPositionDemos; track trackDrawerPosition($index, demo)) {
+              <div class="drawer-catalog-position-item">
+                <div class="drawer-catalog-position-preview">
+                  <div class="drawer-catalog-position-viewport" aria-hidden="true">
+                    <div [class]="'drawer-catalog-position-shape ' + demo.shapeClass"></div>
+                  </div>
+                </div>
+                <span class="drawer-catalog-position-caption catalog-button-state-caption">{{
+                  demo.caption
+                }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>

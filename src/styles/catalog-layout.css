@@ -175,7 +175,8 @@
 .avatar-showcase .catalog-block-head .section-title.component-title-primary,
 .avatargroup-showcase .catalog-block-head .section-title.component-title-primary,
 .breadcrumb-showcase .catalog-block-head .section-title.component-title-primary,
-.tooltip-variant-block .catalog-block-head .section-title.component-title-primary {
+.tooltip-variant-block .catalog-block-head .section-title.component-title-primary,
+.drawer-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--p-content-color);
   font-weight: 800;
 }
@@ -193,7 +194,8 @@
 .avatar-showcase .btn-section-title,
 .avatargroup-showcase .btn-section-title,
 .breadcrumb-showcase .btn-section-title,
-.tooltip-variant-block .btn-section-title {
+.tooltip-variant-block .btn-section-title,
+.drawer-variant-block .btn-section-title {
   color: var(--p-surface-700);
   font-weight: 700;
   border-bottom-color: color-mix(in srgb, var(--p-content-border) 85%, var(--p-surface-300));
@@ -218,7 +220,8 @@
 .tabs-variant-block .tabs-catalog-state-caption,
 .divider-variant-block .divider-catalog-state-caption,
 .breadcrumb-showcase .breadcrumb-catalog-state-caption,
-.tooltip-variant-block .tooltip-catalog-position-caption {
+.tooltip-variant-block .tooltip-catalog-position-caption,
+.drawer-variant-block .drawer-catalog-position-caption {
   color: var(--p-surface-600);
   font-weight: 500;
   font-size: 12px;
@@ -423,6 +426,7 @@
 [data-theme="dark"] .avatargroup-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .breadcrumb-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tooltip-variant-block .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .drawer-variant-block .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .paginator-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .divider-variant-block .catalog-block-head .section-title.component-title-primary {
@@ -441,6 +445,7 @@
 [data-theme="dark"] .avatargroup-showcase .catalog-block-head,
 [data-theme="dark"] .breadcrumb-showcase .catalog-block-head,
 [data-theme="dark"] .tooltip-variant-block .catalog-block-head,
+[data-theme="dark"] .drawer-variant-block .catalog-block-head,
 [data-theme="dark"] .paginator-showcase .catalog-block-head,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head,
 [data-theme="dark"] .divider-variant-block .catalog-block-head {
@@ -458,6 +463,7 @@
 [data-theme="dark"] .avatargroup-showcase .btn-section-title,
 [data-theme="dark"] .breadcrumb-showcase .btn-section-title,
 [data-theme="dark"] .tooltip-variant-block .btn-section-title,
+[data-theme="dark"] .drawer-variant-block .btn-section-title,
 [data-theme="dark"] .paginator-showcase .btn-section-title,
 [data-theme="dark"] .tabs-variant-block .btn-section-title,
 [data-theme="dark"] .divider-variant-block .btn-section-title {
@@ -485,7 +491,8 @@
 [data-theme="dark"] .tabs-variant-block .tabs-catalog-state-caption,
 [data-theme="dark"] .divider-variant-block .divider-catalog-state-caption,
 [data-theme="dark"] .breadcrumb-showcase .breadcrumb-catalog-state-caption,
-[data-theme="dark"] .tooltip-variant-block .tooltip-catalog-position-caption {
+[data-theme="dark"] .tooltip-variant-block .tooltip-catalog-position-caption,
+[data-theme="dark"] .drawer-variant-block .drawer-catalog-position-caption {
   color: var(--p-surface-400);
   font-weight: 500;
 }

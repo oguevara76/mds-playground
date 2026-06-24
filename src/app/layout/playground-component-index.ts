@@ -15,7 +15,7 @@ import {
   PANEL_CATALOG_TAB_STATE_DEMOS,
 } from '../catalogs/panel/panel-catalog.config';
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS } from '../catalogs/menu/menu-catalog.config';
-import { OVERLAY_CATALOG_TOOLTIP_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
+import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
 import { MDS_VARS_CATALOG } from '../theme/mds-vars-catalog.generated';
 
 export type PlaygroundCatalogRoute =
@@ -61,6 +61,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-tabs': 'tabs',
   'pg-breadcrumb': 'breadcrumb',
   'pg-tooltip': 'tooltip',
+  'pg-drawer': 'drawer',
   'pg-tag': 'tag',
   'pg-chip': 'chip',
   'pg-badge': 'badge',
@@ -165,6 +166,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Overlay',
       keywords: ['p-tooltip', 'hint'],
       variantCount: OVERLAY_CATALOG_TOOLTIP_POSITIONS.length,
+    },
+    {
+      id: 'pg-drawer',
+      name: 'Drawer',
+      route: 'overlay',
+      sectionLabel: 'Overlay',
+      keywords: ['p-drawer', 'sidebar', 'panel', 'overlay'],
+      variantCount: OVERLAY_CATALOG_DRAWER_POSITIONS.length,
     },
     {
       id: 'pg-tag',
