@@ -1,0 +1,19 @@
+---
+description: >-
+  Generar texto de commit y notas de release GitHub con formato fijo del proyecto.
+  Usar cuando el usuario pide texto para commit, mensaje de commit, release, tag,
+  versión, changelog o literatura para publicar en GitHub.
+alwaysApply: false
+---
+
+# Commit y release — formato del proyecto
+
+Cuando el usuario pida **texto para commit**, **release**, **tag** o **versión**:
+
+1. Leer y seguir el skill [commit-release](../skills/commit-release/SKILL.md).
+2. Inspeccionar git (`status`, `diff`, último tag, commits desde tag) antes de redactar.
+3. Entregar **dos bloques copiables**: mensaje de commit + release (título + markdown).
+4. Usar la estructura fija de release: **Resumen → Nuevos componentes → Correcciones posteriores → Otros cambios → Verificación**.
+5. **No** ejecutar `git commit`, `git tag` ni `gh release create` salvo petición explícita.
+
+Plantillas y ejemplos (v1.3.0, v1.4.0): `.cursor/skills/commit-release/reference.md`.
