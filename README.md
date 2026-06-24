@@ -33,8 +33,8 @@ mds-playground/
 ├── src/styles/            # Parity CSS por componente PrimeNG
 ├── scripts/               # Regeneración de tokens, diff/apply core, análisis de componentes
 ├── .cursor/
-│   ├── rules/             # Reglas de comportamiento del agente (backup, modo asesor, …)
-│   └── skills/            # Workflows guiados (actualizar core, incorporar componente)
+│   ├── rules/             # Reglas del agente (backup, commit-release, modo asesor, …)
+│   └── skills/            # Workflows guiados (core, componente, commit-release, …)
 ├── ejemplos/              # Marcas de ejemplo (local, no en git — ver regen:ejemplos)
 ├── docs/
 └── backups/               # ZIP locales (ignorado por git)
@@ -51,7 +51,7 @@ mds-playground/
 | `/data` | Tablas, paginador |
 | `/panel` | Paneles, tabs |
 | `/menu` | Menú, breadcrumb |
-| `/overlay` | Dialog, tooltip, popover |
+| `/overlay` | Tooltip, drawer, popover |
 | `/misc` | Avatar, badge, chip, tag |
 | `/tokens` | Mapa y listado de variables MDS |
 
@@ -158,6 +158,35 @@ La carpeta `backups/` está ignorada por git.
 
 ---
 
+### Commits y releases (GitHub)
+
+**En Cursor:** pide *"texto para commit y release"*, *"notas de release"* o *"qué versión toca"*.
+
+Activa la skill `commit-release` (regla `.cursor/rules/commit-release.mdc`):
+
+1. **Inspección git** — `status`, diff, último tag y commits desde el tag anterior
+2. **Versión** — propone el tag siguiente (`vMAJOR.MINOR.PATCH`):
+   - **minor** (p. ej. v1.3.0 → v1.4.0): nuevo showcase o feature visible
+   - **patch** (p. ej. v1.4.0 → v1.4.1): correcciones, refactors, CI, docs
+3. **Mensaje de commit** — Conventional Commits (`feat(overlay): …` + cuerpo en prosa)
+4. **Release GitHub** — título `vX.Y.Z — …` y cuerpo con secciones fijas:
+
+| Sección | Contenido |
+|---------|-----------|
+| **Resumen** | 1–3 frases del alcance |
+| **Nuevos componentes** | `### Nombre` (`/catálogo#pg-name`) + Interaction, CONFIGURAR, States/Positions, tokens |
+| **Correcciones posteriores** | Iteraciones tras QA visual (no repetir lo ya descrito arriba) |
+| **Otros cambios** | Registry, index, `regen:*`, CI, docs, skills |
+| **Verificación** | Checklist manual con rutas (`/overlay#pg-drawer`, `/tokens`, …) |
+
+El agente entrega **dos bloques copiables** (commit + markdown de release). No hace `git commit`, tag ni `gh release` salvo que lo pidas.
+
+**Ejemplos de referencia:** [.cursor/skills/commit-release/reference.md](.cursor/skills/commit-release/reference.md) (v1.3.0, v1.4.0).
+
+Documentación interna: [.cursor/skills/commit-release/SKILL.md](.cursor/skills/commit-release/SKILL.md)
+
+---
+
 ## Scripts útiles
 
 ```bash
@@ -192,11 +221,13 @@ pnpm run mds:component-session -- get
 
 | Versión / área | Qué incluye |
 |----------------|-------------|
-| **Workflows Cursor** | Skills guiadas para actualizar core MDS (diff selectivo + QA) e incorporar componentes PrimeNG al playground |
+| **Workflows Cursor** | Skills para actualizar core, incorporar componentes y redactar commits/releases con formato fijo |
+| **Commit / release** | Skill `commit-release` + regla homónima — plantilla Conventional Commits y notas GitHub (5 secciones) |
 | **Pipeline core** | Scripts `mds-core-preflight`, `diff`, `apply`, `qa` con plan JSON y modos parciales (solo cambios, solo nuevas, por prefijo…) |
-| **Tokens sincronizados** | Badge, Breadcrumb, Paginator; Form Float In; alineación padding Tag/Tooltip con export Figma |
+| **Overlay — Drawer** | Showcase `p-drawer` en `/overlay#pg-drawer` (botones por posición, Full screen, CONFIGURAR Modal, Positions) |
+| **Tokens sincronizados** | Badge, Breadcrumb, Paginator, Drawer; Form Float In; alineación padding Tag/Tooltip con export Figma |
 | **Exports semánticos** | Ignora prefijos de producto/proyecto en metadatos (`core--mobility--light`, etc.) |
 | **Modo asesor** | Project rule `.cursor/rules/asesor-desarrollo.mdc` — tono de asesor técnico en tareas de desarrollo (activación inteligente) |
 | **Backup local** | `pnpm backup` con manifiesto git y rotación de 20 archivos |
 
-Releases etiquetadas: `v1.0.0` … `v1.2.2` (ver [GitHub Releases](https://github.com/oguevara76/mds-playground/releases)).
+Releases etiquetadas: `v1.0.0` … `v1.4.0` (ver [GitHub Releases](https://github.com/oguevara76/mds-playground/releases)).
