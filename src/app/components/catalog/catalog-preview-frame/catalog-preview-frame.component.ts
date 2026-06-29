@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, signal, viewChild } from '@angular/core';
 import { Popover } from 'primeng/popover';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
   selector: 'mds-catalog-preview-frame',
   standalone: true,
-  imports: [Popover],
+  imports: [Popover, Tooltip],
   templateUrl: './catalog-preview-frame.component.html',
   styleUrl: './catalog-preview-frame.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +19,11 @@ export class CatalogPreviewFrameComponent {
   readonly codeAriaLabel = input<string>('Ver código');
   readonly expandAriaLabel = input<string>('Expandir subsecciones');
   readonly collapseAriaLabel = input<string>('Contraer subsecciones');
+
+  readonly codeTooltip = 'Code';
+  readonly configTooltip = 'Configuration';
+  readonly expandTooltip = 'Expand';
+  readonly collapseTooltip = 'Collapse';
 
   readonly expanded = signal(false);
 

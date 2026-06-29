@@ -80,6 +80,10 @@
   margin-left: auto;
 }
 
+.catalog-preview-frame__action-wrap {
+  display: inline-flex;
+}
+
 .catalog-preview-frame__action {
   display: inline-flex;
   align-items: center;

@@ -8,16 +8,22 @@
 
     <div class="catalog-preview-frame__toolbar" role="toolbar" [attr.aria-label]="label() + ' actions'">
       @if (showCode()) {
-        <button
-          type="button"
-          class="catalog-preview-frame__action catalog-preview-frame__action--code"
-          disabled
-          tabindex="-1"
-          [attr.aria-label]="codeAriaLabel()"
-          title="Próximamente"
+        <span
+          class="catalog-preview-frame__action-wrap"
+          [pTooltip]="codeTooltip"
+          tooltipPosition="top"
+          appendTo="body"
         >
-          <i class="pi pi-code" aria-hidden="true"></i>
-        </button>
+          <button
+            type="button"
+            class="catalog-preview-frame__action catalog-preview-frame__action--code"
+            disabled
+            tabindex="-1"
+            [attr.aria-label]="codeAriaLabel()"
+          >
+            <i class="pi pi-code" aria-hidden="true"></i>
+          </button>
+        </span>
       }
 
       @if (showConfig()) {
@@ -28,7 +34,9 @@
           aria-haspopup="dialog"
           [attr.aria-expanded]="configPopoverVisible()"
           [attr.aria-label]="configAriaLabel()"
-          title="Configurar"
+          [pTooltip]="configTooltip"
+          tooltipPosition="top"
+          appendTo="body"
         >
           <i class="pi pi-cog" aria-hidden="true"></i>
         </button>
@@ -41,7 +49,9 @@
           (click)="toggleExpand()"
           [attr.aria-expanded]="expanded()"
           [attr.aria-label]="expanded() ? collapseAriaLabel() : expandAriaLabel()"
-          [title]="expanded() ? 'Contraer' : 'Expandir'"
+          [pTooltip]="expanded() ? collapseTooltip : expandTooltip"
+          tooltipPosition="top"
+          appendTo="body"
         >
           @if (expanded()) {
             <i class="pi pi-window-minimize" aria-hidden="true"></i>
