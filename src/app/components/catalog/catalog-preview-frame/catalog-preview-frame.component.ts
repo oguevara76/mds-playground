@@ -22,8 +22,8 @@ export class CatalogPreviewFrameComponent {
 
   readonly codeTooltip = 'Code';
   readonly configTooltip = 'Configuration';
-  readonly expandTooltip = 'Expand';
-  readonly collapseTooltip = 'Collapse';
+  readonly expandTooltip = 'Expand more info';
+  readonly collapseTooltip = 'Collapse info';
 
   readonly expanded = signal(false);
 
