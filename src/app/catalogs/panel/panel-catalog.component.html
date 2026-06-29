@@ -9,9 +9,12 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showExpand]="true"
           configAriaLabel="Configurar Divider"
+          expandAriaLabel="Expandir estados de Divider"
+          collapseAriaLabel="Contraer estados de Divider"
         >
-          <div catalogPreviewDemo class="divider-catalog-demo-area divider-catalog-demo-area--readable">
+          <div catalogPreviewDemo class="divider-catalog-demo-area divider-catalog-demo-area--readable catalog-showcase-interactive">
             <p class="divider-demo-body-text">
               Resumen del expediente y acciones rápidas para el equipo de gestión.
             </p>
@@ -71,40 +74,41 @@
               </div>
             }
           </ng-container>
-        </mds-catalog-preview-frame>
 
-        <div class="btn-section">
-          <p class="btn-section-title">States</p>
-          <div
-            class="divider-catalog-states-row is-static-preview"
-            aria-label="Divider por estado"
-          >
-            @for (demo of dividerStateDemos; track trackDividerState($index, demo)) {
-              <div class="divider-catalog-state">
-                <div class="divider-catalog-state-preview">
-                  <div class="divider-catalog-state-demo">
-                    <div
-                      class="p-divider p-component p-divider-horizontal p-divider-solid"
-                      [class.p-divider-center]="demo.key !== 'default'"
-                    >
-                      @if (demo.label) {
-                        <div class="p-divider-content">
-                          <span class="divider-catalog-content-label">{{ demo.label }}</span>
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="States" icon="list">
+              <div
+                class="divider-catalog-states-row is-static-preview"
+                aria-label="Divider por estado"
+              >
+                @for (demo of dividerStateDemos; track trackDividerState($index, demo)) {
+                  <div class="divider-catalog-state">
+                    <div class="divider-catalog-state-preview">
+                      <div class="divider-catalog-state-demo">
+                        <div
+                          class="p-divider p-component p-divider-horizontal p-divider-solid"
+                          [class.p-divider-center]="demo.key !== 'default'"
+                        >
+                          @if (demo.label) {
+                            <div class="p-divider-content">
+                              <span class="divider-catalog-content-label">{{ demo.label }}</span>
+                            </div>
+                          }
+                          @if (demo.icon) {
+                            <div class="p-divider-content">
+                              <i [ngClass]="demo.icon" aria-hidden="true"></i>
+                            </div>
+                          }
                         </div>
-                      }
-                      @if (demo.icon) {
-                        <div class="p-divider-content">
-                          <i [ngClass]="demo.icon" aria-hidden="true"></i>
-                        </div>
-                      }
+                      </div>
                     </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
                   </div>
-                </div>
-                <mds-catalog-state-tag [label]="demo.caption" />
+                }
               </div>
-            }
-          </div>
-        </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
       </div>
     </section>
   </div>
@@ -119,9 +123,12 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showExpand]="true"
           configAriaLabel="Configurar Tabs"
+          expandAriaLabel="Expandir estados de Tabs"
+          collapseAriaLabel="Contraer estados de Tabs"
         >
-          <div catalogPreviewDemo>
+          <div catalogPreviewDemo class="catalog-showcase-interactive">
             <p-tabs
               class="tabs-catalog-live"
               [value]="activeTab()"
@@ -172,44 +179,45 @@
               />
             </div>
           </ng-container>
-        </mds-catalog-preview-frame>
 
-        <div class="btn-section">
-          <p class="btn-section-title">States</p>
-          <div
-            class="tabs-catalog-states-row is-static-preview"
-            aria-label="Tabs por estado activa e inactiva"
-          >
-            @for (demo of tabStateDemos; track trackTabState($index, demo)) {
-              <div class="tabs-catalog-state">
-                <div class="tabs-catalog-state-preview">
-                <div class="p-tabs p-component tabs-catalog-state-demo">
-                  <div class="p-tablist p-component">
-                    <div class="p-tablist-content">
-                      <div class="p-tablist-tab-list" role="presentation">
-                        <span
-                          class="p-tab p-component"
-                          [class.p-tab-active]="demo.key === 'active'"
-                          role="presentation"
-                        >
-                          <span class="tabs-tab-label">General</span>
-                        </span>
-                        <span class="p-tab p-component" role="presentation">
-                          <span class="tabs-tab-label">Detalles</span>
-                        </span>
-                        @if (demo.key === 'active') {
-                          <span class="p-tablist-active-bar" aria-hidden="true"></span>
-                        }
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="States" icon="list">
+              <div
+                class="tabs-catalog-states-row is-static-preview"
+                aria-label="Tabs por estado activa e inactiva"
+              >
+                @for (demo of tabStateDemos; track trackTabState($index, demo)) {
+                  <div class="tabs-catalog-state">
+                    <div class="tabs-catalog-state-preview">
+                    <div class="p-tabs p-component tabs-catalog-state-demo">
+                      <div class="p-tablist p-component">
+                        <div class="p-tablist-content">
+                          <div class="p-tablist-tab-list" role="presentation">
+                            <span
+                              class="p-tab p-component"
+                              [class.p-tab-active]="demo.key === 'active'"
+                              role="presentation"
+                            >
+                              <span class="tabs-tab-label">General</span>
+                            </span>
+                            <span class="p-tab p-component" role="presentation">
+                              <span class="tabs-tab-label">Detalles</span>
+                            </span>
+                            @if (demo.key === 'active') {
+                              <span class="p-tablist-active-bar" aria-hidden="true"></span>
+                            }
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
                   </div>
-                </div>
-                </div>
-                <mds-catalog-state-tag [label]="demo.caption" />
+                }
               </div>
-            }
-          </div>
-        </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
       </div>
     </section>
   </div>

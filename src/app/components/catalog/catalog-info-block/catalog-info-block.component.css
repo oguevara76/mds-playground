@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+.catalog-info-block {
+  padding: var(--catalog-info-block-padding, 24px);
+}
+
+.catalog-info-block__head {
+  margin-bottom: var(--catalog-info-block-title-gap, 20px);
+}
+
+.catalog-info-block__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: var(--catalog-title-section-size, 13px);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
+}
+
+.catalog-info-block__title .pi {
+  font-size: 1em;
+  line-height: 1;
+  color: inherit;
+}
+
+.catalog-info-block__body {
+  min-width: 0;
+}

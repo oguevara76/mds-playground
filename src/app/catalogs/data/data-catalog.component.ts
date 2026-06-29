@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { Paginator, type PaginatorState } from 'primeng/paginator';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
@@ -13,7 +14,7 @@ import {
 @Component({
   selector: 'app-data-catalog',
   standalone: true,
-  imports: [CatalogBlockHeadTitlePipe, CatalogPreviewFrameComponent, CatalogStateTagComponent, Paginator],
+  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Paginator],
   templateUrl: './data-catalog.component.html',
   styleUrl: './data-catalog.component.css',
   host: { class: 'data-catalog-page' },

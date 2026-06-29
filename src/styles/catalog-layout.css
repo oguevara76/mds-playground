@@ -54,10 +54,10 @@
   margin: 0;
   padding-bottom: 0;
   border-bottom: none;
-  font-size: 16px;
+  font-size: var(--catalog-title-component-size, 18px);
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: var(--p-content-color, var(--text-color));
+  color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
 }
 
 .catalog-block-body {
@@ -95,7 +95,7 @@
   --catalog-preview-frame-radius: 12px;
   --catalog-preview-frame-bg: color-mix(
     in srgb,
-    var(--p-surface-100, var(--surface-100)) 28%,
+    var(--p-surface-100, var(--surface-100)) 36%,
     var(--p-surface-0, var(--surface-0))
   );
   --catalog-preview-frame-shadow: none;
@@ -105,6 +105,24 @@
   --catalog-preview-frame-action-hover-bg: var(--p-surface-100, var(--surface-100));
   --catalog-preview-frame-action-hover-color: var(--p-surface-700, var(--surface-700));
   --catalog-preview-frame-action-active-bg: color-mix(in srgb, var(--p-primary-color) 12%, transparent);
+  --catalog-info-block-padding: 24px;
+  --catalog-info-block-title-gap: 20px;
+  --catalog-title-color: var(--p-content-color, var(--text-color));
+  --catalog-title-component-size: 18px;
+  --catalog-title-section-size: 13px;
+  --catalog-title-variant-size: 10px;
+}
+
+/* Superficie compartida: preview interactivo y bloques informativos expandibles */
+.catalog-surface-block {
+  box-sizing: border-box;
+  border: none;
+  border-radius: var(--catalog-preview-frame-radius, 12px);
+  background: var(
+    --catalog-preview-frame-bg,
+    color-mix(in srgb, var(--p-surface-100, var(--surface-100)) 36%, var(--p-surface-0, var(--surface-0)))
+  );
+  box-shadow: var(--catalog-preview-frame-shadow, none);
 }
 
 .btn-section {
@@ -116,11 +134,11 @@
 }
 
 .btn-section-title {
-  font-size: 11px;
+  font-size: var(--catalog-title-section-size, 13px);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: var(--p-surface-400);
+  color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
   margin-bottom: var(--catalog-section-title-gap, 24px);
   padding-bottom: 8px;
   border-bottom: 1px solid var(--p-content-border-color, var(--content-border-color));
@@ -154,9 +172,11 @@
 
 .btn-variant-states-label {
   margin: 0 0 var(--catalog-variant-title-gap, 16px);
-  font-size: 11px;
+  font-size: var(--catalog-title-variant-size, 10px);
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
 }
 
 /* States / Sizes: solo visualización, sin interacción */
@@ -198,14 +218,15 @@
 
 /* Paridad con app.css — subtítulos del catálogo en dark */
 [data-theme="dark"] .btn-section-title {
-  color: var(--p-surface-600, var(--surface-600));
+  color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
   border-bottom-color: var(--p-surface-800, var(--surface-800));
 }
 
 [data-theme="dark"] {
+  --catalog-title-color: var(--p-surface-0, var(--surface-0));
   --catalog-preview-frame-bg: color-mix(
     in srgb,
-    var(--p-surface-800, var(--surface-800)) 78%,
+    var(--p-surface-800, var(--surface-800)) 86%,
     var(--p-surface-950, var(--surface-950))
   );
   --catalog-preview-frame-shadow: inset 0 0 0 1px
@@ -233,7 +254,7 @@
 .breadcrumb-showcase .catalog-block-head .section-title.component-title-primary,
 .tooltip-variant-block .catalog-block-head .section-title.component-title-primary,
 .drawer-variant-block .catalog-block-head .section-title.component-title-primary {
-  color: var(--p-content-color, var(--text-color));
+  color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
 }
 
 .form-showcase .btn-section-title,
@@ -251,7 +272,7 @@
 .breadcrumb-showcase .btn-section-title,
 .tooltip-variant-block .btn-section-title,
 .drawer-variant-block .btn-section-title {
-  color: var(--p-surface-700);
+  color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
   font-weight: 700;
   border-bottom-color: color-mix(in srgb, var(--p-content-border) 85%, var(--p-surface-300));
 }
@@ -263,7 +284,7 @@
 .badge-showcase .btn-variant-states-label,
 .avatar-showcase .btn-variant-states-label,
 .avatargroup-showcase .btn-variant-states-label {
-  color: var(--p-surface-600);
+  color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
   font-weight: 700;
 }
 
@@ -303,9 +324,38 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   flex: 1 1 auto;
   min-width: 0;
+}
+
+/* Demo PREVIEW: centrado horizontal y vertical en el stage */
+.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo] {
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+}
+
+.catalog-preview-frame .catalog-preview-frame__stage .breadcrumb-catalog-demo-area,
+.catalog-preview-frame .catalog-preview-frame__stage .divider-catalog-demo-area,
+.catalog-preview-frame .catalog-preview-frame__stage .paginator-catalog-live-shell {
+  flex: 0 1 auto;
+  margin-inline: auto;
+}
+
+.catalog-preview-frame .catalog-preview-frame__stage .form-choice-row,
+.catalog-preview-frame .catalog-preview-frame__stage .form-togglebutton-row,
+.catalog-preview-frame .catalog-preview-frame__stage .tag-catalog-row,
+.catalog-preview-frame .catalog-preview-frame__stage .message-catalog-message-row {
+  justify-content: center;
+}
+
+.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo].catalog-input-interactive,
+.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo] .form-input-interaction-field,
+.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo] .form-input-interaction-control {
+  width: 100%;
+  max-width: 320px;
 }
 
 .button-config-aside {
@@ -539,7 +589,7 @@ mds-catalog-state-tag .catalog-state-tag {
 [data-theme="dark"] .paginator-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .divider-variant-block .catalog-block-head .section-title.component-title-primary {
-  color: var(--p-surface-0, var(--surface-0));
+  color: var(--catalog-title-color, var(--p-surface-0, var(--surface-0)));
 }
 
 [data-theme="dark"] .form-showcase .btn-section-title,
@@ -557,7 +607,7 @@ mds-catalog-state-tag .catalog-state-tag {
 [data-theme="dark"] .paginator-showcase .btn-section-title,
 [data-theme="dark"] .tabs-variant-block .btn-section-title,
 [data-theme="dark"] .divider-variant-block .btn-section-title {
-  color: var(--p-surface-300);
+  color: var(--catalog-title-color, var(--p-surface-0, var(--surface-0)));
   font-weight: 700;
   border-bottom-color: var(--p-surface-800, var(--p-surface-700));
 }
@@ -569,7 +619,7 @@ mds-catalog-state-tag .catalog-state-tag {
 [data-theme="dark"] .badge-showcase .btn-variant-states-label,
 [data-theme="dark"] .avatar-showcase .btn-variant-states-label,
 [data-theme="dark"] .avatargroup-showcase .btn-variant-states-label {
-  color: var(--p-surface-400);
+  color: var(--catalog-title-color, var(--p-surface-0, var(--surface-0)));
   font-weight: 700;
 }
 

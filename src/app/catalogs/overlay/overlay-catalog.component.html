@@ -6,8 +6,14 @@
       </header>
 
       <div class="catalog-block-body">
-        <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
-          <div catalogPreviewDemo class="tooltip-interaction-row">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="true"
+          expandAriaLabel="Expandir posiciones de Tooltip"
+          collapseAriaLabel="Contraer posiciones de Tooltip"
+        >
+          <div catalogPreviewDemo class="tooltip-interaction-row catalog-showcase-interactive">
             <div class="catalog-input-interactive tooltip-interaction-scope">
               <div class="p-field">
                 <div class="p-label-row">
@@ -34,32 +40,33 @@
               </div>
             </div>
           </div>
-        </mds-catalog-preview-frame>
 
-        <div class="btn-section">
-          <p class="btn-section-title">Positions</p>
-          <div
-            class="tooltip-catalog-positions-row is-static-preview"
-            aria-label="Tooltip in all four positions"
-          >
-            @for (demo of positionDemos; track trackPosition($index, demo)) {
-              <div class="tooltip-catalog-position-item">
-                <div class="tooltip-catalog-position-preview">
-                <div [class]="'tooltip-catalog-position-frame ' + demo.frameClass">
-                  <div
-                    [class]="'p-tooltip p-component tooltip-catalog-static-demo ' + demo.tooltipClass"
-                    role="tooltip"
-                  >
-                    <div class="p-tooltip-arrow" data-pc-section="arrow"></div>
-                    <div class="p-tooltip-text" data-pc-section="text">{{ demo.text }}</div>
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Positions" icon="compass">
+              <div
+                class="tooltip-catalog-positions-row is-static-preview"
+                aria-label="Tooltip in all four positions"
+              >
+                @for (demo of positionDemos; track trackPosition($index, demo)) {
+                  <div class="tooltip-catalog-position-item">
+                    <div class="tooltip-catalog-position-preview">
+                    <div [class]="'tooltip-catalog-position-frame ' + demo.frameClass">
+                      <div
+                        [class]="'p-tooltip p-component tooltip-catalog-static-demo ' + demo.tooltipClass"
+                        role="tooltip"
+                      >
+                        <div class="p-tooltip-arrow" data-pc-section="arrow"></div>
+                        <div class="p-tooltip-text" data-pc-section="text">{{ demo.text }}</div>
+                      </div>
+                    </div>
+                    </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
                   </div>
-                </div>
-                </div>
-                <mds-catalog-state-tag [label]="demo.caption" />
+                }
               </div>
-            }
-          </div>
-        </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
       </div>
     </section>
   </div>
@@ -86,7 +93,10 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showExpand]="true"
           configAriaLabel="Configurar Drawer"
+          expandAriaLabel="Expandir posiciones de Drawer"
+          collapseAriaLabel="Contraer posiciones de Drawer"
         >
           <div catalogPreviewDemo class="catalog-showcase-interactive">
             <div class="btn-row">
@@ -118,26 +128,27 @@
               />
             </div>
           </ng-container>
-        </mds-catalog-preview-frame>
 
-        <div class="btn-section">
-          <p class="btn-section-title">Positions</p>
-          <div
-            class="drawer-catalog-positions-row is-static-preview"
-            aria-label="Drawer en las cuatro posiciones"
-          >
-            @for (demo of drawerPositionDemos; track trackDrawerPosition($index, demo)) {
-              <div class="drawer-catalog-position-item">
-                <div class="drawer-catalog-position-preview">
-                  <div class="drawer-catalog-position-viewport" aria-hidden="true">
-                    <div [class]="'drawer-catalog-position-shape ' + demo.shapeClass"></div>
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Positions" icon="compass">
+              <div
+                class="drawer-catalog-positions-row is-static-preview"
+                aria-label="Drawer en las cuatro posiciones"
+              >
+                @for (demo of drawerPositionDemos; track trackDrawerPosition($index, demo)) {
+                  <div class="drawer-catalog-position-item">
+                    <div class="drawer-catalog-position-preview">
+                      <div class="drawer-catalog-position-viewport" aria-hidden="true">
+                        <div [class]="'drawer-catalog-position-shape ' + demo.shapeClass"></div>
+                      </div>
+                    </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
                   </div>
-                </div>
-                <mds-catalog-state-tag [label]="demo.caption" />
+                }
               </div>
-            }
-          </div>
-        </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
       </div>
     </section>
   </div>

@@ -1,0 +1,12 @@
+<section class="catalog-info-block catalog-surface-block">
+  <header class="catalog-info-block__head">
+    <h4 class="catalog-info-block__title">
+      <i [class]="'pi pi-' + icon()" aria-hidden="true"></i>
+      <span>{{ title() }}</span>
+    </h4>
+  </header>
+
+  <div class="catalog-info-block__body">
+    <ng-content />
+  </div>
+</section>

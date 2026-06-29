@@ -1,4 +1,4 @@
-<div class="catalog-preview-frame">
+<div class="catalog-preview-frame catalog-surface-block">
   <div class="catalog-preview-frame__stage">
     <ng-content select="[catalogPreviewDemo]" />
   </div>
@@ -33,6 +33,23 @@
           <i class="pi pi-cog" aria-hidden="true"></i>
         </button>
       }
+
+      @if (showExpand()) {
+        <button
+          type="button"
+          class="catalog-preview-frame__action catalog-preview-frame__action--expand"
+          (click)="toggleExpand()"
+          [attr.aria-expanded]="expanded()"
+          [attr.aria-label]="expanded() ? collapseAriaLabel() : expandAriaLabel()"
+          [title]="expanded() ? 'Contraer' : 'Expandir'"
+        >
+          @if (expanded()) {
+            <i class="pi pi-window-minimize" aria-hidden="true"></i>
+          } @else {
+            <i class="pi pi-expand" aria-hidden="true"></i>
+          }
+        </button>
+      }
     </div>
   </footer>
 
@@ -49,3 +66,9 @@
     </p-popover>
   }
 </div>
+
+@if (showExpand() && expanded()) {
+  <div class="catalog-preview-details">
+    <ng-content select="[catalogPreviewDetails]" />
+  </div>
+}

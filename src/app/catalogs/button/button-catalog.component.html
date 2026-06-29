@@ -16,7 +16,10 @@
         <div class="catalog-block-body">
           <mds-catalog-preview-frame
             class="btn-section catalog-preview-section"
+            [showExpand]="true"
             [configAriaLabel]="'Configurar ' + block.title"
+            [expandAriaLabel]="'Expandir variantes y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer variantes y tamaños de ' + block.title"
           >
             <div
               catalogPreviewDemo
@@ -141,77 +144,75 @@
                 </div>
               }
             </ng-container>
-          </mds-catalog-preview-frame>
 
-        <!-- 2. Variants & States -->
-        <div class="btn-section">
-          <p class="btn-section-title">Variants &amp; States</p>
-          @for (variant of variantsFor(block); track variant.label) {
-            <div class="btn-variant-states-block">
-              <p class="btn-variant-states-label">{{ variantRowLabel(variant) }}</p>
-              <div class="catalog-button-states-row is-static-preview">
-                @for (st of demoStates; track st.key) {
-                  <div class="catalog-button-state">
-                    <div
-                      class="catalog-button-state-preview"
-                      [ngClass]="demoStateClass(st.key)"
-                      [ngStyle]="demoWrapStyle(variant, st.key, block.kind)"
-                    >
-                      <p-button
-                        [label]="block.kind === 'icon' ? undefined : severityLabel(block.kind)"
-                        [icon]="block.kind === 'icon' ? 'pi pi-plus' : undefined"
-                        [severity]="activeSeverity(block.kind)"
-                        [outlined]="!!variant.outlined"
-                        [text]="isTextBlock(block.kind)"
-                        [rounded]="variantRounded(block, variant)"
-                        [raised]="showRaised(block) && !!variant.raised"
-                        [disabled]="st.key === 'disabled'"
-                        [attr.aria-label]="block.kind === 'icon' ? severityLabel(block.kind) : null"
-                      />
+            <ng-container catalogPreviewDetails>
+              <mds-catalog-info-block title="Variants &amp; States" icon="objects-column">
+                @for (variant of variantsFor(block); track variant.label) {
+                  <div class="btn-variant-states-block">
+                    <p class="btn-variant-states-label">{{ variantRowLabel(variant) }}</p>
+                    <div class="catalog-button-states-row is-static-preview">
+                      @for (st of demoStates; track st.key) {
+                        <div class="catalog-button-state">
+                          <div
+                            class="catalog-button-state-preview"
+                            [ngClass]="demoStateClass(st.key)"
+                            [ngStyle]="demoWrapStyle(variant, st.key, block.kind)"
+                          >
+                            <p-button
+                              [label]="block.kind === 'icon' ? undefined : severityLabel(block.kind)"
+                              [icon]="block.kind === 'icon' ? 'pi pi-plus' : undefined"
+                              [severity]="activeSeverity(block.kind)"
+                              [outlined]="!!variant.outlined"
+                              [text]="isTextBlock(block.kind)"
+                              [rounded]="variantRounded(block, variant)"
+                              [raised]="showRaised(block) && !!variant.raised"
+                              [disabled]="st.key === 'disabled'"
+                              [attr.aria-label]="block.kind === 'icon' ? severityLabel(block.kind) : null"
+                            />
+                          </div>
+                          <mds-catalog-state-tag [label]="st.caption" />
+                        </div>
+                      }
                     </div>
-                    <mds-catalog-state-tag [label]="st.caption" />
                   </div>
                 }
-              </div>
-            </div>
-          }
-        </div>
+              </mds-catalog-info-block>
 
-        <!-- 3. Sizes -->
-        <div class="btn-section">
-          <p class="btn-section-title">Sizes</p>
-          <div class="catalog-button-states-row is-static-preview">
-            @for (sz of sizeOptions; track sz.key) {
-              <div class="catalog-button-state">
-                <div class="catalog-button-state-preview">
-                  @if (block.kind === 'icon') {
-                    <p-button
-                      icon="pi pi-plus"
-                      [severity]="activeSeverity(block.kind)"
-                      [size]="sz.size"
-                      [rounded]="true"
-                      [attr.aria-label]="severityLabel(block.kind)"
-                    />
-                  } @else if (block.kind === 'text') {
-                    <p-button
-                      [label]="severityLabel(block.kind)"
-                      [severity]="activeSeverity(block.kind)"
-                      [text]="true"
-                      [size]="sz.size"
-                    />
-                  } @else {
-                    <p-button
-                      [label]="severityLabel(block.kind)"
-                      [severity]="activeSeverity(block.kind)"
-                      [size]="sz.size"
-                    />
+              <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                <div class="catalog-button-states-row is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state">
+                      <div class="catalog-button-state-preview">
+                        @if (block.kind === 'icon') {
+                          <p-button
+                            icon="pi pi-plus"
+                            [severity]="activeSeverity(block.kind)"
+                            [size]="sz.size"
+                            [rounded]="true"
+                            [attr.aria-label]="severityLabel(block.kind)"
+                          />
+                        } @else if (block.kind === 'text') {
+                          <p-button
+                            [label]="severityLabel(block.kind)"
+                            [severity]="activeSeverity(block.kind)"
+                            [text]="true"
+                            [size]="sz.size"
+                          />
+                        } @else {
+                          <p-button
+                            [label]="severityLabel(block.kind)"
+                            [severity]="activeSeverity(block.kind)"
+                            [size]="sz.size"
+                          />
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="sz.caption" />
+                    </div>
                   }
                 </div>
-                <mds-catalog-state-tag [label]="sz.caption" />
-              </div>
-            }
-          </div>
-        </div>
+              </mds-catalog-info-block>
+            </ng-container>
+          </mds-catalog-preview-frame>
         </div>
       </section>
     </div>
@@ -233,7 +234,10 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showExpand]="true"
           configAriaLabel="Configurar SplitButton"
+          expandAriaLabel="Expandir variantes y tamaños de SplitButton"
+          collapseAriaLabel="Contraer variantes y tamaños de SplitButton"
         >
           <div
             catalogPreviewDemo
@@ -317,57 +321,57 @@
               />
             </div>
           </ng-container>
-        </mds-catalog-preview-frame>
 
-        <div class="btn-section">
-          <p class="btn-section-title">Variants &amp; States</p>
-          @for (variant of variantSpecs; track variant.label) {
-            <div class="btn-variant-states-block">
-              <p class="btn-variant-states-label">{{ variantRowLabel(variant) }}</p>
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Variants &amp; States" icon="objects-column">
+              @for (variant of variantSpecs; track variant.label) {
+                <div class="btn-variant-states-block">
+                  <p class="btn-variant-states-label">{{ variantRowLabel(variant) }}</p>
+                  <div class="catalog-button-states-row is-static-preview">
+                    @for (st of demoStates; track st.key) {
+                      <div class="catalog-button-state">
+                        <div
+                          class="catalog-button-state-preview"
+                          [ngClass]="demoStateClass(st.key)"
+                          [ngStyle]="splitbuttonDemoWrapStyle(variant, st.key)"
+                        >
+                          <p-splitbutton
+                            [label]="splitbuttonSeverityLabel()"
+                            [severity]="splitbuttonIx().severity"
+                            [outlined]="!!variant.outlined"
+                            [rounded]="!!variant.rounded"
+                            [raised]="!!variant.raised"
+                            [disabled]="st.key === 'disabled'"
+                            [model]="splitbuttonMenu"
+                          />
+                        </div>
+                        <mds-catalog-state-tag [label]="st.caption" />
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Sizes" icon="arrows-v">
               <div class="catalog-button-states-row is-static-preview">
-                @for (st of demoStates; track st.key) {
+                @for (sz of sizeOptions; track sz.key) {
                   <div class="catalog-button-state">
-                    <div
-                      class="catalog-button-state-preview"
-                      [ngClass]="demoStateClass(st.key)"
-                      [ngStyle]="splitbuttonDemoWrapStyle(variant, st.key)"
-                    >
+                    <div class="catalog-button-state-preview">
                       <p-splitbutton
                         [label]="splitbuttonSeverityLabel()"
                         [severity]="splitbuttonIx().severity"
-                        [outlined]="!!variant.outlined"
-                        [rounded]="!!variant.rounded"
-                        [raised]="!!variant.raised"
-                        [disabled]="st.key === 'disabled'"
+                        [size]="sz.size ?? null"
                         [model]="splitbuttonMenu"
                       />
                     </div>
-                    <mds-catalog-state-tag [label]="st.caption" />
+                    <mds-catalog-state-tag [label]="sz.caption" />
                   </div>
                 }
               </div>
-            </div>
-          }
-        </div>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Sizes</p>
-          <div class="catalog-button-states-row is-static-preview">
-            @for (sz of sizeOptions; track sz.key) {
-              <div class="catalog-button-state">
-                <div class="catalog-button-state-preview">
-                  <p-splitbutton
-                    [label]="splitbuttonSeverityLabel()"
-                    [severity]="splitbuttonIx().severity"
-                    [size]="sz.size ?? null"
-                    [model]="splitbuttonMenu"
-                  />
-                </div>
-                <mds-catalog-state-tag [label]="sz.caption" />
-              </div>
-            }
-          </div>
-        </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
       </div>
     </section>
   </div>

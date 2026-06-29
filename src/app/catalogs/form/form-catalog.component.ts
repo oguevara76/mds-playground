@@ -2,6 +2,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { formPlaygroundAnchorId } from '../../layout/playground-component-index';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { FormsModule } from '@angular/forms';
@@ -176,7 +177,7 @@ function defaultInputOtpInteraction(): FormInputOtpInteractionState {
 
 function defaultRatingInteraction(): FormRatingInteractionState {
   return {
-    value: 3,
+    value: 0,
     disabled: false,
     readonly: false,
   };
@@ -188,7 +189,7 @@ function defaultSelectInteraction(): FormSelectInteractionState {
     floatPosition: 'over',
     size: 'normal',
     value: null,
-    showOverlayFilter: true,
+    showOverlayFilter: false,
     overlayOptionVariant: 'default',
   };
 }
@@ -211,8 +212,8 @@ function defaultPasswordInteraction(): FormPasswordInteractionState {
     variant: 'default',
     floatPosition: 'over',
     toggleMask: true,
-    feedback: true,
-    showStrengthList: true,
+    feedback: false,
+    showStrengthList: false,
     showClear: false,
     showHelperText: false,
     size: 'normal',
@@ -231,7 +232,7 @@ function defaultTextareaInteraction(): FormTextareaInteractionState {
 }
 
 function defaultCheckboxState(): Record<FormCheckboxKey, boolean> {
-  return { email: true, sms: false, push: true };
+  return { email: false, sms: false, push: false };
 }
 
 function defaultToggleButtonInteraction(): FormToggleButtonInteractionState {
@@ -247,6 +248,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
   standalone: true,
   imports: [
     CatalogBlockHeadTitlePipe,
+    CatalogInfoBlockComponent,
     CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
     Checkbox,
@@ -313,16 +315,14 @@ export class FormCatalogComponent {
     textarea: 'outlined',
   });
 
-  readonly radioValue = signal('visa');
+  readonly radioValue = signal<string | null>(null);
   readonly checkboxIx = signal<Record<FormCheckboxKey, boolean>>(defaultCheckboxState());
-  readonly toggleOff = signal(false);
-  readonly toggleOn = signal(true);
+  readonly toggleSwitchValue = signal(false);
   readonly toggleButtonIx = signal(defaultToggleButtonInteraction());
-  readonly toggleButtonOff = signal(false);
-  readonly toggleButtonOn = signal(true);
+  readonly toggleButtonValue = signal(false);
   readonly selectButtonIx = signal(defaultSelectButtonInteraction());
   /** Valor estable del showcase interactivo (evita bucle ngModel con arrays). */
-  readonly selectButtonLiveValue = signal<string | string[]>(FORM_SELECTBUTTON_OPTIONS[0].value);
+  readonly selectButtonLiveValue = signal<string | string[] | null>(null);
 
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
   readonly selectIx = signal<FormSelectInteractionState>(defaultSelectInteraction());
@@ -408,7 +408,11 @@ export class FormCatalogComponent {
     this.selectButtonLiveValue.set(FORM_SELECTBUTTON_OPTIONS[activeItem - 1].value);
   }
 
-  onSelectButtonValueChange(value: string | string[]): void {
+  onSelectButtonValueChange(value: string | string[] | null): void {
+    if (value === null || value === undefined || value === '') {
+      this.selectButtonLiveValue.set(null);
+      return;
+    }
     this.selectButtonLiveValue.set(value);
     const ix = this.selectButtonIx();
     if (ix.multiple && Array.isArray(value)) {
@@ -540,6 +544,10 @@ export class FormCatalogComponent {
       'form-theme-filled': theme === 'filled',
       'form-theme-outlined': theme === 'outlined',
     };
+  }
+
+  showFormSizesSection(kind: FormBlockKind): boolean {
+    return kind !== 'toggleswitch' && kind !== 'rating';
   }
 
   inputtextIsDefault(): boolean {

@@ -32,6 +32,7 @@ import {
 } from './button-catalog.config';
 import { buttonPlaygroundAnchorId } from '../../layout/playground-component-index';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { buttonDemoWrapStyle } from './button-catalog.demo-styles';
@@ -62,7 +63,7 @@ function defaultInteraction(): ButtonInteractionState {
 @Component({
   selector: 'app-button-catalog',
   standalone: true,
-  imports: [Button, CatalogBlockHeadTitlePipe, CatalogPreviewFrameComponent, CatalogStateTagComponent, Divider, FormsModule, NgClass, NgStyle, PrimeTemplate, Select, SelectButton, SplitButton, ToggleSwitch],
+  imports: [Button, CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Divider, FormsModule, NgClass, NgStyle, PrimeTemplate, Select, SelectButton, SplitButton, ToggleSwitch],
   templateUrl: './button-catalog.component.html',
   styleUrl: './button-catalog.component.css',
 })

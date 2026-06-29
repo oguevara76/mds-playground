@@ -25,6 +25,11 @@
             @case ('radio') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar RadioButton"
               >
                 <div catalogPreviewDemo class="catalog-showcase-interactive">
@@ -84,11 +89,27 @@
                   </div>
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('checkbox') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar Checkbox"
               >
                 <div catalogPreviewDemo class="catalog-showcase-interactive">
@@ -147,120 +168,106 @@
                   </div>
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('toggleswitch') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 [showConfig]="false"
               >
                 <div catalogPreviewDemo class="catalog-showcase-interactive">
                 <div class="form-choice-row" role="group" aria-label="ToggleSwitch interactivo">
                 <div class="form-choice-item">
                 <p-toggleswitch
-                inputId="ts-ix-off"
-                [ngModel]="toggleOff()"
-                (ngModelChange)="toggleOff.set($event)"
+                inputId="ts-ix"
+                [ngModel]="toggleSwitchValue()"
+                (ngModelChange)="toggleSwitchValue.set($event)"
                 />
-                <label for="ts-ix-off">Por defecto</label>
-                </div>
-                <div class="form-choice-item">
-                <p-toggleswitch
-                inputId="ts-ix-on"
-                [ngModel]="toggleOn()"
-                (ngModelChange)="toggleOn.set($event)"
-                />
-                <label for="ts-ix-on">Activado</label>
+                <label for="ts-ix">Notificaciones</label>
                 </div>
                 </div>
                 </div>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('togglebutton') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar ToggleButton"
               >
                 <div catalogPreviewDemo class="catalog-showcase-interactive">
                 <div class="form-togglebutton-row" role="group" aria-label="ToggleButton interactivo">
                 @if (toggleButtonIx().size === 'small') {
                 <p-togglebutton
-                inputId="tb-ix-off"
+                inputId="tb-ix"
                 onLabel="On"
                 offLabel="Off"
                 size="small"
                 [iconPos]="toggleButtonIx().iconPos"
                 [onIcon]="toggleButtonOnIcon()"
                 [offIcon]="toggleButtonOffIcon()"
-                [ngModel]="toggleButtonOff()"
-                (ngModelChange)="toggleButtonOff.set($event)"
+                [ngModel]="toggleButtonValue()"
+                (ngModelChange)="toggleButtonValue.set($event)"
                 [style]="toggleButtonHostVars('small')"
-                ariaLabel="ToggleButton apagado"
-                />
-                <p-togglebutton
-                inputId="tb-ix-on"
-                onLabel="On"
-                offLabel="Off"
-                size="small"
-                [iconPos]="toggleButtonIx().iconPos"
-                [onIcon]="toggleButtonOnIcon()"
-                [offIcon]="toggleButtonOffIcon()"
-                [ngModel]="toggleButtonOn()"
-                (ngModelChange)="toggleButtonOn.set($event)"
-                [style]="toggleButtonHostVars('small')"
-                ariaLabel="ToggleButton encendido"
+                ariaLabel="ToggleButton interactivo"
                 />
                 } @else if (toggleButtonIx().size === 'large') {
                 <p-togglebutton
-                inputId="tb-ix-off"
+                inputId="tb-ix"
                 onLabel="On"
                 offLabel="Off"
                 size="large"
                 [iconPos]="toggleButtonIx().iconPos"
                 [onIcon]="toggleButtonOnIcon()"
                 [offIcon]="toggleButtonOffIcon()"
-                [ngModel]="toggleButtonOff()"
-                (ngModelChange)="toggleButtonOff.set($event)"
+                [ngModel]="toggleButtonValue()"
+                (ngModelChange)="toggleButtonValue.set($event)"
                 [style]="toggleButtonHostVars('large')"
-                ariaLabel="ToggleButton apagado"
-                />
-                <p-togglebutton
-                inputId="tb-ix-on"
-                onLabel="On"
-                offLabel="Off"
-                size="large"
-                [iconPos]="toggleButtonIx().iconPos"
-                [onIcon]="toggleButtonOnIcon()"
-                [offIcon]="toggleButtonOffIcon()"
-                [ngModel]="toggleButtonOn()"
-                (ngModelChange)="toggleButtonOn.set($event)"
-                [style]="toggleButtonHostVars('large')"
-                ariaLabel="ToggleButton encendido"
+                ariaLabel="ToggleButton interactivo"
                 />
                 } @else {
                 <p-togglebutton
-                inputId="tb-ix-off"
+                inputId="tb-ix"
                 onLabel="On"
                 offLabel="Off"
                 [iconPos]="toggleButtonIx().iconPos"
                 [onIcon]="toggleButtonOnIcon()"
                 [offIcon]="toggleButtonOffIcon()"
-                [ngModel]="toggleButtonOff()"
-                (ngModelChange)="toggleButtonOff.set($event)"
+                [ngModel]="toggleButtonValue()"
+                (ngModelChange)="toggleButtonValue.set($event)"
                 [style]="toggleButtonHostVars('normal')"
-                ariaLabel="ToggleButton apagado"
-                />
-                <p-togglebutton
-                inputId="tb-ix-on"
-                onLabel="On"
-                offLabel="Off"
-                [iconPos]="toggleButtonIx().iconPos"
-                [onIcon]="toggleButtonOnIcon()"
-                [offIcon]="toggleButtonOffIcon()"
-                [ngModel]="toggleButtonOn()"
-                (ngModelChange)="toggleButtonOn.set($event)"
-                [style]="toggleButtonHostVars('normal')"
-                ariaLabel="ToggleButton encendido"
+                ariaLabel="ToggleButton interactivo"
                 />
                 }
                 </div>
@@ -309,11 +316,27 @@
                   </div>
                   }
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('selectbutton') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar SelectButton"
               >
                 <div catalogPreviewDemo class="catalog-showcase-interactive">
@@ -374,6 +397,17 @@
                   </div>
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('select') {
@@ -416,6 +450,11 @@
               </ng-template>
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar Select"
               >
                 <div catalogPreviewDemo
@@ -522,11 +561,27 @@
                   </div>
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('textarea') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar Textarea"
               >
                 <div catalogPreviewDemo
@@ -680,11 +735,27 @@
                   />
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('inputtext') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar InputText"
               >
                 <div catalogPreviewDemo
@@ -922,6 +993,17 @@
                   />
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('password') {
@@ -975,6 +1057,11 @@
               </ng-template>
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar Password"
               >
                 <div catalogPreviewDemo
@@ -1121,11 +1208,27 @@
                   />
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('inputotp') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar InputOtp"
               >
                 <div catalogPreviewDemo
@@ -1219,11 +1322,27 @@
                   />
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @case ('rating') {
                             <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
+
+            [showExpand]="true"
+            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+
                 configAriaLabel="Configurar Rating"
               >
                 <div catalogPreviewDemo class="catalog-showcase-interactive">
@@ -1268,15 +1387,24 @@
                   />
                   </div>
                 </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
               </mds-catalog-preview-frame>
             }
             @default {}
           }
 
-        <!-- States -->
-        <div class="btn-section">
-          <p class="btn-section-title">States</p>
 
+        <ng-template #formCatalogStates>
           @switch (block.kind) {
             @case ('radio') {
               <div class="catalog-button-states-row is-static-preview">
@@ -2102,13 +2230,9 @@
               }
             }
           }
-        </div>
+        </ng-template>
 
-        <!-- Sizes (ToggleSwitch y Rating: un solo tamaño MDS, sin sección) -->
-        @if (block.kind !== 'toggleswitch' && block.kind !== 'rating') {
-        <div class="btn-section">
-          <p class="btn-section-title">Sizes</p>
-
+        <ng-template #formCatalogSizes>
           @switch (block.kind) {
             @case ('radio') {
               <div class="catalog-button-states-row is-static-preview">
@@ -2540,8 +2664,7 @@
               }
             }
           }
-        </div>
-        }
+        </ng-template>
         </div>
       </section>
     </div>

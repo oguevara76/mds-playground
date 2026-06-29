@@ -12,6 +12,7 @@ import { SelectButton } from 'primeng/selectbutton';
 import { Tag } from 'primeng/tag';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import {
   AVATAR_CATALOG_BADGE_DEMO_VALUE,
@@ -67,6 +68,7 @@ interface AvatarGroupInteractionState {
   standalone: true,
   imports: [
     CatalogBlockHeadTitlePipe,
+    CatalogInfoBlockComponent,
     CatalogPreviewFrameComponent,
     Tag,
     Chip,
@@ -119,7 +121,7 @@ export class MiscCatalogComponent {
   avatarIx: AvatarInteractionState = {
     variant: 'label',
     size: 'normal',
-    shape: 'square',
+    shape: 'circle',
     showBadge: false,
     badgeShape: 'circle',
   };

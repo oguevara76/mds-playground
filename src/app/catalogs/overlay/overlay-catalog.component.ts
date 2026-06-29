@@ -6,6 +6,7 @@ import { InputText } from 'primeng/inputtext';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { Tooltip } from 'primeng/tooltip';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
@@ -27,6 +28,7 @@ import {
   standalone: true,
   imports: [
     CatalogBlockHeadTitlePipe,
+    CatalogInfoBlockComponent,
     CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
     Tooltip,

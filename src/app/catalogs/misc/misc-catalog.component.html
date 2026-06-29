@@ -6,43 +6,55 @@
       </header>
 
       <div class="catalog-block-body">
-        <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
-          <div catalogPreviewDemo class="tag-catalog-row is-static-preview" aria-label="Tag, all severities">
-            @for (sev of severities; track trackSeverity($index, sev)) {
-              @if (isPrimary(sev)) {
-                <p-tag [value]="sev.label" class="p-tag-primary" />
-              } @else {
-                <p-tag [severity]="sev.primeSeverity" [value]="sev.label" />
-              }
-            }
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="true"
+          expandAriaLabel="Expandir variantes de Tag"
+          collapseAriaLabel="Contraer variantes de Tag"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive tag-catalog-row" aria-label="Tag preview">
+            <p-tag value="Primary" class="p-tag-primary" />
           </div>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Severity" icon="objects-column">
+              <div class="tag-catalog-row is-static-preview" aria-label="Tag, all severities">
+                @for (sev of severities; track trackSeverity($index, sev)) {
+                  @if (isPrimary(sev)) {
+                    <p-tag [value]="sev.label" class="p-tag-primary" />
+                  } @else {
+                    <p-tag [severity]="sev.primeSeverity" [value]="sev.label" />
+                  }
+                }
+              </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Rounded" icon="circle">
+              <div class="tag-catalog-row is-static-preview" aria-label="Tag rounded, all severities">
+                @for (sev of severities; track trackSeverity($index, sev)) {
+                  @if (isPrimary(sev)) {
+                    <p-tag [value]="sev.label" [rounded]="true" class="p-tag-primary" />
+                  } @else {
+                    <p-tag [severity]="sev.primeSeverity" [value]="sev.label" [rounded]="true" />
+                  }
+                }
+              </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Icon" icon="image">
+              <div class="tag-catalog-row is-static-preview" aria-label="Tag with icon, all severities">
+                @for (sev of severities; track trackSeverity($index, sev)) {
+                  @if (isPrimary(sev)) {
+                    <p-tag [icon]="sev.icon" [value]="sev.label" class="p-tag-primary" />
+                  } @else {
+                    <p-tag [icon]="sev.icon" [severity]="sev.primeSeverity" [value]="sev.label" />
+                  }
+                }
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
         </mds-catalog-preview-frame>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Rounded</p>
-          <div class="tag-catalog-row is-static-preview" aria-label="Tag rounded, all severities">
-            @for (sev of severities; track trackSeverity($index, sev)) {
-              @if (isPrimary(sev)) {
-                <p-tag [value]="sev.label" [rounded]="true" class="p-tag-primary" />
-              } @else {
-                <p-tag [severity]="sev.primeSeverity" [value]="sev.label" [rounded]="true" />
-              }
-            }
-          </div>
-        </div>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Icon</p>
-          <div class="tag-catalog-row is-static-preview" aria-label="Tag with icon, all severities">
-            @for (sev of severities; track trackSeverity($index, sev)) {
-              @if (isPrimary(sev)) {
-                <p-tag [icon]="sev.icon" [value]="sev.label" class="p-tag-primary" />
-              } @else {
-                <p-tag [icon]="sev.icon" [severity]="sev.primeSeverity" [value]="sev.label" />
-              }
-            }
-          </div>
-        </div>
       </div>
     </section>
   </div>
@@ -56,7 +68,10 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showExpand]="true"
           configAriaLabel="Configurar Chip"
+          expandAriaLabel="Expandir variantes de Chip"
+          collapseAriaLabel="Contraer variantes de Chip"
         >
           <div catalogPreviewDemo class="catalog-showcase-interactive tag-catalog-row chip-catalog-row">
             @for (_ of [chipInteractionKey]; track chipInteractionKey) {
@@ -95,29 +110,29 @@
               />
             </div>
           </ng-container>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Basic" icon="tag">
+              <div class="tag-catalog-row is-static-preview" aria-label="Chip, basic examples">
+                <p-chip label="Default" />
+                <p-chip label="Primary" styleClass="p-chip-primary" />
+                <p-chip label="Con icono" icon="pi pi-user" />
+              </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Icon, Avatar &amp; Remove" icon="id-card">
+              <div class="tag-catalog-row is-static-preview" aria-label="Chip with icon, avatar and remove">
+                <p-chip label="Bookmark" [icon]="chipDemoIcon" [removable]="true" />
+                <p-chip
+                  label="Amy Elsner"
+                  [image]="chipDemoAvatarUrl"
+                  alt="Avatar"
+                  [removable]="true"
+                />
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
         </mds-catalog-preview-frame>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Basic</p>
-          <div class="tag-catalog-row is-static-preview" aria-label="Chip, basic examples">
-            <p-chip label="Default" />
-            <p-chip label="Primary" styleClass="p-chip-primary" />
-            <p-chip label="Con icono" icon="pi pi-user" />
-          </div>
-        </div>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Icon, Avatar &amp; Remove</p>
-          <div class="tag-catalog-row is-static-preview" aria-label="Chip with icon, avatar and remove">
-            <p-chip label="Bookmark" [icon]="chipDemoIcon" [removable]="true" />
-            <p-chip
-              label="Amy Elsner"
-              [image]="chipDemoAvatarUrl"
-              alt="Avatar"
-              [removable]="true"
-            />
-          </div>
-        </div>
       </div>
     </section>
   </div>
@@ -129,67 +144,78 @@
       </header>
 
       <div class="catalog-block-body">
-        <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="true"
+          expandAriaLabel="Expandir variantes de Badge"
+          collapseAriaLabel="Contraer variantes de Badge"
+        >
           <div
             catalogPreviewDemo
-            class="badge-severity-shape-demos is-static-preview"
-            aria-label="Badge, severity circle and square"
+            class="catalog-showcase-interactive tag-catalog-row badge-catalog-row"
+            aria-label="Badge preview"
           >
-            <div class="badge-severity-shape-demo">
-              <span class="btn-variant-states-label avatar-group-size-label">Circle</span>
-              <div class="tag-catalog-row badge-catalog-row badge-catalog-row-circle">
-                @for (sev of badgeSeverities; track trackBadgeSeverity($index, sev)) {
-                  <p-badge
-                    [value]="badgeDemoValue"
-                    [severity]="sev.primeSeverity"
-                    [styleClass]="badgeSeverityStyleClass(sev, 'circle')"
-                  />
-                }
-              </div>
-            </div>
-            <div class="badge-severity-shape-demo">
-              <span class="btn-variant-states-label avatar-group-size-label">Square</span>
-              <div class="tag-catalog-row badge-catalog-row badge-catalog-row-square">
-                @for (sev of badgeSeverities; track trackBadgeSeverity($index, sev)) {
-                  <p-badge
-                    [value]="badgeDemoValue"
-                    [severity]="sev.primeSeverity"
-                    [styleClass]="badgeSeverityStyleClass(sev, 'square')"
-                  />
-                }
-              </div>
-            </div>
+            <p-badge [value]="badgeDemoValue" styleClass="p-badge-primary" />
           </div>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Severity &amp; Shape" icon="objects-column">
+              <div class="badge-severity-shape-demos is-static-preview" aria-label="Badge, severity circle and square">
+                <div class="badge-severity-shape-demo">
+                  <span class="btn-variant-states-label avatar-group-size-label">Circle</span>
+                  <div class="tag-catalog-row badge-catalog-row badge-catalog-row-circle">
+                    @for (sev of badgeSeverities; track trackBadgeSeverity($index, sev)) {
+                      <p-badge
+                        [value]="badgeDemoValue"
+                        [severity]="sev.primeSeverity"
+                        [styleClass]="badgeSeverityStyleClass(sev, 'circle')"
+                      />
+                    }
+                  </div>
+                </div>
+                <div class="badge-severity-shape-demo">
+                  <span class="btn-variant-states-label avatar-group-size-label">Square</span>
+                  <div class="tag-catalog-row badge-catalog-row badge-catalog-row-square">
+                    @for (sev of badgeSeverities; track trackBadgeSeverity($index, sev)) {
+                      <p-badge
+                        [value]="badgeDemoValue"
+                        [severity]="sev.primeSeverity"
+                        [styleClass]="badgeSeverityStyleClass(sev, 'square')"
+                      />
+                    }
+                  </div>
+                </div>
+              </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Size" icon="arrows-v">
+              <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge, size variants">
+                @for (sizeOpt of badgeSizeOptions; track sizeOpt.value) {
+                  <p-badge [value]="badgeDemoValue" [badgeSize]="sizeOpt.value" />
+                }
+              </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Overlay" icon="window-maximize">
+              <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge overlay variants">
+                <p-overlayBadge [value]="2" badgeSize="small">
+                  <i class="pi pi-bell badge-overlay-target" aria-hidden="true"></i>
+                </p-overlayBadge>
+                <p-overlayBadge [value]="4" severity="danger" badgeSize="small">
+                  <i class="pi pi-envelope badge-overlay-target" aria-hidden="true"></i>
+                </p-overlayBadge>
+              </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Button Badge" icon="bookmark">
+              <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge on buttons">
+                <p-button label="Notifications" badge="2" badgeSeverity="primary" />
+                <p-button label="Inbox" icon="pi pi-envelope" badge="2" badgeSeverity="primary" />
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
         </mds-catalog-preview-frame>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Size</p>
-          <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge, size variants">
-            @for (sizeOpt of badgeSizeOptions; track sizeOpt.value) {
-              <p-badge [value]="badgeDemoValue" [badgeSize]="sizeOpt.value" />
-            }
-          </div>
-        </div>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Overlay</p>
-          <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge overlay variants">
-            <p-overlayBadge [value]="2" badgeSize="small">
-              <i class="pi pi-bell badge-overlay-target" aria-hidden="true"></i>
-            </p-overlayBadge>
-            <p-overlayBadge [value]="4" severity="danger" badgeSize="small">
-              <i class="pi pi-envelope badge-overlay-target" aria-hidden="true"></i>
-            </p-overlayBadge>
-          </div>
-        </div>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Button Badge</p>
-          <div class="tag-catalog-row badge-catalog-row is-static-preview" aria-label="Badge on buttons">
-            <p-button label="Notifications" badge="2" badgeSeverity="primary" />
-            <p-button label="Inbox" icon="pi pi-envelope" badge="2" badgeSeverity="primary" />
-          </div>
-        </div>
       </div>
     </section>
   </div>
@@ -203,7 +229,10 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showExpand]="true"
           configAriaLabel="Configurar Avatar"
+          expandAriaLabel="Expandir variantes de Avatar"
+          collapseAriaLabel="Contraer variantes de Avatar"
         >
           <div catalogPreviewDemo class="catalog-showcase-interactive tag-catalog-row avatar-catalog-row">
             <p-overlayBadge
@@ -293,38 +322,38 @@
               </div>
             }
           </ng-container>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Label, Icon &amp; Image" icon="images">
+              <div class="avatar-group-size-demos is-static-preview" aria-label="Avatar, content and shape variants">
+                <div class="avatar-group-size-demo">
+                  <span class="btn-variant-states-label avatar-group-size-label">Square</span>
+                  <div class="tag-catalog-row">
+                    <p-avatar [label]="avatarDemoLabel" shape="square" />
+                    <p-avatar [icon]="avatarDemoIcon" shape="square" />
+                    <p-avatar [image]="avatarDemoImageUrl" shape="square" ariaLabel="Avatar demo" />
+                  </div>
+                </div>
+                <div class="avatar-group-size-demo">
+                  <span class="btn-variant-states-label avatar-group-size-label">Circle</span>
+                  <div class="tag-catalog-row">
+                    <p-avatar [label]="avatarDemoLabel" shape="circle" />
+                    <p-avatar [icon]="avatarDemoIcon" shape="circle" />
+                    <p-avatar [image]="avatarDemoImageUrl" shape="circle" ariaLabel="Avatar demo" />
+                  </div>
+                </div>
+              </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Size" icon="arrows-v">
+              <div class="tag-catalog-row is-static-preview" aria-label="Avatar, size variants">
+                <p-avatar [label]="avatarDemoLabel" />
+                <p-avatar [label]="avatarDemoLabel" size="large" />
+                <p-avatar [label]="avatarDemoLabel" size="xlarge" />
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
         </mds-catalog-preview-frame>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Label, Icon &amp; Image</p>
-          <div class="avatar-group-size-demos is-static-preview" aria-label="Avatar, content and shape variants">
-            <div class="avatar-group-size-demo">
-              <span class="btn-variant-states-label avatar-group-size-label">Square</span>
-              <div class="tag-catalog-row">
-                <p-avatar [label]="avatarDemoLabel" shape="square" />
-                <p-avatar [icon]="avatarDemoIcon" shape="square" />
-                <p-avatar [image]="avatarDemoImageUrl" shape="square" ariaLabel="Avatar demo" />
-              </div>
-            </div>
-            <div class="avatar-group-size-demo">
-              <span class="btn-variant-states-label avatar-group-size-label">Circle</span>
-              <div class="tag-catalog-row">
-                <p-avatar [label]="avatarDemoLabel" shape="circle" />
-                <p-avatar [icon]="avatarDemoIcon" shape="circle" />
-                <p-avatar [image]="avatarDemoImageUrl" shape="circle" ariaLabel="Avatar demo" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Size</p>
-          <div class="tag-catalog-row is-static-preview" aria-label="Avatar, size variants">
-            <p-avatar [label]="avatarDemoLabel" />
-            <p-avatar [label]="avatarDemoLabel" size="large" />
-            <p-avatar [label]="avatarDemoLabel" size="xlarge" />
-          </div>
-        </div>
 
       </div>
     </section>
@@ -343,7 +372,10 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showExpand]="true"
           configAriaLabel="Configurar Avatar Group"
+          expandAriaLabel="Expandir variantes de Avatar Group"
+          collapseAriaLabel="Contraer variantes de Avatar Group"
         >
           <div catalogPreviewDemo class="catalog-showcase-interactive tag-catalog-row avatar-catalog-row">
             @for (_ of [avatarGroupInteractionKey]; track avatarGroupInteractionKey) {
@@ -421,42 +453,15 @@
               />
             </div>
           </ng-container>
-        </mds-catalog-preview-frame>
 
-        <div class="btn-section">
-          <p class="btn-section-title">Basic</p>
-          <div class="tag-catalog-row is-static-preview" aria-label="Avatar group, basic">
-            <p-avatarGroup>
-              @for (src of avatarGroupImages.slice(0, avatarGroupMaxVisible); track $index) {
-                <p-avatar
-                  [image]="src"
-                  shape="circle"
-                  [styleClass]="avatarGroupLayerStyleClass($index)"
-                  ariaLabel="Avatar en grupo"
-                />
-              }
-              <p-avatar
-                [label]="avatarGroupOverflowDemoLabel"
-                shape="circle"
-                [styleClass]="avatarGroupLayerStyleClass(avatarGroupMaxVisible, true)"
-                ariaLabel="Avatares adicionales en grupo"
-              />
-            </p-avatarGroup>
-          </div>
-        </div>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Size</p>
-          <div class="avatar-group-size-demos is-static-preview" aria-label="Avatar group, size variants">
-            @for (row of avatarGroupSizeDemoRows; track row.size) {
-              <div class="avatar-group-size-demo">
-                <span class="btn-variant-states-label avatar-group-size-label">{{ row.label }}</span>
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Basic" icon="users">
+              <div class="tag-catalog-row is-static-preview" aria-label="Avatar group, basic">
                 <p-avatarGroup>
                   @for (src of avatarGroupImages.slice(0, avatarGroupMaxVisible); track $index) {
                     <p-avatar
                       [image]="src"
                       shape="circle"
-                      [size]="avatarPrimeSize(row.size)"
                       [styleClass]="avatarGroupLayerStyleClass($index)"
                       ariaLabel="Avatar en grupo"
                     />
@@ -464,15 +469,42 @@
                   <p-avatar
                     [label]="avatarGroupOverflowDemoLabel"
                     shape="circle"
-                    [size]="avatarPrimeSize(row.size)"
                     [styleClass]="avatarGroupLayerStyleClass(avatarGroupMaxVisible, true)"
                     ariaLabel="Avatares adicionales en grupo"
                   />
                 </p-avatarGroup>
               </div>
-            }
-          </div>
-        </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Size" icon="arrows-v">
+              <div class="avatar-group-size-demos is-static-preview" aria-label="Avatar group, size variants">
+                @for (row of avatarGroupSizeDemoRows; track row.size) {
+                  <div class="avatar-group-size-demo">
+                    <span class="btn-variant-states-label avatar-group-size-label">{{ row.label }}</span>
+                    <p-avatarGroup>
+                      @for (src of avatarGroupImages.slice(0, avatarGroupMaxVisible); track $index) {
+                        <p-avatar
+                          [image]="src"
+                          shape="circle"
+                          [size]="avatarPrimeSize(row.size)"
+                          [styleClass]="avatarGroupLayerStyleClass($index)"
+                          ariaLabel="Avatar en grupo"
+                        />
+                      }
+                      <p-avatar
+                        [label]="avatarGroupOverflowDemoLabel"
+                        shape="circle"
+                        [size]="avatarPrimeSize(row.size)"
+                        [styleClass]="avatarGroupLayerStyleClass(avatarGroupMaxVisible, true)"
+                        ariaLabel="Avatares adicionales en grupo"
+                      />
+                    </p-avatarGroup>
+                  </div>
+                }
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
       </div>
     </section>
   </div>

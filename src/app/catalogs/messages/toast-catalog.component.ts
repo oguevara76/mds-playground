@@ -4,6 +4,7 @@ import { Button } from 'primeng/button';
 import { TimesIcon } from 'primeng/icons/times';
 import { Toast } from 'primeng/toast';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import {
   TOAST_CATALOG_ENTER_CLASS,
@@ -19,7 +20,7 @@ import {
 @Component({
   selector: 'app-toast-catalog',
   standalone: true,
-  imports: [CatalogBlockHeadTitlePipe, CatalogPreviewFrameComponent, Toast, Button, TimesIcon],
+  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, Toast, Button, TimesIcon],
   templateUrl: './toast-catalog.component.html',
   styleUrl: './toast-catalog.component.css',
 })

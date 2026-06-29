@@ -8,7 +8,7 @@ import { Tag } from 'primeng/tag';
   host: {
     class: 'catalog-button-state-caption',
   },
-  template: `<p-tag class="catalog-state-tag" [value]="label()" severity="secondary" />`,
+  template: `<p-tag class="catalog-state-tag p-tag-sm" [value]="label()" severity="secondary" />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CatalogStateTagComponent {

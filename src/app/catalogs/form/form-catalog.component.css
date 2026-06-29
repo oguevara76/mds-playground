@@ -1781,6 +1781,18 @@
 
 /* InputOtp — layout y estados (tokens MDS --inputotp-* → --p-inputotp-*)
    PrimeNG aplica p-inputtext-sm|lg en cada celda (.p-inputotp-input), no en el root. */
+:host ::ng-deep .inputotp-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .form-input-interaction-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+:host ::ng-deep .inputotp-showcase .catalog-preview-frame__stage .p-inputotp {
+  justify-content: center;
+  width: fit-content;
+  margin-inline: auto;
+}
+
 :host ::ng-deep .inputotp-showcase .p-inputotp {
   gap: var(--p-inputotp-gap, var(--inputotp-input-gap));
   align-items: center;

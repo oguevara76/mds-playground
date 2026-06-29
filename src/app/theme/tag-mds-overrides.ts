@@ -70,4 +70,22 @@ export const TAG_MDS_OVERRIDE_CSS = `
   background: var(--tag-contrast-background, var(--p-tag-contrast-background)) !important;
   color: var(--tag-contrast-color, var(--p-tag-contrast-color)) !important;
 }
+
+.p-tag.catalog-state-tag.p-tag-sm {
+  gap: var(--tag-sm-gap, var(--dimension-scale-x2, 2px)) !important;
+  padding: var(--tag-sm-padding-y, var(--dimension-scale-x2, 2px))
+    var(--tag-sm-padding-x, var(--dimension-scale-x6, 6px)) !important;
+  font-size: var(--tag-sm-font-size, var(--form-field-sm-font-size, 12px)) !important;
+  font-weight: 400 !important;
+}
+
+.p-tag.catalog-state-tag.p-tag-sm .p-tag-label {
+  font-size: inherit !important;
+  font-weight: 400 !important;
+}
+
+.p-tag.catalog-state-tag.p-tag-sm .p-tag-icon,
+.p-tag.catalog-state-tag.p-tag-sm > .pi {
+  font-size: var(--tag-sm-icon-size, var(--dimension-scale-x10, 10px)) !important;
+}
 `;

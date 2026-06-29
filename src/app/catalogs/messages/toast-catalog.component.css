@@ -9,6 +9,16 @@
   padding-top: 0;
 }
 
+:host ::ng-deep .toast-showcase .catalog-showcase-interactive {
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+:host ::ng-deep .toast-showcase .toast-catalog-actions-row {
+  margin-top: 12px;
+}
+
 /* Vista previa estática: sin interacción en cierre */
 :host ::ng-deep .is-static-preview .p-toast-close-button {
   pointer-events: none;

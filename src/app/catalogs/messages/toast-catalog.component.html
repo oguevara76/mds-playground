@@ -15,8 +15,14 @@
     </header>
 
     <div class="catalog-block-body toast-catalog-body">
-      <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
-        <div catalogPreviewDemo>
+      <mds-catalog-preview-frame
+        class="btn-section catalog-preview-section"
+        [showConfig]="false"
+        [showExpand]="true"
+        expandAriaLabel="Expandir estados de Toast"
+        collapseAriaLabel="Contraer estados de Toast"
+      >
+        <div catalogPreviewDemo class="catalog-showcase-interactive">
           <div class="btn-row">
             @for (sev of severities; track trackSeverity($index, sev)) {
               <p-button
@@ -37,42 +43,43 @@
             />
           </div>
         </div>
-      </mds-catalog-preview-frame>
 
-      <div class="btn-section">
-        <p class="btn-section-title">States</p>
-        <div class="p-toast p-component toast-catalog-stack is-static-preview" aria-label="Toasts de ejemplo por severidad">
-          @for (item of staticToasts; track item.severity) {
-            <div
-              class="p-toast-message p-toast-message-{{ item.severity }}"
-              role="alert"
-              [attr.aria-live]="item.live"
-            >
-              <div class="p-toast-message-content">
-                <i [class]="'p-toast-message-icon ' + staticIcon(item.severity)" aria-hidden="true"></i>
-                <div class="p-toast-message-text">
-                  <span class="p-toast-summary">{{ item.summary }}</span>
-                  <span class="p-toast-detail">{{ item.detail }}</span>
-                </div>
-                <button
-                  type="button"
-                  class="p-toast-close-button"
-                  disabled
-                  tabindex="-1"
-                  title="Solo vista previa"
-                  aria-label="Cerrar (solo vista previa)"
+        <ng-container catalogPreviewDetails>
+          <mds-catalog-info-block title="States" icon="list">
+            <div class="p-toast p-component toast-catalog-stack is-static-preview" aria-label="Toasts de ejemplo por severidad">
+              @for (item of staticToasts; track item.severity) {
+                <div
+                  class="p-toast-message p-toast-message-{{ item.severity }}"
+                  role="alert"
+                  [attr.aria-live]="item.live"
                 >
-                  <svg
-                    data-p-icon="times"
-                    class="p-toast-close-icon"
-                    aria-hidden="true"
-                  ></svg>
-                </button>
-              </div>
+                  <div class="p-toast-message-content">
+                    <i [class]="'p-toast-message-icon ' + staticIcon(item.severity)" aria-hidden="true"></i>
+                    <div class="p-toast-message-text">
+                      <span class="p-toast-summary">{{ item.summary }}</span>
+                      <span class="p-toast-detail">{{ item.detail }}</span>
+                    </div>
+                    <button
+                      type="button"
+                      class="p-toast-close-button"
+                      disabled
+                      tabindex="-1"
+                      title="Solo vista previa"
+                      aria-label="Cerrar (solo vista previa)"
+                    >
+                      <svg
+                        data-p-icon="times"
+                        class="p-toast-close-icon"
+                        aria-hidden="true"
+                      ></svg>
+                    </button>
+                  </div>
+                </div>
+              }
             </div>
-          }
-        </div>
-      </div>
+          </mds-catalog-info-block>
+        </ng-container>
+      </mds-catalog-preview-frame>
     </div>
   </section>
 </div>

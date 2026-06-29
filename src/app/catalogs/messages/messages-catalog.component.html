@@ -8,52 +8,66 @@
       </header>
 
       <div class="catalog-block-body messages-catalog-body">
-        <div class="btn-section">
-          <p class="btn-section-title">Variants &amp; States</p>
-          @for (variant of variants; track variant.key) {
-            <div class="btn-variant-states-block">
-              <p class="btn-variant-states-label">{{ variant.caption }}</p>
-              <div class="message-catalog-message-row is-static-preview" [attr.aria-label]="variant.caption">
-                @for (sev of severities; track trackSeverity($index, sev)) {
-                  <p-message
-                    [severity]="sev.key"
-                    [variant]="primeVariant(variant.key)"
-                    [icon]="severityIcon(sev.key)"
-                    [closable]="true"
-                    styleClass="mds-message-fix"
-                  >
-                    {{ content }}
-                  </p-message>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="true"
+          expandAriaLabel="Expandir variantes y tamaños de Message"
+          collapseAriaLabel="Contraer variantes y tamaños de Message"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive message-catalog-message-row" aria-label="Message preview">
+            <p-message styleClass="mds-message-fix">
+              {{ content }}
+            </p-message>
+          </div>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Variants &amp; States" icon="objects-column">
+              @for (variant of variants; track variant.key) {
+                <div class="btn-variant-states-block">
+                  <p class="btn-variant-states-label">{{ variant.caption }}</p>
+                  <div class="message-catalog-message-row is-static-preview" [attr.aria-label]="variant.caption">
+                    @for (sev of severities; track trackSeverity($index, sev)) {
+                      <p-message
+                        [severity]="sev.key"
+                        [variant]="primeVariant(variant.key)"
+                        [icon]="severityIcon(sev.key)"
+                        [closable]="true"
+                        styleClass="mds-message-fix"
+                      >
+                        {{ content }}
+                      </p-message>
+                    }
+                  </div>
+                </div>
+              }
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Sizes" icon="arrows-v">
+              <div
+                class="catalog-button-states-row is-static-preview"
+                aria-label="Message relleno en tres tamaños, severidad success"
+              >
+                @for (sz of sizeOptions; track sz.key) {
+                  <div class="catalog-button-state">
+                    <div class="catalog-button-state-preview">
+                      <p-message
+                        severity="success"
+                        [size]="primeSize(sz.key)"
+                        [icon]="severityIcon('success')"
+                        [closable]="true"
+                        styleClass="mds-message-fix"
+                      >
+                        {{ content }}
+                      </p-message>
+                    </div>
+                    <mds-catalog-state-tag [label]="sz.caption" />
+                  </div>
                 }
               </div>
-            </div>
-          }
-        </div>
-
-        <div class="btn-section">
-          <p class="btn-section-title">Sizes</p>
-          <div
-            class="catalog-button-states-row is-static-preview"
-            aria-label="Message relleno en tres tamaños, severidad success"
-          >
-            @for (sz of sizeOptions; track sz.key) {
-              <div class="catalog-button-state">
-                <div class="catalog-button-state-preview">
-                  <p-message
-                    severity="success"
-                    [size]="primeSize(sz.key)"
-                    [icon]="severityIcon('success')"
-                    [closable]="true"
-                    styleClass="mds-message-fix"
-                  >
-                    {{ content }}
-                  </p-message>
-                </div>
-                <mds-catalog-state-tag [label]="sz.caption" />
-              </div>
-            }
-          </div>
-        </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
       </div>
     </section>
   </div>

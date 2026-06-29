@@ -8,7 +8,10 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showExpand]="true"
           configAriaLabel="Configurar Breadcrumb"
+          expandAriaLabel="Expandir variantes de Breadcrumb"
+          collapseAriaLabel="Contraer variantes de Breadcrumb"
         >
           <div catalogPreviewDemo class="breadcrumb-catalog-demo-area catalog-showcase-interactive">
             <p-breadcrumb
@@ -61,29 +64,30 @@
               </div>
             }
           </ng-container>
-        </mds-catalog-preview-frame>
 
-        <div class="btn-section">
-          <p class="btn-section-title">Variants</p>
-          <div
-            class="breadcrumb-catalog-states-row is-static-preview"
-            aria-label="Breadcrumb display variants including custom mode"
-          >
-            @for (demo of displayModeDemos; track trackDisplayMode($index, demo)) {
-              <div class="breadcrumb-catalog-state">
-                <div class="breadcrumb-catalog-state-preview">
-                  <p-breadcrumb
-                    [class]="demoDisplayClass(demo.key)"
-                    [home]="demoHome(demo.key)"
-                    [model]="demoModel(demo.key)"
-                    [homeAriaLabel]="homeAriaLabel"
-                  />
-                </div>
-                <mds-catalog-state-tag [label]="demo.caption" />
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Variants" icon="sitemap">
+              <div
+                class="breadcrumb-catalog-states-row is-static-preview"
+                aria-label="Breadcrumb display variants including custom mode"
+              >
+                @for (demo of displayModeDemos; track trackDisplayMode($index, demo)) {
+                  <div class="breadcrumb-catalog-state">
+                    <div class="breadcrumb-catalog-state-preview">
+                      <p-breadcrumb
+                        [class]="demoDisplayClass(demo.key)"
+                        [home]="demoHome(demo.key)"
+                        [model]="demoModel(demo.key)"
+                        [homeAriaLabel]="homeAriaLabel"
+                      />
+                    </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
+                  </div>
+                }
               </div>
-            }
-          </div>
-        </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
       </div>
     </section>
   </div>

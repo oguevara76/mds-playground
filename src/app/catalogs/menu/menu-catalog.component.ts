@@ -6,6 +6,7 @@ import { Divider } from 'primeng/divider';
 import { Select } from 'primeng/select';
 import { SelectButton } from 'primeng/selectbutton';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
@@ -25,7 +26,7 @@ import {
 @Component({
   selector: 'app-menu-catalog',
   standalone: true,
-  imports: [Breadcrumb, CatalogBlockHeadTitlePipe, CatalogPreviewFrameComponent, CatalogStateTagComponent, FormsModule, Select, SelectButton, Divider],
+  imports: [Breadcrumb, CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, FormsModule, Select, SelectButton, Divider],
   templateUrl: './menu-catalog.component.html',
   styleUrl: './menu-catalog.component.css',
   host: { class: 'menu-catalog-page' },
@@ -37,8 +38,8 @@ export class MenuCatalogComponent {
   readonly homeAriaLabel = BREADCRUMB_CATALOG_HOME_ARIA_LABEL;
 
   readonly breadcrumbIx = signal<BreadcrumbCatalogInteractionState>({
-    itemCount: 5,
-    displayMode: 'icon-text',
+    itemCount: 3,
+    displayMode: 'text',
   });
 
   readonly breadcrumbHome = computed<MenuItem>(() =>
