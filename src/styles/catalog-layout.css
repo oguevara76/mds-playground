@@ -46,14 +46,18 @@
 /* Título del componente (bloque) separado de subsecciones Interaction / States / Sizes */
 .catalog-block-head {
   margin-bottom: 0;
-  padding-bottom: 16px;
-  border-bottom: 2px solid color-mix(in srgb, var(--p-primary-color) 30%, var(--p-content-border));
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .catalog-block-head .section-title.component-title-primary {
   margin: 0;
   padding-bottom: 0;
   border-bottom: none;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--p-content-color, var(--text-color));
 }
 
 .catalog-block-body {
@@ -71,6 +75,36 @@
 
 .catalog-interaction-section.btn-section {
   margin-bottom: var(--catalog-section-stack-gap, 32px);
+}
+
+.catalog-preview-section.btn-section {
+  margin-top: 0;
+  margin-bottom: var(--catalog-section-stack-gap, 32px);
+}
+
+.catalog-block-body > .catalog-preview-section:first-child {
+  margin-top: 14px;
+}
+
+:root {
+  --catalog-preview-frame-min-height: 160px;
+  --catalog-preview-frame-padding-x: 24px;
+  --catalog-preview-frame-padding-y: 48px;
+  --catalog-preview-frame-footer-height: 32px;
+  --catalog-preview-frame-footer-offset: 12px;
+  --catalog-preview-frame-radius: 12px;
+  --catalog-preview-frame-bg: color-mix(
+    in srgb,
+    var(--p-surface-100, var(--surface-100)) 28%,
+    var(--p-surface-0, var(--surface-0))
+  );
+  --catalog-preview-frame-shadow: none;
+  --catalog-preview-frame-badge-bg: var(--p-surface-100, var(--surface-100));
+  --catalog-preview-frame-badge-color: var(--p-surface-600, var(--surface-600));
+  --catalog-preview-frame-action-color: var(--p-surface-500, var(--surface-500));
+  --catalog-preview-frame-action-hover-bg: var(--p-surface-100, var(--surface-100));
+  --catalog-preview-frame-action-hover-color: var(--p-surface-700, var(--surface-700));
+  --catalog-preview-frame-action-active-bg: color-mix(in srgb, var(--p-primary-color) 12%, transparent);
 }
 
 .btn-section {
@@ -168,8 +202,19 @@
   border-bottom-color: var(--p-surface-800, var(--surface-800));
 }
 
-[data-theme="dark"] .catalog-block-head {
-  border-bottom-color: color-mix(in srgb, var(--p-primary-color) 18%, var(--p-surface-800, var(--surface-800)));
+[data-theme="dark"] {
+  --catalog-preview-frame-bg: color-mix(
+    in srgb,
+    var(--p-surface-800, var(--surface-800)) 78%,
+    var(--p-surface-950, var(--surface-950))
+  );
+  --catalog-preview-frame-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--p-surface-700, var(--surface-700)) 38%, transparent);
+  --catalog-preview-frame-badge-bg: var(--p-surface-900, var(--surface-900));
+  --catalog-preview-frame-badge-color: var(--p-surface-300, var(--surface-300));
+  --catalog-preview-frame-action-color: var(--p-surface-400, var(--surface-400));
+  --catalog-preview-frame-action-hover-bg: var(--p-surface-700, var(--surface-700));
+  --catalog-preview-frame-action-hover-color: var(--p-surface-200, var(--surface-200));
 }
 
 /* Showcase cards (Button + Form): jerarquía tipográfica y layout de interacción */
@@ -188,8 +233,7 @@
 .breadcrumb-showcase .catalog-block-head .section-title.component-title-primary,
 .tooltip-variant-block .catalog-block-head .section-title.component-title-primary,
 .drawer-variant-block .catalog-block-head .section-title.component-title-primary {
-  color: var(--p-content-color);
-  font-weight: 800;
+  color: var(--p-content-color, var(--text-color));
 }
 
 .form-showcase .btn-section-title,
@@ -495,26 +539,7 @@ mds-catalog-state-tag .catalog-state-tag {
 [data-theme="dark"] .paginator-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .divider-variant-block .catalog-block-head .section-title.component-title-primary {
-  color: var(--p-surface-0);
-  font-weight: 800;
-}
-
-[data-theme="dark"] .form-showcase .catalog-block-head,
-[data-theme="dark"] .button-showcase .catalog-block-head,
-[data-theme="dark"] .messages-showcase .catalog-block-head,
-[data-theme="dark"] .toast-showcase .catalog-block-head,
-[data-theme="dark"] .tag-showcase .catalog-block-head,
-[data-theme="dark"] .chip-showcase .catalog-block-head,
-[data-theme="dark"] .badge-showcase .catalog-block-head,
-[data-theme="dark"] .avatar-showcase .catalog-block-head,
-[data-theme="dark"] .avatargroup-showcase .catalog-block-head,
-[data-theme="dark"] .breadcrumb-showcase .catalog-block-head,
-[data-theme="dark"] .tooltip-variant-block .catalog-block-head,
-[data-theme="dark"] .drawer-variant-block .catalog-block-head,
-[data-theme="dark"] .paginator-showcase .catalog-block-head,
-[data-theme="dark"] .tabs-variant-block .catalog-block-head,
-[data-theme="dark"] .divider-variant-block .catalog-block-head {
-  border-bottom-color: color-mix(in srgb, var(--p-primary-color) 42%, var(--p-surface-600));
+  color: var(--p-surface-0, var(--surface-0));
 }
 
 [data-theme="dark"] .form-showcase .btn-section-title,

@@ -22,6 +22,10 @@ import {
 } from './toggleswitch-mds-overrides';
 import { MDS_BUTTON_OVERRIDE_STYLE_ID, BUTTON_MDS_OVERRIDE_CSS } from './button-mds-overrides';
 import {
+  MDS_SPLITBUTTON_OVERRIDE_STYLE_ID,
+  SPLITBUTTON_MDS_OVERRIDE_CSS,
+} from './splitbutton-mds-overrides';
+import {
   MDS_PAGINATOR_OVERRIDE_STYLE_ID,
   PAGINATOR_MDS_OVERRIDE_CSS,
 } from './paginator-mds-overrides';
@@ -30,6 +34,7 @@ export type CssColorReader = (varName: string) => string;
 export type InjectStyleFn = (id: string, css: string) => void;
 
 export { MDS_RUNTIME_BRIDGE_STYLE_ID, MDS_TABS_OVERRIDE_STYLE_ID };
+export { MDS_SPLITBUTTON_OVERRIDE_STYLE_ID } from './splitbutton-mds-overrides';
 
 /**
  * Reaplica el puente --p-* ← tokens MDS (primeng-tokens.css + uploads).
@@ -53,5 +58,6 @@ export function syncPrimeUixPalettesFromMds(
   injectStyle(MDS_AVATAR_OVERRIDE_STYLE_ID, AVATAR_MDS_OVERRIDE_CSS);
   injectStyle(MDS_TOGGLESWITCH_OVERRIDE_STYLE_ID, TOGGLESWITCH_MDS_OVERRIDE_CSS);
   injectStyle(MDS_BUTTON_OVERRIDE_STYLE_ID, BUTTON_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_SPLITBUTTON_OVERRIDE_STYLE_ID, SPLITBUTTON_MDS_OVERRIDE_CSS);
   injectStyle(MDS_PAGINATOR_OVERRIDE_STYLE_ID, PAGINATOR_MDS_OVERRIDE_CSS);
 }

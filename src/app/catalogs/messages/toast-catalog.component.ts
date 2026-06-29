@@ -3,6 +3,8 @@ import { MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
 import { TimesIcon } from 'primeng/icons/times';
 import { Toast } from 'primeng/toast';
+import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import {
   TOAST_CATALOG_ENTER_CLASS,
   TOAST_CATALOG_ICONS,
@@ -17,7 +19,7 @@ import {
 @Component({
   selector: 'app-toast-catalog',
   standalone: true,
-  imports: [Toast, Button, TimesIcon],
+  imports: [CatalogBlockHeadTitlePipe, CatalogPreviewFrameComponent, Toast, Button, TimesIcon],
   templateUrl: './toast-catalog.component.html',
   styleUrl: './toast-catalog.component.css',
 })

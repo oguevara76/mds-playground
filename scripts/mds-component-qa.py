@@ -22,12 +22,20 @@ from mds_component_lib import find_showcase, normalize_component, scan_index_for
 PENDING_PATH = Path(__file__).resolve().parent / "mds-component-pending.json"
 CATALOGS_DIR = ROOT / "src" / "app" / "catalogs"
 
-REQUIRED_MARKERS = [
+BASE_MARKERS = [
     ("catalog-block-head", "header de bloque"),
     ("btn-section-title", "subtítulo Interaction/States"),
+]
+
+LEGACY_CONFIG_MARKERS = [
     ("button-config-aside", "aside CONFIGURAR"),
     ("button-config-popover", "clase popover"),
     ("CONFIGURAR", "botón CONFIGURAR"),
+]
+
+PREVIEW_FRAME_MARKERS = [
+    ("mds-catalog-preview-frame", "contenedor PREVIEW"),
+    ("catalog-preview-section", "sección PREVIEW"),
 ]
 
 
@@ -45,19 +53,33 @@ def load_pending_open(component: str) -> list[dict]:
 def check_structure(html_path: Path) -> list[str]:
     text = html_path.read_text(encoding="utf-8", errors="ignore")
     issues = []
-    for marker, label in REQUIRED_MARKERS:
+    for marker, label in BASE_MARKERS:
         if marker not in text:
             issues.append(f"Falta `{marker}` ({label})")
-    if "Interaction" not in text and "catalog-interaction-section" not in text:
-        issues.append("Falta sección Interaction")
+
+    has_legacy_config = all(marker in text for marker, _ in LEGACY_CONFIG_MARKERS)
+    has_preview_frame = all(marker in text for marker, _ in PREVIEW_FRAME_MARKERS)
+    if not has_legacy_config and not has_preview_frame:
+        issues.append(
+            "Falta configurador: patrón legacy (CONFIGURAR + button-config-aside) "
+            "o PREVIEW (mds-catalog-preview-frame)"
+        )
+
+    has_legacy_interaction = "Interaction" in text or "catalog-interaction-section" in text
+    has_preview_section = "mds-catalog-preview-frame" in text or "catalog-preview-section" in text
+    if not has_legacy_interaction and not has_preview_section:
+        issues.append("Falta sección Interaction o PREVIEW")
     return issues
 
 
 def check_popover_bindings(html_path: Path) -> list[str]:
     text = html_path.read_text(encoding="utf-8", errors="ignore")
     issues = []
-    if "p-popover" in text and "ngModel" not in text and "ngModelChange" not in text:
-        # puede usar signals con [ngModel] en hijos
+    uses_preview_frame = "mds-catalog-preview-frame" in text
+    has_popover_markup = "p-popover" in text or uses_preview_frame
+    if not has_popover_markup:
+        return issues
+    if "ngModel" not in text and "ngModelChange" not in text:
         if "p-select" not in text and "p-selectbutton" not in text and "p-toggleswitch" not in text:
             issues.append("Popover sin controles p-select / p-selectbutton / p-toggleswitch detectados")
     return issues
@@ -125,7 +147,7 @@ def run_qa(component_arg: str) -> dict:
     checks.append(
         {
             "id": "structure",
-            "label": "Estructura HTML (títulos, Interaction, CONFIGURAR)",
+            "label": "Estructura HTML (títulos, Interaction/PREVIEW, configurador)",
             "status": "PASS" if not structure_issues else "FAIL",
             "detail": "; ".join(structure_issues) or "OK",
         }
@@ -177,7 +199,7 @@ def run_qa(component_arg: str) -> dict:
         "route": f"/{catalog_route}#{anchor}",
         "checks": checks,
         "visual_checklist": [
-            f"Popover CONFIGURAR en /{catalog_route}#{anchor}",
+            f"Configurador (icono settings o CONFIGURAR) en /{catalog_route}#{anchor}",
             "Variants & States + Sizes (si aplica)",
             "Light + dark",
             f"Tokens --{prefix}-* en /tokens",

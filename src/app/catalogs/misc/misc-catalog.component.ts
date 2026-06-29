@@ -7,11 +7,12 @@ import { Button } from 'primeng/button';
 import { Chip } from 'primeng/chip';
 import { Divider } from 'primeng/divider';
 import { OverlayBadge } from 'primeng/overlaybadge';
-import { Popover } from 'primeng/popover';
 import { Select } from 'primeng/select';
 import { SelectButton } from 'primeng/selectbutton';
 import { Tag } from 'primeng/tag';
 import { ToggleSwitch } from 'primeng/toggleswitch';
+import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import {
   AVATAR_CATALOG_BADGE_DEMO_VALUE,
   AVATAR_CATALOG_DEMO_ICON,
@@ -65,6 +66,8 @@ interface AvatarGroupInteractionState {
   selector: 'app-misc-catalog',
   standalone: true,
   imports: [
+    CatalogBlockHeadTitlePipe,
+    CatalogPreviewFrameComponent,
     Tag,
     Chip,
     Badge,
@@ -73,7 +76,6 @@ interface AvatarGroupInteractionState {
     Avatar,
     AvatarGroup,
     FormsModule,
-    Popover,
     Select,
     SelectButton,
     ToggleSwitch,

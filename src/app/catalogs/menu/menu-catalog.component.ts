@@ -3,9 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { Divider } from 'primeng/divider';
-import { Popover } from 'primeng/popover';
 import { Select } from 'primeng/select';
 import { SelectButton } from 'primeng/selectbutton';
+import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
   BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS,
@@ -24,7 +25,7 @@ import {
 @Component({
   selector: 'app-menu-catalog',
   standalone: true,
-  imports: [Breadcrumb, CatalogStateTagComponent, FormsModule, Popover, Select, SelectButton, Divider],
+  imports: [Breadcrumb, CatalogBlockHeadTitlePipe, CatalogPreviewFrameComponent, CatalogStateTagComponent, FormsModule, Select, SelectButton, Divider],
   templateUrl: './menu-catalog.component.html',
   styleUrl: './menu-catalog.component.css',
   host: { class: 'menu-catalog-page' },

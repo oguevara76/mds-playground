@@ -15,6 +15,22 @@
   flex-direction: column;
 }
 
+:host.panel-catalog-page .divider-catalog-demo-area--readable .divider-demo-body-text {
+  color: var(--p-text-muted-color, var(--text-muted-color, var(--p-surface-600)));
+}
+
+:host.panel-catalog-page .divider-catalog-demo-area--readable .divider-catalog-content-label {
+  color: var(--p-text-color, var(--text-color, var(--p-surface-500)));
+}
+
+:host-context([data-theme='dark']).panel-catalog-page .divider-catalog-demo-area--readable .divider-demo-body-text {
+  color: var(--p-surface-200, var(--surface-200));
+}
+
+:host-context([data-theme='dark']).panel-catalog-page .divider-catalog-demo-area--readable .divider-catalog-content-label {
+  color: var(--p-surface-300, var(--surface-300));
+}
+
 :host.panel-catalog-page .divider-demo-body-text {
   margin: 0;
   padding: 12px 0;

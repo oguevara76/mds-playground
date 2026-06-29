@@ -17,436 +17,364 @@
         tabindex="-1"
       >
         <header class="catalog-block-head">
-          <h3 class="section-title component-title-primary">{{ block.title }}</h3>
+          <h3 class="section-title component-title-primary">{{ block.title | catalogBlockHeadTitle }}</h3>
         </header>
 
         <div class="catalog-block-body" [ngClass]="formThemeContainerClass(block.kind)">
-          <div class="btn-section catalog-interaction-section">
-            <p class="btn-section-title">Interaction</p>
-
           @switch (block.kind) {
             @case ('radio') {
-              <div class="input-interaction-row catalog-interaction-row--center">
-                <div class="catalog-showcase-interactive">
-                  <div
-                    class="form-choice-row"
-                    role="radiogroup"
-                    aria-label="Método de pago"
-                    [ngClass]="choiceSizeClass(choiceIx('radio').size)"
-                  >
-                    @for (opt of radioOptions; track opt.value) {
-                      <div class="form-choice-item">
-                        <p-radiobutton
-                          name="form-catalog-radio"
-                          [value]="opt.value"
-                          [ngModel]="radioValue()"
-                          (ngModelChange)="radioValue.set($event)"
-                          [size]="choicePrimeSize(choiceIx('radio').size)"
-                          [variant]="formThemePrimeVariant('radio')"
-                          [inputId]="'radio-ix-' + opt.value"
-                        />
-                        <label [for]="'radio-ix-' + opt.value">{{ opt.label }}</label>
-                      </div>
-                    }
-                  </div>
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar RadioButton"
+              >
+                <div catalogPreviewDemo class="catalog-showcase-interactive">
+                <div
+                class="form-choice-row"
+                role="radiogroup"
+                aria-label="Método de pago"
+                [ngClass]="choiceSizeClass(choiceIx('radio').size)"
+                >
+                @for (opt of radioOptions; track opt.value) {
+                <div class="form-choice-item">
+                <p-radiobutton
+                name="form-catalog-radio"
+                [value]="opt.value"
+                [ngModel]="radioValue()"
+                (ngModelChange)="radioValue.set($event)"
+                [size]="choicePrimeSize(choiceIx('radio').size)"
+                [variant]="formThemePrimeVariant('radio')"
+                [inputId]="'radio-ix-' + opt.value"
+                />
+                <label [for]="'radio-ix-' + opt.value">{{ opt.label }}</label>
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="radioConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="radioConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Theme, Size
-                  </p>
-                  <p-popover
-                    #radioConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar RadioButton"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Theme</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="themeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="formTheme('radio')"
-                            (ngModelChange)="patchFormTheme('radio', $event)"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Theme RadioButton"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="choiceIx('radio').size"
-                            (ngModelChange)="patchChoiceIx('radio', { size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                }
+                </div>
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Theme</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="themeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="formTheme('radio')"
+                  (ngModelChange)="patchFormTheme('radio', $event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Theme RadioButton"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="choiceIx('radio').size"
+                  (ngModelChange)="patchChoiceIx('radio', { size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size"
+                  />
+                  </div>
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('checkbox') {
-              <div class="input-interaction-row catalog-interaction-row--center">
-                <div class="catalog-showcase-interactive">
-                  <div
-                    class="form-choice-row"
-                    role="group"
-                    aria-label="Canales de notificación"
-                    [ngClass]="choiceSizeClass(choiceIx('checkbox').size)"
-                  >
-                    @for (opt of checkboxOptions; track opt.key) {
-                      <div class="form-choice-item">
-                        <p-checkbox
-                          [binary]="true"
-                          [ngModel]="checkboxChecked(opt.key)"
-                          (ngModelChange)="patchCheckbox(opt.key, $event)"
-                          [size]="choicePrimeSize(choiceIx('checkbox').size)"
-                          [variant]="formThemePrimeVariant('checkbox')"
-                          [inputId]="'cb-ix-' + opt.key"
-                        />
-                        <label [for]="'cb-ix-' + opt.key">{{ opt.label }}</label>
-                      </div>
-                    }
-                  </div>
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar Checkbox"
+              >
+                <div catalogPreviewDemo class="catalog-showcase-interactive">
+                <div
+                class="form-choice-row"
+                role="group"
+                aria-label="Canales de notificación"
+                [ngClass]="choiceSizeClass(choiceIx('checkbox').size)"
+                >
+                @for (opt of checkboxOptions; track opt.key) {
+                <div class="form-choice-item">
+                <p-checkbox
+                [binary]="true"
+                [ngModel]="checkboxChecked(opt.key)"
+                (ngModelChange)="patchCheckbox(opt.key, $event)"
+                [size]="choicePrimeSize(choiceIx('checkbox').size)"
+                [variant]="formThemePrimeVariant('checkbox')"
+                [inputId]="'cb-ix-' + opt.key"
+                />
+                <label [for]="'cb-ix-' + opt.key">{{ opt.label }}</label>
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="checkboxConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="checkboxConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Theme, Size
-                  </p>
-                  <p-popover
-                    #checkboxConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar Checkbox"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Theme</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="themeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="formTheme('checkbox')"
-                            (ngModelChange)="patchFormTheme('checkbox', $event)"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Theme Checkbox"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="choiceIx('checkbox').size"
-                            (ngModelChange)="patchChoiceIx('checkbox', { size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                }
+                </div>
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Theme</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="themeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="formTheme('checkbox')"
+                  (ngModelChange)="patchFormTheme('checkbox', $event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Theme Checkbox"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="choiceIx('checkbox').size"
+                  (ngModelChange)="patchChoiceIx('checkbox', { size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size"
+                  />
+                  </div>
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('toggleswitch') {
-              <div class="input-interaction-row catalog-interaction-row--center">
-                <div class="catalog-showcase-interactive">
-                  <div class="form-choice-row" role="group" aria-label="ToggleSwitch interactivo">
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                [showConfig]="false"
+              >
+                <div catalogPreviewDemo class="catalog-showcase-interactive">
+                <div class="form-choice-row" role="group" aria-label="ToggleSwitch interactivo">
                 <div class="form-choice-item">
-                  <p-toggleswitch
-                    inputId="ts-ix-off"
-                    [ngModel]="toggleOff()"
-                    (ngModelChange)="toggleOff.set($event)"
-                  />
-                  <label for="ts-ix-off">Por defecto</label>
+                <p-toggleswitch
+                inputId="ts-ix-off"
+                [ngModel]="toggleOff()"
+                (ngModelChange)="toggleOff.set($event)"
+                />
+                <label for="ts-ix-off">Por defecto</label>
                 </div>
                 <div class="form-choice-item">
-                  <p-toggleswitch
-                    inputId="ts-ix-on"
-                    [ngModel]="toggleOn()"
-                    (ngModelChange)="toggleOn.set($event)"
-                  />
-                  <label for="ts-ix-on">Activado</label>
+                <p-toggleswitch
+                inputId="ts-ix-on"
+                [ngModel]="toggleOn()"
+                (ngModelChange)="toggleOn.set($event)"
+                />
+                <label for="ts-ix-on">Activado</label>
                 </div>
-                  </div>
                 </div>
-              </div>
+                </div>
+              </mds-catalog-preview-frame>
             }
             @case ('togglebutton') {
-              <div class="input-interaction-row catalog-interaction-row--center">
-                <div class="catalog-showcase-interactive">
-                  <div class="form-togglebutton-row" role="group" aria-label="ToggleButton interactivo">
-                    @if (toggleButtonIx().size === 'small') {
-                      <p-togglebutton
-                        inputId="tb-ix-off"
-                        onLabel="On"
-                        offLabel="Off"
-                        size="small"
-                        [iconPos]="toggleButtonIx().iconPos"
-                        [onIcon]="toggleButtonOnIcon()"
-                        [offIcon]="toggleButtonOffIcon()"
-                        [ngModel]="toggleButtonOff()"
-                        (ngModelChange)="toggleButtonOff.set($event)"
-                        [style]="toggleButtonHostVars('small')"
-                        ariaLabel="ToggleButton apagado"
-                      />
-                      <p-togglebutton
-                        inputId="tb-ix-on"
-                        onLabel="On"
-                        offLabel="Off"
-                        size="small"
-                        [iconPos]="toggleButtonIx().iconPos"
-                        [onIcon]="toggleButtonOnIcon()"
-                        [offIcon]="toggleButtonOffIcon()"
-                        [ngModel]="toggleButtonOn()"
-                        (ngModelChange)="toggleButtonOn.set($event)"
-                        [style]="toggleButtonHostVars('small')"
-                        ariaLabel="ToggleButton encendido"
-                      />
-                    } @else if (toggleButtonIx().size === 'large') {
-                      <p-togglebutton
-                        inputId="tb-ix-off"
-                        onLabel="On"
-                        offLabel="Off"
-                        size="large"
-                        [iconPos]="toggleButtonIx().iconPos"
-                        [onIcon]="toggleButtonOnIcon()"
-                        [offIcon]="toggleButtonOffIcon()"
-                        [ngModel]="toggleButtonOff()"
-                        (ngModelChange)="toggleButtonOff.set($event)"
-                        [style]="toggleButtonHostVars('large')"
-                        ariaLabel="ToggleButton apagado"
-                      />
-                      <p-togglebutton
-                        inputId="tb-ix-on"
-                        onLabel="On"
-                        offLabel="Off"
-                        size="large"
-                        [iconPos]="toggleButtonIx().iconPos"
-                        [onIcon]="toggleButtonOnIcon()"
-                        [offIcon]="toggleButtonOffIcon()"
-                        [ngModel]="toggleButtonOn()"
-                        (ngModelChange)="toggleButtonOn.set($event)"
-                        [style]="toggleButtonHostVars('large')"
-                        ariaLabel="ToggleButton encendido"
-                      />
-                    } @else {
-                      <p-togglebutton
-                        inputId="tb-ix-off"
-                        onLabel="On"
-                        offLabel="Off"
-                        [iconPos]="toggleButtonIx().iconPos"
-                        [onIcon]="toggleButtonOnIcon()"
-                        [offIcon]="toggleButtonOffIcon()"
-                        [ngModel]="toggleButtonOff()"
-                        (ngModelChange)="toggleButtonOff.set($event)"
-                        [style]="toggleButtonHostVars('normal')"
-                        ariaLabel="ToggleButton apagado"
-                      />
-                      <p-togglebutton
-                        inputId="tb-ix-on"
-                        onLabel="On"
-                        offLabel="Off"
-                        [iconPos]="toggleButtonIx().iconPos"
-                        [onIcon]="toggleButtonOnIcon()"
-                        [offIcon]="toggleButtonOffIcon()"
-                        [ngModel]="toggleButtonOn()"
-                        (ngModelChange)="toggleButtonOn.set($event)"
-                        [style]="toggleButtonHostVars('normal')"
-                        ariaLabel="ToggleButton encendido"
-                      />
-                    }
-                  </div>
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar ToggleButton"
+              >
+                <div catalogPreviewDemo class="catalog-showcase-interactive">
+                <div class="form-togglebutton-row" role="group" aria-label="ToggleButton interactivo">
+                @if (toggleButtonIx().size === 'small') {
+                <p-togglebutton
+                inputId="tb-ix-off"
+                onLabel="On"
+                offLabel="Off"
+                size="small"
+                [iconPos]="toggleButtonIx().iconPos"
+                [onIcon]="toggleButtonOnIcon()"
+                [offIcon]="toggleButtonOffIcon()"
+                [ngModel]="toggleButtonOff()"
+                (ngModelChange)="toggleButtonOff.set($event)"
+                [style]="toggleButtonHostVars('small')"
+                ariaLabel="ToggleButton apagado"
+                />
+                <p-togglebutton
+                inputId="tb-ix-on"
+                onLabel="On"
+                offLabel="Off"
+                size="small"
+                [iconPos]="toggleButtonIx().iconPos"
+                [onIcon]="toggleButtonOnIcon()"
+                [offIcon]="toggleButtonOffIcon()"
+                [ngModel]="toggleButtonOn()"
+                (ngModelChange)="toggleButtonOn.set($event)"
+                [style]="toggleButtonHostVars('small')"
+                ariaLabel="ToggleButton encendido"
+                />
+                } @else if (toggleButtonIx().size === 'large') {
+                <p-togglebutton
+                inputId="tb-ix-off"
+                onLabel="On"
+                offLabel="Off"
+                size="large"
+                [iconPos]="toggleButtonIx().iconPos"
+                [onIcon]="toggleButtonOnIcon()"
+                [offIcon]="toggleButtonOffIcon()"
+                [ngModel]="toggleButtonOff()"
+                (ngModelChange)="toggleButtonOff.set($event)"
+                [style]="toggleButtonHostVars('large')"
+                ariaLabel="ToggleButton apagado"
+                />
+                <p-togglebutton
+                inputId="tb-ix-on"
+                onLabel="On"
+                offLabel="Off"
+                size="large"
+                [iconPos]="toggleButtonIx().iconPos"
+                [onIcon]="toggleButtonOnIcon()"
+                [offIcon]="toggleButtonOffIcon()"
+                [ngModel]="toggleButtonOn()"
+                (ngModelChange)="toggleButtonOn.set($event)"
+                [style]="toggleButtonHostVars('large')"
+                ariaLabel="ToggleButton encendido"
+                />
+                } @else {
+                <p-togglebutton
+                inputId="tb-ix-off"
+                onLabel="On"
+                offLabel="Off"
+                [iconPos]="toggleButtonIx().iconPos"
+                [onIcon]="toggleButtonOnIcon()"
+                [offIcon]="toggleButtonOffIcon()"
+                [ngModel]="toggleButtonOff()"
+                (ngModelChange)="toggleButtonOff.set($event)"
+                [style]="toggleButtonHostVars('normal')"
+                ariaLabel="ToggleButton apagado"
+                />
+                <p-togglebutton
+                inputId="tb-ix-on"
+                onLabel="On"
+                offLabel="Off"
+                [iconPos]="toggleButtonIx().iconPos"
+                [onIcon]="toggleButtonOnIcon()"
+                [offIcon]="toggleButtonOffIcon()"
+                [ngModel]="toggleButtonOn()"
+                (ngModelChange)="toggleButtonOn.set($event)"
+                [style]="toggleButtonHostVars('normal')"
+                ariaLabel="ToggleButton encendido"
+                />
+                }
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="toggleButtonConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="toggleButtonConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Size, Iconos, Posición icono
-                  </p>
-                  <p-popover
-                    #toggleButtonConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar ToggleButton"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="toggleButtonIx().size"
-                            (ngModelChange)="patchToggleButtonIx({ size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size ToggleButton"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="input-config-row">
-                        <span class="input-config-label">Iconos</span>
-                        <p-toggleswitch
-                          [ngModel]="toggleButtonIx().withIcons"
-                          (ngModelChange)="patchToggleButtonIx({ withIcons: $event })"
-                        />
-                      </div>
-                      @if (toggleButtonIx().withIcons) {
-                        <div class="button-config-size-field">
-                          <span class="input-config-label">Posición icono</span>
-                          <div class="button-config-size-toggle-wrap">
-                            <p-selectbutton
-                              [options]="toggleButtonIconPosOptions"
-                              optionLabel="label"
-                              optionValue="value"
-                              [ngModel]="toggleButtonIx().iconPos"
-                              (ngModelChange)="patchToggleButtonIx({ iconPos: $event })"
-                              [allowEmpty]="false"
-                              [fluid]="true"
-                              size="small"
-                              ariaLabel="Posición del icono ToggleButton"
-                            />
-                          </div>
-                        </div>
-                      }
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="toggleButtonIx().size"
+                  (ngModelChange)="patchToggleButtonIx({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size ToggleButton"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                  <span class="input-config-label">Iconos</span>
+                  <p-toggleswitch
+                  [ngModel]="toggleButtonIx().withIcons"
+                  (ngModelChange)="patchToggleButtonIx({ withIcons: $event })"
+                  />
+                  </div>
+                  @if (toggleButtonIx().withIcons) {
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Posición icono</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="toggleButtonIconPosOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="toggleButtonIx().iconPos"
+                  (ngModelChange)="patchToggleButtonIx({ iconPos: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Posición del icono ToggleButton"
+                  />
+                  </div>
+                  </div>
+                  }
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('selectbutton') {
-              <div class="input-interaction-row catalog-interaction-row--center">
-                <div class="catalog-showcase-interactive">
-                  <p-selectbutton
-                    [options]="selectButtonOptions"
-                    optionLabel="label"
-                    optionValue="value"
-                    [ngModel]="selectButtonLiveValue()"
-                    (ngModelChange)="onSelectButtonValueChange($event)"
-                    [multiple]="selectButtonIx().multiple"
-                    [allowEmpty]="!selectButtonIx().multiple"
-                    [size]="selectButtonPrimeSize(selectButtonIx().size)"
-                    [style]="selectButtonHostVars(selectButtonIx().size)"
-                    ariaLabel="SelectButton interactivo"
-                  />
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar SelectButton"
+              >
+                <div catalogPreviewDemo class="catalog-showcase-interactive">
+                <p-selectbutton
+                [options]="selectButtonOptions"
+                optionLabel="label"
+                optionValue="value"
+                [ngModel]="selectButtonLiveValue()"
+                (ngModelChange)="onSelectButtonValueChange($event)"
+                [multiple]="selectButtonIx().multiple"
+                [allowEmpty]="!selectButtonIx().multiple"
+                [size]="selectButtonPrimeSize(selectButtonIx().size)"
+                [style]="selectButtonHostVars(selectButtonIx().size)"
+                ariaLabel="SelectButton interactivo"
+                />
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="selectButtonConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="selectButtonConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Item activo, Multiple, Size
-                  </p>
-                  <p-popover
-                    #selectButtonConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar SelectButton"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Item activo</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="selectButtonActiveItemOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="selectButtonIx().activeItem"
-                            (ngModelChange)="patchSelectButtonIx({ activeItem: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Item activo SelectButton"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="input-config-row">
-                        <span class="input-config-label">Multiple</span>
-                        <p-toggleswitch
-                          [ngModel]="selectButtonIx().multiple"
-                          (ngModelChange)="patchSelectButtonIx({ multiple: $event })"
-                          ariaLabel="Selección múltiple SelectButton"
-                        />
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="selectButtonIx().size"
-                            (ngModelChange)="patchSelectButtonIx({ size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size SelectButton"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Item activo</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="selectButtonActiveItemOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="selectButtonIx().activeItem"
+                  (ngModelChange)="patchSelectButtonIx({ activeItem: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Item activo SelectButton"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                  <span class="input-config-label">Multiple</span>
+                  <p-toggleswitch
+                  [ngModel]="selectButtonIx().multiple"
+                  (ngModelChange)="patchSelectButtonIx({ multiple: $event })"
+                  ariaLabel="Selección múltiple SelectButton"
+                  />
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="selectButtonIx().size"
+                  (ngModelChange)="patchSelectButtonIx({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size SelectButton"
+                  />
+                  </div>
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('select') {
               <ng-template #selectInteractionField>
@@ -486,567 +414,515 @@
                   </ng-template>
                 </p-select>
               </ng-template>
-              <div class="input-interaction-row">
-                <div
-                  class="catalog-showcase-interactive catalog-input-interactive select-interaction-scope"
-                  [ngClass]="selectInteractionScopeClass()"
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar Select"
+              >
+                <div catalogPreviewDemo
+                class="catalog-showcase-interactive catalog-input-interactive select-interaction-scope"
+                [ngClass]="selectInteractionScopeClass()"
                 >
-                  @if (selectIsDefault()) {
-                    <div class="p-field form-input-interaction-field">
-                      <label class="p-label" for="sel-live">Label</label>
-                      <ng-container *ngTemplateOutlet="selectInteractionField" />
-                    </div>
-                  } @else if (selectIsIftaLabel()) {
-                    <div class="form-input-interaction-control">
-                      <span class="p-iftalabel" [style]="selectFloatLabelHostVars()">
-                        <ng-container *ngTemplateOutlet="selectInteractionField" />
-                        <label for="sel-live">Label</label>
-                      </span>
-                    </div>
-                  } @else {
-                    <div class="form-input-interaction-control">
-                      <p-floatlabel
-                        [variant]="selectFloatPosition()"
-                        [class.is-label-floated]="selectInteractionLabelFloated()"
-                        [style]="selectFloatLabelHostVars()"
-                        (focusin)="setSelectFloatIxFocused(true)"
-                        (focusout)="setSelectFloatIxFocused(false)"
-                      >
-                        <ng-container *ngTemplateOutlet="selectInteractionField" />
-                        <label for="sel-live">Label</label>
-                      </p-floatlabel>
-                    </div>
-                  }
+                @if (selectIsDefault()) {
+                <div class="p-field form-input-interaction-field">
+                <label class="p-label" for="sel-live">Label</label>
+                <ng-container *ngTemplateOutlet="selectInteractionField" />
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="selectConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="selectConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">Variant, Float variant, Overlay, Size</p>
-                  <p-popover
-                    #selectConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar Select"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Variant</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="selectVariantSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="selectIx().variant"
-                            (ngModelChange)="patchSelect({ variant: $event })"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Variant Select"
-                          />
-                        </div>
-                      </div>
-                      @if (selectIsFloatLabel()) {
-                        <div class="button-config-size-field">
-                          <span class="input-config-label">Float variant</span>
-                          <div class="button-config-select-wrap">
-                            <p-select
-                              [options]="inputtextFloatPositionSelectOptions"
-                              optionLabel="label"
-                              optionValue="value"
-                              [ngModel]="selectIx().floatPosition"
-                              (ngModelChange)="patchSelect({ floatPosition: $event })"
-                              size="small"
-                              appendTo="body"
-                              ariaLabel="Float variant Select"
-                            />
-                          </div>
-                        </div>
-                      }
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">List options</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="selectOverlayOptionVariantOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="selectIx().overlayOptionVariant"
-                            (ngModelChange)="patchSelect({ overlayOptionVariant: $event })"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Variante de opciones del overlay Select"
-                          />
-                        </div>
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Overlay filter</span>
-                        <p-toggleswitch
-                          [ngModel]="selectIx().showOverlayFilter"
-                          (ngModelChange)="patchSelect({ showOverlayFilter: $event })"
-                        />
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="selectIx().size"
-                            (ngModelChange)="patchSelect({ size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size Select"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                } @else if (selectIsIftaLabel()) {
+                <div class="form-input-interaction-control">
+                <span class="p-iftalabel" [style]="selectFloatLabelHostVars()">
+                <ng-container *ngTemplateOutlet="selectInteractionField" />
+                <label for="sel-live">Label</label>
+                </span>
+                </div>
+                } @else {
+                <div class="form-input-interaction-control">
+                <p-floatlabel
+                [variant]="selectFloatPosition()"
+                [class.is-label-floated]="selectInteractionLabelFloated()"
+                [style]="selectFloatLabelHostVars()"
+                (focusin)="setSelectFloatIxFocused(true)"
+                (focusout)="setSelectFloatIxFocused(false)"
+                >
+                <ng-container *ngTemplateOutlet="selectInteractionField" />
+                <label for="sel-live">Label</label>
+                </p-floatlabel>
+                </div>
+                }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Variant</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="selectVariantSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="selectIx().variant"
+                  (ngModelChange)="patchSelect({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant Select"
+                  />
+                  </div>
+                  </div>
+                  @if (selectIsFloatLabel()) {
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Float variant</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="inputtextFloatPositionSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="selectIx().floatPosition"
+                  (ngModelChange)="patchSelect({ floatPosition: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Float variant Select"
+                  />
+                  </div>
+                  </div>
+                  }
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">List options</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="selectOverlayOptionVariantOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="selectIx().overlayOptionVariant"
+                  (ngModelChange)="patchSelect({ overlayOptionVariant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variante de opciones del overlay Select"
+                  />
+                  </div>
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Overlay filter</span>
+                  <p-toggleswitch
+                  [ngModel]="selectIx().showOverlayFilter"
+                  (ngModelChange)="patchSelect({ showOverlayFilter: $event })"
+                  />
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="selectIx().size"
+                  (ngModelChange)="patchSelect({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size Select"
+                  />
+                  </div>
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('textarea') {
-              <div class="input-interaction-row">
-                <div
-                  class="catalog-showcase-interactive catalog-input-interactive textarea-interaction-scope"
-                  [ngClass]="textareaInteractionScopeClass()"
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar Textarea"
+              >
+                <div catalogPreviewDemo
+                class="catalog-showcase-interactive catalog-input-interactive textarea-interaction-scope"
+                [ngClass]="textareaInteractionScopeClass()"
                 >
-                  @if (textareaIsDefault()) {
-                    <div class="p-field form-input-interaction-field">
-                      <label class="p-label" for="ta-live">Label</label>
-                      <textarea
-                        pTextarea
-                        [variant]="formThemePrimeVariant('textarea')"
-                        id="ta-live"
-                        rows="3"
-                        placeholder="Placeholder"
-                        [ngModel]="textareaIx().value"
-                        (ngModelChange)="patchTextarea({ value: $event })"
-                        (input)="onTextareaInput($event)"
-                        [ngClass]="textareaSizeClass(textareaIx().size)"
-                        [autoResize]="false"
-                        [fluid]="true"
-                      ></textarea>
-                      @if (textareaIx().showHelperText) {
-                        <small class="p-hint">Helper Text</small>
-                      }
-                    </div>
-                  } @else if (textareaIsIftaLabel()) {
-                    <div class="form-input-interaction-control">
-                      <span class="p-iftalabel" [style]="textareaFloatLabelHostVars()">
-                        <textarea
-                          pTextarea
-                          [variant]="formThemePrimeVariant('textarea')"
-                          id="ta-live"
-                          rows="3"
-                          [attr.placeholder]="textareaFloatInteractionPlaceholder()"
-                          [ngModel]="textareaIx().value"
-                          (ngModelChange)="patchTextarea({ value: $event })"
-                          (input)="onTextareaInput($event)"
-                          [ngClass]="textareaSizeClass(textareaIx().size)"
-                          [autoResize]="false"
-                          [fluid]="true"
-                        ></textarea>
-                        <label for="ta-live">Label</label>
-                      </span>
-                    </div>
-                    @if (textareaIx().showHelperText) {
-                      <small class="p-hint">Helper Text</small>
-                    }
-                  } @else {
-                    <div class="form-input-interaction-control">
-                      <p-floatlabel
-                        [variant]="textareaFloatPosition()"
-                        [class.is-label-floated]="textareaInteractionLabelFloated()"
-                        [style]="textareaFloatLabelHostVars()"
-                      >
-                        <textarea
-                          pTextarea
-                          [variant]="formThemePrimeVariant('textarea')"
-                          id="ta-live"
-                          rows="3"
-                          autocomplete="off"
-                          [attr.placeholder]="textareaFloatInteractionPlaceholder()"
-                          [ngModel]="textareaIx().value"
-                          (ngModelChange)="patchTextarea({ value: $event })"
-                          (input)="onTextareaInput($event)"
-                          (focus)="setTextareaFloatIxFocused(true)"
-                          (blur)="setTextareaFloatIxFocused(false)"
-                          [ngClass]="textareaSizeClass(textareaIx().size)"
-                          [autoResize]="false"
-                          [fluid]="true"
-                        ></textarea>
-                        <label for="ta-live">Label</label>
-                      </p-floatlabel>
-                    </div>
-                    @if (textareaIx().showHelperText) {
-                      <small class="p-hint">Helper Text</small>
-                    }
-                  }
+                @if (textareaIsDefault()) {
+                <div class="p-field form-input-interaction-field">
+                <label class="p-label" for="ta-live">Label</label>
+                <textarea
+                pTextarea
+                [variant]="formThemePrimeVariant('textarea')"
+                id="ta-live"
+                rows="3"
+                placeholder="Placeholder"
+                [ngModel]="textareaIx().value"
+                (ngModelChange)="patchTextarea({ value: $event })"
+                (input)="onTextareaInput($event)"
+                [ngClass]="textareaSizeClass(textareaIx().size)"
+                [autoResize]="false"
+                [fluid]="true"
+                ></textarea>
+                @if (textareaIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="textareaConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="textareaConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Theme, Variant, Float variant, Size, Helper text
-                  </p>
-                  <p-popover
-                    #textareaConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar Textarea"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Theme</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="themeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="formTheme('textarea')"
-                            (ngModelChange)="patchFormTheme('textarea', $event)"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Theme Textarea"
-                          />
-                        </div>
-                      </div>
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Variant</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="textareaVariantSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="textareaIx().variant"
-                            (ngModelChange)="patchTextarea({ variant: $event })"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Variant Textarea"
-                          />
-                        </div>
-                      </div>
-                      @if (textareaIsFloatLabel()) {
-                        <div class="button-config-size-field">
-                          <span class="input-config-label">Float variant</span>
-                          <div class="button-config-select-wrap">
-                            <p-select
-                              [options]="textareaFloatPositionSelectOptions"
-                              optionLabel="label"
-                              optionValue="value"
-                              [ngModel]="textareaIx().floatPosition"
-                              (ngModelChange)="patchTextarea({ floatPosition: $event })"
-                              size="small"
-                              appendTo="body"
-                              ariaLabel="Float variant Textarea"
-                            />
-                          </div>
-                        </div>
-                      }
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="textareaIx().size"
-                            (ngModelChange)="patchTextarea({ size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="input-config-row">
-                        <span class="input-config-label">Helper text</span>
-                        <p-toggleswitch
-                          [ngModel]="textareaIx().showHelperText"
-                          (ngModelChange)="patchTextarea({ showHelperText: $event })"
-                        />
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                } @else if (textareaIsIftaLabel()) {
+                <div class="form-input-interaction-control">
+                <span class="p-iftalabel" [style]="textareaFloatLabelHostVars()">
+                <textarea
+                pTextarea
+                [variant]="formThemePrimeVariant('textarea')"
+                id="ta-live"
+                rows="3"
+                [attr.placeholder]="textareaFloatInteractionPlaceholder()"
+                [ngModel]="textareaIx().value"
+                (ngModelChange)="patchTextarea({ value: $event })"
+                (input)="onTextareaInput($event)"
+                [ngClass]="textareaSizeClass(textareaIx().size)"
+                [autoResize]="false"
+                [fluid]="true"
+                ></textarea>
+                <label for="ta-live">Label</label>
+                </span>
+                </div>
+                @if (textareaIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
+                } @else {
+                <div class="form-input-interaction-control">
+                <p-floatlabel
+                [variant]="textareaFloatPosition()"
+                [class.is-label-floated]="textareaInteractionLabelFloated()"
+                [style]="textareaFloatLabelHostVars()"
+                >
+                <textarea
+                pTextarea
+                [variant]="formThemePrimeVariant('textarea')"
+                id="ta-live"
+                rows="3"
+                autocomplete="off"
+                [attr.placeholder]="textareaFloatInteractionPlaceholder()"
+                [ngModel]="textareaIx().value"
+                (ngModelChange)="patchTextarea({ value: $event })"
+                (input)="onTextareaInput($event)"
+                (focus)="setTextareaFloatIxFocused(true)"
+                (blur)="setTextareaFloatIxFocused(false)"
+                [ngClass]="textareaSizeClass(textareaIx().size)"
+                [autoResize]="false"
+                [fluid]="true"
+                ></textarea>
+                <label for="ta-live">Label</label>
+                </p-floatlabel>
+                </div>
+                @if (textareaIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
+                }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Theme</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="themeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="formTheme('textarea')"
+                  (ngModelChange)="patchFormTheme('textarea', $event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Theme Textarea"
+                  />
+                  </div>
+                  </div>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Variant</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="textareaVariantSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="textareaIx().variant"
+                  (ngModelChange)="patchTextarea({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant Textarea"
+                  />
+                  </div>
+                  </div>
+                  @if (textareaIsFloatLabel()) {
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Float variant</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="textareaFloatPositionSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="textareaIx().floatPosition"
+                  (ngModelChange)="patchTextarea({ floatPosition: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Float variant Textarea"
+                  />
+                  </div>
+                  </div>
+                  }
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="textareaIx().size"
+                  (ngModelChange)="patchTextarea({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                  <span class="input-config-label">Helper text</span>
+                  <p-toggleswitch
+                  [ngModel]="textareaIx().showHelperText"
+                  (ngModelChange)="patchTextarea({ showHelperText: $event })"
+                  />
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('inputtext') {
-              <div class="input-interaction-row">
-                <div
-                  class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope"
-                  [ngClass]="interactionScopeClass()"
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar InputText"
+              >
+                <div catalogPreviewDemo
+                class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope"
+                [ngClass]="interactionScopeClass()"
                 >
-                  @if (inputtextIsDefault()) {
-                    <div class="p-field form-input-interaction-field">
-                      <label class="p-label" for="it-live">Label</label>
-                      @if (inputtextShowIcon()) {
-                        <p-iconfield
-                          [iconPosition]="inputtextIconPosition()"
-                          [class.p-iconfield-dual]="inputtextDualIcons()"
-                        >
-                          @if (inputtextShowIconLeft()) {
-                            <p-inputicon class="pi pi-search" />
-                          }
-                          <input
-                            pInputText
-                            [variant]="formThemePrimeVariant('inputtext')"
-                            id="it-live"
-                            placeholder="Placeholder"
-                            [ngModel]="inputtextIx().value"
-                            (ngModelChange)="patchInputtext({ value: $event })"
-                            [ngClass]="inputSizeClass(inputtextIx().size)"
-                            [class.p-inputtext-rounded]="inputtextRounded()"
-                            [fluid]="true"
-                          />
-                          @if (inputtextShowIconRight()) {
-                            <p-inputicon class="pi pi-search" />
-                          }
-                        </p-iconfield>
-                      } @else {
-                        <input
-                          pInputText
-                          [variant]="formThemePrimeVariant('inputtext')"
-                          id="it-live"
-                          placeholder="Placeholder"
-                          [ngModel]="inputtextIx().value"
-                          (ngModelChange)="patchInputtext({ value: $event })"
-                          [ngClass]="inputSizeClass(inputtextIx().size)"
-                          [class.p-inputtext-rounded]="inputtextRounded()"
-                          [fluid]="true"
-                        />
-                      }
-                      @if (inputtextIx().showHelperText) {
-                        <small class="p-hint">Helper Text</small>
-                      }
-                    </div>
-                  } @else if (inputtextIsIftaLabel()) {
-                    <div class="form-input-interaction-control">
-                      <span class="p-iftalabel" [style]="floatLabelHostVars()">
-                        @if (inputtextShowIcon()) {
-                          <p-iconfield
-                            [iconPosition]="inputtextIconPosition()"
-                            [class.p-iconfield-dual]="inputtextDualIcons()"
-                          >
-                            <input
-                              pInputText
-                              [variant]="formThemePrimeVariant('inputtext')"
-                              id="it-live"
-                              [attr.placeholder]="floatInteractionPlaceholder()"
-                              [ngModel]="inputtextIx().value"
-                              (ngModelChange)="patchInputtext({ value: $event })"
-                              [ngClass]="inputSizeClass(inputtextIx().size)"
-                              [class.p-inputtext-rounded]="inputtextRounded()"
-                              [fluid]="true"
-                            />
-                            @if (inputtextIx().iconRight) {
-                              <p-inputicon class="pi pi-search" />
-                            }
-                          </p-iconfield>
-                        } @else {
-                          <input
-                            pInputText
-                            [variant]="formThemePrimeVariant('inputtext')"
-                            id="it-live"
-                            [attr.placeholder]="floatInteractionPlaceholder()"
-                            [ngModel]="inputtextIx().value"
-                            (ngModelChange)="patchInputtext({ value: $event })"
-                            [ngClass]="inputSizeClass(inputtextIx().size)"
-                            [class.p-inputtext-rounded]="inputtextRounded()"
-                            [fluid]="true"
-                          />
-                        }
-                        <label for="it-live">Label</label>
-                      </span>
-                    </div>
-                    @if (inputtextIx().showHelperText) {
-                      <small class="p-hint">Helper Text</small>
-                    }
-                  } @else {
-                    <div class="form-input-interaction-control">
-                      <p-floatlabel
-                        [variant]="inputtextFloatPosition()"
-                        [class.is-label-floated]="inputInteractionLabelFloated()"
-                        [style]="floatLabelHostVars()"
-                      >
-                        @if (inputtextShowIcon()) {
-                          <p-iconfield [iconPosition]="inputtextIconPosition()">
-                            <input
-                              pInputText
-                              [variant]="formThemePrimeVariant('inputtext')"
-                              id="it-live"
-                              autocomplete="off"
-                              [attr.placeholder]="floatInteractionPlaceholder()"
-                              [ngModel]="inputtextIx().value"
-                              (ngModelChange)="patchInputtext({ value: $event })"
-                              (focus)="setFloatIxFocused(true)"
-                              (blur)="setFloatIxFocused(false)"
-                              [ngClass]="inputSizeClass(inputtextIx().size)"
-                              [class.p-inputtext-rounded]="inputtextRounded()"
-                              [fluid]="true"
-                            />
-                            <p-inputicon class="pi pi-search" />
-                          </p-iconfield>
-                        } @else {
-                          <input
-                            pInputText
-                            [variant]="formThemePrimeVariant('inputtext')"
-                            id="it-live"
-                            autocomplete="off"
-                            [attr.placeholder]="floatInteractionPlaceholder()"
-                            [ngModel]="inputtextIx().value"
-                            (ngModelChange)="patchInputtext({ value: $event })"
-                            (focus)="setFloatIxFocused(true)"
-                            (blur)="setFloatIxFocused(false)"
-                            [ngClass]="inputSizeClass(inputtextIx().size)"
-                            [class.p-inputtext-rounded]="inputtextRounded()"
-                            [fluid]="true"
-                          />
-                        }
-                        <label for="it-live">Label</label>
-                      </p-floatlabel>
-                    </div>
-                    @if (inputtextIx().showHelperText) {
-                      <small class="p-hint">Helper Text</small>
-                    }
-                  }
+                @if (inputtextIsDefault()) {
+                <div class="p-field form-input-interaction-field">
+                <label class="p-label" for="it-live">Label</label>
+                @if (inputtextShowIcon()) {
+                <p-iconfield
+                [iconPosition]="inputtextIconPosition()"
+                [class.p-iconfield-dual]="inputtextDualIcons()"
+                >
+                @if (inputtextShowIconLeft()) {
+                <p-inputicon class="pi pi-search" />
+                }
+                <input
+                pInputText
+                [variant]="formThemePrimeVariant('inputtext')"
+                id="it-live"
+                placeholder="Placeholder"
+                [ngModel]="inputtextIx().value"
+                (ngModelChange)="patchInputtext({ value: $event })"
+                [ngClass]="inputSizeClass(inputtextIx().size)"
+                [class.p-inputtext-rounded]="inputtextRounded()"
+                [fluid]="true"
+                />
+                @if (inputtextShowIconRight()) {
+                <p-inputicon class="pi pi-search" />
+                }
+                </p-iconfield>
+                } @else {
+                <input
+                pInputText
+                [variant]="formThemePrimeVariant('inputtext')"
+                id="it-live"
+                placeholder="Placeholder"
+                [ngModel]="inputtextIx().value"
+                (ngModelChange)="patchInputtext({ value: $event })"
+                [ngClass]="inputSizeClass(inputtextIx().size)"
+                [class.p-inputtext-rounded]="inputtextRounded()"
+                [fluid]="true"
+                />
+                }
+                @if (inputtextIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="inputtextConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="inputtextConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Theme, Variant, Float variant, Size, Icono izq., Icono der., Rounded, Helper text
-                  </p>
-                  <p-popover
-                    #inputtextConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar InputText"
-                  >
-                    <div class="button-config-popover-body input-icon-switches button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Theme</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="themeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="formTheme('inputtext')"
-                            (ngModelChange)="patchFormTheme('inputtext', $event)"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Theme InputText"
-                          />
-                        </div>
-                      </div>
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Variant</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="inputtextVariantSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="inputtextIx().variant"
-                            (ngModelChange)="patchInputtext({ variant: $event })"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Variant InputText"
-                          />
-                        </div>
-                      </div>
-                      @if (inputtextIsFloatLabel()) {
-                        <div class="button-config-size-field">
-                          <span class="input-config-label">Float variant</span>
-                          <div class="button-config-select-wrap">
-                            <p-select
-                              [options]="inputtextFloatPositionSelectOptions"
-                              optionLabel="label"
-                              optionValue="value"
-                              [ngModel]="inputtextIx().floatPosition"
-                              (ngModelChange)="patchInputtext({ floatPosition: $event })"
-                              size="small"
-                              appendTo="body"
-                              ariaLabel="Float variant InputText"
-                            />
-                          </div>
-                        </div>
-                      }
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="inputtextIx().size"
-                            (ngModelChange)="patchInputtext({ size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      @if (inputtextIsDefault()) {
-                        <div class="input-config-row">
-                          <span class="input-config-label">Icono izq.</span>
-                          <p-toggleswitch
-                            [ngModel]="inputtextIx().iconLeft"
-                            (ngModelChange)="patchInputtext({ iconLeft: $event })"
-                          />
-                        </div>
-                      }
-                      <div class="input-config-row">
-                        <span class="input-config-label">Icono der.</span>
-                        <p-toggleswitch
-                          [ngModel]="inputtextIx().iconRight"
-                          (ngModelChange)="patchInputtext({ iconRight: $event })"
-                        />
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Rounded</span>
-                        <p-toggleswitch
-                          [ngModel]="inputtextIx().rounded"
-                          (ngModelChange)="patchInputtext({ rounded: $event })"
-                        />
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Helper text</span>
-                        <p-toggleswitch
-                          [ngModel]="inputtextIx().showHelperText"
-                          (ngModelChange)="patchInputtext({ showHelperText: $event })"
-                        />
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                } @else if (inputtextIsIftaLabel()) {
+                <div class="form-input-interaction-control">
+                <span class="p-iftalabel" [style]="floatLabelHostVars()">
+                @if (inputtextShowIcon()) {
+                <p-iconfield
+                [iconPosition]="inputtextIconPosition()"
+                [class.p-iconfield-dual]="inputtextDualIcons()"
+                >
+                <input
+                pInputText
+                [variant]="formThemePrimeVariant('inputtext')"
+                id="it-live"
+                [attr.placeholder]="floatInteractionPlaceholder()"
+                [ngModel]="inputtextIx().value"
+                (ngModelChange)="patchInputtext({ value: $event })"
+                [ngClass]="inputSizeClass(inputtextIx().size)"
+                [class.p-inputtext-rounded]="inputtextRounded()"
+                [fluid]="true"
+                />
+                @if (inputtextIx().iconRight) {
+                <p-inputicon class="pi pi-search" />
+                }
+                </p-iconfield>
+                } @else {
+                <input
+                pInputText
+                [variant]="formThemePrimeVariant('inputtext')"
+                id="it-live"
+                [attr.placeholder]="floatInteractionPlaceholder()"
+                [ngModel]="inputtextIx().value"
+                (ngModelChange)="patchInputtext({ value: $event })"
+                [ngClass]="inputSizeClass(inputtextIx().size)"
+                [class.p-inputtext-rounded]="inputtextRounded()"
+                [fluid]="true"
+                />
+                }
+                <label for="it-live">Label</label>
+                </span>
+                </div>
+                @if (inputtextIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
+                } @else {
+                <div class="form-input-interaction-control">
+                <p-floatlabel
+                [variant]="inputtextFloatPosition()"
+                [class.is-label-floated]="inputInteractionLabelFloated()"
+                [style]="floatLabelHostVars()"
+                >
+                @if (inputtextShowIcon()) {
+                <p-iconfield [iconPosition]="inputtextIconPosition()">
+                <input
+                pInputText
+                [variant]="formThemePrimeVariant('inputtext')"
+                id="it-live"
+                autocomplete="off"
+                [attr.placeholder]="floatInteractionPlaceholder()"
+                [ngModel]="inputtextIx().value"
+                (ngModelChange)="patchInputtext({ value: $event })"
+                (focus)="setFloatIxFocused(true)"
+                (blur)="setFloatIxFocused(false)"
+                [ngClass]="inputSizeClass(inputtextIx().size)"
+                [class.p-inputtext-rounded]="inputtextRounded()"
+                [fluid]="true"
+                />
+                <p-inputicon class="pi pi-search" />
+                </p-iconfield>
+                } @else {
+                <input
+                pInputText
+                [variant]="formThemePrimeVariant('inputtext')"
+                id="it-live"
+                autocomplete="off"
+                [attr.placeholder]="floatInteractionPlaceholder()"
+                [ngModel]="inputtextIx().value"
+                (ngModelChange)="patchInputtext({ value: $event })"
+                (focus)="setFloatIxFocused(true)"
+                (blur)="setFloatIxFocused(false)"
+                [ngClass]="inputSizeClass(inputtextIx().size)"
+                [class.p-inputtext-rounded]="inputtextRounded()"
+                [fluid]="true"
+                />
+                }
+                <label for="it-live">Label</label>
+                </p-floatlabel>
+                </div>
+                @if (inputtextIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
+                }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Theme</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="themeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="formTheme('inputtext')"
+                  (ngModelChange)="patchFormTheme('inputtext', $event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Theme InputText"
+                  />
+                  </div>
+                  </div>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Variant</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="inputtextVariantSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="inputtextIx().variant"
+                  (ngModelChange)="patchInputtext({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant InputText"
+                  />
+                  </div>
+                  </div>
+                  @if (inputtextIsFloatLabel()) {
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Float variant</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="inputtextFloatPositionSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="inputtextIx().floatPosition"
+                  (ngModelChange)="patchInputtext({ floatPosition: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Float variant InputText"
+                  />
+                  </div>
+                  </div>
+                  }
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="inputtextIx().size"
+                  (ngModelChange)="patchInputtext({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  @if (inputtextIsDefault()) {
+                  <div class="input-config-row">
+                  <span class="input-config-label">Icono izq.</span>
+                  <p-toggleswitch
+                  [ngModel]="inputtextIx().iconLeft"
+                  (ngModelChange)="patchInputtext({ iconLeft: $event })"
+                  />
+                  </div>
+                  }
+                  <div class="input-config-row">
+                  <span class="input-config-label">Icono der.</span>
+                  <p-toggleswitch
+                  [ngModel]="inputtextIx().iconRight"
+                  (ngModelChange)="patchInputtext({ iconRight: $event })"
+                  />
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Rounded</span>
+                  <p-toggleswitch
+                  [ngModel]="inputtextIx().rounded"
+                  (ngModelChange)="patchInputtext({ rounded: $event })"
+                  />
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Helper text</span>
+                  <p-toggleswitch
+                  [ngModel]="inputtextIx().showHelperText"
+                  (ngModelChange)="patchInputtext({ showHelperText: $event })"
+                  />
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('password') {
               <ng-template #passwordInteractionField>
@@ -1097,360 +973,305 @@
                   }
                 </p-password>
               </ng-template>
-              <div class="input-interaction-row">
-                <div
-                  class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope password-interaction-scope"
-                  [ngClass]="passwordInteractionScopeClass()"
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar Password"
+              >
+                <div catalogPreviewDemo
+                class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope password-interaction-scope"
+                [ngClass]="passwordInteractionScopeClass()"
                 >
-                  @if (passwordIsDefault()) {
-                    <div class="p-field form-input-interaction-field">
-                      <label class="p-label" for="pw-live">Label</label>
-                      <ng-container *ngTemplateOutlet="passwordInteractionField" />
-                      @if (passwordIx().showHelperText) {
-                        <small class="p-hint">Helper Text</small>
-                      }
-                    </div>
-                  } @else if (passwordIsIftaLabel()) {
-                    <div class="form-input-interaction-control">
-                      <span class="p-iftalabel" [style]="passwordFloatLabelHostVars()">
-                        <ng-container *ngTemplateOutlet="passwordInteractionField" />
-                        <label for="pw-live">Label</label>
-                      </span>
-                    </div>
-                    @if (passwordIx().showHelperText) {
-                      <small class="p-hint">Helper Text</small>
-                    }
-                  } @else {
-                    <div class="form-input-interaction-control">
-                      <p-floatlabel
-                        [variant]="passwordFloatPosition()"
-                        [class.is-label-floated]="passwordInteractionLabelFloated()"
-                        [style]="passwordFloatLabelHostVars()"
-                        (focusin)="setPasswordFloatIxFocused(true)"
-                        (focusout)="setPasswordFloatIxFocused(false)"
-                      >
-                        <ng-container *ngTemplateOutlet="passwordInteractionField" />
-                        <label for="pw-live">Label</label>
-                      </p-floatlabel>
-                    </div>
-                    @if (passwordIx().showHelperText) {
-                      <small class="p-hint">Helper Text</small>
-                    }
-                  }
+                @if (passwordIsDefault()) {
+                <div class="p-field form-input-interaction-field">
+                <label class="p-label" for="pw-live">Label</label>
+                <ng-container *ngTemplateOutlet="passwordInteractionField" />
+                @if (passwordIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="passwordConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="passwordConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Theme, Variant, Float variant, Size, Toggle mask, Feedback, Strength list, Show clear, Helper text
-                  </p>
-                  <p-popover
-                    #passwordConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar Password"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Theme</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="themeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="formTheme('password')"
-                            (ngModelChange)="patchFormTheme('password', $event)"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Theme Password"
-                          />
-                        </div>
-                      </div>
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Variant</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="inputtextVariantSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="passwordIx().variant"
-                            (ngModelChange)="patchPassword({ variant: $event })"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Variant Password"
-                          />
-                        </div>
-                      </div>
-                      @if (passwordIsFloatLabel()) {
-                        <div class="button-config-size-field">
-                          <span class="input-config-label">Float variant</span>
-                          <div class="button-config-select-wrap">
-                            <p-select
-                              [options]="inputtextFloatPositionSelectOptions"
-                              optionLabel="label"
-                              optionValue="value"
-                              [ngModel]="passwordIx().floatPosition"
-                              (ngModelChange)="patchPassword({ floatPosition: $event })"
-                              size="small"
-                              appendTo="body"
-                              ariaLabel="Float variant Password"
-                            />
-                          </div>
-                        </div>
-                      }
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="passwordIx().size"
-                            (ngModelChange)="patchPassword({ size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size Password"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="input-config-row">
-                        <span class="input-config-label">Toggle mask</span>
-                        <p-toggleswitch
-                          [ngModel]="passwordIx().toggleMask"
-                          (ngModelChange)="patchPassword({ toggleMask: $event })"
-                        />
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Feedback</span>
-                        <p-toggleswitch
-                          [ngModel]="passwordIx().feedback"
-                          (ngModelChange)="patchPassword({ feedback: $event })"
-                        />
-                      </div>
-                      @if (passwordIx().feedback) {
-                        <div class="input-config-row">
-                          <span class="input-config-label">Strength list</span>
-                          <p-toggleswitch
-                            [ngModel]="passwordIx().showStrengthList"
-                            (ngModelChange)="patchPassword({ showStrengthList: $event })"
-                          />
-                        </div>
-                      }
-                      <div class="input-config-row">
-                        <span class="input-config-label">Show clear</span>
-                        <p-toggleswitch
-                          [ngModel]="passwordIx().showClear"
-                          (ngModelChange)="patchPassword({ showClear: $event })"
-                        />
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Helper text</span>
-                        <p-toggleswitch
-                          [ngModel]="passwordIx().showHelperText"
-                          (ngModelChange)="patchPassword({ showHelperText: $event })"
-                        />
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                } @else if (passwordIsIftaLabel()) {
+                <div class="form-input-interaction-control">
+                <span class="p-iftalabel" [style]="passwordFloatLabelHostVars()">
+                <ng-container *ngTemplateOutlet="passwordInteractionField" />
+                <label for="pw-live">Label</label>
+                </span>
+                </div>
+                @if (passwordIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
+                } @else {
+                <div class="form-input-interaction-control">
+                <p-floatlabel
+                [variant]="passwordFloatPosition()"
+                [class.is-label-floated]="passwordInteractionLabelFloated()"
+                [style]="passwordFloatLabelHostVars()"
+                (focusin)="setPasswordFloatIxFocused(true)"
+                (focusout)="setPasswordFloatIxFocused(false)"
+                >
+                <ng-container *ngTemplateOutlet="passwordInteractionField" />
+                <label for="pw-live">Label</label>
+                </p-floatlabel>
+                </div>
+                @if (passwordIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
+                }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Theme</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="themeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="formTheme('password')"
+                  (ngModelChange)="patchFormTheme('password', $event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Theme Password"
+                  />
+                  </div>
+                  </div>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Variant</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="inputtextVariantSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="passwordIx().variant"
+                  (ngModelChange)="patchPassword({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant Password"
+                  />
+                  </div>
+                  </div>
+                  @if (passwordIsFloatLabel()) {
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Float variant</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="inputtextFloatPositionSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="passwordIx().floatPosition"
+                  (ngModelChange)="patchPassword({ floatPosition: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Float variant Password"
+                  />
+                  </div>
+                  </div>
+                  }
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="passwordIx().size"
+                  (ngModelChange)="patchPassword({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size Password"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                  <span class="input-config-label">Toggle mask</span>
+                  <p-toggleswitch
+                  [ngModel]="passwordIx().toggleMask"
+                  (ngModelChange)="patchPassword({ toggleMask: $event })"
+                  />
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Feedback</span>
+                  <p-toggleswitch
+                  [ngModel]="passwordIx().feedback"
+                  (ngModelChange)="patchPassword({ feedback: $event })"
+                  />
+                  </div>
+                  @if (passwordIx().feedback) {
+                  <div class="input-config-row">
+                  <span class="input-config-label">Strength list</span>
+                  <p-toggleswitch
+                  [ngModel]="passwordIx().showStrengthList"
+                  (ngModelChange)="patchPassword({ showStrengthList: $event })"
+                  />
+                  </div>
+                  }
+                  <div class="input-config-row">
+                  <span class="input-config-label">Show clear</span>
+                  <p-toggleswitch
+                  [ngModel]="passwordIx().showClear"
+                  (ngModelChange)="patchPassword({ showClear: $event })"
+                  />
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Helper text</span>
+                  <p-toggleswitch
+                  [ngModel]="passwordIx().showHelperText"
+                  (ngModelChange)="patchPassword({ showHelperText: $event })"
+                  />
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('inputotp') {
-              <div class="input-interaction-row">
-                <div
-                  class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope"
-                  [ngClass]="formThemeContainerClass('inputotp')"
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar InputOtp"
+              >
+                <div catalogPreviewDemo
+                class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope"
+                [ngClass]="formThemeContainerClass('inputotp')"
                 >
-                  <div class="p-field form-input-interaction-field">
-                    <p-inputotp
-                      [length]="inputotpIx().length"
-                      [mask]="inputotpIx().mask"
-                      [integerOnly]="inputotpIx().integerOnly"
-                      [size]="inputotpPrimeSize(inputotpIx().size)"
-                      [variant]="formThemePrimeVariant('inputotp')"
-                      [style]="inputOtpHostVars(inputotpIx().size)"
-                      [ngModel]="inputotpIx().value"
-                      (ngModelChange)="patchInputotp({ value: $event })"
-                    />
-                    @if (inputotpIx().showHelperText) {
-                      <small class="p-hint">Helper Text</small>
-                    }
-                  </div>
+                <div class="p-field form-input-interaction-field">
+                <p-inputotp
+                [length]="inputotpIx().length"
+                [mask]="inputotpIx().mask"
+                [integerOnly]="inputotpIx().integerOnly"
+                [size]="inputotpPrimeSize(inputotpIx().size)"
+                [variant]="formThemePrimeVariant('inputotp')"
+                [style]="inputOtpHostVars(inputotpIx().size)"
+                [ngModel]="inputotpIx().value"
+                (ngModelChange)="patchInputotp({ value: $event })"
+                />
+                @if (inputotpIx().showHelperText) {
+                <small class="p-hint">Helper Text</small>
+                }
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="inputotpConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="inputotpConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Theme, Longitud, Size, Mask, Solo enteros, Helper text
-                  </p>
-                  <p-popover
-                    #inputotpConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar InputOtp"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Theme</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="themeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="formTheme('inputotp')"
-                            (ngModelChange)="patchFormTheme('inputotp', $event)"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Theme InputOtp"
-                          />
-                        </div>
-                      </div>
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Longitud</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="inputotpLengthSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="inputotpIx().length"
-                            (ngModelChange)="patchInputotp({ length: $event })"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Longitud InputOtp"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Size</span>
-                        <div class="button-config-size-toggle-wrap">
-                          <p-selectbutton
-                            [options]="sizeSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="inputotpIx().size"
-                            (ngModelChange)="patchInputotp({ size: $event })"
-                            [allowEmpty]="false"
-                            [fluid]="true"
-                            size="small"
-                            ariaLabel="Size"
-                          />
-                        </div>
-                      </div>
-                      <p-divider styleClass="button-config-divider" />
-                      <div class="input-config-row">
-                        <span class="input-config-label">Mask</span>
-                        <p-toggleswitch
-                          [ngModel]="inputotpIx().mask"
-                          (ngModelChange)="patchInputotp({ mask: $event })"
-                        />
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Solo enteros</span>
-                        <p-toggleswitch
-                          [ngModel]="inputotpIx().integerOnly"
-                          (ngModelChange)="patchInputotp({ integerOnly: $event })"
-                        />
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Helper text</span>
-                        <p-toggleswitch
-                          [ngModel]="inputotpIx().showHelperText"
-                          (ngModelChange)="patchInputotp({ showHelperText: $event })"
-                        />
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Theme</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="themeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="formTheme('inputotp')"
+                  (ngModelChange)="patchFormTheme('inputotp', $event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Theme InputOtp"
+                  />
+                  </div>
+                  </div>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Longitud</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="inputotpLengthSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="inputotpIx().length"
+                  (ngModelChange)="patchInputotp({ length: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Longitud InputOtp"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Size</span>
+                  <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                  [options]="sizeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="inputotpIx().size"
+                  (ngModelChange)="patchInputotp({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size"
+                  />
+                  </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                  <span class="input-config-label">Mask</span>
+                  <p-toggleswitch
+                  [ngModel]="inputotpIx().mask"
+                  (ngModelChange)="patchInputotp({ mask: $event })"
+                  />
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Solo enteros</span>
+                  <p-toggleswitch
+                  [ngModel]="inputotpIx().integerOnly"
+                  (ngModelChange)="patchInputotp({ integerOnly: $event })"
+                  />
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Helper text</span>
+                  <p-toggleswitch
+                  [ngModel]="inputotpIx().showHelperText"
+                  (ngModelChange)="patchInputotp({ showHelperText: $event })"
+                  />
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @case ('rating') {
-              <div class="input-interaction-row catalog-interaction-row--center">
-                <div class="catalog-showcase-interactive">
-                  <p-rating
-                    [stars]="5"
-                    [style]="ratingHostVars()"
-                    [ngModel]="ratingIx().value"
-                    (ngModelChange)="patchRating({ value: $event })"
-                    [disabled]="ratingIx().disabled"
-                    [readonly]="ratingIx().readonly"
-                    aria-label="Rating interactivo"
-                  />
+                            <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                configAriaLabel="Configurar Rating"
+              >
+                <div catalogPreviewDemo class="catalog-showcase-interactive">
+                <p-rating
+                [stars]="5"
+                [style]="ratingHostVars()"
+                [ngModel]="ratingIx().value"
+                (ngModelChange)="patchRating({ value: $event })"
+                [disabled]="ratingIx().disabled"
+                [readonly]="ratingIx().readonly"
+                aria-label="Rating interactivo"
+                />
                 </div>
-                <aside class="button-config-aside">
-                  <button
-                    type="button"
-                    class="button-config-aside-title button-config-link"
-                    (click)="ratingConfigPopover.toggle($event)"
-                    aria-haspopup="dialog"
-                    [attr.aria-expanded]="ratingConfigPopover.overlayVisible"
-                  >
-                    CONFIGURAR
-                  </button>
-                  <p class="button-config-aside-hint">
-                    Rating, Readonly, Disabled
-                  </p>
-                  <p-popover
-                    #ratingConfigPopover
-                    styleClass="button-config-popover"
-                    appendTo="body"
-                    ariaLabel="Configurar Rating"
-                  >
-                    <div class="button-config-popover-body button-config-switches">
-                      <div class="button-config-size-field">
-                        <span class="input-config-label">Rating</span>
-                        <div class="button-config-select-wrap">
-                          <p-select
-                            [options]="ratingValueSelectOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="ratingIx().value"
-                            (ngModelChange)="patchRating({ value: $event })"
-                            size="small"
-                            appendTo="body"
-                            ariaLabel="Valor Rating"
-                          />
-                        </div>
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Readonly</span>
-                        <p-toggleswitch
-                          [ngModel]="ratingIx().readonly"
-                          (ngModelChange)="patchRating({ readonly: $event })"
-                        />
-                      </div>
-                      <div class="input-config-row">
-                        <span class="input-config-label">Disabled</span>
-                        <p-toggleswitch
-                          [ngModel]="ratingIx().disabled"
-                          (ngModelChange)="patchRating({ disabled: $event })"
-                        />
-                      </div>
-                    </div>
-                  </p-popover>
-                </aside>
-              </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                  <span class="input-config-label">Rating</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="ratingValueSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="ratingIx().value"
+                  (ngModelChange)="patchRating({ value: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Valor Rating"
+                  />
+                  </div>
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Readonly</span>
+                  <p-toggleswitch
+                  [ngModel]="ratingIx().readonly"
+                  (ngModelChange)="patchRating({ readonly: $event })"
+                  />
+                  </div>
+                  <div class="input-config-row">
+                  <span class="input-config-label">Disabled</span>
+                  <p-toggleswitch
+                  [ngModel]="ratingIx().disabled"
+                  (ngModelChange)="patchRating({ disabled: $event })"
+                  />
+                  </div>
+                </ng-container>
+              </mds-catalog-preview-frame>
             }
             @default {}
           }
-        </div>
 
         <!-- States -->
         <div class="btn-section">

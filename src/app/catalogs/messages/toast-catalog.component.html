@@ -11,32 +11,33 @@
 <div class="catalog-preview toast-showcase">
     <section id="pg-toast" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
     <header class="catalog-block-head">
-      <h3 class="section-title component-title-primary">Toast</h3>
+      <h3 class="section-title component-title-primary">{{ 'Toast' | catalogBlockHeadTitle }}</h3>
     </header>
 
     <div class="catalog-block-body toast-catalog-body">
-      <div class="btn-section catalog-interaction-section">
-        <p class="btn-section-title">Interaction</p>
-        <div class="btn-row">
-          @for (sev of severities; track trackSeverity($index, sev)) {
+      <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
+        <div catalogPreviewDemo>
+          <div class="btn-row">
+            @for (sev of severities; track trackSeverity($index, sev)) {
+              <p-button
+                [label]="sev.label"
+                [icon]="sev.buttonIcon"
+                [severity]="sev.buttonSeverity"
+                size="small"
+                (onClick)="pushToast(sev.key)"
+              />
+            }
+          </div>
+          <div class="btn-row toast-catalog-actions-row">
             <p-button
-              [label]="sev.label"
-              [icon]="sev.buttonIcon"
-              [severity]="sev.buttonSeverity"
+              label="Ocultar toast activos"
+              link
               size="small"
-              (onClick)="pushToast(sev.key)"
+              (onClick)="hideAllToasts()"
             />
-          }
+          </div>
         </div>
-        <div class="btn-row toast-catalog-actions-row">
-          <p-button
-            label="Ocultar toast activos"
-            link
-            size="small"
-            (onClick)="hideAllToasts()"
-          />
-        </div>
-      </div>
+      </mds-catalog-preview-frame>
 
       <div class="btn-section">
         <p class="btn-section-title">States</p>

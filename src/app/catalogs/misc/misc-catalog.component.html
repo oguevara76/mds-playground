@@ -2,13 +2,12 @@
   <div class="catalog-preview tag-showcase">
     <section id="pg-tag" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
-        <h3 class="section-title component-title-primary">Tag</h3>
+        <h3 class="section-title component-title-primary">{{ 'Tag' | catalogBlockHeadTitle }}</h3>
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section catalog-interaction-section">
-          <p class="btn-section-title">Severity</p>
-          <div class="tag-catalog-row is-static-preview" aria-label="Tag, all severities">
+        <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
+          <div catalogPreviewDemo class="tag-catalog-row is-static-preview" aria-label="Tag, all severities">
             @for (sev of severities; track trackSeverity($index, sev)) {
               @if (isPrimary(sev)) {
                 <p-tag [value]="sev.label" class="p-tag-primary" />
@@ -17,7 +16,7 @@
               }
             }
           </div>
-        </div>
+        </mds-catalog-preview-frame>
 
         <div class="btn-section">
           <p class="btn-section-title">Rounded</p>
@@ -51,73 +50,52 @@
   <div class="catalog-preview chip-showcase">
     <section id="pg-chip" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
-        <h3 class="section-title component-title-primary">Chip</h3>
+        <h3 class="section-title component-title-primary">{{ 'Chip' | catalogBlockHeadTitle }}</h3>
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section catalog-interaction-section">
-          <p class="btn-section-title">Interaction</p>
-          <div class="input-interaction-row chip-interaction-row">
-            <div class="catalog-showcase-interactive tag-catalog-row chip-catalog-row">
-              @for (_ of [chipInteractionKey]; track chipInteractionKey) {
-                <p-chip
-                  [label]="chipInteractionLabel"
-                  [icon]="chipShowsIcon() ? chipDemoIcon : undefined"
-                  [image]="chipShowsAvatar() ? chipDemoAvatarUrl : undefined"
-                  [alt]="chipShowsAvatar() ? 'Avatar' : undefined"
-                  [removable]="chipIx.removable"
-                  (onRemove)="onChipRemove()"
-                />
-              }
-            </div>
-            <aside class="button-config-aside">
-              <button
-                type="button"
-                class="button-config-aside-title button-config-link"
-                (click)="chipConfigPopover.toggle($event)"
-                aria-haspopup="dialog"
-                [attr.aria-expanded]="chipConfigPopover.overlayVisible"
-              >
-                CONFIGURAR
-              </button>
-              <p class="button-config-aside-hint">
-                Variant, Icono de cierre
-              </p>
-              <p-popover
-                #chipConfigPopover
-                styleClass="button-config-popover"
-                appendTo="body"
-                ariaLabel="Configurar Chip"
-              >
-                <div class="button-config-popover-body input-icon-switches button-config-switches">
-                  <div class="button-config-size-field">
-                    <span class="input-config-label">Variant</span>
-                    <div class="button-config-select-wrap">
-                      <p-select
-                        [options]="chipVariantSelectOptions"
-                        optionLabel="label"
-                        optionValue="value"
-                        [ngModel]="chipIx.variant"
-                        (ngModelChange)="patchChipIx({ variant: $event })"
-                        size="small"
-                        appendTo="body"
-                        ariaLabel="Variant"
-                      />
-                    </div>
-                  </div>
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="input-config-row">
-                    <span class="input-config-label">Icono de cierre</span>
-                    <p-toggleswitch
-                      [ngModel]="chipIx.removable"
-                      (ngModelChange)="patchChipIx({ removable: $event })"
-                    />
-                  </div>
-                </div>
-              </p-popover>
-            </aside>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Chip"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive tag-catalog-row chip-catalog-row">
+            @for (_ of [chipInteractionKey]; track chipInteractionKey) {
+              <p-chip
+                [label]="chipInteractionLabel"
+                [icon]="chipShowsIcon() ? chipDemoIcon : undefined"
+                [image]="chipShowsAvatar() ? chipDemoAvatarUrl : undefined"
+                [alt]="chipShowsAvatar() ? 'Avatar' : undefined"
+                [removable]="chipIx.removable"
+                (onRemove)="onChipRemove()"
+              />
+            }
           </div>
-        </div>
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Variant</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="chipVariantSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="chipIx.variant"
+                  (ngModelChange)="patchChipIx({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Icono de cierre</span>
+              <p-toggleswitch
+                [ngModel]="chipIx.removable"
+                (ngModelChange)="patchChipIx({ removable: $event })"
+              />
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
 
         <div class="btn-section">
           <p class="btn-section-title">Basic</p>
@@ -147,13 +125,16 @@
   <div class="catalog-preview badge-showcase">
     <section id="pg-badge" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
-        <h3 class="section-title component-title-primary">Badge</h3>
+        <h3 class="section-title component-title-primary">{{ 'Badge' | catalogBlockHeadTitle }}</h3>
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section catalog-interaction-section">
-          <p class="btn-section-title">Severity</p>
-          <div class="badge-severity-shape-demos is-static-preview" aria-label="Badge, severity circle and square">
+        <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
+          <div
+            catalogPreviewDemo
+            class="badge-severity-shape-demos is-static-preview"
+            aria-label="Badge, severity circle and square"
+          >
             <div class="badge-severity-shape-demo">
               <span class="btn-variant-states-label avatar-group-size-label">Circle</span>
               <div class="tag-catalog-row badge-catalog-row badge-catalog-row-circle">
@@ -179,7 +160,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </mds-catalog-preview-frame>
 
         <div class="btn-section">
           <p class="btn-section-title">Size</p>
@@ -216,124 +197,103 @@
   <div class="catalog-preview avatar-showcase">
     <section id="pg-avatar" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
-        <h3 class="section-title component-title-primary">Avatar</h3>
+        <h3 class="section-title component-title-primary">{{ 'Avatar' | catalogBlockHeadTitle }}</h3>
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section catalog-interaction-section">
-          <p class="btn-section-title">Interaction</p>
-          <div class="input-interaction-row avatar-interaction-row">
-            <div class="catalog-showcase-interactive tag-catalog-row avatar-catalog-row">
-              <p-overlayBadge
-                [value]="avatarBadgeDemoValue"
-                [badgeDisabled]="!avatarIx.showBadge"
-                badgeSize="small"
-                [styleClass]="avatarBadgeStyleClass()"
-              >
-                <p-avatar
-                  [label]="avatarShowsLabel() ? avatarDemoLabel : undefined"
-                  [icon]="avatarShowsIcon() ? avatarDemoIcon : undefined"
-                  [image]="avatarShowsImage() ? avatarDemoImageUrl : undefined"
-                  [size]="avatarPrimeSize(avatarIx.size)"
-                  [shape]="avatarPrimeShape()"
-                  [attr.aria-label]="avatarShowsImage() ? 'Avatar demo' : undefined"
-                />
-              </p-overlayBadge>
-            </div>
-            <aside class="button-config-aside">
-              <button
-                type="button"
-                class="button-config-aside-title button-config-link"
-                (click)="avatarConfigPopover.toggle($event)"
-                aria-haspopup="dialog"
-                [attr.aria-expanded]="avatarConfigPopover.overlayVisible"
-              >
-                CONFIGURAR
-              </button>
-              <p class="button-config-aside-hint">
-                Variant, Size, Circle, Badge y forma del badge
-              </p>
-              <p-popover
-                #avatarConfigPopover
-                styleClass="button-config-popover"
-                appendTo="body"
-                ariaLabel="Configurar Avatar"
-              >
-                <div class="button-config-popover-body input-icon-switches button-config-switches">
-                  <div class="button-config-size-field">
-                    <span class="input-config-label">Variant</span>
-                    <div class="button-config-select-wrap">
-                      <p-select
-                        [options]="avatarVariantOptions"
-                        optionLabel="label"
-                        optionValue="value"
-                        [ngModel]="avatarIx.variant"
-                        (ngModelChange)="patchAvatarIx({ variant: $event })"
-                        size="small"
-                        appendTo="body"
-                        ariaLabel="Variant Avatar"
-                      />
-                    </div>
-                  </div>
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="button-config-size-field">
-                    <span class="input-config-label">Size</span>
-                    <div class="button-config-size-toggle-wrap">
-                      <p-selectbutton
-                        [options]="avatarSizeOptions"
-                        optionLabel="label"
-                        optionValue="value"
-                        [ngModel]="avatarIx.size"
-                        (ngModelChange)="patchAvatarIx({ size: $event })"
-                        [allowEmpty]="false"
-                        [fluid]="true"
-                        size="small"
-                        ariaLabel="Size Avatar"
-                      />
-                    </div>
-                  </div>
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="input-config-row">
-                    <span class="input-config-label">Circle</span>
-                    <p-toggleswitch
-                      [ngModel]="avatarIx.shape === 'circle'"
-                      (ngModelChange)="patchAvatarIx({ shape: $event ? 'circle' : 'square' })"
-                      ariaLabel="Avatar circular"
-                    />
-                  </div>
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="input-config-row">
-                    <span class="input-config-label">Badge</span>
-                    <p-toggleswitch
-                      [ngModel]="avatarIx.showBadge"
-                      (ngModelChange)="patchAvatarIx({ showBadge: $event })"
-                      ariaLabel="Mostrar badge en avatar"
-                    />
-                  </div>
-                  @if (avatarIx.showBadge) {
-                    <p-divider styleClass="button-config-divider" />
-                    <div class="button-config-size-field">
-                      <span class="input-config-label">Badge shape</span>
-                      <div class="button-config-size-toggle-wrap">
-                        <p-selectbutton
-                          [options]="avatarBadgeShapeOptions"
-                          optionLabel="label"
-                          optionValue="value"
-                          [ngModel]="avatarIx.badgeShape"
-                          (ngModelChange)="patchAvatarIx({ badgeShape: $event })"
-                          [allowEmpty]="false"
-                          [fluid]="true"
-                          size="small"
-                          ariaLabel="Forma del badge en avatar"
-                        />
-                      </div>
-                    </div>
-                  }
-                </div>
-              </p-popover>
-            </aside>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Avatar"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive tag-catalog-row avatar-catalog-row">
+            <p-overlayBadge
+              [value]="avatarBadgeDemoValue"
+              [badgeDisabled]="!avatarIx.showBadge"
+              badgeSize="small"
+              [styleClass]="avatarBadgeStyleClass()"
+            >
+              <p-avatar
+                [label]="avatarShowsLabel() ? avatarDemoLabel : undefined"
+                [icon]="avatarShowsIcon() ? avatarDemoIcon : undefined"
+                [image]="avatarShowsImage() ? avatarDemoImageUrl : undefined"
+                [size]="avatarPrimeSize(avatarIx.size)"
+                [shape]="avatarPrimeShape()"
+                [attr.aria-label]="avatarShowsImage() ? 'Avatar demo' : undefined"
+              />
+            </p-overlayBadge>
           </div>
-        </div>
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Variant</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="avatarVariantOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="avatarIx.variant"
+                  (ngModelChange)="patchAvatarIx({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant Avatar"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="button-config-size-field">
+              <span class="input-config-label">Size</span>
+              <div class="button-config-size-toggle-wrap">
+                <p-selectbutton
+                  [options]="avatarSizeOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="avatarIx.size"
+                  (ngModelChange)="patchAvatarIx({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size Avatar"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Circle</span>
+              <p-toggleswitch
+                [ngModel]="avatarIx.shape === 'circle'"
+                (ngModelChange)="patchAvatarIx({ shape: $event ? 'circle' : 'square' })"
+                ariaLabel="Avatar circular"
+              />
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Badge</span>
+              <p-toggleswitch
+                [ngModel]="avatarIx.showBadge"
+                (ngModelChange)="patchAvatarIx({ showBadge: $event })"
+                ariaLabel="Mostrar badge en avatar"
+              />
+            </div>
+            @if (avatarIx.showBadge) {
+              <p-divider styleClass="button-config-divider" />
+              <div class="button-config-size-field">
+                <span class="input-config-label">Badge shape</span>
+                <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                    [options]="avatarBadgeShapeOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="avatarIx.badgeShape"
+                    (ngModelChange)="patchAvatarIx({ badgeShape: $event })"
+                    [allowEmpty]="false"
+                    [fluid]="true"
+                    size="small"
+                    ariaLabel="Forma del badge en avatar"
+                  />
+                </div>
+              </div>
+            }
+          </ng-container>
+        </mds-catalog-preview-frame>
 
         <div class="btn-section">
           <p class="btn-section-title">Label, Icon &amp; Image</p>
@@ -377,112 +337,91 @@
       tabindex="-1"
     >
       <header class="catalog-block-head">
-        <h3 class="section-title component-title-primary">Avatar Group</h3>
+        <h3 class="section-title component-title-primary">{{ 'Avatar Group' | catalogBlockHeadTitle }}</h3>
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section catalog-interaction-section">
-          <p class="btn-section-title">Interaction</p>
-          <div class="input-interaction-row avatar-interaction-row">
-            <div class="catalog-showcase-interactive tag-catalog-row avatar-catalog-row">
-              @for (_ of [avatarGroupInteractionKey]; track avatarGroupInteractionKey) {
-                <p-avatarGroup>
-                  @for (src of avatarGroupVisiblePhotos(); track $index) {
-                    <p-avatar
-                      [image]="src"
-                      [size]="avatarPrimeSize(avatarGroupIx.size)"
-                      [shape]="avatarGroupIx.shape"
-                      [styleClass]="avatarGroupLayerStyleClass($index)"
-                      ariaLabel="Avatar en grupo"
-                    />
-                  }
-                  @if (avatarGroupIx.showTextAvatar) {
-                    <p-avatar
-                      [label]="avatarGroupOverflowDemoLabel"
-                      [size]="avatarPrimeSize(avatarGroupIx.size)"
-                      [shape]="avatarGroupIx.shape"
-                      [styleClass]="avatarGroupLayerStyleClass(avatarGroupVisiblePhotos().length, true)"
-                      ariaLabel="Avatares adicionales en grupo"
-                    />
-                  }
-                </p-avatarGroup>
-              }
-            </div>
-            <aside class="button-config-aside">
-              <button
-                type="button"
-                class="button-config-aside-title button-config-link"
-                (click)="avatarGroupConfigPopover.toggle($event)"
-                aria-haspopup="dialog"
-                [attr.aria-expanded]="avatarGroupConfigPopover.overlayVisible"
-              >
-                CONFIGURAR
-              </button>
-              <p class="button-config-aside-hint">
-                Cantidad, Size, Circle, Avatar de texto
-              </p>
-              <p-popover
-                #avatarGroupConfigPopover
-                styleClass="button-config-popover"
-                appendTo="body"
-                ariaLabel="Configurar Avatar Group"
-              >
-                <div class="button-config-popover-body input-icon-switches button-config-switches">
-                  <div class="button-config-size-field">
-                    <span class="input-config-label">Cantidad</span>
-                    <div class="button-config-select-wrap">
-                      <p-select
-                        [options]="avatarGroupCountOptions"
-                        optionLabel="label"
-                        optionValue="value"
-                        [ngModel]="avatarGroupIx.count"
-                        (ngModelChange)="patchAvatarGroupIx({ count: $event })"
-                        size="small"
-                        appendTo="body"
-                        ariaLabel="Cantidad Avatar Group"
-                      />
-                    </div>
-                  </div>
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="button-config-size-field">
-                    <span class="input-config-label">Size</span>
-                    <div class="button-config-size-toggle-wrap">
-                      <p-selectbutton
-                        [options]="avatarSizeOptions"
-                        optionLabel="label"
-                        optionValue="value"
-                        [ngModel]="avatarGroupIx.size"
-                        (ngModelChange)="patchAvatarGroupIx({ size: $event })"
-                        [allowEmpty]="false"
-                        [fluid]="true"
-                        size="small"
-                        ariaLabel="Size Avatar Group"
-                      />
-                    </div>
-                  </div>
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="input-config-row">
-                    <span class="input-config-label">Circle</span>
-                    <p-toggleswitch
-                      [ngModel]="avatarGroupIx.shape === 'circle'"
-                      (ngModelChange)="patchAvatarGroupIx({ shape: $event ? 'circle' : 'square' })"
-                      ariaLabel="Avatar group circular"
-                    />
-                  </div>
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="input-config-row">
-                    <span class="input-config-label">Avatar de texto</span>
-                    <p-toggleswitch
-                      [ngModel]="avatarGroupIx.showTextAvatar"
-                      (ngModelChange)="patchAvatarGroupIx({ showTextAvatar: $event })"
-                      ariaLabel="Mostrar avatar de texto al final"
-                    />
-                  </div>
-                </div>
-              </p-popover>
-            </aside>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Avatar Group"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive tag-catalog-row avatar-catalog-row">
+            @for (_ of [avatarGroupInteractionKey]; track avatarGroupInteractionKey) {
+              <p-avatarGroup>
+                @for (src of avatarGroupVisiblePhotos(); track $index) {
+                  <p-avatar
+                    [image]="src"
+                    [size]="avatarPrimeSize(avatarGroupIx.size)"
+                    [shape]="avatarGroupIx.shape"
+                    [styleClass]="avatarGroupLayerStyleClass($index)"
+                    ariaLabel="Avatar en grupo"
+                  />
+                }
+                @if (avatarGroupIx.showTextAvatar) {
+                  <p-avatar
+                    [label]="avatarGroupOverflowDemoLabel"
+                    [size]="avatarPrimeSize(avatarGroupIx.size)"
+                    [shape]="avatarGroupIx.shape"
+                    [styleClass]="avatarGroupLayerStyleClass(avatarGroupVisiblePhotos().length, true)"
+                    ariaLabel="Avatares adicionales en grupo"
+                  />
+                }
+              </p-avatarGroup>
+            }
           </div>
-        </div>
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Cantidad</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="avatarGroupCountOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="avatarGroupIx.count"
+                  (ngModelChange)="patchAvatarGroupIx({ count: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Cantidad Avatar Group"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="button-config-size-field">
+              <span class="input-config-label">Size</span>
+              <div class="button-config-size-toggle-wrap">
+                <p-selectbutton
+                  [options]="avatarSizeOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="avatarGroupIx.size"
+                  (ngModelChange)="patchAvatarGroupIx({ size: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Size Avatar Group"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Circle</span>
+              <p-toggleswitch
+                [ngModel]="avatarGroupIx.shape === 'circle'"
+                (ngModelChange)="patchAvatarGroupIx({ shape: $event ? 'circle' : 'square' })"
+                ariaLabel="Avatar group circular"
+              />
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Avatar de texto</span>
+              <p-toggleswitch
+                [ngModel]="avatarGroupIx.showTextAvatar"
+                (ngModelChange)="patchAvatarGroupIx({ showTextAvatar: $event })"
+                ariaLabel="Mostrar avatar de texto al final"
+              />
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
 
         <div class="btn-section">
           <p class="btn-section-title">Basic</p>

@@ -1,0 +1,51 @@
+<div class="catalog-preview-frame">
+  <div class="catalog-preview-frame__stage">
+    <ng-content select="[catalogPreviewDemo]" />
+  </div>
+
+  <footer class="catalog-preview-frame__footer">
+    <span class="catalog-preview-frame__badge">{{ label() }}</span>
+
+    <div class="catalog-preview-frame__toolbar" role="toolbar" [attr.aria-label]="label() + ' actions'">
+      @if (showCode()) {
+        <button
+          type="button"
+          class="catalog-preview-frame__action catalog-preview-frame__action--code"
+          disabled
+          tabindex="-1"
+          [attr.aria-label]="codeAriaLabel()"
+          title="Próximamente"
+        >
+          <i class="pi pi-code" aria-hidden="true"></i>
+        </button>
+      }
+
+      @if (showConfig()) {
+        <button
+          type="button"
+          class="catalog-preview-frame__action catalog-preview-frame__action--config"
+          (click)="toggleConfig($event)"
+          aria-haspopup="dialog"
+          [attr.aria-expanded]="configPopoverVisible()"
+          [attr.aria-label]="configAriaLabel()"
+          title="Configurar"
+        >
+          <i class="pi pi-cog" aria-hidden="true"></i>
+        </button>
+      }
+    </div>
+  </footer>
+
+  @if (showConfig()) {
+    <p-popover
+      #configPopover
+      styleClass="button-config-popover"
+      appendTo="body"
+      [ariaLabel]="configAriaLabel()"
+    >
+      <div class="button-config-popover-body input-icon-switches button-config-switches">
+        <ng-content select="[catalogPreviewConfig]" />
+      </div>
+    </p-popover>
+  }
+</div>

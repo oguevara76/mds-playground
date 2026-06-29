@@ -1,7 +1,7 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MenuItem, PrimeTemplate } from 'primeng/api';
+import { MenuItem, MessageService, PrimeTemplate } from 'primeng/api';
 import { SplitButton } from 'primeng/splitbutton';
 import { Button } from 'primeng/button';
 import { Popover } from 'primeng/popover';
@@ -31,8 +31,11 @@ import {
   type ButtonVariantSpec,
 } from './button-catalog.config';
 import { buttonPlaygroundAnchorId } from '../../layout/playground-component-index';
+import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { buttonDemoWrapStyle } from './button-catalog.demo-styles';
+import { ThemeUploadService } from '../../theme/theme-upload.service';
 
 export interface ButtonInteractionState {
   type: ButtonCatalogType;
@@ -59,11 +62,13 @@ function defaultInteraction(): ButtonInteractionState {
 @Component({
   selector: 'app-button-catalog',
   standalone: true,
-  imports: [Button, CatalogStateTagComponent, Divider, FormsModule, NgClass, NgStyle, Popover, PrimeTemplate, Select, SelectButton, SplitButton, ToggleSwitch],
+  imports: [Button, CatalogBlockHeadTitlePipe, CatalogPreviewFrameComponent, CatalogStateTagComponent, Divider, FormsModule, NgClass, NgStyle, PrimeTemplate, Select, SelectButton, SplitButton, ToggleSwitch],
   templateUrl: './button-catalog.component.html',
   styleUrl: './button-catalog.component.css',
 })
-export class ButtonCatalogComponent {
+export class ButtonCatalogComponent implements AfterViewInit {
+  private readonly messages = inject(MessageService);
+  private readonly themeUpload = inject(ThemeUploadService);
   readonly buttonAnchorId = buttonPlaygroundAnchorId;
   readonly blocks = BUTTON_BLOCKS;
   readonly splitbuttonMenu: MenuItem[] = SPLITBUTTON_DEMO_MENU;
@@ -211,6 +216,15 @@ export class ButtonCatalogComponent {
     this.splitbuttonIx.update((s) => ({ ...s, ...patch }));
   }
 
+  onSplitbuttonPrimaryClick(): void {
+    this.messages.add({
+      severity: 'info',
+      summary: 'Acción confirmada',
+      detail: 'Haz presionado el botón principal del componente',
+      life: 4000,
+    });
+  }
+
   splitbuttonSeverityLabel(): string {
     const value = this.splitbuttonIx().severity;
     return BUTTON_DS_SEVERITIES.find((s) => s.value === value)?.label ?? 'Primary';
@@ -223,6 +237,14 @@ export class ButtonCatalogComponent {
     return buttonDemoWrapStyle(variant, state, {
       severity: this.splitbuttonIx().severity,
       outlined: !!variant.outlined,
+    });
+  }
+
+  ngAfterViewInit(): void {
+    // PrimeNG inyecta estilos de SplitButton al montar el catálogo; recolocar overrides MDS al final.
+    requestAnimationFrame(() => {
+      this.themeUpload.resyncThemeRuntime();
+      requestAnimationFrame(() => this.themeUpload.resyncThemeRuntime());
     });
   }
 }

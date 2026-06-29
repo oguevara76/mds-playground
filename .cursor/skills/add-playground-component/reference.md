@@ -23,46 +23,46 @@
   tabindex="-1"
 >
   <header class="catalog-block-head">
-    <h3 class="section-title component-title-primary">{Title}</h3>
+    <h3 class="section-title component-title-primary">{{ {Title} | catalogBlockHeadTitle }}</h3>
   </header>
   <div class="catalog-block-body">
-    <div class="btn-section catalog-interaction-section">
-      <p class="btn-section-title">Interaction</p>
-      <div class="input-interaction-row catalog-interaction-row--center">
-        <div class="catalog-showcase-interactive">
-          <!-- p-{component} demo -->
-        </div>
-        <aside class="button-config-aside">
-          <button
-            type="button"
-            class="button-config-aside-title button-config-link"
-            (click)="configPopover.toggle($event)"
-            aria-haspopup="dialog"
-            [attr.aria-expanded]="configPopover.overlayVisible"
-          >
-            CONFIGURAR
-          </button>
-          <p class="button-config-aside-hint">{hint}</p>
-          <p-popover
-            #configPopover
-            styleClass="button-config-popover"
-            appendTo="body"
-            [ariaLabel]="'Configurar {Title}'"
-          >
-            <div class="button-config-popover-body button-config-switches">
-              <!-- p-select | p-selectbutton | p-toggleswitch -->
-            </div>
-          </p-popover>
-        </aside>
+    <mds-catalog-preview-frame
+      class="btn-section catalog-preview-section"
+      [configAriaLabel]="'Configurar ' + {Title}"
+    >
+      <div catalogPreviewDemo class="catalog-showcase-interactive">
+        <!-- p-{component} demo -->
       </div>
-    </div>
+      <ng-container catalogPreviewConfig>
+        <!-- p-select | p-selectbutton | p-toggleswitch -->
+      </ng-container>
+    </mds-catalog-preview-frame>
     <!-- Variants & States -->
     <!-- Sizes (si aplica) -->
   </div>
 </section>
 ```
 
+Importar `CatalogPreviewFrameComponent` y `CatalogBlockHeadTitlePipe` en el catálogo.
+
 Estilos compartidos: `src/styles/catalog-layout.css`.
+
+## Preview frame (sin configurador)
+
+Si el demo no tiene popover CONFIGURAR (Toast, Paginator, Tooltip, etc.):
+
+```html
+<mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
+  <div catalogPreviewDemo><!-- demo --></div>
+</mds-catalog-preview-frame>
+```
+
+Notas PREVIEW:
+- Badge inferior izquierdo: **Preview** (uppercase vía CSS).
+- Toolbar: icono código (deshabilitado, v1) + icono configurador (si `showConfig` no es false).
+- No confundir con la pestaña/ruta global `/preview` del playground.
+
+## Estructura legacy (deprecada)
 
 ## Patrón TypeScript (config)
 

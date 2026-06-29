@@ -1,6 +1,8 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { formPlaygroundAnchorId } from '../../layout/playground-component-index';
+import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { FormsModule } from '@angular/forms';
 import { Checkbox } from 'primeng/checkbox';
@@ -11,7 +13,6 @@ import { InputIcon } from 'primeng/inputicon';
 import { InputOtp } from 'primeng/inputotp';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
-import { Popover } from 'primeng/popover';
 import { RadioButton } from 'primeng/radiobutton';
 import { Rating } from 'primeng/rating';
 import { StarFillIcon } from 'primeng/icons/starfill';
@@ -245,6 +246,8 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
   selector: 'app-form-catalog',
   standalone: true,
   imports: [
+    CatalogBlockHeadTitlePipe,
+    CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
     Checkbox,
     Divider,
@@ -257,7 +260,6 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     NgClass,
     NgTemplateOutlet,
     Password,
-    Popover,
     RadioButton,
     Rating,
     StarFillIcon,

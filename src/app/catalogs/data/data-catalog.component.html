@@ -2,13 +2,12 @@
   <div class="catalog-preview paginator-showcase">
     <section id="pg-paginator" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
-        <h3 class="section-title component-title-primary">Paginator</h3>
+        <h3 class="section-title component-title-primary">{{ 'Paginator' | catalogBlockHeadTitle }}</h3>
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section catalog-interaction-section">
-          <p class="btn-section-title">Interaction</p>
-          <div class="paginator-catalog-live-shell">
+        <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
+          <div catalogPreviewDemo class="paginator-catalog-live-shell">
             <p-paginator
               class="paginator-catalog-live"
               [first]="first()"
@@ -23,7 +22,7 @@
               ariaLabel="Paginator interactivo del catálogo"
             />
           </div>
-        </div>
+        </mds-catalog-preview-frame>
 
         <div class="btn-section">
           <p class="btn-section-title">States</p>

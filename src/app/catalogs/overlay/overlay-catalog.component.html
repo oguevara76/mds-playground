@@ -2,13 +2,12 @@
   <div class="catalog-preview tooltip-variant-block">
     <section id="pg-tooltip" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
-        <h3 class="section-title component-title-primary">Tooltip</h3>
+        <h3 class="section-title component-title-primary">{{ 'Tooltip' | catalogBlockHeadTitle }}</h3>
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section catalog-interaction-section">
-          <p class="btn-section-title">Interaction</p>
-          <div class="tooltip-interaction-row">
+        <mds-catalog-preview-frame class="btn-section catalog-preview-section" [showConfig]="false">
+          <div catalogPreviewDemo class="tooltip-interaction-row">
             <div class="catalog-input-interactive tooltip-interaction-scope">
               <div class="p-field">
                 <div class="p-label-row">
@@ -35,7 +34,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </mds-catalog-preview-frame>
 
         <div class="btn-section">
           <p class="btn-section-title">Positions</p>
@@ -81,65 +80,45 @@
   <div class="catalog-preview drawer-variant-block">
     <section id="pg-drawer" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
-        <h3 class="section-title component-title-primary">Drawer</h3>
+        <h3 class="section-title component-title-primary">{{ 'Drawer' | catalogBlockHeadTitle }}</h3>
       </header>
 
       <div class="catalog-block-body">
-        <div class="btn-section catalog-interaction-section">
-          <p class="btn-section-title">Interaction</p>
-          <div class="input-interaction-row catalog-interaction-row--center">
-            <div class="catalog-showcase-interactive">
-              <div class="btn-row">
-                @for (demo of drawerPositionDemos; track trackDrawerPosition($index, demo)) {
-                  <p-button
-                    [label]="demo.label"
-                    [icon]="demo.buttonIcon"
-                    iconPos="right"
-                    size="small"
-                    (onClick)="openDrawer(demo.key)"
-                  />
-                }
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Drawer"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive">
+            <div class="btn-row">
+              @for (demo of drawerPositionDemos; track trackDrawerPosition($index, demo)) {
                 <p-button
-                  [label]="drawerFullScreenLabel"
-                  [icon]="drawerFullScreenIcon"
+                  [label]="demo.label"
+                  [icon]="demo.buttonIcon"
                   iconPos="right"
                   size="small"
-                  (onClick)="openDrawerFullScreen()"
+                  (onClick)="openDrawer(demo.key)"
                 />
-              </div>
+              }
+              <p-button
+                [label]="drawerFullScreenLabel"
+                [icon]="drawerFullScreenIcon"
+                iconPos="right"
+                size="small"
+                (onClick)="openDrawerFullScreen()"
+              />
             </div>
-
-            <aside class="button-config-aside">
-              <button
-                type="button"
-                class="button-config-aside-title button-config-link"
-                (click)="drawerConfigPopover.toggle($event)"
-                aria-haspopup="dialog"
-                [attr.aria-expanded]="drawerConfigPopover.overlayVisible"
-              >
-                CONFIGURAR
-              </button>
-              <p class="button-config-aside-hint">{{ drawerConfigHint }}</p>
-              <p-popover
-                #drawerConfigPopover
-                styleClass="button-config-popover"
-                appendTo="body"
-                ariaLabel="Configurar Drawer"
-              >
-                <div class="button-config-popover-body input-icon-switches button-config-switches">
-                  <div class="input-config-row">
-                    <span class="input-config-label">Modal</span>
-                    <p-toggleswitch
-                      [ngModel]="drawerIx().modal"
-                      (ngModelChange)="patchDrawerIx({ modal: $event })"
-                      ariaLabel="Mostrar máscara modal"
-                    />
-                  </div>
-                </div>
-              </p-popover>
-            </aside>
           </div>
-        </div>
+          <ng-container catalogPreviewConfig>
+            <div class="input-config-row">
+              <span class="input-config-label">Modal</span>
+              <p-toggleswitch
+                [ngModel]="drawerIx().modal"
+                (ngModelChange)="patchDrawerIx({ modal: $event })"
+                ariaLabel="Mostrar máscara modal"
+              />
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
 
         <div class="btn-section">
           <p class="btn-section-title">Positions</p>

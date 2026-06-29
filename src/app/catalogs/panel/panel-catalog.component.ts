@@ -2,10 +2,11 @@ import { NgClass } from '@angular/common';
 import { afterNextRender, Component, inject, Injector, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Divider } from 'primeng/divider';
-import { Popover } from 'primeng/popover';
 import { Select } from 'primeng/select';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'primeng/tabs';
 import { ToggleSwitch } from 'primeng/toggleswitch';
+import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
   DIVIDER_ALIGN_OPTIONS,
@@ -22,7 +23,7 @@ import {
 @Component({
   selector: 'app-panel-catalog',
   standalone: true,
-  imports: [CatalogStateTagComponent, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select, Popover],
+  imports: [CatalogBlockHeadTitlePipe, CatalogPreviewFrameComponent, CatalogStateTagComponent, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select],
   templateUrl: './panel-catalog.component.html',
   styleUrl: './panel-catalog.component.css',
   host: { class: 'panel-catalog-page' },

@@ -3,9 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { Button } from 'primeng/button';
 import { Drawer } from 'primeng/drawer';
 import { InputText } from 'primeng/inputtext';
-import { Popover } from 'primeng/popover';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { Tooltip } from 'primeng/tooltip';
+import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
   OVERLAY_CATALOG_DRAWER_CONFIG_HINT,
@@ -25,13 +26,14 @@ import {
   selector: 'app-overlay-catalog',
   standalone: true,
   imports: [
+    CatalogBlockHeadTitlePipe,
+    CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
     Tooltip,
     InputText,
     FormsModule,
     Drawer,
     Button,
-    Popover,
     ToggleSwitch,
   ],
   templateUrl: './overlay-catalog.component.html',
