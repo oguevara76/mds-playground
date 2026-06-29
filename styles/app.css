@@ -740,16 +740,10 @@ app-playground-sidebar {
   outline-offset: 2px;
   background: transparent;
 }
-.tooltip-catalog-positions-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
-  gap: 16px;
-  margin-top: 8px;
-}
 .tooltip-catalog-position-item {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--catalog-state-caption-gap, 12px);
 }
 .tooltip-catalog-position-caption {
   font-size: 11px;
@@ -762,8 +756,8 @@ app-playground-sidebar {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 88px;
-  padding: 24px 20px;
+  min-height: 0;
+  padding: 16px 20px;
   border-radius: var(--p-border-radius-lg);
   border: 1.5px dashed var(--p-surface-300);
   background: color-mix(in srgb, var(--p-surface-50) 72%, var(--p-content-bg));
@@ -846,13 +840,13 @@ app-playground-sidebar {
 .tabs-catalog-states-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px 24px;
+  gap: 16px 20px;
   align-items: flex-end;
 }
 .tabs-catalog-state {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--catalog-state-caption-gap, 12px);
   flex: 1 1 200px;
   min-width: 200px;
   max-width: 320px;

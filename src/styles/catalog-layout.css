@@ -60,16 +60,25 @@
   padding-top: 0;
 }
 
-.catalog-interaction-section {
+/* Aire uniforme entre título del componente y primera subsección (Interaction, etc.) */
+.catalog-block-body > .btn-section:first-child {
   margin-top: 24px;
 }
 
+.catalog-interaction-section {
+  margin-top: 0;
+}
+
 .catalog-interaction-section.btn-section {
-  margin-bottom: 32px;
+  margin-bottom: var(--catalog-section-stack-gap, 32px);
 }
 
 .btn-section {
-  margin-bottom: 32px;
+  margin-bottom: var(--catalog-section-stack-gap, 32px);
+}
+
+.btn-section:last-child {
+  margin-bottom: 0;
 }
 
 .btn-section-title {
@@ -78,7 +87,7 @@
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--p-surface-400);
-  margin-bottom: 12px;
+  margin-bottom: var(--catalog-section-title-gap, 24px);
   padding-bottom: 8px;
   border-bottom: 1px solid var(--p-content-border-color, var(--content-border-color));
 }
@@ -98,10 +107,10 @@
   align-items: center;
 }
 
-/* Subtítulos dentro de un bloque (p. ej. FILLED, OUTLINED en Message / Button) */
+/* Bloques de variantes (FILLED / OUTLINED / DEFAULT…): 32px hasta el siguiente subtítulo */
 .btn-variant-states-block {
-  margin-bottom: 36px;
-  padding-bottom: 4px;
+  margin-bottom: var(--catalog-section-stack-gap, 32px);
+  padding-bottom: 0;
 }
 
 .btn-variant-states-block:last-child {
@@ -110,7 +119,7 @@
 }
 
 .btn-variant-states-label {
-  margin: 0 0 12px;
+  margin: 0 0 var(--catalog-variant-title-gap, 16px);
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -120,6 +129,8 @@
 .is-static-preview .p-radiobutton,
 .is-static-preview .p-checkbox,
 .is-static-preview .p-toggleswitch,
+.is-static-preview .p-splitbutton,
+.is-static-preview .p-splitbutton .p-button,
 .is-static-preview .p-radiobutton-input,
 .is-static-preview .p-checkbox-input,
 .is-static-preview .p-toggleswitch-input,
@@ -212,30 +223,32 @@
   font-weight: 700;
 }
 
-.form-showcase .catalog-button-state-caption,
-.button-showcase .catalog-button-state-caption,
-.messages-showcase .catalog-button-state-caption,
-.toast-showcase .catalog-button-state-caption,
-.paginator-showcase .paginator-catalog-state-caption,
-.tabs-variant-block .tabs-catalog-state-caption,
-.divider-variant-block .divider-catalog-state-caption,
-.breadcrumb-showcase .breadcrumb-catalog-state-caption,
-.tooltip-variant-block .tooltip-catalog-position-caption,
-.drawer-variant-block .drawer-catalog-position-caption {
-  color: var(--p-surface-600);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: normal;
-  text-transform: none;
-}
-
-/* Más aire entre el título Interaction y el componente (p. ej. FloatLabel elevado) */
-.form-showcase .catalog-interaction-section > .btn-section-title {
-  margin-bottom: 22px;
-}
-
-.form-showcase .catalog-interaction-section .input-interaction-row:has(.p-floatlabel) {
-  padding-top: 10px;
+.catalog-preview .btn-section > .btn-section-title + .catalog-button-states-row,
+.catalog-preview .btn-section > .btn-section-title + .catalog-input-states-row,
+.catalog-preview .btn-section > .btn-section-title + .input-interaction-row,
+.catalog-preview .btn-section > .btn-section-title + .divider-interaction-row,
+.catalog-preview .btn-section > .btn-section-title + .tabs-interaction-row,
+.catalog-preview .btn-section > .btn-section-title + .tooltip-interaction-row,
+.catalog-preview .btn-section > .btn-section-title + .breadcrumb-interaction-row,
+.catalog-preview .btn-section > .btn-section-title + .paginator-catalog-live-shell,
+.catalog-preview .btn-section > .btn-section-title + .toast-catalog-actions-row,
+.catalog-preview .btn-section > .btn-section-title + .message-catalog-message-row,
+.catalog-preview .btn-section > .btn-section-title + .btn-variant-states-block,
+.catalog-preview .btn-section > .btn-section-title + .tag-catalog-row,
+.catalog-preview .btn-section > .btn-section-title + .chip-catalog-row,
+.catalog-preview .btn-section > .btn-section-title + .badge-catalog-row,
+.catalog-preview .btn-section > .btn-section-title + .avatar-catalog-row,
+.catalog-preview .btn-section > .btn-section-title + .avatargroup-catalog-row,
+.catalog-preview .btn-section > .btn-section-title + .tooltip-catalog-positions-row,
+.catalog-preview .btn-section > .btn-section-title + .drawer-catalog-positions-row,
+.catalog-preview .btn-section > .btn-section-title + .divider-catalog-states-row,
+.catalog-preview .btn-section > .btn-section-title + .tabs-catalog-states-row,
+.catalog-preview .btn-section > .btn-section-title + .paginator-catalog-states-row,
+.catalog-preview .btn-section > .btn-section-title + .breadcrumb-catalog-states-row,
+.catalog-preview .btn-section > .btn-section-title + .badge-severity-shape-demos,
+.catalog-preview .btn-section > .btn-section-title + .avatar-group-size-demos,
+.catalog-preview .btn-section > .btn-section-title + .toast-catalog-stack {
+  margin-top: 0;
 }
 
 .catalog-interaction-row--center {
@@ -385,6 +398,21 @@
   border-block-start-color: var(--p-content-border);
 }
 
+.catalog-preview {
+  /* Tag ↔ componente superior */
+  --catalog-state-caption-gap: 12px;
+  /* Subtítulo principal → contenido (INTERACTION, STATES, SIZES…) */
+  --catalog-section-title-gap: 24px;
+  /* Subtítulo secundario → contenido (DEFAULT, FILLED, OUTLINED…) */
+  --catalog-variant-title-gap: 16px;
+  /* Último bloque → siguiente subtítulo principal de sección */
+  --catalog-section-stack-gap: 32px;
+  /* Headroom interno en previews con float label (no suma al gap del subtítulo) */
+  --catalog-floatlabel-headroom: calc(
+    var(--p-floatlabel-over-wrapper-padding-top, var(--floatlabel-over-wrapper-padding-top, 14px)) + 6px
+  );
+}
+
 .catalog-button-states-row {
   display: flex;
   flex-wrap: wrap;
@@ -395,8 +423,10 @@
 .catalog-button-state {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  width: fit-content;
+  max-width: 100%;
+  gap: var(--catalog-state-caption-gap, 12px);
   flex: 0 1 auto;
   min-width: 88px;
 }
@@ -405,14 +435,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
 }
 
-.catalog-button-state-caption {
+/* Columnas preview + tag en catálogos con clase propia (misma lógica de alineación) */
+.paginator-catalog-state,
+.breadcrumb-catalog-state,
+.tooltip-catalog-position-item,
+.drawer-catalog-position-item,
+.divider-catalog-state,
+.tabs-catalog-state {
+  align-items: flex-start;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.paginator-catalog-state-preview,
+.breadcrumb-catalog-state-preview,
+.tooltip-catalog-position-preview,
+.drawer-catalog-position-preview,
+.divider-catalog-state-preview,
+.tabs-catalog-state-preview {
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  min-height: 0;
+  justify-content: flex-start;
+}
+
+mds-catalog-state-tag.catalog-button-state-caption {
+  display: flex;
+  justify-content: flex-start;
+  width: max-content;
+  max-width: 100%;
+  align-self: flex-start;
   margin: 0;
-  line-height: 1.2;
-  text-transform: none;
-  letter-spacing: normal;
-  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+mds-catalog-state-tag .catalog-state-tag {
+  max-width: 100%;
 }
 
 [data-theme="dark"] .form-showcase .catalog-block-head .section-title.component-title-primary,
@@ -483,19 +548,6 @@
   font-weight: 700;
 }
 
-[data-theme="dark"] .form-showcase .catalog-button-state-caption,
-[data-theme="dark"] .button-showcase .catalog-button-state-caption,
-[data-theme="dark"] .messages-showcase .catalog-button-state-caption,
-[data-theme="dark"] .toast-showcase .catalog-button-state-caption,
-[data-theme="dark"] .paginator-showcase .paginator-catalog-state-caption,
-[data-theme="dark"] .tabs-variant-block .tabs-catalog-state-caption,
-[data-theme="dark"] .divider-variant-block .divider-catalog-state-caption,
-[data-theme="dark"] .breadcrumb-showcase .breadcrumb-catalog-state-caption,
-[data-theme="dark"] .tooltip-variant-block .tooltip-catalog-position-caption,
-[data-theme="dark"] .drawer-variant-block .drawer-catalog-position-caption {
-  color: var(--p-surface-400);
-  font-weight: 500;
-}
 
 /* Message parity global (PrimeNG 20): usa tokens MDS x/y por tamaño. */
 .messages-showcase .p-message.p-component,

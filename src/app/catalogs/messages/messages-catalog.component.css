@@ -6,9 +6,9 @@
   gap: 24px;
 }
 
-/* Espacio entre el título del componente (Message) y el contenido del catálogo */
+/* Espacio entre el título del componente y el contenido: ver catalog-layout (.catalog-block-body > .btn-section:first-child) */
 .messages-catalog-body {
-  padding-top: 24px;
+  padding-top: 0;
 }
 
 /* Paridad Message: usa tokens MDS x/y por tamaño (sm, normal, lg). */

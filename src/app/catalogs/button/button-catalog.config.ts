@@ -122,3 +122,27 @@ export const BUTTON_BLOCKS: ButtonBlockConfig[] = [
 export const BUTTON_TEXT_VARIANT_SPECS: ButtonVariantSpec[] = BUTTON_VARIANT_SPECS.filter(
   (v) => !v.rounded && !v.raised,
 );
+
+/** Estado del popover CONFIGURAR de SplitButton. */
+export interface SplitButtonInteractionState {
+  type: ButtonCatalogType;
+  severity: ButtonDsSeverity;
+  rounded: boolean;
+  raised: boolean;
+  size: ButtonInteractionSize;
+}
+
+export const SPLITBUTTON_DEFAULT_INTERACTION: SplitButtonInteractionState = {
+  type: 'filled',
+  severity: 'primary',
+  rounded: false,
+  raised: false,
+  size: 'normal',
+};
+
+/** Items del menú desplegable en demos de SplitButton. */
+export const SPLITBUTTON_DEMO_MENU = [
+  { label: 'Update', icon: 'pi pi-refresh' },
+  { label: 'Delete', icon: 'pi pi-times' },
+  { label: 'Angular', icon: 'pi pi-external-link' },
+];

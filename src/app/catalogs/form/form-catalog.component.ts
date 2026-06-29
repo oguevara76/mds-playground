@@ -1,6 +1,7 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { formPlaygroundAnchorId } from '../../layout/playground-component-index';
+import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { FormsModule } from '@angular/forms';
 import { Checkbox } from 'primeng/checkbox';
 import { Divider } from 'primeng/divider';
@@ -44,6 +45,14 @@ import {
   FORM_RATING_VALUE_SELECT_OPTIONS,
   FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS,
   FORM_TEXTAREA_VARIANT_SELECT_OPTIONS,
+  FORM_SELECT_DEMO_GROUPED_OPTIONS,
+  FORM_SELECT_DEMO_OPTIONS,
+  FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER,
+  FORM_SELECT_OVERLAY_OPTION_VARIANT_OPTIONS,
+  FORM_SELECT_STATE_FILLED_VALUE,
+  FORM_SELECT_VARIANT_SELECT_OPTIONS,
+  type FormSelectOverlayOptionVariant,
+  type FormSelectDemoGroup,
   FORM_RADIO_OPTIONS,
   FORM_SELECTBUTTON_ACTIVE_ITEM_OPTIONS,
   FORM_SELECTBUTTON_OPTIONS,
@@ -61,9 +70,20 @@ import {
   type FormInputTextVariant,
   type FormInteractionSize,
   type FormRatingDemoState,
+  type FormSelectDemoValue,
   type FormSelectButtonActiveItem,
 } from './form-catalog.config';
 import { inputDemoWrapClass } from './form-catalog.demo-styles';
+
+export interface FormSelectInteractionState {
+  variant: FormInputTextVariant;
+  floatPosition: FormInputFloatVariant;
+  size: FormInteractionSize;
+  value: FormSelectDemoValue | null;
+  /** Buscador en header del overlay (PrimeNG filter). */
+  showOverlayFilter: boolean;
+  overlayOptionVariant: FormSelectOverlayOptionVariant;
+}
 
 export interface FormInputTextInteractionState {
   variant: FormInputTextVariant;
@@ -129,8 +149,8 @@ interface FormSelectButtonInteractionState {
   activeItem: FormSelectButtonActiveItem;
 }
 
-/** Campo al que aplican los tokens MDS de float label / ifta (input vs textarea vs password). */
-type FormFieldKind = 'inputtext' | 'textarea' | 'password';
+/** Campo al que aplican los tokens MDS de float label / ifta (input vs textarea vs password vs select). */
+type FormFieldKind = 'inputtext' | 'textarea' | 'password' | 'select';
 
 type PasswordStrengthLevel = 'none' | 'weak' | 'medium' | 'strong';
 
@@ -158,6 +178,17 @@ function defaultRatingInteraction(): FormRatingInteractionState {
     value: 3,
     disabled: false,
     readonly: false,
+  };
+}
+
+function defaultSelectInteraction(): FormSelectInteractionState {
+  return {
+    variant: 'default',
+    floatPosition: 'over',
+    size: 'normal',
+    value: null,
+    showOverlayFilter: true,
+    overlayOptionVariant: 'default',
   };
 }
 
@@ -214,6 +245,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
   selector: 'app-form-catalog',
   standalone: true,
   imports: [
+    CatalogStateTagComponent,
     Checkbox,
     Divider,
     FloatLabel,
@@ -251,6 +283,11 @@ export class FormCatalogComponent {
   readonly inputotpLengthSelectOptions = FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS;
   readonly ratingValueSelectOptions = FORM_RATING_VALUE_SELECT_OPTIONS;
   readonly ratingDemoStates = FORM_RATING_DEMO_STATES;
+  readonly selectVariantSelectOptions = FORM_SELECT_VARIANT_SELECT_OPTIONS;
+  readonly selectDemoOptions = [...FORM_SELECT_DEMO_OPTIONS];
+  readonly selectDemoGroupedOptions = FORM_SELECT_DEMO_GROUPED_OPTIONS;
+  readonly selectOverlayOptionVariantOptions = FORM_SELECT_OVERLAY_OPTION_VARIANT_OPTIONS;
+  readonly selectOverlayFilterPlaceholder = FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER;
   readonly inputtextVariantSelectOptions = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
   readonly inputtextFloatPositionSelectOptions = FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS;
   readonly textareaVariantSelectOptions = FORM_TEXTAREA_VARIANT_SELECT_OPTIONS;
@@ -267,6 +304,7 @@ export class FormCatalogComponent {
     togglebutton: 'outlined',
     selectbutton: 'outlined',
     inputtext: 'outlined',
+    select: 'outlined',
     password: 'outlined',
     inputotp: 'outlined',
     rating: 'outlined',
@@ -285,9 +323,16 @@ export class FormCatalogComponent {
   readonly selectButtonLiveValue = signal<string | string[]>(FORM_SELECTBUTTON_OPTIONS[0].value);
 
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
+  readonly selectIx = signal<FormSelectInteractionState>(defaultSelectInteraction());
   readonly passwordIx = signal<FormPasswordInteractionState>(defaultPasswordInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
   readonly ratingIx = signal<FormRatingInteractionState>(defaultRatingInteraction());
+
+  /** Float Label interactivo (Select): placeholder solo con foco. */
+  private readonly selectFloatIxFocused = signal(false);
+
+  /** Select Float Label: overlay abierto mantiene label/placeholder activos (onBlur al abrir lista). */
+  private readonly selectFloatOverlayOpen = signal(false);
 
   /** Float Label interactivo: placeholder solo mientras el campo tiene foco. */
   private readonly floatIxFocused = signal(false);
@@ -315,6 +360,10 @@ export class FormCatalogComponent {
 
   isInputTextBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputtext' } {
     return block.kind === 'inputtext';
+  }
+
+  isSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'select' } {
+    return block.kind === 'select';
   }
 
   isPasswordBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'password' } {
@@ -511,6 +560,19 @@ export class FormCatalogComponent {
     return this.inputtextIsFloatLabel() && this.inputtextFloatPosition() === 'in';
   }
 
+  inputtextIsFloatOver(): boolean {
+    return this.inputtextIsFloatLabel() && this.inputtextFloatPosition() === 'over';
+  }
+
+  inputtextIsFloatOn(): boolean {
+    return this.inputtextIsFloatLabel() && this.inputtextFloatPosition() === 'on';
+  }
+
+  /** Over/On comparten previews estáticos en States (label dentro vs sobre el borde). */
+  inputtextIsFloatOverOrOn(): boolean {
+    return this.inputtextIsFloatOver() || this.inputtextIsFloatOn();
+  }
+
   /** Float In: label arriba siempre; Over/On solo con valor o foco. */
   inputInteractionLabelFloated(): boolean {
     if (this.inputtextIsFloatIn()) {
@@ -524,21 +586,285 @@ export class FormCatalogComponent {
 
   inputFloatStateLabelFloated(state: FormInputDemoState): boolean {
     if (this.inputtextFloatPosition() === 'in') {
+      return state === 'filled' || state === 'focus' || state === 'disabled';
+    }
+    if (this.inputtextIsFloatOverOrOn() && state === 'disabled') {
       return true;
     }
-    return this.inputFloatFilled(state);
+    return state === 'focus' || state === 'filled';
   }
 
-  /** Sizes: Over/On elevan label; In siempre arriba. */
+  /** Sizes: preview tipo Fill (label activo + valor) en todas las variantes float. */
   inputFloatSizeLabelFloated(): boolean {
-    if (!this.inputtextIsFloatLabel()) {
+    return this.inputtextIsFloatLabel();
+  }
+
+  inputFloatSizeShowsFillPreview(): boolean {
+    return this.inputtextIsFloatLabel();
+  }
+
+  patchInputtext(patch: Partial<FormInputTextInteractionState>): void {
+    this.inputtextIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  selectIsDefault(): boolean {
+    return this.selectIx().variant === 'default';
+  }
+
+  selectIsFloatLabel(): boolean {
+    return this.selectIx().variant === 'floatlabel';
+  }
+
+  selectIsIftaLabel(): boolean {
+    return this.selectIx().variant === 'iftalabel';
+  }
+
+  selectFloatPosition(): FormInputFloatVariant {
+    return this.selectIx().floatPosition;
+  }
+
+  selectIsFloatIn(): boolean {
+    return this.selectIsFloatLabel() && this.selectFloatPosition() === 'in';
+  }
+
+  selectIsFloatOverOrOn(): boolean {
+    return (
+      this.selectIsFloatLabel() &&
+      (this.selectFloatPosition() === 'over' || this.selectFloatPosition() === 'on')
+    );
+  }
+
+  selectInteractionLabelFloated(): boolean {
+    if (!this.selectIsFloatLabel()) {
+      return false;
+    }
+    return (
+      !!this.selectIx().value ||
+      this.selectFloatIxFocused() ||
+      this.selectFloatOverlayOpen()
+    );
+  }
+
+  selectFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    if (this.selectFloatPosition() === 'in') {
+      return state === 'filled' || state === 'focus' || state === 'disabled';
+    }
+    if (this.selectIsFloatOverOrOn() && state === 'disabled') {
+      return true;
+    }
+    return state === 'focus' || state === 'filled';
+  }
+
+  selectFloatSizeLabelFloated(): boolean {
+    if (!this.selectIsFloatLabel()) {
       return false;
     }
     return true;
   }
 
-  patchInputtext(patch: Partial<FormInputTextInteractionState>): void {
-    this.inputtextIx.update((prev) => ({ ...prev, ...patch }));
+  patchSelect(patch: Partial<FormSelectInteractionState>): void {
+    this.selectIx.update((prev) => {
+      const next = { ...prev, ...patch };
+      if (
+        patch.overlayOptionVariant !== undefined &&
+        patch.overlayOptionVariant !== prev.overlayOptionVariant
+      ) {
+        next.value = null;
+      }
+      return next;
+    });
+    if (patch.variant !== undefined || patch.floatPosition !== undefined) {
+      this.selectFloatIxFocused.set(false);
+      this.selectFloatOverlayOpen.set(false);
+    }
+  }
+
+  setSelectFloatIxFocused(focused: boolean): void {
+    if (!this.selectIsFloatLabel()) {
+      return;
+    }
+    if (!focused && this.selectFloatOverlayOpen()) {
+      return;
+    }
+    this.selectFloatIxFocused.set(focused);
+  }
+
+  setSelectFloatOverlayOpen(open: boolean): void {
+    if (!this.selectIsFloatLabel()) {
+      return;
+    }
+    this.selectFloatOverlayOpen.set(open);
+    if (open) {
+      this.selectFloatIxFocused.set(true);
+    } else if (!this.selectIx().value) {
+      this.selectFloatIxFocused.set(false);
+    }
+  }
+
+  selectFloatInteractionPlaceholder(): string | null {
+    if (this.selectIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    if (!this.selectFloatIxFocused() && !this.selectFloatOverlayOpen()) {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  /** Placeholder en Interaction: Default e IftaLabel siempre; Float Label solo con foco/overlay. */
+  selectInteractionPlaceholder(): string {
+    if (this.selectIsDefault() || this.selectIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    return this.selectFloatInteractionPlaceholder() ?? '';
+  }
+
+  selectInteractionScopeClass(): Record<string, boolean> {
+    const sx = this.selectIx();
+    return {
+      'input-variant-block': true,
+      'form-input-interaction--stacked': sx.variant === 'floatlabel' || sx.variant === 'iftalabel',
+      'floatlabel-variant-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
+      'floatlabel-variant-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
+      'floatlabel-variant-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+      'iftalabel-variant': sx.variant === 'iftalabel',
+    };
+  }
+
+  selectPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return this.inputotpPrimeSize(size);
+  }
+
+  selectInteractionOptions(): typeof this.selectDemoOptions | FormSelectDemoGroup[] {
+    if (this.selectIx().overlayOptionVariant === 'group') {
+      return this.selectDemoGroupedOptions;
+    }
+    return this.selectDemoOptions;
+  }
+
+  selectInteractionOverlayPanelClass(): string | undefined {
+    return this.selectInteractionGroup() ? 'catalog-select-overlay--group' : undefined;
+  }
+
+  /** País sin emoji duplicado cuando label ya incluye el emoji (fallback PrimeNG). */
+  selectGroupCountryLabel(optionGroup: FormSelectDemoGroup): string {
+    const emoji = optionGroup.emoji?.trim();
+    const label = optionGroup.label?.trim() ?? '';
+    if (emoji && label.startsWith(emoji)) {
+      return label.slice(emoji.length).trimStart();
+    }
+    return label;
+  }
+
+  selectInteractionCheckmark(): boolean {
+    return this.selectIx().overlayOptionVariant === 'checkmark';
+  }
+
+  selectInteractionGroup(): boolean {
+    return this.selectIx().overlayOptionVariant === 'group';
+  }
+
+  private selectOverlayHostVars(): Record<string, string> {
+    return {
+      '--p-select-overlay-background': 'var(--select-overlay-background)',
+      '--p-select-overlay-border-color': 'var(--select-overlay-border-color)',
+      '--p-select-overlay-border-radius': 'var(--select-overlay-border-radius)',
+      '--p-select-overlay-color': 'var(--select-overlay-color)',
+      '--p-select-overlay-shadow': 'var(--select-overlay-shadow)',
+      '--p-select-list-padding': 'var(--list-padding, var(--dimension-scale-x4))',
+      '--p-select-list-gap': 'var(--select-list-gap)',
+      '--p-select-list-header-padding': 'var(--list-header-padding, var(--form-field-padding-y) var(--form-field-padding-x))',
+      '--p-select-option-padding': 'var(--list-option-padding, var(--form-field-sm-padding-y) var(--form-field-padding-x))',
+      '--p-select-option-border-radius': 'var(--select-option-border-radius)',
+      '--p-select-option-color': 'var(--select-option-color)',
+      '--p-select-option-focus-background': 'var(--select-option-focus-background)',
+      '--p-select-option-focus-color': 'var(--select-option-focus-color)',
+      '--p-select-option-selected-background': 'var(--select-option-selected-background)',
+      '--p-select-option-selected-color': 'var(--select-option-selected-color)',
+      '--p-select-option-selected-focus-background': 'var(--select-option-selected-focus-background)',
+      '--p-select-option-selected-focus-color': 'var(--select-option-selected-focus-color)',
+      '--p-select-option-group-padding': 'var(--list-option-group-padding, var(--form-field-sm-padding-y) var(--form-field-padding-x))',
+      '--p-select-empty-message-padding': 'var(--list-option-padding, var(--form-field-sm-padding-y) var(--form-field-padding-x))',
+    };
+  }
+
+  selectHostVars(size: FormInteractionSize = 'normal'): Record<string, string> {
+    return {
+      '--p-select-background': 'var(--select-background)',
+      '--p-select-border-color': 'var(--select-border-color)',
+      '--p-select-border-radius': 'var(--select-border-radius)',
+      '--p-select-color': 'var(--select-color)',
+      '--p-select-padding-x': `var(${this.fieldPaddingXToken('select', size)})`,
+      '--p-select-padding-y': `var(${this.fieldPaddingYToken('select', size)})`,
+      '--p-select-placeholder-color': 'var(--select-placeholder-color)',
+      '--p-select-dropdown-color': 'var(--select-dropdown-color)',
+      '--p-select-dropdown-width': 'var(--select-dropdown-width)',
+      '--p-select-focus-border-color': 'var(--select-focus-border-color)',
+      '--p-select-hover-border-color': 'var(--select-hover-border-color)',
+      '--p-select-invalid-border-color': 'var(--select-invalid-border-color)',
+      '--p-select-shadow': 'var(--select-shadow)',
+      '--p-select-sm-font-size': 'var(--select-sm-font-size)',
+      '--p-select-sm-padding-x': 'var(--select-sm-padding-x)',
+      '--p-select-sm-padding-y': 'var(--select-sm-padding-y)',
+      '--p-select-lg-font-size': 'var(--select-lg-font-size)',
+      '--p-select-lg-padding-x': 'var(--select-lg-padding-x)',
+      '--p-select-lg-padding-y': 'var(--select-lg-padding-y)',
+      ...this.selectOverlayHostVars(),
+    };
+  }
+
+  selectFloatLabelHostVars(): Record<string, string> {
+    const sx = this.selectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, sx.size, 'select');
+  }
+
+  selectIftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    return this.iftaLabelHostVars(size, 'select');
+  }
+
+  selectFloatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    const sx = this.selectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, size, 'select');
+  }
+
+  selectFloatLabelStatesHostVars(): Record<string, string> {
+    const sx = this.selectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, 'normal', 'select');
+  }
+
+  selectFloatPlaceholderAttr(state: FormInputDemoState): string | null {
+    if (this.selectIsIftaLabel()) {
+      if (state === 'filled') {
+        return null;
+      }
+      return this.inputStatePlaceholder;
+    }
+    if (this.selectIsFloatLabel()) {
+      if (state === 'focus') {
+        return this.inputStatePlaceholder;
+      }
+      return null;
+    }
+    if (state === 'empty' || state === 'filled') {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  selectStateValue(state: FormInputDemoState): FormSelectDemoValue | null {
+    if (this.selectIsDefault()) {
+      if (this.inputStateShowsPlaceholderOnly({ kind: 'select', title: 'Select', category: 'input' }, state)) {
+        return null;
+      }
+      if (state === 'readonly') {
+        return FORM_SELECT_STATE_FILLED_VALUE;
+      }
+      return null;
+    }
+    if (state === 'filled' || state === 'disabled') {
+      return FORM_SELECT_STATE_FILLED_VALUE;
+    }
+    return null;
   }
 
   patchPassword(patch: Partial<FormPasswordInteractionState>): void {
@@ -944,6 +1270,17 @@ export class FormCatalogComponent {
     return '--floatlabel-position-x';
   }
 
+  /** Token MDS de inset vertical del label in-field (Float In / Ifta). */
+  private floatLabelPositionYMdsToken(size: FormInteractionSize): string {
+    if (size === 'small') {
+      return '--form-field-sm-position-y';
+    }
+    if (size === 'large') {
+      return '--form-field-lg-padding-y';
+    }
+    return '--form-field-padding-y';
+  }
+
   /** Tipografía del valor en el campo (label in-field en float; placeholder en ifta). */
   private fieldInfieldFontSizeMdsToken(field: FormFieldKind, size: FormInteractionSize): string {
     if (field === 'textarea') {
@@ -954,6 +1291,15 @@ export class FormCatalogComponent {
         return '--textarea-lg-font-size';
       }
       return '--textarea-font-size';
+    }
+    if (field === 'select') {
+      if (size === 'small') {
+        return '--select-sm-font-size';
+      }
+      if (size === 'large') {
+        return '--select-lg-font-size';
+      }
+      return '--inputtext-font-size';
     }
     if (size === 'small') {
       return '--inputtext-sm-font-size';
@@ -974,6 +1320,15 @@ export class FormCatalogComponent {
       }
       return '--textarea-padding-x';
     }
+    if (field === 'select') {
+      if (size === 'small') {
+        return '--select-sm-padding-x';
+      }
+      if (size === 'large') {
+        return '--select-lg-padding-x';
+      }
+      return '--select-padding-x';
+    }
     if (size === 'small') {
       return '--inputtext-sm-padding-x';
     }
@@ -992,6 +1347,15 @@ export class FormCatalogComponent {
         return '--textarea-lg-padding-y';
       }
       return '--textarea-padding-y';
+    }
+    if (field === 'select') {
+      if (size === 'small') {
+        return '--select-sm-padding-y';
+      }
+      if (size === 'large') {
+        return '--select-lg-padding-y';
+      }
+      return '--select-padding-y';
     }
     if (size === 'small') {
       return '--inputtext-sm-padding-y';
@@ -1018,11 +1382,13 @@ export class FormCatalogComponent {
   ): Record<string, string> {
     const positionValue = `var(${this.floatLabelPositionMdsToken(size)})`;
     const fontValue = `var(${this.fieldInfieldFontSizeMdsToken(field, size)})`;
-    const positionYValue = `var(${this.fieldPaddingYToken(field, size)})`;
+    const positionYValue = `var(${this.floatLabelPositionYMdsToken(size)})`;
     const overActiveBackground =
       field === 'textarea'
         ? 'var(--textarea-background, var(--p-textarea-background, var(--form-field-background)))'
-        : 'var(--inputtext-background, var(--p-inputtext-background, var(--form-field-background)))';
+        : field === 'select'
+          ? 'var(--select-background, var(--p-select-background, var(--form-field-background)))'
+          : 'var(--inputtext-background, var(--p-inputtext-background, var(--form-field-background)))';
     return {
       '--p-floatlabel-position-x': positionValue,
       '--catalog-floatlabel-position-x': positionValue,
@@ -1049,20 +1415,45 @@ export class FormCatalogComponent {
     return 'var(--floatlabel-in-input-min-height, var(--iftalabel-input-min-height, 47px))';
   }
 
-  /** Gap label xs ↔ valor en Float In (normal 2px; sm gap semántico; lg más compacto que lg-gap-space). */
+  /** Gap label xs ↔ valor en Float In (2px normal/sm; lg x4). */
   private floatLabelInGapExpr(size: FormInteractionSize): string {
-    if (size === 'small') {
-      return 'var(--form-field-sm-gap-scale)';
-    }
     if (size === 'large') {
       return 'var(--dimension-scale-x4)';
     }
     return 'var(--dimension-scale-x2)';
   }
 
+  /** Layout vertical Float In: Normal tokens estáticos MDS; sm/lg centran label xs + gap + valor en min-height. */
+  private floatLabelInVerticalLayout(
+    size: FormInteractionSize,
+    field: FormFieldKind,
+    minHeight: string,
+    gap: string,
+  ): { activeTop: string; paddingTop: string; paddingBottom: string } {
+    if (size === 'normal') {
+      return {
+        activeTop: 'var(--floatlabel-in-active-top, var(--form-field-padding-y))',
+        paddingTop: 'var(--floatlabel-in-input-padding-top, var(--iftalabel-input-padding-top))',
+        paddingBottom: 'var(--floatlabel-in-input-padding-bottom, var(--form-field-padding-y))',
+      };
+    }
+
+    const activeFont = 'var(--floatlabel-active-font-size)';
+    const infieldFont = this.fieldInfieldFontSizeMdsToken(field, size);
+    const lineHeightVar =
+      field === 'textarea' ? '--textarea-line-height' : '--inputtext-line-height';
+    const activeTopExpr = `((${minHeight} - ${activeFont} - ${gap} - (var(${infieldFont}) * var(${lineHeightVar}, 1.25))) / 2)`;
+
+    return {
+      activeTop: `calc(${activeTopExpr})`,
+      paddingTop: `calc(${activeTopExpr} + ${activeFont} + ${gap})`,
+      paddingBottom: `calc(${activeTopExpr})`,
+    };
+  }
+
   /**
-   * Float In: Normal usa tokens estáticos del core MDS; sm/lg derivan padding-y + label xs + gap
-   * (misma lógica que IftaLabel). Large además centra con calc plano (sin calc anidados).
+   * Float In: Normal usa tokens estáticos del core MDS; sm/lg centran label xs + gap + valor
+   * dentro de min-height (misma lógica que IftaLabel).
    */
   private floatLabelInHostVars(size: FormInteractionSize, field: FormFieldKind): Record<string, string> {
     const pick = (normal: string, small: string, large: string): string => {
@@ -1078,39 +1469,19 @@ export class FormCatalogComponent {
 
     const minHeight = this.floatLabelInMinHeightExpr(size);
     const gap = this.floatLabelInGapExpr(size);
-    const paddingY = cssVar(this.fieldPaddingYToken(field, size));
-    const activeFont = 'var(--floatlabel-active-font-size)';
-    const infieldFont = this.fieldInfieldFontSizeMdsToken(field, size);
-    const lineHeightVar = field === 'textarea' ? '--textarea-line-height' : '--inputtext-line-height';
-
-    let activeTop: string;
-    let paddingTop: string;
-    let paddingBottom: string;
-
-    if (size === 'normal') {
-      activeTop = 'var(--floatlabel-in-active-top, var(--form-field-padding-y))';
-      paddingTop = 'var(--floatlabel-in-input-padding-top, var(--iftalabel-input-padding-top))';
-      paddingBottom = 'var(--floatlabel-in-input-padding-bottom, var(--form-field-padding-y))';
-    } else if (size === 'small') {
-      activeTop = paddingY;
-      paddingTop = `calc(${paddingY} + ${activeFont} + ${gap})`;
-      paddingBottom = paddingY;
-    } else {
-      const activeTopExpr = `((${minHeight} - ${activeFont} - ${gap} - (var(${infieldFont}) * var(${lineHeightVar}, 1.25))) / 2)`;
-      activeTop = `calc(${activeTopExpr})`;
-      paddingBottom = activeTop;
-      paddingTop = `calc(${activeTopExpr} + ${activeFont} + ${gap})`;
-    }
+    const { activeTop, paddingTop, paddingBottom } = this.floatLabelInVerticalLayout(size, field, minHeight, gap);
 
     const paddingX = this.fieldPaddingXToken(field, size);
     const iconPaddingEnd =
       field === 'textarea'
         ? paddingX
-        : pick(
-            '--inputtext-with-icon-padding-start',
-            '--inputtext-with-icon-padding-start-sm',
-            '--inputtext-with-icon-padding-start-lg',
-          );
+        : field === 'select'
+          ? `calc(var(${paddingX}) + var(--select-dropdown-width, var(--p-select-dropdown-width, var(--dimension-scale-x32, 32px))))`
+          : pick(
+              '--inputtext-with-icon-padding-start',
+              '--inputtext-with-icon-padding-start-sm',
+              '--inputtext-with-icon-padding-start-lg',
+            );
 
     const vars: Record<string, string> = {
       '--catalog-floatlabel-in-input-padding-top': paddingTop,
@@ -1142,10 +1513,14 @@ export class FormCatalogComponent {
   private textareaInfieldLabelHostVars(size: FormInteractionSize): Record<string, string> {
     const paddingY = `var(${this.fieldPaddingYToken('textarea', size)})`;
     const paddingX = `var(${this.fieldPaddingXToken('textarea', size)})`;
-    const activeFont = 'var(--floatlabel-active-font-size)';
+    const minHeight = this.floatLabelInMinHeightExpr(size);
     const gap = this.floatLabelInGapExpr(size);
-    const labelTop = paddingY;
-    const paddingTop = `calc(${labelTop} + ${activeFont} + ${gap})`;
+    const { activeTop: labelTop, paddingTop, paddingBottom } = this.floatLabelInVerticalLayout(
+      size,
+      'textarea',
+      minHeight,
+      gap,
+    );
 
     return {
       '--catalog-floatlabel-in-active-top': labelTop,
@@ -1155,8 +1530,8 @@ export class FormCatalogComponent {
       '--catalog-floatlabel-in-input-padding-top': paddingTop,
       '--p-floatlabel-in-input-padding-top': paddingTop,
       '--p-iftalabel-input-padding-top': paddingTop,
-      '--catalog-floatlabel-in-input-padding-bottom': paddingY,
-      '--p-floatlabel-in-input-padding-bottom': paddingY,
+      '--catalog-floatlabel-in-input-padding-bottom': paddingBottom,
+      '--p-floatlabel-in-input-padding-bottom': paddingBottom,
       '--p-iftalabel-input-padding-bottom': paddingY,
       '--catalog-floatlabel-in-input-padding-x': paddingX,
     };
@@ -1177,26 +1552,25 @@ export class FormCatalogComponent {
   }
 
   /**
-   * IftaLabel + InputText / Password: label en --iftalabel-top (padding-y); valor debajo con
-   * --iftalabel-input-padding-top (22px normal) o padding-y + label xs + gap x4 (sm/lg).
+   * IftaLabel + InputText / Password: label en --iftalabel-top (position-y); valor debajo con
+   * --iftalabel-input-padding-top (22px normal) o position-y + label xs + gap (sm/lg).
    */
   private iftaLabelInputtextHostVars(
     size: FormInteractionSize,
-    field: 'inputtext' | 'password' = 'inputtext',
+    field: 'inputtext' | 'password' | 'select' = 'inputtext',
   ): Record<string, string> {
     const fieldVars = this.floatLabelFieldStyleVars(size, field);
     const paddingYToken = this.fieldPaddingYToken(field, size);
     const paddingY = `var(${paddingYToken})`;
     const paddingX = `var(${this.fieldPaddingXToken(field, size)})`;
-    const labelTop = `var(--iftalabel-top, ${paddingY})`;
-    const gap = this.floatLabelInGapExpr(size);
-    const activeFont = 'var(--floatlabel-active-font-size)';
-    const paddingTop =
-      size === 'normal'
-        ? 'var(--iftalabel-input-padding-top)'
-        : `calc(${paddingY} + ${activeFont} + ${gap})`;
-
     const minHeight = this.floatLabelInMinHeightExpr(size);
+    const gap = this.floatLabelInGapExpr(size);
+    const { activeTop: labelTop, paddingTop, paddingBottom } = this.floatLabelInVerticalLayout(
+      size,
+      field,
+      minHeight,
+      gap,
+    );
 
     return {
       ...fieldVars,
@@ -1207,14 +1581,14 @@ export class FormCatalogComponent {
       '--catalog-floatlabel-in-input-padding-top': paddingTop,
       '--p-floatlabel-in-input-padding-top': paddingTop,
       '--p-iftalabel-input-padding-top': paddingTop,
-      '--catalog-floatlabel-in-input-padding-bottom': paddingY,
-      '--p-floatlabel-in-input-padding-bottom': paddingY,
+      '--catalog-floatlabel-in-input-padding-bottom': paddingBottom,
+      '--p-floatlabel-in-input-padding-bottom': paddingBottom,
       '--p-iftalabel-input-padding-bottom': 'var(--iftalabel-input-padding-bottom, var(--form-field-padding-y))',
       '--catalog-floatlabel-in-input-min-height': minHeight,
       '--p-floatlabel-in-input-min-height': minHeight,
       '--p-iftalabel-input-min-height': minHeight,
       '--catalog-floatlabel-in-input-padding-x': paddingX,
-      '--p-iftalabel-font-size': activeFont,
+      '--p-iftalabel-font-size': 'var(--floatlabel-active-font-size)',
       '--p-iftalabel-font-weight': 'var(--floatlabel-active-font-weight)',
       '--p-iftalabel-position-x': fieldVars['--p-floatlabel-position-x'],
     };
@@ -1228,6 +1602,9 @@ export class FormCatalogComponent {
     };
     if (fieldKind === 'textarea') {
       return { ...this.iftaLabelTextareaHostVars(size), ...iconVars };
+    }
+    if (fieldKind === 'select') {
+      return { ...this.iftaLabelInputtextHostVars(size, 'select'), ...iconVars };
     }
     return {
       ...this.iftaLabelInputtextHostVars(size, fieldKind === 'password' ? 'password' : 'inputtext'),
@@ -1380,6 +1757,9 @@ export class FormCatalogComponent {
   }
 
   inputStates(block: FormBlockConfig): { key: FormInputDemoState; caption: string }[] {
+    if (this.isSelectBlock(block)) {
+      return this.selectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
+    }
     if (this.isTextareaBlock(block)) {
       return this.textareaIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
@@ -1418,12 +1798,14 @@ export class FormCatalogComponent {
   readonly inputStateHint = FORM_INPUT_STATE_HINT;
   readonly inputStateErrorMessage = FORM_INPUT_STATE_ERROR_MESSAGE;
   readonly inputStateReadonlyValue = FORM_INPUT_STATE_READONLY_VALUE;
+  readonly inputStateFilledValue = FORM_INPUT_STATE_FILLED_VALUE;
   readonly inputOtpStateReadonlyValue = FORM_INPUT_OTP_STATE_READONLY_VALUE;
   readonly passwordFeedbackHeader = FORM_PASSWORD_FEEDBACK_HEADER;
 
   /** Preview estático: el input no lleva valor, solo placeholder (tokens). */
   inputStateShowsPlaceholderOnly(block: FormBlockConfig, state: FormInputDemoState): boolean {
     const isDefaultField =
+      (this.isSelectBlock(block) && this.selectIsDefault()) ||
       (this.isTextareaBlock(block) && this.textareaIsDefault()) ||
       (this.isInputTextBlock(block) && this.inputtextIsDefault());
     if (isDefaultField) {
@@ -1444,7 +1826,13 @@ export class FormCatalogComponent {
         state === 'disabled'
       );
     }
-    if (this.isTextareaBlock(block) || this.isInputTextBlock(block)) {
+    if (this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isSelectBlock(block)) {
+      if (this.isInputTextBlock(block) && this.inputtextIsFloatOverOrOn() && (state === 'disabled' || state === 'focus')) {
+        return false;
+      }
+      if (this.isInputTextBlock(block) && this.inputtextIsFloatIn() && (state === 'disabled' || state === 'focus')) {
+        return false;
+      }
       return state === 'hover' || state === 'focus' || state === 'invalid' || state === 'disabled';
     }
     return false;
@@ -1459,6 +1847,9 @@ export class FormCatalogComponent {
         return null;
       }
       return this.inputStatePlaceholder;
+    }
+    if (this.inputtextIsFloatOverOrOn() || this.inputtextIsFloatIn()) {
+      return null;
     }
     if (state === 'empty' || state === 'filled') {
       return null;
@@ -1484,7 +1875,7 @@ export class FormCatalogComponent {
     if (state !== 'invalid') {
       return false;
     }
-    return this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isPasswordBlock(block) || this.isInputOtpBlock(block);
+    return this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isSelectBlock(block) || this.isPasswordBlock(block) || this.isInputOtpBlock(block);
   }
 
   inputStateShowHint(block: FormBlockConfig, state: FormInputDemoState): boolean {
@@ -1511,6 +1902,12 @@ export class FormCatalogComponent {
       return '';
     }
     if (this.isInputTextBlock(block) && !this.inputtextIsDefault() && state === 'filled') {
+      return FORM_INPUT_STATE_FILLED_VALUE;
+    }
+    if (this.isInputTextBlock(block) && this.inputtextIsFloatOverOrOn() && (state === 'disabled' || state === 'focus')) {
+      return FORM_INPUT_STATE_FILLED_VALUE;
+    }
+    if (this.isInputTextBlock(block) && this.inputtextIsFloatIn() && (state === 'disabled' || state === 'focus')) {
       return FORM_INPUT_STATE_FILLED_VALUE;
     }
     if (this.isInputTextBlock(block) && !this.inputtextIsDefault()) {

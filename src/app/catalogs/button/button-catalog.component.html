@@ -191,7 +191,7 @@
                         [attr.aria-label]="block.kind === 'icon' ? severityLabel(block.kind) : null"
                       />
                     </div>
-                    <span class="catalog-button-state-caption">{{ st.caption }}</span>
+                    <mds-catalog-state-tag [label]="st.caption" />
                   </div>
                 }
               </div>
@@ -229,7 +229,7 @@
                     />
                   }
                 </div>
-                <span class="catalog-button-state-caption">{{ sz.caption }}</span>
+                <mds-catalog-state-tag [label]="sz.caption" />
               </div>
             }
           </div>
@@ -238,4 +238,174 @@
       </section>
     </div>
   }
+</div>
+
+<!-- SplitButton -->
+<div class="cards-grid form-catalog-stack button-catalog-stack">
+  <div class="catalog-preview button-showcase button-showcase--splitbutton">
+    <section
+      class="preview-section preview-section--flush catalog-block-section"
+      id="pg-splitbutton"
+      tabindex="-1"
+    >
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">SplitButton</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <div class="btn-section catalog-interaction-section">
+          <p class="btn-section-title">Interaction</p>
+          <div class="input-interaction-row button-interaction-row">
+            <div class="catalog-showcase-interactive catalog-button-interactive btn-row btn-row--align-center">
+              @for (key of [splitbuttonInteractionKey()]; track key) {
+                <p-splitbutton
+                  [label]="splitbuttonSeverityLabel()"
+                  [severity]="splitbuttonIx().severity"
+                  [outlined]="splitbuttonOutlined()"
+                  [raised]="splitbuttonIx().raised"
+                  [rounded]="splitbuttonIx().rounded"
+                  [size]="splitbuttonPrimeSize()"
+                  [model]="splitbuttonMenu"
+                />
+              }
+            </div>
+            <aside class="button-config-aside">
+              <button
+                type="button"
+                class="button-config-aside-title button-config-link"
+                (click)="splitbuttonConfigPopover.toggle($event)"
+                aria-haspopup="dialog"
+                [attr.aria-expanded]="splitbuttonConfigPopover.overlayVisible"
+              >
+                CONFIGURAR
+              </button>
+              <p class="button-config-aside-hint">Theme, Variant, Size, Rounded, Raised</p>
+              <p-popover
+                #splitbuttonConfigPopover
+                styleClass="button-config-popover"
+                appendTo="body"
+                ariaLabel="Configurar SplitButton"
+              >
+                <div class="button-config-popover-body input-icon-switches button-config-switches">
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Theme</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="typeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="splitbuttonIx().type"
+                        (ngModelChange)="patchSplitbuttonIx({ type: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Theme"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="severitySelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="splitbuttonIx().severity"
+                        (ngModelChange)="patchSplitbuttonIx({ severity: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="splitbuttonIx().size"
+                        (ngModelChange)="patchSplitbuttonIx({ size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="input-config-row">
+                    <span class="input-config-label">Rounded</span>
+                    <p-toggleswitch
+                      [ngModel]="splitbuttonIx().rounded"
+                      (ngModelChange)="patchSplitbuttonIx({ rounded: $event })"
+                    />
+                  </div>
+                  <div class="input-config-row">
+                    <span class="input-config-label">Raised</span>
+                    <p-toggleswitch
+                      [ngModel]="splitbuttonIx().raised"
+                      (ngModelChange)="patchSplitbuttonIx({ raised: $event })"
+                    />
+                  </div>
+                </div>
+              </p-popover>
+            </aside>
+          </div>
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Variants &amp; States</p>
+          @for (variant of variantSpecs; track variant.label) {
+            <div class="btn-variant-states-block">
+              <p class="btn-variant-states-label">{{ variantRowLabel(variant) }}</p>
+              <div class="catalog-button-states-row is-static-preview">
+                @for (st of demoStates; track st.key) {
+                  <div class="catalog-button-state">
+                    <div
+                      class="catalog-button-state-preview"
+                      [ngClass]="demoStateClass(st.key)"
+                      [ngStyle]="splitbuttonDemoWrapStyle(variant, st.key)"
+                    >
+                      <p-splitbutton
+                        [label]="splitbuttonSeverityLabel()"
+                        [severity]="splitbuttonIx().severity"
+                        [outlined]="!!variant.outlined"
+                        [rounded]="!!variant.rounded"
+                        [raised]="!!variant.raised"
+                        [disabled]="st.key === 'disabled'"
+                        [model]="splitbuttonMenu"
+                      />
+                    </div>
+                    <mds-catalog-state-tag [label]="st.caption" />
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="btn-section">
+          <p class="btn-section-title">Sizes</p>
+          <div class="catalog-button-states-row is-static-preview">
+            @for (sz of sizeOptions; track sz.key) {
+              <div class="catalog-button-state">
+                <div class="catalog-button-state-preview">
+                  <p-splitbutton
+                    [label]="splitbuttonSeverityLabel()"
+                    [severity]="splitbuttonIx().severity"
+                    [size]="sz.size ?? null"
+                    [model]="splitbuttonMenu"
+                  />
+                </div>
+                <mds-catalog-state-tag [label]="sz.caption" />
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>

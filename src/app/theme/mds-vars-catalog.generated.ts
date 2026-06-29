@@ -2183,7 +2183,7 @@ export const MDS_VARS_CATALOG = {
     { name: "--slider-track-size", value: "var(--dimension-scale-x4)" },
     { name: "--speeddial-gap", value: "var(--dimension-scale-x8)" },
     { name: "--splitbutton-border-radius", value: "var(--form-field-border-radius)" },
-    { name: "--splitbutton-raised-shadow", value: "inset 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2)" },
+    { name: "--splitbutton-raised-shadow", value: "var(--button-raised-shadow)" },
     { name: "--splitbutton-rounded-border-radius", value: "var(--border-radius-pill)" },
     { name: "--splitter-background", value: "var(--content-background)" },
     { name: "--splitter-border-color", value: "var(--content-border-color)" },

@@ -40,8 +40,8 @@ export interface DividerStateDemo {
 
 export const DIVIDER_STATE_DEMOS: DividerStateDemo[] = [
   { key: 'default', caption: 'Default' },
-  { key: 'labeled', caption: 'Con etiqueta', label: 'Sección' },
-  { key: 'icon', caption: 'Con icono', icon: 'pi pi-star' },
+  { key: 'labeled', caption: 'Labeled', label: 'Sección' },
+  { key: 'icon', caption: 'With icon', icon: 'pi pi-star' },
 ];
 
 export const PANEL_CATALOG_TABS: PanelCatalogTab[] = [
@@ -79,6 +79,6 @@ export interface PanelCatalogTabStateDemo {
 }
 
 export const PANEL_CATALOG_TAB_STATE_DEMOS: PanelCatalogTabStateDemo[] = [
-  { key: 'active', caption: 'Activa' },
-  { key: 'inactive', caption: 'Inactiva' },
+  { key: 'active', caption: 'Active' },
+  { key: 'inactive', caption: 'Inactive' },
 ];

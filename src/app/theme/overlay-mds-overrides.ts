@@ -189,19 +189,29 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
 
 .p-select-overlay .p-select-list-container,
 .p-select-overlay .p-select-list {
-  padding: var(--list-padding, var(--p-select-list-padding, 8px)) !important;
+  padding: var(--list-padding, var(--p-select-list-padding, var(--dimension-scale-x4, 4px))) !important;
+}
+
+.p-select-overlay .p-select-header {
+  padding: var(
+    --list-header-padding,
+    var(--p-select-list-header-padding, var(--form-field-padding-y, var(--dimension-scale-x8)) var(--form-field-padding-x, var(--dimension-scale-x12)))
+  ) !important;
 }
 
 .p-select-overlay .p-select-list {
   display: flex !important;
   flex-direction: column !important;
-  gap: var(--select-list-gap, var(--list-gap, var(--p-select-list-gap, 2px))) !important;
+  gap: var(--select-list-gap, var(--list-gap, var(--p-select-list-gap, var(--dimension-scale-x2, 2px)))) !important;
 }
 
 .p-select-overlay .p-select-option {
   padding: var(
     --select-option-padding,
-    var(--p-select-option-padding, var(--list-option-padding, 6px 12px))
+    var(
+      --p-select-option-padding,
+      var(--list-option-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
+    )
   ) !important;
   border-radius: var(
     --select-option-border-radius,
@@ -255,11 +265,48 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
 .p-select-overlay .p-select-option-group-label {
   padding: var(
     --list-option-group-padding,
-    var(--p-select-option-group-padding, var(--list-option-padding, 6px 12px))
+    var(
+      --p-select-option-group-padding,
+      var(--list-option-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
+    )
+  ) !important;
+  background: var(--select-option-group-background, var(--p-select-option-group-background, transparent)) !important;
+  color: var(--select-option-group-color, var(--p-select-option-group-color, var(--list-option-group-color))) !important;
+  font-weight: var(
+    --select-option-group-font-weight,
+    var(--p-select-option-group-font-weight, var(--list-option-group-font-weight, 600))
+  ) !important;
+  cursor: default;
+}
+
+.p-select-overlay .catalog-select-option-group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dimension-scale-x8, 8px);
+  line-height: 1.25;
+}
+
+.p-select-overlay .catalog-select-option-group-emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 1.125em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.p-select-overlay .catalog-select-option-group-label {
+  font-family: var(--font-family, inherit);
+}
+
+.p-select-overlay.catalog-select-overlay--group .p-select-option {
+  padding-inline-start: calc(
+    var(--form-field-padding-x, var(--dimension-scale-x12)) + var(--catalog-select-group-option-indent, var(--dimension-scale-x12, 12px))
   ) !important;
 }
 
 .p-select-overlay .p-select-empty-message {
-  padding: var(--list-option-padding, var(--p-select-empty-message-padding, 6px 12px)) !important;
+  padding: var(
+    --list-option-padding,
+    var(--p-select-empty-message-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
+  ) !important;
 }
 `;

@@ -1,7 +1,8 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PrimeTemplate } from 'primeng/api';
+import { MenuItem, PrimeTemplate } from 'primeng/api';
+import { SplitButton } from 'primeng/splitbutton';
 import { Button } from 'primeng/button';
 import { Popover } from 'primeng/popover';
 import { Divider } from 'primeng/divider';
@@ -18,6 +19,9 @@ import {
   BUTTON_SIZE_OPTIONS,
   BUTTON_SIZE_SELECT_OPTIONS,
   BUTTON_TEXT_VARIANT_SPECS,
+  SPLITBUTTON_DEFAULT_INTERACTION,
+  SPLITBUTTON_DEMO_MENU,
+  type SplitButtonInteractionState,
   BUTTON_VARIANT_SPECS,
   type ButtonBlockConfig,
   type ButtonBlockKind,
@@ -27,6 +31,7 @@ import {
   type ButtonVariantSpec,
 } from './button-catalog.config';
 import { buttonPlaygroundAnchorId } from '../../layout/playground-component-index';
+import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { buttonDemoWrapStyle } from './button-catalog.demo-styles';
 
 export interface ButtonInteractionState {
@@ -54,13 +59,25 @@ function defaultInteraction(): ButtonInteractionState {
 @Component({
   selector: 'app-button-catalog',
   standalone: true,
-  imports: [Button, Divider, FormsModule, NgClass, NgStyle, Popover, PrimeTemplate, Select, SelectButton, ToggleSwitch],
+  imports: [Button, CatalogStateTagComponent, Divider, FormsModule, NgClass, NgStyle, Popover, PrimeTemplate, Select, SelectButton, SplitButton, ToggleSwitch],
   templateUrl: './button-catalog.component.html',
   styleUrl: './button-catalog.component.css',
 })
 export class ButtonCatalogComponent {
   readonly buttonAnchorId = buttonPlaygroundAnchorId;
   readonly blocks = BUTTON_BLOCKS;
+  readonly splitbuttonMenu: MenuItem[] = SPLITBUTTON_DEMO_MENU;
+  readonly splitbuttonIx = signal<SplitButtonInteractionState>(SPLITBUTTON_DEFAULT_INTERACTION);
+  /** Fuerza remount del demo interactivo cuando cambian props del popover. */
+  readonly splitbuttonInteractionKey = computed(() => {
+    const { type, severity, size, rounded, raised } = this.splitbuttonIx();
+    return `${type}|${severity}|${size}|${rounded}|${raised}`;
+  });
+  readonly splitbuttonPrimeSize = computed((): 'small' | 'large' | null => {
+    const size = this.splitbuttonIx().size;
+    return size === 'normal' ? null : size;
+  });
+  readonly splitbuttonOutlined = computed(() => this.splitbuttonIx().type === 'outlined');
   readonly typeSelectOptions = BUTTON_TYPE_SELECT_OPTIONS;
   readonly severitySelectOptions = BUTTON_SEVERITY_SELECT_OPTIONS;
   readonly variantSpecs = BUTTON_VARIANT_SPECS;
@@ -188,5 +205,24 @@ export class ButtonCatalogComponent {
 
   variantRowLabel(variant: ButtonVariantSpec): string {
     return variant.label;
+  }
+
+  patchSplitbuttonIx(patch: Partial<SplitButtonInteractionState>): void {
+    this.splitbuttonIx.update((s) => ({ ...s, ...patch }));
+  }
+
+  splitbuttonSeverityLabel(): string {
+    const value = this.splitbuttonIx().severity;
+    return BUTTON_DS_SEVERITIES.find((s) => s.value === value)?.label ?? 'Primary';
+  }
+
+  splitbuttonDemoWrapStyle(
+    variant: ButtonVariantSpec,
+    state: ButtonDemoState,
+  ): Record<string, string> | null {
+    return buttonDemoWrapStyle(variant, state, {
+      severity: this.splitbuttonIx().severity,
+      outlined: !!variant.outlined,
+    });
   }
 }

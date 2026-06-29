@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { Paginator, type PaginatorState } from 'primeng/paginator';
+import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
   PAGINATOR_CATALOG_ROWS_OPTIONS,
   PAGINATOR_CATALOG_STATE_DEMOS,
@@ -10,7 +11,7 @@ import {
 @Component({
   selector: 'app-data-catalog',
   standalone: true,
-  imports: [Paginator],
+  imports: [CatalogStateTagComponent, Paginator],
   templateUrl: './data-catalog.component.html',
   styleUrl: './data-catalog.component.css',
   host: { class: 'data-catalog-page' },

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Message } from 'primeng/message';
+import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { ToastCatalogComponent } from './toast-catalog.component';
 import {
   MESSAGE_CONTENT,
@@ -16,7 +17,7 @@ import {
 @Component({
   selector: 'app-messages-catalog',
   standalone: true,
-  imports: [Message, ToastCatalogComponent],
+  imports: [CatalogStateTagComponent, Message, ToastCatalogComponent],
   templateUrl: './messages-catalog.component.html',
   styleUrl: './messages-catalog.component.css',
 })

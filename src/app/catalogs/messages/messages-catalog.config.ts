@@ -33,9 +33,9 @@ export const MESSAGE_SIZE_OPTIONS: {
   caption: string;
   pSize?: 'small' | 'large';
 }[] = [
-  { key: 'small', caption: 'Pequeño', pSize: 'small' },
+  { key: 'small', caption: 'Small', pSize: 'small' },
   { key: 'normal', caption: 'Normal' },
-  { key: 'large', caption: 'Grande', pSize: 'large' },
+  { key: 'large', caption: 'Large', pSize: 'large' },
 ];
 
 /** Iconos de severidad (paridad legacy / index.html). */

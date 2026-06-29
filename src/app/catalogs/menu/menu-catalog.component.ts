@@ -6,6 +6,7 @@ import { Divider } from 'primeng/divider';
 import { Popover } from 'primeng/popover';
 import { Select } from 'primeng/select';
 import { SelectButton } from 'primeng/selectbutton';
+import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
   BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS,
   BREADCRUMB_CATALOG_DISPLAY_MODE_OPTIONS,
@@ -23,7 +24,7 @@ import {
 @Component({
   selector: 'app-menu-catalog',
   standalone: true,
-  imports: [Breadcrumb, FormsModule, Popover, Select, SelectButton, Divider],
+  imports: [Breadcrumb, CatalogStateTagComponent, FormsModule, Popover, Select, SelectButton, Divider],
   templateUrl: './menu-catalog.component.html',
   styleUrl: './menu-catalog.component.css',
   host: { class: 'menu-catalog-page' },

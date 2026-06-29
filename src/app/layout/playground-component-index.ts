@@ -44,12 +44,14 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-button': 'button',
   'pg-button-icon': 'button',
   'pg-button-text': 'button',
+  'pg-splitbutton': 'splitbutton',
   'pg-radiobutton': 'radiobutton',
   'pg-checkbox': 'checkbox',
   'pg-toggleswitch': 'toggleswitch',
   'pg-togglebutton': 'togglebutton',
   'pg-selectbutton': 'selectbutton',
   'pg-inputtext': 'inputtext',
+  'pg-select': 'select',
   'pg-password': 'password',
   'pg-inputotp': 'inputotp',
   'pg-rating': 'rating',
@@ -87,6 +89,7 @@ const FORM_VARIANT_COUNTS: Record<string, number> = {
   togglebutton: 4,
   selectbutton: 4,
   inputtext: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
+  select: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   password: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputotp: 6,
   rating: 4,
@@ -103,6 +106,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       keywords: ['btn', 'p-button', b.kind],
       variantCount: buttonVariantCount(b.kind),
     })),
+    {
+      id: 'pg-splitbutton',
+      name: 'SplitButton',
+      route: 'button' as const,
+      sectionLabel: 'Button',
+      keywords: ['p-splitbutton', 'splitbutton', 'split button', 'dropdown'],
+      variantCount: BUTTON_VARIANT_SPECS.length,
+    },
     ...FORM_BLOCKS.map((b) => ({
       id: `pg-${b.kind === 'toggleswitch' ? 'toggleswitch' : b.kind}`,
       name: b.title,
@@ -238,6 +249,8 @@ export function buttonPlaygroundAnchorId(kind: 'standard' | 'icon' | 'text'): st
   return kind === 'standard' ? 'pg-button' : `pg-button-${kind}`;
 }
 
+export const splitbuttonPlaygroundAnchorId = 'pg-splitbutton';
+
 export function formPlaygroundAnchorId(
   kind:
     | 'radio'
@@ -246,6 +259,7 @@ export function formPlaygroundAnchorId(
     | 'togglebutton'
     | 'selectbutton'
     | 'inputtext'
+    | 'select'
     | 'password'
     | 'inputotp'
     | 'rating'

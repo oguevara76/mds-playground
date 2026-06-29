@@ -15,15 +15,15 @@
 :host.menu-catalog-page .breadcrumb-catalog-states-row {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 8px;
+  gap: 16px;
+  align-items: flex-start;
 }
 
 :host.menu-catalog-page .breadcrumb-catalog-state {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: var(--catalog-state-caption-gap, 12px);
   width: fit-content;
   max-width: 100%;
 }
@@ -31,6 +31,7 @@
 :host.menu-catalog-page .breadcrumb-catalog-state-preview {
   width: fit-content;
   max-width: 100%;
+  margin-inline: 0;
   overflow-x: auto;
 }
 

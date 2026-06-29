@@ -6,6 +6,7 @@ import { InputText } from 'primeng/inputtext';
 import { Popover } from 'primeng/popover';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { Tooltip } from 'primeng/tooltip';
+import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
   OVERLAY_CATALOG_DRAWER_CONFIG_HINT,
   OVERLAY_CATALOG_DRAWER_CONTENT,
@@ -24,6 +25,7 @@ import {
   selector: 'app-overlay-catalog',
   standalone: true,
   imports: [
+    CatalogStateTagComponent,
     Tooltip,
     InputText,
     FormsModule,

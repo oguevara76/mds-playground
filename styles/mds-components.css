@@ -1489,7 +1489,7 @@ html:root {
   --slider-track-size: var(--dimension-scale-x4);
   --speeddial-gap: var(--dimension-scale-x8);
   --splitbutton-border-radius: var(--form-field-border-radius);
-  --splitbutton-raised-shadow: inset 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2);
+  --splitbutton-raised-shadow: var(--button-raised-shadow);
   --splitbutton-rounded-border-radius: var(--border-radius-pill);
   --splitter-background: var(--content-background);
   --splitter-border-color: var(--content-border-color);

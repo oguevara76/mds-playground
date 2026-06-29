@@ -6,6 +6,7 @@ import { Popover } from 'primeng/popover';
 import { Select } from 'primeng/select';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'primeng/tabs';
 import { ToggleSwitch } from 'primeng/toggleswitch';
+import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
   DIVIDER_ALIGN_OPTIONS,
   DIVIDER_BORDER_TYPE_OPTIONS,
@@ -21,7 +22,7 @@ import {
 @Component({
   selector: 'app-panel-catalog',
   standalone: true,
-  imports: [Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select, Popover],
+  imports: [CatalogStateTagComponent, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select, Popover],
   templateUrl: './panel-catalog.component.html',
   styleUrl: './panel-catalog.component.css',
   host: { class: 'panel-catalog-page' },

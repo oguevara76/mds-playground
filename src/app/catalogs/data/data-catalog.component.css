@@ -1,6 +1,5 @@
 :host.data-catalog-page .paginator-catalog-live-shell {
   max-width: 100%;
-  margin-top: 4px;
   overflow-x: auto;
 }
 
@@ -15,14 +14,13 @@
   flex-wrap: wrap;
   gap: 16px 20px;
   align-items: flex-start;
-  margin-top: 8px;
 }
 
 :host.data-catalog-page .paginator-catalog-state {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: var(--catalog-state-caption-gap, 12px);
   flex: 0 0 auto;
   width: fit-content;
   min-width: 0;
@@ -46,17 +44,6 @@
   .paginator-catalog-state:not(.paginator-catalog-state--informe)
   .paginator-catalog-state-demo {
   width: fit-content;
-}
-
-:host.data-catalog-page .paginator-catalog-state-caption {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: normal;
-  text-transform: none;
-  text-align: center;
-  color: var(--p-surface-600);
 }
 
 :host.data-catalog-page .paginator-catalog-state-demo {

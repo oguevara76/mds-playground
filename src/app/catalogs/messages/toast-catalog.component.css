@@ -4,17 +4,9 @@
   --toast-catalog-states-gap: 8px;
 }
 
-/* Mismo aire que Message → Variants & States (solo padding del body, sin margin-top extra) */
+/* Espacio entre título del componente y contenido: ver catalog-layout */
 .toast-catalog-body {
-  padding-top: 24px;
-}
-
-.toast-showcase .catalog-interaction-section {
-  margin-top: 0;
-}
-
-.toast-catalog-actions-row {
-  margin-top: 10px;
+  padding-top: 0;
 }
 
 /* Vista previa estática: sin interacción en cierre */
@@ -27,7 +19,6 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, var(--toast-catalog-max-width)));
   gap: var(--toast-catalog-states-gap);
-  margin-top: 8px;
   width: fit-content;
   max-width: 100%;
   align-items: stretch;

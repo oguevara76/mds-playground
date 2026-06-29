@@ -77,3 +77,25 @@
 .button-showcase--icon-only ::ng-deep .p-button.p-button-icon-only.p-button-lg .p-button-icon {
   font-size: var(--p-button-lg-font-size);
 }
+
+/* Button States/Sizes: tag centrada bajo el control */
+.button-showcase .catalog-button-state:has(.catalog-button-state-preview .p-button) {
+  align-items: center;
+}
+
+.button-showcase .catalog-button-state:has(.catalog-button-state-preview .p-button) .catalog-button-state-preview {
+  margin-inline: 0;
+}
+
+.button-showcase .catalog-button-state:has(.catalog-button-state-preview .p-button) mds-catalog-state-tag {
+  align-self: center;
+}
+
+/* SplitButton: tags centrados bajo el control compuesto */
+.button-showcase--splitbutton .catalog-button-state:has(.catalog-button-state-preview .p-splitbutton) {
+  align-items: center;
+}
+
+.button-showcase--splitbutton .catalog-button-state:has(.catalog-button-state-preview .p-splitbutton) mds-catalog-state-tag {
+  align-self: center;
+}

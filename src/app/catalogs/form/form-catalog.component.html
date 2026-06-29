@@ -7,7 +7,9 @@
       [class.inputotp-showcase]="isInputOtpBlock(block)"
       [class.rating-showcase]="isRatingBlock(block)"
       [class.textarea-showcase]="isTextareaBlock(block)"
+      [class.select-showcase]="isSelectBlock(block)"
       [class.selectbutton-showcase]="isSelectButtonBlock(block)"
+      [class.togglebutton-showcase]="isToggleButtonBlock(block)"
     >
       <section
         class="preview-section preview-section--flush catalog-block-section"
@@ -438,6 +440,170 @@
                             [fluid]="true"
                             size="small"
                             ariaLabel="Size SelectButton"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </p-popover>
+                </aside>
+              </div>
+            }
+            @case ('select') {
+              <ng-template #selectInteractionField>
+                <p-select
+                  inputId="sel-live"
+                  [options]="selectInteractionOptions()"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="selectIx().value"
+                  (ngModelChange)="patchSelect({ value: $event })"
+                  [size]="selectPrimeSize(selectIx().size)"
+                  [variant]="formThemePrimeVariant('select')"
+                  [style]="selectHostVars(selectIx().size)"
+                  [placeholder]="selectInteractionPlaceholder()"
+                  [filter]="selectIx().showOverlayFilter"
+                  [filterPlaceholder]="selectOverlayFilterPlaceholder"
+                  [checkmark]="selectInteractionCheckmark()"
+                  [group]="selectInteractionGroup()"
+                  [panelStyleClass]="selectInteractionOverlayPanelClass()"
+                  [fluid]="true"
+                  appendTo="body"
+                  (onFocus)="setSelectFloatIxFocused(true)"
+                  (onBlur)="setSelectFloatIxFocused(false)"
+                  (onShow)="setSelectFloatOverlayOpen(true)"
+                  (onHide)="setSelectFloatOverlayOpen(false)"
+                  ariaLabel="Select interactivo"
+                >
+                  <ng-template pTemplate="group" let-optionGroup>
+                    <span class="catalog-select-option-group">
+                      @if (optionGroup.emoji) {
+                        <span class="catalog-select-option-group-emoji" aria-hidden="true">{{ optionGroup.emoji }}</span>
+                        <span class="catalog-select-option-group-label">{{ selectGroupCountryLabel(optionGroup) }}</span>
+                      } @else {
+                        <span class="catalog-select-option-group-label">{{ optionGroup.label }}</span>
+                      }
+                    </span>
+                  </ng-template>
+                </p-select>
+              </ng-template>
+              <div class="input-interaction-row">
+                <div
+                  class="catalog-showcase-interactive catalog-input-interactive select-interaction-scope"
+                  [ngClass]="selectInteractionScopeClass()"
+                >
+                  @if (selectIsDefault()) {
+                    <div class="p-field form-input-interaction-field">
+                      <label class="p-label" for="sel-live">Label</label>
+                      <ng-container *ngTemplateOutlet="selectInteractionField" />
+                    </div>
+                  } @else if (selectIsIftaLabel()) {
+                    <div class="form-input-interaction-control">
+                      <span class="p-iftalabel" [style]="selectFloatLabelHostVars()">
+                        <ng-container *ngTemplateOutlet="selectInteractionField" />
+                        <label for="sel-live">Label</label>
+                      </span>
+                    </div>
+                  } @else {
+                    <div class="form-input-interaction-control">
+                      <p-floatlabel
+                        [variant]="selectFloatPosition()"
+                        [class.is-label-floated]="selectInteractionLabelFloated()"
+                        [style]="selectFloatLabelHostVars()"
+                        (focusin)="setSelectFloatIxFocused(true)"
+                        (focusout)="setSelectFloatIxFocused(false)"
+                      >
+                        <ng-container *ngTemplateOutlet="selectInteractionField" />
+                        <label for="sel-live">Label</label>
+                      </p-floatlabel>
+                    </div>
+                  }
+                </div>
+                <aside class="button-config-aside">
+                  <button
+                    type="button"
+                    class="button-config-aside-title button-config-link"
+                    (click)="selectConfigPopover.toggle($event)"
+                    aria-haspopup="dialog"
+                    [attr.aria-expanded]="selectConfigPopover.overlayVisible"
+                  >
+                    CONFIGURAR
+                  </button>
+                  <p class="button-config-aside-hint">Variant, Float variant, Overlay, Size</p>
+                  <p-popover
+                    #selectConfigPopover
+                    styleClass="button-config-popover"
+                    appendTo="body"
+                    ariaLabel="Configurar Select"
+                  >
+                    <div class="button-config-popover-body button-config-switches">
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Variant</span>
+                        <div class="button-config-select-wrap">
+                          <p-select
+                            [options]="selectVariantSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="selectIx().variant"
+                            (ngModelChange)="patchSelect({ variant: $event })"
+                            size="small"
+                            appendTo="body"
+                            ariaLabel="Variant Select"
+                          />
+                        </div>
+                      </div>
+                      @if (selectIsFloatLabel()) {
+                        <div class="button-config-size-field">
+                          <span class="input-config-label">Float variant</span>
+                          <div class="button-config-select-wrap">
+                            <p-select
+                              [options]="inputtextFloatPositionSelectOptions"
+                              optionLabel="label"
+                              optionValue="value"
+                              [ngModel]="selectIx().floatPosition"
+                              (ngModelChange)="patchSelect({ floatPosition: $event })"
+                              size="small"
+                              appendTo="body"
+                              ariaLabel="Float variant Select"
+                            />
+                          </div>
+                        </div>
+                      }
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">List options</span>
+                        <div class="button-config-select-wrap">
+                          <p-select
+                            [options]="selectOverlayOptionVariantOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="selectIx().overlayOptionVariant"
+                            (ngModelChange)="patchSelect({ overlayOptionVariant: $event })"
+                            size="small"
+                            appendTo="body"
+                            ariaLabel="Variante de opciones del overlay Select"
+                          />
+                        </div>
+                      </div>
+                      <div class="input-config-row">
+                        <span class="input-config-label">Overlay filter</span>
+                        <p-toggleswitch
+                          [ngModel]="selectIx().showOverlayFilter"
+                          (ngModelChange)="patchSelect({ showOverlayFilter: $event })"
+                        />
+                      </div>
+                      <p-divider styleClass="button-config-divider" />
+                      <div class="button-config-size-field">
+                        <span class="input-config-label">Size</span>
+                        <div class="button-config-size-toggle-wrap">
+                          <p-selectbutton
+                            [options]="sizeSelectOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="selectIx().size"
+                            (ngModelChange)="patchSelect({ size: $event })"
+                            [allowEmpty]="false"
+                            [fluid]="true"
+                            size="small"
+                            ariaLabel="Size Select"
                           />
                         </div>
                       </div>
@@ -1492,7 +1658,7 @@
                       ariaLabel="Default"
                     />
                   </div>
-                  <span class="catalog-button-state-caption">Default</span>
+                  <mds-catalog-state-tag label="Default" />
                 </div>
                 <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
@@ -1505,7 +1671,7 @@
                       ariaLabel="On"
                     />
                   </div>
-                  <span class="catalog-button-state-caption">On</span>
+                  <mds-catalog-state-tag label="On" />
                 </div>
                 <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
@@ -1519,7 +1685,7 @@
                       ariaLabel="Disabled"
                     />
                   </div>
-                  <span class="catalog-button-state-caption">Disabled</span>
+                  <mds-catalog-state-tag label="Disabled" />
                 </div>
                 <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
@@ -1533,7 +1699,7 @@
                       ariaLabel="Invalid"
                     />
                   </div>
-                  <span class="catalog-button-state-caption">Invalid</span>
+                  <mds-catalog-state-tag label="Invalid" />
                 </div>
               </div>
             }
@@ -1552,7 +1718,7 @@
                       ariaLabel="Item 1 seleccionado"
                     />
                   </div>
-                  <span class="catalog-button-state-caption">Item 1</span>
+                  <mds-catalog-state-tag label="Item 1" />
                 </div>
                 <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
@@ -1567,7 +1733,7 @@
                       ariaLabel="Item 3 seleccionado"
                     />
                   </div>
-                  <span class="catalog-button-state-caption">Item 3</span>
+                  <mds-catalog-state-tag label="Item 3" />
                 </div>
                 <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
@@ -1583,7 +1749,7 @@
                       ariaLabel="Disabled"
                     />
                   </div>
-                  <span class="catalog-button-state-caption">Disabled</span>
+                  <mds-catalog-state-tag label="Disabled" />
                 </div>
                 <div class="catalog-button-state">
                   <div class="catalog-button-state-preview">
@@ -1599,12 +1765,119 @@
                       ariaLabel="Invalid"
                     />
                   </div>
-                  <span class="catalog-button-state-caption">Invalid</span>
+                  <mds-catalog-state-tag label="Invalid" />
                 </div>
               </div>
             }
             @default {
-              @if (isTextareaBlock(block)) {
+              @if (isSelectBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (selectIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label">Label</label>
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-select
+                                [options]="selectDemoOptions"
+                                optionLabel="label"
+                                optionValue="value"
+                                [ngModel]="selectStateValue(st.key)"
+                                [size]="selectPrimeSize('normal')"
+                                [variant]="formThemePrimeVariant('select')"
+                                [style]="selectHostVars('normal')"
+                                [placeholder]="inputStatePlaceholder"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
+                                [readonly]="inputStateReadonly(st.key)"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                                [attr.aria-label]="st.caption"
+                              />
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else if (selectIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <span
+                                class="p-iftalabel"
+                                [class.is-label-invalid]="inputStateInvalid(st.key)"
+                                [style]="selectFloatLabelStatesHostVars()"
+                              >
+                                <p-select
+                                  [options]="selectDemoOptions"
+                                  optionLabel="label"
+                                  optionValue="value"
+                                  [ngModel]="selectStateValue(st.key)"
+                                  [size]="selectPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('select')"
+                                  [style]="selectHostVars('normal')"
+                                  [placeholder]="selectFloatPlaceholderAttr(st.key) ?? ''"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [readonly]="inputStateReadonly(st.key)"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </span>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-floatlabel
+                                [variant]="selectFloatPosition()"
+                                [class.is-label-floated]="selectFloatStateLabelFloated(st.key)"
+                                [style]="selectFloatLabelStatesHostVars()"
+                              >
+                                <p-select
+                                  [options]="selectDemoOptions"
+                                  optionLabel="label"
+                                  optionValue="value"
+                                  [ngModel]="selectStateValue(st.key)"
+                                  [size]="selectPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('select')"
+                                  [style]="selectHostVars('normal')"
+                                  [placeholder]="selectFloatPlaceholderAttr(st.key) ?? ''"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [readonly]="inputStateReadonly(st.key)"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </p-floatlabel>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="st.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isTextareaBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
                   @for (st of inputStates(block); track st.key) {
                     <div class="catalog-button-state catalog-input-state">
@@ -1705,7 +1978,7 @@
                           </div>
                         }
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
+                      <mds-catalog-state-tag [label]="st.caption" />
                     </div>
                   }
                 </div>
@@ -1792,6 +2065,7 @@
                                   [invalid]="inputStateInvalid(st.key)"
                                   [disabled]="inputStateDisabled(st.key)"
                                   [readonly]="inputStateReadonly(st.key)"
+                                  [class.p-filled]="inputFloatStateLabelFloated(st.key)"
                                   tabindex="-1"
                                   [attr.aria-label]="st.caption"
                                 />
@@ -1806,7 +2080,7 @@
                           </div>
                         }
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
+                      <mds-catalog-state-tag [label]="st.caption" />
                     </div>
                   }
                 </div>
@@ -1918,7 +2192,7 @@
                           </div>
                         }
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
+                      <mds-catalog-state-tag [label]="st.caption" />
                     </div>
                   }
                 </div>
@@ -1963,7 +2237,7 @@
                           }
                         </div>
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
+                      <mds-catalog-state-tag [label]="st.caption" />
                     </div>
                   }
                 </div>
@@ -2000,7 +2274,7 @@
                           </span>
                         </div>
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ st.caption }}</span>
+                      <mds-catalog-state-tag [label]="st.caption" />
                     </div>
                   }
                 </div>
@@ -2099,7 +2373,7 @@
                         }
                       }
                     </div>
-                    <span class="catalog-button-state-caption">{{ choiceSizeDisplayLabel(sz.key) }}</span>
+                    <mds-catalog-state-tag [label]="choiceSizeDisplayLabel(sz.key)" />
                   </div>
                 }
               </div>
@@ -2150,13 +2424,89 @@
                         }
                       }
                     </div>
-                    <span class="catalog-button-state-caption">{{ choiceSizeDisplayLabel(sz.key) }}</span>
+                    <mds-catalog-state-tag [label]="choiceSizeDisplayLabel(sz.key)" />
                   </div>
                 }
               </div>
             }
             @default {
-              @if (isTextareaBlock(block)) {
+              @if (isSelectBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (selectIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label" [for]="'sel-sz-' + sz.key">Label</label>
+                            <p-select
+                              [inputId]="'sel-sz-' + sz.key"
+                              [options]="selectDemoOptions"
+                              optionLabel="label"
+                              optionValue="value"
+                              [ngModel]="null"
+                              [size]="selectPrimeSize(sz.key)"
+                              [variant]="formThemePrimeVariant('select')"
+                              [style]="selectHostVars(sz.key)"
+                              [placeholder]="inputStatePlaceholder"
+                              [readonly]="true"
+                              [fluid]="true"
+                              appendTo="body"
+                              tabindex="-1"
+                            />
+                          </div>
+                        } @else if (selectIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <span class="p-iftalabel" [style]="selectIftaLabelHostVarsForSize(sz.key)">
+                              <p-select
+                                [inputId]="'sel-sz-' + sz.key"
+                                [options]="selectDemoOptions"
+                                optionLabel="label"
+                                optionValue="value"
+                                [ngModel]="null"
+                                [size]="selectPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('select')"
+                                [style]="selectHostVars(sz.key)"
+                                [placeholder]="inputStatePlaceholder"
+                                [readonly]="true"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                              />
+                              <label [for]="'sel-sz-' + sz.key">Label</label>
+                            </span>
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <p-floatlabel
+                              [variant]="selectFloatPosition()"
+                              [class.is-label-floated]="selectFloatSizeLabelFloated()"
+                              [style]="selectFloatLabelHostVarsForSize(sz.key)"
+                            >
+                              <p-select
+                                [inputId]="'sel-sz-' + sz.key"
+                                [options]="selectDemoOptions"
+                                optionLabel="label"
+                                optionValue="value"
+                                [ngModel]="null"
+                                [size]="selectPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('select')"
+                                [style]="selectHostVars(sz.key)"
+                                [placeholder]="inputStatePlaceholder"
+                                [readonly]="true"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                              />
+                              <label [for]="'sel-sz-' + sz.key">Label</label>
+                            </p-floatlabel>
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="sz.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isTextareaBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
                   @for (sz of sizeOptions; track sz.key) {
                     <div class="catalog-button-state catalog-input-state">
@@ -2216,7 +2566,7 @@
                           </div>
                         }
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ sz.caption }}</span>
+                      <mds-catalog-state-tag [label]="sz.caption" />
                     </div>
                   }
                 </div>
@@ -2266,7 +2616,8 @@
                                 pInputText
                                 [variant]="formThemePrimeVariant('inputtext')"
                                 [id]="'it-sz-' + sz.key"
-                                placeholder="Placeholder"
+                                [value]="inputFloatSizeShowsFillPreview() ? inputStateFilledValue : ''"
+                                [class.p-filled]="inputFloatSizeShowsFillPreview()"
                                 [ngClass]="inputSizeClass(sz.key)"
                                 [readonly]="true"
                                 [fluid]="true"
@@ -2277,7 +2628,7 @@
                           </div>
                         }
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ sz.caption }}</span>
+                      <mds-catalog-state-tag [label]="sz.caption" />
                     </div>
                   }
                 </div>
@@ -2341,7 +2692,7 @@
                           </div>
                         }
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ sz.caption }}</span>
+                      <mds-catalog-state-tag [label]="sz.caption" />
                     </div>
                   }
                 </div>
@@ -2361,7 +2712,7 @@
                           />
                         </div>
                       </div>
-                      <span class="catalog-button-state-caption catalog-input-state-caption">{{ sz.caption }}</span>
+                      <mds-catalog-state-tag [label]="sz.caption" />
                     </div>
                   }
                 </div>

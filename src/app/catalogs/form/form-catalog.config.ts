@@ -5,6 +5,7 @@ export type FormBlockKind =
   | 'togglebutton'
   | 'selectbutton'
   | 'inputtext'
+  | 'select'
   | 'password'
   | 'inputotp'
   | 'rating'
@@ -53,6 +54,60 @@ export const FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS: {
   { label: 'Float Label', value: 'floatlabel' },
   { label: 'IftaLabel', value: 'iftalabel' },
 ];
+
+export const FORM_SELECT_DEMO_OPTIONS = [
+  { label: 'Option 1', value: 'opt-1' },
+  { label: 'Option 2', value: 'opt-2' },
+  { label: 'Option 3', value: 'opt-3' },
+] as const;
+
+export type FormSelectDemoValue = (typeof FORM_SELECT_DEMO_OPTIONS)[number]['value'];
+
+/** Opciones agrupadas para overlay Group en Interaction (emoji + país, ciudades como ítems). */
+export interface FormSelectDemoGroup {
+  emoji: string;
+  label: string;
+  items: { label: string; value: string }[];
+}
+
+export const FORM_SELECT_DEMO_GROUPED_OPTIONS: FormSelectDemoGroup[] = [
+  {
+    emoji: '🇩🇪',
+    label: '🇩🇪 Germany',
+    items: [
+      { label: 'Berlin', value: 'de-berlin' },
+      { label: 'Frankfurt', value: 'de-frankfurt' },
+      { label: 'Munich', value: 'de-munich' },
+    ],
+  },
+  {
+    emoji: '🇺🇸',
+    label: '🇺🇸 USA',
+    items: [
+      { label: 'Chicago', value: 'us-chicago' },
+      { label: 'Los Angeles', value: 'us-los-angeles' },
+      { label: 'New York', value: 'us-new-york' },
+    ],
+  },
+];
+
+export type FormSelectOverlayOptionVariant = 'default' | 'checkmark' | 'group';
+
+export const FORM_SELECT_OVERLAY_OPTION_VARIANT_OPTIONS: {
+  label: string;
+  value: FormSelectOverlayOptionVariant;
+}[] = [
+  { label: 'Default', value: 'default' },
+  { label: 'Checkmark', value: 'checkmark' },
+  { label: 'Group', value: 'group' },
+];
+
+export const FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER = 'Filter...';
+
+/** Valor seleccionado en estados Fill (Float label / IftaLabel). */
+export const FORM_SELECT_STATE_FILLED_VALUE: FormSelectDemoValue = 'opt-2';
+
+export const FORM_SELECT_VARIANT_SELECT_OPTIONS = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
 
 export const FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS: {
   label: string;
@@ -260,6 +315,7 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'togglebutton', title: 'ToggleButton', category: 'choice' },
   { kind: 'selectbutton', title: 'SelectButton', category: 'choice' },
   { kind: 'inputtext', title: 'InputText', category: 'input' },
+  { kind: 'select', title: 'Select', category: 'input' },
   { kind: 'password', title: 'Password', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },
   { kind: 'rating', title: 'Rating', category: 'input' },

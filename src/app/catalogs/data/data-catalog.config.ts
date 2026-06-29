@@ -15,9 +15,9 @@ export interface PaginatorCatalogStateDemo {
 }
 
 export const PAGINATOR_CATALOG_STATE_DEMOS: PaginatorCatalogStateDemo[] = [
-  { key: 'inactive', caption: 'Inactiva' },
-  { key: 'active', caption: 'Activa' },
+  { key: 'inactive', caption: 'Inactive' },
+  { key: 'active', caption: 'Active' },
   { key: 'hover', caption: 'Hover' },
-  { key: 'disabled', caption: 'Deshabilitada' },
-  { key: 'report', caption: 'Informe' },
+  { key: 'disabled', caption: 'Disabled' },
+  { key: 'report', caption: 'Report' },
 ];
