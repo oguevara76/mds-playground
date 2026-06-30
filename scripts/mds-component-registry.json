@@ -12,6 +12,13 @@
     "parity": "src/styles/primeng-preview-parity.css",
     "watch_vars": ["--inputtext-*", "--p-inputtext-*", "--p-floatlabel-*", "--p-iftalabel-*"]
   },
+  "inputnumber": {
+    "playground_anchor": "pg-inputnumber",
+    "primeng_prefix": "inputnumber",
+    "related_semantic": ["--form-field-*"],
+    "parity": "src/styles/primeng-preview-parity.css",
+    "watch_vars": ["--inputnumber-*", "--p-inputnumber-*", "--inputtext-*", "--p-inputtext-*"]
+  },
   "select": {
     "playground_anchor": "pg-select",
     "primeng_prefix": "select",

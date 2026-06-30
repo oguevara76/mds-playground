@@ -5,6 +5,7 @@ export type FormBlockKind =
   | 'togglebutton'
   | 'selectbutton'
   | 'inputtext'
+  | 'inputnumber'
   | 'select'
   | 'password'
   | 'inputotp'
@@ -222,6 +223,75 @@ export const FORM_SELECTBUTTON_ACTIVE_ITEM_OPTIONS: {
   { label: 'Item 4', value: 4 },
 ];
 
+/** Layout de botones +/- en InputNumber (PrimeNG `buttonLayout`). */
+export type FormInputNumberButtonLayout = 'stacked' | 'horizontal' | 'vertical';
+
+export const FORM_INPUTNUMBER_BUTTON_LAYOUT_OPTIONS: {
+  label: string;
+  value: FormInputNumberButtonLayout;
+}[] = [
+  { label: 'Stacked', value: 'stacked' },
+  { label: 'Horizontal', value: 'horizontal' },
+  { label: 'Vertical', value: 'vertical' },
+];
+
+/** Iconos +/- en layouts horizontal y vertical (stacked mantiene chevrons por defecto). */
+export const FORM_INPUTNUMBER_INCREMENT_BUTTON_ICON = 'pi pi-plus';
+export const FORM_INPUTNUMBER_DECREMENT_BUTTON_ICON = 'pi pi-minus';
+
+/** Variante de formato numérico (PrimeNG InputNumber). */
+export type FormInputNumberFormatVariant = 'numerals' | 'currency' | 'prefix-suffix';
+
+export const FORM_INPUTNUMBER_FORMAT_VARIANT_OPTIONS: {
+  label: string;
+  value: FormInputNumberFormatVariant;
+}[] = [
+  { label: 'Numerals', value: 'numerals' },
+  { label: 'Currency', value: 'currency' },
+  { label: 'Prefix & Suffix', value: 'prefix-suffix' },
+];
+
+export interface FormInputNumberFormatVariantPreset {
+  mode?: 'decimal' | 'currency';
+  currency?: string;
+  locale?: string;
+  prefix?: string;
+  suffix?: string;
+  minFractionDigits?: number;
+  maxFractionDigits?: number;
+  useGrouping?: boolean;
+  defaultValue: number;
+}
+
+/** Presets alineados con los ejemplos de la documentación PrimeNG InputNumber. */
+export const FORM_INPUTNUMBER_FORMAT_VARIANT_PRESETS: Record<
+  FormInputNumberFormatVariant,
+  FormInputNumberFormatVariantPreset
+> = {
+  numerals: {
+    mode: 'decimal',
+    minFractionDigits: 2,
+    maxFractionDigits: 5,
+    useGrouping: true,
+    defaultValue: 12345.678,
+  },
+  currency: {
+    mode: 'currency',
+    currency: 'USD',
+    locale: 'en-US',
+    defaultValue: 1500,
+  },
+  'prefix-suffix': {
+    mode: 'decimal',
+    prefix: 'Expires in ',
+    suffix: ' months',
+    defaultValue: 12,
+  },
+};
+
+/** Valor numérico de demostración en InputNumber (Interaction y States). */
+export const FORM_INPUT_NUMBER_DEMO_VALUE = 42;
+
 /** Texto visible del placeholder en previews estáticos InputText default. */
 export const FORM_INPUT_STATE_PLACEHOLDER = 'Placeholder';
 
@@ -315,6 +385,7 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'togglebutton', title: 'ToggleButton', category: 'choice' },
   { kind: 'selectbutton', title: 'SelectButton', category: 'choice' },
   { kind: 'inputtext', title: 'InputText', category: 'input' },
+  { kind: 'inputnumber', title: 'InputNumber', category: 'input' },
   { kind: 'select', title: 'Select', category: 'input' },
   { kind: 'password', title: 'Password', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },

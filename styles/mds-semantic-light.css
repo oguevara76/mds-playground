@@ -118,6 +118,8 @@ html[data-theme="light"] {
   --list-option-selected-color: var(--highlight-color);
   --list-option-selected-focus-background: var(--highlight-focus-background);
   --list-option-selected-focus-color: var(--highlight-focus-color);
+  --list-padding-x: var(--dimension-scale-x4);
+  --list-padding-y: var(--dimension-scale-x4);
   --mask-background: rgba(0, 0, 0, 0.4);
   --mask-color: var(--surface-200);
   --navigation-item-active-background: var(--surface-100);
@@ -198,8 +200,8 @@ html[data-theme="light"] {
   --surface-context-fixed-feedback-warn-minimal: var(--yellow-100);
   --surface-context-fixed-light: var(--surface-50);
   --surface-context-fixed-primary-default: var(--teal-600);
-  --surface-context-fixed-primary-strong: var(--teal-800);
-  --surface-context-fixed-primary-subtle: var(--teal-100);
+  --surface-context-fixed-primary-strong: var(--teal-700);
+  --surface-context-fixed-primary-subtle: var(--teal-50);
   --surface-context-intense: var(--surface-900);
   --surface-context-medium: var(--surface-300);
   --surface-context-minimal: var(--surface-0);

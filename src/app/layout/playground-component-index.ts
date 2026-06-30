@@ -1,5 +1,10 @@
 import { BUTTON_BLOCKS, BUTTON_TEXT_VARIANT_SPECS, BUTTON_VARIANT_SPECS } from '../catalogs/button/button-catalog.config';
-import { FORM_BLOCKS, FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS, FORM_SIZE_OPTIONS } from '../catalogs/form/form-catalog.config';
+import {
+  FORM_BLOCKS,
+  FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS,
+  FORM_SIZE_OPTIONS,
+  type FormBlockKind,
+} from '../catalogs/form/form-catalog.config';
 import { PAGINATOR_CATALOG_STATE_DEMOS } from '../catalogs/data/data-catalog.config';
 import {
   AVATAR_CATALOG_VARIANT_OPTIONS,
@@ -51,6 +56,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-togglebutton': 'togglebutton',
   'pg-selectbutton': 'selectbutton',
   'pg-inputtext': 'inputtext',
+  'pg-inputnumber': 'inputnumber',
   'pg-select': 'select',
   'pg-password': 'password',
   'pg-inputotp': 'inputotp',
@@ -89,6 +95,7 @@ const FORM_VARIANT_COUNTS: Record<string, number> = {
   togglebutton: 4,
   selectbutton: 4,
   inputtext: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
+  inputnumber: 6,
   select: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   password: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputotp: 6,
@@ -251,19 +258,6 @@ export function buttonPlaygroundAnchorId(kind: 'standard' | 'icon' | 'text'): st
 
 export const splitbuttonPlaygroundAnchorId = 'pg-splitbutton';
 
-export function formPlaygroundAnchorId(
-  kind:
-    | 'radio'
-    | 'checkbox'
-    | 'toggleswitch'
-    | 'togglebutton'
-    | 'selectbutton'
-    | 'inputtext'
-    | 'select'
-    | 'password'
-    | 'inputotp'
-    | 'rating'
-    | 'textarea',
-): string {
+export function formPlaygroundAnchorId(kind: FormBlockKind): string {
   return `pg-${kind}`;
 }

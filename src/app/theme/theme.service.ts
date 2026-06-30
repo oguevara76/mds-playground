@@ -47,7 +47,7 @@ export class ThemeService {
 
     if (onlyDark) {
       this.toggleDisabled.set(true);
-      this.toggleTitle.set('Solo hay semántica oscura: el tema permanece en modo oscuro.');
+      this.toggleTitle.set('Only dark semantic loaded: theme stays in dark mode.');
       if (this.mode() !== 'dark') {
         this.forcedDark = true;
         this.mode.set('dark');
@@ -58,7 +58,7 @@ export class ThemeService {
 
     if (onlyLight) {
       this.toggleDisabled.set(true);
-      this.toggleTitle.set('Solo hay semántica clara: el tema permanece en modo claro.');
+      this.toggleTitle.set('Only light semantic loaded: theme stays in light mode.');
       if (this.mode() !== 'light') {
         this.forcedDark = false;
         this.mode.set('light');

@@ -1781,6 +1781,122 @@
 
 /* InputOtp — layout y estados (tokens MDS --inputotp-* → --p-inputotp-*)
    PrimeNG aplica p-inputtext-sm|lg en cada celda (.p-inputotp-input), no en el root. */
+:host ::ng-deep .inputnumber-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .p-field.catalog-input-interactive .p-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--p-form-field-hint-color);
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .p-field.catalog-input-interactive .p-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--p-inputtext-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+}
+
+:host ::ng-deep .inputnumber-showcase .p-inputnumber {
+  width: 100%;
+}
+
+:host ::ng-deep .inputnumber-showcase .p-inputnumber.p-inputnumber-vertical,
+:host ::ng-deep .inputnumber-showcase .p-inputnumber.p-inputnumber-vertical.p-inputnumber-fluid {
+  width: fit-content;
+  max-width: var(--dimension-scale-x96, 96px);
+}
+
+:host ::ng-deep .inputnumber-showcase .p-inputnumber.p-inputnumber-vertical .p-inputnumber-input {
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+}
+
+:host ::ng-deep .inputnumber-showcase .p-inputnumber:not(.p-inputnumber-vertical) .p-inputnumber-input {
+  width: 100%;
+  min-width: 0;
+}
+
+:host ::ng-deep .inputnumber-showcase .p-input-demo-wrap.p-input-demo--hover .p-inputnumber:not(.p-disabled) .p-inputnumber-input:enabled {
+  border-color: var(--p-inputtext-hover-border-color, var(--inputtext-hover-border-color, var(--form-field-hover-border-color)));
+}
+
+:host ::ng-deep .inputnumber-showcase .p-input-demo-wrap.p-input-demo--focus .p-inputnumber:not(.p-disabled) .p-inputnumber-input:enabled {
+  border-color: var(--p-inputtext-focus-border-color, var(--inputtext-focus-border-color, var(--form-field-focus-border-color)));
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-inputnumber .p-inputnumber-input.p-invalid {
+  border-color: var(--p-inputtext-invalid-border-color, var(--inputtext-invalid-border-color, var(--form-field-invalid-border-color)));
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-inputnumber.p-invalid:not(.p-inputnumber-stacked) .p-inputnumber-button {
+  border-color: var(
+    --p-inputnumber-button-invalid-border-color,
+    var(--inputnumber-button-invalid-border-color, var(--form-field-invalid-border-color))
+  );
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-inputnumber:not(.p-disabled) .p-inputnumber-input.p-invalid:enabled,
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-inputnumber:not(.p-disabled) .p-inputnumber-input.p-invalid:enabled {
+  border-color: var(--p-inputtext-invalid-border-color, var(--inputtext-invalid-border-color, var(--form-field-invalid-border-color)));
+  box-shadow: none;
+  outline: none;
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-inputnumber.p-invalid:not(.p-inputnumber-stacked) .p-inputnumber-button:not(:disabled),
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-inputnumber.p-invalid:not(.p-inputnumber-stacked) .p-inputnumber-button:not(:disabled) {
+  border-color: var(
+    --p-inputnumber-button-invalid-border-color,
+    var(--inputnumber-button-invalid-border-color, var(--form-field-invalid-border-color))
+  );
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-inputnumber .p-inputnumber-button:disabled,
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-inputnumber .p-inputnumber-button.p-disabled {
+  background: var(
+    --p-inputnumber-button-disabled-background,
+    var(--inputnumber-button-disabled-background, var(--form-field-disabled-background))
+  );
+  color: var(
+    --p-inputnumber-button-disabled-color,
+    var(--inputnumber-button-disabled-color, var(--form-field-disabled-color))
+  );
+  cursor: not-allowed;
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-inputnumber:not(.p-inputnumber-stacked) .p-inputnumber-button:disabled,
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-inputnumber:not(.p-inputnumber-stacked) .p-inputnumber-button.p-disabled {
+  border-color: var(
+    --p-inputnumber-button-border-color,
+    var(--inputnumber-button-border-color, var(--form-field-border-color))
+  );
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-inputnumber .p-inputnumber-input:disabled {
+  background: var(--p-inputtext-disabled-background, var(--inputtext-disabled-background, var(--form-field-disabled-background)));
+  color: var(--p-inputtext-disabled-color, var(--inputtext-disabled-color, var(--form-field-disabled-color)));
+  border-color: var(--p-inputtext-border-color, var(--inputtext-border-color, var(--form-field-border-color)));
+  opacity: 1;
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-inputnumber .p-inputnumber-input:disabled,
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-inputnumber .p-inputnumber-input:disabled {
+  border-color: var(--p-inputtext-border-color, var(--inputtext-border-color, var(--form-field-border-color)));
+  box-shadow: none;
+  outline: none;
+}
+
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-inputnumber:not(.p-inputnumber-stacked) .p-inputnumber-button:disabled,
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-inputnumber:not(.p-inputnumber-stacked) .p-inputnumber-button:disabled,
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-inputnumber:not(.p-inputnumber-stacked) .p-inputnumber-button.p-disabled,
+:host ::ng-deep .inputnumber-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-inputnumber:not(.p-inputnumber-stacked) .p-inputnumber-button.p-disabled {
+  border-color: var(
+    --p-inputnumber-button-border-color,
+    var(--inputnumber-button-border-color, var(--form-field-border-color))
+  );
+}
+
 :host ::ng-deep .inputotp-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .form-input-interaction-field {
   display: flex;
   flex-direction: column;

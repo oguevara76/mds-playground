@@ -115,6 +115,8 @@ html[data-theme="dark"] {
   --list-option-selected-color: var(--highlight-color);
   --list-option-selected-focus-background: var(--highlight-focus-background);
   --list-option-selected-focus-color: var(--highlight-focus-color);
+  --list-padding-x: var(--dimension-scale-x4);
+  --list-padding-y: var(--dimension-scale-x4);
   --mask-background: rgba(0, 0, 0, 0.6);
   --mask-color: var(--surface-200);
   --navigation-item-active-background: var(--surface-800);
@@ -196,13 +198,15 @@ html[data-theme="dark"] {
   --surface-context-fixed-light: var(--surface-50);
   --surface-context-fixed-primary: var(--primary-color);
   --surface-context-fixed-primary-default: var(--teal-600);
-  --surface-context-fixed-primary-strong: var(--teal-800);
-  --surface-context-fixed-primary-subtle: var(--teal-100);
+  --surface-context-fixed-primary-strong: var(--teal-700);
+  --surface-context-fixed-primary-subtle: var(--teal-50);
   --surface-context-intense: var(--surface-0);
   --surface-context-medium: var(--surface-600);
   --surface-context-minimal: var(--surface-950);
+  --surface-context-primary-default: var(--teal-400);
   --surface-context-primary-medium: var(--primary-color);
   --surface-context-primary-soft: var(--olive-900);
+  --surface-context-primary-strong: var(--teal-500);
   --surface-context-primary-subtle: var(--olive-800);
   --surface-context-soft: var(--surface-900);
   --surface-context-strong: var(--surface-400);

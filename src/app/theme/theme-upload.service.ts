@@ -28,10 +28,10 @@ const SLOT_STYLE_ID: Record<UploadSlot, string> = {
 };
 
 const SLOT_LABEL: Record<UploadSlot, string> = {
-  primitives: 'Primitivos',
-  'semantic-light': 'Semántica Light',
-  'semantic-dark': 'Semántica Dark',
-  components: 'Componentes',
+  primitives: 'Primitives',
+  'semantic-light': 'Semantic Light',
+  'semantic-dark': 'Semantic Dark',
+  components: 'Components',
 };
 
 const USER_STYLE_ORDER: string[] = [
@@ -112,7 +112,7 @@ export class ThemeUploadService {
   async processFiles(fileList: FileList | File[]): Promise<void> {
     const files = Array.from(fileList).filter((f) => f.name.endsWith('.css'));
     if (!files.length) {
-      this.toast('Solo se aceptan ficheros .css', 'error');
+      this.toast('Only .css files are accepted', 'error');
       return;
     }
 
@@ -139,14 +139,14 @@ export class ThemeUploadService {
     if (!hasPrim || !hasSem) {
       if (!hasPrim && !hasSem) {
         this.toast(
-          'Subida no permitida: faltan primitivos y semántica (light u oscuro). Ambos son obligatorios.',
+          'Upload not allowed: missing primitives and semantic (light or dark). Both are required.',
           'error'
         );
       } else if (!hasPrim) {
-        this.toast('Subida no permitida: falta el fichero de primitivos (obligatorio).', 'error');
+        this.toast('Upload not allowed: missing primitives file (required).', 'error');
       } else {
         this.toast(
-          'Subida no permitida: falta semántica clara u oscura (al menos una es obligatoria).',
+          'Upload not allowed: missing light or dark semantic (at least one is required).',
           'error'
         );
       }
@@ -167,7 +167,7 @@ export class ThemeUploadService {
       .sort()
       .map((s) => SLOT_LABEL[s as UploadSlot]);
     this.toast(
-      labels.length ? `✓ ${labels.join(' · ')} — ${sorted.length} fichero(s)` : `✓ ${sorted.length} fichero(s)`,
+      labels.length ? `✓ ${labels.join(' · ')} — ${sorted.length} file(s)` : `✓ ${sorted.length} file(s)`,
       'success'
     );
     setTimeout(() => this.refreshInspector(), 120);
@@ -180,7 +180,7 @@ export class ThemeUploadService {
     this.uploadWarning.set(null);
     this.theme.syncToggleFromSlots({});
     this.refreshInspector();
-    this.toast('Ficheros eliminados — tokens por defecto restaurados', 'info');
+    this.toast('Files removed — default tokens restored', 'info');
   }
 
   /** Re-sincroniza PrimeNG + overrides MDS tras cambiar light/dark (sin recalcular inspector). */
@@ -246,11 +246,11 @@ export class ThemeUploadService {
     const hasSem = !!slots['semantic-light'] || !!slots['semantic-dark'];
     if (!hasPrim) {
       this.uploadWarning.set(
-        'Falta el fichero de primitivos (obligatorio). Añade también al menos un semántico (light y/o dark). Los componentes son opcionales.'
+        'Missing primitives file (required). Also add at least one semantic file (light and/or dark). Components are optional.'
       );
     } else if (!hasSem) {
       this.uploadWarning.set(
-        'Falta la semántica: sube al menos light o dark (obligatorio). El fichero de componentes es opcional.'
+        'Missing semantic files: upload at least light or dark (required). The components file is optional.'
       );
     } else {
       this.uploadWarning.set(null);

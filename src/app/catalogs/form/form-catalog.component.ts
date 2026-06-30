@@ -11,6 +11,7 @@ import { Divider } from 'primeng/divider';
 import { FloatLabel } from 'primeng/floatlabel';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
+import { InputNumber } from 'primeng/inputnumber';
 import { InputOtp } from 'primeng/inputotp';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
@@ -38,6 +39,14 @@ import {
   FORM_PASSWORD_FEEDBACK_PROMPT,
   FORM_PASSWORD_STRENGTH_RULES,
   type FormPasswordStrengthRuleId,
+  FORM_INPUT_NUMBER_DEMO_VALUE,
+  FORM_INPUTNUMBER_BUTTON_LAYOUT_OPTIONS,
+  FORM_INPUTNUMBER_DECREMENT_BUTTON_ICON,
+  FORM_INPUTNUMBER_FORMAT_VARIANT_OPTIONS,
+  FORM_INPUTNUMBER_FORMAT_VARIANT_PRESETS,
+  FORM_INPUTNUMBER_INCREMENT_BUTTON_ICON,
+  type FormInputNumberFormatVariant,
+  type FormInputNumberFormatVariantPreset,
   FORM_INPUT_OTP_DEFAULT_LENGTH,
   FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS,
   FORM_INPUT_OTP_STATE_READONLY_VALUE,
@@ -69,6 +78,7 @@ import {
   type FormCheckboxKey,
   type FormInputDemoState,
   type FormInputFloatVariant,
+  type FormInputNumberButtonLayout,
   type FormInputTextVariant,
   type FormInteractionSize,
   type FormRatingDemoState,
@@ -85,6 +95,14 @@ export interface FormSelectInteractionState {
   /** Buscador en header del overlay (PrimeNG filter). */
   showOverlayFilter: boolean;
   overlayOptionVariant: FormSelectOverlayOptionVariant;
+}
+
+export interface FormInputNumberInteractionState {
+  buttonLayout: FormInputNumberButtonLayout;
+  formatVariant: FormInputNumberFormatVariant;
+  showHelperText: boolean;
+  size: FormInteractionSize;
+  value: number | null;
 }
 
 export interface FormInputTextInteractionState {
@@ -194,6 +212,17 @@ function defaultSelectInteraction(): FormSelectInteractionState {
   };
 }
 
+function defaultInputNumberInteraction(): FormInputNumberInteractionState {
+  const formatVariant: FormInputNumberFormatVariant = 'numerals';
+  return {
+    buttonLayout: 'stacked',
+    formatVariant,
+    showHelperText: false,
+    size: 'normal',
+    value: FORM_INPUTNUMBER_FORMAT_VARIANT_PRESETS[formatVariant].defaultValue,
+  };
+}
+
 function defaultInputTextInteraction(): FormInputTextInteractionState {
   return {
     variant: 'default',
@@ -257,6 +286,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     FormsModule,
     IconField,
     InputIcon,
+    InputNumber,
     InputOtp,
     InputText,
     NgClass,
@@ -284,6 +314,8 @@ export class FormCatalogComponent {
   readonly sizeSelectOptions = FORM_SIZE_SELECT_OPTIONS;
   readonly inputDefaultStates = FORM_INPUT_DEFAULT_STATES;
   readonly inputFloatStates = FORM_INPUT_FLOAT_STATES;
+  readonly inputnumberButtonLayoutOptions = FORM_INPUTNUMBER_BUTTON_LAYOUT_OPTIONS;
+  readonly inputnumberFormatVariantOptions = FORM_INPUTNUMBER_FORMAT_VARIANT_OPTIONS;
   readonly inputotpLengthSelectOptions = FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS;
   readonly ratingValueSelectOptions = FORM_RATING_VALUE_SELECT_OPTIONS;
   readonly ratingDemoStates = FORM_RATING_DEMO_STATES;
@@ -308,6 +340,7 @@ export class FormCatalogComponent {
     togglebutton: 'outlined',
     selectbutton: 'outlined',
     inputtext: 'outlined',
+    inputnumber: 'outlined',
     select: 'outlined',
     password: 'outlined',
     inputotp: 'outlined',
@@ -325,6 +358,7 @@ export class FormCatalogComponent {
   readonly selectButtonLiveValue = signal<string | string[] | null>(null);
 
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
+  readonly inputnumberIx = signal<FormInputNumberInteractionState>(defaultInputNumberInteraction());
   readonly selectIx = signal<FormSelectInteractionState>(defaultSelectInteraction());
   readonly passwordIx = signal<FormPasswordInteractionState>(defaultPasswordInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
@@ -362,6 +396,10 @@ export class FormCatalogComponent {
 
   isInputTextBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputtext' } {
     return block.kind === 'inputtext';
+  }
+
+  isInputNumberBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputnumber' } {
+    return block.kind === 'inputnumber';
   }
 
   isSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'select' } {
@@ -615,6 +653,71 @@ export class FormCatalogComponent {
 
   patchInputtext(patch: Partial<FormInputTextInteractionState>): void {
     this.inputtextIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  patchInputnumber(patch: Partial<FormInputNumberInteractionState>): void {
+    this.inputnumberIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  patchInputnumberFormatVariant(formatVariant: FormInputNumberFormatVariant): void {
+    const preset = FORM_INPUTNUMBER_FORMAT_VARIANT_PRESETS[formatVariant];
+    this.patchInputnumber({ formatVariant, value: preset.defaultValue });
+  }
+
+  inputnumberFormatVariantPreset(): FormInputNumberFormatVariantPreset {
+    return FORM_INPUTNUMBER_FORMAT_VARIANT_PRESETS[this.inputnumberIx().formatVariant];
+  }
+
+  inputnumberPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return size === 'normal' ? undefined : size;
+  }
+
+  inputnumberIncrementButtonIcon(layout: FormInputNumberButtonLayout): string | undefined {
+    return layout === 'stacked' ? undefined : FORM_INPUTNUMBER_INCREMENT_BUTTON_ICON;
+  }
+
+  inputnumberDecrementButtonIcon(layout: FormInputNumberButtonLayout): string | undefined {
+    return layout === 'stacked' ? undefined : FORM_INPUTNUMBER_DECREMENT_BUTTON_ICON;
+  }
+
+  /** Puente explícito Core MDS → PrimeNG (--p-inputnumber-* + input interno). */
+  inputNumberHostVars(): Record<string, string> {
+    return {
+      '--p-inputnumber-button-background': 'var(--inputnumber-button-background)',
+      '--p-inputnumber-button-border-color': 'var(--inputnumber-button-border-color)',
+      '--p-inputnumber-button-border-radius': 'var(--inputnumber-button-border-radius)',
+      '--p-inputnumber-button-color': 'var(--inputnumber-button-color)',
+      '--p-inputnumber-button-disabled-background': 'var(--inputnumber-button-disabled-background)',
+      '--p-inputnumber-button-disabled-color': 'var(--inputnumber-button-disabled-color)',
+      '--p-inputnumber-button-hover-background': 'var(--inputnumber-button-hover-background)',
+      '--p-inputnumber-button-hover-border-color': 'var(--inputnumber-button-hover-border-color)',
+      '--p-inputnumber-button-hover-color': 'var(--inputnumber-button-hover-color)',
+      '--p-inputnumber-button-active-background': 'var(--inputnumber-button-active-background)',
+      '--p-inputnumber-button-active-border-color': 'var(--inputnumber-button-active-border-color)',
+      '--p-inputnumber-button-active-color': 'var(--inputnumber-button-active-color)',
+      '--p-inputnumber-button-invalid-border-color': 'var(--inputnumber-button-invalid-border-color)',
+      '--p-inputnumber-button-vertical-padding': 'var(--inputnumber-button-vertical-padding)',
+      '--p-inputnumber-button-width': 'var(--inputnumber-button-width)',
+      '--p-inputtext-border-color': 'var(--inputtext-border-color)',
+      '--p-inputtext-disabled-background': 'var(--inputtext-disabled-background)',
+      '--p-inputtext-disabled-color': 'var(--inputtext-disabled-color)',
+    };
+  }
+
+  inputNumberStateValue(state: FormInputDemoState): number | null {
+    if (state === 'readonly') {
+      return FORM_INPUT_NUMBER_DEMO_VALUE;
+    }
+    if (
+      state === 'normal' ||
+      state === 'hover' ||
+      state === 'focus' ||
+      state === 'invalid' ||
+      state === 'disabled'
+    ) {
+      return null;
+    }
+    return FORM_INPUT_NUMBER_DEMO_VALUE;
   }
 
   selectIsDefault(): boolean {
@@ -1782,6 +1885,9 @@ export class FormCatalogComponent {
     if (this.isInputOtpBlock(block)) {
       return this.inputDefaultStates;
     }
+    if (this.isInputNumberBlock(block)) {
+      return this.inputDefaultStates;
+    }
     return this.inputDefaultStates;
   }
 
@@ -1828,6 +1934,15 @@ export class FormCatalogComponent {
       );
     }
     if (this.isInputOtpBlock(block)) {
+      return (
+        state === 'normal' ||
+        state === 'hover' ||
+        state === 'focus' ||
+        state === 'invalid' ||
+        state === 'disabled'
+      );
+    }
+    if (this.isInputNumberBlock(block)) {
       return (
         state === 'normal' ||
         state === 'hover' ||
@@ -1885,7 +2000,7 @@ export class FormCatalogComponent {
     if (state !== 'invalid') {
       return false;
     }
-    return this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isSelectBlock(block) || this.isPasswordBlock(block) || this.isInputOtpBlock(block);
+    return this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isSelectBlock(block) || this.isPasswordBlock(block) || this.isInputOtpBlock(block) || this.isInputNumberBlock(block);
   }
 
   inputStateShowHint(block: FormBlockConfig, state: FormInputDemoState): boolean {

@@ -2,9 +2,9 @@
   <div class="sidebar-section">
     @if (upload.loadedEntries.length) {
       <div class="sidebar-label-row">
-        <p class="sidebar-label">Colecciones adjuntas</p>
-        <button type="button" class="lf-remove-all" (click)="upload.removeAll()" title="Eliminar todos los ficheros">
-          <i class="pi pi-trash"></i> Limpiar
+        <p class="sidebar-label">Attached collections</p>
+        <button type="button" class="lf-remove-all" (click)="upload.removeAll()" title="Remove all files">
+          <i class="pi pi-trash"></i> Clear
         </button>
       </div>
       <ul class="loaded-files">
@@ -32,15 +32,15 @@
         (drop)="onDrop($event)"
       >
         <div class="upload-icon"><i class="pi pi-upload"></i></div>
-        <p class="upload-text">Arrastra tus <strong>.css</strong> aquí</p>
-        <p class="upload-sub">El sistema sobreescribirá las variables core con las nuevas css</p>
+        <p class="upload-text">Drop your <strong>.css</strong> files here</p>
+        <p class="upload-sub">The system will override core variables with the new CSS files</p>
         <input type="file" accept=".css" multiple (change)="onFilesSelected($event)" />
       </div>
     }
   </div>
 
   <div class="sidebar-section">
-    <p class="sidebar-label">Tokens activos</p>
+    <p class="sidebar-label">Active tokens</p>
     <div class="token-grid">
       @for (row of upload.tokenRows(); track row.label) {
         <div class="token-row">
@@ -57,7 +57,7 @@
   </div>
 
   <div class="sidebar-section">
-    <p class="sidebar-label">Paleta primaria</p>
+    <p class="sidebar-label">Primary palette</p>
     <div class="color-strip">
       @for (sw of upload.colorSwatches(); track sw.cssVar) {
         <div
