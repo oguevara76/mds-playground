@@ -114,7 +114,6 @@ export interface FormInputTextInteractionState {
   rounded: boolean;
   /** Muestra el helper text bajo el campo en Interaction. */
   showHelperText: boolean;
-  size: FormInteractionSize;
   value: string;
 }
 
@@ -231,7 +230,6 @@ function defaultInputTextInteraction(): FormInputTextInteractionState {
     iconRight: false,
     rounded: false,
     showHelperText: false,
-    size: 'normal',
     value: '',
   };
 }
@@ -585,7 +583,7 @@ export class FormCatalogComponent {
   }
 
   showFormSizesSection(kind: FormBlockKind): boolean {
-    return kind !== 'toggleswitch' && kind !== 'rating';
+    return kind !== 'toggleswitch' && kind !== 'rating' && kind !== 'inputtext';
   }
 
   inputtextIsDefault(): boolean {
@@ -640,15 +638,6 @@ export class FormCatalogComponent {
       return true;
     }
     return state === 'focus' || state === 'filled';
-  }
-
-  /** Sizes: preview tipo Fill (label activo + valor) en todas las variantes float. */
-  inputFloatSizeLabelFloated(): boolean {
-    return this.inputtextIsFloatLabel();
-  }
-
-  inputFloatSizeShowsFillPreview(): boolean {
-    return this.inputtextIsFloatLabel();
   }
 
   patchInputtext(patch: Partial<FormInputTextInteractionState>): void {
@@ -1760,7 +1749,7 @@ export class FormCatalogComponent {
 
   floatLabelHostVars(): Record<string, string> {
     const ix = this.inputtextIx();
-    return this.floatLabelHostVarsForVariant(ix.variant, ix.floatPosition, ix.size, 'inputtext');
+    return this.floatLabelHostVarsForVariant(ix.variant, ix.floatPosition, 'normal', 'inputtext');
   }
 
   textareaFloatLabelHostVars(): Record<string, string> {
@@ -1768,17 +1757,8 @@ export class FormCatalogComponent {
     return this.floatLabelHostVarsForVariant(tx.variant, tx.floatPosition, tx.size, 'textarea');
   }
 
-  iftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
-    return this.iftaLabelHostVars(size, 'inputtext');
-  }
-
   textareaIftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
     return this.iftaLabelHostVars(size, 'textarea');
-  }
-
-  floatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
-    const ix = this.inputtextIx();
-    return this.floatLabelHostVarsForVariant(ix.variant, ix.floatPosition, size, 'inputtext');
   }
 
   textareaFloatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {

@@ -754,8 +754,8 @@
                 class="btn-section catalog-preview-section"
 
             [showExpand]="true"
-            [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
-            [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+            [expandAriaLabel]="'Expandir estados de ' + block.title"
+            [collapseAriaLabel]="'Contraer estados de ' + block.title"
 
                 configAriaLabel="Configurar InputText"
               >
@@ -781,7 +781,6 @@
                 placeholder="Placeholder"
                 [ngModel]="inputtextIx().value"
                 (ngModelChange)="patchInputtext({ value: $event })"
-                [ngClass]="inputSizeClass(inputtextIx().size)"
                 [class.p-inputtext-rounded]="inputtextRounded()"
                 [fluid]="true"
                 />
@@ -797,7 +796,6 @@
                 placeholder="Placeholder"
                 [ngModel]="inputtextIx().value"
                 (ngModelChange)="patchInputtext({ value: $event })"
-                [ngClass]="inputSizeClass(inputtextIx().size)"
                 [class.p-inputtext-rounded]="inputtextRounded()"
                 [fluid]="true"
                 />
@@ -821,7 +819,6 @@
                 [attr.placeholder]="floatInteractionPlaceholder()"
                 [ngModel]="inputtextIx().value"
                 (ngModelChange)="patchInputtext({ value: $event })"
-                [ngClass]="inputSizeClass(inputtextIx().size)"
                 [class.p-inputtext-rounded]="inputtextRounded()"
                 [fluid]="true"
                 />
@@ -837,7 +834,6 @@
                 [attr.placeholder]="floatInteractionPlaceholder()"
                 [ngModel]="inputtextIx().value"
                 (ngModelChange)="patchInputtext({ value: $event })"
-                [ngClass]="inputSizeClass(inputtextIx().size)"
                 [class.p-inputtext-rounded]="inputtextRounded()"
                 [fluid]="true"
                 />
@@ -867,7 +863,6 @@
                 (ngModelChange)="patchInputtext({ value: $event })"
                 (focus)="setFloatIxFocused(true)"
                 (blur)="setFloatIxFocused(false)"
-                [ngClass]="inputSizeClass(inputtextIx().size)"
                 [class.p-inputtext-rounded]="inputtextRounded()"
                 [fluid]="true"
                 />
@@ -884,7 +879,6 @@
                 (ngModelChange)="patchInputtext({ value: $event })"
                 (focus)="setFloatIxFocused(true)"
                 (blur)="setFloatIxFocused(false)"
-                [ngClass]="inputSizeClass(inputtextIx().size)"
                 [class.p-inputtext-rounded]="inputtextRounded()"
                 [fluid]="true"
                 />
@@ -945,23 +939,6 @@
                   </div>
                   </div>
                   }
-                  <p-divider styleClass="button-config-divider" />
-                  <div class="button-config-size-field">
-                  <span class="input-config-label">Size</span>
-                  <div class="button-config-size-toggle-wrap">
-                  <p-selectbutton
-                  [options]="sizeSelectOptions"
-                  optionLabel="label"
-                  optionValue="value"
-                  [ngModel]="inputtextIx().size"
-                  (ngModelChange)="patchInputtext({ size: $event })"
-                  [allowEmpty]="false"
-                  [fluid]="true"
-                  size="small"
-                  ariaLabel="Size"
-                  />
-                  </div>
-                  </div>
                   <p-divider styleClass="button-config-divider" />
                   @if (inputtextIsDefault()) {
                   <div class="input-config-row">
@@ -1118,6 +1095,15 @@
                       [ngModel]="inputnumberIx().showHelperText"
                       (ngModelChange)="patchInputnumber({ showHelperText: $event })"
                     />
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">NOTA</span>
+                    <p class="button-config-tooltip-note">
+                      La etiqueta <strong>Label</strong> no es propia del componente
+                      <strong>InputNumber</strong>. La mostramos en el playground a modo de ejemplo de
+                      cómo quedaría.
+                    </p>
                   </div>
                 </ng-container>
 
@@ -1529,7 +1515,6 @@
             }
             @default {}
           }
-
 
         <ng-template #formCatalogStates>
           @switch (block.kind) {
@@ -2687,68 +2672,6 @@
                                 tabindex="-1"
                               ></textarea>
                               <label [for]="'ta-sz-' + sz.key">Label</label>
-                            </p-floatlabel>
-                          </div>
-                        }
-                      </div>
-                      <mds-catalog-state-tag [label]="sz.caption" />
-                    </div>
-                  }
-                </div>
-              } @else if (isInputTextBlock(block)) {
-                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
-                  @for (sz of sizeOptions; track sz.key) {
-                    <div class="catalog-button-state catalog-input-state">
-                      <div class="catalog-button-state-preview">
-                        @if (inputtextIsDefault()) {
-                          <div class="p-field catalog-input-interactive">
-                            <label class="p-label" [for]="'it-sz-' + sz.key">Label</label>
-                            <input
-                              pInputText
-                              [variant]="formThemePrimeVariant('inputtext')"
-                              [id]="'it-sz-' + sz.key"
-                              placeholder="Placeholder"
-                              [ngClass]="inputSizeClass(sz.key)"
-                              [readonly]="true"
-                              [fluid]="true"
-                              tabindex="-1"
-                            />
-                          </div>
-                        } @else if (inputtextIsIftaLabel()) {
-                          <div class="catalog-input-interactive">
-                            <span class="p-iftalabel" [style]="iftaLabelHostVarsForSize(sz.key)">
-                              <input
-                                pInputText
-                                [variant]="formThemePrimeVariant('inputtext')"
-                                [id]="'it-sz-' + sz.key"
-                                placeholder="Placeholder"
-                                [ngClass]="inputSizeClass(sz.key)"
-                                [readonly]="true"
-                                [fluid]="true"
-                                tabindex="-1"
-                              />
-                              <label [for]="'it-sz-' + sz.key">Label</label>
-                            </span>
-                          </div>
-                        } @else {
-                          <div class="catalog-input-interactive">
-                            <p-floatlabel
-                              [variant]="inputtextFloatPosition()"
-                              [class.is-label-floated]="inputFloatSizeLabelFloated()"
-                              [style]="floatLabelHostVarsForSize(sz.key)"
-                            >
-                              <input
-                                pInputText
-                                [variant]="formThemePrimeVariant('inputtext')"
-                                [id]="'it-sz-' + sz.key"
-                                [value]="inputFloatSizeShowsFillPreview() ? inputStateFilledValue : ''"
-                                [class.p-filled]="inputFloatSizeShowsFillPreview()"
-                                [ngClass]="inputSizeClass(sz.key)"
-                                [readonly]="true"
-                                [fluid]="true"
-                                tabindex="-1"
-                              />
-                              <label [for]="'it-sz-' + sz.key">Label</label>
                             </p-floatlabel>
                           </div>
                         }

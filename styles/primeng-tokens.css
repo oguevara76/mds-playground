@@ -604,6 +604,14 @@ html[data-theme="light"] {
   --p-inputotp-input-sm-width:   var(--inputotp-input-sm-width, var(--dimension-scale-x28, 28px));
   --p-inputotp-input-lg-width:   var(--inputotp-input-lg-width, var(--dimension-scale-x42, 42px));
 
+  /* InputGroup — PrimeNG 20 dt('inputgroup.*') */
+  --p-inputgroup-addon-background:    var(--inputgroup-addon-background, var(--form-field-background));
+  --p-inputgroup-addon-border-color:  var(--inputgroup-addon-border-color, var(--form-field-border-color));
+  --p-inputgroup-addon-border-radius: var(--inputgroup-addon-border-radius, var(--form-field-border-radius));
+  --p-inputgroup-addon-color:         var(--inputgroup-addon-color, var(--form-field-icon-color));
+  --p-inputgroup-addon-min-width:     var(--inputgroup-addon-min-width, var(--dimension-scale-x32));
+  --p-inputgroup-addon-padding:       var(--inputgroup-addon-padding, var(--dimension-scale-x8));
+
   /* InputNumber — PrimeNG 20 dt('inputnumber.*') */
   --p-inputnumber-button-active-background:       var(--inputnumber-button-active-background, var(--surface-context-base));
   --p-inputnumber-button-active-border-color:     var(--inputnumber-button-active-border-color, var(--form-field-border-color));
@@ -2131,6 +2139,12 @@ html[data-theme="dark"] {
         --p-inputotp-input-width:      var(--inputotp-input-width, var(--dimension-scale-x32, 32px));
         --p-inputotp-input-sm-width:   var(--inputotp-input-sm-width, var(--dimension-scale-x28, 28px));
         --p-inputotp-input-lg-width:   var(--inputotp-input-lg-width, var(--dimension-scale-x42, 42px));
+        --p-inputgroup-addon-background:    var(--inputgroup-addon-background, var(--form-field-background));
+        --p-inputgroup-addon-border-color:  var(--inputgroup-addon-border-color, var(--form-field-border-color));
+        --p-inputgroup-addon-border-radius: var(--inputgroup-addon-border-radius, var(--form-field-border-radius));
+        --p-inputgroup-addon-color:         var(--inputgroup-addon-color, var(--form-field-icon-color));
+        --p-inputgroup-addon-min-width:     var(--inputgroup-addon-min-width, var(--dimension-scale-x32));
+        --p-inputgroup-addon-padding:       var(--inputgroup-addon-padding, var(--dimension-scale-x8));
         --p-inputnumber-button-active-background:       var(--inputnumber-button-active-background, var(--surface-context-base));
         --p-inputnumber-button-active-border-color:     var(--inputnumber-button-active-border-color, var(--form-field-border-color));
         --p-inputnumber-button-active-color:            var(--inputnumber-button-active-color, var(--surface-context-strong));

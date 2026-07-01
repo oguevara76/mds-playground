@@ -4,6 +4,7 @@
 .catalog-preview.pg-component-focus {
   position: relative;
   z-index: 1;
+  --catalog-preview-frame-bg: var(--surface-0);
   background: color-mix(in srgb, var(--p-primary-color) 5%, var(--surface-context-minimal));
   border-width: 1px;
   border-color: color-mix(in srgb, var(--p-primary-color) 38%, var(--surface-context-emphasized));
@@ -29,6 +30,11 @@
 }
 
 [data-theme='dark'] .catalog-preview.pg-component-focus {
+  --catalog-preview-frame-bg: color-mix(
+    in srgb,
+    var(--p-surface-800, var(--surface-800)) 86%,
+    var(--p-surface-950, var(--surface-950))
+  );
   background: color-mix(in srgb, var(--p-primary-color) 8%, var(--surface-context-minimal));
   border-color: color-mix(in srgb, var(--p-primary-color) 32%, var(--surface-context-emphasized));
   box-shadow:

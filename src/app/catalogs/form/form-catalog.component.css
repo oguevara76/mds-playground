@@ -1419,7 +1419,7 @@
   color: var(--p-floatlabel-active-color, var(--p-floatlabel-color));
 }
 
-/* Float Over/On invalid: label rojo dentro del campo (sin placeholder) */
+/* Float Over/On/In invalid: label rojo dentro del campo (sin placeholder) */
 :host ::ng-deep
   .inputtext-showcase
   .catalog-input-states-row
@@ -1804,12 +1804,12 @@
 :host ::ng-deep .inputnumber-showcase .p-inputnumber.p-inputnumber-vertical,
 :host ::ng-deep .inputnumber-showcase .p-inputnumber.p-inputnumber-vertical.p-inputnumber-fluid {
   width: fit-content;
-  max-width: var(--dimension-scale-x96, 96px);
+  max-width: min(100%, var(--dimension-scale-x256, 256px));
 }
 
 :host ::ng-deep .inputnumber-showcase .p-inputnumber.p-inputnumber-vertical .p-inputnumber-input {
-  width: 100%;
-  min-width: 0;
+  width: auto;
+  min-width: var(--dimension-scale-x128, 128px);
   text-align: center;
 }
 
