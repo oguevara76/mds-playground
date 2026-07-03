@@ -1050,6 +1050,61 @@ html[data-theme="light"] {
   --p-select-clear-icon-color:            var(--select-clear-icon-color, var(--form-field-icon-color, var(--p-surface-500)));
 
   /* ═══════════════════════════════════════════════════════════════════
+     COMPONENT TOKENS — CascadeSelect
+     Bridge: var(--cascadeselect-*, fallback) ← MDS components.css
+  ═══════════════════════════════════════════════════════════════════ */
+  --p-cascadeselect-background:                            var(--cascadeselect-background, var(--form-field-background, var(--p-input-bg)));
+  --p-cascadeselect-border-color:                          var(--cascadeselect-border-color, var(--form-field-border-color, var(--p-input-border-color)));
+  --p-cascadeselect-border-radius:                         var(--cascadeselect-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+  --p-cascadeselect-clear-icon:                            var(--cascadeselect-clear-icon, var(--form-field-icon-color, var(--p-surface-500)));
+  --p-cascadeselect-color:                                 var(--cascadeselect-color, var(--form-field-color, var(--p-input-color)));
+  --p-cascadeselect-disabled-background:                   var(--cascadeselect-disabled-background, var(--form-field-disabled-background, var(--p-surface-200)));
+  --p-cascadeselect-disabled-color:                        var(--cascadeselect-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+  --p-cascadeselect-dropdown-color:                        var(--cascadeselect-dropdown-color, var(--form-field-icon-color, var(--p-surface-500)));
+  --p-cascadeselect-dropdown-width:                        var(--cascadeselect-dropdown-width, var(--dimension-scale-x32, 32px));
+  --p-cascadeselect-filled-background:                     var(--cascadeselect-filled-background, var(--form-field-filled-background, var(--p-input-bg)));
+  --p-cascadeselect-filled-focus-background:               var(--cascadeselect-filled-focus-background, var(--form-field-filled-focus-background, var(--p-input-bg)));
+  --p-cascadeselect-filled-hover-background:               var(--cascadeselect-filled-hover-background, var(--form-field-filled-hover-background, var(--p-input-bg)));
+  --p-cascadeselect-focus-border-color:                    var(--cascadeselect-focus-border-color, var(--form-field-focus-border-color, var(--p-primary-color)));
+  --p-cascadeselect-focus-ring-color:                      var(--cascadeselect-focus-ring-color, var(--form-field-focus-ring-color, var(--p-primary-color)));
+  --p-cascadeselect-focus-ring-offset:                     var(--cascadeselect-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+  --p-cascadeselect-focus-ring-shadow:                     var(--cascadeselect-focus-ring-shadow, 0 0 0 0 transparent);
+  --p-cascadeselect-focus-ring-width:                      var(--cascadeselect-focus-ring-width, var(--form-field-focus-ring-width, 0));
+  --p-cascadeselect-focus-ring-style:                      solid;
+  --p-cascadeselect-hover-border-color:                    var(--cascadeselect-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+  --p-cascadeselect-invalid-border-color:                  var(--cascadeselect-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+  --p-cascadeselect-invalid-placeholder-color:             var(--cascadeselect-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+  --p-cascadeselect-lg-font-size:                          var(--cascadeselect-lg-font-size, var(--form-field-lg-font-size, 16px));
+  --p-cascadeselect-lg-padding-x:                          var(--cascadeselect-lg-padding-x, var(--form-field-lg-padding-x, 22px));
+  --p-cascadeselect-lg-padding-y:                          var(--cascadeselect-lg-padding-y, var(--form-field-lg-padding-y, 11px));
+  --p-cascadeselect-list-gap:                              var(--cascadeselect-list-gap, var(--list-gap, 4px));
+  --p-cascadeselect-list-mobile-indent:                    var(--cascadeselect-list-mobile-indent, var(--dimension-scale-x12, 12px));
+  --p-cascadeselect-option-border-radius:                  var(--cascadeselect-option-border-radius, var(--list-option-border-radius, var(--p-border-radius-sm)));
+  --p-cascadeselect-option-color:                          var(--cascadeselect-option-color, var(--list-option-color, var(--p-content-color)));
+  --p-cascadeselect-option-focus-background:               var(--cascadeselect-option-focus-background, var(--list-option-focus-background, var(--p-surface-100)));
+  --p-cascadeselect-option-focus-color:                    var(--cascadeselect-option-focus-color, var(--list-option-focus-color, var(--p-content-color)));
+  --p-cascadeselect-option-icon-color:                     var(--cascadeselect-option-icon-color, var(--list-option-icon-color, var(--p-surface-500)));
+  --p-cascadeselect-option-icon-focus-color:               var(--cascadeselect-option-icon-focus-color, var(--list-option-icon-focus-color, var(--p-surface-500)));
+  --p-cascadeselect-option-icon-size:                      var(--cascadeselect-option-icon-size, var(--dimension-scale-x12, 12px));
+  --p-cascadeselect-option-selected-background:            var(--cascadeselect-option-selected-background, var(--list-option-selected-background, var(--p-primary-50)));
+  --p-cascadeselect-option-selected-color:                 var(--cascadeselect-option-selected-color, var(--list-option-selected-color, var(--p-primary-color)));
+  --p-cascadeselect-option-selected-focus-background:      var(--cascadeselect-option-selected-focus-background, var(--list-option-selected-focus-background, var(--p-primary-100)));
+  --p-cascadeselect-option-selected-focus-color:           var(--cascadeselect-option-selected-focus-color, var(--list-option-selected-focus-color, var(--p-primary-color)));
+  --p-cascadeselect-overlay-background:                    var(--cascadeselect-overlay-background, var(--overlay-select-background, var(--overlay-popover-background)));
+  --p-cascadeselect-overlay-border-color:                  var(--cascadeselect-overlay-border-color, var(--overlay-select-border-color, var(--overlay-popover-border-color)));
+  --p-cascadeselect-overlay-border-radius:                 var(--cascadeselect-overlay-border-radius, var(--overlay-select-border-radius, var(--p-border-radius)));
+  --p-cascadeselect-overlay-color:                         var(--cascadeselect-overlay-color, var(--overlay-select-color, var(--overlay-popover-color)));
+  --p-cascadeselect-overlay-shadow:                        var(--cascadeselect-overlay-shadow, var(--overlay-select-shadow, var(--popover-shadow)));
+  --p-cascadeselect-padding-x:                             var(--cascadeselect-padding-x, var(--form-field-padding-x, 12px));
+  --p-cascadeselect-padding-y:                             var(--cascadeselect-padding-y, var(--form-field-padding-y, 8px));
+  --p-cascadeselect-placeholder-color:                     var(--cascadeselect-placeholder-color, var(--form-field-placeholder-color, var(--p-input-placeholder)));
+  --p-cascadeselect-shadow:                                var(--cascadeselect-shadow, var(--inputtext-shadow, 0 1px 2px rgba(18, 18, 23, 0.05)));
+  --p-cascadeselect-sm-font-size:                          var(--cascadeselect-sm-font-size, var(--form-field-sm-font-size, 12px));
+  --p-cascadeselect-sm-padding-x:                          var(--cascadeselect-sm-padding-x, var(--form-field-sm-padding-x, 10px));
+  --p-cascadeselect-sm-padding-y:                          var(--cascadeselect-sm-padding-y, var(--form-field-sm-padding-y, 5px));
+  --p-cascadeselect-transition-duration:                   var(--form-field-transition-duration, 0.2s);
+
+  /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Tabs
      Bridge: var(--tabs-*, fallback) ← MDS components.css
   ═══════════════════════════════════════════════════════════════════ */
@@ -1547,6 +1602,39 @@ html[data-theme="dark"] {
           --p-select-option-focus-background:     var(--select-option-focus-background, var(--list-option-focus-background, var(--p-surface-800)));
           --p-select-option-selected-background:  var(--select-option-selected-background, var(--list-option-selected-background, color-mix(in srgb, var(--p-primary-color) 18%, transparent)));
           --p-select-option-selected-focus-background: var(--select-option-selected-focus-background, var(--list-option-selected-focus-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent)));
+          --p-cascadeselect-background:                            var(--cascadeselect-background, var(--form-field-background, var(--p-input-bg)));
+          --p-cascadeselect-disabled-background:                   var(--cascadeselect-disabled-background, var(--form-field-disabled-background, var(--p-surface-800)));
+          --p-cascadeselect-filled-background:                     var(--cascadeselect-filled-background, var(--form-field-filled-background, var(--p-input-bg)));
+          --p-cascadeselect-filled-hover-background:               var(--cascadeselect-filled-hover-background, var(--form-field-filled-hover-background, var(--p-input-bg)));
+          --p-cascadeselect-filled-focus-background:               var(--cascadeselect-filled-focus-background, var(--form-field-filled-focus-background, var(--p-input-bg)));
+          --p-cascadeselect-border-color:                          var(--cascadeselect-border-color, var(--form-field-border-color, var(--p-input-border-color)));
+          --p-cascadeselect-hover-border-color:                    var(--cascadeselect-hover-border-color, var(--form-field-hover-border-color, var(--p-input-border-color)));
+          --p-cascadeselect-focus-border-color:                    var(--cascadeselect-focus-border-color, var(--form-field-focus-border-color, var(--p-primary-color)));
+          --p-cascadeselect-invalid-border-color:                  var(--cascadeselect-invalid-border-color, var(--form-field-invalid-border-color, var(--p-danger-color)));
+          --p-cascadeselect-color:                                 var(--cascadeselect-color, var(--form-field-color, var(--p-input-color)));
+          --p-cascadeselect-disabled-color:                        var(--cascadeselect-disabled-color, var(--form-field-disabled-color, var(--p-surface-500)));
+          --p-cascadeselect-placeholder-color:                     var(--cascadeselect-placeholder-color, var(--form-field-placeholder-color, var(--p-input-placeholder)));
+          --p-cascadeselect-invalid-placeholder-color:             var(--cascadeselect-invalid-placeholder-color, var(--form-field-invalid-placeholder-color, var(--p-danger-color)));
+          --p-cascadeselect-shadow:                                var(--cascadeselect-shadow, 0 1px 2px rgba(0, 0, 0, 0.2));
+          --p-cascadeselect-padding-x:                             var(--cascadeselect-padding-x, var(--form-field-padding-x, 12px));
+          --p-cascadeselect-padding-y:                             var(--cascadeselect-padding-y, var(--form-field-padding-y, 8px));
+          --p-cascadeselect-border-radius:                         var(--cascadeselect-border-radius, var(--form-field-border-radius, var(--p-border-radius)));
+          --p-cascadeselect-focus-ring-width:                      var(--cascadeselect-focus-ring-width, var(--form-field-focus-ring-width, 0));
+          --p-cascadeselect-focus-ring-style:                      solid;
+          --p-cascadeselect-focus-ring-color:                      var(--cascadeselect-focus-ring-color, var(--form-field-focus-ring-color, var(--p-primary-color)));
+          --p-cascadeselect-focus-ring-offset:                     var(--cascadeselect-focus-ring-offset, var(--form-field-focus-ring-offset, 0));
+          --p-cascadeselect-focus-ring-shadow:                     var(--cascadeselect-focus-ring-shadow, 0 0 0 0 transparent);
+          --p-cascadeselect-transition-duration:                   var(--form-field-transition-duration, 0.2s);
+          --p-cascadeselect-dropdown-color:                        var(--cascadeselect-dropdown-color, var(--form-field-icon-color, var(--p-surface-500)));
+          --p-cascadeselect-dropdown-width:                        var(--cascadeselect-dropdown-width, var(--dimension-scale-x32, 32px));
+          --p-cascadeselect-overlay-background:                    var(--cascadeselect-overlay-background, var(--overlay-select-background, var(--overlay-popover-background)));
+          --p-cascadeselect-overlay-border-color:                  var(--cascadeselect-overlay-border-color, var(--overlay-select-border-color, var(--overlay-popover-border-color)));
+          --p-cascadeselect-overlay-color:                         var(--cascadeselect-overlay-color, var(--overlay-select-color, var(--overlay-popover-color)));
+          --p-cascadeselect-overlay-border-radius:                 var(--cascadeselect-overlay-border-radius, var(--overlay-select-border-radius, var(--p-border-radius)));
+          --p-cascadeselect-overlay-shadow:                        var(--cascadeselect-overlay-shadow, var(--overlay-select-shadow, var(--popover-shadow)));
+          --p-cascadeselect-option-focus-background:               var(--cascadeselect-option-focus-background, var(--list-option-focus-background, var(--p-surface-800)));
+          --p-cascadeselect-option-selected-background:            var(--cascadeselect-option-selected-background, var(--list-option-selected-background, color-mix(in srgb, var(--p-primary-color) 18%, transparent)));
+          --p-cascadeselect-option-selected-focus-background:      var(--cascadeselect-option-selected-focus-background, var(--list-option-selected-focus-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent)));
           --p-transition-duration: 180ms;
           --p-focus-ring-width:  2px;
           --p-focus-ring-style:  solid;

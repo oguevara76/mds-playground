@@ -9,6 +9,7 @@
       [class.rating-showcase]="isRatingBlock(block)"
       [class.textarea-showcase]="isTextareaBlock(block)"
       [class.select-showcase]="isSelectBlock(block)"
+      [class.cascadeselect-showcase]="isCascadeSelectBlock(block)"
       [class.selectbutton-showcase]="isSelectButtonBlock(block)"
       [class.togglebutton-showcase]="isToggleButtonBlock(block)"
     >
@@ -563,6 +564,147 @@
                   </div>
                 </ng-container>
 
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
+              </mds-catalog-preview-frame>
+            }
+            @case ('cascadeselect') {
+              <ng-template #cascadeSelectInteractionField>
+                <p-cascadeselect
+                  inputId="csel-live"
+                  [options]="cascadeSelectPrimeOptions"
+                  optionLabel="cname"
+                  optionGroupLabel="name"
+                  [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                  optionValue="code"
+                  [ngModel]="cascadeSelectIx().value"
+                  (ngModelChange)="patchCascadeSelect({ value: $event })"
+                  [size]="cascadeSelectPrimeSize(cascadeSelectIx().size)"
+                  [variant]="formThemePrimeVariant('cascadeselect')"
+                  [style]="cascadeSelectHostVars(cascadeSelectIx().size)"
+                  [placeholder]="cascadeSelectInteractionPlaceholder()"
+                  [fluid]="true"
+                  appendTo="body"
+                  (onFocus)="setCascadeSelectFloatIxFocused(true)"
+                  (onBlur)="setCascadeSelectFloatIxFocused(false)"
+                  (onShow)="setCascadeSelectFloatOverlayOpen(true)"
+                  (onHide)="setCascadeSelectFloatOverlayOpen(false)"
+                  ariaLabel="CascadeSelect interactivo"
+                />
+              </ng-template>
+              <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                [showExpand]="true"
+                [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+                [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+                configAriaLabel="Configurar CascadeSelect"
+              >
+                <div
+                  catalogPreviewDemo
+                  class="catalog-showcase-interactive catalog-input-interactive cascadeselect-interaction-scope"
+                  [ngClass]="cascadeSelectInteractionScopeClass()"
+                >
+                  @if (cascadeSelectIsDefault()) {
+                    <div class="p-field form-input-interaction-field">
+                      <label class="p-label" for="csel-live">Label</label>
+                      <ng-container *ngTemplateOutlet="cascadeSelectInteractionField" />
+                    </div>
+                  } @else if (cascadeSelectIsIftaLabel()) {
+                    <div class="form-input-interaction-control">
+                      <span class="p-iftalabel" [style]="cascadeSelectFloatLabelHostVars()">
+                        <ng-container *ngTemplateOutlet="cascadeSelectInteractionField" />
+                        <label for="csel-live">Label</label>
+                      </span>
+                    </div>
+                  } @else {
+                    <div class="form-input-interaction-control">
+                      <p-floatlabel
+                        [variant]="cascadeSelectFloatPosition()"
+                        [class.is-label-floated]="cascadeSelectInteractionLabelFloated()"
+                        [style]="cascadeSelectFloatLabelHostVars()"
+                        (focusin)="setCascadeSelectFloatIxFocused(true)"
+                        (focusout)="setCascadeSelectFloatIxFocused(false)"
+                      >
+                        <ng-container *ngTemplateOutlet="cascadeSelectInteractionField" />
+                        <label for="csel-live">Label</label>
+                      </p-floatlabel>
+                    </div>
+                  }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Theme</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="themeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="formTheme('cascadeselect')"
+                        (ngModelChange)="patchFormTheme('cascadeselect', $event)"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Theme CascadeSelect"
+                      />
+                    </div>
+                  </div>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="inputtextVariantSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="cascadeSelectIx().variant"
+                        (ngModelChange)="patchCascadeSelect({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant CascadeSelect"
+                      />
+                    </div>
+                  </div>
+                  @if (cascadeSelectIsFloatLabel()) {
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">Float variant</span>
+                      <div class="button-config-select-wrap">
+                        <p-select
+                          [options]="inputtextFloatPositionSelectOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          [ngModel]="cascadeSelectIx().floatPosition"
+                          (ngModelChange)="patchCascadeSelect({ floatPosition: $event })"
+                          size="small"
+                          appendTo="body"
+                          ariaLabel="Float variant CascadeSelect"
+                        />
+                      </div>
+                    </div>
+                  }
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="cascadeSelectIx().size"
+                        (ngModelChange)="patchCascadeSelect({ size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size CascadeSelect"
+                      />
+                    </div>
+                  </div>
+                </ng-container>
                 <ng-container catalogPreviewDetails>
                   <mds-catalog-info-block title="States" icon="list">
                     <ng-container *ngTemplateOutlet="formCatalogStates" />
@@ -1850,8 +1992,7 @@
                                 [style]="selectHostVars('normal')"
                                 [placeholder]="inputStatePlaceholder"
                                 [invalid]="inputStateInvalid(st.key)"
-                                [disabled]="inputStateDisabled(st.key)"
-                                [readonly]="inputStateReadonly(st.key)"
+                                [disabled]="inputStateDisabled(st.key) || inputStateReadonly(st.key)"
                                 [fluid]="true"
                                 appendTo="body"
                                 tabindex="-1"
@@ -1882,8 +2023,6 @@
                                   [style]="selectHostVars('normal')"
                                   [placeholder]="selectFloatPlaceholderAttr(st.key) ?? ''"
                                   [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [readonly]="inputStateReadonly(st.key)"
                                   [fluid]="true"
                                   appendTo="body"
                                   tabindex="-1"
@@ -1916,8 +2055,114 @@
                                   [style]="selectHostVars('normal')"
                                   [placeholder]="selectFloatPlaceholderAttr(st.key) ?? ''"
                                   [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [readonly]="inputStateReadonly(st.key)"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </p-floatlabel>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="st.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isCascadeSelectBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (cascadeSelectIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label">Label</label>
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-cascadeselect
+                                [options]="cascadeSelectPrimeOptions"
+                                optionLabel="cname"
+                                optionGroupLabel="name"
+                                [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                                optionValue="code"
+                                [ngModel]="cascadeSelectStateValue(st.key)"
+                                [size]="cascadeSelectPrimeSize('normal')"
+                                [variant]="formThemePrimeVariant('cascadeselect')"
+                                [style]="cascadeSelectHostVars('normal')"
+                                [placeholder]="inputStatePlaceholder"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key) || inputStateReadonly(st.key)"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                                [attr.aria-label]="st.caption"
+                              />
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else if (cascadeSelectIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <span
+                                class="p-iftalabel"
+                                [class.is-label-invalid]="inputStateInvalid(st.key)"
+                                [style]="cascadeSelectFloatLabelStatesHostVars()"
+                              >
+                                <p-cascadeselect
+                                  [options]="cascadeSelectPrimeOptions"
+                                  optionLabel="cname"
+                                  optionGroupLabel="name"
+                                  [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                                  optionValue="code"
+                                  [ngModel]="cascadeSelectStateValue(st.key)"
+                                  [size]="cascadeSelectPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('cascadeselect')"
+                                  [style]="cascadeSelectHostVars('normal')"
+                                  [placeholder]="cascadeSelectFloatPlaceholderAttr(st.key) ?? ''"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </span>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-floatlabel
+                                [variant]="cascadeSelectFloatPosition()"
+                                [class.is-label-floated]="cascadeSelectFloatStateLabelFloated(st.key)"
+                                [style]="cascadeSelectFloatLabelStatesHostVars()"
+                              >
+                                <p-cascadeselect
+                                  [options]="cascadeSelectPrimeOptions"
+                                  optionLabel="cname"
+                                  optionGroupLabel="name"
+                                  [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                                  optionValue="code"
+                                  [ngModel]="cascadeSelectStateValue(st.key)"
+                                  [size]="cascadeSelectPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('cascadeselect')"
+                                  [style]="cascadeSelectHostVars('normal')"
+                                  [placeholder]="cascadeSelectFloatPlaceholderAttr(st.key) ?? ''"
+                                  [invalid]="inputStateInvalid(st.key)"
                                   [fluid]="true"
                                   appendTo="body"
                                   tabindex="-1"
@@ -1954,7 +2199,6 @@
                                   rows="3"
                                   [placeholder]="inputStatePlaceholder"
                                   [value]="inputStateReadonlyValue"
-                                  [readonly]="true"
                                   tabindex="-1"
                                   [attr.aria-label]="st.caption"
                                 ></textarea>
@@ -1966,8 +2210,6 @@
                                   [placeholder]="inputStatePlaceholder"
                                   [ngModel]="inputStateValue(st.key, block)"
                                   [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [readonly]="inputStateReadonly(st.key)"
                                   tabindex="-1"
                                   [attr.aria-label]="st.caption"
                                 ></textarea>
@@ -1994,8 +2236,6 @@
                                   [attr.placeholder]="textareaFloatPlaceholderAttr(st.key)"
                                   [ngModel]="inputStateValue(st.key, block)"
                                   [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [readonly]="inputStateReadonly(st.key)"
                                   tabindex="-1"
                                   [attr.aria-label]="st.caption"
                                 ></textarea>
@@ -2023,8 +2263,6 @@
                                   [attr.placeholder]="textareaFloatPlaceholderAttr(st.key)"
                                   [ngModel]="inputStateValue(st.key, block)"
                                   [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [readonly]="inputStateReadonly(st.key)"
                                   tabindex="-1"
                                   [attr.aria-label]="st.caption"
                                 ></textarea>
@@ -2058,7 +2296,6 @@
                                   [variant]="formThemePrimeVariant('inputtext')"
                                   [placeholder]="inputStatePlaceholder"
                                   [value]="inputStateReadonlyValue"
-                                  [readonly]="true"
                                   tabindex="-1"
                                   [attr.aria-label]="st.caption"
                                 />
@@ -2069,8 +2306,6 @@
                                   [placeholder]="inputStatePlaceholder"
                                   [ngModel]="inputStateValue(st.key, block)"
                                   [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [readonly]="inputStateReadonly(st.key)"
                                   tabindex="-1"
                                   [attr.aria-label]="st.caption"
                                 />
@@ -2096,8 +2331,6 @@
                                   [attr.placeholder]="inputFloatPlaceholderAttr(st.key)"
                                   [ngModel]="inputStateValue(st.key, block)"
                                   [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [readonly]="inputStateReadonly(st.key)"
                                   tabindex="-1"
                                   [attr.aria-label]="st.caption"
                                 />
@@ -2275,7 +2508,6 @@
                                 [variant]="formThemePrimeVariant('inputnumber')"
                                 [style]="inputNumberHostVars()"
                                 [ngModel]="inputNumberStateValue(st.key)"
-                                [readonly]="true"
                                 [fluid]="true"
                                 [tabindex]="-1"
                                 [attr.aria-label]="st.caption"
@@ -2291,8 +2523,7 @@
                                 [style]="inputNumberHostVars()"
                                 [ngModel]="inputNumberStateValue(st.key)"
                                 [invalid]="inputStateInvalid(st.key)"
-                                [disabled]="inputStateDisabled(st.key)"
-                                [readonly]="inputStateReadonly(st.key)"
+                                [disabled]="inputStateDisabled(st.key) || inputStateReadonly(st.key)"
                                 [fluid]="true"
                                 [tabindex]="-1"
                                 [attr.aria-label]="st.caption"
@@ -2558,7 +2789,6 @@
                               [variant]="formThemePrimeVariant('select')"
                               [style]="selectHostVars(sz.key)"
                               [placeholder]="inputStatePlaceholder"
-                              [readonly]="true"
                               [fluid]="true"
                               appendTo="body"
                               tabindex="-1"
@@ -2577,7 +2807,6 @@
                                 [variant]="formThemePrimeVariant('select')"
                                 [style]="selectHostVars(sz.key)"
                                 [placeholder]="inputStatePlaceholder"
-                                [readonly]="true"
                                 [fluid]="true"
                                 appendTo="body"
                                 tabindex="-1"
@@ -2602,12 +2831,90 @@
                                 [variant]="formThemePrimeVariant('select')"
                                 [style]="selectHostVars(sz.key)"
                                 [placeholder]="inputStatePlaceholder"
-                                [readonly]="true"
                                 [fluid]="true"
                                 appendTo="body"
                                 tabindex="-1"
                               />
                               <label [for]="'sel-sz-' + sz.key">Label</label>
+                            </p-floatlabel>
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="sz.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isCascadeSelectBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (cascadeSelectIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label" [for]="'csel-sz-' + sz.key">Label</label>
+                            <p-cascadeselect
+                              [inputId]="'csel-sz-' + sz.key"
+                              [options]="cascadeSelectPrimeOptions"
+                              optionLabel="cname"
+                              optionGroupLabel="name"
+                              [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                              optionValue="code"
+                              [ngModel]="null"
+                              [size]="cascadeSelectPrimeSize(sz.key)"
+                              [variant]="formThemePrimeVariant('cascadeselect')"
+                              [style]="cascadeSelectHostVars(sz.key)"
+                              [placeholder]="inputStatePlaceholder"
+                              [fluid]="true"
+                              appendTo="body"
+                              tabindex="-1"
+                            />
+                          </div>
+                        } @else if (cascadeSelectIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <span class="p-iftalabel" [style]="cascadeSelectIftaLabelHostVarsForSize(sz.key)">
+                              <p-cascadeselect
+                                [inputId]="'csel-sz-' + sz.key"
+                                [options]="cascadeSelectPrimeOptions"
+                                optionLabel="cname"
+                                optionGroupLabel="name"
+                                [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                                optionValue="code"
+                                [ngModel]="null"
+                                [size]="cascadeSelectPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('cascadeselect')"
+                                [style]="cascadeSelectHostVars(sz.key)"
+                                [placeholder]="inputStatePlaceholder"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                              />
+                              <label [for]="'csel-sz-' + sz.key">Label</label>
+                            </span>
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <p-floatlabel
+                              [variant]="cascadeSelectFloatPosition()"
+                              [class.is-label-floated]="cascadeSelectFloatSizeLabelFloated()"
+                              [style]="cascadeSelectFloatLabelHostVarsForSize(sz.key)"
+                            >
+                              <p-cascadeselect
+                                [inputId]="'csel-sz-' + sz.key"
+                                [options]="cascadeSelectPrimeOptions"
+                                optionLabel="cname"
+                                optionGroupLabel="name"
+                                [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                                optionValue="code"
+                                [ngModel]="null"
+                                [size]="cascadeSelectPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('cascadeselect')"
+                                [style]="cascadeSelectHostVars(sz.key)"
+                                [placeholder]="inputStatePlaceholder"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                              />
+                              <label [for]="'csel-sz-' + sz.key">Label</label>
                             </p-floatlabel>
                           </div>
                         }
@@ -2631,7 +2938,6 @@
                               rows="3"
                               placeholder="Placeholder"
                               [ngClass]="textareaSizeClass(sz.key)"
-                              [readonly]="true"
                               [fluid]="true"
                               tabindex="-1"
                             ></textarea>
@@ -2646,7 +2952,6 @@
                                 rows="3"
                                 placeholder="Placeholder"
                                 [ngClass]="textareaSizeClass(sz.key)"
-                                [readonly]="true"
                                 [fluid]="true"
                                 tabindex="-1"
                               ></textarea>
@@ -2667,7 +2972,6 @@
                                 rows="3"
                                 placeholder="Placeholder"
                                 [ngClass]="textareaSizeClass(sz.key)"
-                                [readonly]="true"
                                 [fluid]="true"
                                 tabindex="-1"
                               ></textarea>

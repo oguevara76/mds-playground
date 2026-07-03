@@ -252,6 +252,8 @@
 .form-showcase .catalog-input-states-row:not(.catalog-input-sizes-row) .p-floatlabel-over:has(.p-password-input:focus) label,
 .form-showcase .catalog-input-states-row:not(.catalog-input-sizes-row) .p-floatlabel-over:has(.p-select:focus-within) label,
 .form-showcase .catalog-input-states-row:not(.catalog-input-sizes-row) .p-floatlabel-over:has(.p-select.p-focus) label,
+.form-showcase .catalog-input-states-row:not(.catalog-input-sizes-row) .p-floatlabel-over:has(.p-cascadeselect:focus-within) label,
+.form-showcase .catalog-input-states-row:not(.catalog-input-sizes-row) .p-floatlabel-over:has(.p-cascadeselect.p-focus) label,
 .form-showcase .catalog-input-states-row:not(.catalog-input-sizes-row) .p-floatlabel-over:has(textarea:focus) label,
 .form-showcase .catalog-input-states-row:not(.catalog-input-sizes-row) .p-floatlabel-over:has(textarea.p-filled) label {
   z-index: 1;
@@ -261,6 +263,12 @@
   .catalog-input-states-row:not(.catalog-input-sizes-row)
   .catalog-button-state-preview:has(.p-floatlabel-over),
 .textarea-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-button-state-preview:has(.p-floatlabel-on),
+.cascadeselect-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-button-state-preview:has(.p-floatlabel-over),
+.cascadeselect-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
   .catalog-button-state-preview:has(.p-floatlabel-on) {
   padding-top: var(--catalog-floatlabel-headroom);
@@ -2652,5 +2660,367 @@
 :host ::ng-deep .select-showcase .catalog-input-states-row .p-floatlabel:has(.p-invalid) label,
 :host ::ng-deep .select-showcase .catalog-input-states-row .p-floatlabel.is-label-floated:has(.p-invalid) label,
 :host ::ng-deep .select-showcase .catalog-input-states-row .p-iftalabel.is-label-invalid label {
+  color: var(--p-floatlabel-active-color, var(--p-floatlabel-color));
+}
+/* CascadeSelect — Float Label / IftaLabel (paridad InputText / Password) */
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel > .p-cascadeselect,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel > .p-cascadeselect,
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel > .p-cascadeselect,
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel > .p-cascadeselect {
+  width: 100%;
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-x, var(--floatlabel-position-x, var(--cascadeselect-padding-x, var(--form-field-padding-x))))
+  );
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-iftalabel label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-iftalabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-iftalabel-position-x, var(--iftalabel-position-x, var(--cascadeselect-padding-x, var(--form-field-padding-x))))
+  );
+  top: var(
+    --catalog-iftalabel-top,
+    var(--p-iftalabel-top, var(--catalog-floatlabel-in-active-top, var(--cascadeselect-padding-y, var(--form-field-padding-y))))
+  );
+  transform: translateY(0);
+  font-size: var(--p-iftalabel-font-size, var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size)));
+  font-weight: var(--p-iftalabel-font-weight, var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight)));
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-in label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-x, var(--floatlabel-position-x, var(--cascadeselect-padding-x, var(--form-field-padding-x))))
+  );
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Interaction Float In: label activo solo con valor, foco u overlay abierto */
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in.is-label-floated label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in:has(.p-cascadeselect.p-focus) label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in:has(.p-cascadeselect:focus-within) label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in:has(.p-cascadeselect.p-cascadeselect-open) label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in:not(.is-label-floated):not(:has(.p-cascadeselect.p-focus)):not(:has(.p-cascadeselect:focus-within)):not(:has(.p-cascadeselect.p-cascadeselect-open)) label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+}
+
+/* States / Sizes Float In: label activo por defecto (preview fill) */
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-in label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in:not(.is-label-floated) label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in.is-label-floated label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .form-showcase .cascadeselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
+:host ::ng-deep .form-showcase .cascadeselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-over-wrapper-padding-top, var(--floatlabel-over-wrapper-padding-top));
+}
+
+:host ::ng-deep
+  .cascadeselect-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-input-interactive:has(.p-floatlabel-over)
+  .p-floatlabel,
+:host ::ng-deep
+  .cascadeselect-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-input-interactive:has(.p-floatlabel-on)
+  .p-floatlabel {
+  margin-top: 0;
+}
+
+:host ::ng-deep .form-showcase .cascadeselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-on-wrapper-padding-top, var(--floatlabel-on-wrapper-padding-top, 7px));
+}
+
+/* Select Float Over/On: vacío en Interaction/States/Sizes — label centrado en el campo */
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-on:not(.is-label-floated) label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-weight: 400;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Select Interaction Over activo: label por encima del borde + máscara */
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-over:has(.p-cascadeselect:focus-within) label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-over:has(.p-cascadeselect.p-focus) label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-over.is-label-floated label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--cascadeselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  z-index: 1;
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-over:has(.p-cascadeselect.p-focus) label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--cascadeselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  z-index: 1;
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-on:has(.p-cascadeselect:focus-within) label,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-on:has(.p-cascadeselect.p-focus) label {
+  top: 0;
+  transform: translateY(-50%);
+  padding: var(--p-floatlabel-on-active-padding, var(--floatlabel-on-active-padding-y, 0) var(--floatlabel-on-active-padding-x, 2px));
+  background: var(
+    --p-floatlabel-on-active-background,
+    var(--floatlabel-on-active-background, var(--cascadeselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in .p-cascadeselect,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel .p-cascadeselect,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-cascadeselect,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-iftalabel .p-cascadeselect,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in .p-cascadeselect,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-iftalabel .p-cascadeselect {
+  box-sizing: border-box;
+  position: relative;
+  display: flex !important;
+  align-items: stretch !important;
+  width: 100%;
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height, var(--p-iftalabel-input-min-height, 47px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height, var(--p-iftalabel-input-min-height, 47px))
+  ) !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-in .p-cascadeselect .p-cascadeselect-label,
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel .p-cascadeselect .p-cascadeselect-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  line-height: var(--inputtext-line-height, 1.25);
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-top,
+    var(--p-floatlabel-in-input-padding-top, var(--p-iftalabel-input-padding-top, var(--floatlabel-in-input-padding-top)))
+  );
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+  padding-inline-start: var(
+    --catalog-floatlabel-in-input-padding-x,
+    var(--cascadeselect-padding-x, var(--form-field-padding-x))
+  );
+  padding-inline-end: calc(
+    var(--p-cascadeselect-dropdown-width, var(--cascadeselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      var(--catalog-floatlabel-in-input-padding-x, var(--cascadeselect-padding-x, var(--form-field-padding-x)))
+  );
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Vacío Float In: valor/placeholder centrado (sin padding-top de label activo) */
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-in:not(.is-label-floated) .p-cascadeselect .p-cascadeselect-label {
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+}
+
+/* Chevron: centrado vertical en el input (igual que icono derecho en InputText Float In) */
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-in .p-cascadeselect .p-cascadeselect-dropdown,
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel .p-cascadeselect .p-cascadeselect-dropdown {
+  position: absolute !important;
+  top: 50% !important;
+  bottom: auto !important;
+  inset-inline-end: 0 !important;
+  inset-inline-start: auto !important;
+  width: var(--p-cascadeselect-dropdown-width, var(--cascadeselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  min-width: var(--p-cascadeselect-dropdown-width, var(--cascadeselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  height: var(--p-cascadeselect-dropdown-width, var(--cascadeselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  margin: 0 !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: auto !important;
+  flex: 0 0 auto !important;
+  color: var(--p-cascadeselect-dropdown-color, var(--cascadeselect-dropdown-color, var(--form-field-icon-color)));
+}
+
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-in .p-cascadeselect.p-cascadeselect-sm .p-cascadeselect-dropdown,
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel .p-cascadeselect.p-cascadeselect-sm .p-cascadeselect-dropdown {
+  top: 50% !important;
+}
+
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-in .p-cascadeselect.p-cascadeselect-lg .p-cascadeselect-dropdown,
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel .p-cascadeselect.p-cascadeselect-lg .p-cascadeselect-dropdown {
+  top: 50% !important;
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in .p-cascadeselect.p-cascadeselect-sm,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel .p-cascadeselect.p-cascadeselect-sm,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-cascadeselect.p-cascadeselect-sm,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-iftalabel .p-cascadeselect.p-cascadeselect-sm {
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px))
+  ) !important;
+}
+
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-in .p-cascadeselect.p-cascadeselect-sm .p-cascadeselect-label,
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel .p-cascadeselect.p-cascadeselect-sm .p-cascadeselect-label {
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--cascadeselect-sm-font-size, var(--form-field-sm-font-size)))
+  );
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in .p-cascadeselect.p-cascadeselect-lg,
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel .p-cascadeselect.p-cascadeselect-lg,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-cascadeselect.p-cascadeselect-lg,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-iftalabel .p-cascadeselect.p-cascadeselect-lg {
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px))
+  ) !important;
+}
+
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-in .p-cascadeselect.p-cascadeselect-lg .p-cascadeselect-label,
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel .p-cascadeselect.p-cascadeselect-lg .p-cascadeselect-label {
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--cascadeselect-lg-font-size, var(--form-field-lg-font-size)))
+  );
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-field:has(.p-cascadeselect-sm) > .p-label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-field:has(.p-cascadeselect-sm) > .p-label {
+  font-size: var(--cascadeselect-sm-font-size, var(--form-field-sm-font-size));
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-field:has(.p-cascadeselect-lg) > .p-label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-field:has(.p-cascadeselect-lg) > .p-label {
+  font-size: var(--cascadeselect-lg-font-size, var(--form-field-lg-font-size));
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-cascadeselect:not(.p-disabled),
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-cascadeselect:not(.p-disabled) {
+  border-color: var(--p-cascadeselect-hover-border-color, var(--cascadeselect-hover-border-color));
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-cascadeselect:not(.p-disabled) {
+  border-color: var(--p-cascadeselect-focus-border-color, var(--cascadeselect-focus-border-color));
+  box-shadow: var(--p-cascadeselect-focus-ring-shadow, var(--cascadeselect-focus-ring-shadow));
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-cascadeselect.p-invalid {
+  border-color: var(--p-cascadeselect-invalid-border-color, var(--cascadeselect-invalid-border-color));
+}
+
+.form-showcase .catalog-block-section:has(.cascadeselect-interaction-scope) .catalog-block-body {
+  overflow: visible;
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel:has(.p-invalid) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel.is-label-floated:has(.p-invalid) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-iftalabel.is-label-invalid label {
   color: var(--p-floatlabel-active-color, var(--p-floatlabel-color));
 }

@@ -6,6 +6,7 @@ import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { FormsModule } from '@angular/forms';
+import { CascadeSelect } from 'primeng/cascadeselect';
 import { Checkbox } from 'primeng/checkbox';
 import { Divider } from 'primeng/divider';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -56,12 +57,17 @@ import {
   FORM_RATING_VALUE_SELECT_OPTIONS,
   FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS,
   FORM_TEXTAREA_VARIANT_SELECT_OPTIONS,
+  FORM_CASCADESELECT_DEMO_OPTIONS,
+  FORM_CASCADESELECT_OPTION_GROUP_CHILDREN,
+  FORM_CASCADESELECT_STATE_FILLED_VALUE,
   FORM_SELECT_DEMO_GROUPED_OPTIONS,
   FORM_SELECT_DEMO_OPTIONS,
   FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER,
   FORM_SELECT_OVERLAY_OPTION_VARIANT_OPTIONS,
   FORM_SELECT_STATE_FILLED_VALUE,
   FORM_SELECT_VARIANT_SELECT_OPTIONS,
+  type FormCascadeSelectDemoValue,
+  type FormCascadeSelectCountry,
   type FormSelectOverlayOptionVariant,
   type FormSelectDemoGroup,
   FORM_RADIO_OPTIONS,
@@ -95,6 +101,13 @@ export interface FormSelectInteractionState {
   /** Buscador en header del overlay (PrimeNG filter). */
   showOverlayFilter: boolean;
   overlayOptionVariant: FormSelectOverlayOptionVariant;
+}
+
+export interface FormCascadeSelectInteractionState {
+  variant: FormInputTextVariant;
+  floatPosition: FormInputFloatVariant;
+  size: FormInteractionSize;
+  value: FormCascadeSelectDemoValue | null;
 }
 
 export interface FormInputNumberInteractionState {
@@ -169,7 +182,7 @@ interface FormSelectButtonInteractionState {
 }
 
 /** Campo al que aplican los tokens MDS de float label / ifta (input vs textarea vs password vs select). */
-type FormFieldKind = 'inputtext' | 'textarea' | 'password' | 'select';
+type FormFieldKind = 'inputtext' | 'textarea' | 'password' | 'select' | 'cascadeselect';
 
 type PasswordStrengthLevel = 'none' | 'weak' | 'medium' | 'strong';
 
@@ -208,6 +221,15 @@ function defaultSelectInteraction(): FormSelectInteractionState {
     value: null,
     showOverlayFilter: false,
     overlayOptionVariant: 'default',
+  };
+}
+
+function defaultCascadeSelectInteraction(): FormCascadeSelectInteractionState {
+  return {
+    variant: 'default',
+    floatPosition: 'over',
+    size: 'normal',
+    value: null,
   };
 }
 
@@ -278,6 +300,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     CatalogInfoBlockComponent,
     CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
+    CascadeSelect,
     Checkbox,
     Divider,
     FloatLabel,
@@ -319,6 +342,10 @@ export class FormCatalogComponent {
   readonly ratingDemoStates = FORM_RATING_DEMO_STATES;
   readonly selectVariantSelectOptions = FORM_SELECT_VARIANT_SELECT_OPTIONS;
   readonly selectDemoOptions = [...FORM_SELECT_DEMO_OPTIONS];
+  readonly cascadeSelectDemoOptions: FormCascadeSelectCountry[] = FORM_CASCADESELECT_DEMO_OPTIONS;
+  /** Opciones anidadas expuestas a PrimeNG (tipado del componente limitado a string). */
+  readonly cascadeSelectPrimeOptions = FORM_CASCADESELECT_DEMO_OPTIONS as any;
+  readonly cascadeSelectOptionGroupChildren = [...FORM_CASCADESELECT_OPTION_GROUP_CHILDREN];
   readonly selectDemoGroupedOptions = FORM_SELECT_DEMO_GROUPED_OPTIONS;
   readonly selectOverlayOptionVariantOptions = FORM_SELECT_OVERLAY_OPTION_VARIANT_OPTIONS;
   readonly selectOverlayFilterPlaceholder = FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER;
@@ -340,6 +367,7 @@ export class FormCatalogComponent {
     inputtext: 'outlined',
     inputnumber: 'outlined',
     select: 'outlined',
+    cascadeselect: 'outlined',
     password: 'outlined',
     inputotp: 'outlined',
     rating: 'outlined',
@@ -358,6 +386,7 @@ export class FormCatalogComponent {
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
   readonly inputnumberIx = signal<FormInputNumberInteractionState>(defaultInputNumberInteraction());
   readonly selectIx = signal<FormSelectInteractionState>(defaultSelectInteraction());
+  readonly cascadeSelectIx = signal<FormCascadeSelectInteractionState>(defaultCascadeSelectInteraction());
   readonly passwordIx = signal<FormPasswordInteractionState>(defaultPasswordInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
   readonly ratingIx = signal<FormRatingInteractionState>(defaultRatingInteraction());
@@ -367,6 +396,12 @@ export class FormCatalogComponent {
 
   /** Select Float Label: overlay abierto mantiene label/placeholder activos (onBlur al abrir lista). */
   private readonly selectFloatOverlayOpen = signal(false);
+
+  /** Float Label interactivo (CascadeSelect). */
+  private readonly cascadeSelectFloatIxFocused = signal(false);
+
+  /** CascadeSelect Float Label: overlay abierto mantiene label/placeholder activos. */
+  private readonly cascadeSelectFloatOverlayOpen = signal(false);
 
   /** Float Label interactivo: placeholder solo mientras el campo tiene foco. */
   private readonly floatIxFocused = signal(false);
@@ -402,6 +437,10 @@ export class FormCatalogComponent {
 
   isSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'select' } {
     return block.kind === 'select';
+  }
+
+  isCascadeSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'cascadeselect' } {
+    return block.kind === 'cascadeselect';
   }
 
   isPasswordBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'password' } {
@@ -969,6 +1008,233 @@ export class FormCatalogComponent {
     return null;
   }
 
+  patchCascadeSelect(patch: Partial<FormCascadeSelectInteractionState>): void {
+    this.cascadeSelectIx.update((prev) => {
+      const next = { ...prev, ...patch };
+      if (patch.variant !== undefined && patch.variant !== prev.variant) {
+        next.value = null;
+      }
+      return next;
+    });
+    if (patch.variant !== undefined) {
+      this.cascadeSelectFloatIxFocused.set(false);
+      this.cascadeSelectFloatOverlayOpen.set(false);
+    }
+  }
+
+  cascadeSelectIsDefault(): boolean {
+    return this.cascadeSelectIx().variant === 'default';
+  }
+
+  cascadeSelectIsFloatLabel(): boolean {
+    return this.cascadeSelectIx().variant === 'floatlabel';
+  }
+
+  cascadeSelectIsIftaLabel(): boolean {
+    return this.cascadeSelectIx().variant === 'iftalabel';
+  }
+
+  cascadeSelectFloatPosition(): FormInputFloatVariant {
+    return this.cascadeSelectIx().floatPosition;
+  }
+
+  cascadeSelectIsFloatIn(): boolean {
+    return this.cascadeSelectIsFloatLabel() && this.cascadeSelectFloatPosition() === 'in';
+  }
+
+  cascadeSelectIsFloatOverOrOn(): boolean {
+    return (
+      this.cascadeSelectIsFloatLabel() &&
+      (this.cascadeSelectFloatPosition() === 'over' || this.cascadeSelectFloatPosition() === 'on')
+    );
+  }
+
+  cascadeSelectInteractionLabelFloated(): boolean {
+    if (!this.cascadeSelectIsFloatLabel()) {
+      return false;
+    }
+    return (
+      !!this.cascadeSelectIx().value ||
+      this.cascadeSelectFloatIxFocused() ||
+      this.cascadeSelectFloatOverlayOpen()
+    );
+  }
+
+  cascadeSelectFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    if (this.cascadeSelectFloatPosition() === 'in') {
+      return state !== 'empty';
+    }
+    if (this.cascadeSelectIsFloatOverOrOn() && state === 'disabled') {
+      return true;
+    }
+    return state === 'filled' || state === 'disabled' || state === 'readonly';
+  }
+
+  cascadeSelectFloatSizeLabelFloated(): boolean {
+    if (!this.cascadeSelectIsFloatLabel()) {
+      return false;
+    }
+    return this.cascadeSelectFloatPosition() !== 'in';
+  }
+
+  setCascadeSelectFloatIxFocused(focused: boolean): void {
+    if (!this.cascadeSelectIsFloatLabel()) {
+      return;
+    }
+    if (!focused && this.cascadeSelectFloatOverlayOpen()) {
+      return;
+    }
+    this.cascadeSelectFloatIxFocused.set(focused);
+  }
+
+  setCascadeSelectFloatOverlayOpen(open: boolean): void {
+    if (!this.cascadeSelectIsFloatLabel()) {
+      return;
+    }
+    this.cascadeSelectFloatOverlayOpen.set(open);
+    if (open) {
+      this.cascadeSelectFloatIxFocused.set(true);
+    } else if (!this.cascadeSelectIx().value) {
+      this.cascadeSelectFloatIxFocused.set(false);
+    }
+  }
+
+  cascadeSelectFloatInteractionPlaceholder(): string | null {
+    if (this.cascadeSelectIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    if (!this.cascadeSelectFloatIxFocused() && !this.cascadeSelectFloatOverlayOpen()) {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  cascadeSelectInteractionPlaceholder(): string {
+    if (this.cascadeSelectIsDefault() || this.cascadeSelectIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    return this.cascadeSelectFloatInteractionPlaceholder() ?? '';
+  }
+
+  cascadeSelectInteractionScopeClass(): Record<string, boolean> {
+    const sx = this.cascadeSelectIx();
+    return {
+      'catalog-input-interactive--float-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
+      'catalog-input-interactive--float-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
+      'catalog-input-interactive--float-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+    };
+  }
+
+  cascadeSelectPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return size === 'small' ? 'small' : size === 'large' ? 'large' : undefined;
+  }
+
+  private cascadeSelectOverlayHostVars(): Record<string, string> {
+    return {
+      '--p-cascadeselect-overlay-background': 'var(--cascadeselect-overlay-background)',
+      '--p-cascadeselect-overlay-border-color': 'var(--cascadeselect-overlay-border-color)',
+      '--p-cascadeselect-overlay-border-radius': 'var(--cascadeselect-overlay-border-radius)',
+      '--p-cascadeselect-overlay-color': 'var(--cascadeselect-overlay-color)',
+      '--p-cascadeselect-overlay-shadow': 'var(--cascadeselect-overlay-shadow)',
+      '--p-cascadeselect-list-gap': 'var(--cascadeselect-list-gap)',
+      '--p-cascadeselect-option-border-radius': 'var(--cascadeselect-option-border-radius)',
+      '--p-cascadeselect-option-color': 'var(--cascadeselect-option-color)',
+      '--p-cascadeselect-option-focus-background': 'var(--cascadeselect-option-focus-background)',
+      '--p-cascadeselect-option-focus-color': 'var(--cascadeselect-option-focus-color)',
+      '--p-cascadeselect-option-selected-background': 'var(--cascadeselect-option-selected-background)',
+      '--p-cascadeselect-option-selected-color': 'var(--cascadeselect-option-selected-color)',
+      '--p-cascadeselect-option-selected-focus-background': 'var(--cascadeselect-option-selected-focus-background)',
+      '--p-cascadeselect-option-selected-focus-color': 'var(--cascadeselect-option-selected-focus-color)',
+      '--p-cascadeselect-option-icon-color': 'var(--cascadeselect-option-icon-color)',
+      '--p-cascadeselect-option-icon-focus-color': 'var(--cascadeselect-option-icon-focus-color)',
+      '--p-cascadeselect-option-icon-size': 'var(--cascadeselect-option-icon-size)',
+    };
+  }
+
+  cascadeSelectHostVars(size: FormInteractionSize = 'normal'): Record<string, string> {
+    return {
+      '--p-cascadeselect-background': 'var(--cascadeselect-background)',
+      '--p-cascadeselect-border-color': 'var(--cascadeselect-border-color)',
+      '--p-cascadeselect-border-radius': 'var(--cascadeselect-border-radius)',
+      '--p-cascadeselect-color': 'var(--cascadeselect-color)',
+      '--p-cascadeselect-padding-x': `var(${this.fieldPaddingXToken('cascadeselect', size)})`,
+      '--p-cascadeselect-padding-y': `var(${this.fieldPaddingYToken('cascadeselect', size)})`,
+      '--p-cascadeselect-placeholder-color': 'var(--cascadeselect-placeholder-color)',
+      '--p-cascadeselect-dropdown-color': 'var(--cascadeselect-dropdown-color)',
+      '--p-cascadeselect-dropdown-width': 'var(--cascadeselect-dropdown-width)',
+      '--p-cascadeselect-focus-border-color': 'var(--cascadeselect-focus-border-color)',
+      '--p-cascadeselect-hover-border-color': 'var(--cascadeselect-hover-border-color)',
+      '--p-cascadeselect-invalid-border-color': 'var(--cascadeselect-invalid-border-color)',
+      '--p-cascadeselect-shadow': 'var(--cascadeselect-shadow)',
+      '--p-cascadeselect-sm-font-size': 'var(--cascadeselect-sm-font-size)',
+      '--p-cascadeselect-sm-padding-x': 'var(--cascadeselect-sm-padding-x)',
+      '--p-cascadeselect-sm-padding-y': 'var(--cascadeselect-sm-padding-y)',
+      '--p-cascadeselect-lg-font-size': 'var(--cascadeselect-lg-font-size)',
+      '--p-cascadeselect-lg-padding-x': 'var(--cascadeselect-lg-padding-x)',
+      '--p-cascadeselect-lg-padding-y': 'var(--cascadeselect-lg-padding-y)',
+      ...this.cascadeSelectOverlayHostVars(),
+    };
+  }
+
+  cascadeSelectFloatLabelHostVars(): Record<string, string> {
+    const sx = this.cascadeSelectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, sx.size, 'cascadeselect');
+  }
+
+  cascadeSelectIftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    return this.iftaLabelHostVars(size, 'cascadeselect');
+  }
+
+  cascadeSelectFloatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    const sx = this.cascadeSelectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, size, 'cascadeselect');
+  }
+
+  cascadeSelectFloatLabelStatesHostVars(): Record<string, string> {
+    const sx = this.cascadeSelectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, 'normal', 'cascadeselect');
+  }
+
+  cascadeSelectFloatPlaceholderAttr(state: FormInputDemoState): string | null {
+    if (this.cascadeSelectIsIftaLabel()) {
+      if (state === 'filled') {
+        return null;
+      }
+      return this.inputStatePlaceholder;
+    }
+    if (this.cascadeSelectIsFloatLabel()) {
+      if (state === 'focus') {
+        return this.inputStatePlaceholder;
+      }
+      return null;
+    }
+    if (state === 'empty' || state === 'filled') {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  cascadeSelectStateValue(state: FormInputDemoState): FormCascadeSelectDemoValue | null {
+    if (this.cascadeSelectIsDefault()) {
+      if (
+        this.inputStateShowsPlaceholderOnly(
+          { kind: 'cascadeselect', title: 'CascadeSelect', category: 'input' },
+          state,
+        )
+      ) {
+        return null;
+      }
+      if (state === 'readonly') {
+        return FORM_CASCADESELECT_STATE_FILLED_VALUE;
+      }
+      return null;
+    }
+    if (state === 'filled' || state === 'disabled') {
+      return FORM_CASCADESELECT_STATE_FILLED_VALUE;
+    }
+    return null;
+  }
+
   patchPassword(patch: Partial<FormPasswordInteractionState>): void {
     this.passwordIx.update((prev) => ({ ...prev, ...patch }));
   }
@@ -1403,6 +1669,15 @@ export class FormCatalogComponent {
       }
       return '--inputtext-font-size';
     }
+    if (field === 'cascadeselect') {
+      if (size === 'small') {
+        return '--cascadeselect-sm-font-size';
+      }
+      if (size === 'large') {
+        return '--cascadeselect-lg-font-size';
+      }
+      return '--inputtext-font-size';
+    }
     if (size === 'small') {
       return '--inputtext-sm-font-size';
     }
@@ -1430,6 +1705,15 @@ export class FormCatalogComponent {
         return '--select-lg-padding-x';
       }
       return '--select-padding-x';
+    }
+    if (field === 'cascadeselect') {
+      if (size === 'small') {
+        return '--cascadeselect-sm-padding-x';
+      }
+      if (size === 'large') {
+        return '--cascadeselect-lg-padding-x';
+      }
+      return '--cascadeselect-padding-x';
     }
     if (size === 'small') {
       return '--inputtext-sm-padding-x';
@@ -1459,6 +1743,15 @@ export class FormCatalogComponent {
       }
       return '--select-padding-y';
     }
+    if (field === 'cascadeselect') {
+      if (size === 'small') {
+        return '--cascadeselect-sm-padding-y';
+      }
+      if (size === 'large') {
+        return '--cascadeselect-lg-padding-y';
+      }
+      return '--cascadeselect-padding-y';
+    }
     if (size === 'small') {
       return '--inputtext-sm-padding-y';
     }
@@ -1478,6 +1771,28 @@ export class FormCatalogComponent {
     return '--iconfield-figma-size';
   }
 
+  private isDropdownField(field: FormFieldKind): field is 'select' | 'cascadeselect' {
+    return field === 'select' || field === 'cascadeselect';
+  }
+
+  private fieldBackgroundCssVar(field: 'select' | 'cascadeselect' | 'textarea' | 'inputtext'): string {
+    if (field === 'textarea') {
+      return 'var(--textarea-background, var(--p-textarea-background, var(--form-field-background)))';
+    }
+    if (field === 'select') {
+      return 'var(--select-background, var(--p-select-background, var(--form-field-background)))';
+    }
+    if (field === 'cascadeselect') {
+      return 'var(--cascadeselect-background, var(--p-cascadeselect-background, var(--form-field-background)))';
+    }
+    return 'var(--inputtext-background, var(--p-inputtext-background, var(--form-field-background)))';
+  }
+
+  private fieldDropdownWidthCssVar(field: 'select' | 'cascadeselect'): string {
+    const prefix = field === 'select' ? 'select' : 'cascadeselect';
+    return `var(--${prefix}-dropdown-width, var(--p-${prefix}-dropdown-width, var(--dimension-scale-x32, 32px)))`;
+  }
+
   private floatLabelFieldStyleVars(
     size: FormInteractionSize,
     field: FormFieldKind,
@@ -1487,10 +1802,10 @@ export class FormCatalogComponent {
     const positionYValue = `var(${this.floatLabelPositionYMdsToken(size)})`;
     const overActiveBackground =
       field === 'textarea'
-        ? 'var(--textarea-background, var(--p-textarea-background, var(--form-field-background)))'
-        : field === 'select'
-          ? 'var(--select-background, var(--p-select-background, var(--form-field-background)))'
-          : 'var(--inputtext-background, var(--p-inputtext-background, var(--form-field-background)))';
+        ? this.fieldBackgroundCssVar('textarea')
+        : this.isDropdownField(field)
+          ? this.fieldBackgroundCssVar(field)
+          : this.fieldBackgroundCssVar('inputtext');
     return {
       '--p-floatlabel-position-x': positionValue,
       '--catalog-floatlabel-position-x': positionValue,
@@ -1577,8 +1892,8 @@ export class FormCatalogComponent {
     const iconPaddingEnd =
       field === 'textarea'
         ? paddingX
-        : field === 'select'
-          ? `calc(var(${paddingX}) + var(--select-dropdown-width, var(--p-select-dropdown-width, var(--dimension-scale-x32, 32px))))`
+        : this.isDropdownField(field)
+          ? `calc(var(${paddingX}) + ${this.fieldDropdownWidthCssVar(field)})`
           : pick(
               '--inputtext-with-icon-padding-start',
               '--inputtext-with-icon-padding-start-sm',
@@ -1659,7 +1974,7 @@ export class FormCatalogComponent {
    */
   private iftaLabelInputtextHostVars(
     size: FormInteractionSize,
-    field: 'inputtext' | 'password' | 'select' = 'inputtext',
+    field: 'inputtext' | 'password' | 'select' | 'cascadeselect' = 'inputtext',
   ): Record<string, string> {
     const fieldVars = this.floatLabelFieldStyleVars(size, field);
     const paddingYToken = this.fieldPaddingYToken(field, size);
@@ -1705,8 +2020,8 @@ export class FormCatalogComponent {
     if (fieldKind === 'textarea') {
       return { ...this.iftaLabelTextareaHostVars(size), ...iconVars };
     }
-    if (fieldKind === 'select') {
-      return { ...this.iftaLabelInputtextHostVars(size, 'select'), ...iconVars };
+    if (fieldKind === 'select' || fieldKind === 'cascadeselect') {
+      return { ...this.iftaLabelInputtextHostVars(size, fieldKind), ...iconVars };
     }
     return {
       ...this.iftaLabelInputtextHostVars(size, fieldKind === 'password' ? 'password' : 'inputtext'),
@@ -1853,6 +2168,9 @@ export class FormCatalogComponent {
     if (this.isSelectBlock(block)) {
       return this.selectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
+    if (this.isCascadeSelectBlock(block)) {
+      return this.cascadeSelectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
+    }
     if (this.isTextareaBlock(block)) {
       return this.textareaIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
@@ -1902,6 +2220,7 @@ export class FormCatalogComponent {
   inputStateShowsPlaceholderOnly(block: FormBlockConfig, state: FormInputDemoState): boolean {
     const isDefaultField =
       (this.isSelectBlock(block) && this.selectIsDefault()) ||
+      (this.isCascadeSelectBlock(block) && this.cascadeSelectIsDefault()) ||
       (this.isTextareaBlock(block) && this.textareaIsDefault()) ||
       (this.isInputTextBlock(block) && this.inputtextIsDefault());
     if (isDefaultField) {
@@ -1931,7 +2250,7 @@ export class FormCatalogComponent {
         state === 'disabled'
       );
     }
-    if (this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isSelectBlock(block)) {
+    if (this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isSelectBlock(block) || this.isCascadeSelectBlock(block)) {
       if (this.isInputTextBlock(block) && this.inputtextIsFloatOverOrOn() && (state === 'disabled' || state === 'focus')) {
         return false;
       }

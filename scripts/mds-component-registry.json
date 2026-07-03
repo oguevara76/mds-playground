@@ -25,6 +25,12 @@
     "related_semantic": ["--form-field-*", "--form-field-float-label-*", "--list-*", "--overlay-select-*"],
     "watch_vars": ["--select-*", "--p-select-*", "--p-floatlabel-*", "--p-iftalabel-*"]
   },
+  "cascadeselect": {
+    "playground_anchor": "pg-cascadeselect",
+    "primeng_prefix": "cascadeselect",
+    "related_semantic": ["--form-field-*", "--form-field-float-label-*", "--list-*", "--overlay-select-*"],
+    "watch_vars": ["--cascadeselect-*", "--p-cascadeselect-*", "--p-floatlabel-*", "--p-iftalabel-*"]
+  },
   "password": {
     "playground_anchor": "pg-password",
     "primeng_prefix": "password",

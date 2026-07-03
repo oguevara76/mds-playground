@@ -7,6 +7,7 @@ export type FormBlockKind =
   | 'inputtext'
   | 'inputnumber'
   | 'select'
+  | 'cascadeselect'
   | 'password'
   | 'inputotp'
   | 'rating'
@@ -107,6 +108,64 @@ export const FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER = 'Filter...';
 
 /** Valor seleccionado en estados Fill (Float label / IftaLabel). */
 export const FORM_SELECT_STATE_FILLED_VALUE: FormSelectDemoValue = 'opt-2';
+
+export interface FormCascadeSelectCity {
+  cname: string;
+  code: string;
+}
+
+export interface FormCascadeSelectState {
+  name: string;
+  cities: FormCascadeSelectCity[];
+}
+
+export interface FormCascadeSelectCountry {
+  name: string;
+  code: string;
+  states: FormCascadeSelectState[];
+}
+
+export const FORM_CASCADESELECT_DEMO_OPTIONS: FormCascadeSelectCountry[] = [
+  {
+    name: 'Australia',
+    code: 'AU',
+    states: [
+      {
+        name: 'New South Wales',
+        cities: [
+          { cname: 'Sydney', code: 'A-SY' },
+          { cname: 'Newcastle', code: 'A-NE' },
+        ],
+      },
+      {
+        name: 'Queensland',
+        cities: [
+          { cname: 'Brisbane', code: 'A-BR' },
+          { cname: 'Townsville', code: 'A-TO' },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'USA',
+    code: 'US',
+    states: [
+      {
+        name: 'California',
+        cities: [
+          { cname: 'Los Angeles', code: 'US-LA' },
+          { cname: 'San Francisco', code: 'US-SF' },
+        ],
+      },
+    ],
+  },
+];
+
+export type FormCascadeSelectDemoValue = FormCascadeSelectCity['code'];
+
+export const FORM_CASCADESELECT_STATE_FILLED_VALUE: FormCascadeSelectDemoValue = 'A-SY';
+
+export const FORM_CASCADESELECT_OPTION_GROUP_CHILDREN = ['states', 'cities'] as const;
 
 export const FORM_SELECT_VARIANT_SELECT_OPTIONS = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
 
@@ -387,6 +446,7 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'inputtext', title: 'InputText', category: 'input' },
   { kind: 'inputnumber', title: 'InputNumber', category: 'input' },
   { kind: 'select', title: 'Select', category: 'input' },
+  { kind: 'cascadeselect', title: 'CascadeSelect', category: 'input' },
   { kind: 'password', title: 'Password', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },
   { kind: 'rating', title: 'Rating', category: 'input' },
