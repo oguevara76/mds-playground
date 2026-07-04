@@ -5,6 +5,7 @@ export type FormBlockKind =
   | 'togglebutton'
   | 'selectbutton'
   | 'inputtext'
+  | 'inputgroup'
   | 'inputnumber'
   | 'select'
   | 'cascadeselect'
@@ -55,6 +56,40 @@ export const FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS: {
   { label: 'Default', value: 'default' },
   { label: 'Float Label', value: 'floatlabel' },
   { label: 'IftaLabel', value: 'iftalabel' },
+];
+
+export interface FormInputGroupCityOption {
+  name: string;
+  code: string;
+}
+
+export type FormInputGroupExample =
+  | 'basic'
+  | 'multiple'
+  | 'button'
+  | 'checkbox-radio'
+  | 'select'
+  | 'file-upload';
+
+export const FORM_INPUTGROUP_EXAMPLE_OPTIONS: {
+  label: string;
+  value: FormInputGroupExample;
+}[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Multiple', value: 'multiple' },
+  { label: 'Button', value: 'button' },
+  { label: 'Checkbox & Radio', value: 'checkbox-radio' },
+  { label: 'Select', value: 'select' },
+  { label: 'File Upload', value: 'file-upload' },
+];
+
+/** Ciudades demo (InputGroup → Select, alineado con PrimeNG docs). */
+export const FORM_INPUTGROUP_CITY_OPTIONS: FormInputGroupCityOption[] = [
+  { name: 'New York', code: 'NY' },
+  { name: 'Rome', code: 'RM' },
+  { name: 'London', code: 'LDN' },
+  { name: 'Istanbul', code: 'IST' },
+  { name: 'Paris', code: 'PRS' },
 ];
 
 export const FORM_SELECT_DEMO_OPTIONS = [
@@ -444,6 +479,7 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'togglebutton', title: 'ToggleButton', category: 'choice' },
   { kind: 'selectbutton', title: 'SelectButton', category: 'choice' },
   { kind: 'inputtext', title: 'InputText', category: 'input' },
+  { kind: 'inputgroup', title: 'InputGroup', category: 'input' },
   { kind: 'inputnumber', title: 'InputNumber', category: 'input' },
   { kind: 'select', title: 'Select', category: 'input' },
   { kind: 'cascadeselect', title: 'CascadeSelect', category: 'input' },

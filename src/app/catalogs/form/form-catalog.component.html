@@ -3,6 +3,7 @@
     <div
       class="catalog-preview form-showcase"
       [class.inputtext-showcase]="isInputTextBlock(block)"
+      [class.inputgroup-showcase]="isInputGroupBlock(block)"
       [class.inputnumber-showcase]="isInputNumberBlock(block)"
       [class.password-showcase]="isPasswordBlock(block)"
       [class.inputotp-showcase]="isInputOtpBlock(block)"
@@ -1126,6 +1127,323 @@
                 </ng-container>
               </mds-catalog-preview-frame>
             }
+            @case ('inputgroup') {
+              <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                [showExpand]="true"
+                [expandAriaLabel]="'Expandir estados de ' + block.title"
+                [collapseAriaLabel]="'Contraer estados de ' + block.title"
+                configAriaLabel="Configurar InputGroup"
+              >
+                <div
+                  catalogPreviewDemo
+                  class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope inputgroup-interaction-scope"
+                  [ngClass]="inputgroupPreviewDemoClass()"
+                >
+                  @if (inputgroupIsDefault()) {
+                  @switch (inputgroupIx().example) {
+                    @case ('basic') {
+                      <div class="inputgroup-examples-pair" aria-label="InputGroup basic examples">
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>
+                            <i class="pi pi-user" aria-hidden="true"></i>
+                          </p-inputgroup-addon>
+                          <input
+                            pInputText
+                            placeholder="Username"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExBasicUsername"
+                            [fluid]="true"
+                          />
+                        </p-inputgroup>
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>$</p-inputgroup-addon>
+                          <p-inputnumber
+                            placeholder="Price"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExBasicPrice"
+                            [fluid]="true"
+                          />
+                          <p-inputgroup-addon>.00</p-inputgroup-addon>
+                        </p-inputgroup>
+                      </div>
+                    }
+                    @case ('multiple') {
+                      <div class="inputgroup-examples-pair" aria-label="InputGroup multiple examples">
+                        <p-inputgroup class="inputgroup-examples-wide" [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>
+                            <i class="pi pi-clock" aria-hidden="true"></i>
+                          </p-inputgroup-addon>
+                          <p-inputgroup-addon>
+                            <i class="pi pi-star-fill" aria-hidden="true"></i>
+                          </p-inputgroup-addon>
+                          <input
+                            pInputText
+                            placeholder="Price"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExMultiplePrice"
+                            [fluid]="true"
+                          />
+                          <p-inputgroup-addon>$</p-inputgroup-addon>
+                          <p-inputgroup-addon>.00</p-inputgroup-addon>
+                        </p-inputgroup>
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>
+                            <i class="pi pi-tags" aria-hidden="true"></i>
+                          </p-inputgroup-addon>
+                          <p-inputgroup-addon>
+                            <i class="pi pi-shopping-cart" aria-hidden="true"></i>
+                          </p-inputgroup-addon>
+                          <input
+                            pInputText
+                            placeholder="Tags"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExMultipleTags"
+                            [fluid]="true"
+                          />
+                        </p-inputgroup>
+                      </div>
+                    }
+                    @case ('button') {
+                      <div class="inputgroup-examples-pair" aria-label="InputGroup button examples">
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-button label="Search" />
+                          <input
+                            pInputText
+                            placeholder="Keyword"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExButtonKeyword"
+                            [fluid]="true"
+                          />
+                        </p-inputgroup>
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>
+                            <p-button icon="pi pi-check" severity="secondary" />
+                          </p-inputgroup-addon>
+                          <input
+                            pInputText
+                            placeholder="Vote"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExButtonVote"
+                            [fluid]="true"
+                          />
+                          <p-inputgroup-addon>
+                            <p-button icon="pi pi-times" severity="secondary" />
+                          </p-inputgroup-addon>
+                        </p-inputgroup>
+                      </div>
+                    }
+                    @case ('checkbox-radio') {
+                      <div class="inputgroup-examples-pair" aria-label="InputGroup checkbox and radio examples">
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <input
+                            pInputText
+                            placeholder="Price"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExCheckboxRadioPrice"
+                            [fluid]="true"
+                          />
+                          <p-inputgroup-addon>
+                            <p-radiobutton
+                              name="inputgroup-ex-rb1"
+                              value="rb1"
+                              [(ngModel)]="inputgroupExCheckboxRadioValue"
+                              [variant]="formThemePrimeVariant('radio')"
+                            />
+                          </p-inputgroup-addon>
+                        </p-inputgroup>
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>
+                            <p-checkbox
+                              [(ngModel)]="inputgroupExCheckboxChecked1"
+                              [binary]="true"
+                              [variant]="formThemePrimeVariant('checkbox')"
+                            />
+                          </p-inputgroup-addon>
+                          <input
+                            pInputText
+                            placeholder="Username"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExCheckboxUsername"
+                            [fluid]="true"
+                          />
+                        </p-inputgroup>
+                      </div>
+                    }
+                    @case ('select') {
+                      <div class="inputgroup-examples-pair" aria-label="InputGroup select examples">
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>
+                            <i class="pi pi-map" aria-hidden="true"></i>
+                          </p-inputgroup-addon>
+                          <p-select
+                            [(ngModel)]="inputgroupExSelectCity"
+                            [options]="inputgroupCityOptions"
+                            optionLabel="name"
+                            placeholder="Select a City"
+                            [variant]="inputgroupExampleSelectVariant()"
+                            [fluid]="true"
+                          />
+                        </p-inputgroup>
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>www</p-inputgroup-addon>
+                          <p-select
+                            [(ngModel)]="inputgroupExSelectWwwCity"
+                            [options]="inputgroupCityOptions"
+                            optionLabel="name"
+                            placeholder="Select a City"
+                            [variant]="inputgroupExampleSelectVariant()"
+                            [fluid]="true"
+                          />
+                        </p-inputgroup>
+                      </div>
+                    }
+                    @case ('file-upload') {
+                      <div class="inputgroup-examples-pair" aria-label="InputGroup file upload examples">
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-fileupload
+                            mode="basic"
+                            chooseLabel="Choose file"
+                            [customUpload]="true"
+                            (uploadHandler)="inputgroupFileUploadNoop($event)"
+                          />
+                          <p-button label="Upload" severity="secondary" />
+                        </p-inputgroup>
+                        <p-inputgroup [style]="inputgroupHostVars()">
+                          <p-inputgroup-addon>Browse</p-inputgroup-addon>
+                          <p-fileupload
+                            mode="basic"
+                            chooseLabel="Choose file"
+                            [customUpload]="true"
+                            (uploadHandler)="inputgroupFileUploadNoop($event)"
+                          />
+                        </p-inputgroup>
+                      </div>
+                    }
+                  }
+                  } @else if (inputgroupIsIftaLabel()) {
+                    <div class="form-input-interaction-control">
+                      <p-inputgroup [style]="inputgroupHostVars()">
+                        <p-inputgroup-addon>
+                          <i class="pi pi-shopping-cart" aria-hidden="true"></i>
+                        </p-inputgroup-addon>
+                        <span class="p-iftalabel" [style]="inputgroupFloatLabelHostVars()">
+                          <input
+                            pInputText
+                            id="ig-live"
+                            placeholder="Placeholder"
+                            [variant]="formThemePrimeVariant('inputgroup')"
+                            [ngModel]="inputgroupIx().value"
+                            (ngModelChange)="patchInputgroup({ value: $event })"
+                            [fluid]="true"
+                          />
+                          <label for="ig-live">Label</label>
+                        </span>
+                      </p-inputgroup>
+                    </div>
+                  } @else {
+                    <div class="form-input-interaction-control">
+                      <p-inputgroup [style]="inputgroupHostVars()">
+                        <p-inputgroup-addon>
+                          <i class="pi pi-user" aria-hidden="true"></i>
+                        </p-inputgroup-addon>
+                        <p-floatlabel
+                          [variant]="inputgroupFloatPosition()"
+                          [class.is-label-floated]="inputgroupInteractionLabelFloated()"
+                          [style]="inputgroupFloatLabelHostVars()"
+                        >
+                          <input
+                            pInputText
+                            id="ig-live"
+                            autocomplete="off"
+                            [attr.placeholder]="inputgroupInteractionPlaceholder()"
+                            [variant]="formThemePrimeVariant('inputgroup')"
+                            [ngModel]="inputgroupIx().value"
+                            (ngModelChange)="patchInputgroup({ value: $event })"
+                            (focus)="setInputgroupFloatIxFocused(true)"
+                            (blur)="setInputgroupFloatIxFocused(false)"
+                            [fluid]="true"
+                          />
+                          <label for="ig-live">Label</label>
+                        </p-floatlabel>
+                      </p-inputgroup>
+                    </div>
+                  }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Theme</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="themeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="formTheme('inputgroup')"
+                        (ngModelChange)="patchFormTheme('inputgroup', $event)"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Theme InputGroup"
+                      />
+                    </div>
+                  </div>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="inputtextVariantSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="inputgroupIx().variant"
+                        (ngModelChange)="patchInputgroup({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant InputGroup"
+                      />
+                    </div>
+                  </div>
+                  @if (inputgroupIsFloatLabel()) {
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">Float variant</span>
+                      <div class="button-config-select-wrap">
+                        <p-select
+                          [options]="inputtextFloatPositionSelectOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          [ngModel]="inputgroupIx().floatPosition"
+                          (ngModelChange)="patchInputgroup({ floatPosition: $event })"
+                          size="small"
+                          appendTo="body"
+                          ariaLabel="Float variant InputGroup"
+                        />
+                      </div>
+                    </div>
+                  }
+                  @if (inputgroupIsDefault()) {
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Example</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="inputgroupExampleSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="inputgroupIx().example"
+                        (ngModelChange)="patchInputgroup({ example: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Example InputGroup"
+                      />
+                    </div>
+                  </div>
+                  }
+                </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States (BASIC EXAMPLES)" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                </ng-container>
+              </mds-catalog-preview-frame>
+            }
             @case ('inputnumber') {
               <mds-catalog-preview-frame
                 class="btn-section catalog-preview-section"
@@ -2096,7 +2414,7 @@
                                 [style]="cascadeSelectHostVars('normal')"
                                 [placeholder]="inputStatePlaceholder"
                                 [invalid]="inputStateInvalid(st.key)"
-                                [disabled]="inputStateDisabled(st.key) || inputStateReadonly(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
                                 [fluid]="true"
                                 appendTo="body"
                                 tabindex="-1"
@@ -2129,6 +2447,7 @@
                                   [style]="cascadeSelectHostVars('normal')"
                                   [placeholder]="cascadeSelectFloatPlaceholderAttr(st.key) ?? ''"
                                   [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
                                   [fluid]="true"
                                   appendTo="body"
                                   tabindex="-1"
@@ -2163,6 +2482,7 @@
                                   [style]="cascadeSelectHostVars('normal')"
                                   [placeholder]="cascadeSelectFloatPlaceholderAttr(st.key) ?? ''"
                                   [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
                                   [fluid]="true"
                                   appendTo="body"
                                   tabindex="-1"
@@ -2365,6 +2685,120 @@
                                 />
                                 <label>Label</label>
                               </p-floatlabel>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="st.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isInputGroupBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (inputgroupIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label">Label</label>
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-inputgroup [style]="inputgroupHostVars()">
+                                <p-inputgroup-addon>
+                                  <i class="pi pi-user" aria-hidden="true"></i>
+                                </p-inputgroup-addon>
+                                @if (st.key === 'readonly') {
+                                  <input
+                                    pInputText
+                                    [variant]="formThemePrimeVariant('inputgroup')"
+                                    [placeholder]="inputStatePlaceholder"
+                                    [value]="inputStateReadonlyValue"
+                                    tabindex="-1"
+                                    [attr.aria-label]="st.caption"
+                                  />
+                                } @else {
+                                  <input
+                                    pInputText
+                                    [variant]="formThemePrimeVariant('inputgroup')"
+                                    [placeholder]="inputStatePlaceholder"
+                                    [ngModel]="inputStateValue(st.key, block)"
+                                    [invalid]="inputStateInvalid(st.key)"
+                                    [disabled]="inputStateDisabled(st.key)"
+                                    tabindex="-1"
+                                    [attr.aria-label]="st.caption"
+                                  />
+                                }
+                              </p-inputgroup>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else if (inputgroupIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-inputgroup [style]="inputgroupHostVars()">
+                                <p-inputgroup-addon>
+                                  <i class="pi pi-user" aria-hidden="true"></i>
+                                </p-inputgroup-addon>
+                                <span
+                                  class="p-iftalabel"
+                                  [class.is-label-invalid]="inputStateInvalid(st.key)"
+                                  [style]="inputgroupFloatLabelStatesHostVars()"
+                                >
+                                  <input
+                                    pInputText
+                                    [variant]="formThemePrimeVariant('inputgroup')"
+                                    [attr.placeholder]="inputgroupFloatPlaceholderAttr(st.key)"
+                                    [ngModel]="inputStateValue(st.key, block)"
+                                    [invalid]="inputStateInvalid(st.key)"
+                                    [disabled]="inputStateDisabled(st.key)"
+                                    tabindex="-1"
+                                    [attr.aria-label]="st.caption"
+                                  />
+                                  <label>Label</label>
+                                </span>
+                              </p-inputgroup>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-inputgroup [style]="inputgroupHostVars()">
+                                <p-inputgroup-addon>
+                                  <i class="pi pi-user" aria-hidden="true"></i>
+                                </p-inputgroup-addon>
+                                <p-floatlabel
+                                  [variant]="inputgroupFloatPosition()"
+                                  [class.is-label-floated]="inputgroupFloatStateLabelFloated(st.key)"
+                                  [style]="inputgroupFloatLabelStatesHostVars()"
+                                >
+                                  <input
+                                    pInputText
+                                    [variant]="formThemePrimeVariant('inputgroup')"
+                                    [attr.placeholder]="inputgroupFloatPlaceholderAttr(st.key)"
+                                    [ngModel]="inputStateValue(st.key, block)"
+                                    [invalid]="inputStateInvalid(st.key)"
+                                    [disabled]="inputStateDisabled(st.key)"
+                                    [readonly]="inputStateReadonly(st.key)"
+                                    [class.p-filled]="inputgroupFloatStateLabelFloated(st.key)"
+                                    tabindex="-1"
+                                    [attr.aria-label]="st.caption"
+                                  />
+                                  <label>Label</label>
+                                </p-floatlabel>
+                              </p-inputgroup>
                             </div>
                             @if (inputStateShowErrorMessage(block, st.key)) {
                               <small class="p-error">{{ inputStateErrorMessage }}</small>

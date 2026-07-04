@@ -289,6 +289,7 @@
 .chip-showcase .btn-variant-states-label,
 .badge-showcase .btn-variant-states-label,
 .avatar-showcase .btn-variant-states-label,
+.inputgroup-showcase .btn-variant-states-label,
 .avatargroup-showcase .btn-variant-states-label {
   color: var(--catalog-title-color, var(--p-content-color, var(--text-color)));
   font-weight: 700;

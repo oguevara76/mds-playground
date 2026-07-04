@@ -10,6 +10,10 @@ import { CascadeSelect } from 'primeng/cascadeselect';
 import { Checkbox } from 'primeng/checkbox';
 import { Divider } from 'primeng/divider';
 import { FloatLabel } from 'primeng/floatlabel';
+import { Button } from 'primeng/button';
+import { FileUpload, type FileUploadHandlerEvent } from 'primeng/fileupload';
+import { InputGroup } from 'primeng/inputgroup';
+import { InputGroupAddon } from 'primeng/inputgroupaddon';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputNumber } from 'primeng/inputnumber';
@@ -53,6 +57,10 @@ import {
   FORM_INPUT_OTP_STATE_READONLY_VALUE,
   FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS,
   FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS,
+  FORM_INPUTGROUP_CITY_OPTIONS,
+  FORM_INPUTGROUP_EXAMPLE_OPTIONS,
+  type FormInputGroupCityOption,
+  type FormInputGroupExample,
   FORM_RATING_DEMO_STATES,
   FORM_RATING_VALUE_SELECT_OPTIONS,
   FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS,
@@ -116,6 +124,13 @@ export interface FormInputNumberInteractionState {
   showHelperText: boolean;
   size: FormInteractionSize;
   value: number | null;
+}
+
+export interface FormInputGroupInteractionState {
+  variant: FormInputTextVariant;
+  floatPosition: FormInputFloatVariant;
+  example: FormInputGroupExample;
+  value: string;
 }
 
 export interface FormInputTextInteractionState {
@@ -244,6 +259,15 @@ function defaultInputNumberInteraction(): FormInputNumberInteractionState {
   };
 }
 
+function defaultInputGroupInteraction(): FormInputGroupInteractionState {
+  return {
+    variant: 'default',
+    floatPosition: 'over',
+    example: 'basic',
+    value: '',
+  };
+}
+
 function defaultInputTextInteraction(): FormInputTextInteractionState {
   return {
     variant: 'default',
@@ -301,11 +325,15 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
     CascadeSelect,
+    Button,
     Checkbox,
     Divider,
+    FileUpload,
     FloatLabel,
     FormsModule,
     IconField,
+    InputGroup,
+    InputGroupAddon,
     InputIcon,
     InputNumber,
     InputOtp,
@@ -349,6 +377,8 @@ export class FormCatalogComponent {
   readonly selectDemoGroupedOptions = FORM_SELECT_DEMO_GROUPED_OPTIONS;
   readonly selectOverlayOptionVariantOptions = FORM_SELECT_OVERLAY_OPTION_VARIANT_OPTIONS;
   readonly selectOverlayFilterPlaceholder = FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER;
+  readonly inputgroupCityOptions: FormInputGroupCityOption[] = FORM_INPUTGROUP_CITY_OPTIONS;
+  readonly inputgroupExampleSelectOptions = FORM_INPUTGROUP_EXAMPLE_OPTIONS;
   readonly inputtextVariantSelectOptions = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
   readonly inputtextFloatPositionSelectOptions = FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS;
   readonly textareaVariantSelectOptions = FORM_TEXTAREA_VARIANT_SELECT_OPTIONS;
@@ -365,6 +395,7 @@ export class FormCatalogComponent {
     togglebutton: 'outlined',
     selectbutton: 'outlined',
     inputtext: 'outlined',
+    inputgroup: 'outlined',
     inputnumber: 'outlined',
     select: 'outlined',
     cascadeselect: 'outlined',
@@ -384,6 +415,7 @@ export class FormCatalogComponent {
   readonly selectButtonLiveValue = signal<string | string[] | null>(null);
 
   readonly inputtextIx = signal<FormInputTextInteractionState>(defaultInputTextInteraction());
+  readonly inputgroupIx = signal<FormInputGroupInteractionState>(defaultInputGroupInteraction());
   readonly inputnumberIx = signal<FormInputNumberInteractionState>(defaultInputNumberInteraction());
   readonly selectIx = signal<FormSelectInteractionState>(defaultSelectInteraction());
   readonly cascadeSelectIx = signal<FormCascadeSelectInteractionState>(defaultCascadeSelectInteraction());
@@ -405,6 +437,7 @@ export class FormCatalogComponent {
 
   /** Float Label interactivo: placeholder solo mientras el campo tiene foco. */
   private readonly floatIxFocused = signal(false);
+  private readonly inputgroupFloatIxFocused = signal(false);
 
   private readonly choiceIxByKind = signal<Record<FormChoiceBlockKind, FormChoiceInteractionState>>({
     radio: defaultChoiceInteraction(),
@@ -427,8 +460,31 @@ export class FormCatalogComponent {
     return block.kind === 'textarea';
   }
 
+  /** Valores demo estáticos (Examples → PrimeNG InputGroup docs). */
+  inputgroupExBasicUsername = '';
+  inputgroupExBasicPrice: number | null = null;
+  inputgroupExBasicWebsite = '';
+  inputgroupExBasicCity: FormInputGroupCityOption | null = null;
+  inputgroupExMultiplePrice = '';
+  inputgroupExMultipleTags = '';
+  inputgroupExButtonKeyword = '';
+  inputgroupExButtonVote = '';
+  inputgroupExCheckboxRadioPrice = '';
+  inputgroupExCheckboxRadioValue = 'rb1';
+  inputgroupExCheckboxUsername = '';
+  inputgroupExCheckboxChecked1 = false;
+  inputgroupExCheckboxWebsite = '';
+  inputgroupExCheckboxChecked2 = false;
+  inputgroupExCheckboxCategory = 'rb2';
+  inputgroupExSelectCity: FormInputGroupCityOption | null = null;
+  inputgroupExSelectWwwCity: FormInputGroupCityOption | null = null;
+
   isInputTextBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputtext' } {
     return block.kind === 'inputtext';
+  }
+
+  isInputGroupBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputgroup' } {
+    return block.kind === 'inputgroup';
   }
 
   isInputNumberBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputnumber' } {
@@ -622,7 +678,144 @@ export class FormCatalogComponent {
   }
 
   showFormSizesSection(kind: FormBlockKind): boolean {
-    return kind !== 'toggleswitch' && kind !== 'rating' && kind !== 'inputtext';
+    return kind !== 'toggleswitch' && kind !== 'rating' && kind !== 'inputtext' && kind !== 'inputgroup';
+  }
+
+  patchInputgroup(patch: Partial<FormInputGroupInteractionState>): void {
+    this.inputgroupIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  inputgroupIsDefault(): boolean {
+    return this.inputgroupIx().variant === 'default';
+  }
+
+  inputgroupIsFloatLabel(): boolean {
+    return this.inputgroupIx().variant === 'floatlabel';
+  }
+
+  inputgroupIsIftaLabel(): boolean {
+    return this.inputgroupIx().variant === 'iftalabel';
+  }
+
+  inputgroupFloatPosition(): FormInputFloatVariant {
+    return this.inputgroupIx().floatPosition;
+  }
+
+  inputgroupIsFloatIn(): boolean {
+    return this.inputgroupIsFloatLabel() && this.inputgroupFloatPosition() === 'in';
+  }
+
+  inputgroupIsFloatOver(): boolean {
+    return this.inputgroupIsFloatLabel() && this.inputgroupFloatPosition() === 'over';
+  }
+
+  inputgroupIsFloatOn(): boolean {
+    return this.inputgroupIsFloatLabel() && this.inputgroupFloatPosition() === 'on';
+  }
+
+  inputgroupIsFloatOverOrOn(): boolean {
+    return this.inputgroupIsFloatOver() || this.inputgroupIsFloatOn();
+  }
+
+  inputgroupHostVars(): Record<string, string> {
+    return {
+      '--p-inputgroup-addon-background': 'var(--inputgroup-addon-background)',
+      '--p-inputgroup-addon-border-color': 'var(--inputgroup-addon-border-color)',
+      '--p-inputgroup-addon-border-radius': 'var(--inputgroup-addon-border-radius)',
+      '--p-inputgroup-addon-color': 'var(--inputgroup-addon-color)',
+      '--p-inputgroup-addon-min-width': 'var(--inputgroup-addon-min-width)',
+      '--p-inputgroup-addon-padding': 'var(--inputgroup-addon-padding)',
+      '--p-inputgroup-gap': 'var(--inputgroup-gap)',
+      '--p-inputtext-disabled-background': 'var(--inputtext-disabled-background)',
+      '--p-inputtext-disabled-color': 'var(--inputtext-disabled-color)',
+    };
+  }
+
+  inputgroupFloatLabelHostVars(): Record<string, string> {
+    const ix = this.inputgroupIx();
+    return this.floatLabelHostVarsForVariant(ix.variant, ix.floatPosition, 'normal', 'inputtext');
+  }
+
+  inputgroupFloatLabelStatesHostVars(): Record<string, string> {
+    const ix = this.inputgroupIx();
+    return this.floatLabelHostVarsForVariant(ix.variant, ix.floatPosition, 'normal', 'inputtext');
+  }
+
+  inputgroupFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    if (this.inputgroupFloatPosition() === 'in') {
+      return state === 'filled' || state === 'focus' || state === 'disabled';
+    }
+    if (this.inputgroupIsFloatOverOrOn() && state === 'disabled') {
+      return true;
+    }
+    return state === 'focus' || state === 'filled';
+  }
+
+  inputgroupFloatPlaceholderAttr(state: FormInputDemoState): string | null {
+    if (this.inputgroupIsIftaLabel()) {
+      if (state === 'filled') {
+        return null;
+      }
+      return this.inputStatePlaceholder;
+    }
+    if (this.inputgroupIsFloatOverOrOn() || this.inputgroupIsFloatIn()) {
+      return null;
+    }
+    if (state === 'empty' || state === 'filled') {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  inputgroupExampleInputVariant(): 'filled' | undefined {
+    return this.formThemePrimeVariant('inputgroup');
+  }
+
+  inputgroupExampleSelectVariant(): 'filled' | undefined {
+    return this.formThemePrimeVariant('inputgroup');
+  }
+
+  inputgroupFileUploadNoop(_event: FileUploadHandlerEvent): void {
+    // Showcase: sin envío HTTP en el playground.
+  }
+
+  setInputgroupFloatIxFocused(focused: boolean): void {
+    if (!this.inputgroupIsFloatLabel()) {
+      return;
+    }
+    this.inputgroupFloatIxFocused.set(focused);
+  }
+
+  inputgroupInteractionLabelFloated(): boolean {
+    if (this.inputgroupIsFloatIn()) {
+      return true;
+    }
+    if (!this.inputgroupIsFloatLabel()) {
+      return false;
+    }
+    return !!this.inputgroupIx().value || this.inputgroupFloatIxFocused();
+  }
+
+  inputgroupInteractionPlaceholder(): string | null {
+    if (this.inputgroupIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    if (!this.inputgroupFloatIxFocused()) {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  inputgroupPreviewDemoClass(): Record<string, boolean> {
+    const ix = this.inputgroupIx();
+    return {
+      ...this.formThemeContainerClass('inputgroup'),
+      'form-input-interaction--stacked': ix.variant === 'floatlabel' || ix.variant === 'iftalabel',
+      'floatlabel-variant-over': ix.variant === 'floatlabel' && ix.floatPosition === 'over',
+      'floatlabel-variant-on': ix.variant === 'floatlabel' && ix.floatPosition === 'on',
+      'floatlabel-variant-in': ix.variant === 'floatlabel' && ix.floatPosition === 'in',
+      'iftalabel-variant': ix.variant === 'iftalabel',
+    };
   }
 
   inputtextIsDefault(): boolean {
@@ -1062,19 +1255,20 @@ export class FormCatalogComponent {
 
   cascadeSelectFloatStateLabelFloated(state: FormInputDemoState): boolean {
     if (this.cascadeSelectFloatPosition() === 'in') {
-      return state !== 'empty';
+      return state === 'filled' || state === 'focus' || state === 'disabled';
     }
     if (this.cascadeSelectIsFloatOverOrOn() && state === 'disabled') {
       return true;
     }
-    return state === 'filled' || state === 'disabled' || state === 'readonly';
+    return state === 'focus' || state === 'filled';
   }
 
+  /** Sizes: Over/On elevan label; In siempre arriba (igual que Select, Textarea, Password). */
   cascadeSelectFloatSizeLabelFloated(): boolean {
     if (!this.cascadeSelectIsFloatLabel()) {
       return false;
     }
-    return this.cascadeSelectFloatPosition() !== 'in';
+    return true;
   }
 
   setCascadeSelectFloatIxFocused(focused: boolean): void {
@@ -2177,6 +2371,9 @@ export class FormCatalogComponent {
     if (this.isInputTextBlock(block)) {
       return this.inputtextIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
+    if (this.isInputGroupBlock(block)) {
+      return this.inputgroupIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
+    }
     if (this.isPasswordBlock(block)) {
       return this.passwordIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
@@ -2222,7 +2419,8 @@ export class FormCatalogComponent {
       (this.isSelectBlock(block) && this.selectIsDefault()) ||
       (this.isCascadeSelectBlock(block) && this.cascadeSelectIsDefault()) ||
       (this.isTextareaBlock(block) && this.textareaIsDefault()) ||
-      (this.isInputTextBlock(block) && this.inputtextIsDefault());
+      (this.isInputTextBlock(block) && this.inputtextIsDefault()) ||
+      (this.isInputGroupBlock(block) && this.inputgroupIsDefault());
     if (isDefaultField) {
       return (
         state === 'normal' ||
@@ -2250,11 +2448,23 @@ export class FormCatalogComponent {
         state === 'disabled'
       );
     }
-    if (this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isSelectBlock(block) || this.isCascadeSelectBlock(block)) {
+    if (
+      this.isTextareaBlock(block) ||
+      this.isInputTextBlock(block) ||
+      this.isInputGroupBlock(block) ||
+      this.isSelectBlock(block) ||
+      this.isCascadeSelectBlock(block)
+    ) {
       if (this.isInputTextBlock(block) && this.inputtextIsFloatOverOrOn() && (state === 'disabled' || state === 'focus')) {
         return false;
       }
       if (this.isInputTextBlock(block) && this.inputtextIsFloatIn() && (state === 'disabled' || state === 'focus')) {
+        return false;
+      }
+      if (this.isInputGroupBlock(block) && this.inputgroupIsFloatOverOrOn() && (state === 'disabled' || state === 'focus')) {
+        return false;
+      }
+      if (this.isInputGroupBlock(block) && this.inputgroupIsFloatIn() && (state === 'disabled' || state === 'focus')) {
         return false;
       }
       return state === 'hover' || state === 'focus' || state === 'invalid' || state === 'disabled';
@@ -2299,7 +2509,15 @@ export class FormCatalogComponent {
     if (state !== 'invalid') {
       return false;
     }
-    return this.isTextareaBlock(block) || this.isInputTextBlock(block) || this.isSelectBlock(block) || this.isPasswordBlock(block) || this.isInputOtpBlock(block) || this.isInputNumberBlock(block);
+    return (
+      this.isTextareaBlock(block) ||
+      this.isInputTextBlock(block) ||
+      this.isInputGroupBlock(block) ||
+      this.isSelectBlock(block) ||
+      this.isPasswordBlock(block) ||
+      this.isInputOtpBlock(block) ||
+      this.isInputNumberBlock(block)
+    );
   }
 
   inputStateShowHint(block: FormBlockConfig, state: FormInputDemoState): boolean {
@@ -2335,6 +2553,18 @@ export class FormCatalogComponent {
       return FORM_INPUT_STATE_FILLED_VALUE;
     }
     if (this.isInputTextBlock(block) && !this.inputtextIsDefault()) {
+      return '';
+    }
+    if (this.isInputGroupBlock(block) && !this.inputgroupIsDefault() && state === 'filled') {
+      return FORM_INPUT_STATE_FILLED_VALUE;
+    }
+    if (this.isInputGroupBlock(block) && this.inputgroupIsFloatOverOrOn() && (state === 'disabled' || state === 'focus')) {
+      return FORM_INPUT_STATE_FILLED_VALUE;
+    }
+    if (this.isInputGroupBlock(block) && this.inputgroupIsFloatIn() && (state === 'disabled' || state === 'focus')) {
+      return FORM_INPUT_STATE_FILLED_VALUE;
+    }
+    if (this.isInputGroupBlock(block) && !this.inputgroupIsDefault()) {
       return '';
     }
     if (this.isInputOtpBlock(block)) {

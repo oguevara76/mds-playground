@@ -24,6 +24,8 @@ CATALOG_HINTS: dict[str, str] = {
     "toggleswitch": "form",
     "togglebutton": "form",
     "inputtext": "form",
+    "inputgroup": "form",
+    "inputgroupaddon": "form",
     "inputotp": "form",
     "rating": "form",
     "textarea": "form",

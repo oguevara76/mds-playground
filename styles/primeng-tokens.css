@@ -611,6 +611,7 @@ html[data-theme="light"] {
   --p-inputgroup-addon-color:         var(--inputgroup-addon-color, var(--form-field-icon-color));
   --p-inputgroup-addon-min-width:     var(--inputgroup-addon-min-width, var(--dimension-scale-x32));
   --p-inputgroup-addon-padding:       var(--inputgroup-addon-padding, var(--dimension-scale-x8));
+  --p-inputgroup-gap:                 var(--inputgroup-gap, -1px);
 
   /* InputNumber — PrimeNG 20 dt('inputnumber.*') */
   --p-inputnumber-button-active-background:       var(--inputnumber-button-active-background, var(--surface-context-base));
@@ -1633,8 +1634,14 @@ html[data-theme="dark"] {
           --p-cascadeselect-overlay-border-radius:                 var(--cascadeselect-overlay-border-radius, var(--overlay-select-border-radius, var(--p-border-radius)));
           --p-cascadeselect-overlay-shadow:                        var(--cascadeselect-overlay-shadow, var(--overlay-select-shadow, var(--popover-shadow)));
           --p-cascadeselect-option-focus-background:               var(--cascadeselect-option-focus-background, var(--list-option-focus-background, var(--p-surface-800)));
+          --p-cascadeselect-option-color:                          var(--cascadeselect-option-color, var(--list-option-color, var(--p-content-color)));
+          --p-cascadeselect-option-focus-color:                    var(--cascadeselect-option-focus-color, var(--list-option-focus-color, var(--p-content-color)));
+          --p-cascadeselect-option-icon-color:                     var(--cascadeselect-option-icon-color, var(--list-option-icon-color, var(--p-surface-500)));
+          --p-cascadeselect-option-icon-focus-color:               var(--cascadeselect-option-icon-focus-color, var(--list-option-icon-focus-color, var(--p-surface-400)));
           --p-cascadeselect-option-selected-background:            var(--cascadeselect-option-selected-background, var(--list-option-selected-background, color-mix(in srgb, var(--p-primary-color) 18%, transparent)));
+          --p-cascadeselect-option-selected-color:                 var(--cascadeselect-option-selected-color, var(--list-option-selected-color, var(--p-primary-color)));
           --p-cascadeselect-option-selected-focus-background:      var(--cascadeselect-option-selected-focus-background, var(--list-option-selected-focus-background, color-mix(in srgb, var(--p-primary-color) 24%, transparent)));
+          --p-cascadeselect-option-selected-focus-color:           var(--cascadeselect-option-selected-focus-color, var(--list-option-selected-focus-color, var(--p-primary-color)));
           --p-transition-duration: 180ms;
           --p-focus-ring-width:  2px;
           --p-focus-ring-style:  solid;
@@ -2233,6 +2240,7 @@ html[data-theme="dark"] {
         --p-inputgroup-addon-color:         var(--inputgroup-addon-color, var(--form-field-icon-color));
         --p-inputgroup-addon-min-width:     var(--inputgroup-addon-min-width, var(--dimension-scale-x32));
         --p-inputgroup-addon-padding:       var(--inputgroup-addon-padding, var(--dimension-scale-x8));
+        --p-inputgroup-gap:                 var(--inputgroup-gap, -1px);
         --p-inputnumber-button-active-background:       var(--inputnumber-button-active-background, var(--surface-context-base));
         --p-inputnumber-button-active-border-color:     var(--inputnumber-button-active-border-color, var(--form-field-border-color));
         --p-inputnumber-button-active-color:            var(--inputnumber-button-active-color, var(--surface-context-strong));

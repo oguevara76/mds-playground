@@ -3001,6 +3001,28 @@
   font-size: var(--cascadeselect-lg-font-size, var(--form-field-lg-font-size));
 }
 
+:host ::ng-deep .cascadeselect-showcase .is-static-preview .p-cascadeselect {
+  pointer-events: none;
+  cursor: default;
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-cascadeselect.p-disabled {
+  background: var(--p-cascadeselect-disabled-background, var(--cascadeselect-disabled-background));
+  color: var(--p-cascadeselect-disabled-color, var(--cascadeselect-disabled-color));
+  opacity: 1;
+}
+
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-cascadeselect.p-disabled .p-cascadeselect-label {
+  color: var(--p-cascadeselect-disabled-color, var(--cascadeselect-disabled-color));
+}
+
+:host ::ng-deep .form-theme-filled .cascadeselect-showcase .catalog-input-states-row .p-cascadeselect.p-variant-filled:not(.p-disabled) {
+  background: var(
+    --p-cascadeselect-filled-background,
+    var(--cascadeselect-filled-background, var(--form-field-filled-background))
+  );
+}
+
 :host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-cascadeselect:not(.p-disabled),
 :host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-cascadeselect:not(.p-disabled) {
   border-color: var(--p-cascadeselect-hover-border-color, var(--cascadeselect-hover-border-color));
@@ -3023,4 +3045,168 @@
 :host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel.is-label-floated:has(.p-invalid) label,
 :host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-iftalabel.is-label-invalid label {
   color: var(--p-floatlabel-active-color, var(--p-floatlabel-color));
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--p-inputgroup-addon-background, var(--inputgroup-addon-background, var(--form-field-background)));
+  color: var(--p-inputgroup-addon-color, var(--inputgroup-addon-color, var(--form-field-icon-color)));
+  padding: var(--p-inputgroup-addon-padding, var(--inputgroup-addon-padding, var(--dimension-scale-x8)));
+  min-width: var(--p-inputgroup-addon-min-width, var(--inputgroup-addon-min-width, var(--dimension-scale-x32)));
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button) {
+  padding: 0;
+  overflow: hidden;
+  min-width: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button) .p-button {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-width: var(--p-inputgroup-addon-min-width, var(--inputgroup-addon-min-width, var(--dimension-scale-x32)));
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > * + * {
+  margin-inline-start: var(--p-inputgroup-gap, var(--inputgroup-gap, -1px));
+}
+
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo] {
+  width: 100%;
+  max-width: 640px;
+}
+
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo].catalog-input-interactive {
+  max-width: 640px;
+}
+
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .p-field,
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .form-input-interaction-control {
+  width: 100%;
+}
+
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .p-inputgroup,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-inputtext,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-inputnumber-input,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.inputgroup-showcase .inputgroup-examples-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--dimension-scale-x16, 1rem);
+  align-items: start;
+  width: 100%;
+}
+
+.form-showcase.inputgroup-showcase .catalog-input-states-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 280px));
+  row-gap: var(--dimension-scale-x20, 1.25rem);
+  column-gap: 40px;
+  justify-content: start;
+  align-items: flex-end;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.form-showcase.inputgroup-showcase .catalog-input-states-row .catalog-input-state.catalog-button-state {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.form-showcase.inputgroup-showcase .catalog-input-states-row .catalog-button-state-preview {
+  width: 100%;
+  margin-inline: 0;
+}
+
+.form-showcase.inputgroup-showcase .catalog-input-states-row .catalog-input-interactive,
+.form-showcase.inputgroup-showcase .catalog-input-states-row .p-field {
+  width: 100%;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup {
+  width: 100%;
+  min-width: 0;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-inputtext,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iconfield,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-floatlabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iftalabel {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-inputtext:disabled {
+  background: var(
+    --p-inputtext-disabled-background,
+    var(--inputtext-disabled-background, var(--form-field-disabled-background))
+  );
+  color: var(
+    --p-inputtext-disabled-color,
+    var(--inputtext-disabled-color, var(--form-field-disabled-color))
+  );
+  opacity: 1;
+}
+
+:host ::ng-deep
+  .inputgroup-showcase
+  .form-theme-filled
+  .catalog-input-states-row
+  .p-inputgroup
+  .p-inputtext.p-variant-filled:disabled {
+  background: var(
+    --p-inputtext-disabled-background,
+    var(--inputtext-disabled-background, var(--form-field-disabled-background))
+  );
+}
+
+.inputgroup-showcase .inputgroup-examples-wide {
+  width: 100%;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup,
+:host ::ng-deep .inputgroup-showcase .catalog-showcase-interactive .p-inputgroup {
+  width: 100%;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-inputtext,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-select,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-fileupload {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .inputgroup-showcase .inputgroup-examples-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .inputgroup-showcase .catalog-input-states-row {
+    grid-template-columns: repeat(2, minmax(240px, 280px));
+  }
+}
+
+@media (max-width: 480px) {
+  .inputgroup-showcase .catalog-input-states-row {
+    grid-template-columns: 1fr;
+  }
 }

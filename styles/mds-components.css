@@ -942,6 +942,7 @@ html:root {
   --inputgroup-addon-color: var(--form-field-icon-color);
   --inputgroup-addon-min-width: var(--dimension-scale-x32);
   --inputgroup-addon-padding: var(--dimension-scale-x8);
+  --inputgroup-gap: -1px;
   --inputnumber-button-active-background: var(--surface-context-base);
   --inputnumber-button-active-border-color: var(--form-field-border-color);
   --inputnumber-button-active-color: var(--surface-context-strong);

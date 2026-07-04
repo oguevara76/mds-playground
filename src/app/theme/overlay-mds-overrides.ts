@@ -309,4 +309,93 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
     var(--p-select-empty-message-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
   ) !important;
 }
+
+/* p-cascadeselect overlay (appendTo="body") — tokens MDS en dark + paneles anidados */
+.p-cascadeselect-overlay {
+  background: var(--cascadeselect-overlay-background, var(--p-cascadeselect-overlay-background)) !important;
+  border: 1px solid var(--cascadeselect-overlay-border-color, var(--p-cascadeselect-overlay-border-color)) !important;
+  color: var(--cascadeselect-overlay-color, var(--p-cascadeselect-overlay-color)) !important;
+  border-radius: var(--cascadeselect-overlay-border-radius, var(--p-cascadeselect-overlay-border-radius)) !important;
+  box-shadow: var(--cascadeselect-overlay-shadow, var(--p-cascadeselect-overlay-shadow)) !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-list {
+  padding: var(--list-padding, var(--p-cascadeselect-list-padding, var(--dimension-scale-x4, 4px))) !important;
+  gap: var(--cascadeselect-list-gap, var(--list-gap, var(--p-cascadeselect-list-gap, var(--dimension-scale-x2, 2px)))) !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-option {
+  color: var(--cascadeselect-option-color, var(--p-cascadeselect-option-color)) !important;
+  border-radius: var(
+    --cascadeselect-option-border-radius,
+    var(--p-cascadeselect-option-border-radius, var(--list-option-border-radius))
+  ) !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-option-content {
+  padding: var(
+    --list-option-padding,
+    var(--p-cascadeselect-option-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
+  ) !important;
+  border-radius: inherit !important;
+  color: inherit !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-option-text {
+  line-height: 1.25 !important;
+  color: inherit !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-group-icon {
+  color: var(--cascadeselect-option-icon-color, var(--p-cascadeselect-option-icon-color)) !important;
+}
+
+.p-cascadeselect-overlay
+  .p-cascadeselect-option:not(.p-cascadeselect-option-selected):not(.p-disabled).p-focus
+  > .p-cascadeselect-option-content,
+.p-cascadeselect-overlay
+  .p-cascadeselect-option:not(.p-cascadeselect-option-selected):not(.p-disabled):focus-visible
+  > .p-cascadeselect-option-content {
+  background: var(--cascadeselect-option-focus-background, var(--p-cascadeselect-option-focus-background)) !important;
+  color: var(--cascadeselect-option-focus-color, var(--p-cascadeselect-option-focus-color)) !important;
+}
+
+.p-cascadeselect-overlay
+  .p-cascadeselect-option:not(.p-cascadeselect-option-selected):not(.p-disabled).p-focus
+  .p-cascadeselect-group-icon,
+.p-cascadeselect-overlay
+  .p-cascadeselect-option:not(.p-cascadeselect-option-selected):not(.p-disabled):focus-visible
+  .p-cascadeselect-group-icon {
+  color: var(--cascadeselect-option-icon-focus-color, var(--p-cascadeselect-option-icon-focus-color)) !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-option-active:not(.p-cascadeselect-option-selected):not(.p-disabled) > .p-cascadeselect-option-content,
+.p-cascadeselect-overlay .p-cascadeselect-option:not(.p-cascadeselect-option-selected):not(.p-disabled):hover > .p-cascadeselect-option-content {
+  background: var(--cascadeselect-option-focus-background, var(--p-cascadeselect-option-focus-background)) !important;
+  color: var(--cascadeselect-option-focus-color, var(--p-cascadeselect-option-focus-color)) !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-option-active:not(.p-cascadeselect-option-selected):not(.p-disabled) .p-cascadeselect-group-icon,
+.p-cascadeselect-overlay .p-cascadeselect-option:not(.p-cascadeselect-option-selected):not(.p-disabled):hover .p-cascadeselect-group-icon {
+  color: var(--cascadeselect-option-icon-focus-color, var(--p-cascadeselect-option-icon-focus-color)) !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-option-selected > .p-cascadeselect-option-content,
+.p-cascadeselect-overlay .p-cascadeselect-option-selected.p-focus > .p-cascadeselect-option-content,
+.p-cascadeselect-overlay .p-cascadeselect-option-selected:focus-visible > .p-cascadeselect-option-content {
+  background: var(--cascadeselect-option-selected-background, var(--p-cascadeselect-option-selected-background)) !important;
+  color: var(--cascadeselect-option-selected-color, var(--p-cascadeselect-option-selected-color)) !important;
+}
+
+.p-cascadeselect-overlay .p-cascadeselect-option-selected.p-focus > .p-cascadeselect-option-content,
+.p-cascadeselect-overlay .p-cascadeselect-option-selected:hover > .p-cascadeselect-option-content {
+  background: var(
+    --cascadeselect-option-selected-focus-background,
+    var(--p-cascadeselect-option-selected-focus-background)
+  ) !important;
+  color: var(
+    --cascadeselect-option-selected-focus-color,
+    var(--p-cascadeselect-option-selected-focus-color)
+  ) !important;
+}
 `;

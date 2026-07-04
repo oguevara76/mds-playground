@@ -1,0 +1,209 @@
+/* Paridad PrimeNG InputGroup — gap MDS + border-radius en extremos conectados.
+   Tokens: --inputgroup-gap (-1px), addon vs inputtext/select en caps izq/der. */
+
+.p-inputgroup > * + * {
+  margin-inline-start: var(--p-inputgroup-gap, var(--inputgroup-gap, -1px)) !important;
+}
+
+.p-inputgroupaddon {
+  border-block-start: 1px solid var(
+    --p-inputgroup-addon-border-color,
+    var(--inputgroup-addon-border-color, var(--form-field-border-color))
+  );
+  border-block-end: 1px solid var(
+    --p-inputgroup-addon-border-color,
+    var(--inputgroup-addon-border-color, var(--form-field-border-color))
+  );
+  border-inline-start: 1px solid var(
+    --p-inputgroup-addon-border-color,
+    var(--inputgroup-addon-border-color, var(--form-field-border-color))
+  );
+  border-inline-end: 1px solid var(
+    --p-inputgroup-addon-border-color,
+    var(--inputgroup-addon-border-color, var(--form-field-border-color))
+  );
+}
+
+.p-inputgroupaddon:has(.p-button) {
+  padding: 0;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.p-inputgroupaddon:has(.p-button) .p-button {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-width: var(--p-inputgroup-addon-min-width, var(--inputgroup-addon-min-width, var(--dimension-scale-x32)));
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Segmentos internos: sin radio (PrimeNG + refuerzo MDS) */
+.p-inputgroup > .p-inputgroupaddon,
+.p-inputgroup > .p-component,
+.p-inputgroup > .p-inputwrapper > .p-component,
+.p-inputgroup > .p-iconfield > .p-component,
+.p-inputgroup > .p-floatlabel > .p-component,
+.p-inputgroup > .p-floatlabel > .p-inputwrapper > .p-component,
+.p-inputgroup > .p-iftalabel > .p-component,
+.p-inputgroup > .p-iftalabel > .p-inputwrapper > .p-component {
+  border-radius: 0;
+}
+
+/* ── Extremo izquierdo: addon ── */
+.p-inputgroup > .p-inputgroupaddon:first-child {
+  border-start-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+/* ── Extremo derecho: addon ── */
+.p-inputgroup > .p-inputgroupaddon:last-child {
+  border-start-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+/* ── Extremo izquierdo: InputText / InputNumber (sin addon a la izquierda) ── */
+.p-inputgroup > .p-inputtext:first-child,
+.p-inputgroup > .p-inputnumber:first-child,
+.p-inputgroup > .p-inputwrapper:first-child > .p-inputnumber,
+.p-inputgroup > .p-iconfield:first-child > .p-inputtext,
+.p-inputgroup > .p-floatlabel:first-child > .p-inputtext,
+.p-inputgroup > .p-floatlabel:first-child > .p-inputwrapper > .p-inputtext,
+.p-inputgroup > .p-iftalabel:first-child > .p-inputtext,
+.p-inputgroup > .p-iftalabel:first-child > .p-inputwrapper > .p-inputtext {
+  border-start-start-radius: var(
+    --p-inputtext-border-radius,
+    var(--inputtext-border-radius, var(--form-field-border-radius))
+  );
+  border-end-start-radius: var(
+    --p-inputtext-border-radius,
+    var(--inputtext-border-radius, var(--form-field-border-radius))
+  );
+}
+
+/* ── Extremo derecho: InputText / InputNumber ── */
+.p-inputgroup > .p-inputtext:last-child,
+.p-inputgroup > .p-inputnumber:last-child,
+.p-inputgroup > .p-inputwrapper:last-child > .p-inputnumber,
+.p-inputgroup > .p-iconfield:last-child > .p-inputtext,
+.p-inputgroup > .p-floatlabel:last-child > .p-inputtext,
+.p-inputgroup > .p-floatlabel:last-child > .p-inputwrapper > .p-inputtext,
+.p-inputgroup > .p-iftalabel:last-child > .p-inputtext,
+.p-inputgroup > .p-iftalabel:last-child > .p-inputwrapper > .p-inputtext {
+  border-start-end-radius: var(
+    --p-inputtext-border-radius,
+    var(--inputtext-border-radius, var(--form-field-border-radius))
+  );
+  border-end-end-radius: var(
+    --p-inputtext-border-radius,
+    var(--inputtext-border-radius, var(--form-field-border-radius))
+  );
+}
+
+/* ── Extremo izquierdo: Select ── */
+.p-inputgroup > .p-select:first-child,
+.p-inputgroup > .p-inputwrapper:first-child > .p-select {
+  border-start-start-radius: var(
+    --p-select-border-radius,
+    var(--select-border-radius, var(--form-field-border-radius))
+  );
+  border-end-start-radius: var(
+    --p-select-border-radius,
+    var(--select-border-radius, var(--form-field-border-radius))
+  );
+}
+
+/* ── Extremo derecho: Select ── */
+.p-inputgroup > .p-select:last-child,
+.p-inputgroup > .p-inputwrapper:last-child > .p-select {
+  border-start-end-radius: var(
+    --p-select-border-radius,
+    var(--select-border-radius, var(--form-field-border-radius))
+  );
+  border-end-end-radius: var(
+    --p-select-border-radius,
+    var(--select-border-radius, var(--form-field-border-radius))
+  );
+}
+
+/* ── Botones en extremos (Search, Vote, Upload…) ── */
+.p-inputgroup:has(> p-button:first-child) > p-button:first-child .p-button {
+  border-start-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+.p-inputgroup:has(> p-button:last-child) > p-button:last-child .p-button {
+  border-start-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+.p-inputgroup > .p-inputgroupaddon:first-child .p-button,
+.p-inputgroup > .p-inputgroupaddon:last-child .p-button {
+  border-radius: 0;
+}
+
+.p-inputgroup > .p-inputgroupaddon:first-child .p-button {
+  border-start-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+.p-inputgroup > .p-inputgroupaddon:last-child .p-button {
+  border-start-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+/* Input central: bordes laterales visibles sobre el solape -1px con addons */
+.p-inputgroup > .p-inputtext:not(:first-child):not(:last-child),
+.p-inputgroup > .p-inputnumber:not(:first-child):not(:last-child),
+.p-inputgroup > .p-inputwrapper:not(:first-child):not(:last-child) > .p-inputnumber,
+.p-inputgroup > .p-select:not(:first-child):not(:last-child),
+.p-inputgroup > .p-inputwrapper:not(:first-child):not(:last-child) > .p-select {
+  border-inline-start: 1px solid var(
+    --p-inputtext-border-color,
+    var(--inputtext-border-color, var(--form-field-border-color))
+  );
+  border-inline-end: 1px solid var(
+    --p-inputtext-border-color,
+    var(--inputtext-border-color, var(--form-field-border-color))
+  );
+  position: relative;
+  z-index: 1;
+}
