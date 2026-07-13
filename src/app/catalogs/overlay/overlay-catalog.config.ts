@@ -69,6 +69,12 @@ export const OVERLAY_CATALOG_DRAWER_HEADER = 'Panel lateral';
 export const OVERLAY_CATALOG_DRAWER_CONTENT =
   'Contenido del drawer con acciones secundarias y texto de apoyo para validar padding, tipografía y contraste del overlay.';
 
+export const OVERLAY_CATALOG_DIALOG_HEADER = 'Título del diálogo';
+export const OVERLAY_CATALOG_DIALOG_CONTENT =
+  'Contenido del diálogo con texto de apoyo para validar tipografía, colores y espaciado del overlay modal.';
+export const OVERLAY_CATALOG_DIALOG_OPEN_LABEL = 'Abrir diálogo';
+export const OVERLAY_CATALOG_DIALOG_OPEN_ICON = 'pi pi-external-link';
+
 export const OVERLAY_CATALOG_TOOLTIP_POSITIONS: TooltipPositionDemo[] = [
   {
     key: 'top',

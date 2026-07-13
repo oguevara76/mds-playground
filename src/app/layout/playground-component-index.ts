@@ -71,6 +71,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-tabs': 'tabs',
   'pg-breadcrumb': 'breadcrumb',
   'pg-tooltip': 'tooltip',
+  'pg-dialog': 'dialog',
   'pg-drawer': 'drawer',
   'pg-tag': 'tag',
   'pg-chip': 'chip',
@@ -188,6 +189,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Overlay',
       keywords: ['p-tooltip', 'hint'],
       variantCount: OVERLAY_CATALOG_TOOLTIP_POSITIONS.length,
+    },
+    {
+      id: 'pg-dialog',
+      name: 'Dialog',
+      route: 'overlay',
+      sectionLabel: 'Overlay',
+      keywords: ['p-dialog', 'modal', 'overlay', 'diálogo'],
+      variantCount: 1,
     },
     {
       id: 'pg-drawer',

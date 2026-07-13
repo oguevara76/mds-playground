@@ -1187,13 +1187,19 @@ html[data-theme="light"] {
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Dialog
      ═══════════════════════════════════════════════════════════════════ */
+  --p-dialog-background:           var(--dialog-background, var(--overlay-modal-background));
+  --p-dialog-border-color:         var(--dialog-border-color, var(--overlay-modal-border-color));
   --p-dialog-border-radius:        var(--dialog-border-radius, var(--overlay-modal-border-radius, var(--p-border-radius-xl)));
+  --p-dialog-color:                var(--dialog-color, var(--overlay-modal-color));
+  --p-dialog-shadow:               var(--dialog-shadow, 0px 8px 10px -6px rgba(0, 0, 0, 0.1), 0px 20px 25px -5px rgba(0, 0, 0, 0.1));
   --p-dialog-header-padding:       var(--dialog-header-padding, var(--overlay-modal-padding, 20px));
   --p-dialog-header-gap:           var(--dialog-header-gap, var(--dimension-spacing-x8, 8px));
   --p-dialog-content-padding:      var(--overlay-modal-padding, 20px);
   --p-dialog-footer-padding-x:     var(--overlay-modal-padding, 20px);
   --p-dialog-footer-padding-y:     var(--dimension-spacing-x12, 12px);
   --p-dialog-footer-gap:           var(--dialog-footer-gap, var(--dimension-spacing-x8, 8px));
+  --p-dialog-title-font-size:      var(--dialog-title-font-size, 18px);
+  --p-dialog-title-font-weight:    var(--dialog-title-font-weight, 600);
 
   /* ═══════════════════════════════════════════════════════════════════
      COMPONENT TOKENS — Drawer
@@ -2149,13 +2155,19 @@ html[data-theme="dark"] {
           --p-paginator-nav-button-focus-ring-shadow:     var(--paginator-nav-button-focus-ring-shadow, none);
           --p-paginator-current-page-report-color:        var(--paginator-current-page-report-color, var(--p-surface-500));
           --p-paginator-jump-to-page-input-max-width:     var(--paginator-jump-to-page-input-max-width, 32px);
+          --p-dialog-background:           var(--dialog-background, var(--overlay-modal-background));
+          --p-dialog-border-color:         var(--dialog-border-color, var(--overlay-modal-border-color));
           --p-dialog-border-radius:        var(--dialog-border-radius, var(--overlay-modal-border-radius, var(--p-border-radius-xl)));
+          --p-dialog-color:                var(--dialog-color, var(--overlay-modal-color));
+          --p-dialog-shadow:               var(--dialog-shadow, 0px 8px 10px -6px rgba(0, 0, 0, 0.1), 0px 20px 25px -5px rgba(0, 0, 0, 0.1));
           --p-dialog-header-padding:       var(--dialog-header-padding, var(--overlay-modal-padding, 20px));
           --p-dialog-header-gap:           var(--dialog-header-gap, var(--dimension-spacing-x8, 8px));
           --p-dialog-content-padding:      var(--overlay-modal-padding, 20px);
           --p-dialog-footer-padding-x:     var(--overlay-modal-padding, 20px);
           --p-dialog-footer-padding-y:     var(--dimension-spacing-x12, 12px);
           --p-dialog-footer-gap:           var(--dialog-footer-gap, var(--dimension-spacing-x8, 8px));
+          --p-dialog-title-font-size:      var(--dialog-title-font-size, 18px);
+          --p-dialog-title-font-weight:    var(--dialog-title-font-weight, 600);
           --p-drawer-background:           var(--drawer-background, var(--overlay-modal-background, var(--p-content-bg)));
           --p-drawer-border-color:         var(--drawer-border-color, var(--overlay-modal-border-color, var(--p-content-border)));
           --p-drawer-border-radius:        var(--drawer-border-radius, var(--overlay-modal-border-radius, var(--p-border-radius-xl)));

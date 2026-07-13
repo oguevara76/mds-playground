@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Button } from 'primeng/button';
+import { Dialog } from 'primeng/dialog';
 import { Drawer } from 'primeng/drawer';
 import { InputText } from 'primeng/inputtext';
 import { ToggleSwitch } from 'primeng/toggleswitch';
@@ -10,6 +11,10 @@ import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
+  OVERLAY_CATALOG_DIALOG_CONTENT,
+  OVERLAY_CATALOG_DIALOG_HEADER,
+  OVERLAY_CATALOG_DIALOG_OPEN_ICON,
+  OVERLAY_CATALOG_DIALOG_OPEN_LABEL,
   OVERLAY_CATALOG_DRAWER_CONFIG_HINT,
   OVERLAY_CATALOG_DRAWER_CONTENT,
   OVERLAY_CATALOG_DRAWER_FULLSCREEN_ICON,
@@ -34,6 +39,7 @@ import {
     Tooltip,
     InputText,
     FormsModule,
+    Dialog,
     Drawer,
     Button,
     ToggleSwitch,
@@ -45,6 +51,14 @@ import {
 export class OverlayCatalogComponent {
   readonly tooltipText = OVERLAY_CATALOG_TOOLTIP_INTERACTION_TEXT;
   readonly positionDemos = OVERLAY_CATALOG_TOOLTIP_POSITIONS;
+
+  readonly dialogHeader = OVERLAY_CATALOG_DIALOG_HEADER;
+  readonly dialogContent = OVERLAY_CATALOG_DIALOG_CONTENT;
+  readonly dialogOpenLabel = OVERLAY_CATALOG_DIALOG_OPEN_LABEL;
+  readonly dialogOpenIcon = OVERLAY_CATALOG_DIALOG_OPEN_ICON;
+
+  dialogVisible = false;
+
   readonly drawerPositionDemos = OVERLAY_CATALOG_DRAWER_POSITIONS;
   readonly drawerHeader = OVERLAY_CATALOG_DRAWER_HEADER;
   readonly drawerContent = OVERLAY_CATALOG_DRAWER_CONTENT;

@@ -96,6 +96,11 @@
     "override": "src/app/theme/tooltip-mds-overrides.ts",
     "watch_vars": ["--tooltip-*", "--p-tooltip-*"]
   },
+  "dialog": {
+    "playground_anchor": "pg-dialog",
+    "primeng_prefix": "dialog",
+    "watch_vars": ["--dialog-*", "--p-dialog-*"]
+  },
   "drawer": {
     "playground_anchor": "pg-drawer",
     "primeng_prefix": "drawer",
