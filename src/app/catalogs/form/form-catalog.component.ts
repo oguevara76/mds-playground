@@ -11,7 +11,6 @@ import { Checkbox } from 'primeng/checkbox';
 import { Divider } from 'primeng/divider';
 import { FloatLabel } from 'primeng/floatlabel';
 import { Button } from 'primeng/button';
-import { FileUpload, type FileUploadHandlerEvent } from 'primeng/fileupload';
 import { InputGroup } from 'primeng/inputgroup';
 import { InputGroupAddon } from 'primeng/inputgroupaddon';
 import { IconField } from 'primeng/iconfield';
@@ -328,7 +327,6 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     Button,
     Checkbox,
     Divider,
-    FileUpload,
     FloatLabel,
     FormsModule,
     IconField,
@@ -437,7 +435,8 @@ export class FormCatalogComponent {
 
   /** Float Label interactivo: placeholder solo mientras el campo tiene foco. */
   private readonly floatIxFocused = signal(false);
-  private readonly inputgroupFloatIxFocused = signal(false);
+  private readonly inputgroupFloatBasicUsernameFocused = signal(false);
+  private readonly inputgroupFloatBasicPriceFocused = signal(false);
 
   private readonly choiceIxByKind = signal<Record<FormChoiceBlockKind, FormChoiceInteractionState>>({
     radio: defaultChoiceInteraction(),
@@ -470,7 +469,7 @@ export class FormCatalogComponent {
   inputgroupExButtonKeyword = '';
   inputgroupExButtonVote = '';
   inputgroupExCheckboxRadioPrice = '';
-  inputgroupExCheckboxRadioValue = 'rb1';
+  inputgroupExCheckboxRadioValue = '';
   inputgroupExCheckboxUsername = '';
   inputgroupExCheckboxChecked1 = false;
   inputgroupExCheckboxWebsite = '';
@@ -478,6 +477,8 @@ export class FormCatalogComponent {
   inputgroupExCheckboxCategory = 'rb2';
   inputgroupExSelectCity: FormInputGroupCityOption | null = null;
   inputgroupExSelectWwwCity: FormInputGroupCityOption | null = null;
+  inputgroupExFileUploadName1 = '';
+  inputgroupExFileUploadName2 = '';
 
   isInputTextBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'inputtext' } {
     return block.kind === 'inputtext';
@@ -775,35 +776,62 @@ export class FormCatalogComponent {
     return this.formThemePrimeVariant('inputgroup');
   }
 
-  inputgroupFileUploadNoop(_event: FileUploadHandlerEvent): void {
-    // Showcase: sin envío HTTP en el playground.
+  inputgroupOnFileInputChange(event: Event, slot: 1 | 2): void {
+    const input = event.target as HTMLInputElement;
+    const name = input.files?.[0]?.name ?? '';
+    if (slot === 1) {
+      this.inputgroupExFileUploadName1 = name;
+      return;
+    }
+    this.inputgroupExFileUploadName2 = name;
   }
 
-  setInputgroupFloatIxFocused(focused: boolean): void {
+  setInputgroupFloatBasicUsernameFocused(focused: boolean): void {
     if (!this.inputgroupIsFloatLabel()) {
       return;
     }
-    this.inputgroupFloatIxFocused.set(focused);
+    this.inputgroupFloatBasicUsernameFocused.set(focused);
   }
 
-  inputgroupInteractionLabelFloated(): boolean {
+  setInputgroupFloatBasicPriceFocused(focused: boolean): void {
+    if (!this.inputgroupIsFloatLabel()) {
+      return;
+    }
+    this.inputgroupFloatBasicPriceFocused.set(focused);
+  }
+
+  inputgroupBasicUsernameLabelFloated(): boolean {
     if (this.inputgroupIsFloatIn()) {
       return true;
     }
-    if (!this.inputgroupIsFloatLabel()) {
-      return false;
-    }
-    return !!this.inputgroupIx().value || this.inputgroupFloatIxFocused();
+    return !!this.inputgroupExBasicUsername || this.inputgroupFloatBasicUsernameFocused();
   }
 
-  inputgroupInteractionPlaceholder(): string | null {
-    if (this.inputgroupIsIftaLabel()) {
-      return this.inputStatePlaceholder;
+  inputgroupBasicPriceLabelFloated(): boolean {
+    if (this.inputgroupIsFloatIn()) {
+      return true;
     }
-    if (!this.inputgroupFloatIxFocused()) {
+    return this.inputgroupExBasicPrice != null || this.inputgroupFloatBasicPriceFocused();
+  }
+
+  inputgroupBasicUsernamePlaceholder(): string | null {
+    if (this.inputgroupIsIftaLabel()) {
+      return this.inputgroupExBasicUsername ? null : 'Username';
+    }
+    if (!this.inputgroupFloatBasicUsernameFocused()) {
       return null;
     }
-    return this.inputStatePlaceholder;
+    return 'Username';
+  }
+
+  inputgroupBasicPricePlaceholder(): string | null {
+    if (this.inputgroupIsIftaLabel()) {
+      return this.inputgroupExBasicPrice != null ? null : 'Price';
+    }
+    if (!this.inputgroupFloatBasicPriceFocused()) {
+      return null;
+    }
+    return 'Price';
   }
 
   inputgroupPreviewDemoClass(): Record<string, boolean> {

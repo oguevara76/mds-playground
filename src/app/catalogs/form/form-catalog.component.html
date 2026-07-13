@@ -1236,13 +1236,6 @@
                     @case ('checkbox-radio') {
                       <div class="inputgroup-examples-pair" aria-label="InputGroup checkbox and radio examples">
                         <p-inputgroup [style]="inputgroupHostVars()">
-                          <input
-                            pInputText
-                            placeholder="Price"
-                            [variant]="inputgroupExampleInputVariant()"
-                            [(ngModel)]="inputgroupExCheckboxRadioPrice"
-                            [fluid]="true"
-                          />
                           <p-inputgroup-addon>
                             <p-radiobutton
                               name="inputgroup-ex-rb1"
@@ -1251,6 +1244,13 @@
                               [variant]="formThemePrimeVariant('radio')"
                             />
                           </p-inputgroup-addon>
+                          <input
+                            pInputText
+                            placeholder="Price"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExCheckboxRadioPrice"
+                            [fluid]="true"
+                          />
                         </p-inputgroup>
                         <p-inputgroup [style]="inputgroupHostVars()">
                           <p-inputgroup-addon>
@@ -1301,71 +1301,132 @@
                     @case ('file-upload') {
                       <div class="inputgroup-examples-pair" aria-label="InputGroup file upload examples">
                         <p-inputgroup [style]="inputgroupHostVars()">
-                          <p-fileupload
-                            mode="basic"
-                            chooseLabel="Choose file"
-                            [customUpload]="true"
-                            (uploadHandler)="inputgroupFileUploadNoop($event)"
+                          <p-inputgroup-addon>
+                            <p-button
+                              label="Choose file"
+                              severity="secondary"
+                              (onClick)="inputgroupExFileInput1.click()"
+                            />
+                            <input
+                              #inputgroupExFileInput1
+                              type="file"
+                              class="inputgroup-hidden-file-input"
+                              (change)="inputgroupOnFileInputChange($event, 1)"
+                            />
+                          </p-inputgroup-addon>
+                          <input
+                            pInputText
+                            readonly
+                            placeholder="Choose file"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [ngModel]="inputgroupExFileUploadName1"
+                            [fluid]="true"
                           />
-                          <p-button label="Upload" severity="secondary" />
+                          <p-button label="Upload" severity="primary" />
                         </p-inputgroup>
                         <p-inputgroup [style]="inputgroupHostVars()">
-                          <p-inputgroup-addon>Browse</p-inputgroup-addon>
-                          <p-fileupload
-                            mode="basic"
-                            chooseLabel="Choose file"
-                            [customUpload]="true"
-                            (uploadHandler)="inputgroupFileUploadNoop($event)"
+                          <p-inputgroup-addon>
+                            <p-button
+                              label="Browse"
+                              severity="secondary"
+                              (onClick)="inputgroupExFileInput2.click()"
+                            />
+                            <input
+                              #inputgroupExFileInput2
+                              type="file"
+                              class="inputgroup-hidden-file-input"
+                              (change)="inputgroupOnFileInputChange($event, 2)"
+                            />
+                          </p-inputgroup-addon>
+                          <input
+                            pInputText
+                            readonly
+                            placeholder="Choose file"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [ngModel]="inputgroupExFileUploadName2"
+                            [fluid]="true"
                           />
                         </p-inputgroup>
                       </div>
                     }
                   }
                   } @else if (inputgroupIsIftaLabel()) {
-                    <div class="form-input-interaction-control">
+                    <div class="inputgroup-examples-pair" aria-label="InputGroup basic examples (IftaLabel)">
                       <p-inputgroup [style]="inputgroupHostVars()">
                         <p-inputgroup-addon>
-                          <i class="pi pi-shopping-cart" aria-hidden="true"></i>
+                          <i class="pi pi-user" aria-hidden="true"></i>
                         </p-inputgroup-addon>
                         <span class="p-iftalabel" [style]="inputgroupFloatLabelHostVars()">
                           <input
                             pInputText
-                            id="ig-live"
-                            placeholder="Placeholder"
+                            id="ig-ifta-username"
+                            [attr.placeholder]="inputgroupBasicUsernamePlaceholder()"
                             [variant]="formThemePrimeVariant('inputgroup')"
-                            [ngModel]="inputgroupIx().value"
-                            (ngModelChange)="patchInputgroup({ value: $event })"
+                            [(ngModel)]="inputgroupExBasicUsername"
                             [fluid]="true"
                           />
-                          <label for="ig-live">Label</label>
+                          <label for="ig-ifta-username">Username</label>
                         </span>
+                      </p-inputgroup>
+                      <p-inputgroup [style]="inputgroupHostVars()">
+                        <p-inputgroup-addon>$</p-inputgroup-addon>
+                        <span class="p-iftalabel" [style]="inputgroupFloatLabelHostVars()">
+                          <p-inputnumber
+                            inputId="ig-ifta-price"
+                            [attr.placeholder]="inputgroupBasicPricePlaceholder()"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExBasicPrice"
+                            [fluid]="true"
+                          />
+                          <label for="ig-ifta-price">Price</label>
+                        </span>
+                        <p-inputgroup-addon>.00</p-inputgroup-addon>
                       </p-inputgroup>
                     </div>
                   } @else {
-                    <div class="form-input-interaction-control">
+                    <div class="inputgroup-examples-pair" aria-label="InputGroup basic examples (Float Label)">
                       <p-inputgroup [style]="inputgroupHostVars()">
                         <p-inputgroup-addon>
                           <i class="pi pi-user" aria-hidden="true"></i>
                         </p-inputgroup-addon>
                         <p-floatlabel
                           [variant]="inputgroupFloatPosition()"
-                          [class.is-label-floated]="inputgroupInteractionLabelFloated()"
+                          [class.is-label-floated]="inputgroupBasicUsernameLabelFloated()"
                           [style]="inputgroupFloatLabelHostVars()"
                         >
                           <input
                             pInputText
-                            id="ig-live"
+                            id="ig-float-username"
                             autocomplete="off"
-                            [attr.placeholder]="inputgroupInteractionPlaceholder()"
+                            [attr.placeholder]="inputgroupBasicUsernamePlaceholder()"
                             [variant]="formThemePrimeVariant('inputgroup')"
-                            [ngModel]="inputgroupIx().value"
-                            (ngModelChange)="patchInputgroup({ value: $event })"
-                            (focus)="setInputgroupFloatIxFocused(true)"
-                            (blur)="setInputgroupFloatIxFocused(false)"
+                            [(ngModel)]="inputgroupExBasicUsername"
+                            (focus)="setInputgroupFloatBasicUsernameFocused(true)"
+                            (blur)="setInputgroupFloatBasicUsernameFocused(false)"
                             [fluid]="true"
                           />
-                          <label for="ig-live">Label</label>
+                          <label for="ig-float-username">Username</label>
                         </p-floatlabel>
+                      </p-inputgroup>
+                      <p-inputgroup [style]="inputgroupHostVars()">
+                        <p-inputgroup-addon>$</p-inputgroup-addon>
+                        <p-floatlabel
+                          [variant]="inputgroupFloatPosition()"
+                          [class.is-label-floated]="inputgroupBasicPriceLabelFloated()"
+                          [style]="inputgroupFloatLabelHostVars()"
+                        >
+                          <p-inputnumber
+                            inputId="ig-float-price"
+                            [attr.placeholder]="inputgroupBasicPricePlaceholder()"
+                            [variant]="inputgroupExampleInputVariant()"
+                            [(ngModel)]="inputgroupExBasicPrice"
+                            (onFocus)="setInputgroupFloatBasicPriceFocused(true)"
+                            (onBlur)="setInputgroupFloatBasicPriceFocused(false)"
+                            [fluid]="true"
+                          />
+                          <label for="ig-float-price">Price</label>
+                        </p-floatlabel>
+                        <p-inputgroup-addon>.00</p-inputgroup-addon>
                       </p-inputgroup>
                     </div>
                   }

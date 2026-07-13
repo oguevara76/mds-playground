@@ -324,9 +324,9 @@
   flex: 0 0 auto;
 }
 
-:host ::ng-deep .form-showcase .catalog-input-interactive p-floatlabel,
-:host ::ng-deep .form-showcase .catalog-input-interactive .p-floatlabel,
-:host ::ng-deep .form-showcase .catalog-input-interactive .p-iftalabel {
+:host ::ng-deep .form-showcase .catalog-input-interactive > p-floatlabel,
+:host ::ng-deep .form-showcase .catalog-input-interactive > .p-floatlabel,
+:host ::ng-deep .form-showcase .catalog-input-interactive > .p-iftalabel {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -341,12 +341,17 @@
   width: 100%;
 }
 
-:host ::ng-deep .form-showcase .input-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
-:host ::ng-deep .form-showcase .input-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+:host ::ng-deep
+  .form-showcase
+  .input-interaction-scope.catalog-input-interactive:not(.inputgroup-interaction-scope):has(.p-floatlabel-over)
+  .p-floatlabel {
   margin-top: var(--p-floatlabel-over-wrapper-padding-top, var(--floatlabel-over-wrapper-padding-top));
 }
 
-:host ::ng-deep .form-showcase .input-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+:host ::ng-deep
+  .form-showcase
+  .input-interaction-scope.catalog-input-interactive:not(.inputgroup-interaction-scope):has(.p-floatlabel-on)
+  .p-floatlabel {
   margin-top: var(--p-floatlabel-on-wrapper-padding-top, var(--floatlabel-on-wrapper-padding-top, 7px));
 }
 
@@ -3063,6 +3068,10 @@
   min-width: 0;
 }
 
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button:not(.p-button-icon-only)) {
+  min-width: auto;
+}
+
 :host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button) .p-button {
   margin: 0;
   width: 100%;
@@ -3071,6 +3080,16 @@
   border: none;
   box-shadow: none;
   border-radius: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button:not(.p-button-icon-only)) .p-button {
+  min-width: auto;
+  width: auto;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-hidden-file-input {
+  display: none;
 }
 
 :host ::ng-deep .inputgroup-showcase .p-inputgroup > * + * {
@@ -3103,6 +3122,64 @@
 :host ::ng-deep .inputgroup-showcase .p-inputgroup .p-select {
   flex: 1 1 auto;
   min-width: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > .p-inputnumber {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-self: stretch;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > p-inputnumber .p-inputnumber-input,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > .p-inputnumber .p-inputnumber-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Float/Ifta en InputGroup: fill ancho del segmento (preview 640px fijo intacto) */
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > .p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > .p-iftalabel,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin-top: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel > .p-inputtext,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel > p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel > .p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel .p-inputnumber-input,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel > .p-inputtext,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel > p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel > .p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel .p-inputnumber-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep
+  .inputgroup-showcase
+  .inputgroup-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over)
+  .p-inputgroup
+  > .p-floatlabel,
+:host ::ng-deep
+  .inputgroup-showcase
+  .inputgroup-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on)
+  .p-inputgroup
+  > .p-floatlabel {
+  margin-top: 0;
 }
 
 .inputgroup-showcase .inputgroup-examples-pair {
@@ -3146,12 +3223,32 @@
 }
 
 :host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-inputtext,
-:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iconfield,
-:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-floatlabel,
-:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iftalabel {
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iconfield {
   flex: 1 1 auto;
   min-width: 0;
   width: 100%;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup > .p-floatlabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup > p-floatlabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup > .p-iftalabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-floatlabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iftalabel {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-floatlabel > .p-inputtext,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iftalabel > .p-inputtext {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
 }
 
 :host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-inputtext:disabled {
@@ -3188,10 +3285,28 @@
 }
 
 :host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-inputtext,
-:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-inputnumber,
-:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-select,
-:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-fileupload {
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-select {
   flex: 1 1 auto;
+  min-width: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > .p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > .p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > .p-iftalabel {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > p-inputnumber .p-inputnumber-input,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > .p-inputnumber .p-inputnumber-input {
+  flex: 1 1 auto;
+  width: 100%;
   min-width: 0;
 }
 

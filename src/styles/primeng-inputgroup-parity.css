@@ -5,6 +5,53 @@
   margin-inline-start: var(--p-inputgroup-gap, var(--inputgroup-gap, -1px)) !important;
 }
 
+/* FloatLabel / IftaLabel: fill ancho del segmento flexible */
+.p-inputgroup .p-floatlabel,
+.p-inputgroup .p-iftalabel,
+.p-inputgroup > p-floatlabel {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.p-inputgroup .p-floatlabel > .p-inputtext,
+.p-inputgroup .p-floatlabel > p-inputnumber,
+.p-inputgroup .p-floatlabel > .p-inputnumber,
+.p-inputgroup .p-floatlabel > .p-inputwrapper,
+.p-inputgroup .p-iftalabel > .p-inputtext,
+.p-inputgroup .p-iftalabel > p-inputnumber,
+.p-inputgroup .p-iftalabel > .p-inputnumber,
+.p-inputgroup .p-iftalabel > .p-inputwrapper {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.p-inputgroup .p-floatlabel .p-inputnumber-input,
+.p-inputgroup .p-iftalabel .p-inputnumber-input {
+  width: 100%;
+}
+
+/* InputNumber hijo directo: flex en host + bordes en .p-inputnumber-input (como InputText) */
+.p-inputgroup > p-inputnumber,
+.p-inputgroup > .p-inputnumber {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-self: stretch;
+}
+
+.p-inputgroup > p-inputnumber .p-inputnumber-input,
+.p-inputgroup > .p-inputnumber .p-inputnumber-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+
 .p-inputgroupaddon {
   border-block-start: 1px solid var(
     --p-inputgroup-addon-border-color,
@@ -40,15 +87,37 @@
   border-radius: 0;
 }
 
-/* Segmentos internos: sin radio (PrimeNG + refuerzo MDS) */
+/* Segmentos internos: sin radio en junturas (reset global + caps solo en extremos) */
+.p-inputgroup > * {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
 .p-inputgroup > .p-inputgroupaddon,
 .p-inputgroup > .p-component,
+.p-inputgroup > p-button,
+.p-inputgroup > p-inputnumber,
+.p-inputgroup > p-select,
+.p-inputgroup > p-fileupload,
 .p-inputgroup > .p-inputwrapper > .p-component,
 .p-inputgroup > .p-iconfield > .p-component,
 .p-inputgroup > .p-floatlabel > .p-component,
 .p-inputgroup > .p-floatlabel > .p-inputwrapper > .p-component,
 .p-inputgroup > .p-iftalabel > .p-component,
 .p-inputgroup > .p-iftalabel > .p-inputwrapper > .p-component {
+  border-radius: 0;
+}
+
+.p-inputgroup > *:not(:first-child) .p-button,
+.p-inputgroup > *:not(:last-child) .p-button,
+.p-inputgroup > *:not(:first-child) .p-inputnumber-input,
+.p-inputgroup > *:not(:last-child) .p-inputnumber-input,
+.p-inputgroup > *:not(:first-child) .p-select,
+.p-inputgroup > *:not(:last-child) .p-select,
+.p-inputgroup > *:not(:first-child) .p-inputtext,
+.p-inputgroup > *:not(:last-child) .p-inputtext {
   border-radius: 0;
 }
 
@@ -76,10 +145,13 @@
   );
 }
 
-/* ── Extremo izquierdo: InputText / InputNumber (sin addon a la izquierda) ── */
+/* ── Extremo izquierdo: InputText / InputNumber ── */
 .p-inputgroup > .p-inputtext:first-child,
 .p-inputgroup > .p-inputnumber:first-child,
+.p-inputgroup > p-inputnumber:first-child,
+.p-inputgroup > p-inputnumber:first-child .p-inputnumber-input,
 .p-inputgroup > .p-inputwrapper:first-child > .p-inputnumber,
+.p-inputgroup > .p-inputwrapper:first-child > .p-inputnumber .p-inputnumber-input,
 .p-inputgroup > .p-iconfield:first-child > .p-inputtext,
 .p-inputgroup > .p-floatlabel:first-child > .p-inputtext,
 .p-inputgroup > .p-floatlabel:first-child > .p-inputwrapper > .p-inputtext,
@@ -98,7 +170,10 @@
 /* ── Extremo derecho: InputText / InputNumber ── */
 .p-inputgroup > .p-inputtext:last-child,
 .p-inputgroup > .p-inputnumber:last-child,
+.p-inputgroup > p-inputnumber:last-child,
+.p-inputgroup > p-inputnumber:last-child .p-inputnumber-input,
 .p-inputgroup > .p-inputwrapper:last-child > .p-inputnumber,
+.p-inputgroup > .p-inputwrapper:last-child > .p-inputnumber .p-inputnumber-input,
 .p-inputgroup > .p-iconfield:last-child > .p-inputtext,
 .p-inputgroup > .p-floatlabel:last-child > .p-inputtext,
 .p-inputgroup > .p-floatlabel:last-child > .p-inputwrapper > .p-inputtext,
@@ -116,6 +191,8 @@
 
 /* ── Extremo izquierdo: Select ── */
 .p-inputgroup > .p-select:first-child,
+.p-inputgroup > p-select:first-child,
+.p-inputgroup > p-select:first-child .p-select,
 .p-inputgroup > .p-inputwrapper:first-child > .p-select {
   border-start-start-radius: var(
     --p-select-border-radius,
@@ -129,6 +206,8 @@
 
 /* ── Extremo derecho: Select ── */
 .p-inputgroup > .p-select:last-child,
+.p-inputgroup > p-select:last-child,
+.p-inputgroup > p-select:last-child .p-select,
 .p-inputgroup > .p-inputwrapper:last-child > .p-select {
   border-start-end-radius: var(
     --p-select-border-radius,
@@ -190,10 +269,71 @@
   );
 }
 
+/* Botones directos en extremos (Search, Upload…) */
+.p-inputgroup > p-button:first-child .p-button,
+.p-inputgroup > p-button:last-child .p-button {
+  border-radius: 0;
+}
+
+.p-inputgroup > p-button:first-child .p-button {
+  border-start-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+.p-inputgroup > p-button:last-child .p-button {
+  border-start-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+/* FileUpload basic dentro del grupo: botón choose sin radio en junturas */
+.p-inputgroup > p-fileupload:first-child .p-fileupload-basic-content .p-button,
+.p-inputgroup > p-fileupload:last-child .p-fileupload-basic-content .p-button,
+.p-inputgroup > .p-fileupload:first-child .p-fileupload-basic-content .p-button,
+.p-inputgroup > .p-fileupload:last-child .p-fileupload-basic-content .p-button {
+  border-radius: 0;
+}
+
+.p-inputgroup > p-fileupload:first-child .p-fileupload-basic-content .p-button,
+.p-inputgroup > .p-fileupload:first-child .p-fileupload-basic-content .p-button {
+  border-start-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-start-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
+.p-inputgroup > p-fileupload:last-child .p-fileupload-basic-content .p-button,
+.p-inputgroup > .p-fileupload:last-child .p-fileupload-basic-content .p-button {
+  border-start-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+  border-end-end-radius: var(
+    --p-inputgroup-addon-border-radius,
+    var(--inputgroup-addon-border-radius, var(--form-field-border-radius))
+  );
+}
+
 /* Input central: bordes laterales visibles sobre el solape -1px con addons */
 .p-inputgroup > .p-inputtext:not(:first-child):not(:last-child),
-.p-inputgroup > .p-inputnumber:not(:first-child):not(:last-child),
-.p-inputgroup > .p-inputwrapper:not(:first-child):not(:last-child) > .p-inputnumber,
+.p-inputgroup > p-inputnumber:not(:first-child):not(:last-child) .p-inputnumber-input,
+.p-inputgroup > .p-inputnumber:not(:first-child):not(:last-child) .p-inputnumber-input,
+.p-inputgroup > .p-inputwrapper:not(:first-child):not(:last-child) > .p-inputnumber .p-inputnumber-input,
 .p-inputgroup > .p-select:not(:first-child):not(:last-child),
 .p-inputgroup > .p-inputwrapper:not(:first-child):not(:last-child) > .p-select {
   border-inline-start: 1px solid var(
