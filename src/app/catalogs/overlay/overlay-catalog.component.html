@@ -71,6 +71,49 @@
     </section>
   </div>
 
+  <div class="catalog-preview dialog-variant-block">
+    <section id="pg-dialog" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Dialog' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title">Interaction</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="false"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive">
+            <div class="btn-row">
+              <p-button
+                [label]="dialogOpenLabel"
+                [icon]="dialogOpenIcon"
+                iconPos="right"
+                (onClick)="dialogVisible = true"
+              />
+            </div>
+          </div>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
+  <p-dialog
+    [(visible)]="dialogVisible"
+    [header]="dialogHeader"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    appendTo="body"
+  >
+    <p>{{ dialogContent }}</p>
+    <ng-template pTemplate="footer">
+      <p-button label="Cancelar" severity="secondary" (onClick)="dialogVisible = false" />
+      <p-button label="Aceptar" (onClick)="dialogVisible = false" />
+    </ng-template>
+  </p-dialog>
+
   <p-drawer
     [(visible)]="drawerVisible"
     [position]="drawerIx().position"
@@ -105,7 +148,6 @@
                   [label]="demo.label"
                   [icon]="demo.buttonIcon"
                   iconPos="right"
-                  size="small"
                   (onClick)="openDrawer(demo.key)"
                 />
               }
@@ -113,7 +155,6 @@
                 [label]="drawerFullScreenLabel"
                 [icon]="drawerFullScreenIcon"
                 iconPos="right"
-                size="small"
                 (onClick)="openDrawerFullScreen()"
               />
             </div>
