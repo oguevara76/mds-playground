@@ -50,6 +50,7 @@
               "src/styles/primeng-preview-parity.css",
               "src/styles/primeng-inputgroup-parity.css",
               "src/styles/primeng-splitbutton-parity.css",
+              "src/styles/primeng-dialog-parity.css",
               "styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"
@@ -148,6 +149,7 @@
               "src/styles/primeng-preview-parity.css",
               "src/styles/primeng-inputgroup-parity.css",
               "src/styles/primeng-splitbutton-parity.css",
+              "src/styles/primeng-dialog-parity.css",
               "styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles.css"

@@ -196,7 +196,7 @@ function buildIndex(): PlaygroundComponentEntry[] {
       route: 'overlay',
       sectionLabel: 'Overlay',
       keywords: ['p-dialog', 'modal', 'overlay', 'diálogo'],
-      variantCount: 1,
+      variantCount: 2,
     },
     {
       id: 'pg-drawer',

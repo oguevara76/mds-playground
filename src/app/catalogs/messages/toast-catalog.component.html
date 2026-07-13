@@ -29,7 +29,6 @@
                 [label]="sev.label"
                 [icon]="sev.buttonIcon"
                 [severity]="sev.buttonSeverity"
-                size="small"
                 (onClick)="pushToast(sev.key)"
               />
             }
@@ -38,7 +37,6 @@
             <p-button
               label="Ocultar toast activos"
               link
-              size="small"
               (onClick)="hideAllToasts()"
             />
           </div>

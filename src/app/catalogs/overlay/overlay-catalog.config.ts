@@ -69,11 +69,35 @@ export const OVERLAY_CATALOG_DRAWER_HEADER = 'Panel lateral';
 export const OVERLAY_CATALOG_DRAWER_CONTENT =
   'Contenido del drawer con acciones secundarias y texto de apoyo para validar padding, tipografía y contraste del overlay.';
 
-export const OVERLAY_CATALOG_DIALOG_HEADER = 'Título del diálogo';
-export const OVERLAY_CATALOG_DIALOG_CONTENT =
-  'Contenido del diálogo con texto de apoyo para validar tipografía, colores y espaciado del overlay modal.';
-export const OVERLAY_CATALOG_DIALOG_OPEN_LABEL = 'Abrir diálogo';
-export const OVERLAY_CATALOG_DIALOG_OPEN_ICON = 'pi pi-external-link';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_HEADER = 'Edit Profile';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_OPEN_LABEL = 'Edit Profile';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_DISPLAY_NAME = 'Amanda Miller';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_DISPLAY_EMAIL = 'amanda@example.com';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_NAME_LABEL = 'Name';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_USERNAME_LABEL = 'Username';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_EMAIL_LABEL = 'Email';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_NAME_VALUE = 'Amanda Miller';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_USERNAME_VALUE = '@amandamiller';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_EMAIL_VALUE = 'amanda@example.com';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_AVATAR_IMAGE =
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&w=128&h=128&q=80';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_CANCEL_LABEL = 'Cancel';
+export const OVERLAY_CATALOG_DIALOG_PROFILE_SAVE_LABEL = 'Save Changes';
+
+export const OVERLAY_CATALOG_DIALOG_EVENT_HEADER = 'Create Event';
+export const OVERLAY_CATALOG_DIALOG_EVENT_OPEN_LABEL = 'Create Event';
+export const OVERLAY_CATALOG_DIALOG_EVENT_NAME_LABEL = 'Event Name';
+export const OVERLAY_CATALOG_DIALOG_EVENT_NAME_PLACEHOLDER = 'e.g. Team Standup';
+export const OVERLAY_CATALOG_DIALOG_EVENT_ORGANIZER_LABEL = 'Organizer';
+export const OVERLAY_CATALOG_DIALOG_EVENT_ORGANIZER_PLACEHOLDER = 'Name';
+export const OVERLAY_CATALOG_DIALOG_EVENT_EMAIL_LABEL = 'Email';
+export const OVERLAY_CATALOG_DIALOG_EVENT_EMAIL_PLACEHOLDER = 'organizer@example.com';
+export const OVERLAY_CATALOG_DIALOG_EVENT_LOCATION_LABEL = 'Location';
+export const OVERLAY_CATALOG_DIALOG_EVENT_LOCATION_PLACEHOLDER = 'Add a location or video link';
+export const OVERLAY_CATALOG_DIALOG_EVENT_DESCRIPTION_LABEL = 'Description';
+export const OVERLAY_CATALOG_DIALOG_EVENT_DESCRIPTION_PLACEHOLDER = 'Event details';
+export const OVERLAY_CATALOG_DIALOG_EVENT_CANCEL_LABEL = 'Cancel';
+export const OVERLAY_CATALOG_DIALOG_EVENT_CREATE_LABEL = 'Create Event';
 
 export const OVERLAY_CATALOG_TOOLTIP_POSITIONS: TooltipPositionDemo[] = [
   {

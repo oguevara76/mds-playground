@@ -102,6 +102,10 @@ html[data-theme="light"] {
   --highlight-focus-color: rgba(60, 47, 6, 1);
   --icon-size: var(--dimension-scale-x16);
   --list-gap: var(--dimension-scale-x2);
+  --list-header-padding-bottom: var(--dimension-scale-x4);
+  --list-header-padding-left: var(--dimension-scale-x16);
+  --list-header-padding-right: var(--dimension-scale-x16);
+  --list-header-padding-top: var(--dimension-scale-x8);
   --list-option-border-radius: var(--border-radius-sm);
   --list-option-color: var(--text-color);
   --list-option-focus-background: var(--surface-100);
@@ -111,6 +115,8 @@ html[data-theme="light"] {
   --list-option-group-font-weight: 600;
   --list-option-icon-color: var(--surface-400);
   --list-option-icon-focus-color: var(--surface-500);
+  --list-option-padding-x: var(--dimension-scale-x12);
+  --list-option-padding-y: var(--dimension-scale-x8);
   --list-option-selected-background: var(--highlight-background);
   --list-option-selected-color: var(--highlight-color);
   --list-option-selected-focus-background: var(--highlight-focus-background);
@@ -129,7 +135,11 @@ html[data-theme="light"] {
   --navigation-item-icon-active-color: var(--surface-500);
   --navigation-item-icon-color: var(--surface-400);
   --navigation-item-icon-focus-color: var(--surface-500);
+  --navigation-item-padding-x: var(--dimension-scale-x12);
+  --navigation-item-padding-y: var(--dimension-scale-x8);
   --navigation-list-gap: var(--dimension-scale-x2);
+  --navigation-list-padding-x: var(--dimension-scale-x4);
+  --navigation-list-padding-y: var(--dimension-scale-x4);
   --navigation-submenu-icon-active-color: var(--surface-500);
   --navigation-submenu-icon-color: var(--surface-400);
   --navigation-submenu-icon-focus-color: var(--surface-500);
