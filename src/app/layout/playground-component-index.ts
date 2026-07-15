@@ -16,6 +16,8 @@ import {
 import { MESSAGE_VARIANTS } from '../catalogs/messages/messages-catalog.config';
 import { TOAST_CATALOG_SEVERITIES } from '../catalogs/messages/toast-catalog.config';
 import {
+  ACCORDION_CATALOG_STATE_DEMOS,
+  CARD_EXAMPLE_OPTIONS,
   DIVIDER_STATE_DEMOS,
   PANEL_CATALOG_TAB_STATE_DEMOS,
 } from '../catalogs/panel/panel-catalog.config';
@@ -68,6 +70,8 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-toast': 'toast',
   'pg-paginator': 'paginator',
   'pg-divider': 'divider',
+  'pg-card': 'card',
+  'pg-accordion': 'accordion',
   'pg-tabs': 'tabs',
   'pg-breadcrumb': 'breadcrumb',
   'pg-tooltip': 'tooltip',
@@ -157,6 +161,22 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Data',
       keywords: ['p-paginator', 'pagination', 'paginación'],
       variantCount: PAGINATOR_CATALOG_STATE_DEMOS.length,
+    },
+    {
+      id: 'pg-card',
+      name: 'Card',
+      route: 'panel',
+      sectionLabel: 'Panel',
+      keywords: ['p-card', 'tarjeta', 'container', 'contenedor'],
+      variantCount: CARD_EXAMPLE_OPTIONS.length,
+    },
+    {
+      id: 'pg-accordion',
+      name: 'Accordion',
+      route: 'panel',
+      sectionLabel: 'Panel',
+      keywords: ['p-accordion', 'acordeón', 'panel', 'expandible'],
+      variantCount: ACCORDION_CATALOG_STATE_DEMOS.length,
     },
     {
       id: 'pg-divider',

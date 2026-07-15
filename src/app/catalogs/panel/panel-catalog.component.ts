@@ -1,8 +1,14 @@
 import { NgClass } from '@angular/common';
 import { afterNextRender, Component, inject, Injector, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
+import { Button } from 'primeng/button';
+import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
+import { InputText } from 'primeng/inputtext';
+import { Password } from 'primeng/password';
 import { Select } from 'primeng/select';
+import { Tag } from 'primeng/tag';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'primeng/tabs';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
@@ -10,11 +16,22 @@ import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
+  ACCORDION_CATALOG_PANELS,
+  ACCORDION_CATALOG_STATE_DEMOS,
+  ACCORDION_EXAMPLE_OPTIONS,
+  ACCORDION_TEMPLATE_PANELS,
+  CARD_EXAMPLE_OPTIONS,
+  CARD_CATALOG_DEMO_HEIGHT,
   DIVIDER_ALIGN_OPTIONS,
   DIVIDER_BORDER_TYPE_OPTIONS,
   DIVIDER_STATE_DEMOS,
   PANEL_CATALOG_TAB_STATE_DEMOS,
   PANEL_CATALOG_TABS,
+  type AccordionCatalogExampleKey,
+  type AccordionCatalogStateKey,
+  type AccordionInteractionState,
+  type CardCatalogExampleKey,
+  type CardInteractionState,
   type DividerInteractionState,
   type DividerStateDemo,
   type DividerStateKey,
@@ -24,13 +41,51 @@ import {
 @Component({
   selector: 'app-panel-catalog',
   standalone: true,
-  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select],
+  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Button, Card, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select],
   templateUrl: './panel-catalog.component.html',
   styleUrl: './panel-catalog.component.css',
   host: { class: 'panel-catalog-page' },
 })
 export class PanelCatalogComponent {
   private readonly injector = inject(Injector);
+
+  // ─── Accordion ───────────────────────────────────────────────────────────────
+
+  readonly accordionPanels = ACCORDION_CATALOG_PANELS;
+  readonly accordionTemplatePanels = ACCORDION_TEMPLATE_PANELS;
+  readonly accordionStateDemos = ACCORDION_CATALOG_STATE_DEMOS;
+  readonly accordionExampleOptions = ACCORDION_EXAMPLE_OPTIONS;
+
+  readonly accordionIx = signal<AccordionInteractionState>({ example: 'basic' });
+  readonly accordionActive = signal<string | string[] | null>('0');
+
+  setAccordionExample(example: AccordionCatalogExampleKey): void {
+    this.accordionIx.set({ example });
+    this.accordionActive.set(example === 'multiple' ? ['0'] : '0');
+  }
+
+  onAccordionChange(value: string | number | string[] | number[] | null | undefined): void {
+    if (value === undefined || value === null) {
+      return;
+    }
+    if (Array.isArray(value)) {
+      this.accordionActive.set(value.map(String));
+      return;
+    }
+    this.accordionActive.set(String(value));
+  }
+
+  trackAccordionPanel(_: number, panel: { value: string }): string {
+    return panel.value;
+  }
+
+  trackAccordionTemplatePanel(_: number, panel: { value: string }): string {
+    return panel.value;
+  }
+
+  trackAccordionState(_: number, demo: { key: AccordionCatalogStateKey }): AccordionCatalogStateKey {
+    return demo.key;
+  }
 
   // ─── Tabs ──────────────────────────────────────────────────────────────────
 
@@ -114,5 +169,19 @@ export class PanelCatalogComponent {
 
   trackDividerState(_: number, demo: DividerStateDemo): DividerStateKey {
     return demo.key;
+  }
+
+  // ─── Card ──────────────────────────────────────────────────────────────────
+
+  readonly cardExampleOptions = CARD_EXAMPLE_OPTIONS;
+  readonly cardDemoHeight = CARD_CATALOG_DEMO_HEIGHT;
+
+  readonly cardIx = signal<CardInteractionState>({ example: 'basic' });
+
+  cardFormEmail = '';
+  cardFormPassword = '';
+
+  setCardExample(example: CardCatalogExampleKey): void {
+    this.cardIx.set({ example });
   }
 }

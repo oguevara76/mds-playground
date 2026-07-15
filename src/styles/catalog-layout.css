@@ -252,6 +252,7 @@
 .paginator-showcase .catalog-block-head .section-title.component-title-primary,
 .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
 .divider-variant-block .catalog-block-head .section-title.component-title-primary,
+.accordion-variant-block .catalog-block-head .section-title.component-title-primary,
 .tag-showcase .catalog-block-head .section-title.component-title-primary,
 .chip-showcase .catalog-block-head .section-title.component-title-primary,
 .badge-showcase .catalog-block-head .section-title.component-title-primary,
@@ -270,6 +271,7 @@
 .paginator-showcase .btn-section-title,
 .tabs-variant-block .btn-section-title,
 .divider-variant-block .btn-section-title,
+.accordion-variant-block .btn-section-title,
 .tag-showcase .btn-section-title,
 .chip-showcase .btn-section-title,
 .badge-showcase .btn-section-title,
@@ -344,10 +346,22 @@
   margin-inline: auto;
 }
 
+.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo].accordion-catalog-demo-area {
+  width: 100%;
+  max-width: 36rem;
+  flex-direction: column;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
 .catalog-preview-frame .catalog-preview-frame__stage .breadcrumb-catalog-demo-area,
 .catalog-preview-frame .catalog-preview-frame__stage .divider-catalog-demo-area,
+.catalog-preview-frame .catalog-preview-frame__stage .accordion-catalog-demo-area,
 .catalog-preview-frame .catalog-preview-frame__stage .paginator-catalog-live-shell {
   flex: 0 1 auto;
+  width: 100%;
+  max-width: 36rem;
   margin-inline: auto;
 }
 
@@ -595,7 +609,8 @@ mds-catalog-state-tag .catalog-state-tag {
 [data-theme="dark"] .drawer-variant-block .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .paginator-showcase .catalog-block-head .section-title.component-title-primary,
 [data-theme="dark"] .tabs-variant-block .catalog-block-head .section-title.component-title-primary,
-[data-theme="dark"] .divider-variant-block .catalog-block-head .section-title.component-title-primary {
+[data-theme="dark"] .divider-variant-block .catalog-block-head .section-title.component-title-primary,
+[data-theme="dark"] .accordion-variant-block .catalog-block-head .section-title.component-title-primary {
   color: var(--catalog-title-color, var(--p-surface-0, var(--surface-0)));
 }
 
@@ -613,7 +628,8 @@ mds-catalog-state-tag .catalog-state-tag {
 [data-theme="dark"] .drawer-variant-block .btn-section-title,
 [data-theme="dark"] .paginator-showcase .btn-section-title,
 [data-theme="dark"] .tabs-variant-block .btn-section-title,
-[data-theme="dark"] .divider-variant-block .btn-section-title {
+[data-theme="dark"] .divider-variant-block .btn-section-title,
+[data-theme="dark"] .accordion-variant-block .btn-section-title {
   color: var(--catalog-title-color, var(--p-surface-0, var(--surface-0)));
   font-weight: 700;
   border-bottom-color: var(--p-surface-800, var(--p-surface-700));

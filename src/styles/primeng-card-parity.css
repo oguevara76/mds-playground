@@ -1,0 +1,47 @@
+/* Paridad PrimeNG Card (extraído de styles/components.css + preview parity).
+   El playground no carga components.css completo; tokens --p-card-* vía primeng-tokens.css.
+   overflow:hidden en root recorta header/imagen a los border-radius superiores del token MDS. */
+
+.p-card {
+  background: var(--p-card-background, var(--card-background, var(--p-content-bg)));
+  color: var(--p-card-color, var(--card-color, var(--p-content-color)));
+  box-shadow: var(--p-card-shadow, var(--card-shadow));
+  border-radius: var(--p-card-border-radius, var(--card-border-radius, var(--p-border-radius-xl, 12px)));
+  overflow: hidden;
+}
+
+.p-card > .p-card-header:first-child {
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  border-top-left-radius: var(--p-card-border-radius, var(--card-border-radius, var(--p-border-radius-xl, 12px)));
+  border-top-right-radius: var(--p-card-border-radius, var(--card-border-radius, var(--p-border-radius-xl, 12px)));
+  overflow: hidden;
+}
+
+.p-card > .p-card-header:first-child img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-top-left-radius: var(--p-card-border-radius, var(--card-border-radius, var(--p-border-radius-xl, 12px)));
+  border-top-right-radius: var(--p-card-border-radius, var(--card-border-radius, var(--p-border-radius-xl, 12px)));
+}
+
+.p-card-body {
+  padding: var(--p-card-body-padding, var(--card-body-padding, var(--dimension-spacing-x16, 16px)));
+  gap: var(--p-card-body-gap, var(--card-body-gap, var(--dimension-spacing-x16, 16px)));
+}
+
+.p-card-caption {
+  gap: var(--p-card-caption-gap, var(--card-caption-gap, var(--dimension-scale-x8, 8px)));
+}
+
+.p-card-title {
+  font-size: var(--p-card-title-font-size, var(--card-title-font-size, 18px));
+  font-weight: var(--p-card-title-font-weight, var(--card-title-font-weight, 500));
+}
+
+.p-card-subtitle {
+  color: var(--p-card-subtitle-color, var(--card-subtitle-color, var(--text-muted-color, var(--p-surface-500))));
+}

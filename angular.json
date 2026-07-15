@@ -53,6 +53,7 @@
               "src/styles/primeng-dialog-parity.css",
               "styles/app.css",
               "src/styles/catalog-layout.css",
+              "src/styles/primeng-card-parity.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -152,6 +153,7 @@
               "src/styles/primeng-dialog-parity.css",
               "styles/app.css",
               "src/styles/catalog-layout.css",
+              "src/styles/primeng-card-parity.css",
               "src/styles.css"
             ],
             "scripts": []

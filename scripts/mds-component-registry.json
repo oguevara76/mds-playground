@@ -81,6 +81,16 @@
     "parity": "src/styles/primeng-tabs-parity.css",
     "watch_vars": ["--tabs-*", "--p-tabs-*"]
   },
+  "accordion": {
+    "playground_anchor": "pg-accordion",
+    "primeng_prefix": "accordion",
+    "watch_vars": ["--accordion-*", "--p-accordion-*"]
+  },
+  "card": {
+    "playground_anchor": "pg-card",
+    "primeng_prefix": "card",
+    "watch_vars": ["--card-*", "--p-card-*"]
+  },
   "badge": {
     "playground_anchor": "pg-badge",
     "override": "src/app/theme/badge-mds-overrides.ts",

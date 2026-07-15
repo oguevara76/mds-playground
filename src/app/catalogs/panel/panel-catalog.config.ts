@@ -1,3 +1,96 @@
+// ─── Accordion ───────────────────────────────────────────────────────────────
+
+export interface AccordionCatalogPanel {
+  value: string;
+  header: string;
+  content: string;
+}
+
+export const ACCORDION_CATALOG_PANELS: AccordionCatalogPanel[] = [
+  {
+    value: '0',
+    header: 'General',
+    content:
+      'Resumen del expediente, estado actual y acciones rápidas para el equipo.',
+  },
+  {
+    value: '1',
+    header: 'Detalles',
+    content:
+      'Datos de contacto, dirección fiscal y preferencias de notificación del titular.',
+  },
+  {
+    value: '2',
+    header: 'Historial',
+    content:
+      'Registro de cambios, aprobaciones y eventos sincronizados en los últimos 30 días.',
+  },
+];
+
+export type AccordionTemplateIconTone = 'amber' | 'blue' | 'green';
+
+export interface AccordionTemplatePanel {
+  value: string;
+  header: string;
+  content: string;
+  icon: string;
+  iconTone: AccordionTemplateIconTone;
+}
+
+/** Paneles del ejemplo Template (paridad con primeng.dev/accordion#template). */
+export const ACCORDION_TEMPLATE_PANELS: AccordionTemplatePanel[] = [
+  {
+    value: '0',
+    header: 'What is this service about?',
+    content:
+      'This service helps you manage your projects more efficiently by offering real-time collaboration, task tracking, and powerful analytics. Whether you\'re working solo or in a team, it\'s built to scale with your needs.',
+    icon: 'pi-question-circle',
+    iconTone: 'amber',
+  },
+  {
+    value: '1',
+    header: 'Is my data secure?',
+    content:
+      'Yes. We use end-to-end encryption and follow industry best practices to ensure your data is protected. Your information is stored on secure servers and regularly backed up.',
+    icon: 'pi-lock',
+    iconTone: 'blue',
+  },
+  {
+    value: '2',
+    header: 'Can I upgrade or downgrade my plan later?',
+    content:
+      'Absolutely. You can change your subscription plan at any time from your account settings. Changes take effect immediately, and any billing adjustments are handled automatically.',
+    icon: 'pi-credit-card',
+    iconTone: 'green',
+  },
+];
+
+export type AccordionCatalogStateKey = 'active' | 'inactive' | 'disabled';
+
+export interface AccordionCatalogStateDemo {
+  key: AccordionCatalogStateKey;
+  caption: string;
+}
+
+export const ACCORDION_CATALOG_STATE_DEMOS: AccordionCatalogStateDemo[] = [
+  { key: 'active', caption: 'Active' },
+  { key: 'inactive', caption: 'Inactive' },
+  { key: 'disabled', caption: 'Disabled' },
+];
+
+export type AccordionCatalogExampleKey = 'basic' | 'multiple' | 'indicator' | 'template';
+
+export interface AccordionInteractionState {
+  example: AccordionCatalogExampleKey;
+}
+
+export const ACCORDION_EXAMPLE_OPTIONS: { label: string; value: AccordionCatalogExampleKey }[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Multiple', value: 'multiple' },
+  { label: 'Indicator (open/close)', value: 'indicator' },
+  { label: 'Template', value: 'template' },
+];
+
 export interface PanelCatalogTab {
   value: string;
   label: string;
@@ -82,3 +175,20 @@ export const PANEL_CATALOG_TAB_STATE_DEMOS: PanelCatalogTabStateDemo[] = [
   { key: 'active', caption: 'Active' },
   { key: 'inactive', caption: 'Inactive' },
 ];
+
+// ─── Card ─────────────────────────────────────────────────────────────────────
+
+export type CardCatalogExampleKey = 'basic' | 'form' | 'advanced';
+
+export interface CardInteractionState {
+  example: CardCatalogExampleKey;
+}
+
+export const CARD_EXAMPLE_OPTIONS: { label: string; value: CardCatalogExampleKey }[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'With Form', value: 'form' },
+  { label: 'Advanced', value: 'advanced' },
+];
+
+/** Altura fija del preview Card — calibrada al ejemplo Advanced (el más alto). */
+export const CARD_CATALOG_DEMO_HEIGHT = '440px';

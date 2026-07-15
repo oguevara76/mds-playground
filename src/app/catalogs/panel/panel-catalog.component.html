@@ -1,4 +1,341 @@
 <div class="cards-grid form-catalog-stack">
+  <!-- ─── Card ──────────────────────────────────────────────────────────────── -->
+  <div class="catalog-preview card-variant-block" [style.--card-catalog-demo-height]="cardDemoHeight">
+    <section id="pg-card" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Card' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Card"
+        >
+          <div
+            catalogPreviewDemo
+            class="card-catalog-demo-area catalog-showcase-interactive"
+          >
+            @switch (cardIx().example) {
+              @case ('basic') {
+                <p-card
+                  class="card-catalog-live"
+                  header="Starter Plan"
+                  subheader="For personal projects"
+                  ariaLabel="Card interactivo del catálogo — Basic"
+                >
+                  <p class="card-catalog-body-text">
+                    Includes essential features, basic analytics and access to community support.
+                  </p>
+                  <ng-template #footer>
+                    <span class="card-catalog-footer-text">Cancel anytime. No credit card required.</span>
+                  </ng-template>
+                </p-card>
+              }
+              @case ('form') {
+                <p-card class="card-catalog-live card-catalog-live--form" ariaLabel="Card interactivo del catálogo — With Form">
+                  <ng-template #title>Welcome back</ng-template>
+                  <ng-template #subtitle>Sign in with your email to continue.</ng-template>
+                  <div class="card-catalog-form">
+                    <div class="card-catalog-field">
+                      <label class="card-catalog-field-label" for="card-catalog-email">Email</label>
+                      <input
+                        pInputText
+                        id="card-catalog-email"
+                        type="email"
+                        class="card-catalog-field-input"
+                        [(ngModel)]="cardFormEmail"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="card-catalog-field">
+                      <div class="card-catalog-field-label-row">
+                        <label class="card-catalog-field-label" for="card-catalog-password">Password</label>
+                        <button type="button" class="card-catalog-link-button">Forgot password?</button>
+                      </div>
+                      <p-password
+                        inputId="card-catalog-password"
+                        [(ngModel)]="cardFormPassword"
+                        [feedback]="false"
+                        [toggleMask]="true"
+                        [fluid]="true"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="card-catalog-form-actions">
+                      <p-button label="Login" type="button" styleClass="card-catalog-form-cta" />
+                      <p-button
+                        label="Login with Google"
+                        type="button"
+                        severity="secondary"
+                        [outlined]="true"
+                        icon="pi pi-google"
+                        styleClass="card-catalog-form-cta"
+                      />
+                    </div>
+                  </div>
+                  <ng-template #footer>
+                    <span class="card-catalog-form-footer-text">
+                      Don't have an account?
+                      <button type="button" class="card-catalog-link-button">Sign up</button>
+                    </span>
+                  </ng-template>
+                </p-card>
+              }
+              @case ('advanced') {
+                <p-card class="card-catalog-live card-catalog-live--advanced" ariaLabel="Card interactivo del catálogo — Advanced">
+                  <ng-template #header>
+                    <img
+                      src="https://images.unsplash.com/photo-1553787434-45e1d245bfbb?q=80&w=1310&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      alt="Sakura Fresh Market — productos ecológicos"
+                      class="card-catalog-advanced-image"
+                    />
+                  </ng-template>
+                  <ng-template #title>Sakura Fresh Market</ng-template>
+                  <ng-template #subtitle>
+                    <div class="card-catalog-advanced-tags">
+                      <p-tag value="Daily" severity="secondary" />
+                      <p-tag value="Premium" severity="warn" />
+                    </div>
+                  </ng-template>
+                  <p class="card-catalog-body-text">
+                    Sakura Fresh Market is your go-to store for fresh local produce, Japanese snacks, and daily essentials — all in one place!
+                  </p>
+                  <div class="card-catalog-advanced-meta">
+                    <span class="card-catalog-advanced-rating">
+                      <strong>4.6</strong> (200+ reviews)
+                    </span>
+                    <span class="card-catalog-footer-text">Tokyo, Shibuya-ku</span>
+                  </div>
+                  <ng-template #footer>
+                    <div class="card-catalog-advanced-footer-actions">
+                      <p-button label="Call Us" type="button" [outlined]="true" />
+                      <p-button label="Visit Site" type="button" />
+                    </div>
+                  </ng-template>
+                </p-card>
+              }
+            }
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Examples</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="cardExampleOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="cardIx().example"
+                  (ngModelChange)="setCardExample($event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Ejemplo de Card"
+                />
+              </div>
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
+  <!-- ─── Accordion ─────────────────────────────────────────────────────────── -->
+  <div class="catalog-preview accordion-variant-block">
+    <section id="pg-accordion" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Accordion' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showExpand]="true"
+          configAriaLabel="Configurar Accordion"
+          expandAriaLabel="Expandir estados de Accordion"
+          collapseAriaLabel="Contraer estados de Accordion"
+        >
+          <div catalogPreviewDemo class="accordion-catalog-demo-area catalog-showcase-interactive">
+            @switch (accordionIx().example) {
+              @case ('basic') {
+                <p-accordion
+                  class="accordion-catalog-live"
+                  [value]="accordionActive()"
+                  (valueChange)="onAccordionChange($event)"
+                  ariaLabel="Accordion interactivo del catálogo — Basic"
+                >
+                  <p-accordion-panel value="0">
+                    <p-accordion-header>General</p-accordion-header>
+                    <p-accordion-content>
+                      <p class="accordion-catalog-panel-text">
+                        Resumen del expediente, estado actual y acciones rápidas para el equipo.
+                      </p>
+                    </p-accordion-content>
+                  </p-accordion-panel>
+                  <p-accordion-panel value="1">
+                    <p-accordion-header>Detalles</p-accordion-header>
+                    <p-accordion-content>
+                      <p class="accordion-catalog-panel-text">
+                        Datos de contacto, dirección fiscal y preferencias de notificación del titular.
+                      </p>
+                    </p-accordion-content>
+                  </p-accordion-panel>
+                  <p-accordion-panel value="2">
+                    <p-accordion-header>Historial</p-accordion-header>
+                    <p-accordion-content>
+                      <p class="accordion-catalog-panel-text">
+                        Registro de cambios, aprobaciones y eventos sincronizados en los últimos 30 días.
+                      </p>
+                    </p-accordion-content>
+                  </p-accordion-panel>
+                </p-accordion>
+              }
+              @case ('multiple') {
+                <p-accordion
+                  class="accordion-catalog-live"
+                  [multiple]="true"
+                  [value]="accordionActive()"
+                  (valueChange)="onAccordionChange($event)"
+                  ariaLabel="Accordion interactivo del catálogo — Multiple"
+                >
+                  @for (panel of accordionPanels; track trackAccordionPanel($index, panel)) {
+                    <p-accordion-panel [value]="panel.value">
+                      <p-accordion-header>{{ panel.header }}</p-accordion-header>
+                      <p-accordion-content>
+                        <p class="accordion-catalog-panel-text">{{ panel.content }}</p>
+                      </p-accordion-content>
+                    </p-accordion-panel>
+                  }
+                </p-accordion>
+              }
+              @case ('indicator') {
+                <p-accordion
+                  class="accordion-catalog-live"
+                  [value]="accordionActive()"
+                  (valueChange)="onAccordionChange($event)"
+                  ariaLabel="Accordion interactivo del catálogo — Indicator"
+                >
+                  @for (panel of accordionPanels; track trackAccordionPanel($index, panel)) {
+                    <p-accordion-panel [value]="panel.value">
+                      <p-accordion-header>
+                        {{ panel.header }}
+                        <ng-template #toggleicon let-active="active">
+                          <i
+                            class="accordion-catalog-toggle-icon pi p-accordionheader-toggle-icon"
+                            [ngClass]="active ? 'pi-minus' : 'pi-plus'"
+                            aria-hidden="true"
+                          ></i>
+                        </ng-template>
+                      </p-accordion-header>
+                      <p-accordion-content>
+                        <p class="accordion-catalog-panel-text">{{ panel.content }}</p>
+                      </p-accordion-content>
+                    </p-accordion-panel>
+                  }
+                </p-accordion>
+              }
+              @case ('template') {
+                <p-accordion
+                  class="accordion-catalog-live accordion-catalog-live--template"
+                  expandIcon="pi pi-plus"
+                  collapseIcon="pi pi-minus"
+                  [value]="accordionActive()"
+                  (valueChange)="onAccordionChange($event)"
+                  ariaLabel="Accordion interactivo del catálogo — Template"
+                >
+                  @for (panel of accordionTemplatePanels; track trackAccordionTemplatePanel($index, panel)) {
+                    <p-accordion-panel [value]="panel.value">
+                      <p-accordion-header>
+                        <span class="accordion-catalog-template-header">
+                          <i
+                            class="accordion-catalog-template-icon pi"
+                            [ngClass]="panel.icon + ' is-' + panel.iconTone"
+                            aria-hidden="true"
+                          ></i>
+                          <span class="accordion-catalog-template-label">{{ panel.header }}</span>
+                        </span>
+                      </p-accordion-header>
+                      <p-accordion-content>
+                        <p class="accordion-catalog-panel-text">{{ panel.content }}</p>
+                      </p-accordion-content>
+                    </p-accordion-panel>
+                  }
+                </p-accordion>
+              }
+            }
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Examples</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="accordionExampleOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="accordionIx().example"
+                  (ngModelChange)="setAccordionExample($event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Ejemplo de Accordion"
+                />
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="States" icon="list">
+              <div
+                class="accordion-catalog-states-row is-static-preview"
+                aria-label="Accordion por estado activo, inactivo y deshabilitado"
+              >
+                @for (demo of accordionStateDemos; track trackAccordionState($index, demo)) {
+                  <div class="accordion-catalog-state">
+                    <div class="accordion-catalog-state-preview">
+                      <div class="p-accordion p-component accordion-catalog-state-demo">
+                        <div
+                          class="p-accordionpanel p-component"
+                          [class.p-accordionpanel-active]="demo.key === 'active'"
+                          [class.p-disabled]="demo.key === 'disabled'"
+                        >
+                          <button
+                            type="button"
+                            class="p-accordionheader p-component"
+                            [attr.aria-expanded]="demo.key === 'active'"
+                            [disabled]="demo.key === 'disabled'"
+                          >
+                            <span class="p-accordionheader-text">General</span>
+                            <i class="p-accordionheader-toggle-icon pi pi-chevron-down" aria-hidden="true"></i>
+                          </button>
+                          @if (demo.key === 'active') {
+                            <div class="p-accordioncontent p-component">
+                              <div class="p-accordioncontent-content">
+                                <p class="accordion-catalog-panel-text">
+                                  Resumen del expediente y acciones rápidas.
+                                </p>
+                              </div>
+                            </div>
+                          }
+                        </div>
+                        <div class="p-accordionpanel p-component">
+                          <button type="button" class="p-accordionheader p-component" aria-expanded="false">
+                            <span class="p-accordionheader-text">Detalles</span>
+                            <i class="p-accordionheader-toggle-icon pi pi-chevron-right" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
+                  </div>
+                }
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
   <!-- ─── Divider ─────────────────────────────────────────────────────────── -->
   <div class="catalog-preview divider-variant-block">
     <section id="pg-divider" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
