@@ -21,6 +21,7 @@ import {
   DIVIDER_STATE_DEMOS,
   PANEL_CATALOG_TAB_STATE_DEMOS,
   PANEL_EXAMPLE_OPTIONS,
+  STEPPER_CATALOG_STATE_DEMOS,
 } from '../catalogs/panel/panel-catalog.config';
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
@@ -75,10 +76,12 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-card': 'card',
   'pg-accordion': 'accordion',
   'pg-tabs': 'tabs',
+  'pg-stepper': 'stepper',
   'pg-breadcrumb': 'breadcrumb',
   'pg-tooltip': 'tooltip',
   'pg-dialog': 'dialog',
   'pg-confirmdialog': 'confirmdialog',
+  'pg-confirmpopup': 'confirmpopup',
   'pg-drawer': 'drawer',
   'pg-popover': 'popover',
   'pg-tag': 'tag',
@@ -207,6 +210,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       variantCount: PANEL_CATALOG_TAB_STATE_DEMOS.length,
     },
     {
+      id: 'pg-stepper',
+      name: 'Stepper',
+      route: 'panel',
+      sectionLabel: 'Panel',
+      keywords: ['p-stepper', 'wizard', 'pasos', 'steps'],
+      variantCount: STEPPER_CATALOG_STATE_DEMOS.length,
+    },
+    {
       id: 'pg-breadcrumb',
       name: 'Breadcrumb',
       route: 'menu',
@@ -236,6 +247,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       route: 'overlay',
       sectionLabel: 'Overlay',
       keywords: ['p-confirmdialog', 'confirm', 'confirmation', 'alertdialog'],
+      variantCount: 2,
+    },
+    {
+      id: 'pg-confirmpopup',
+      name: 'ConfirmPopup',
+      route: 'overlay',
+      sectionLabel: 'Overlay',
+      keywords: ['p-confirmpopup', 'confirm', 'confirmation', 'popup', 'popover'],
       variantCount: 2,
     },
     {

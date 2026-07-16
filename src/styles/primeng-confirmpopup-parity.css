@@ -1,0 +1,5 @@
+/* ConfirmPopup showcase — popup anclado al botón disparador */
+
+.confirmpopup-catalog-live .p-confirmpopup-footer {
+  justify-content: flex-end;
+}

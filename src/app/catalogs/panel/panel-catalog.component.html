@@ -690,4 +690,359 @@
       </div>
     </section>
   </div>
+
+  <!-- ─── Stepper ───────────────────────────────────────────────────────────── -->
+  <div
+    class="catalog-preview stepper-variant-block"
+    [style.--stepper-catalog-demo-height]="stepperDemoHeight"
+    [style.--stepper-catalog-template-width]="stepperTemplateWidth"
+  >
+    <section id="pg-stepper" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Stepper' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showExpand]="true"
+          configAriaLabel="Configurar Stepper"
+          expandAriaLabel="Expandir estados de Stepper"
+          collapseAriaLabel="Contraer estados de Stepper"
+        >
+          <div
+            catalogPreviewDemo
+            class="catalog-showcase-interactive stepper-catalog-demo-area"
+            [class.stepper-catalog-demo-area--steps-only]="stepperIx().stepsOnly"
+            [class.stepper-catalog-demo-area--template]="stepperIx().variant === 'template'"
+          >
+            @switch (stepperIx().variant) {
+              @case ('horizontal') {
+                <p-stepper
+                  class="stepper-catalog-live stepper-catalog-live--horizontal"
+                  [value]="stepperActiveStep()"
+                  (valueChange)="onStepperValueChange($event)"
+                  ariaLabel="Stepper horizontal del catálogo"
+                >
+                  <p-step-list>
+                    @for (step of stepperBasicSteps; track trackStepperStep($index, step)) {
+                      <p-step [value]="step.value">{{ step.header }}</p-step>
+                    }
+                  </p-step-list>
+                  @if (!stepperIx().stepsOnly) {
+                  <p-step-panels>
+                    <p-step-panel [value]="1">
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-panel-stack">
+                          <div class="stepper-catalog-content-slot">{{ stepperBasicSteps[0].content }}</div>
+                          <div class="stepper-catalog-nav-row stepper-catalog-nav-row--end">
+                            <p-button
+                              label="Next"
+                              icon="pi pi-arrow-right"
+                              iconPos="right"
+                              (onClick)="activateCallback(2)"
+                            />
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                    <p-step-panel [value]="2">
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-panel-stack">
+                          <div class="stepper-catalog-content-slot">{{ stepperBasicSteps[1].content }}</div>
+                        </div>
+                        <div class="stepper-catalog-nav-row stepper-catalog-nav-row--between">
+                          <p-button
+                            label="Back"
+                            severity="secondary"
+                            icon="pi pi-arrow-left"
+                            (onClick)="activateCallback(1)"
+                          />
+                          <p-button
+                            label="Next"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            (onClick)="activateCallback(3)"
+                          />
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                    <p-step-panel [value]="3">
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-panel-stack">
+                          <div class="stepper-catalog-content-slot">{{ stepperBasicSteps[2].content }}</div>
+                        </div>
+                        <div class="stepper-catalog-nav-row stepper-catalog-nav-row--start">
+                          <p-button
+                            label="Back"
+                            icon="pi pi-arrow-left"
+                            iconPos="right"
+                            (onClick)="activateCallback(2)"
+                          />
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                  </p-step-panels>
+                  }
+                </p-stepper>
+              }
+              @case ('vertical') {
+                <p-stepper
+                  class="stepper-catalog-live stepper-catalog-live--vertical"
+                  [value]="stepperActiveStep()"
+                  (valueChange)="onStepperValueChange($event)"
+                  ariaLabel="Stepper vertical del catálogo"
+                >
+                  <p-step-item [value]="1">
+                    <p-step>{{ stepperBasicSteps[0].header }}</p-step>
+                    @if (!stepperIx().stepsOnly) {
+                    <p-step-panel>
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-panel-stack">
+                          <div class="stepper-catalog-content-slot">{{ stepperBasicSteps[0].content }}</div>
+                        </div>
+                        <div class="stepper-catalog-nav-row stepper-catalog-nav-row--vertical">
+                          <p-button label="Next" (onClick)="activateCallback(2)" />
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                    }
+                  </p-step-item>
+                  <p-step-item [value]="2">
+                    <p-step>{{ stepperBasicSteps[1].header }}</p-step>
+                    @if (!stepperIx().stepsOnly) {
+                    <p-step-panel>
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-panel-stack">
+                          <div class="stepper-catalog-content-slot">{{ stepperBasicSteps[1].content }}</div>
+                        </div>
+                        <div class="stepper-catalog-nav-row stepper-catalog-nav-row--vertical stepper-catalog-nav-row--gap">
+                          <p-button label="Back" severity="secondary" (onClick)="activateCallback(1)" />
+                          <p-button label="Next" (onClick)="activateCallback(3)" />
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                    }
+                  </p-step-item>
+                  <p-step-item [value]="3">
+                    <p-step>{{ stepperBasicSteps[2].header }}</p-step>
+                    @if (!stepperIx().stepsOnly) {
+                    <p-step-panel>
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-panel-stack">
+                          <div class="stepper-catalog-content-slot">{{ stepperBasicSteps[2].content }}</div>
+                        </div>
+                        <div class="stepper-catalog-nav-row stepper-catalog-nav-row--vertical">
+                          <p-button label="Back" severity="secondary" (onClick)="activateCallback(2)" />
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                    }
+                  </p-step-item>
+                </p-stepper>
+              }
+              @case ('template') {
+                <p-stepper
+                  class="stepper-catalog-live stepper-catalog-live--template"
+                  [value]="stepperActiveStep()"
+                  (valueChange)="onStepperValueChange($event)"
+                  ariaLabel="Stepper template del catálogo"
+                >
+                  <p-step-list>
+                    @for (step of stepperTemplateSteps; track trackStepperStep($index, step)) {
+                      <p-step [value]="step.value" class="stepper-catalog-template-step">
+                        <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                          <button
+                            type="button"
+                            class="stepper-catalog-template-step-btn"
+                            (click)="activateCallback()"
+                          >
+                            <span
+                              class="stepper-catalog-template-step-icon"
+                              [ngClass]="{ 'is-complete': isStepperTemplateStepComplete(value) }"
+                            >
+                              <i [ngClass]="step.icon" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </ng-template>
+                      </p-step>
+                    }
+                  </p-step-list>
+                  @if (!stepperIx().stepsOnly) {
+                  <p-step-panels>
+                    <p-step-panel [value]="1">
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-template-panel">
+                          <div class="stepper-catalog-template-title">Create your account</div>
+                          <div class="stepper-catalog-template-field">
+                            <input
+                              pInputText
+                              type="text"
+                              placeholder="Name"
+                              [(ngModel)]="stepperTemplateName"
+                              [fluid]="true"
+                              aria-label="Name"
+                            />
+                          </div>
+                          <div class="stepper-catalog-template-field">
+                            <input
+                              pInputText
+                              type="email"
+                              placeholder="Email"
+                              [(ngModel)]="stepperTemplateEmail"
+                              [fluid]="true"
+                              aria-label="Email"
+                            />
+                          </div>
+                          <div class="stepper-catalog-template-field">
+                            <p-password
+                              [(ngModel)]="stepperTemplatePassword"
+                              placeholder="Password"
+                              [feedback]="false"
+                              [toggleMask]="true"
+                              [fluid]="true"
+                              autocomplete="off"
+                              ariaLabel="Password"
+                            />
+                          </div>
+                        </div>
+                        <div class="stepper-catalog-nav-row stepper-catalog-nav-row--end">
+                          <p-button
+                            label="Next"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            (onClick)="activateCallback(2)"
+                          />
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                    <p-step-panel [value]="2">
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-template-panel stepper-catalog-template-panel--wide">
+                          <div class="stepper-catalog-template-title">Choose your interests</div>
+                          <div class="stepper-catalog-template-interests">
+                            @for (label of stepperTemplateInterests; track trackStepperTemplateInterest($index, label)) {
+                              <p-togglebutton
+                                [ngModel]="stepperTemplateInterestValues()[label]"
+                                (ngModelChange)="patchStepperTemplateInterest(label, $event)"
+                                [onLabel]="label"
+                                [offLabel]="label"
+                                ariaLabel="Interest {{ label }}"
+                              />
+                            }
+                          </div>
+                        </div>
+                        <div class="stepper-catalog-nav-row stepper-catalog-nav-row--between">
+                          <p-button
+                            label="Back"
+                            severity="secondary"
+                            icon="pi pi-arrow-left"
+                            (onClick)="activateCallback(1)"
+                          />
+                          <p-button
+                            label="Next"
+                            icon="pi pi-arrow-right"
+                            iconPos="right"
+                            (onClick)="activateCallback(3)"
+                          />
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                    <p-step-panel [value]="3">
+                      <ng-template #content let-activateCallback="activateCallback">
+                        <div class="stepper-catalog-template-panel stepper-catalog-template-panel--success">
+                          <div class="stepper-catalog-template-title">Account created successfully</div>
+                          <div class="stepper-catalog-template-success-image-wrap">
+                            <img
+                              [src]="stepperTemplateSuccessImage"
+                              alt=""
+                              class="stepper-catalog-template-success-image"
+                            />
+                          </div>
+                        </div>
+                        <div class="stepper-catalog-nav-row stepper-catalog-nav-row--start">
+                          <p-button
+                            label="Back"
+                            severity="secondary"
+                            icon="pi pi-arrow-left"
+                            (onClick)="activateCallback(2)"
+                          />
+                        </div>
+                      </ng-template>
+                    </p-step-panel>
+                  </p-step-panels>
+                  }
+                </p-stepper>
+              }
+            }
+          </div>
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Variant</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="stepperVariantOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="stepperIx().variant"
+                  (ngModelChange)="patchStepperIx({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variante del stepper"
+                />
+              </div>
+            </div>
+            @if (stepperIx().variant === 'horizontal' || stepperIx().variant === 'template') {
+              <p-divider styleClass="button-config-divider" />
+              <div class="input-config-row">
+                <span class="input-config-label">Steps only</span>
+                <p-toggleswitch
+                  [ngModel]="stepperIx().stepsOnly"
+                  (ngModelChange)="patchStepperIx({ stepsOnly: $event })"
+                  ariaLabel="Mostrar solo pasos sin contenido"
+                />
+              </div>
+            }
+          </ng-container>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="States" icon="list">
+              <div
+                class="stepper-catalog-states-row is-static-preview"
+                aria-label="Stepper por estado default, activo y deshabilitado"
+              >
+                @for (demo of stepperStateDemos; track trackStepperState($index, demo)) {
+                  <div class="stepper-catalog-state">
+                    <div class="stepper-catalog-state-preview">
+                      <div class="p-stepper p-component stepper-catalog-state-demo">
+                        <div class="p-steplist p-component" role="presentation">
+                          <span
+                            class="p-step p-component"
+                            [class.p-step-active]="isStepperStepActive(1, demo.key)"
+                            [class.p-disabled]="isStepperStepDisabled(1, demo.key)"
+                            role="presentation"
+                          >
+                            <button
+                              class="p-step-header"
+                              type="button"
+                              [disabled]="isStepperStepDisabled(1, demo.key)"
+                              tabindex="-1"
+                            >
+                              <span class="p-step-number">1</span>
+                              <span class="p-step-title">{{ stepperBasicSteps[0].header }}</span>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
+                  </div>
+                }
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
 </div>

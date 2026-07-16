@@ -556,3 +556,319 @@
 :host.panel-catalog-page .tabs-catalog-state-demo .p-tabpanels {
   display: none;
 }
+
+/* ─── Stepper ─────────────────────────────────────────────────────────────── */
+
+:host.panel-catalog-page .stepper-variant-block {
+  --catalog-preview-frame-min-height: calc(
+    var(--stepper-catalog-demo-height, 440px) + var(--catalog-preview-frame-padding-y, 48px) * 2
+  );
+}
+
+:host.panel-catalog-page .stepper-variant-block ::ng-deep .catalog-preview-frame__stage {
+  min-height: var(--stepper-catalog-demo-height, 440px);
+  align-items: center;
+}
+
+:host.panel-catalog-page .stepper-variant-block ::ng-deep [catalogPreviewDemo].stepper-catalog-demo-area {
+  width: 100%;
+  max-width: 36rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+:host.panel-catalog-page .stepper-variant-block ::ng-deep [catalogPreviewDemo].stepper-catalog-demo-area--template {
+  max-width: var(--stepper-catalog-template-width, 40rem);
+  align-items: stretch;
+}
+
+:host.panel-catalog-page .stepper-catalog-demo-area--template {
+  align-items: stretch;
+}
+
+:host.panel-catalog-page .stepper-catalog-demo-area {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  min-height: var(--stepper-catalog-demo-height, 440px);
+  height: var(--stepper-catalog-demo-height, 440px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+:host.panel-catalog-page .stepper-catalog-live {
+  width: 100%;
+  min-width: 0;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--horizontal,
+:host.panel-catalog-page .stepper-catalog-live--vertical {
+  max-width: 36rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template {
+  width: 100%;
+  max-width: var(--stepper-catalog-template-width, 40rem);
+  margin-inline: auto;
+  align-self: stretch;
+  --p-stepper-step-padding: 0;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep p-step-list.p-steplist,
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .p-steplist {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep p-step.stepper-catalog-template-step,
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .stepper-catalog-template-step.p-step {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--p-stepper-step-gap, 14px);
+  min-width: 0;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep p-step.stepper-catalog-template-step .p-stepper-separator,
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .stepper-catalog-template-step .p-stepper-separator {
+  flex: 1 1 0;
+  min-width: 1.5rem;
+  margin-inline-end: var(--p-stepper-step-gap, 14px);
+  width: auto;
+  max-width: none;
+  height: var(--p-stepper-separator-size, 2px);
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep p-step.stepper-catalog-template-step:last-of-type,
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .stepper-catalog-template-step.p-step:last-of-type {
+  flex: 0 0 auto;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .p-steppanels {
+  width: 100%;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .p-steppanel-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+:host.panel-catalog-page .stepper-catalog-demo-area--steps-only {
+  justify-content: center;
+}
+
+:host.panel-catalog-page .stepper-catalog-demo-area--steps-only .stepper-catalog-live {
+  align-self: center;
+}
+
+:host.panel-catalog-page .stepper-catalog-panel-stack {
+  display: flex;
+  flex-direction: column;
+  min-height: 12rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--vertical {
+  --p-stepper-steppanel-background: transparent;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--vertical ::ng-deep .p-steppanel,
+:host.panel-catalog-page .stepper-catalog-live--vertical ::ng-deep .p-steppanel-content {
+  background: transparent;
+}
+
+:host.panel-catalog-page .stepper-catalog-content-slot {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  border: 2px dashed var(--p-content-border-color, var(--content-border-color));
+  border-radius: var(--p-content-border-radius, var(--content-border-radius, 6px));
+  background: var(--p-surface-50, var(--surface-50, var(--content-background)));
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--p-stepper-steppanel-color, var(--content-color));
+}
+
+:host-context([data-theme='dark']).panel-catalog-page .stepper-catalog-content-slot {
+  background: var(--p-surface-950, var(--surface-950, var(--content-background)));
+  border-color: var(--p-surface-700, var(--surface-700, var(--content-border-color)));
+}
+
+:host.panel-catalog-page .stepper-catalog-nav-row {
+  display: flex;
+  align-items: center;
+  padding-top: 1.5rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .stepper-catalog-nav-row {
+  align-self: stretch;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-top: 1.25rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-nav-row--end {
+  justify-content: flex-end;
+}
+
+:host.panel-catalog-page .stepper-catalog-nav-row--between {
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-nav-row--start {
+  justify-content: flex-start;
+}
+
+:host.panel-catalog-page .stepper-catalog-nav-row--vertical {
+  padding-top: 1.5rem;
+  padding-bottom: 0;
+}
+
+:host.panel-catalog-page .stepper-catalog-nav-row--gap {
+  gap: 0.5rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-step-btn {
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-step-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid var(--p-content-border-color, var(--content-border-color));
+  border-radius: 999px;
+  color: var(--p-text-muted-color, var(--text-muted-color));
+  background: var(--p-content-background, var(--content-background));
+  font-size: 1.25rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-step-icon.is-complete,
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .p-step-active .stepper-catalog-template-step-icon {
+  border-color: var(--p-primary-color, var(--primary-color));
+  background: var(--p-primary-color, var(--primary-color));
+  color: var(--p-primary-contrast-color, var(--primary-contrast-color, #fff));
+}
+
+:host.panel-catalog-page .stepper-catalog-template-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  min-height: 16rem;
+  width: 100%;
+  max-width: 20rem;
+  margin-inline: auto;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-panel--wide {
+  max-width: 32rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-panel--success {
+  align-items: center;
+  max-width: 24rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-title {
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: inherit;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-field {
+  display: flex;
+  flex-direction: column;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-input,
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .stepper-catalog-template-input {
+  width: 100%;
+}
+
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .stepper-catalog-template-password,
+:host.panel-catalog-page .stepper-catalog-live--template ::ng-deep .stepper-catalog-template-password .p-password {
+  width: 100%;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-interests {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-success-image-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+:host.panel-catalog-page .stepper-catalog-template-success-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:host.panel-catalog-page .stepper-catalog-states-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: flex-end;
+}
+
+:host.panel-catalog-page .stepper-catalog-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--catalog-state-caption-gap, 12px);
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: none;
+  width: auto;
+}
+
+:host.panel-catalog-page .stepper-catalog-state-preview {
+  display: flex;
+  width: auto;
+  margin-inline: 0;
+  align-items: center;
+}
+
+:host.panel-catalog-page .stepper-catalog-state-demo {
+  width: auto;
+  pointer-events: none;
+}
+
+:host.panel-catalog-page .stepper-catalog-state-demo .p-step-header {
+  cursor: default;
+}

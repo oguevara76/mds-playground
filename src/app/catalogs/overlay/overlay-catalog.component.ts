@@ -5,6 +5,7 @@ import { ConfirmationService } from 'primeng/api';
 import { Avatar } from 'primeng/avatar';
 import { Button } from 'primeng/button';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { ConfirmPopup } from 'primeng/confirmpopup';
 import { Dialog } from 'primeng/dialog';
 import { Drawer } from 'primeng/drawer';
 import { InputText } from 'primeng/inputtext';
@@ -27,6 +28,7 @@ import {
   OVERLAY_CATALOG_CONFIRM_DIALOG_MESSAGE,
   OVERLAY_CATALOG_CONFIRM_DIALOG_REJECT_LABEL,
   CONFIRM_DIALOG_CATALOG_KEY,
+  CONFIRM_POPUP_CATALOG_KEY,
   OVERLAY_CATALOG_DIALOG_EVENT_CANCEL_LABEL,
   OVERLAY_CATALOG_DIALOG_EVENT_CREATE_LABEL,
   OVERLAY_CATALOG_DIALOG_EVENT_DESCRIPTION_LABEL,
@@ -94,6 +96,7 @@ import {
     FormsModule,
     Dialog,
     ConfirmDialog,
+    ConfirmPopup,
     Drawer,
     Button,
     ToggleSwitch,
@@ -159,6 +162,7 @@ export class OverlayCatalogComponent {
   eventDescription = '';
 
   readonly confirmDialogKey = CONFIRM_DIALOG_CATALOG_KEY;
+  readonly confirmPopupKey = CONFIRM_POPUP_CATALOG_KEY;
   readonly confirmDialogHeader = OVERLAY_CATALOG_CONFIRM_DIALOG_HEADER;
   readonly confirmDialogMessage = OVERLAY_CATALOG_CONFIRM_DIALOG_MESSAGE;
   readonly confirmDeleteLabel = OVERLAY_CATALOG_CONFIRM_DIALOG_DELETE_LABEL;
@@ -265,6 +269,20 @@ export class OverlayCatalogComponent {
   }
 
   openDrawer(position: DrawerPositionKey): void {
+    const leavingFullScreen = this.drawerIx().fullScreen;
+
+    if (leavingFullScreen) {
+      // PrimeNG resetea transformOptions a "left" al poner fullScreen=false;
+      // aplicar posición en un tick posterior evita la animación desde la izquierda.
+      this.drawerVisible = false;
+      this.patchDrawerIx({ fullScreen: false });
+      queueMicrotask(() => {
+        this.patchDrawerIx({ position });
+        this.drawerVisible = true;
+      });
+      return;
+    }
+
     this.patchDrawerIx({ position, fullScreen: false });
     this.drawerVisible = true;
   }
@@ -307,6 +325,32 @@ export class OverlayCatalogComponent {
     this.confirmation.confirm({
       key: this.confirmDialogKey,
       header: this.confirmDialogHeader,
+      message: OVERLAY_CATALOG_CONFIRM_DIALOG_DISCARD_MESSAGE,
+      icon: 'pi pi-question-circle',
+      acceptLabel: this.confirmAcceptLabel,
+      rejectLabel: this.confirmRejectLabel,
+      accept: () => {},
+      reject: () => {},
+    });
+  }
+
+  confirmPopupDelete(event: Event): void {
+    this.confirmation.confirm({
+      key: this.confirmPopupKey,
+      target: (event.currentTarget ?? event.target) ?? undefined,
+      message: OVERLAY_CATALOG_CONFIRM_DIALOG_DELETE_MESSAGE,
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: this.confirmAcceptLabel,
+      rejectLabel: this.confirmRejectLabel,
+      accept: () => {},
+      reject: () => {},
+    });
+  }
+
+  confirmPopupDiscard(event: Event): void {
+    this.confirmation.confirm({
+      key: this.confirmPopupKey,
+      target: (event.currentTarget ?? event.target) ?? undefined,
       message: OVERLAY_CATALOG_CONFIRM_DIALOG_DISCARD_MESSAGE,
       icon: 'pi pi-question-circle',
       acceptLabel: this.confirmAcceptLabel,

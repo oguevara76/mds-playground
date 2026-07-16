@@ -1607,8 +1607,12 @@ html:root {
   --stepper-separator-margin-left: var(--dimension-scale-x14);
   --stepper-separator-margin-right: var(--dimension-scale-x0);
   --stepper-separator-margin-top: var(--dimension-scale-x0);
+  --stepper-separator-margin: var(--stepper-separator-margin-top) var(--stepper-separator-margin-right)
+    var(--stepper-separator-margin-bottom)
+    calc(var(--stepper-step-padding) + var(--stepper-separator-margin-left) + var(--stepper-separator-size) / 2);
   --stepper-separator-size: var(--dimension-scale-x2);
   --stepper-step-gap: var(--dimension-scale-x14);
+  --stepper-transition-duration: var(--form-field-transition-duration, 0.2s);
   --stepper-step-header-border-radius: var(--content-border-radius);
   --stepper-step-header-focus-ring-color: var(--focus-ring-color);
   --stepper-step-header-focus-ring-offset: var(--focus-ring-offset);
@@ -1634,10 +1638,13 @@ html:root {
   --stepper-steppanel-background: var(--content-background);
   --stepper-steppanel-color: var(--content-color);
   --stepper-steppanel-padding: var(--dimension-scale-x0);
+  --stepper-steppanel-indent: var(--dimension-scale-x16);
   --stepper-steppanels-padding-bottom: var(--dimension-scale-x16);
   --stepper-steppanels-padding-left: var(--dimension-scale-x8);
   --stepper-steppanels-padding-right: var(--dimension-scale-x8);
   --stepper-steppanels-padding-top: var(--dimension-scale-x12);
+  --stepper-steppanels-padding: var(--stepper-steppanels-padding-top) var(--stepper-steppanels-padding-right)
+    var(--stepper-steppanels-padding-bottom) var(--stepper-steppanels-padding-left);
   --tabs-active-bar-background: var(--primary-color);
   --tabs-active-bar-bottom: -1px;
   --tabs-active-bar-height: 1px;

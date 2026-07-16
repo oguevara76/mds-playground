@@ -43,7 +43,7 @@ const PALETTE_LABELS: Record<string, string> = {
 const PALETTE_TAIL = new Set(['Spacing', 'Radius']);
 
 const COMP_RE =
-  /^--(button|accordion|autocomplete|badge|breadcrumb|calendar|card|carousel|checkbox|chip|colorpicker|confirmdialog|contextmenu|datatable|dataview|dialog|divider|dropdown|editor|fieldset|fileupload|galleria|image|inlinemessage|inputgroup|inputnumber|inputotp|inputswitch|inputtext|knob|listbox|megamenu|menu|menubar|message|multiselect|orderlist|organizationchart|overlaypanel|paginator|panel|panelmenu|password|picklist|progressbar|progressspinner|radio|radiobutton|rating|scrollpanel|selectbutton|sidebar|skeleton|slider|speeddial|splitbutton|steps|tabmenu|tabs|tabview|tag|terminal|textarea|tieredmenu|timeline|toast|togglebutton|toolbar|tooltip|tree|treetable|tristatecheckbox|virtualscroller)-/;
+  /^--(button|accordion|autocomplete|badge|breadcrumb|calendar|card|carousel|checkbox|chip|colorpicker|confirmdialog|confirmpopup|contextmenu|datatable|dataview|dialog|divider|dropdown|editor|fieldset|fileupload|galleria|image|inlinemessage|inputgroup|inputnumber|inputotp|inputswitch|inputtext|knob|listbox|megamenu|menu|menubar|message|multiselect|orderlist|organizationchart|overlaypanel|paginator|panel|panelmenu|password|picklist|progressbar|progressspinner|radio|radiobutton|rating|scrollpanel|selectbutton|sidebar|skeleton|slider|speeddial|splitbutton|steps|tabmenu|tabs|tabview|tag|terminal|textarea|tieredmenu|timeline|toast|togglebutton|toolbar|tooltip|tree|treetable|tristatecheckbox|virtualscroller)-/;
 
 export function parseCssVarsText(text: string): MdsVarEntry[] {
   const re = /(--[\w-]+)\s*:\s*([^;}\n]+)/g;

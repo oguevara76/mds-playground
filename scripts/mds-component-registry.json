@@ -81,6 +81,12 @@
     "parity": "src/styles/primeng-tabs-parity.css",
     "watch_vars": ["--tabs-*", "--p-tabs-*"]
   },
+  "stepper": {
+    "playground_anchor": "pg-stepper",
+    "primeng_prefix": "stepper",
+    "parity": "src/styles/primeng-stepper-parity.css",
+    "watch_vars": ["--stepper-*", "--p-stepper-*"]
+  },
   "accordion": {
     "playground_anchor": "pg-accordion",
     "primeng_prefix": "accordion",
@@ -124,6 +130,13 @@
     "override": "src/app/theme/confirmdialog-mds-overrides.ts",
     "parity": "src/styles/primeng-confirmdialog-parity.css",
     "watch_vars": ["--confirmdialog-*", "--p-confirmdialog-*"]
+  },
+  "confirmpopup": {
+    "playground_anchor": "pg-confirmpopup",
+    "primeng_prefix": "confirmpopup",
+    "override": "src/app/theme/confirmpopup-mds-overrides.ts",
+    "parity": "src/styles/primeng-confirmpopup-parity.css",
+    "watch_vars": ["--confirmpopup-*", "--p-confirmpopup-*"]
   },
   "drawer": {
     "playground_anchor": "pg-drawer",

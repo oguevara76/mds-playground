@@ -51,6 +51,7 @@ CATALOG_HINTS: dict[str, str] = {
     "tooltip": "overlay",
     "dialog": "overlay",
     "confirmdialog": "overlay",
+    "confirmpopup": "overlay",
     "popover": "overlay",
     "tag": "misc",
     "badge": "misc",

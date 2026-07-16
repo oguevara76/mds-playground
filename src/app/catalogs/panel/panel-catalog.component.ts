@@ -10,8 +10,18 @@ import { Panel } from 'primeng/panel';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { Select } from 'primeng/select';
+import { SelectButton } from 'primeng/selectbutton';
 import { Tag } from 'primeng/tag';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'primeng/tabs';
+import {
+  Step,
+  StepItem,
+  StepList,
+  StepPanel,
+  StepPanels,
+  Stepper,
+} from 'primeng/stepper';
+import { ToggleButton } from 'primeng/togglebutton';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
 import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
@@ -36,6 +46,14 @@ import {
   PANEL_CATALOG_TEMPLATE_FOOTER,
   PANEL_CATALOG_TOTAL,
   PANEL_EXAMPLE_OPTIONS,
+  STEPPER_CATALOG_BASIC_STEPS,
+  STEPPER_CATALOG_DEMO_HEIGHT,
+  STEPPER_CATALOG_STATE_DEMOS,
+  STEPPER_CATALOG_TEMPLATE_INTERESTS,
+  STEPPER_CATALOG_TEMPLATE_STEPS,
+  STEPPER_CATALOG_TEMPLATE_SUCCESS_IMAGE,
+  STEPPER_CATALOG_TEMPLATE_WIDTH,
+  STEPPER_VARIANT_OPTIONS,
   type AccordionCatalogExampleKey,
   type AccordionCatalogStateKey,
   type AccordionInteractionState,
@@ -47,12 +65,16 @@ import {
   type PanelCatalogExampleKey,
   type PanelCatalogTabStateKey,
   type PanelInteractionState,
+  type StepperCatalogStateKey,
+  type StepperCatalogStepValue,
+  type StepperCatalogTemplateInterest,
+  type StepperInteractionState,
 } from './panel-catalog.config';
 
 @Component({
   selector: 'app-panel-catalog',
   standalone: true,
-  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Avatar, Button, Card, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select, Panel],
+  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Avatar, Button, Card, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleButton, ToggleSwitch, FormsModule, NgClass, Divider, Select, Panel, Stepper, StepList, Step, StepPanels, StepPanel, StepItem],
   templateUrl: './panel-catalog.component.html',
   styleUrl: './panel-catalog.component.css',
   host: { class: 'panel-catalog-page' },
@@ -220,5 +242,83 @@ export class PanelCatalogComponent {
 
   setCardExample(example: CardCatalogExampleKey): void {
     this.cardIx.set({ example });
+  }
+
+  // ─── Stepper ───────────────────────────────────────────────────────────────
+
+  readonly stepperBasicSteps = STEPPER_CATALOG_BASIC_STEPS;
+  readonly stepperTemplateSteps = STEPPER_CATALOG_TEMPLATE_STEPS;
+  readonly stepperTemplateInterests = STEPPER_CATALOG_TEMPLATE_INTERESTS;
+  readonly stepperTemplateSuccessImage = STEPPER_CATALOG_TEMPLATE_SUCCESS_IMAGE;
+  readonly stepperVariantOptions = STEPPER_VARIANT_OPTIONS;
+  readonly stepperStateDemos = STEPPER_CATALOG_STATE_DEMOS;
+  readonly stepperDemoHeight = STEPPER_CATALOG_DEMO_HEIGHT;
+  readonly stepperTemplateWidth = STEPPER_CATALOG_TEMPLATE_WIDTH;
+
+  readonly stepperIx = signal<StepperInteractionState>({ variant: 'horizontal', stepsOnly: false });
+  readonly stepperActiveStep = signal<StepperCatalogStepValue>(1);
+
+  stepperTemplateName = '';
+  stepperTemplateEmail = '';
+  stepperTemplatePassword = '';
+  readonly stepperTemplateInterestValues = signal<Record<StepperCatalogTemplateInterest, boolean>>({
+    Nature: false,
+    Art: false,
+    Music: false,
+    Design: false,
+    Photography: false,
+    Movies: false,
+    Sports: false,
+    Gaming: false,
+    Traveling: false,
+    Dancing: false,
+  });
+
+  patchStepperIx(patch: Partial<StepperInteractionState>): void {
+    this.stepperIx.update((s) => {
+      const next = { ...s, ...patch };
+      if (patch.variant && patch.variant !== s.variant) {
+        this.stepperActiveStep.set(1);
+        if (patch.variant === 'vertical') {
+          next.stepsOnly = false;
+        }
+      }
+      return next;
+    });
+  }
+
+  onStepperValueChange(value: number | undefined): void {
+    if (value === undefined || value === null) {
+      return;
+    }
+    this.stepperActiveStep.set(value as StepperCatalogStepValue);
+  }
+
+  isStepperTemplateStepComplete(stepValue: number): boolean {
+    return stepValue <= this.stepperActiveStep();
+  }
+
+  patchStepperTemplateInterest(label: StepperCatalogTemplateInterest, value: boolean): void {
+    this.stepperTemplateInterestValues.update((current) => ({ ...current, [label]: value }));
+  }
+
+  trackStepperStep(_: number, step: { value: number }): number {
+    return step.value;
+  }
+
+  trackStepperTemplateInterest(_: number, label: StepperCatalogTemplateInterest): string {
+    return label;
+  }
+
+  trackStepperState(_: number, demo: { key: StepperCatalogStateKey }): StepperCatalogStateKey {
+    return demo.key;
+  }
+
+  isStepperStepDisabled(_stepValue: number, demoKey: StepperCatalogStateKey): boolean {
+    return demoKey === 'disabled';
+  }
+
+  isStepperStepActive(_stepValue: number, demoKey: StepperCatalogStateKey): boolean {
+    return demoKey === 'active';
   }
 }

@@ -34,6 +34,14 @@ import {
   CONFIRMDIALOG_MDS_OVERRIDE_CSS,
   MDS_CONFIRMDIALOG_OVERRIDE_STYLE_ID,
 } from './confirmdialog-mds-overrides';
+import {
+  CONFIRMPOPUP_MDS_OVERRIDE_CSS,
+  MDS_CONFIRMPOPUP_OVERRIDE_STYLE_ID,
+} from './confirmpopup-mds-overrides';
+import {
+  MDS_STEPPER_OVERRIDE_STYLE_ID,
+  STEPPER_MDS_OVERRIDE_CSS,
+} from './stepper-mds-overrides';
 
 export type CssColorReader = (varName: string) => string;
 export type InjectStyleFn = (id: string, css: string) => void;
@@ -67,4 +75,6 @@ export function syncPrimeUixPalettesFromMds(
   injectStyle(MDS_PAGINATOR_OVERRIDE_STYLE_ID, PAGINATOR_MDS_OVERRIDE_CSS);
   injectStyle(MDS_PANEL_OVERRIDE_STYLE_ID, PANEL_MDS_OVERRIDE_CSS);
   injectStyle(MDS_CONFIRMDIALOG_OVERRIDE_STYLE_ID, CONFIRMDIALOG_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_CONFIRMPOPUP_OVERRIDE_STYLE_ID, CONFIRMPOPUP_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_STEPPER_OVERRIDE_STYLE_ID, STEPPER_MDS_OVERRIDE_CSS);
 }

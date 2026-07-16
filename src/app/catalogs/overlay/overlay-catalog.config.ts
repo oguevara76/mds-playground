@@ -100,6 +100,7 @@ export const OVERLAY_CATALOG_DIALOG_EVENT_CANCEL_LABEL = 'Cancel';
 export const OVERLAY_CATALOG_DIALOG_EVENT_CREATE_LABEL = 'Create Event';
 
 export const CONFIRM_DIALOG_CATALOG_KEY = 'overlay-confirm-dialog-catalog';
+export const CONFIRM_POPUP_CATALOG_KEY = 'overlay-confirm-popup-catalog';
 
 export type ConfirmDialogIconKey = 'question' | 'warn' | 'error' | 'info';
 

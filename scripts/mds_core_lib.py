@@ -39,7 +39,7 @@ CORE_SELECTORS: dict[Slot, str] = {
 COMP_PREFIX_RE = re.compile(
     r"^--("
     r"button|accordion|autocomplete|badge|breadcrumb|calendar|card|carousel|checkbox|chip|"
-    r"colorpicker|confirmdialog|contextmenu|datatable|dataview|dialog|divider|dropdown|editor|"
+    r"colorpicker|confirmdialog|confirmpopup|contextmenu|datatable|dataview|dialog|divider|dropdown|editor|"
     r"fieldset|fileupload|galleria|image|inlinemessage|inputgroup|inputnumber|inputotp|"
     r"inputswitch|inputtext|knob|listbox|megamenu|menu|menubar|message|multiselect|orderlist|"
     r"organizationchart|overlaypanel|paginator|panel|panelmenu|password|picklist|progressbar|"

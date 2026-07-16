@@ -138,6 +138,43 @@
     styleClass="confirmdialog-catalog-live"
   />
 
+  <div class="catalog-preview confirmpopup-variant-block">
+    <section id="pg-confirmpopup" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'ConfirmPopup' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="false"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive">
+            <div class="btn-row">
+              <p-button
+                [label]="confirmDeleteLabel"
+                severity="danger"
+                (onClick)="confirmPopupDelete($event)"
+              />
+              <p-button
+                [label]="confirmDiscardLabel"
+                severity="secondary"
+                (onClick)="confirmPopupDiscard($event)"
+              />
+            </div>
+          </div>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
+  <p-confirmpopup
+    [key]="confirmPopupKey"
+    styleClass="confirmpopup-catalog-live"
+  />
+
   <p-dialog
     [(visible)]="profileDialogVisible"
     [header]="profileDialogHeader"
@@ -308,8 +345,8 @@
 
   <p-drawer
     [(visible)]="drawerVisible"
-    [position]="drawerIx().position"
     [fullScreen]="drawerIx().fullScreen"
+    [position]="drawerIx().position"
     [modal]="drawerIx().modal"
     [dismissible]="drawerIx().modal"
     [header]="drawerHeader"

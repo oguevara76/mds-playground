@@ -232,3 +232,85 @@ export const CARD_EXAMPLE_OPTIONS: { label: string; value: CardCatalogExampleKey
 
 /** Altura fija del preview Card — calibrada al ejemplo Advanced (el más alto). */
 export const CARD_CATALOG_DEMO_HEIGHT = '440px';
+
+// ─── Stepper ──────────────────────────────────────────────────────────────────
+
+export type StepperCatalogVariant = 'horizontal' | 'vertical' | 'template';
+
+export type StepperCatalogStepValue = 1 | 2 | 3;
+
+export interface StepperCatalogBasicStep {
+  value: StepperCatalogStepValue;
+  header: string;
+  content: string;
+}
+
+/** Pasos Basic / Vertical — paridad primeng.dev/stepper#horizontal */
+export const STEPPER_CATALOG_BASIC_STEPS: StepperCatalogBasicStep[] = [
+  { value: 1, header: 'Header I', content: 'Content I' },
+  { value: 2, header: 'Header II', content: 'Content II' },
+  { value: 3, header: 'Header III', content: 'Content III' },
+];
+
+export interface StepperCatalogTemplateStep {
+  value: StepperCatalogStepValue;
+  icon: string;
+}
+
+export const STEPPER_CATALOG_TEMPLATE_STEPS: StepperCatalogTemplateStep[] = [
+  { value: 1, icon: 'pi pi-user' },
+  { value: 2, icon: 'pi pi-star' },
+  { value: 3, icon: 'pi pi-id-card' },
+];
+
+export const STEPPER_CATALOG_TEMPLATE_INTERESTS = [
+  'Nature',
+  'Art',
+  'Music',
+  'Design',
+  'Photography',
+  'Movies',
+  'Sports',
+  'Gaming',
+  'Traveling',
+  'Dancing',
+] as const;
+
+export type StepperCatalogTemplateInterest = (typeof STEPPER_CATALOG_TEMPLATE_INTERESTS)[number];
+
+/** Ilustración del paso final — primeng.dev/stepper#template */
+export const STEPPER_CATALOG_TEMPLATE_SUCCESS_IMAGE =
+  'https://primefaces.org/cdn/primeng/images/stepper/content.svg';
+
+/** Altura fija del preview Stepper — calibrada al variant Template (intereses, el más alto). */
+export const STEPPER_CATALOG_DEMO_HEIGHT = '440px';
+
+/** Ancho del variant Template — paridad primeng.dev/stepper#template (`basis-[40rem]`). */
+export const STEPPER_CATALOG_TEMPLATE_WIDTH = '40rem';
+
+export interface StepperInteractionState {
+  variant: StepperCatalogVariant;
+  stepsOnly: boolean;
+}
+
+export const STEPPER_VARIANT_OPTIONS: {
+  label: string;
+  value: StepperCatalogVariant;
+}[] = [
+  { label: 'Horizontal position', value: 'horizontal' },
+  { label: 'Vertical position', value: 'vertical' },
+  { label: 'Template', value: 'template' },
+];
+
+export type StepperCatalogStateKey = 'default' | 'active' | 'disabled';
+
+export interface StepperCatalogStateDemo {
+  key: StepperCatalogStateKey;
+  caption: string;
+}
+
+export const STEPPER_CATALOG_STATE_DEMOS: StepperCatalogStateDemo[] = [
+  { key: 'default', caption: 'Default' },
+  { key: 'active', caption: 'Active' },
+  { key: 'disabled', caption: 'Disabled' },
+];
