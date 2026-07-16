@@ -1,0 +1,7 @@
+/* ConfirmDialog showcase — appendTo body: estilos globales */
+
+.confirmdialog-catalog-live .p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--dialog-footer-gap, var(--p-dialog-footer-gap, 8px));
+}

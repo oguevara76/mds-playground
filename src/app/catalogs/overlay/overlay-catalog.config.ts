@@ -99,6 +99,78 @@ export const OVERLAY_CATALOG_DIALOG_EVENT_DESCRIPTION_PLACEHOLDER = 'Event detai
 export const OVERLAY_CATALOG_DIALOG_EVENT_CANCEL_LABEL = 'Cancel';
 export const OVERLAY_CATALOG_DIALOG_EVENT_CREATE_LABEL = 'Create Event';
 
+export const CONFIRM_DIALOG_CATALOG_KEY = 'overlay-confirm-dialog-catalog';
+
+export type ConfirmDialogIconKey = 'question' | 'warn' | 'error' | 'info';
+
+export interface ConfirmDialogIconDemo {
+  key: ConfirmDialogIconKey;
+  caption: string;
+  icon: string;
+}
+
+export const OVERLAY_CATALOG_CONFIRM_DIALOG_HEADER = 'Confirm';
+export const OVERLAY_CATALOG_CONFIRM_DIALOG_MESSAGE =
+  'Are you sure you want to proceed with this action?';
+export const OVERLAY_CATALOG_CONFIRM_DIALOG_DELETE_LABEL = 'Delete item';
+export const OVERLAY_CATALOG_CONFIRM_DIALOG_DISCARD_LABEL = 'Discard changes';
+export const OVERLAY_CATALOG_CONFIRM_DIALOG_DELETE_MESSAGE =
+  'This will permanently remove the item. This action cannot be undone.';
+export const OVERLAY_CATALOG_CONFIRM_DIALOG_DISCARD_MESSAGE =
+  'You have unsaved changes. Do you want to leave without saving?';
+export const OVERLAY_CATALOG_CONFIRM_DIALOG_ACCEPT_LABEL = 'Yes';
+export const OVERLAY_CATALOG_CONFIRM_DIALOG_REJECT_LABEL = 'No';
+
+export const CONFIRM_DIALOG_ICON_DEMOS: ConfirmDialogIconDemo[] = [
+  { key: 'question', caption: 'Question', icon: 'pi pi-question-circle' },
+  { key: 'warn', caption: 'Warn', icon: 'pi pi-exclamation-triangle' },
+  { key: 'error', caption: 'Error', icon: 'pi pi-times-circle' },
+  { key: 'info', caption: 'Info', icon: 'pi pi-info-circle' },
+];
+
+export type PopoverShareRole = 'Owner' | 'Editor' | 'Viewer';
+
+export interface PopoverShareMember {
+  name: string;
+  email: string;
+  avatar: string;
+  role: PopoverShareRole;
+}
+
+export const OVERLAY_CATALOG_POPOVER_SHARE_LABEL = 'Share';
+export const OVERLAY_CATALOG_POPOVER_SHOW_LABEL = 'Show';
+export const OVERLAY_CATALOG_POPOVER_SHARE_ARIA_LABEL = 'Compartir documento';
+export const OVERLAY_CATALOG_POPOVER_SHOW_ARIA_LABEL = 'Mostrar popover';
+export const OVERLAY_CATALOG_POPOVER_CUSTOM_CONTENT = 'CONTENT';
+
+export const OVERLAY_CATALOG_POPOVER_SHARE_URL =
+  'https://primeng.org/12323ff26t2g243g423g234gg52hy25XADXAG3';
+export const OVERLAY_CATALOG_POPOVER_SHARE_TITLE = 'Share this document';
+export const OVERLAY_CATALOG_POPOVER_INVITE_TITLE = 'Invite Member';
+export const OVERLAY_CATALOG_POPOVER_MEMBERS_TITLE = 'Team Members';
+export const OVERLAY_CATALOG_POPOVER_INVITE_LABEL = 'Invite';
+
+export const OVERLAY_CATALOG_POPOVER_TEAM_MEMBERS: PopoverShareMember[] = [
+  {
+    name: 'Amy Elsner',
+    email: 'amy@email.com',
+    avatar: 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png',
+    role: 'Owner',
+  },
+  {
+    name: 'Bernardo Dominic',
+    email: 'bernardo@email.com',
+    avatar: 'https://primefaces.org/cdn/primeng/images/demo/avatar/bernardodominic.png',
+    role: 'Editor',
+  },
+  {
+    name: 'Ioni Bowcher',
+    email: 'ioni@email.com',
+    avatar: 'https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png',
+    role: 'Viewer',
+  },
+];
+
 export const OVERLAY_CATALOG_TOOLTIP_POSITIONS: TooltipPositionDemo[] = [
   {
     key: 'top',

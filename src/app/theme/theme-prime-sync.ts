@@ -29,6 +29,11 @@ import {
   MDS_PAGINATOR_OVERRIDE_STYLE_ID,
   PAGINATOR_MDS_OVERRIDE_CSS,
 } from './paginator-mds-overrides';
+import { MDS_PANEL_OVERRIDE_STYLE_ID, PANEL_MDS_OVERRIDE_CSS } from './panel-mds-overrides';
+import {
+  CONFIRMDIALOG_MDS_OVERRIDE_CSS,
+  MDS_CONFIRMDIALOG_OVERRIDE_STYLE_ID,
+} from './confirmdialog-mds-overrides';
 
 export type CssColorReader = (varName: string) => string;
 export type InjectStyleFn = (id: string, css: string) => void;
@@ -60,4 +65,6 @@ export function syncPrimeUixPalettesFromMds(
   injectStyle(MDS_BUTTON_OVERRIDE_STYLE_ID, BUTTON_MDS_OVERRIDE_CSS);
   injectStyle(MDS_SPLITBUTTON_OVERRIDE_STYLE_ID, SPLITBUTTON_MDS_OVERRIDE_CSS);
   injectStyle(MDS_PAGINATOR_OVERRIDE_STYLE_ID, PAGINATOR_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_PANEL_OVERRIDE_STYLE_ID, PANEL_MDS_OVERRIDE_CSS);
+  injectStyle(MDS_CONFIRMDIALOG_OVERRIDE_STYLE_ID, CONFIRMDIALOG_MDS_OVERRIDE_CSS);
 }

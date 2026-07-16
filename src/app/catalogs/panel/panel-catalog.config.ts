@@ -1,3 +1,43 @@
+// ─── Panel (p-panel) ─────────────────────────────────────────────────────────
+
+export interface PanelCatalogLineItem {
+  label: string;
+  value: string;
+}
+
+export const PANEL_CATALOG_LINE_ITEMS: PanelCatalogLineItem[] = [
+  { label: 'Wireless Headphones', value: '$79.00' },
+  { label: 'Phone Case', value: '$15.00' },
+  { label: 'Shipping', value: '$5.99' },
+];
+
+export const PANEL_CATALOG_TOTAL = '$99.99';
+
+/** Texto completo del ejemplo Template (primeng.dev/panel#template). */
+export const PANEL_CATALOG_TEMPLATE_BODY =
+  'Product designer focused on accessible interfaces, scalable design systems and modern frontend workflows. Passionate about creating intuitive user experiences that balance usability, consistency and performance across platforms. Currently exploring AI-assisted UI tooling, component architecture and developer experience improvements to streamline design-to-development collaboration and build more maintainable products.';
+
+export const PANEL_CATALOG_TEMPLATE_FOOTER = 'Updated 2 hours ago';
+
+/** Avatar Amy Elsner — paridad primeng.dev/panel#template */
+export const PANEL_CATALOG_TEMPLATE_AVATAR_IMAGE =
+  'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png';
+
+export type PanelCatalogExampleKey = 'basic' | 'toggleable' | 'template';
+
+export interface PanelInteractionState {
+  example: PanelCatalogExampleKey;
+}
+
+export const PANEL_EXAMPLE_OPTIONS: { label: string; value: PanelCatalogExampleKey }[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Toggleable', value: 'toggleable' },
+  { label: 'Template', value: 'template' },
+];
+
+/** Altura fija del preview Panel — calibrada al ejemplo Template (el más alto). */
+export const PANEL_CATALOG_DEMO_HEIGHT = '292px';
+
 // ─── Accordion ───────────────────────────────────────────────────────────────
 
 export interface AccordionCatalogPanel {

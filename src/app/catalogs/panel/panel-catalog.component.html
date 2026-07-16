@@ -1,4 +1,136 @@
 <div class="cards-grid form-catalog-stack">
+  <!-- ─── Panel ─────────────────────────────────────────────────────────────── -->
+  <div class="catalog-preview panel-variant-block" [style.--panel-catalog-demo-height]="panelDemoHeight">
+    <section id="pg-panel" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Panel' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Panel"
+        >
+          <div catalogPreviewDemo class="panel-catalog-demo-area catalog-showcase-interactive">
+            @switch (panelIx().example) {
+              @case ('basic') {
+                <p-panel
+                  class="panel-catalog-live"
+                  header="Order Summary"
+                  ariaLabel="Panel interactivo del catálogo — Basic"
+                >
+                  <div class="panel-catalog-order">
+                    @for (item of panelLineItems; track trackPanelLineItem($index, item)) {
+                      <div class="panel-catalog-order-row">
+                        <span>{{ item.label }}</span>
+                        <span>{{ item.value }}</span>
+                      </div>
+                    }
+                  </div>
+                  <ng-template #footer>
+                    <div class="panel-catalog-order-total">
+                      <span>Total</span>
+                      <strong>{{ panelTotal }}</strong>
+                    </div>
+                  </ng-template>
+                </p-panel>
+              }
+              @case ('toggleable') {
+                <p-panel
+                  class="panel-catalog-live"
+                  header="Order Summary"
+                  [toggleable]="true"
+                  [collapsed]="panelCollapsed()"
+                  (collapsedChange)="onPanelCollapsedChange($event)"
+                  ariaLabel="Panel interactivo del catálogo — Toggleable"
+                >
+                  <div class="panel-catalog-order">
+                    @for (item of panelLineItems; track trackPanelLineItem($index, item)) {
+                      <div class="panel-catalog-order-row">
+                        <span>{{ item.label }}</span>
+                        <span>{{ item.value }}</span>
+                      </div>
+                    }
+                  </div>
+                  <ng-template #footer>
+                    <div class="panel-catalog-order-total">
+                      <span>Total</span>
+                      <strong>{{ panelTotal }}</strong>
+                    </div>
+                  </ng-template>
+                </p-panel>
+              }
+              @case ('template') {
+                <p-panel
+                  class="panel-catalog-live panel-catalog-live--template"
+                  [toggleable]="true"
+                  [collapsed]="panelCollapsed()"
+                  (collapsedChange)="onPanelCollapsedChange($event)"
+                  ariaLabel="Panel interactivo del catálogo — Template"
+                >
+                  <ng-template #header>
+                    <div class="panel-catalog-template-header">
+                      <p-avatar
+                        [image]="panelTemplateAvatar"
+                        shape="circle"
+                        ariaLabel="Amy Elsner"
+                      />
+                      <span class="panel-catalog-template-name">Amy Elsner</span>
+                    </div>
+                  </ng-template>
+                  <ng-template #icons>
+                    <button type="button" class="panel-catalog-template-action" aria-label="Configuración">
+                      <i class="pi pi-cog" aria-hidden="true"></i>
+                    </button>
+                  </ng-template>
+                  <ng-template #headericons let-collapsed>
+                    <i
+                      class="pi panel-catalog-template-toggle-icon"
+                      [ngClass]="collapsed ? 'pi-chevron-down' : 'pi-chevron-up'"
+                      aria-hidden="true"
+                    ></i>
+                  </ng-template>
+                  <p class="panel-catalog-body-text">{{ panelTemplateBody }}</p>
+                  <ng-template #footer>
+                    <div class="panel-catalog-template-footer">
+                      <div class="panel-catalog-template-footer-actions">
+                        <button type="button" class="panel-catalog-template-action" aria-label="Perfil">
+                          <i class="pi pi-user" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="panel-catalog-template-action" aria-label="Guardar">
+                          <i class="pi pi-bookmark" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                      <span class="panel-catalog-footer-text">{{ panelTemplateFooter }}</span>
+                    </div>
+                  </ng-template>
+                </p-panel>
+              }
+            }
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Examples</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="panelExampleOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="panelIx().example"
+                  (ngModelChange)="setPanelExample($event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Ejemplo de Panel"
+                />
+              </div>
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
   <!-- ─── Card ──────────────────────────────────────────────────────────────── -->
   <div class="catalog-preview card-variant-block" [style.--card-catalog-demo-height]="cardDemoHeight">
     <section id="pg-card" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">

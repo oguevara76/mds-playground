@@ -2,9 +2,11 @@ import { NgClass } from '@angular/common';
 import { afterNextRender, Component, inject, Injector, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
+import { Avatar } from 'primeng/avatar';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
+import { Panel } from 'primeng/panel';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { Select } from 'primeng/select';
@@ -25,8 +27,15 @@ import {
   DIVIDER_ALIGN_OPTIONS,
   DIVIDER_BORDER_TYPE_OPTIONS,
   DIVIDER_STATE_DEMOS,
+  PANEL_CATALOG_LINE_ITEMS,
+  PANEL_CATALOG_DEMO_HEIGHT,
   PANEL_CATALOG_TAB_STATE_DEMOS,
   PANEL_CATALOG_TABS,
+  PANEL_CATALOG_TEMPLATE_AVATAR_IMAGE,
+  PANEL_CATALOG_TEMPLATE_BODY,
+  PANEL_CATALOG_TEMPLATE_FOOTER,
+  PANEL_CATALOG_TOTAL,
+  PANEL_EXAMPLE_OPTIONS,
   type AccordionCatalogExampleKey,
   type AccordionCatalogStateKey,
   type AccordionInteractionState,
@@ -35,19 +44,47 @@ import {
   type DividerInteractionState,
   type DividerStateDemo,
   type DividerStateKey,
+  type PanelCatalogExampleKey,
   type PanelCatalogTabStateKey,
+  type PanelInteractionState,
 } from './panel-catalog.config';
 
 @Component({
   selector: 'app-panel-catalog',
   standalone: true,
-  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Button, Card, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select],
+  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Avatar, Button, Card, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleSwitch, FormsModule, NgClass, Divider, Select, Panel],
   templateUrl: './panel-catalog.component.html',
   styleUrl: './panel-catalog.component.css',
   host: { class: 'panel-catalog-page' },
 })
 export class PanelCatalogComponent {
   private readonly injector = inject(Injector);
+
+  // ─── Panel (p-panel) ───────────────────────────────────────────────────────
+
+  readonly panelLineItems = PANEL_CATALOG_LINE_ITEMS;
+  readonly panelTotal = PANEL_CATALOG_TOTAL;
+  readonly panelTemplateBody = PANEL_CATALOG_TEMPLATE_BODY;
+  readonly panelTemplateFooter = PANEL_CATALOG_TEMPLATE_FOOTER;
+  readonly panelTemplateAvatar = PANEL_CATALOG_TEMPLATE_AVATAR_IMAGE;
+  readonly panelExampleOptions = PANEL_EXAMPLE_OPTIONS;
+  readonly panelDemoHeight = PANEL_CATALOG_DEMO_HEIGHT;
+
+  readonly panelIx = signal<PanelInteractionState>({ example: 'basic' });
+  readonly panelCollapsed = signal(false);
+
+  setPanelExample(example: PanelCatalogExampleKey): void {
+    this.panelIx.set({ example });
+    this.panelCollapsed.set(false);
+  }
+
+  onPanelCollapsedChange(value: boolean | undefined): void {
+    this.panelCollapsed.set(!!value);
+  }
+
+  trackPanelLineItem(_: number, item: { label: string }): string {
+    return item.label;
+  }
 
   // ─── Accordion ───────────────────────────────────────────────────────────────
 

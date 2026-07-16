@@ -100,6 +100,44 @@
     </section>
   </div>
 
+  <div class="catalog-preview confirmdialog-variant-block">
+    <section id="pg-confirmdialog" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'ConfirmDialog' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="false"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive">
+            <div class="btn-row">
+              <p-button
+                [label]="confirmDeleteLabel"
+                severity="danger"
+                (onClick)="confirmDelete()"
+              />
+              <p-button
+                [label]="confirmDiscardLabel"
+                severity="secondary"
+                (onClick)="confirmDiscard()"
+              />
+            </div>
+          </div>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
+  <p-confirmdialog
+    [key]="confirmDialogKey"
+    appendTo="body"
+    styleClass="confirmdialog-catalog-live"
+  />
+
   <p-dialog
     [(visible)]="profileDialogVisible"
     [header]="profileDialogHeader"
@@ -343,6 +381,105 @@
               </div>
             </mds-catalog-info-block>
           </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
+  <p-popover
+    #popoverShare
+    appendTo="body"
+    styleClass="popover-catalog-live popover-catalog-live--share"
+    [ariaLabel]="popoverShareAriaLabel"
+  >
+    <div class="popover-catalog-share">
+      <div class="popover-catalog-share__block">
+        <span class="popover-catalog-share__title">{{ popoverShareTitle }}</span>
+        <p-inputgroup class="popover-catalog-share__inputgroup">
+          <input
+            pInputText
+            class="popover-catalog-share__url-input"
+            [ngModel]="popoverShareUrl"
+            readonly
+            aria-label="Document share URL"
+          />
+          <p-inputgroup-addon>
+            <i class="pi pi-copy" aria-hidden="true"></i>
+          </p-inputgroup-addon>
+        </p-inputgroup>
+      </div>
+
+      <div class="popover-catalog-share__block">
+        <span class="popover-catalog-share__title">{{ popoverInviteTitle }}</span>
+        <p-inputgroup class="popover-catalog-share__inputgroup">
+          <input pInputText disabled aria-label="Invite member email" />
+          <p-button [label]="popoverInviteLabel" icon="pi pi-users" />
+        </p-inputgroup>
+      </div>
+
+      <div class="popover-catalog-share__block">
+        <span class="popover-catalog-share__title">{{ popoverMembersTitle }}</span>
+        <ul class="popover-catalog-share__list">
+          @for (member of popoverTeamMembers; track trackPopoverMember($index, member)) {
+            <li class="popover-catalog-share__member">
+              <img
+                class="popover-catalog-share__member-avatar"
+                [src]="member.avatar"
+                [alt]="member.name"
+                width="32"
+                height="32"
+              />
+              <div class="popover-catalog-share__member-info">
+                <span class="popover-catalog-share__member-name">{{ member.name }}</span>
+                <div class="popover-catalog-share__member-email">{{ member.email }}</div>
+              </div>
+              <div class="popover-catalog-share__member-role">
+                <span>{{ member.role }}</span>
+                <i class="pi pi-angle-down" aria-hidden="true"></i>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </p-popover>
+
+  <p-popover
+    #popoverShow
+    appendTo="body"
+    styleClass="popover-catalog-live popover-catalog-live--show"
+    [ariaLabel]="popoverShowAriaLabel"
+    (onShow)="alignShowPopoverAbove()"
+  >
+    <div class="popover-catalog-custom-content">{{ popoverCustomContent }}</div>
+  </p-popover>
+
+  <div class="catalog-preview popover-variant-block">
+    <section id="pg-popover" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Popover' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="false"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive">
+            <div class="btn-row popover-catalog-demo-row">
+              <p-button
+                [label]="popoverShareLabel"
+                icon="pi pi-share-alt"
+                (onClick)="toggleSharePopover($event)"
+              />
+              <p-button
+                [label]="popoverShowLabel"
+                icon="pi pi-image"
+                (onClick)="toggleShowPopover($event)"
+              />
+            </div>
+          </div>
         </mds-catalog-preview-frame>
       </div>
     </section>

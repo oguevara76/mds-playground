@@ -20,6 +20,7 @@ import {
   CARD_EXAMPLE_OPTIONS,
   DIVIDER_STATE_DEMOS,
   PANEL_CATALOG_TAB_STATE_DEMOS,
+  PANEL_EXAMPLE_OPTIONS,
 } from '../catalogs/panel/panel-catalog.config';
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
@@ -70,13 +71,16 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-toast': 'toast',
   'pg-paginator': 'paginator',
   'pg-divider': 'divider',
+  'pg-panel': 'panel',
   'pg-card': 'card',
   'pg-accordion': 'accordion',
   'pg-tabs': 'tabs',
   'pg-breadcrumb': 'breadcrumb',
   'pg-tooltip': 'tooltip',
   'pg-dialog': 'dialog',
+  'pg-confirmdialog': 'confirmdialog',
   'pg-drawer': 'drawer',
+  'pg-popover': 'popover',
   'pg-tag': 'tag',
   'pg-chip': 'chip',
   'pg-badge': 'badge',
@@ -163,6 +167,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       variantCount: PAGINATOR_CATALOG_STATE_DEMOS.length,
     },
     {
+      id: 'pg-panel',
+      name: 'Panel',
+      route: 'panel',
+      sectionLabel: 'Panel',
+      keywords: ['p-panel', 'contenedor', 'toggleable', 'colapsable'],
+      variantCount: PANEL_EXAMPLE_OPTIONS.length,
+    },
+    {
       id: 'pg-card',
       name: 'Card',
       route: 'panel',
@@ -219,12 +231,28 @@ function buildIndex(): PlaygroundComponentEntry[] {
       variantCount: 2,
     },
     {
+      id: 'pg-confirmdialog',
+      name: 'ConfirmDialog',
+      route: 'overlay',
+      sectionLabel: 'Overlay',
+      keywords: ['p-confirmdialog', 'confirm', 'confirmation', 'alertdialog'],
+      variantCount: 2,
+    },
+    {
       id: 'pg-drawer',
       name: 'Drawer',
       route: 'overlay',
       sectionLabel: 'Overlay',
       keywords: ['p-drawer', 'sidebar', 'panel', 'overlay'],
       variantCount: OVERLAY_CATALOG_DRAWER_POSITIONS.length,
+    },
+    {
+      id: 'pg-popover',
+      name: 'Popover',
+      route: 'overlay',
+      sectionLabel: 'Overlay',
+      keywords: ['p-popover', 'overlay', 'popup', 'floating'],
+      variantCount: 2,
     },
     {
       id: 'pg-tag',

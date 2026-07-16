@@ -398,4 +398,142 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
     var(--p-cascadeselect-option-selected-focus-color)
   ) !important;
 }
+
+/* Popover Share — paridad primeng.org/popover (basic-doc), appendTo body */
+.p-popover.popover-catalog-live--share .p-popover-content {
+  padding: var(--popover-content-padding, var(--overlay-popover-padding, 12px)) !important;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 25rem;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__block {
+  display: block;
+  width: 100%;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__title {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--popover-color, var(--overlay-popover-color, var(--p-content-color)));
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__inputgroup.p-inputgroup {
+  display: flex;
+  width: 100%;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__inputgroup .p-inputtext {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__inputgroup .p-inputgroupaddon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  color: var(--p-surface-500);
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__inputgroup .p-inputgroupaddon .pi-copy {
+  font-size: 1rem;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__inputgroup .p-button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__member {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__member-avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__member-info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__member-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--popover-color, var(--overlay-popover-color, var(--p-content-color)));
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__member-email {
+  display: block;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--p-surface-500);
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__member-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--p-surface-500);
+  white-space: nowrap;
+}
+
+.p-popover.popover-catalog-live--share .popover-catalog-share__member-role .pi-angle-down {
+  font-size: 0.875rem;
+}
+
+.p-popover.popover-catalog-live--show .p-popover-content {
+  padding: var(--popover-content-padding, var(--overlay-popover-padding, 12px)) !important;
+}
+
+.p-popover.popover-catalog-live--show .popover-catalog-custom-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 18rem;
+  min-height: 9rem;
+  padding: 2rem 2.5rem;
+  border-radius: var(--popover-border-radius, var(--border-radius-md, var(--p-border-radius)));
+  background: var(--surface-context-subtle, var(--content-hover-background, var(--p-surface-100)));
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--p-surface-500);
+}
 `;

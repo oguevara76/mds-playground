@@ -156,3 +156,7 @@
   border-top: 1px solid var(--surface-context-emphasized, var(--p-content-border));
   border-radius: var(--drawer-border-radius, var(--p-border-radius)) var(--drawer-border-radius, var(--p-border-radius)) 0 0;
 }
+
+:host.overlay-catalog-page .popover-catalog-demo-row {
+  justify-content: center;
+}

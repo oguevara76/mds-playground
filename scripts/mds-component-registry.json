@@ -86,6 +86,13 @@
     "primeng_prefix": "accordion",
     "watch_vars": ["--accordion-*", "--p-accordion-*"]
   },
+  "panel": {
+    "playground_anchor": "pg-panel",
+    "primeng_prefix": "panel",
+    "override": "src/app/theme/panel-mds-overrides.ts",
+    "parity": "src/styles/primeng-panel-parity.css",
+    "watch_vars": ["--panel-*", "--p-panel-*"]
+  },
   "card": {
     "playground_anchor": "pg-card",
     "primeng_prefix": "card",
@@ -111,9 +118,22 @@
     "primeng_prefix": "dialog",
     "watch_vars": ["--dialog-*", "--p-dialog-*"]
   },
+  "confirmdialog": {
+    "playground_anchor": "pg-confirmdialog",
+    "primeng_prefix": "confirmdialog",
+    "override": "src/app/theme/confirmdialog-mds-overrides.ts",
+    "parity": "src/styles/primeng-confirmdialog-parity.css",
+    "watch_vars": ["--confirmdialog-*", "--p-confirmdialog-*"]
+  },
   "drawer": {
     "playground_anchor": "pg-drawer",
     "primeng_prefix": "drawer",
     "watch_vars": ["--drawer-*", "--p-drawer-*"]
+  },
+  "popover": {
+    "playground_anchor": "pg-popover",
+    "primeng_prefix": "popover",
+    "override": "src/app/theme/overlay-mds-overrides.ts",
+    "watch_vars": ["--popover-*", "--p-popover-*"]
   }
 }

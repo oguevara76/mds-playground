@@ -1,3 +1,145 @@
+/* ─── Panel (p-panel) ─────────────────────────────────────────────────────── */
+
+:host.panel-catalog-page .panel-variant-block {
+  --catalog-preview-frame-min-height: calc(
+    var(--panel-catalog-demo-height, 292px) + var(--catalog-preview-frame-padding-y, 48px) * 2
+  );
+}
+
+:host.panel-catalog-page .panel-variant-block ::ng-deep .catalog-preview-frame__stage {
+  min-height: var(--panel-catalog-demo-height, 292px);
+  align-items: center;
+}
+
+:host.panel-catalog-page .panel-catalog-demo-area {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 28rem;
+  min-width: 0;
+  min-height: var(--panel-catalog-demo-height, 292px);
+  height: var(--panel-catalog-demo-height, 292px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+:host.panel-catalog-page .panel-catalog-live {
+  width: 100%;
+  min-width: 0;
+}
+
+:host.panel-catalog-page .panel-catalog-order {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+:host.panel-catalog-page .panel-catalog-order-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 14px;
+  line-height: 1.4;
+  color: inherit;
+}
+
+:host.panel-catalog-page .panel-catalog-order-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.4;
+  color: inherit;
+}
+
+:host.panel-catalog-page .panel-catalog-body-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: inherit;
+}
+
+:host.panel-catalog-page .panel-catalog-footer-text {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--p-text-muted-color, var(--text-muted-color, var(--p-surface-500)));
+}
+
+:host.panel-catalog-page .panel-catalog-template-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+:host.panel-catalog-page .panel-catalog-live--template ::ng-deep .p-panel-header {
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:host.panel-catalog-page .panel-catalog-live--template ::ng-deep .p-panel-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  flex-shrink: 0;
+}
+
+:host.panel-catalog-page .panel-catalog-live--template ::ng-deep .p-avatar {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+:host.panel-catalog-page .panel-catalog-template-name {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: inherit;
+}
+
+:host.panel-catalog-page .panel-catalog-template-toggle-icon {
+  font-size: 0.875rem;
+}
+
+:host.panel-catalog-page .panel-catalog-template-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--p-text-muted-color, var(--text-muted-color, var(--p-surface-500)));
+  border-radius: var(--p-border-radius, 6px);
+  cursor: pointer;
+}
+
+:host.panel-catalog-page .panel-catalog-template-action:hover {
+  background: var(--p-content-hover-background, color-mix(in srgb, var(--p-text-color) 6%, transparent));
+  color: var(--p-text-color, var(--text-color));
+}
+
+:host.panel-catalog-page .panel-catalog-template-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+:host.panel-catalog-page .panel-catalog-template-footer-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
 /* ─── Card ──────────────────────────────────────────────────────────────────── */
 
 :host.panel-catalog-page .card-variant-block {

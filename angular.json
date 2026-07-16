@@ -51,9 +51,11 @@
               "src/styles/primeng-inputgroup-parity.css",
               "src/styles/primeng-splitbutton-parity.css",
               "src/styles/primeng-dialog-parity.css",
+              "src/styles/primeng-confirmdialog-parity.css",
               "styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles/primeng-card-parity.css",
+              "src/styles/primeng-panel-parity.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -151,9 +153,11 @@
               "src/styles/primeng-inputgroup-parity.css",
               "src/styles/primeng-splitbutton-parity.css",
               "src/styles/primeng-dialog-parity.css",
+              "src/styles/primeng-confirmdialog-parity.css",
               "styles/app.css",
               "src/styles/catalog-layout.css",
               "src/styles/primeng-card-parity.css",
+              "src/styles/primeng-panel-parity.css",
               "src/styles.css"
             ],
             "scripts": []
