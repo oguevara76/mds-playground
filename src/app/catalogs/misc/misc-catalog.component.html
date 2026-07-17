@@ -508,4 +508,138 @@
       </div>
     </section>
   </div>
+
+  <div class="catalog-preview progressbar-showcase">
+    <section id="pg-progressbar" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'ProgressBar' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showExpand]="false"
+          configAriaLabel="Configurar ProgressBar"
+        >
+          <div
+            catalogPreviewDemo
+            class="catalog-showcase-interactive progressbar-catalog-demo-wrap"
+            aria-label="ProgressBar preview"
+          >
+            @switch (progressbarIx.example) {
+              @case ('basic') {
+                <p-progressbar
+                  [value]="progressbarIx.value"
+                  [showValue]="progressbarIx.showValue"
+                  styleClass="progressbar-catalog-demo"
+                />
+              }
+              @case ('indeterminate') {
+                <p-progressbar mode="indeterminate" styleClass="progressbar-catalog-demo" />
+              }
+              @case ('dynamic') {
+                <div class="progressbar-dynamic-demo">
+                  <span class="progressbar-dynamic-label">Uploading Files</span>
+                  <p-progressbar [value]="progressbarAnimatedValue" styleClass="progressbar-catalog-demo" />
+                </div>
+              }
+              @case ('template') {
+                <div class="progressbar-template-demos" aria-label="ProgressBar template examples">
+                  <div class="progressbar-template-demo">
+                    <div class="progressbar-template-head">
+                      <span class="progressbar-template-title">Basic Percentage</span>
+                      <span class="progressbar-template-meta">{{ progressbarTemplatePercentLabel() }}</span>
+                    </div>
+                    <p-progressbar
+                      [value]="progressbarAnimatedValue"
+                      [showValue]="false"
+                      styleClass="progressbar-catalog-demo progressbar-template-bar progressbar-template-bar--primary"
+                    />
+                  </div>
+                  <div class="progressbar-template-demo">
+                    <div class="progressbar-template-head">
+                      <span class="progressbar-template-title">File Size Progress</span>
+                      <span class="progressbar-template-meta">{{ progressbarTemplateFileSizeLabel() }}</span>
+                    </div>
+                    <p-progressbar
+                      [value]="progressbarAnimatedValue"
+                      [showValue]="false"
+                      styleClass="progressbar-catalog-demo progressbar-template-bar progressbar-template-bar--success"
+                    />
+                  </div>
+                  <div class="progressbar-template-demo">
+                    <div class="progressbar-template-head">
+                      <span class="progressbar-template-title">Time Remaining</span>
+                      <span class="progressbar-template-meta">{{ progressbarTemplateTimeLabel() }}</span>
+                    </div>
+                    <p-progressbar
+                      [value]="progressbarAnimatedValue"
+                      [showValue]="false"
+                      styleClass="progressbar-catalog-demo progressbar-template-bar progressbar-template-bar--info"
+                    />
+                  </div>
+                  <div class="progressbar-template-demo">
+                    <div class="progressbar-template-head">
+                      <span class="progressbar-template-title">Upload Status Steps</span>
+                      <span class="progressbar-template-meta">{{ progressbarTemplateStatusLabel() }}</span>
+                    </div>
+                    <p-progressbar
+                      [value]="progressbarAnimatedValue"
+                      [showValue]="false"
+                      styleClass="progressbar-catalog-demo progressbar-template-bar progressbar-template-bar--warn"
+                    />
+                  </div>
+                </div>
+              }
+            }
+          </div>
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Examples</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="progressbarExampleOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="progressbarIx.example"
+                  (ngModelChange)="patchProgressbarIx({ example: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Examples ProgressBar"
+                />
+              </div>
+            </div>
+            @if (progressbarIsBasicExample()) {
+              <p-divider styleClass="button-config-divider" />
+              <div class="button-config-size-field">
+                <span class="input-config-label">Value</span>
+                <div class="button-config-select-wrap">
+                  <p-select
+                    [options]="progressbarValueOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="progressbarIx.value"
+                    (ngModelChange)="patchProgressbarIx({ value: $event })"
+                    size="small"
+                    appendTo="body"
+                    ariaLabel="Value ProgressBar"
+                  />
+                </div>
+              </div>
+              <p-divider styleClass="button-config-divider" />
+              <div class="input-config-row">
+                <span class="input-config-label">Show value</span>
+                <p-toggleswitch
+                  [ngModel]="progressbarIx.showValue"
+                  (ngModelChange)="patchProgressbarIx({ showValue: $event })"
+                  ariaLabel="Mostrar valor en ProgressBar"
+                />
+              </div>
+            }
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
 </div>

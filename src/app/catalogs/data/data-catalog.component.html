@@ -106,4 +106,81 @@
       </div>
     </section>
   </div>
+
+  <div class="catalog-preview orderlist-showcase">
+    <section id="pg-orderlist" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'OrderList' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar OrderList"
+        >
+          <div catalogPreviewDemo class="orderlist-catalog-live-shell catalog-showcase-interactive">
+            <p-orderlist
+              class="orderlist-catalog-live"
+              [value]="orderlistItems"
+              dataKey="id"
+              [dragdrop]="orderlistDragdropEnabled()"
+              [filterBy]="orderlistFilterBy()"
+              filterPlaceholder="Filter by name"
+              [responsive]="true"
+              breakpoint="575px"
+              [scrollHeight]="orderlistScrollHeight"
+              ariaLabel="OrderList interactivo del catálogo"
+            >
+              @if (orderlistIsCheckboxExample()) {
+                <ng-template #item let-option>
+                  <div class="orderlist-catalog-checkbox-row">
+                    <p-checkbox
+                      [inputId]="'orderlist-cb-' + option.id"
+                      name="orderlist-catalog-checkbox"
+                      [value]="option"
+                      [(ngModel)]="orderlistCheckboxSelection"
+                      (click)="$event.stopPropagation()"
+                    />
+                    <label [for]="'orderlist-cb-' + option.id">{{ option.name }}</label>
+                  </div>
+                </ng-template>
+              } @else {
+                <ng-template #item let-option>
+                  {{ option.name }}
+                </ng-template>
+              }
+            </p-orderlist>
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Examples</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="orderlistExampleOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="orderlistIx.example"
+                  (ngModelChange)="onOrderlistExampleChange($event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Examples OrderList"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Filter</span>
+              <p-toggleswitch
+                [ngModel]="orderlistIx.filter"
+                (ngModelChange)="patchOrderlistIx({ filter: $event })"
+                ariaLabel="Filtrar OrderList"
+              />
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
 </div>

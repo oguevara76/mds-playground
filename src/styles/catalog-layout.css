@@ -675,3 +675,30 @@ mds-catalog-state-tag .catalog-state-tag {
   padding: 0 !important;
   gap: var(--message-content-gap, 8px) !important;
 }
+
+/* Menu catalog — toggleable (popup appendTo body requiere estilos globales) */
+.p-menu.menu-catalog-live .mds-menu-catalog-item-link,
+.p-menu.menu-catalog-static .mds-menu-catalog-item-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: var(--menu-item-gap, var(--p-menu-item-gap, 8px));
+  text-decoration: none;
+  color: inherit;
+}
+
+.p-menu.menu-catalog-live .mds-menu-toggle-angle,
+.p-menu.menu-catalog-static .mds-menu-toggle-angle {
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}
+
+.p-menu.menu-catalog-live .mds-menu-toggle-header.is-expanded .p-menu-item-label,
+.p-menu.menu-catalog-static .mds-menu-toggle-header.is-expanded .p-menu-item-label {
+  font-weight: 700;
+}
+
+.p-menu.menu-catalog-live .mds-menu-toggle-child .mds-menu-catalog-item-link,
+.p-menu.menu-catalog-static .mds-menu-toggle-child .mds-menu-catalog-item-link {
+  padding-inline-start: calc(var(--p-menu-item-padding, 12px) + 1.25rem);
+}

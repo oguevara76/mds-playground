@@ -129,3 +129,26 @@ export const AVATAR_GROUP_CATALOG_MAX_VISIBLE = 3;
 
 /** Etiqueta demo del avatar contador en previews estáticas. */
 export const AVATAR_GROUP_CATALOG_OVERFLOW_LABEL = '+2';
+
+/** Ejemplo activo del progressbar en Interaction (popover). */
+export type ProgressbarCatalogExample = 'basic' | 'indeterminate' | 'dynamic' | 'template';
+
+export type ProgressbarCatalogValue = 0 | 25 | 50 | 75 | 100;
+
+export const PROGRESSBAR_CATALOG_EXAMPLE_OPTIONS: { label: string; value: ProgressbarCatalogExample }[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Indeterminate', value: 'indeterminate' },
+  { label: 'Dynamic', value: 'dynamic' },
+  { label: 'Template', value: 'template' },
+];
+
+export const PROGRESSBAR_CATALOG_VALUE_OPTIONS: { label: string; value: ProgressbarCatalogValue }[] = [
+  { label: '0%', value: 0 },
+  { label: '25%', value: 25 },
+  { label: '50%', value: 50 },
+  { label: '75%', value: 75 },
+  { label: '100%', value: 100 },
+];
+
+/** Tamaño máximo demo (bytes) para el ejemplo Template de PrimeNG. */
+export const PROGRESSBAR_CATALOG_TEMPLATE_MAX_BYTES = 5000;

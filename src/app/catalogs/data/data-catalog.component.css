@@ -68,3 +68,22 @@
   opacity: 1;
   cursor: default;
 }
+
+:host.data-catalog-page .orderlist-catalog-live-shell {
+  max-width: 100%;
+}
+
+:host.data-catalog-page .orderlist-catalog-live {
+  width: min(100%, 28rem);
+}
+
+:host.data-catalog-page .orderlist-catalog-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: var(--dimension-scale-x8, 8px);
+  width: 100%;
+}
+
+:host.data-catalog-page .orderlist-catalog-checkbox-row label {
+  cursor: pointer;
+}

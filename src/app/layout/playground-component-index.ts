@@ -5,12 +5,14 @@ import {
   FORM_SIZE_OPTIONS,
   type FormBlockKind,
 } from '../catalogs/form/form-catalog.config';
-import { PAGINATOR_CATALOG_STATE_DEMOS } from '../catalogs/data/data-catalog.config';
+import { PAGINATOR_CATALOG_STATE_DEMOS, ORDERLIST_CATALOG_EXAMPLE_OPTIONS } from '../catalogs/data/data-catalog.config';
 import {
   AVATAR_CATALOG_VARIANT_OPTIONS,
   AVATAR_GROUP_CATALOG_COUNT_OPTIONS,
   BADGE_CATALOG_SEVERITIES,
   CHIP_CATALOG_VARIANT_SELECT_OPTIONS,
+  PROGRESSBAR_CATALOG_EXAMPLE_OPTIONS,
+  PROGRESSBAR_CATALOG_VALUE_OPTIONS,
   TAG_CATALOG_SEVERITIES,
 } from '../catalogs/misc/misc-catalog.config';
 import { MESSAGE_VARIANTS } from '../catalogs/messages/messages-catalog.config';
@@ -23,7 +25,7 @@ import {
   PANEL_EXAMPLE_OPTIONS,
   STEPPER_CATALOG_STATE_DEMOS,
 } from '../catalogs/panel/panel-catalog.config';
-import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS } from '../catalogs/menu/menu-catalog.config';
+import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS, MENU_CATALOG_EXAMPLE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
 import { MDS_VARS_CATALOG } from '../theme/mds-vars-catalog.generated';
 
@@ -71,6 +73,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-message': 'message',
   'pg-toast': 'toast',
   'pg-paginator': 'paginator',
+  'pg-orderlist': 'orderlist',
   'pg-divider': 'divider',
   'pg-panel': 'panel',
   'pg-card': 'card',
@@ -78,6 +81,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-tabs': 'tabs',
   'pg-stepper': 'stepper',
   'pg-breadcrumb': 'breadcrumb',
+  'pg-menu': 'menu',
   'pg-tooltip': 'tooltip',
   'pg-dialog': 'dialog',
   'pg-confirmdialog': 'confirmdialog',
@@ -89,6 +93,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-badge': 'badge',
   'pg-avatar': 'avatar',
   'pg-avatargroup': 'avatar',
+  'pg-progressbar': 'progressbar',
 };
 
 function countComponentVariables(anchorId: string): number {
@@ -170,6 +175,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       variantCount: PAGINATOR_CATALOG_STATE_DEMOS.length,
     },
     {
+      id: 'pg-orderlist',
+      name: 'OrderList',
+      route: 'data',
+      sectionLabel: 'Data',
+      keywords: ['p-orderlist', 'orderlist', 'order list', 'reordenar', 'lista'],
+      variantCount: ORDERLIST_CATALOG_EXAMPLE_OPTIONS.length,
+    },
+    {
       id: 'pg-panel',
       name: 'Panel',
       route: 'panel',
@@ -224,6 +237,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Menu',
       keywords: ['p-breadcrumb', 'miga de pan', 'navegación', 'navigation'],
       variantCount: BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS.length,
+    },
+    {
+      id: 'pg-menu',
+      name: 'Menu',
+      route: 'menu',
+      sectionLabel: 'Menu',
+      keywords: ['p-menu', 'menú', 'navigation', 'popup', 'command'],
+      variantCount: MENU_CATALOG_EXAMPLE_DEMOS.length,
     },
     {
       id: 'pg-tooltip',
@@ -312,6 +333,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Misc',
       keywords: ['p-avatargroup', 'avatar group', 'grupo'],
       variantCount: AVATAR_GROUP_CATALOG_COUNT_OPTIONS.length,
+    },
+    {
+      id: 'pg-progressbar',
+      name: 'ProgressBar',
+      route: 'misc',
+      sectionLabel: 'Misc',
+      keywords: ['p-progressbar', 'progress', 'bar', 'loading'],
+      variantCount: PROGRESSBAR_CATALOG_EXAMPLE_OPTIONS.length,
     },
   ];
 

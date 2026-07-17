@@ -1,4 +1,118 @@
 <div class="cards-grid form-catalog-stack">
+  <ng-template #menuCatalogItem let-item>
+    <a pRipple class="p-menu-item-link mds-menu-catalog-item-link" tabindex="-1">
+      @if (item.icon) {
+        <span [class]="item.icon + ' p-menu-item-icon'" aria-hidden="true"></span>
+      }
+      @if (item.label) {
+        <span class="p-menu-item-label">{{ item.label }}</span>
+      }
+      @if (menuToggleHeader(item)) {
+        <span
+          class="p-menu-item-icon mds-menu-toggle-angle pi"
+          [class.pi-angle-up]="menuToggleHeaderExpanded(item)"
+          [class.pi-angle-down]="!menuToggleHeaderExpanded(item)"
+          aria-hidden="true"
+        ></span>
+      }
+    </a>
+  </ng-template>
+
+  <div class="catalog-preview menu-showcase">
+    <section id="pg-menu" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Menu' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showExpand]="true"
+          configAriaLabel="Configurar Menu"
+          expandAriaLabel="Expandir ejemplos de Menu"
+          collapseAriaLabel="Contraer ejemplos de Menu"
+        >
+          <div catalogPreviewDemo class="menu-catalog-demo-area catalog-showcase-interactive">
+            <p-button
+              type="button"
+              [label]="menuPopupTriggerLabel"
+              [icon]="menuPopupTriggerIcon"
+              (onClick)="toggleMenuPopup($event)"
+              ariaLabel="Abrir menú popup"
+            />
+            <p-menu
+              #menuPopup
+              [model]="menuModel()"
+              [popup]="true"
+              appendTo="body"
+              styleClass="menu-catalog-live"
+            >
+              <ng-template #item let-item>
+                <ng-container *ngTemplateOutlet="menuCatalogItem; context: { $implicit: item }" />
+              </ng-template>
+            </p-menu>
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Examples</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="menuExampleOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="menuIx().example"
+                  (ngModelChange)="setMenuExample($event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Examples Menu"
+                />
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Examples" icon="list">
+              <div
+                class="menu-catalog-states-row is-static-preview"
+                aria-label="Menu examples from PrimeNG documentation"
+              >
+                @for (demo of menuExampleDemos; track trackMenuExample($index, demo)) {
+                  <div class="menu-catalog-state">
+                    <div class="menu-catalog-state-preview">
+                      @if (demo.key === 'toggleable') {
+                        <p-menu
+                          [model]="toggleableStaticMenuModel()"
+                          styleClass="menu-catalog-static"
+                          ariaLabel="Menú toggleable estático"
+                        >
+                          <ng-template #item let-item>
+                            <ng-container *ngTemplateOutlet="menuCatalogItem; context: { $implicit: item }" />
+                          </ng-template>
+                        </p-menu>
+                      } @else {
+                        <p-menu
+                          [model]="demoMenuModel(demo.key)"
+                          styleClass="menu-catalog-static"
+                        >
+                          <ng-template #item let-item>
+                            <ng-container *ngTemplateOutlet="menuCatalogItem; context: { $implicit: item }" />
+                          </ng-template>
+                        </p-menu>
+                      }
+                    </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
+                  </div>
+                }
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
   <div class="catalog-preview breadcrumb-showcase">
     <section id="pg-breadcrumb" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">

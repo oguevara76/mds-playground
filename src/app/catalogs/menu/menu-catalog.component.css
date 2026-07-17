@@ -1,3 +1,35 @@
+:host.menu-catalog-page .menu-catalog-demo-area {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+:host.menu-catalog-page .menu-catalog-states-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+:host.menu-catalog-page .menu-catalog-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--catalog-state-caption-gap, 12px);
+  width: fit-content;
+  max-width: 100%;
+}
+
+:host.menu-catalog-page .menu-catalog-state-preview {
+  width: fit-content;
+  max-width: 100%;
+}
+
+:host.menu-catalog-page ::ng-deep .menu-catalog-static.p-menu {
+  width: min(100%, 18rem);
+}
+
 :host.menu-catalog-page .breadcrumb-interaction-row {
   display: flex;
   align-items: flex-start;

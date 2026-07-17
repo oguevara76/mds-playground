@@ -176,3 +176,177 @@ export function breadcrumbDisplayModeClass(
 ): string {
   return `breadcrumb-display-${displayMode}`;
 }
+
+/** Ejemplo activo del Menu en Interaction (popover). */
+export type MenuCatalogExample = 'basic' | 'group' | 'toggleable';
+
+export interface MenuCatalogExampleDemo {
+  key: MenuCatalogExample;
+  caption: string;
+}
+
+export interface MenuCatalogInteractionState {
+  example: MenuCatalogExample;
+}
+
+export const MENU_CATALOG_EXAMPLE_OPTIONS: { label: string; value: MenuCatalogExample }[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Group', value: 'group' },
+  { label: 'Toggleable', value: 'toggleable' },
+];
+
+export const MENU_CATALOG_EXAMPLE_DEMOS: MenuCatalogExampleDemo[] = [
+  { key: 'basic', caption: 'Basic' },
+  { key: 'group', caption: 'Group' },
+  { key: 'toggleable', caption: 'Toggleable' },
+];
+
+export const MENU_CATALOG_POPUP_TRIGGER_LABEL = 'Account';
+export const MENU_CATALOG_POPUP_TRIGGER_ICON = 'pi pi-user';
+
+export function buildMenuBasicModel(): MenuItem[] {
+  return [
+    {
+      label: 'Account',
+      items: [
+        { label: 'Profile', icon: 'pi pi-user' },
+        { label: 'Settings', icon: 'pi pi-cog' },
+        { label: 'Logout', icon: 'pi pi-sign-out' },
+      ],
+    },
+  ];
+}
+
+export function buildMenuGroupModel(): MenuItem[] {
+  return [
+    {
+      label: 'Notifications',
+      items: [
+        { label: 'Enable notifications', icon: 'pi pi-check' },
+        { separator: true },
+        { label: 'Play sound' },
+        { label: 'Marketing emails' },
+      ],
+    },
+    { separator: true },
+    {
+      label: 'System',
+      items: [{ label: 'Auto-update apps' }],
+    },
+    { separator: true },
+    {
+      label: 'Appearance',
+      items: [
+        { label: 'Light' },
+        { label: 'Dark', icon: 'pi pi-check' },
+        { label: 'System' },
+      ],
+    },
+    { separator: true },
+    {
+      label: 'Language',
+      items: [
+        { label: 'English', icon: 'pi pi-check' },
+        { label: 'Türkçe' },
+        { label: 'Deutsch' },
+      ],
+    },
+  ];
+}
+
+export type MenuCatalogToggleableSection = 'import' | 'export' | 'share';
+
+export interface MenuCatalogToggleableExpandedState {
+  import: boolean;
+  export: boolean;
+  share: boolean;
+}
+
+/** Paridad con el demo Toggleable de PrimeNG: Import abierto, Export/Share cerrados. */
+export const MENU_CATALOG_TOGGLEABLE_DEFAULT_EXPANDED: MenuCatalogToggleableExpandedState = {
+  import: true,
+  export: false,
+  share: false,
+};
+
+function menuToggleableSectionHeader(
+  section: MenuCatalogToggleableSection,
+  label: string,
+  icon: string,
+  expanded: boolean,
+  toggleSection?: (section: MenuCatalogToggleableSection) => void,
+): MenuItem {
+  return {
+    id: `menu-${section}`,
+    label,
+    icon,
+    styleClass: `mds-menu-toggle-header${expanded ? ' is-expanded' : ''}`,
+    command: toggleSection ? () => toggleSection(section) : undefined,
+  };
+}
+
+function menuToggleableNestedItem(label: string, icon: string): MenuItem {
+  return { label, icon, styleClass: 'mds-menu-toggle-child' };
+}
+
+/** Toggleable — grupo Document con Import, Export y Share desplegables (PrimeNG docs). */
+export function buildMenuToggleableModel(
+  expanded: MenuCatalogToggleableExpandedState = MENU_CATALOG_TOGGLEABLE_DEFAULT_EXPANDED,
+  toggleSection?: (section: MenuCatalogToggleableSection) => void,
+): MenuItem[] {
+  const documentItems: MenuItem[] = [
+    { label: 'New file', icon: 'pi pi-plus' },
+    { label: 'Open recent', icon: 'pi pi-clock' },
+    { label: 'Duplicate', icon: 'pi pi-copy' },
+    menuToggleableSectionHeader('import', 'Import', 'pi pi-download', expanded.import, toggleSection),
+  ];
+
+  if (expanded.import) {
+    documentItems.push(
+      menuToggleableNestedItem('From file', 'pi pi-file'),
+      menuToggleableNestedItem('From cloud', 'pi pi-cloud'),
+      menuToggleableNestedItem('From URL', 'pi pi-globe'),
+    );
+  }
+
+  documentItems.push(
+    menuToggleableSectionHeader('export', 'Export', 'pi pi-upload', expanded.export, toggleSection),
+  );
+
+  if (expanded.export) {
+    documentItems.push(
+      menuToggleableNestedItem('To file', 'pi pi-file'),
+      menuToggleableNestedItem('To cloud', 'pi pi-cloud'),
+    );
+  }
+
+  documentItems.push(
+    menuToggleableSectionHeader('share', 'Share', 'pi pi-share-alt', expanded.share, toggleSection),
+  );
+
+  if (expanded.share) {
+    documentItems.push(
+      menuToggleableNestedItem('Copy link', 'pi pi-link'),
+      menuToggleableNestedItem('Email', 'pi pi-envelope'),
+    );
+  }
+
+  documentItems.push({ label: 'Rename', icon: 'pi pi-pencil' });
+
+  return [{ label: 'Document', items: documentItems }];
+}
+
+export function buildMenuCatalogModel(
+  example: MenuCatalogExample,
+  toggleableExpanded?: MenuCatalogToggleableExpandedState,
+  toggleSection?: (section: MenuCatalogToggleableSection) => void,
+): MenuItem[] {
+  switch (example) {
+    case 'group':
+      return buildMenuGroupModel();
+    case 'toggleable':
+      return buildMenuToggleableModel(toggleableExpanded, toggleSection);
+    default:
+      return buildMenuBasicModel();
+  }
+}

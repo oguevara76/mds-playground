@@ -148,5 +148,21 @@
     "primeng_prefix": "popover",
     "override": "src/app/theme/overlay-mds-overrides.ts",
     "watch_vars": ["--popover-*", "--p-popover-*"]
+  },
+  "progressbar": {
+    "playground_anchor": "pg-progressbar",
+    "primeng_prefix": "progressbar",
+    "watch_vars": ["--progressbar-*", "--p-progressbar-*"]
+  },
+  "orderlist": {
+    "playground_anchor": "pg-orderlist",
+    "primeng_prefix": "orderlist",
+    "related_semantic": ["--listbox-*", "--list-option-*", "--form-field-*"],
+    "watch_vars": ["--orderlist-*", "--p-orderlist-*", "--listbox-*", "--p-listbox-*"]
+  },
+  "menu": {
+    "playground_anchor": "pg-menu",
+    "primeng_prefix": "menu",
+    "watch_vars": ["--menu-*", "--p-menu-*"]
   }
 }

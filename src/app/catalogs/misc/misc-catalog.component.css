@@ -282,3 +282,103 @@
 :host.misc-catalog-page ::ng-deep .p-avatar-group .p-avatar-xl + .p-avatar-xl {
   margin-inline-start: var(--p-avatar-xl-group-offset, var(--avatar-xl-group-offset, -20px)) !important;
 }
+
+:host.misc-catalog-page .progressbar-catalog-demo-wrap {
+  width: 100%;
+  max-width: 320px;
+}
+
+:host.misc-catalog-page .progressbar-catalog-row,
+:host.misc-catalog-page .progressbar-dynamic-demo,
+:host.misc-catalog-page .progressbar-template-demos {
+  width: 100%;
+  max-width: 320px;
+}
+
+:host.misc-catalog-page .progressbar-dynamic-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+:host.misc-catalog-page .progressbar-dynamic-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--surface-context-contrast, var(--p-text-color));
+}
+
+:host.misc-catalog-page .progressbar-template-demos {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+:host.misc-catalog-page .progressbar-template-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+:host.misc-catalog-page .progressbar-template-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+
+:host.misc-catalog-page .progressbar-template-title {
+  font-weight: 500;
+  color: var(--surface-context-contrast, var(--p-text-color));
+}
+
+:host.misc-catalog-page .progressbar-template-meta {
+  color: var(--surface-context-muted, var(--p-text-muted-color));
+  white-space: nowrap;
+}
+
+:host.misc-catalog-page ::ng-deep .progressbar-catalog-demo {
+  width: 100%;
+}
+
+:host.misc-catalog-page ::ng-deep .progressbar-template-bar {
+  height: 6px;
+  border-radius: var(--border-radius-pill, 999px);
+}
+
+:host.misc-catalog-page ::ng-deep .progressbar-template-bar .p-progressbar-value {
+  border-radius: var(--border-radius-pill, 999px);
+}
+
+:host.misc-catalog-page ::ng-deep .progressbar-template-bar--primary .p-progressbar-value {
+  background: var(--primary-color, var(--p-primary-color));
+}
+
+:host.misc-catalog-page ::ng-deep .progressbar-template-bar--success .p-progressbar-value {
+  background: var(--feedback-success-medium, var(--p-success-color));
+}
+
+:host.misc-catalog-page ::ng-deep .progressbar-template-bar--info .p-progressbar-value {
+  background: var(--feedback-info-medium, var(--p-info-color));
+}
+
+:host.misc-catalog-page ::ng-deep .progressbar-template-bar--warn .p-progressbar-value {
+  background: var(--feedback-warn-medium, var(--p-warning-color));
+}
+
+:host.misc-catalog-page ::ng-deep .p-progressbar {
+  height: var(--progressbar-height, var(--p-progressbar-height));
+  border-radius: var(--progressbar-border-radius, var(--p-progressbar-border-radius));
+  background: var(--progressbar-background, var(--p-progressbar-background));
+}
+
+:host.misc-catalog-page ::ng-deep .p-progressbar-value {
+  background: var(--progressbar-value-background, var(--p-progressbar-value-background));
+}
+
+:host.misc-catalog-page ::ng-deep .p-progressbar-label {
+  color: var(--progressbar-label-color, var(--p-progressbar-label-color));
+  font-size: var(--progressbar-label-font-size, var(--p-progressbar-label-font-size));
+  font-weight: var(--progressbar-label-font-weight, var(--p-progressbar-label-font-weight));
+}
