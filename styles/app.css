@@ -2709,22 +2709,7 @@ app-playground-sidebar {
 }
 [data-theme="dark"] .tv-map-area { background: var(--p-surface-900); }
 
-/* ── Toolbar above the infinite canvas ── */
-.vv-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
-  border-bottom: 1px solid var(--p-surface-200);
-  background: var(--p-surface-0);
-  flex-shrink: 0;
-  z-index: 20;
-}
-[data-theme="dark"] .vv-toolbar {
-  background: var(--p-surface-900);
-  border-color: var(--p-surface-700);
-}
-
+/* ── Map chrome (lives in .tv-toolbar) ── */
 .vv-zoom-group {
   display: flex;
   align-items: center;
@@ -3059,6 +3044,17 @@ app-playground-sidebar {
   text-overflow: ellipsis;
 }
 [data-theme="dark"] .vv-name { color: var(--p-surface-200); }
+.vv-deps {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--p-surface-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-theme="dark"] .vv-deps { color: var(--p-surface-400); }
 .vv-val {
   font-family: 'Menlo','Consolas',monospace;
   font-size: 10px;
@@ -3125,19 +3121,37 @@ app-playground-sidebar {
 
 /* ── Panel variant: individual component panels (narrower, 3-column grid) ── */
 .vv-panel-comp {
-  width: 215px;
+  width: 240px;
+  border: 2px solid rgba(59, 130, 246, 0.38);
 }
-/* Truncate long component variable names inside the narrow panels */
-.vv-panel-comp .vv-name {
-  max-width: 118px;
+[data-theme='dark'] .vv-panel-comp {
+  border: 2px solid rgba(99, 179, 237, 0.3);
+}
+.vv-panel-comp-selected {
+  width: 280px;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--p-primary-color) 45%, transparent);
+}
+.vv-panel-comp-via {
+  opacity: 0.96;
+}
+.vv-role-icon {
+  font-size: 12px;
+  color: inherit;
+  flex-shrink: 0;
+}
+/* Truncate long names / deps inside component panels */
+.vv-panel-comp .vv-info {
+  max-width: 155px;
+}
+.vv-panel-comp-selected .vv-info {
+  max-width: 190px;
+}
+.vv-panel-comp .vv-name,
+.vv-panel-comp .vv-deps {
+  max-width: 100%;
 }
 
 /* Smaller header for per-component panels */
-.vv-phdr-sm {
-  font-size: 10.5px;
-  padding: 7px 12px 6px;
-}
-
 /* ── Selection: dim everything, brighten only the highlighted chain ── */
 .vv-row { cursor: pointer; }
 

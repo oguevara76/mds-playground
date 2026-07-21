@@ -7,7 +7,7 @@ import type { MapCompGroup, MapTokenRow, PanelPos, TokenMapModel, VvConnData } f
 const VV_ZOOM_MIN = 0.2;
 const VV_ZOOM_MAX = 2.5;
 const VV_ZOOM_STEP = 0.12;
-const COMP_PANEL_W = 215;
+const COMP_PANEL_W = 240;
 const COMP_PANEL_GAP = 60;
 const COMP_ROW_GAP = 40;
 const COMP_COLS = 10;
@@ -20,6 +20,14 @@ const VV_DEFAULT_POS = {
 
 function escAttr(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+}
+
+function escHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 type DragInteraction = {
@@ -45,6 +53,11 @@ type PanInteraction = {
 
 type VvInteraction = DragInteraction | PanInteraction;
 
+export type TokenMapUiState = {
+  zoomPercent: number;
+  mapSearchQuery: string;
+};
+
 /** Controlador imperativo del mapa de tokens (paridad con js/app.js). */
 export class TokenMapController {
   private zoom = 1;
@@ -64,10 +77,13 @@ export class TokenMapController {
   private selectedVar: string | null = null;
   private clickSuppressed = false;
   private mapSearchQuery = '';
+  private componentLabel: string | null = null;
   private interaction: VvInteraction | null = null;
   private globalListenersBound = false;
+  private canvasBound = false;
   private readonly onMouseMove = (e: MouseEvent) => this.handleMouseMove(e);
   private readonly onMouseUp = () => this.handleMouseUp();
+  private uiListener: ((state: TokenMapUiState) => void) | null = null;
 
   constructor(
     private readonly doc: Document,
@@ -75,10 +91,52 @@ export class TokenMapController {
     private readonly catalog: TokenCatalogService
   ) {}
 
+  /** Filtra el mapa a un único grupo de componente (`compLabel`). `null` = mapa completo. */
+  setComponentFilter(label: string | null): void {
+    this.componentLabel = label?.trim() || null;
+  }
+
+  setUiListener(listener: ((state: TokenMapUiState) => void) | null): void {
+    this.uiListener = listener;
+    this.notifyUi();
+  }
+
+  zoomIn(): void {
+    this.zoom = Math.min(VV_ZOOM_MAX, +(this.zoom + VV_ZOOM_STEP).toFixed(2));
+    this.applyTransform();
+    requestAnimationFrame(() => this.drawLines());
+  }
+
+  zoomOut(): void {
+    this.zoom = Math.max(VV_ZOOM_MIN, +(this.zoom - VV_ZOOM_STEP).toFixed(2));
+    this.applyTransform();
+    requestAnimationFrame(() => this.drawLines());
+  }
+
+  resetView(): void {
+    this.zoom = 1;
+    this.pan = { x: 40, y: 40 };
+    this.posStore.prim = { ...VV_DEFAULT_POS.prim };
+    this.posStore.sem = { ...VV_DEFAULT_POS.sem };
+    this.posStore.comp = { ...VV_DEFAULT_POS.comp };
+    this.compPosStore.clear();
+    this.mapSearchQuery = '';
+    this.render();
+    this.notifyUi();
+  }
+
+  setMapSearch(query: string): void {
+    this.mapSearchQuery = (query || '').trim();
+    this.applySearch(this.mapSearchQuery);
+    this.notifyUi();
+  }
+
   destroy(): void {
     this.doc.removeEventListener('mousemove', this.onMouseMove);
     this.doc.removeEventListener('mouseup', this.onMouseUp);
+    this.uiListener = null;
     this.host.innerHTML = '';
+    this.canvasBound = false;
   }
 
   /** Tras upload/eliminación: resetea layout y vuelve a calcular conexiones. */
@@ -92,12 +150,17 @@ export class TokenMapController {
   }
 
   render(onComplete?: () => void): void {
-    const model = buildTokenMapModel(this.catalog.sections(), this.catalog);
+    const model = buildTokenMapModel(this.catalog.sections(), this.catalog, {
+      componentLabel: this.componentLabel,
+    });
     this.connData = model.connData;
     this.selectedVar = null;
+    this.canvasBound = false;
     this.host.innerHTML = this.buildHtml(model);
     this.ensureGlobalListeners();
     this.bindCanvas(this.host.querySelector('#vv-canvas'));
+    if (this.mapSearchQuery) this.applySearch(this.mapSearchQuery);
+    this.notifyUi();
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         this.restack();
@@ -105,6 +168,13 @@ export class TokenMapController {
         onComplete?.();
       })
     );
+  }
+
+  private notifyUi(): void {
+    this.uiListener?.({
+      zoomPercent: Math.round(this.zoom * 100),
+      mapSearchQuery: this.mapSearchQuery,
+    });
   }
 
   private buildHtml(model: TokenMapModel): string {
@@ -125,10 +195,24 @@ export class TokenMapController {
     const compPanels = model.compGroups
       .map((g) => {
         const pos = this.compPosStore.get(g.storeKey)!;
-        const body = g.rows.map((r) => this.mkRowHtml(r, null)).join('');
-        return `<div class="vv-panel vv-panel-comp" id="vv-comp-${g.safeId}" style="left:${pos.x}px;top:${pos.y}px">
-        <div class="vv-phdr vv-phdr-sm" data-drag="${escAttr(g.storeKey)}">
-          ${g.label}<span class="vv-pc">${g.rows.length}</span>
+        const body = g.rows.length
+          ? g.rows.map((r) => this.mkRowHtml(r, null)).join('')
+          : '<p class="vv-empty">Sin variables</p>';
+        const roleCls =
+          g.role === 'selected'
+            ? ' vv-panel-comp-selected'
+            : g.role === 'via'
+              ? ' vv-panel-comp-via'
+              : '';
+        const roleIcon =
+          g.role === 'selected'
+            ? '<i class="pi pi-box vv-role-icon" aria-hidden="true" title="Componente"></i>'
+            : g.role === 'via'
+              ? '<i class="pi pi-share-alt vv-role-icon" aria-hidden="true" title="Vía"></i>'
+              : '';
+        return `<div class="vv-panel vv-panel-comp${roleCls}" id="vv-comp-${g.safeId}" style="left:${pos.x}px;top:${pos.y}px">
+        <div class="vv-phdr" data-drag="${escAttr(g.storeKey)}">
+          ${roleIcon}${escHtml(g.label)}<span class="vv-pc">${g.rows.length}</span>
         </div>
         <div class="vv-pbody-fit">${body}</div>
       </div>`;
@@ -137,40 +221,22 @@ export class TokenMapController {
 
     const pp = this.posStore.prim;
     const sp = this.posStore.sem;
-    const q = escAttr(this.mapSearchQuery);
 
     return `
-      <div class="vv-toolbar" id="vv-toolbar">
-        <div class="vv-zoom-group">
-          <button type="button" class="vv-zbtn" id="vv-zoom-out" title="Alejar">−</button>
-          <span class="vv-zlabel" id="vv-zlabel">${Math.round(this.zoom * 100)}%</span>
-          <button type="button" class="vv-zbtn" id="vv-zoom-in" title="Acercar">+</button>
-        </div>
-        <button type="button" class="vv-zbtn vv-reset" id="vv-zoom-reset" title="Restablecer vista">↺ Reset</button>
-        <div class="vv-msearch-wrap" id="vv-msearch-wrap">
-          <i class="pi pi-search vv-msearch-icon" aria-hidden="true"></i>
-          <input class="vv-msearch-input" id="vv-msearch"
-            type="search" placeholder="Buscar variable…" autocomplete="off"
-            value="${q}">
-          <button type="button" class="vv-msearch-clear" id="vv-msearch-clear"
-            title="Limpiar"${this.mapSearchQuery ? '' : ' hidden'}>✕</button>
-        </div>
-        <span class="vv-hint">Scroll = zoom · Arrastra panel = mover · Clic = seleccionar</span>
-      </div>
       <div class="vv-canvas" id="vv-canvas">
         <div class="vv-world" id="vv-world" style="transform:translate(${this.pan.x}px,${this.pan.y}px) scale(${this.zoom});transform-origin:0 0;">
           <svg id="vv-svg-bg" style="position:absolute;top:0;left:0;pointer-events:none;z-index:1;overflow:visible;" width="1" height="1"></svg>
           <svg id="vv-svg-fg" style="position:absolute;top:0;left:0;pointer-events:none;z-index:50;overflow:visible;" width="1" height="1"></svg>
           <div class="vv-panel vv-panel-fit" id="vv-prim" style="left:${pp.x}px;top:${pp.y}px">
             <div class="vv-phdr" data-drag="prim">
-              <i class="pi pi-box" aria-hidden="true"></i> Primitivos
+              <i class="pi pi-box" aria-hidden="true"></i> Primitives
               <span class="vv-pc">${model.primRows.length}</span>
             </div>
             <div class="vv-pbody-fit">${primBody}</div>
           </div>
           <div class="vv-panel vv-panel-fit" id="vv-sem" style="left:${sp.x}px;top:${sp.y}px">
             <div class="vv-phdr" data-drag="sem">
-              <i class="pi pi-sliders-h" aria-hidden="true"></i> Semánticos
+              <i class="pi pi-sliders-h" aria-hidden="true"></i> Semantics
               <span class="vv-pc">${model.semRows.length}</span>
             </div>
             <div class="vv-pbody-fit">${semBody}</div>
@@ -186,13 +252,16 @@ export class TokenMapController {
     const ld = row.leftRef
       ? `<span class="vv-dot vv-dot-l" data-cref="${escAttr(row.leftRef)}"></span>`
       : '<span class="vv-dot-sp"></span>';
-    const rd =
-      row.vtype !== 'comp'
-        ? `<span class="vv-dot vv-dot-r" data-sdot="${escAttr(t.name)}"></span>`
-        : '';
+    const showRight = row.showRightDot ?? row.vtype !== 'comp';
+    const rd = showRight
+      ? `<span class="vv-dot vv-dot-r" data-sdot="${escAttr(t.name)}"></span>`
+      : '';
     const label = t.label.replace(/^p-/, '');
+    const deps = row.depsSubtext
+      ? `<span class="vv-deps">${escHtml(row.depsSubtext)}</span>`
+      : '';
     return `<div class="vv-row" data-var="${escAttr(t.name)}" data-vtype="${row.vtype}">
-      ${ld}${sw}<span class="vv-name">${label}</span>${rd}
+      ${ld}${sw}<span class="vv-info"><span class="vv-name">${escHtml(label)}</span>${deps}</span>${rd}
     </div>`;
   }
 
@@ -212,6 +281,21 @@ export class TokenMapController {
   }
 
   private computeCompGridPositions(compGroups: MapCompGroup[]): PanelPos[] {
+    // Modo Component: Prim → Sem → [Vías] → Componente seleccionado (una fila).
+    if (this.componentLabel) {
+      const semW = 290;
+      const startX = this.posStore.sem.x + semW + COMP_PANEL_GAP;
+      const y = this.posStore.sem.y;
+      let x = startX;
+      // Sin `col`: restack no los apila en vertical; quedan en fila Prim→Sem→Vía→Comp.
+      return compGroups.map((g) => {
+        const pos: PanelPos = { x, y };
+        const w = g.role === 'selected' ? 280 : COMP_PANEL_W;
+        x += w + COMP_PANEL_GAP;
+        return pos;
+      });
+    }
+
     const colTokenCount = Array(COMP_COLS).fill(0);
     return compGroups.map((g) => {
       const col = colTokenCount.indexOf(Math.min(...colTokenCount));
@@ -232,28 +316,8 @@ export class TokenMapController {
   }
 
   private bindCanvas(canvas: Element | null): void {
-    if (!canvas || !(canvas instanceof HTMLElement)) return;
-
-    this.host.querySelector('#vv-zoom-in')?.addEventListener('click', () => {
-      this.zoom = Math.min(VV_ZOOM_MAX, +(this.zoom + VV_ZOOM_STEP).toFixed(2));
-      this.applyTransform();
-      requestAnimationFrame(() => this.drawLines());
-    });
-    this.host.querySelector('#vv-zoom-out')?.addEventListener('click', () => {
-      this.zoom = Math.max(VV_ZOOM_MIN, +(this.zoom - VV_ZOOM_STEP).toFixed(2));
-      this.applyTransform();
-      requestAnimationFrame(() => this.drawLines());
-    });
-    this.host.querySelector('#vv-zoom-reset')?.addEventListener('click', () => {
-      this.zoom = 1;
-      this.pan = { x: 40, y: 40 };
-      this.posStore.prim = { ...VV_DEFAULT_POS.prim };
-      this.posStore.sem = { ...VV_DEFAULT_POS.sem };
-      this.posStore.comp = { ...VV_DEFAULT_POS.comp };
-      this.compPosStore.clear();
-      this.mapSearchQuery = '';
-      this.render();
-    });
+    if (!canvas || !(canvas instanceof HTMLElement) || this.canvasBound) return;
+    this.canvasBound = true;
 
     canvas.addEventListener(
       'wheel',
@@ -327,39 +391,6 @@ export class TokenMapController {
         this.deselect();
       }
     });
-
-    const msInput = this.host.querySelector('#vv-msearch');
-    const msClear = this.host.querySelector('#vv-msearch-clear');
-    if (msInput instanceof HTMLInputElement) {
-      if (this.mapSearchQuery) this.applySearch(this.mapSearchQuery);
-      msInput.addEventListener('input', () => {
-        this.mapSearchQuery = msInput.value.trim();
-        if (msClear instanceof HTMLElement) {
-          msClear.hidden = !this.mapSearchQuery;
-        }
-        this.applySearch(this.mapSearchQuery);
-      });
-      msInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && msClear instanceof HTMLElement) {
-          msInput.value = '';
-          this.mapSearchQuery = '';
-          msClear.hidden = true;
-          this.applySearch('');
-          msInput.focus();
-        }
-      });
-    }
-    if (msClear instanceof HTMLElement) {
-      msClear.addEventListener('click', () => {
-        if (msInput instanceof HTMLInputElement) {
-          msInput.value = '';
-          msInput.focus();
-        }
-        this.mapSearchQuery = '';
-        msClear.hidden = true;
-        this.applySearch('');
-      });
-    }
   }
 
   private handleMouseMove(e: MouseEvent): void {
@@ -409,8 +440,7 @@ export class TokenMapController {
     if (world instanceof HTMLElement) {
       world.style.transform = `translate(${this.pan.x}px,${this.pan.y}px) scale(${this.zoom})`;
     }
-    const lbl = this.host.querySelector('#vv-zlabel');
-    if (lbl) lbl.textContent = `${Math.round(this.zoom * 100)}%`;
+    this.notifyUi();
   }
 
   private restack(): void {
@@ -459,7 +489,7 @@ export class TokenMapController {
         if (matches) directHits.add(row.dataset['var']);
       });
 
-      const { semRefMap, compRefMap, primSet, semSet } = this.connData;
+      const { semRefMap, primSet, semSet } = this.connData;
       const allHits = new Set(directHits);
 
       directHits.forEach((name) => {
@@ -467,26 +497,16 @@ export class TokenMapController {
           semRefMap.forEach((primRef, semName) => {
             if (primRef !== name) return;
             allHits.add(semName);
-            compRefMap.forEach((ref, compName) => {
-              if (ref === semName) allHits.add(compName);
-            });
+            this.compsReaching(semName, allHits);
           });
-          compRefMap.forEach((ref, compName) => {
-            if (ref === name) allHits.add(compName);
-          });
+          this.compsReaching(name, allHits);
         } else if (semSet.has(name)) {
           const primRef = semRefMap.get(name);
           if (primRef) allHits.add(primRef);
-          compRefMap.forEach((ref, compName) => {
-            if (ref === name) allHits.add(compName);
-          });
+          this.compsReaching(name, allHits);
         } else {
-          const ref = compRefMap.get(name);
-          if (ref) {
-            allHits.add(ref);
-            const primRef = semRefMap.get(ref);
-            if (primRef) allHits.add(primRef);
-          }
+          this.walkCompChain(name, allHits);
+          this.compsReaching(name, allHits);
         }
       });
 
@@ -499,34 +519,60 @@ export class TokenMapController {
     requestAnimationFrame(() => this.drawLines());
   }
 
-  private buildHlSet(varName: string): Set<string> {
+  /** Sigue hops de compRefMap hasta Sem/Prim. */
+  private walkCompChain(start: string, into: Set<string>): void {
     const { semRefMap, compRefMap, primSet, semSet } = this.connData;
+    let ref: string | undefined = compRefMap.get(start);
+    const visited = new Set<string>();
+    while (ref && !visited.has(ref)) {
+      visited.add(ref);
+      into.add(ref);
+      if (primSet.has(ref)) break;
+      if (semSet.has(ref)) {
+        const primRef = semRefMap.get(ref);
+        if (primRef) into.add(primRef);
+        break;
+      }
+      ref = compRefMap.get(ref);
+    }
+  }
+
+  /** Componentes (directos o vía hops) que terminan alcanzando `target`. */
+  private compsReaching(target: string, into: Set<string>): void {
+    const { compRefMap, semRefMap, primSet } = this.connData;
+    compRefMap.forEach((_ref, compName) => {
+      const chain = new Set<string>();
+      this.walkCompChain(compName, chain);
+      if (chain.has(target)) into.add(compName);
+    });
+    if (primSet.has(target)) {
+      semRefMap.forEach((primRef, semName) => {
+        if (primRef !== target) return;
+        this.compsReaching(semName, into);
+      });
+    }
+  }
+
+  private buildHlSet(varName: string): Set<string> {
+    const { semRefMap, primSet, semSet } = this.connData;
     const hl = new Set([varName]);
 
     if (primSet.has(varName)) {
       semRefMap.forEach((primRef, semName) => {
         if (primRef === varName) {
           hl.add(semName);
-          compRefMap.forEach((ref, compName) => {
-            if (ref === semName) hl.add(compName);
-          });
+          this.compsReaching(semName, hl);
         }
       });
+      this.compsReaching(varName, hl);
     } else if (semSet.has(varName)) {
       const primRef = semRefMap.get(varName);
       if (primRef) hl.add(primRef);
-      compRefMap.forEach((ref, compName) => {
-        if (ref === varName) hl.add(compName);
-      });
+      this.compsReaching(varName, hl);
     } else {
-      const ref = compRefMap.get(varName);
-      if (ref) {
-        hl.add(ref);
-        if (semSet.has(ref)) {
-          const primRef = semRefMap.get(ref);
-          if (primRef) hl.add(primRef);
-        }
-      }
+      this.walkCompChain(varName, hl);
+      // Upstream: otros comps que dependen de este token
+      this.compsReaching(varName, hl);
     }
     return hl;
   }

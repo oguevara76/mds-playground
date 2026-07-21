@@ -53,6 +53,8 @@
       }
     </ul>
   } @else if (panelOpen() && query().trim() && !results().length) {
-    <div class="pg-search-empty" role="status">Sin resultados para «{{ query().trim() }}»</div>
+    <div class="pg-search-empty" role="status">
+      Component not found…
+    </div>
   }
 </div>

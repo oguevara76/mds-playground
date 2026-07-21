@@ -1,0 +1,24 @@
+<div class="tcm-root">
+  @if (!catalog.selectedComponentLabel()) {
+    <div class="tcm-empty-page" role="status">
+      <div class="tcm-empty-icon" aria-hidden="true">
+        <i class="pi pi-box"></i>
+      </div>
+      <h2 class="tcm-empty-title">Search a component</h2>
+      <p class="tcm-empty-text">
+        Use the toolbar search and pick a component from the list to explore its Prim → Sem → Comp
+        connections.
+      </p>
+    </div>
+  } @else {
+    <div class="tv-map-area" [class.is-refreshing]="mapLoading()">
+      @if (mapLoading()) {
+        <div class="tv-map-loader" role="status" aria-live="polite" aria-busy="true">
+          <i class="pi pi-spin pi-spinner" aria-hidden="true"></i>
+          <span>Updating map…</span>
+        </div>
+      }
+      <div class="tv-map-host" #mapHost></div>
+    </div>
+  }
+</div>

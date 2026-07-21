@@ -357,6 +357,15 @@ export const PLAYGROUND_COMPONENT_COUNT = new Set(
   PLAYGROUND_COMPONENT_INDEX.map((e) => TOKEN_PREFIXES[e.id] ?? e.id),
 ).size;
 
+/** Labels `compLabel` de componentes implementados en el playground (p.ej. Button, Dialog). */
+export const PLAYGROUND_COMP_TOKEN_LABELS: string[] = [
+  ...new Set(
+    Object.values(TOKEN_PREFIXES).map(
+      (prefix) => prefix.charAt(0).toUpperCase() + prefix.slice(1)
+    )
+  ),
+].sort((a, b) => a.localeCompare(b, 'es'));
+
 export function playgroundAnchorId(id: string): string {
   return id;
 }

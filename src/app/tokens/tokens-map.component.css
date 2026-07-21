@@ -24,6 +24,12 @@
   flex-direction: column;
 }
 
+.tv-map-host > .vv-canvas {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
+
 .tv-map-area.is-refreshing .tv-map-host {
   pointer-events: none;
   opacity: 0.35;

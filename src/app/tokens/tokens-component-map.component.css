@@ -1,0 +1,126 @@
+:host {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tcm-root {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tcm-empty-page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 24px;
+  gap: 8px;
+}
+
+.tcm-empty-icon {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  background: color-mix(in srgb, var(--p-primary-color) 10%, var(--p-surface-100));
+  color: var(--p-primary-color);
+}
+
+.tcm-empty-icon .pi {
+  font-size: 3.25rem;
+}
+
+.tcm-empty-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--p-surface-800);
+  letter-spacing: -0.02em;
+}
+
+.tcm-empty-text {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--p-surface-500);
+}
+
+:host-context([data-theme='dark']) .tcm-empty-icon {
+  background: color-mix(in srgb, var(--p-primary-color) 18%, var(--p-surface-800));
+}
+
+:host-context([data-theme='dark']) .tcm-empty-title {
+  color: var(--p-surface-100);
+}
+
+:host-context([data-theme='dark']) .tcm-empty-text {
+  color: var(--p-surface-400);
+}
+
+.tv-map-area {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tv-map-host {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tv-map-host > .vv-canvas {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
+
+.tv-map-area.is-refreshing .tv-map-host {
+  pointer-events: none;
+  opacity: 0.35;
+  transition: opacity 0.15s ease;
+}
+
+.tv-map-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: color-mix(in srgb, var(--p-surface-0) 72%, transparent);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--p-surface-600);
+}
+
+.tv-map-loader .pi-spinner {
+  font-size: 1.75rem;
+  color: var(--p-primary-color);
+}
+
+:host-context([data-theme='dark']) .tv-map-loader {
+  background: color-mix(in srgb, var(--p-surface-900) 78%, transparent);
+  color: var(--p-surface-300);
+}

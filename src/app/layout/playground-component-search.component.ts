@@ -37,7 +37,7 @@ export class PlaygroundComponentSearchComponent {
     const next = this.search.search(value);
     this.results.set(next);
     this.highlightIndex.set(0);
-    this.panelOpen.set(value.trim().length > 0 && next.length > 0);
+    this.panelOpen.set(value.trim().length > 0);
   }
 
   clear(): void {
@@ -53,7 +53,7 @@ export class PlaygroundComponentSearchComponent {
     if (!q) return;
     const next = this.search.search(q);
     this.results.set(next);
-    this.panelOpen.set(next.length > 0);
+    this.panelOpen.set(true);
   }
 
   select(entry: PlaygroundComponentEntry): void {

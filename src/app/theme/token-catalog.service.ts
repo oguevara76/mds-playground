@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, computed, inject, signal } from '@angular/core';
 
+import { PLAYGROUND_COMP_TOKEN_LABELS } from '../layout/playground-component-index';
 import type { UploadSlot } from './css-import-normalize';
 import { MDS_VARS_CATALOG } from './mds-vars-catalog.generated';
 import type {
@@ -44,7 +45,8 @@ export class TokenCatalogService {
   private readonly upload = inject(ThemeUploadService);
 
   readonly searchQuery = signal('');
-  readonly mapMode = signal(false);
+  readonly tokensViewMode = signal<'list' | 'map' | 'component'>('list');
+  readonly selectedComponentLabel = signal<string | null>(null);
 
   private readonly catalogRevision = computed(() => ({
     mode: this.theme.mode(),
@@ -105,6 +107,13 @@ export class TokenCatalogService {
     return { sections: sectionViews, total };
   });
 
+  /** Solo componentes implementados en el playground y presentes en el catálogo. */
+  readonly componentLabels = computed(() => {
+    const sec = this.sections().find((s) => s.id === 'componentes');
+    const inCatalog = new Set(sec?.subGroups.map((sg) => sg.label) ?? []);
+    return PLAYGROUND_COMP_TOKEN_LABELS.filter((label) => inCatalog.has(label));
+  });
+
   setSearchQuery(value: string): void {
     this.searchQuery.set(value);
   }
@@ -113,8 +122,60 @@ export class TokenCatalogService {
     this.searchQuery.set('');
   }
 
-  setMapMode(on: boolean): void {
-    this.mapMode.set(on);
+  setTokensViewMode(mode: 'list' | 'map' | 'component'): void {
+    this.tokensViewMode.set(mode);
+    this.searchQuery.set('');
+    this.selectedComponentLabel.set(null);
+  }
+
+  setSelectedComponentLabel(label: string | null): void {
+    this.selectedComponentLabel.set(label);
+  }
+
+  /** Filtra labels de componente para el combobox predictivo de Tokens → Component. */
+  searchComponentLabels(query: string, limit = 12): string[] {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    const labels = this.componentLabels();
+    const scored = labels
+      .map((label) => {
+        const n = label.toLowerCase();
+        let score = 0;
+        if (n === q) score = 100;
+        else if (n.startsWith(q)) score = 80;
+        else if (n.includes(q)) score = 40;
+        return { label, score };
+      })
+      .filter((row) => row.score > 0)
+      .sort((a, b) => b.score - a.score || a.label.localeCompare(b.label, 'es'));
+    return scored.slice(0, limit).map((row) => row.label);
+  }
+
+  /** Nombres de token para el combobox predictivo de Tokens → List. */
+  searchTokenNames(query: string, limit = 12): string[] {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    const names: string[] = [];
+    for (const sec of this.sections()) {
+      for (const sg of sec.subGroups) {
+        for (const t of sg.tokens) {
+          names.push(t.name);
+        }
+      }
+    }
+    const scored = names
+      .map((name) => {
+        const n = name.toLowerCase();
+        const label = name.replace(/^--/, '').toLowerCase();
+        let score = 0;
+        if (n === q || label === q) score = 100;
+        else if (n.startsWith(q) || label.startsWith(q)) score = 80;
+        else if (n.includes(q) || label.includes(q)) score = 40;
+        return { name, score };
+      })
+      .filter((row) => row.score > 0)
+      .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, 'es'));
+    return scored.slice(0, limit).map((row) => row.name);
   }
 
   private buildSections(): CatalogSection[] {
@@ -129,7 +190,7 @@ export class TokenCatalogService {
 
     const primSubs = groupByPalette(prim);
     if (primSubs.length) {
-      sections.push({ id: 'primitivos', label: 'Primitivos', cls: 'tva-prim', subGroups: primSubs });
+      sections.push({ id: 'primitivos', label: 'Primitives', cls: 'tva-prim', subGroups: primSubs });
     }
 
     const semSubs: CatalogSection['subGroups'] = [];
@@ -152,7 +213,7 @@ export class TokenCatalogService {
     if (semSubs.length) {
       sections.push({
         id: 'semanticos',
-        label: isDark ? 'Semánticos - Dark' : 'Semánticos - Light',
+        label: isDark ? 'Semantics - Dark' : 'Semantics - Light',
         cls: 'tva-sem',
         subGroups: semSubs,
       });
@@ -182,7 +243,7 @@ export class TokenCatalogService {
       }
       const subGroups = groupByPalette(vars);
       if (subGroups.length) {
-        sections.push({ id: 'primitivos', label: 'Primitivos', cls: 'tva-prim', subGroups });
+        sections.push({ id: 'primitivos', label: 'Primitives', cls: 'tva-prim', subGroups });
       }
     }
 
@@ -202,7 +263,7 @@ export class TokenCatalogService {
       });
       sections.push({
         id: 'semanticos',
-        label: isDark ? 'Semánticos - Dark' : 'Semánticos - Light',
+        label: isDark ? 'Semantics - Dark' : 'Semantics - Light',
         cls: 'tva-sem',
         subGroups: [
           {

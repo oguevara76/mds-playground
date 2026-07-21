@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
@@ -18,14 +17,14 @@ import { TokenMapController, type TokenMapUiState } from './token-map.controller
 const REFRESH_DELAY_MS = 140;
 
 @Component({
-  selector: 'app-tokens-map',
+  selector: 'app-tokens-component-map',
   standalone: true,
-  templateUrl: './tokens-map.component.html',
-  styleUrl: './tokens-map.component.css',
+  templateUrl: './tokens-component-map.component.html',
+  styleUrl: './tokens-component-map.component.css',
 })
-export class TokensMapComponent implements AfterViewInit, OnDestroy {
+export class TokensComponentMapComponent implements OnDestroy {
   private readonly doc = inject(DOCUMENT);
-  private readonly catalog = inject(TokenCatalogService);
+  readonly catalog = inject(TokenCatalogService);
   private readonly upload = inject(ThemeUploadService);
   private readonly mapHost = viewChild<ElementRef<HTMLElement>>('mapHost');
 
@@ -34,46 +33,70 @@ export class TokensMapComponent implements AfterViewInit, OnDestroy {
   readonly uiChange = output<TokenMapUiState>();
 
   private controller: TokenMapController | null = null;
-  private readonly viewReady = signal(false);
+  private controllerHost: HTMLElement | null = null;
   private showLoaderOnRefresh = false;
   private suppressEffectRefresh = true;
   private refreshTimer: ReturnType<typeof setTimeout> | null = null;
   private refreshGen = 0;
+  private bootstrapped = false;
+  private lastRenderedLabel: string | null = null;
 
   constructor() {
     effect(() => {
-      if (!this.viewReady() || this.catalog.tokensViewMode() !== 'map') return;
+      if (this.catalog.tokensViewMode() !== 'component') return;
+
+      const label = this.catalog.selectedComponentLabel();
+      const host = this.mapHost()?.nativeElement ?? null;
+
       this.upload.inspectorTick();
       this.upload.loadedSlots();
       this.catalog.sections();
+
+      if (!label || !host) {
+        this.teardownController();
+        this.lastRenderedLabel = null;
+        this.uiReady.set(false);
+        return;
+      }
+
+      if (!this.controller || this.controllerHost !== host) {
+        this.teardownController();
+        this.controller = new TokenMapController(this.doc, host, this.catalog);
+        this.controllerHost = host;
+        this.controller.setUiListener((state) => {
+          this.uiReady.set(true);
+          this.uiChange.emit(state);
+        });
+        this.controller.setComponentFilter(label);
+        this.lastRenderedLabel = label;
+        this.controller.render();
+        if (!this.bootstrapped) {
+          this.bootstrapped = true;
+          setTimeout(() => {
+            this.showLoaderOnRefresh = true;
+            this.suppressEffectRefresh = false;
+          }, 400);
+        }
+        return;
+      }
+
+      const labelChanged = this.lastRenderedLabel !== label;
+      this.controller.setComponentFilter(label);
+      if (labelChanged) {
+        this.lastRenderedLabel = label;
+        this.queueMapRefresh(true);
+        return;
+      }
+
       if (this.suppressEffectRefresh) return;
       this.queueMapRefresh(true);
     });
   }
 
-  ngAfterViewInit(): void {
-    const el = this.mapHost()?.nativeElement;
-    if (!el) return;
-    this.controller = new TokenMapController(this.doc, el, this.catalog);
-    this.controller.setUiListener((state) => {
-      this.uiReady.set(true);
-      this.uiChange.emit(state);
-    });
-    this.controller.render();
-    this.viewReady.set(true);
-    setTimeout(() => {
-      this.showLoaderOnRefresh = true;
-      this.suppressEffectRefresh = false;
-    }, 400);
-  }
-
   ngOnDestroy(): void {
     if (this.refreshTimer) clearTimeout(this.refreshTimer);
     this.mapLoading.set(false);
-    this.controller?.setUiListener(null);
-    this.controller?.destroy();
-    this.controller = null;
-    this.uiReady.set(false);
+    this.teardownController();
   }
 
   zoomIn(): void {
@@ -90,6 +113,14 @@ export class TokensMapComponent implements AfterViewInit, OnDestroy {
 
   setMapSearch(query: string): void {
     this.controller?.setMapSearch(query);
+  }
+
+  private teardownController(): void {
+    this.controller?.setUiListener(null);
+    this.controller?.destroy();
+    this.controller = null;
+    this.controllerHost = null;
+    this.uiReady.set(false);
   }
 
   private queueMapRefresh(reconnect: boolean): void {
