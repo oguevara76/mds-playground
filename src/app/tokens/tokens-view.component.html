@@ -132,10 +132,12 @@
               <div class="tv-search-wrap">
                 <i class="pi pi-search tv-search-icon" aria-hidden="true"></i>
                 <input
-                  type="search"
+                  type="text"
                   class="tv-search"
+                  role="searchbox"
                   placeholder="Search for component variables"
                   autocomplete="off"
+                  spellcheck="false"
                   [ngModel]="mapVarQuery()"
                   (ngModelChange)="onMapVarSearch($event)"
                 />
@@ -169,26 +171,30 @@
             ↺ Reset
           </button>
           @if (showMapVarSearch()) {
-            <div class="vv-msearch-wrap">
-              <i class="pi pi-search vv-msearch-icon" aria-hidden="true"></i>
-              <input
-                class="vv-msearch-input"
-                type="search"
-                placeholder="Search variable…"
-                autocomplete="off"
-                [ngModel]="mapVarQuery()"
-                (ngModelChange)="onMapVarSearch($event)"
-              />
-              @if (mapVarQuery()) {
-                <button
-                  type="button"
-                  class="vv-msearch-clear"
-                  title="Clear"
-                  (click)="clearMapVarSearch()"
-                >
-                  ✕
-                </button>
-              }
+            <div class="tv-map-var-search">
+              <div class="tv-search-wrap">
+                <i class="pi pi-search tv-search-icon" aria-hidden="true"></i>
+                <input
+                  type="text"
+                  class="tv-search"
+                  role="searchbox"
+                  placeholder="Search variable…"
+                  autocomplete="off"
+                  spellcheck="false"
+                  [ngModel]="mapVarQuery()"
+                  (ngModelChange)="onMapVarSearch($event)"
+                />
+                @if (mapVarQuery()) {
+                  <button
+                    type="button"
+                    class="tv-search-clear"
+                    title="Clear"
+                    (click)="clearMapVarSearch()"
+                  >
+                    <i class="pi pi-times" aria-hidden="true"></i>
+                  </button>
+                }
+              </div>
             </div>
           }
         }
@@ -275,9 +281,10 @@
                       @if (row.metaKind === 'sem' && row.metaParts?.length) {
                         <div class="tva-meta tva-meta-sem">
                           <span class="p-tag p-tag-info tva-meta-components-tag">Components</span>
-                          <span class="tva-meta-components-list">{{
-                            row.metaParts!.join(' · ')
-                          }}</span>
+                          <span
+                            class="tva-meta-components-list"
+                            [attr.title]="row.metaParts!.join(' · ')"
+                          >{{ row.metaParts!.join(' · ') }}</span>
                         </div>
                       }
                       @if (row.compSource) {

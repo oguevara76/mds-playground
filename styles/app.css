@@ -2059,7 +2059,7 @@ app-playground-sidebar {
 .tv-search-icon {
   position: absolute;
   left: 10px;
-  color: var(--p-surface-400);
+  color: var(--p-inputtext-icon-color, var(--p-input-placeholder));
   font-size: 13px;
   pointer-events: none;
 }
@@ -2067,30 +2067,50 @@ app-playground-sidebar {
   width: 100%;
   height: 34px;
   padding: 0 32px;
-  border: 1px solid var(--p-surface-300);
-  border-radius: var(--p-border-radius);
+  border: 1px solid var(--p-inputtext-border-color, var(--p-input-border-color));
+  border-radius: var(
+    --p-inputtext-border-rounded-radius,
+    var(--inputtext-border-rounded-radius, var(--form-field-border-radius-rounded, 999px))
+  );
   font-family: var(--p-font-family);
   font-size: 13px;
-  background: var(--p-surface-0);
-  color: var(--p-content-color);
+  background: var(--p-inputtext-background, var(--p-input-bg));
+  color: var(--p-inputtext-color, var(--p-input-color));
   outline: none;
-  transition: border-color var(--p-transition-duration);
+  transition:
+    border-color var(--p-transition-duration),
+    background var(--p-transition-duration);
 }
-.tv-search:focus { border-color: var(--p-primary-color); }
+.tv-search::placeholder {
+  color: var(--p-inputtext-placeholder-color, var(--p-input-placeholder));
+}
+.tv-search:hover {
+  border-color: var(--p-inputtext-hover-border-color, var(--p-input-hover-border));
+}
+.tv-search:focus {
+  border-color: var(--p-inputtext-focus-border-color, var(--p-input-focus-border));
+  box-shadow: var(--p-inputtext-focus-ring-shadow, none);
+}
 .tv-search-clear {
   position: absolute;
   right: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--p-surface-400);
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
   padding: 0;
-  font-size: 11px;
-  transition: color var(--p-transition-duration);
+  border: none;
+  border-radius: var(--p-border-radius-sm);
+  background: transparent;
+  color: var(--p-inputtext-icon-color, var(--p-input-placeholder));
+  cursor: pointer;
+  transition: color var(--p-transition-duration), background var(--p-transition-duration);
 }
-.tv-search-clear:hover { color: var(--p-surface-700); }
+.tv-search-clear:hover {
+  color: var(--p-inputtext-color, var(--p-input-color));
+  background: color-mix(in srgb, var(--p-inputtext-background, var(--p-input-bg)) 72%, var(--p-surface-400) 28%);
+}
 .tv-count {
   font-size: 12px;
   color: var(--p-surface-400);
@@ -2182,7 +2202,6 @@ app-playground-sidebar {
 [data-theme="dark"] .tv-nav { border-color: var(--p-surface-700); }
 [data-theme="dark"] .tv-nav-link:hover { background: rgba(255, 255, 255, .06); color: var(--p-surface-200); }
 [data-theme="dark"] .tv-toolbar { border-color: var(--p-surface-700); }
-[data-theme="dark"] .tv-search { background: var(--p-surface-800); border-color: var(--p-surface-600); color: var(--p-surface-100); }
 [data-theme="dark"] .tv-group-title { color: var(--p-surface-500); border-color: var(--p-surface-700); }
 [data-theme="dark"] .tv-row { border-color: rgba(255, 255, 255, .05); }
 [data-theme="dark"] .tv-token-name { color: var(--p-surface-200); }
@@ -2677,6 +2696,8 @@ app-playground-sidebar {
   font-size: 10.5px;
   line-height: 1.45;
   color: #6366f1;
+  white-space: normal;
+  word-break: break-word;
 }
 [data-theme="dark"] .tva-meta-components-list { color: #818cf8; }
 .tva-meta-comp { color: #0ea5e9; gap: 4px; flex-wrap: wrap; }
@@ -2781,70 +2802,12 @@ app-playground-sidebar {
 }
 [data-theme="dark"] .vv-hint { color: var(--p-surface-500); }
 
-/* ── Map search bar ── */
-.vv-msearch-wrap {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  height: 32px;
-  box-sizing: border-box;
-  background: var(--p-surface-0);
-  border: 1px solid var(--p-surface-200);
-  border-radius: 6px;
-  padding: 0 8px 0 9px;
-  min-width: 200px;
-  transition: border-color .15s, box-shadow .15s;
-}
-.vv-msearch-wrap:focus-within {
-  border-color: var(--p-primary-color);
-  box-shadow: 0 0 0 2px rgba(75,168,188,.15);
-}
-[data-theme="dark"] .vv-msearch-wrap {
-  background: var(--p-surface-900);
-  border-color: var(--p-surface-700);
-}
-[data-theme="dark"] .vv-msearch-wrap:focus-within {
-  border-color: var(--p-primary-color);
-  box-shadow: 0 0 0 2px rgba(75,168,188,.2);
-}
-.vv-msearch-icon {
-  font-size: 11px;
-  color: var(--p-surface-400);
-  flex-shrink: 0;
-}
-.vv-msearch-input {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 12px;
-  color: var(--p-surface-700);
-  flex: 1;
+/* ── Map search: misma estructura/tokens que .tv-search (ref. pg-search) ── */
+.tv-map-var-search {
+  position: relative;
+  flex: 0 1 220px;
+  max-width: 220px;
   min-width: 0;
-  /* hide the native "×" clear button — we have our own */
-  -webkit-appearance: none;
-}
-.vv-msearch-input::-webkit-search-cancel-button { display: none; }
-[data-theme="dark"] .vv-msearch-input { color: var(--p-surface-200); }
-.vv-msearch-input::placeholder { color: var(--p-surface-400); }
-.vv-msearch-clear {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--p-surface-400);
-  font-size: 11px;
-  padding: 0 1px;
-  line-height: 1;
-  flex-shrink: 0;
-  border-radius: 3px;
-  transition: color .12s, background .12s;
-}
-.vv-msearch-clear:hover {
-  color: var(--p-surface-700);
-  background: var(--p-surface-100);
-}
-[data-theme="dark"] .vv-msearch-clear:hover {
-  color: var(--p-surface-200);
-  background: var(--p-surface-700);
 }
 
 /* ── Search highlight in map ── */
@@ -3045,16 +3008,53 @@ app-playground-sidebar {
 }
 [data-theme="dark"] .vv-name { color: var(--p-surface-200); }
 .vv-deps {
-  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
   font-size: 10px;
   font-weight: 500;
-  line-height: 1.25;
+  line-height: 1.35;
   color: var(--p-surface-500);
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: break-word;
+  max-height: 1.35em;
+  opacity: 0.92;
+  transition:
+    max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.28s ease;
 }
 [data-theme="dark"] .vv-deps { color: var(--p-surface-400); }
+/* Al seleccionar: deps expandidas (la animación de altura la controla JS en ambos sentidos) */
+.vv-world[data-sel] .vv-row[data-hl] {
+  align-items: flex-start;
+  transition: background 0.18s ease;
+}
+.vv-world[data-sel] .vv-row[data-hl] .vv-info {
+  overflow: hidden;
+}
+.vv-world[data-sel] .vv-row[data-hl] .vv-sw,
+.vv-world[data-sel] .vv-row[data-hl] .vv-dot-r,
+.vv-world[data-sel] .vv-row[data-hl] .vv-dot-l,
+.vv-world[data-sel] .vv-row[data-hl] .vv-dot-sp {
+  margin-top: 2px;
+  transition: margin-top 0.28s ease;
+}
+.vv-world[data-sel] .vv-row[data-hl] .vv-deps {
+  display: block;
+  -webkit-line-clamp: unset;
+  max-height: none;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vv-deps,
+  .vv-world[data-sel] .vv-row[data-hl] .vv-sw,
+  .vv-world[data-sel] .vv-row[data-hl] .vv-dot-r,
+  .vv-world[data-sel] .vv-row[data-hl] .vv-dot-l,
+  .vv-world[data-sel] .vv-row[data-hl] .vv-dot-sp {
+    transition: none;
+  }
+}
 .vv-val {
   font-family: 'Menlo','Consolas',monospace;
   font-size: 10px;
@@ -3118,6 +3118,10 @@ app-playground-sidebar {
 .vv-panel-fit {
   width: 290px;
 }
+/* Semantics: más ancha para listar todas las dependencias de componentes */
+#vv-sem.vv-panel-fit {
+  width: 400px;
+}
 
 /* ── Panel variant: individual component panels (narrower, 3-column grid) ── */
 .vv-panel-comp {
@@ -3139,7 +3143,7 @@ app-playground-sidebar {
   color: inherit;
   flex-shrink: 0;
 }
-/* Truncate long names / deps inside component panels */
+/* Truncate long names / deps inside component panels (se expanden al seleccionar) */
 .vv-panel-comp .vv-info {
   max-width: 155px;
 }
@@ -3149,6 +3153,9 @@ app-playground-sidebar {
 .vv-panel-comp .vv-name,
 .vv-panel-comp .vv-deps {
   max-width: 100%;
+}
+.vv-world[data-sel] .vv-panel-comp .vv-row[data-hl] .vv-info {
+  max-width: none;
 }
 
 /* Smaller header for per-component panels */

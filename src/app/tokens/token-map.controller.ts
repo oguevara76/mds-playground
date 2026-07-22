@@ -8,9 +8,12 @@ const VV_ZOOM_MIN = 0.2;
 const VV_ZOOM_MAX = 2.5;
 const VV_ZOOM_STEP = 0.12;
 const COMP_PANEL_W = 240;
+const SEM_PANEL_W = 400;
 const COMP_PANEL_GAP = 60;
 const COMP_ROW_GAP = 40;
 const COMP_COLS = 10;
+/** Debe coincidir con la transición CSS de `.vv-deps` (max-height). */
+const DEPS_EXPAND_MS = 400;
 
 const VV_DEFAULT_POS = {
   prim: { x: 40, y: 40 },
@@ -81,6 +84,9 @@ export class TokenMapController {
   private interaction: VvInteraction | null = null;
   private globalListenersBound = false;
   private canvasBound = false;
+  private depsLayoutRaf = 0;
+  private depsLayoutUntil = 0;
+  private depsInlineCleanupTimer = 0;
   private readonly onMouseMove = (e: MouseEvent) => this.handleMouseMove(e);
   private readonly onMouseUp = () => this.handleMouseUp();
   private uiListener: ((state: TokenMapUiState) => void) | null = null;
@@ -132,6 +138,9 @@ export class TokenMapController {
   }
 
   destroy(): void {
+    this.stopDepsLayoutSync();
+    this.clearDepsInlineCleanup();
+    this.clearAllDepsInlineStyles();
     this.doc.removeEventListener('mousemove', this.onMouseMove);
     this.doc.removeEventListener('mouseup', this.onMouseUp);
     this.uiListener = null;
@@ -258,7 +267,7 @@ export class TokenMapController {
       : '';
     const label = t.label.replace(/^p-/, '');
     const deps = row.depsSubtext
-      ? `<span class="vv-deps">${escHtml(row.depsSubtext)}</span>`
+      ? `<span class="vv-deps" title="${escAttr(row.depsSubtext)}">${escHtml(row.depsSubtext)}</span>`
       : '';
     return `<div class="vv-row" data-var="${escAttr(t.name)}" data-vtype="${row.vtype}">
       ${ld}${sw}<span class="vv-info"><span class="vv-name">${escHtml(label)}</span>${deps}</span>${rd}
@@ -283,7 +292,7 @@ export class TokenMapController {
   private computeCompGridPositions(compGroups: MapCompGroup[]): PanelPos[] {
     // Modo Component: Prim → Sem → [Vías] → Componente seleccionado (una fila).
     if (this.componentLabel) {
-      const semW = 290;
+      const semW = SEM_PANEL_W;
       const startX = this.posStore.sem.x + semW + COMP_PANEL_GAP;
       const y = this.posStore.sem.y;
       let x = startX;
@@ -584,24 +593,159 @@ export class TokenMapController {
       this.deselect();
       return;
     }
-    this.selectedVar = varName;
-    const hlVars = this.buildHlSet(varName);
-    world.setAttribute('data-sel', '1');
-    world.querySelectorAll('[data-var]').forEach((row) => {
-      if (row instanceof HTMLElement && row.dataset['var']) {
-        row.toggleAttribute('data-hl', hlVars.has(row.dataset['var']));
-      }
+
+    const nextHl = this.buildHlSet(varName);
+    const collapsing: HTMLElement[] = [];
+    const expanding: HTMLElement[] = [];
+
+    world.querySelectorAll<HTMLElement>('.vv-row[data-var]').forEach((row) => {
+      const name = row.dataset['var'];
+      if (!name) return;
+      const deps = row.querySelector('.vv-deps');
+      if (!(deps instanceof HTMLElement)) return;
+      const wasHl = row.hasAttribute('data-hl');
+      const willHl = nextHl.has(name);
+      if (wasHl && !willHl) collapsing.push(deps);
+      if (!wasHl && willHl) expanding.push(deps);
     });
-    requestAnimationFrame(() => this.drawLines());
+
+    this.selectedVar = varName;
+    this.prepareDepsCollapse(collapsing);
+    this.prepareDepsExpandStart(expanding);
+    void world.offsetHeight;
+
+    world.setAttribute('data-sel', '1');
+    world.querySelectorAll<HTMLElement>('.vv-row[data-var]').forEach((row) => {
+      const name = row.dataset['var'];
+      if (!name) return;
+      row.toggleAttribute('data-hl', nextHl.has(name));
+    });
+
+    this.runDepsCollapse(collapsing);
+    this.runDepsExpand(expanding);
+    this.syncLinesDuringDepsTransition();
+    this.scheduleDepsInlineCleanup([...collapsing, ...expanding]);
   }
 
   private deselect(): void {
     this.selectedVar = null;
     const world = this.host.querySelector('#vv-world');
     if (!(world instanceof HTMLElement)) return;
+
+    const collapsing = Array.from(
+      world.querySelectorAll<HTMLElement>('.vv-row[data-hl] .vv-deps')
+    );
+    this.prepareDepsCollapse(collapsing);
+    void world.offsetHeight;
+
     world.removeAttribute('data-sel');
     world.querySelectorAll('[data-hl]').forEach((el) => el.removeAttribute('data-hl'));
-    requestAnimationFrame(() => this.drawLines());
+
+    this.runDepsCollapse(collapsing);
+    this.syncLinesDuringDepsTransition();
+    this.scheduleDepsInlineCleanup(collapsing);
+  }
+
+  /** Fija altura actual y quita line-clamp para poder colapsar con overflow. */
+  private prepareDepsCollapse(deps: HTMLElement[]): void {
+    deps.forEach((el) => {
+      el.style.display = 'block';
+      el.style.overflow = 'hidden';
+      el.style.setProperty('-webkit-line-clamp', 'unset');
+      // De px concretos (none no interpola al colapsar)
+      const h = Math.max(el.scrollHeight, el.offsetHeight);
+      el.style.maxHeight = `${h}px`;
+    });
+  }
+
+  private prepareDepsExpandStart(deps: HTMLElement[]): void {
+    deps.forEach((el) => {
+      el.style.display = 'block';
+      el.style.overflow = 'hidden';
+      el.style.setProperty('-webkit-line-clamp', 'unset');
+      el.style.maxHeight = '1.35em';
+      el.style.opacity = '0.92';
+    });
+  }
+
+  private runDepsCollapse(deps: HTMLElement[]): void {
+    deps.forEach((el) => {
+      el.style.maxHeight = '1.35em';
+      el.style.opacity = '0.92';
+    });
+  }
+
+  private runDepsExpand(deps: HTMLElement[]): void {
+    void this.host.offsetHeight;
+    deps.forEach((el) => {
+      el.style.maxHeight = `${el.scrollHeight}px`;
+      el.style.opacity = '1';
+    });
+  }
+
+  private scheduleDepsInlineCleanup(deps: HTMLElement[]): void {
+    this.clearDepsInlineCleanup();
+    this.depsInlineCleanupTimer = window.setTimeout(() => {
+      this.depsInlineCleanupTimer = 0;
+      deps.forEach((el) => {
+        // Si sigue expandido (fila resaltada), deja max-height en none
+        // para no recortar tras la animación (antes 12rem contraía el texto).
+        const row = el.closest('.vv-row');
+        const stillOpen = row?.hasAttribute('data-hl') && row.closest('.vv-world[data-sel]');
+        this.clearDepsInlineStyle(el);
+        if (stillOpen) {
+          el.style.maxHeight = 'none';
+          el.style.setProperty('-webkit-line-clamp', 'unset');
+          el.style.display = 'block';
+        }
+      });
+      this.drawLines();
+    }, DEPS_EXPAND_MS);
+  }
+
+  private clearDepsInlineCleanup(): void {
+    if (this.depsInlineCleanupTimer) {
+      window.clearTimeout(this.depsInlineCleanupTimer);
+      this.depsInlineCleanupTimer = 0;
+    }
+  }
+
+  private clearDepsInlineStyle(el: HTMLElement): void {
+    el.style.maxHeight = '';
+    el.style.opacity = '';
+    el.style.display = '';
+    el.style.overflow = '';
+    el.style.removeProperty('-webkit-line-clamp');
+  }
+
+  private clearAllDepsInlineStyles(): void {
+    this.host.querySelectorAll<HTMLElement>('.vv-deps').forEach((el) => {
+      this.clearDepsInlineStyle(el);
+    });
+  }
+
+  /** Redibuja conexiones mientras anima la expansión/colapso de dependencias. */
+  private syncLinesDuringDepsTransition(): void {
+    this.stopDepsLayoutSync();
+    this.depsLayoutUntil = performance.now() + DEPS_EXPAND_MS;
+    const tick = () => {
+      this.drawLines();
+      if (performance.now() < this.depsLayoutUntil) {
+        this.depsLayoutRaf = requestAnimationFrame(tick);
+      } else {
+        this.depsLayoutRaf = 0;
+        this.drawLines();
+      }
+    };
+    this.depsLayoutRaf = requestAnimationFrame(tick);
+  }
+
+  private stopDepsLayoutSync(): void {
+    if (this.depsLayoutRaf) {
+      cancelAnimationFrame(this.depsLayoutRaf);
+      this.depsLayoutRaf = 0;
+    }
+    this.depsLayoutUntil = 0;
   }
 
   private drawLines(): void {
