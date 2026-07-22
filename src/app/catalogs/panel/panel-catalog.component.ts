@@ -7,6 +7,8 @@ import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
 import { Panel } from 'primeng/panel';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { Select } from 'primeng/select';
@@ -21,6 +23,7 @@ import {
   StepPanels,
   Stepper,
 } from 'primeng/stepper';
+import { Toolbar } from 'primeng/toolbar';
 import { ToggleButton } from 'primeng/togglebutton';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
@@ -54,6 +57,9 @@ import {
   STEPPER_CATALOG_TEMPLATE_SUCCESS_IMAGE,
   STEPPER_CATALOG_TEMPLATE_WIDTH,
   STEPPER_VARIANT_OPTIONS,
+  TOOLBAR_CATALOG_DEMO_HEIGHT,
+  TOOLBAR_CATALOG_EXAMPLE_DEMOS,
+  TOOLBAR_CATALOG_NAV_ITEMS,
   type AccordionCatalogExampleKey,
   type AccordionCatalogStateKey,
   type AccordionInteractionState,
@@ -69,12 +75,14 @@ import {
   type StepperCatalogStepValue,
   type StepperCatalogTemplateInterest,
   type StepperInteractionState,
+  type ToolbarCatalogExampleDemo,
+  type ToolbarCatalogExampleKey,
 } from './panel-catalog.config';
 
 @Component({
   selector: 'app-panel-catalog',
   standalone: true,
-  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Avatar, Button, Card, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleButton, ToggleSwitch, FormsModule, NgClass, Divider, Select, Panel, Stepper, StepList, Step, StepPanels, StepPanel, StepItem],
+  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Avatar, Button, Card, IconField, InputIcon, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleButton, ToggleSwitch, FormsModule, NgClass, Divider, Select, Panel, Stepper, StepList, Step, StepPanels, StepPanel, StepItem, Toolbar],
   templateUrl: './panel-catalog.component.html',
   styleUrl: './panel-catalog.component.css',
   host: { class: 'panel-catalog-page' },
@@ -320,5 +328,21 @@ export class PanelCatalogComponent {
 
   isStepperStepActive(_stepValue: number, demoKey: StepperCatalogStateKey): boolean {
     return demoKey === 'active';
+  }
+
+  // ─── Toolbar ───────────────────────────────────────────────────────────────
+
+  readonly toolbarExampleDemos = TOOLBAR_CATALOG_EXAMPLE_DEMOS;
+  readonly toolbarNavItems = TOOLBAR_CATALOG_NAV_ITEMS;
+  readonly toolbarDemoHeight = TOOLBAR_CATALOG_DEMO_HEIGHT;
+
+  toolbarSearch = '';
+
+  trackToolbarExample(_: number, demo: ToolbarCatalogExampleDemo): ToolbarCatalogExampleKey {
+    return demo.key;
+  }
+
+  trackToolbarNavItem(_: number, item: { label: string }): string {
+    return item.label;
   }
 }

@@ -12,6 +12,7 @@ export type FormBlockKind =
   | 'password'
   | 'inputotp'
   | 'rating'
+  | 'slider'
   | 'textarea';
 
 /** Variante del showcase unificado InputText / Textarea. */
@@ -423,6 +424,31 @@ export const FORM_RATING_VALUE_SELECT_OPTIONS: { label: string; value: number }[
   { label: '5', value: 5 },
 ];
 
+export type FormSliderVariant = 'basic' | 'controlled';
+export type FormSliderDirection = 'horizontal' | 'vertical';
+
+export const FORM_SLIDER_VARIANT_SELECT_OPTIONS: { label: string; value: FormSliderVariant }[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Controlled', value: 'controlled' },
+];
+
+export const FORM_SLIDER_DIRECTION_SELECT_OPTIONS: {
+  label: string;
+  value: FormSliderDirection;
+}[] = [
+  { label: 'Horizontal', value: 'horizontal' },
+  { label: 'Vertical', value: 'vertical' },
+];
+
+/** Valor por defecto del showcase Slider (single). */
+export const FORM_SLIDER_DEFAULT_VALUE = 50;
+
+/** Rango por defecto del showcase Slider (range). */
+export const FORM_SLIDER_DEFAULT_RANGE_VALUE: number[] = [20, 80];
+
+/** Altura fija del área Preview — calibrada a la variante Vertical. */
+export const FORM_SLIDER_CATALOG_DEMO_HEIGHT = '224px';
+
 /** Valor de demostración en estado Readonly (InputOtp). */
 export const FORM_INPUT_OTP_STATE_READONLY_VALUE = '1234';
 
@@ -486,5 +512,6 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'password', title: 'Password', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },
   { kind: 'rating', title: 'Rating', category: 'input' },
+  { kind: 'slider', title: 'Slider', category: 'input' },
   { kind: 'textarea', title: 'Textarea', category: 'textarea' },
 ];

@@ -1,4 +1,5 @@
 <div class="cards-grid form-catalog-stack">
+  <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
   @for (block of blocks; track block.kind) {
     <div
       class="catalog-preview form-showcase"
@@ -8,11 +9,13 @@
       [class.password-showcase]="isPasswordBlock(block)"
       [class.inputotp-showcase]="isInputOtpBlock(block)"
       [class.rating-showcase]="isRatingBlock(block)"
+      [class.slider-showcase]="isSliderBlock(block)"
       [class.textarea-showcase]="isTextareaBlock(block)"
       [class.select-showcase]="isSelectBlock(block)"
       [class.cascadeselect-showcase]="isCascadeSelectBlock(block)"
       [class.selectbutton-showcase]="isSelectButtonBlock(block)"
       [class.togglebutton-showcase]="isToggleButtonBlock(block)"
+      [style.--slider-catalog-demo-height]="isSliderBlock(block) ? sliderDemoHeight : null"
     >
       <section
         class="preview-section preview-section--flush catalog-block-section"
@@ -2056,6 +2059,107 @@
                 </ng-container>
               </mds-catalog-preview-frame>
             }
+            @case ('slider') {
+              <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                [showExpand]="true"
+                [expandAriaLabel]="'Expandir estados de ' + block.title"
+                [collapseAriaLabel]="'Contraer estados de ' + block.title"
+                configAriaLabel="Configurar Slider"
+              >
+                <div catalogPreviewDemo class="catalog-showcase-interactive slider-catalog-demo-area">
+                  <div
+                    class="slider-showcase-demo"
+                    [class.slider-showcase-demo--vertical]="sliderIsVertical()"
+                    [class.slider-showcase-demo--controlled]="sliderIx().variant === 'controlled'"
+                    role="group"
+                    aria-label="Slider interactivo"
+                  >
+                    @if (sliderIx().variant === 'controlled') {
+                      <p-inputnumber
+                        [ngModel]="sliderIx().value"
+                        (ngModelChange)="patchSlider({ value: $event })"
+                        [min]="0"
+                        [max]="100"
+                        [showButtons]="false"
+                        [fluid]="true"
+                        inputId="slider-ix-input"
+                        ariaLabel="Valor Slider"
+                      />
+                    }
+                    @if (sliderIx().variant === 'basic' && sliderIx().range) {
+                      <p-slider
+                        class="slider-showcase-live"
+                        [range]="true"
+                        [orientation]="sliderOrientation()"
+                        [ngModel]="sliderIx().rangeValue"
+                        (ngModelChange)="patchSlider({ rangeValue: $event })"
+                        [min]="0"
+                        [max]="100"
+                        ariaLabel="Slider rango interactivo"
+                      />
+                    } @else {
+                      <p-slider
+                        class="slider-showcase-live"
+                        [orientation]="sliderOrientation()"
+                        [ngModel]="sliderIx().value"
+                        (ngModelChange)="patchSlider({ value: $event })"
+                        [min]="0"
+                        [max]="100"
+                        ariaLabel="Slider interactivo"
+                      />
+                    }
+                  </div>
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="sliderVariantSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="sliderIx().variant"
+                        (ngModelChange)="patchSlider({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant Slider"
+                      />
+                    </div>
+                  </div>
+                  @if (sliderIx().variant === 'basic') {
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">Direction</span>
+                      <div class="button-config-select-wrap">
+                        <p-select
+                          [options]="sliderDirectionSelectOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          [ngModel]="sliderIx().direction"
+                          (ngModelChange)="patchSlider({ direction: $event })"
+                          size="small"
+                          appendTo="body"
+                          ariaLabel="Direction Slider"
+                        />
+                      </div>
+                    </div>
+                    <div class="input-config-row">
+                      <span class="input-config-label">Range</span>
+                      <p-toggleswitch
+                        [ngModel]="sliderIx().range"
+                        (ngModelChange)="patchSlider({ range: $event })"
+                      />
+                    </div>
+                  }
+                </ng-container>
+
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                </ng-container>
+              </mds-catalog-preview-frame>
+            }
             @default {}
           }
 
@@ -2370,6 +2474,65 @@
                     />
                   </div>
                   <mds-catalog-state-tag label="Invalid" />
+                </div>
+              </div>
+            }
+            @case ('slider') {
+              <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                <div class="catalog-button-state catalog-input-state">
+                  <div class="catalog-button-state-preview">
+                    <div class="slider-showcase-demo">
+                      <p-slider
+                        class="slider-showcase-live"
+                        [ngModel]="50"
+                        [tabindex]="-1"
+                        ariaLabel="Default"
+                      />
+                    </div>
+                  </div>
+                  <mds-catalog-state-tag label="Default" />
+                </div>
+                <div class="catalog-button-state catalog-input-state">
+                  <div class="catalog-button-state-preview">
+                    <div class="slider-showcase-demo">
+                      <p-slider
+                        class="slider-showcase-live"
+                        [range]="true"
+                        [ngModel]="[20, 80]"
+                        [tabindex]="-1"
+                        ariaLabel="Range"
+                      />
+                    </div>
+                  </div>
+                  <mds-catalog-state-tag label="Range" />
+                </div>
+                <div class="catalog-button-state catalog-input-state">
+                  <div class="catalog-button-state-preview">
+                    <div class="slider-showcase-demo slider-showcase-demo--vertical">
+                      <p-slider
+                        class="slider-showcase-live"
+                        orientation="vertical"
+                        [ngModel]="50"
+                        [tabindex]="-1"
+                        ariaLabel="Vertical"
+                      />
+                    </div>
+                  </div>
+                  <mds-catalog-state-tag label="Vertical" />
+                </div>
+                <div class="catalog-button-state catalog-input-state">
+                  <div class="catalog-button-state-preview">
+                    <div class="slider-showcase-demo">
+                      <p-slider
+                        class="slider-showcase-live"
+                        [ngModel]="50"
+                        [disabled]="true"
+                        [tabindex]="-1"
+                        ariaLabel="Disabled"
+                      />
+                    </div>
+                  </div>
+                  <mds-catalog-state-tag label="Disabled" />
                 </div>
               </div>
             }

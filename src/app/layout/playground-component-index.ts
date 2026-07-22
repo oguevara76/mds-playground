@@ -24,6 +24,7 @@ import {
   PANEL_CATALOG_TAB_STATE_DEMOS,
   PANEL_EXAMPLE_OPTIONS,
   STEPPER_CATALOG_STATE_DEMOS,
+  TOOLBAR_CATALOG_EXAMPLE_DEMOS,
 } from '../catalogs/panel/panel-catalog.config';
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS, MENU_CATALOG_EXAMPLE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
@@ -69,6 +70,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-password': 'password',
   'pg-inputotp': 'inputotp',
   'pg-rating': 'rating',
+  'pg-slider': 'slider',
   'pg-textarea': 'textarea',
   'pg-message': 'message',
   'pg-toast': 'toast',
@@ -80,6 +82,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-accordion': 'accordion',
   'pg-tabs': 'tabs',
   'pg-stepper': 'stepper',
+  'pg-toolbar': 'toolbar',
   'pg-breadcrumb': 'breadcrumb',
   'pg-menu': 'menu',
   'pg-tooltip': 'tooltip',
@@ -121,6 +124,7 @@ const FORM_VARIANT_COUNTS: Record<string, number> = {
   password: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputotp: 6,
   rating: 4,
+  slider: 2,
   textarea: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
 };
 
@@ -229,6 +233,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Panel',
       keywords: ['p-stepper', 'wizard', 'pasos', 'steps'],
       variantCount: STEPPER_CATALOG_STATE_DEMOS.length,
+    },
+    {
+      id: 'pg-toolbar',
+      name: 'Toolbar',
+      route: 'panel',
+      sectionLabel: 'Panel',
+      keywords: ['p-toolbar', 'barra', 'acciones', 'toolbar'],
+      variantCount: TOOLBAR_CATALOG_EXAMPLE_DEMOS.length,
     },
     {
       id: 'pg-breadcrumb',

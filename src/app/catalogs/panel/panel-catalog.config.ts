@@ -314,3 +314,28 @@ export const STEPPER_CATALOG_STATE_DEMOS: StepperCatalogStateDemo[] = [
   { key: 'active', caption: 'Active' },
   { key: 'disabled', caption: 'Disabled' },
 ];
+
+// ─── Toolbar ──────────────────────────────────────────────────────────────────
+
+export type ToolbarCatalogExampleKey = 'basic' | 'custom';
+
+export interface ToolbarCatalogExampleDemo {
+  key: ToolbarCatalogExampleKey;
+  caption: string;
+}
+
+/** Ejemplos showcase — paridad primeng.org/toolbar (Basic / Custom). */
+export const TOOLBAR_CATALOG_EXAMPLE_DEMOS: ToolbarCatalogExampleDemo[] = [
+  { key: 'basic', caption: 'Basic' },
+  { key: 'custom', caption: 'Custom' },
+];
+
+export const TOOLBAR_CATALOG_NAV_ITEMS: readonly { label: string }[] = [
+  { label: 'Products' },
+  { label: 'Solutions' },
+  { label: 'Resources' },
+  { label: 'Pricing' },
+];
+
+/** Altura fija del preview Toolbar — calibrada al ejemplo Basic. */
+export const TOOLBAR_CATALOG_DEMO_HEIGHT = '88px';

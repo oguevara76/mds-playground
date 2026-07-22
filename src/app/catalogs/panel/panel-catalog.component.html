@@ -1045,4 +1045,107 @@
       </div>
     </section>
   </div>
+
+  <!-- ─── Toolbar ───────────────────────────────────────────────────────────── -->
+  <div class="catalog-preview toolbar-variant-block" [style.--toolbar-catalog-demo-height]="toolbarDemoHeight">
+    <section id="pg-toolbar" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Toolbar' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showExpand]="true"
+          expandAriaLabel="Expandir ejemplos de Toolbar"
+          collapseAriaLabel="Contraer ejemplos de Toolbar"
+        >
+          <div catalogPreviewDemo class="toolbar-catalog-demo-area catalog-showcase-interactive">
+            <p-toolbar class="toolbar-catalog-live" ariaLabel="Toolbar interactivo del catálogo — Basic">
+              <ng-template #start>
+                <div class="toolbar-catalog-group">
+                  <p-button label="New" icon="pi pi-plus" />
+                  <p-button label="Upload" icon="pi pi-upload" severity="secondary" [outlined]="true" />
+                </div>
+              </ng-template>
+              <ng-template #center>
+                <p-iconfield>
+                  <p-inputicon class="pi pi-search" />
+                  <input
+                    pInputText
+                    placeholder="Search"
+                    [(ngModel)]="toolbarSearch"
+                    autocomplete="off"
+                    aria-label="Buscar en toolbar"
+                  />
+                </p-iconfield>
+              </ng-template>
+              <ng-template #end>
+                <div class="toolbar-catalog-group">
+                  <p-button label="Cancel" severity="secondary" [text]="true" />
+                  <p-button label="Save" icon="pi pi-check" />
+                </div>
+              </ng-template>
+            </p-toolbar>
+          </div>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Examples" icon="objects-column">
+              <div class="toolbar-catalog-examples is-static-preview" aria-label="Toolbar Basic y Custom">
+                @for (demo of toolbarExampleDemos; track trackToolbarExample($index, demo)) {
+                  <div class="toolbar-catalog-example">
+                    <div class="toolbar-catalog-example-preview">
+                      @switch (demo.key) {
+                        @case ('basic') {
+                          <p-toolbar class="toolbar-catalog-live" ariaLabel="Toolbar ejemplo Basic">
+                            <ng-template #start>
+                              <div class="toolbar-catalog-group">
+                                <p-button label="New" icon="pi pi-plus" />
+                                <p-button label="Upload" icon="pi pi-upload" severity="secondary" [outlined]="true" />
+                              </div>
+                            </ng-template>
+                            <ng-template #center>
+                              <p-iconfield>
+                                <p-inputicon class="pi pi-search" />
+                                <input pInputText placeholder="Search" value="Design system" readonly tabindex="-1" />
+                              </p-iconfield>
+                            </ng-template>
+                            <ng-template #end>
+                              <div class="toolbar-catalog-group">
+                                <p-button label="Cancel" severity="secondary" [text]="true" />
+                                <p-button label="Save" icon="pi pi-check" />
+                              </div>
+                            </ng-template>
+                          </p-toolbar>
+                        }
+                        @case ('custom') {
+                          <p-toolbar class="toolbar-catalog-live toolbar-catalog-live--custom" ariaLabel="Toolbar ejemplo Custom">
+                            <ng-template #start>
+                              <span class="toolbar-catalog-brand">Brand</span>
+                            </ng-template>
+                            <ng-template #center>
+                              <div class="toolbar-catalog-nav">
+                                @for (item of toolbarNavItems; track trackToolbarNavItem($index, item)) {
+                                  <p-button [label]="item.label" [text]="true" severity="secondary" />
+                                }
+                              </div>
+                            </ng-template>
+                            <ng-template #end>
+                              <p-button label="Get Started" />
+                            </ng-template>
+                          </p-toolbar>
+                        }
+                      }
+                    </div>
+                    <mds-catalog-state-tag [label]="demo.caption" />
+                  </div>
+                }
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
 </div>

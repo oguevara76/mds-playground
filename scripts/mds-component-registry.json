@@ -71,6 +71,11 @@
     "primeng_prefix": "selectbutton",
     "watch_vars": ["--selectbutton-*", "--p-selectbutton-*", "--togglebutton-*", "--p-togglebutton-*"]
   },
+  "slider": {
+    "playground_anchor": "pg-slider",
+    "primeng_prefix": "slider",
+    "watch_vars": ["--slider-*", "--p-slider-*"]
+  },
   "togglebutton": {
     "playground_anchor": "pg-togglebutton",
     "watch_vars": ["--togglebutton-*", "--p-togglebutton-*"]
@@ -86,6 +91,11 @@
     "primeng_prefix": "stepper",
     "parity": "src/styles/primeng-stepper-parity.css",
     "watch_vars": ["--stepper-*", "--p-stepper-*"]
+  },
+  "toolbar": {
+    "playground_anchor": "pg-toolbar",
+    "primeng_prefix": "toolbar",
+    "watch_vars": ["--toolbar-*", "--p-toolbar-*"]
   },
   "accordion": {
     "playground_anchor": "pg-accordion",

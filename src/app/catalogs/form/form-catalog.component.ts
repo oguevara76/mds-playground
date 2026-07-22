@@ -21,6 +21,7 @@ import { InputText } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { RadioButton } from 'primeng/radiobutton';
 import { Rating } from 'primeng/rating';
+import { Slider } from 'primeng/slider';
 import { StarFillIcon } from 'primeng/icons/starfill';
 import { StarIcon } from 'primeng/icons/star';
 import { Select } from 'primeng/select';
@@ -62,6 +63,11 @@ import {
   type FormInputGroupExample,
   FORM_RATING_DEMO_STATES,
   FORM_RATING_VALUE_SELECT_OPTIONS,
+  FORM_SLIDER_DEFAULT_RANGE_VALUE,
+  FORM_SLIDER_DEFAULT_VALUE,
+  FORM_SLIDER_CATALOG_DEMO_HEIGHT,
+  FORM_SLIDER_DIRECTION_SELECT_OPTIONS,
+  FORM_SLIDER_VARIANT_SELECT_OPTIONS,
   FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS,
   FORM_TEXTAREA_VARIANT_SELECT_OPTIONS,
   FORM_CASCADESELECT_DEMO_OPTIONS,
@@ -97,6 +103,8 @@ import {
   type FormRatingDemoState,
   type FormSelectDemoValue,
   type FormSelectButtonActiveItem,
+  type FormSliderDirection,
+  type FormSliderVariant,
 } from './form-catalog.config';
 import { inputDemoWrapClass } from './form-catalog.demo-styles';
 
@@ -173,6 +181,14 @@ export interface FormRatingInteractionState {
   readonly: boolean;
 }
 
+export interface FormSliderInteractionState {
+  variant: FormSliderVariant;
+  direction: FormSliderDirection;
+  range: boolean;
+  value: number;
+  rangeValue: number[];
+}
+
 export interface FormTextareaInteractionState {
   variant: FormInputTextVariant;
   floatPosition: FormInputFloatVariant;
@@ -225,6 +241,16 @@ function defaultRatingInteraction(): FormRatingInteractionState {
     value: 0,
     disabled: false,
     readonly: false,
+  };
+}
+
+function defaultSliderInteraction(): FormSliderInteractionState {
+  return {
+    variant: 'basic',
+    direction: 'horizontal',
+    range: false,
+    value: FORM_SLIDER_DEFAULT_VALUE,
+    rangeValue: [...FORM_SLIDER_DEFAULT_RANGE_VALUE],
   };
 }
 
@@ -347,6 +373,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     StarIcon,
     Select,
     SelectButton,
+    Slider,
     Textarea,
     ToggleButton,
     ToggleSwitch,
@@ -368,6 +395,9 @@ export class FormCatalogComponent {
   readonly inputotpLengthSelectOptions = FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS;
   readonly ratingValueSelectOptions = FORM_RATING_VALUE_SELECT_OPTIONS;
   readonly ratingDemoStates = FORM_RATING_DEMO_STATES;
+  readonly sliderVariantSelectOptions = FORM_SLIDER_VARIANT_SELECT_OPTIONS;
+  readonly sliderDirectionSelectOptions = FORM_SLIDER_DIRECTION_SELECT_OPTIONS;
+  readonly sliderDemoHeight = FORM_SLIDER_CATALOG_DEMO_HEIGHT;
   readonly selectVariantSelectOptions = FORM_SELECT_VARIANT_SELECT_OPTIONS;
   readonly selectDemoOptions = [...FORM_SELECT_DEMO_OPTIONS];
   readonly cascadeSelectDemoOptions: FormCascadeSelectCountry[] = FORM_CASCADESELECT_DEMO_OPTIONS;
@@ -402,6 +432,7 @@ export class FormCatalogComponent {
     password: 'outlined',
     inputotp: 'outlined',
     rating: 'outlined',
+    slider: 'outlined',
     textarea: 'outlined',
   });
 
@@ -422,6 +453,7 @@ export class FormCatalogComponent {
   readonly passwordIx = signal<FormPasswordInteractionState>(defaultPasswordInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
   readonly ratingIx = signal<FormRatingInteractionState>(defaultRatingInteraction());
+  readonly sliderIx = signal<FormSliderInteractionState>(defaultSliderInteraction());
 
   /** Float Label interactivo (Select): placeholder solo con foco. */
   private readonly selectFloatIxFocused = signal(false);
@@ -512,6 +544,10 @@ export class FormCatalogComponent {
 
   isRatingBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'rating' } {
     return block.kind === 'rating';
+  }
+
+  isSliderBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'slider' } {
+    return block.kind === 'slider';
   }
 
   isToggleButtonBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'togglebutton' } {
@@ -681,7 +717,7 @@ export class FormCatalogComponent {
   }
 
   showFormSizesSection(kind: FormBlockKind): boolean {
-    return kind !== 'toggleswitch' && kind !== 'rating' && kind !== 'inputgroup';
+    return kind !== 'toggleswitch' && kind !== 'rating' && kind !== 'inputgroup' && kind !== 'slider';
   }
 
   patchInputgroup(patch: Partial<FormInputGroupInteractionState>): void {
@@ -1559,6 +1595,31 @@ export class FormCatalogComponent {
 
   patchRating(patch: Partial<FormRatingInteractionState>): void {
     this.ratingIx.update((prev) => ({ ...prev, ...patch }));
+  }
+
+  patchSlider(patch: Partial<FormSliderInteractionState>): void {
+    this.sliderIx.update((prev) => {
+      const next: FormSliderInteractionState = { ...prev, ...patch };
+      if (patch.variant === 'controlled') {
+        next.direction = 'horizontal';
+        next.range = false;
+      }
+      if (patch.range === true && !prev.range) {
+        next.rangeValue = [...FORM_SLIDER_DEFAULT_RANGE_VALUE];
+      }
+      if (patch.range === false && prev.range) {
+        next.value = prev.rangeValue[0] ?? FORM_SLIDER_DEFAULT_VALUE;
+      }
+      return next;
+    });
+  }
+
+  sliderOrientation(): FormSliderDirection {
+    return this.sliderIx().variant === 'controlled' ? 'horizontal' : this.sliderIx().direction;
+  }
+
+  sliderIsVertical(): boolean {
+    return this.sliderOrientation() === 'vertical';
   }
 
   /** PrimeNG `size` en InputOtp / Password: omite en Normal. */

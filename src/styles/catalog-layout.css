@@ -355,9 +355,18 @@
   justify-content: flex-start;
 }
 
+.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo].slider-catalog-demo-area {
+  width: 100%;
+  max-width: 28rem;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+}
+
 .catalog-preview-frame .catalog-preview-frame__stage .breadcrumb-catalog-demo-area,
 .catalog-preview-frame .catalog-preview-frame__stage .divider-catalog-demo-area,
 .catalog-preview-frame .catalog-preview-frame__stage .accordion-catalog-demo-area,
+.catalog-preview-frame .catalog-preview-frame__stage .slider-catalog-demo-area,
 .catalog-preview-frame .catalog-preview-frame__stage .paginator-catalog-live-shell {
   flex: 0 1 auto;
   width: 100%;

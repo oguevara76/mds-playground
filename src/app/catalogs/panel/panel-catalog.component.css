@@ -872,3 +872,104 @@
 :host.panel-catalog-page .stepper-catalog-state-demo .p-step-header {
   cursor: default;
 }
+
+/* ─── Toolbar ──────────────────────────────────────────────────────────────── */
+
+:host.panel-catalog-page .toolbar-variant-block {
+  --catalog-preview-frame-min-height: calc(
+    var(--toolbar-catalog-demo-height, 88px) + var(--catalog-preview-frame-padding-y, 48px) * 2
+  );
+}
+
+:host.panel-catalog-page .toolbar-variant-block ::ng-deep .catalog-preview-frame__stage {
+  min-height: var(--toolbar-catalog-demo-height, 88px);
+  align-items: center;
+}
+
+:host.panel-catalog-page .toolbar-catalog-demo-area {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1024px;
+  min-width: 0;
+  min-height: var(--toolbar-catalog-demo-height, 88px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+:host.panel-catalog-page .toolbar-catalog-live {
+  width: 100%;
+  min-width: 0;
+}
+
+:host.panel-catalog-page .toolbar-catalog-live ::ng-deep .p-toolbar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+}
+
+:host.panel-catalog-page .toolbar-catalog-live ::ng-deep .p-toolbar-start,
+:host.panel-catalog-page .toolbar-catalog-live ::ng-deep .p-toolbar-center,
+:host.panel-catalog-page .toolbar-catalog-live ::ng-deep .p-toolbar-end {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+:host.panel-catalog-page .toolbar-catalog-live ::ng-deep .p-toolbar-center {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: center;
+}
+
+:host.panel-catalog-page .toolbar-catalog-live ::ng-deep .p-toolbar-center .p-inputtext {
+  width: 10rem;
+  max-width: 10rem;
+}
+
+:host.panel-catalog-page .toolbar-catalog-group,
+:host.panel-catalog-page .toolbar-catalog-nav {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--toolbar-gap, var(--dimension-scale-x8, 8px));
+}
+
+:host.panel-catalog-page .toolbar-catalog-brand {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: inherit;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+:host.panel-catalog-page .toolbar-catalog-examples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dimension-scale-x24, 24px);
+  width: 100%;
+  max-width: 1024px;
+}
+
+:host.panel-catalog-page .toolbar-catalog-example {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--catalog-state-caption-gap, 12px);
+  width: 100%;
+  min-width: 0;
+}
+
+:host.panel-catalog-page .toolbar-catalog-example-preview {
+  width: 100%;
+  min-width: 0;
+}
+
+:host.panel-catalog-page .toolbar-catalog-example-preview .toolbar-catalog-live {
+  pointer-events: none;
+}
+
