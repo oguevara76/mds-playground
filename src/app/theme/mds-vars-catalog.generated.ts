@@ -1986,7 +1986,7 @@ export const MDS_VARS_CATALOG = {
     { name: "--multiselect-background", value: "var(--form-field-background)" },
     { name: "--multiselect-border-color", value: "var(--form-field-border-color)" },
     { name: "--multiselect-border-radius", value: "var(--form-field-border-radius)" },
-    { name: "--multiselect-chip-border-radius", value: "var(--border-radius-sm)" },
+    { name: "--multiselect-chip-border-radius", value: "var(--dimension-radius-x6)" },
     { name: "--multiselect-clear-icon-color", value: "var(--form-field-icon-color)" },
     { name: "--multiselect-color", value: "var(--form-field-color)" },
     { name: "--multiselect-disabled-background", value: "var(--form-field-disabled-background)" },

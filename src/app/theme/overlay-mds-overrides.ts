@@ -310,6 +310,157 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
   ) !important;
 }
 
+/* p-multiselect overlay (appendTo="body") — tokens MDS en lista y opciones */
+.p-multiselect-overlay {
+  background: var(--multiselect-overlay-background, var(--p-multiselect-overlay-background)) !important;
+  border: 1px solid var(--multiselect-overlay-border-color, var(--p-multiselect-overlay-border-color)) !important;
+  color: var(--multiselect-overlay-color, var(--p-multiselect-overlay-color)) !important;
+  border-radius: var(--multiselect-overlay-border-radius, var(--p-multiselect-overlay-border-radius)) !important;
+  box-shadow: var(--multiselect-overlay-shadow, var(--p-multiselect-overlay-shadow)) !important;
+}
+
+.p-multiselect-overlay .p-multiselect-list {
+  padding: var(--list-padding, var(--p-multiselect-list-padding, var(--dimension-scale-x4, 4px))) !important;
+}
+
+.p-multiselect-overlay .p-multiselect-header {
+  padding-block: var(
+    --list-header-padding-block,
+    var(
+      --p-multiselect-list-header-padding-top,
+      var(--list-header-padding-top, var(--form-field-padding-y, var(--dimension-scale-x8)))
+    )
+  )
+  var(
+    --list-header-padding-block-end,
+    var(
+      --p-multiselect-list-header-padding-bottom,
+      var(--list-header-padding-bottom, var(--form-field-padding-y, var(--dimension-scale-x8)))
+    )
+  ) !important;
+  padding-inline-start: calc(
+    var(--list-padding-x, var(--dimension-scale-x4, 4px)) +
+      var(--list-option-padding-x, var(--form-field-padding-x, var(--dimension-scale-x12, 12px)))
+  ) !important;
+  padding-inline-end: var(
+    --list-header-padding-right,
+    var(--p-multiselect-list-header-padding-right, var(--form-field-padding-x, var(--dimension-scale-x12)))
+  ) !important;
+}
+
+.p-multiselect-overlay .p-multiselect-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--multiselect-list-gap, var(--list-gap, var(--p-multiselect-list-gap, var(--dimension-scale-x2, 2px)))) !important;
+}
+
+.p-multiselect-overlay .p-multiselect-option {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(
+    --multiselect-option-gap,
+    var(--p-multiselect-option-gap, var(--list-option-gap, var(--dimension-scale-x8, 8px)))
+  ) !important;
+  padding: var(
+    --multiselect-option-padding,
+    var(
+      --p-multiselect-option-padding,
+      var(--list-option-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
+    )
+  ) !important;
+  border-radius: var(
+    --multiselect-option-border-radius,
+    var(--p-multiselect-option-border-radius, var(--list-option-border-radius))
+  ) !important;
+  background: transparent !important;
+  color: var(--multiselect-option-color, var(--p-multiselect-option-color)) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition:
+    background var(--p-transition-duration, 0.2s),
+    color var(--p-transition-duration, 0.2s);
+}
+
+.p-multiselect-overlay .p-multiselect-option .p-checkbox {
+  flex-shrink: 0;
+}
+
+.p-multiselect-overlay .p-multiselect-option:not(.p-disabled):not(.p-multiselect-option-selected).p-focus,
+.p-multiselect-overlay .p-multiselect-option:not(.p-disabled):not(.p-multiselect-option-selected):focus,
+.p-multiselect-overlay .p-multiselect-option:not(.p-disabled):not(.p-multiselect-option-selected):focus-visible {
+  background: transparent !important;
+  color: var(--multiselect-option-color, var(--p-multiselect-option-color)) !important;
+  box-shadow: none !important;
+}
+
+.p-multiselect-overlay .p-multiselect-option:not(.p-disabled):not(.p-multiselect-option-selected):hover {
+  background: var(--multiselect-option-focus-background, var(--p-multiselect-option-focus-background)) !important;
+  color: var(--multiselect-option-focus-color, var(--p-multiselect-option-focus-color)) !important;
+}
+
+.p-multiselect-overlay .p-multiselect-option.p-multiselect-option-selected,
+.p-multiselect-overlay .p-multiselect-option.p-multiselect-option-selected.p-focus,
+.p-multiselect-overlay .p-multiselect-option.p-multiselect-option-selected:focus,
+.p-multiselect-overlay .p-multiselect-option.p-multiselect-option-selected:focus-visible {
+  background: var(--multiselect-option-selected-background, var(--p-multiselect-option-selected-background)) !important;
+  color: var(--multiselect-option-selected-color, var(--p-multiselect-option-selected-color)) !important;
+  box-shadow: none !important;
+}
+
+.p-multiselect-overlay .p-multiselect-option.p-multiselect-option-selected:hover {
+  background: var(--multiselect-option-selected-background, var(--p-multiselect-option-selected-background)) !important;
+  color: var(--multiselect-option-selected-color, var(--p-multiselect-option-selected-color)) !important;
+}
+
+.p-multiselect-overlay .p-multiselect-option-group {
+  padding: var(
+    --list-option-group-padding,
+    var(
+      --p-multiselect-option-group-padding,
+      var(--list-option-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
+    )
+  ) !important;
+  background: var(--multiselect-option-group-background, var(--p-multiselect-option-group-background, transparent)) !important;
+  color: var(--multiselect-option-group-color, var(--p-multiselect-option-group-color, var(--list-option-group-color))) !important;
+  font-weight: var(
+    --multiselect-option-group-font-weight,
+    var(--p-multiselect-option-group-font-weight, var(--list-option-group-font-weight, 600))
+  ) !important;
+  cursor: default;
+}
+
+.p-multiselect-overlay .p-multiselect-option-group-label {
+  padding: 0 !important;
+  background: transparent !important;
+  font-weight: inherit !important;
+}
+
+.p-multiselect-overlay .catalog-select-option-group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dimension-scale-x8, 8px);
+  line-height: 1.25;
+}
+
+.p-multiselect-overlay .catalog-select-option-group-emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 1.125em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.p-multiselect-overlay .catalog-select-option-group-label {
+  font-family: var(--font-family, inherit);
+}
+
+.p-multiselect-overlay .p-multiselect-empty-message {
+  padding: var(
+    --list-option-padding,
+    var(--p-multiselect-empty-message-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
+  ) !important;
+}
+
 /* p-cascadeselect overlay (appendTo="body") — tokens MDS en dark + paneles anidados */
 .p-cascadeselect-overlay {
   background: var(--cascadeselect-overlay-background, var(--p-cascadeselect-overlay-background)) !important;

@@ -8,6 +8,8 @@ export type FormBlockKind =
   | 'inputgroup'
   | 'inputnumber'
   | 'select'
+  | 'multiselect'
+  | 'listbox'
   | 'cascadeselect'
   | 'password'
   | 'inputotp'
@@ -131,6 +133,50 @@ export const FORM_SELECT_DEMO_GROUPED_OPTIONS: FormSelectDemoGroup[] = [
 
 export type FormSelectOverlayOptionVariant = 'default' | 'checkmark' | 'group';
 
+/** Variante de opciones del overlay MultiSelect (sin checkmark; usa checkbox nativo). */
+export type FormMultiselectOverlayOptionVariant = 'default' | 'group';
+
+export type FormMultiselectDisplay = 'chip' | 'comma';
+
+/** Variante del showcase Listbox (popover CONFIGURAR). */
+export type FormListboxVariant = 'basic' | 'checkmark' | 'checkbox' | 'group';
+
+export const FORM_LISTBOX_VARIANT_SELECT_OPTIONS: {
+  label: string;
+  value: FormListboxVariant;
+}[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Checkmark', value: 'checkmark' },
+  { label: 'Checkbox', value: 'checkbox' },
+  { label: 'Group', value: 'group' },
+];
+
+/** Países del ejemplo Basic (PrimeNG listbox#template). */
+export interface FormListboxTemplateCountry {
+  name: string;
+  code: string;
+}
+
+export const FORM_LISTBOX_TEMPLATE_COUNTRIES: FormListboxTemplateCountry[] = [
+  { name: 'Australia', code: 'AU' },
+  { name: 'Brazil', code: 'BR' },
+  { name: 'China', code: 'CN' },
+  { name: 'Egypt', code: 'EG' },
+  { name: 'France', code: 'FR' },
+  { name: 'Germany', code: 'DE' },
+  { name: 'India', code: 'IN' },
+  { name: 'Japan', code: 'JP' },
+  { name: 'Spain', code: 'ES' },
+  { name: 'United States', code: 'US' },
+];
+
+/** Sprite placeholder del demo de banderas PrimeNG. */
+export const FORM_LISTBOX_FLAG_PLACEHOLDER_URL =
+  'https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png';
+
+/** Altura del viewport de la lista en el showcase Listbox. */
+export const FORM_LISTBOX_SCROLL_HEIGHT = '14rem';
+
 export const FORM_SELECT_OVERLAY_OPTION_VARIANT_OPTIONS: {
   label: string;
   value: FormSelectOverlayOptionVariant;
@@ -144,6 +190,26 @@ export const FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER = 'Filter...';
 
 /** Valor seleccionado en estados Fill (Float label / IftaLabel). */
 export const FORM_SELECT_STATE_FILLED_VALUE: FormSelectDemoValue = 'opt-2';
+
+export const FORM_MULTISELECT_STATE_FILLED_VALUE: FormSelectDemoValue[] = ['opt-1', 'opt-2'];
+
+export const FORM_MULTISELECT_OVERLAY_OPTION_VARIANT_OPTIONS: {
+  label: string;
+  value: FormMultiselectOverlayOptionVariant;
+}[] = [
+  { label: 'Default', value: 'default' },
+  { label: 'Group', value: 'group' },
+];
+
+export const FORM_MULTISELECT_DISPLAY_OPTIONS: {
+  label: string;
+  value: FormMultiselectDisplay;
+}[] = [
+  { label: 'Chip', value: 'chip' },
+  { label: 'Comma', value: 'comma' },
+];
+
+export const FORM_MULTISELECT_VARIANT_SELECT_OPTIONS = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
 
 export interface FormCascadeSelectCity {
   cname: string;
@@ -508,6 +574,8 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'inputgroup', title: 'InputGroup', category: 'input' },
   { kind: 'inputnumber', title: 'InputNumber', category: 'input' },
   { kind: 'select', title: 'Select', category: 'input' },
+  { kind: 'multiselect', title: 'MultiSelect', category: 'input' },
+  { kind: 'listbox', title: 'Listbox', category: 'input' },
   { kind: 'cascadeselect', title: 'CascadeSelect', category: 'input' },
   { kind: 'password', title: 'Password', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },

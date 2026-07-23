@@ -9,6 +9,7 @@ import { Menu } from 'primeng/menu';
 import { Ripple } from 'primeng/ripple';
 import { Select } from 'primeng/select';
 import { SelectButton } from 'primeng/selectbutton';
+import { TieredMenu } from 'primeng/tieredmenu';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
 import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
@@ -22,6 +23,7 @@ import {
   buildBreadcrumbModel,
   buildMenuCatalogModel,
   buildMenuToggleableModel,
+  buildTieredMenuCatalogModel,
   breadcrumbCatalogShowsTooltipNote,
   breadcrumbDisplayModeClass,
   MENU_CATALOG_EXAMPLE_DEMOS,
@@ -36,6 +38,13 @@ import {
   type MenuCatalogInteractionState,
   type MenuCatalogToggleableExpandedState,
   type MenuCatalogToggleableSection,
+  TIEREDMENU_CATALOG_BUTTON_STYLE_OPTIONS,
+  TIEREDMENU_CATALOG_MENU_BUTTON_ICON,
+  TIEREDMENU_CATALOG_POPUP_TRIGGER_ICON,
+  TIEREDMENU_CATALOG_POPUP_TRIGGER_LABEL,
+  TIEREDMENU_CATALOG_VARIANT_OPTIONS,
+  type TieredMenuCatalogButtonStyle,
+  type TieredMenuCatalogInteractionState,
 } from './menu-catalog.config';
 
 @Component({
@@ -55,6 +64,7 @@ import {
     Select,
     SelectButton,
     Divider,
+    TieredMenu,
   ],
   templateUrl: './menu-catalog.component.html',
   styleUrl: './menu-catalog.component.css',
@@ -62,8 +72,10 @@ import {
 })
 export class MenuCatalogComponent {
   @ViewChild('menuPopup') menuPopup?: Menu;
+  @ViewChild('tieredMenuPopup') tieredMenuPopup?: TieredMenu;
 
   private menuPopupAnchor: HTMLElement | null = null;
+  private tieredMenuPopupAnchor: HTMLElement | null = null;
 
   readonly itemCountOptions = BREADCRUMB_CATALOG_ITEM_COUNT_OPTIONS;
   readonly displayModeOptions = BREADCRUMB_CATALOG_DISPLAY_MODE_OPTIONS;
@@ -75,6 +87,12 @@ export class MenuCatalogComponent {
   readonly menuPopupTriggerLabel = MENU_CATALOG_POPUP_TRIGGER_LABEL;
   readonly menuPopupTriggerIcon = MENU_CATALOG_POPUP_TRIGGER_ICON;
 
+  readonly tieredMenuVariantOptions = TIEREDMENU_CATALOG_VARIANT_OPTIONS;
+  readonly tieredMenuButtonStyleOptions = TIEREDMENU_CATALOG_BUTTON_STYLE_OPTIONS;
+  readonly tieredMenuPopupTriggerLabel = TIEREDMENU_CATALOG_POPUP_TRIGGER_LABEL;
+  readonly tieredMenuPopupTriggerIcon = TIEREDMENU_CATALOG_POPUP_TRIGGER_ICON;
+  readonly tieredMenuMenuButtonIcon = TIEREDMENU_CATALOG_MENU_BUTTON_ICON;
+
   readonly breadcrumbIx = signal<BreadcrumbCatalogInteractionState>({
     itemCount: 3,
     displayMode: 'text',
@@ -82,6 +100,11 @@ export class MenuCatalogComponent {
 
   readonly menuIx = signal<MenuCatalogInteractionState>({
     example: 'basic',
+  });
+
+  readonly tieredMenuIx = signal<TieredMenuCatalogInteractionState>({
+    variant: 'popup',
+    buttonStyle: 'button-default',
   });
 
   readonly menuToggleableExpanded = signal<MenuCatalogToggleableExpandedState>({
@@ -125,12 +148,27 @@ export class MenuCatalogComponent {
     ),
   );
 
+  readonly tieredMenuModel = computed<MenuItem[]>(() => buildTieredMenuCatalogModel());
+
+  readonly tieredMenuIsPopup = computed(() => this.tieredMenuIx().variant === 'popup');
+
+  readonly tieredMenuUsesMenuButton = computed(
+    () => this.tieredMenuIsPopup() && this.tieredMenuIx().buttonStyle === 'menu-button',
+  );
+
   readonly breadcrumbTooltipNoteVisible = computed(() =>
     breadcrumbCatalogShowsTooltipNote(this.breadcrumbIx().displayMode),
   );
 
   patchBreadcrumbIx(patch: Partial<BreadcrumbCatalogInteractionState>): void {
     this.breadcrumbIx.update((state) => ({ ...state, ...patch }));
+  }
+
+  patchTieredMenuIx(patch: Partial<TieredMenuCatalogInteractionState>): void {
+    if (patch.variant === 'basic') {
+      this.tieredMenuPopup?.hide();
+    }
+    this.tieredMenuIx.update((state) => ({ ...state, ...patch }));
   }
 
   setMenuExample(example: MenuCatalogExample): void {
@@ -173,6 +211,14 @@ export class MenuCatalogComponent {
       this.menuPopupAnchor = target;
     }
     this.menuPopup?.toggle(event);
+  }
+
+  toggleTieredMenuPopup(event: Event): void {
+    const target = event.currentTarget;
+    if (target instanceof HTMLElement) {
+      this.tieredMenuPopupAnchor = target;
+    }
+    this.tieredMenuPopup?.toggle(event);
   }
 
   trackDisplayMode(_: number, demo: { key: BreadcrumbCatalogDisplayMode }): BreadcrumbCatalogDisplayMode {

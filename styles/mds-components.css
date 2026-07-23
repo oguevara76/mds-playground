@@ -928,6 +928,12 @@ html:root {
   --galleria-thumbnail-nav-button-icon-size: 14px;
   --galleria-thumbnail-nav-button-size: var(--dimension-scale-x28);
   --galleria-thumbnails-content-background: var(--content-background);
+  --galleria-thumbnails-content-padding: var(--dimension-scale-x14) var(--dimension-scale-x4);
+  --galleria-transition-duration: 180ms;
+  --galleria-nav-button-focus-ring-style: solid;
+  --galleria-thumbnail-nav-button-focus-ring-style: solid;
+  --galleria-indicator-button-focus-ring-style: solid;
+  --galleria-close-button-focus-ring-style: solid;
   --iconfield-figma-lg-icon-size: var(--inputtext-lg-font-size);
   --iconfield-figma-size: var(--inputtext-font-size);
   --iconfield-figma-sm-icon-size: var(--inputtext-sm-font-size);
@@ -1268,7 +1274,7 @@ html:root {
   --multiselect-background: var(--form-field-background);
   --multiselect-border-color: var(--form-field-border-color);
   --multiselect-border-radius: var(--form-field-border-radius);
-  --multiselect-chip-border-radius: var(--border-radius-sm);
+  --multiselect-chip-border-radius: var(--dimension-radius-x6);
   --multiselect-clear-icon-color: var(--form-field-icon-color);
   --multiselect-color: var(--form-field-color);
   --multiselect-disabled-background: var(--form-field-disabled-background);

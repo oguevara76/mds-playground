@@ -18,6 +18,7 @@ import { InputIcon } from 'primeng/inputicon';
 import { InputNumber } from 'primeng/inputnumber';
 import { InputOtp } from 'primeng/inputotp';
 import { InputText } from 'primeng/inputtext';
+import { Listbox } from 'primeng/listbox';
 import { Password } from 'primeng/password';
 import { RadioButton } from 'primeng/radiobutton';
 import { Rating } from 'primeng/rating';
@@ -25,6 +26,7 @@ import { Slider } from 'primeng/slider';
 import { StarFillIcon } from 'primeng/icons/starfill';
 import { StarIcon } from 'primeng/icons/star';
 import { Select } from 'primeng/select';
+import { MultiSelect } from 'primeng/multiselect';
 import { SelectButton } from 'primeng/selectbutton';
 import { Textarea } from 'primeng/textarea';
 import { ToggleButton } from 'primeng/togglebutton';
@@ -52,6 +54,8 @@ import {
   FORM_INPUTNUMBER_INCREMENT_BUTTON_ICON,
   type FormInputNumberFormatVariant,
   type FormInputNumberFormatVariantPreset,
+  type FormListboxTemplateCountry,
+  type FormListboxVariant,
   FORM_INPUT_OTP_DEFAULT_LENGTH,
   FORM_INPUT_OTP_LENGTH_SELECT_OPTIONS,
   FORM_INPUT_OTP_STATE_READONLY_VALUE,
@@ -59,6 +63,10 @@ import {
   FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS,
   FORM_INPUTGROUP_CITY_OPTIONS,
   FORM_INPUTGROUP_EXAMPLE_OPTIONS,
+  FORM_LISTBOX_FLAG_PLACEHOLDER_URL,
+  FORM_LISTBOX_SCROLL_HEIGHT,
+  FORM_LISTBOX_TEMPLATE_COUNTRIES,
+  FORM_LISTBOX_VARIANT_SELECT_OPTIONS,
   type FormInputGroupCityOption,
   type FormInputGroupExample,
   FORM_RATING_DEMO_STATES,
@@ -73,6 +81,10 @@ import {
   FORM_CASCADESELECT_DEMO_OPTIONS,
   FORM_CASCADESELECT_OPTION_GROUP_CHILDREN,
   FORM_CASCADESELECT_STATE_FILLED_VALUE,
+  FORM_MULTISELECT_DISPLAY_OPTIONS,
+  FORM_MULTISELECT_OVERLAY_OPTION_VARIANT_OPTIONS,
+  FORM_MULTISELECT_STATE_FILLED_VALUE,
+  FORM_MULTISELECT_VARIANT_SELECT_OPTIONS,
   FORM_SELECT_DEMO_GROUPED_OPTIONS,
   FORM_SELECT_DEMO_OPTIONS,
   FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER,
@@ -81,6 +93,8 @@ import {
   FORM_SELECT_VARIANT_SELECT_OPTIONS,
   type FormCascadeSelectDemoValue,
   type FormCascadeSelectCountry,
+  type FormMultiselectDisplay,
+  type FormMultiselectOverlayOptionVariant,
   type FormSelectOverlayOptionVariant,
   type FormSelectDemoGroup,
   FORM_RADIO_OPTIONS,
@@ -108,6 +122,13 @@ import {
 } from './form-catalog.config';
 import { inputDemoWrapClass } from './form-catalog.demo-styles';
 
+export interface FormListboxInteractionState {
+  size: FormInteractionSize;
+  value: FormSelectDemoValue | FormSelectDemoValue[] | FormListboxTemplateCountry | null;
+  variant: FormListboxVariant;
+  filter: boolean;
+}
+
 export interface FormSelectInteractionState {
   variant: FormInputTextVariant;
   floatPosition: FormInputFloatVariant;
@@ -116,6 +137,17 @@ export interface FormSelectInteractionState {
   /** Buscador en header del overlay (PrimeNG filter). */
   showOverlayFilter: boolean;
   overlayOptionVariant: FormSelectOverlayOptionVariant;
+}
+
+export interface FormMultiselectInteractionState {
+  variant: FormInputTextVariant;
+  floatPosition: FormInputFloatVariant;
+  size: FormInteractionSize;
+  value: FormSelectDemoValue[];
+  display: FormMultiselectDisplay;
+  /** Buscador en header del overlay (PrimeNG filter). */
+  showOverlayFilter: boolean;
+  overlayOptionVariant: FormMultiselectOverlayOptionVariant;
 }
 
 export interface FormCascadeSelectInteractionState {
@@ -213,7 +245,7 @@ interface FormSelectButtonInteractionState {
 }
 
 /** Campo al que aplican los tokens MDS de float label / ifta (input vs textarea vs password vs select). */
-type FormFieldKind = 'inputtext' | 'textarea' | 'password' | 'select' | 'cascadeselect';
+type FormFieldKind = 'inputtext' | 'textarea' | 'password' | 'select' | 'multiselect' | 'cascadeselect' | 'listbox';
 
 type PasswordStrengthLevel = 'none' | 'weak' | 'medium' | 'strong';
 
@@ -254,6 +286,15 @@ function defaultSliderInteraction(): FormSliderInteractionState {
   };
 }
 
+function defaultListboxInteraction(): FormListboxInteractionState {
+  return {
+    size: 'normal',
+    value: null,
+    variant: 'basic',
+    filter: true,
+  };
+}
+
 function defaultSelectInteraction(): FormSelectInteractionState {
   return {
     variant: 'default',
@@ -261,6 +302,18 @@ function defaultSelectInteraction(): FormSelectInteractionState {
     size: 'normal',
     value: null,
     showOverlayFilter: false,
+    overlayOptionVariant: 'default',
+  };
+}
+
+function defaultMultiselectInteraction(): FormMultiselectInteractionState {
+  return {
+    variant: 'default',
+    floatPosition: 'over',
+    size: 'normal',
+    value: [],
+    display: 'chip',
+    showOverlayFilter: true,
     overlayOptionVariant: 'default',
   };
 }
@@ -363,6 +416,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     InputIcon,
     InputNumber,
     InputOtp,
+    Listbox,
     InputText,
     NgClass,
     NgTemplateOutlet,
@@ -372,6 +426,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     StarFillIcon,
     StarIcon,
     Select,
+    MultiSelect,
     SelectButton,
     Slider,
     Textarea,
@@ -399,7 +454,17 @@ export class FormCatalogComponent {
   readonly sliderDirectionSelectOptions = FORM_SLIDER_DIRECTION_SELECT_OPTIONS;
   readonly sliderDemoHeight = FORM_SLIDER_CATALOG_DEMO_HEIGHT;
   readonly selectVariantSelectOptions = FORM_SELECT_VARIANT_SELECT_OPTIONS;
+  readonly multiselectVariantSelectOptions = FORM_MULTISELECT_VARIANT_SELECT_OPTIONS;
+  readonly multiselectDisplayOptions = FORM_MULTISELECT_DISPLAY_OPTIONS;
+  readonly multiselectOverlayOptionVariantOptions = FORM_MULTISELECT_OVERLAY_OPTION_VARIANT_OPTIONS;
+  readonly listboxVariantSelectOptions = FORM_LISTBOX_VARIANT_SELECT_OPTIONS;
+  readonly listboxScrollHeight = FORM_LISTBOX_SCROLL_HEIGHT;
+  readonly listboxTemplateCountries = FORM_LISTBOX_TEMPLATE_COUNTRIES;
+  readonly listboxFlagPlaceholderUrl = FORM_LISTBOX_FLAG_PLACEHOLDER_URL;
   readonly selectDemoOptions = [...FORM_SELECT_DEMO_OPTIONS];
+  /** Referencia estable para previews estáticos MultiSelect (evita bucle ngModel). */
+  readonly multiselectDemoEmptyValue: FormSelectDemoValue[] = [];
+  readonly multiselectDemoFilledValue = FORM_MULTISELECT_STATE_FILLED_VALUE;
   readonly cascadeSelectDemoOptions: FormCascadeSelectCountry[] = FORM_CASCADESELECT_DEMO_OPTIONS;
   /** Opciones anidadas expuestas a PrimeNG (tipado del componente limitado a string). */
   readonly cascadeSelectPrimeOptions = FORM_CASCADESELECT_DEMO_OPTIONS as any;
@@ -428,6 +493,8 @@ export class FormCatalogComponent {
     inputgroup: 'outlined',
     inputnumber: 'outlined',
     select: 'outlined',
+    multiselect: 'outlined',
+    listbox: 'outlined',
     cascadeselect: 'outlined',
     password: 'outlined',
     inputotp: 'outlined',
@@ -449,6 +516,8 @@ export class FormCatalogComponent {
   readonly inputgroupIx = signal<FormInputGroupInteractionState>(defaultInputGroupInteraction());
   readonly inputnumberIx = signal<FormInputNumberInteractionState>(defaultInputNumberInteraction());
   readonly selectIx = signal<FormSelectInteractionState>(defaultSelectInteraction());
+  readonly multiselectIx = signal<FormMultiselectInteractionState>(defaultMultiselectInteraction());
+  readonly listboxIx = signal<FormListboxInteractionState>(defaultListboxInteraction());
   readonly cascadeSelectIx = signal<FormCascadeSelectInteractionState>(defaultCascadeSelectInteraction());
   readonly passwordIx = signal<FormPasswordInteractionState>(defaultPasswordInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
@@ -460,6 +529,12 @@ export class FormCatalogComponent {
 
   /** Select Float Label: overlay abierto mantiene label/placeholder activos (onBlur al abrir lista). */
   private readonly selectFloatOverlayOpen = signal(false);
+
+  /** Float Label interactivo (MultiSelect). */
+  private readonly multiselectFloatIxFocused = signal(false);
+
+  /** MultiSelect Float Label: overlay abierto mantiene label/placeholder activos. */
+  private readonly multiselectFloatOverlayOpen = signal(false);
 
   /** Float Label interactivo (CascadeSelect). */
   private readonly cascadeSelectFloatIxFocused = signal(false);
@@ -528,6 +603,14 @@ export class FormCatalogComponent {
 
   isSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'select' } {
     return block.kind === 'select';
+  }
+
+  isMultiselectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'multiselect' } {
+    return block.kind === 'multiselect';
+  }
+
+  isListboxBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'listbox' } {
+    return block.kind === 'listbox';
   }
 
   isCascadeSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'cascadeselect' } {
@@ -1267,6 +1350,359 @@ export class FormCatalogComponent {
     return null;
   }
 
+  multiselectIsDefault(): boolean {
+    return this.multiselectIx().variant === 'default';
+  }
+
+  multiselectIsFloatLabel(): boolean {
+    return this.multiselectIx().variant === 'floatlabel';
+  }
+
+  multiselectIsIftaLabel(): boolean {
+    return this.multiselectIx().variant === 'iftalabel';
+  }
+
+  multiselectFloatPosition(): FormInputFloatVariant {
+    return this.multiselectIx().floatPosition;
+  }
+
+  multiselectIsFloatIn(): boolean {
+    return this.multiselectIsFloatLabel() && this.multiselectFloatPosition() === 'in';
+  }
+
+  multiselectIsFloatOverOrOn(): boolean {
+    return (
+      this.multiselectIsFloatLabel() &&
+      (this.multiselectFloatPosition() === 'over' || this.multiselectFloatPosition() === 'on')
+    );
+  }
+
+  multiselectInteractionLabelFloated(): boolean {
+    if (!this.multiselectIsFloatLabel()) {
+      return false;
+    }
+    return (
+      this.multiselectIx().value.length > 0 ||
+      this.multiselectFloatIxFocused() ||
+      this.multiselectFloatOverlayOpen()
+    );
+  }
+
+  multiselectFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    if (this.multiselectFloatPosition() === 'in') {
+      return state === 'filled' || state === 'focus' || state === 'disabled';
+    }
+    if (this.multiselectIsFloatOverOrOn() && state === 'disabled') {
+      return true;
+    }
+    return state === 'focus' || state === 'filled';
+  }
+
+  multiselectFloatSizeLabelFloated(): boolean {
+    return this.multiselectIsFloatLabel();
+  }
+
+  patchMultiselect(patch: Partial<FormMultiselectInteractionState>): void {
+    this.multiselectIx.update((prev) => {
+      const next = { ...prev, ...patch };
+      if (
+        patch.overlayOptionVariant !== undefined &&
+        patch.overlayOptionVariant !== prev.overlayOptionVariant
+      ) {
+        next.value = [];
+      }
+      return next;
+    });
+    if (patch.variant !== undefined || patch.floatPosition !== undefined) {
+      this.multiselectFloatIxFocused.set(false);
+      this.multiselectFloatOverlayOpen.set(false);
+    }
+  }
+
+  setMultiselectFloatIxFocused(focused: boolean): void {
+    if (!this.multiselectIsFloatLabel()) {
+      return;
+    }
+    if (!focused && this.multiselectFloatOverlayOpen()) {
+      return;
+    }
+    this.multiselectFloatIxFocused.set(focused);
+  }
+
+  setMultiselectFloatOverlayOpen(open: boolean): void {
+    if (!this.multiselectIsFloatLabel()) {
+      return;
+    }
+    this.multiselectFloatOverlayOpen.set(open);
+    if (open) {
+      this.multiselectFloatIxFocused.set(true);
+    } else if (this.multiselectIx().value.length === 0) {
+      this.multiselectFloatIxFocused.set(false);
+    }
+  }
+
+  multiselectFloatInteractionPlaceholder(): string | null {
+    if (this.multiselectIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    if (!this.multiselectFloatIxFocused() && !this.multiselectFloatOverlayOpen()) {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  multiselectInteractionPlaceholder(): string {
+    if (this.multiselectIsDefault() || this.multiselectIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    return this.multiselectFloatInteractionPlaceholder() ?? '';
+  }
+
+  multiselectInteractionScopeClass(): Record<string, boolean> {
+    const sx = this.multiselectIx();
+    return {
+      'input-variant-block': true,
+      'form-input-interaction--stacked': sx.variant === 'floatlabel' || sx.variant === 'iftalabel',
+      'floatlabel-variant-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
+      'floatlabel-variant-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
+      'floatlabel-variant-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+      'iftalabel-variant': sx.variant === 'iftalabel',
+    };
+  }
+
+  multiselectPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return this.inputotpPrimeSize(size);
+  }
+
+  multiselectInteractionOptions(): typeof this.selectDemoOptions | FormSelectDemoGroup[] {
+    if (this.multiselectIx().overlayOptionVariant === 'group') {
+      return this.selectDemoGroupedOptions;
+    }
+    return this.selectDemoOptions;
+  }
+
+  multiselectInteractionOverlayPanelClass(): string | undefined {
+    return undefined;
+  }
+
+  multiselectInteractionGroup(): boolean {
+    return this.multiselectIx().overlayOptionVariant === 'group';
+  }
+
+  private multiselectOverlayHostVars(): Record<string, string> {
+    return {
+      '--p-multiselect-overlay-background': 'var(--multiselect-overlay-background)',
+      '--p-multiselect-overlay-border-color': 'var(--multiselect-overlay-border-color)',
+      '--p-multiselect-overlay-border-radius': 'var(--multiselect-overlay-border-radius)',
+      '--p-multiselect-overlay-color': 'var(--multiselect-overlay-color)',
+      '--p-multiselect-overlay-shadow': 'var(--multiselect-overlay-shadow)',
+      '--p-multiselect-list-padding': 'var(--multiselect-list-padding-y) var(--multiselect-list-padding-x)',
+      '--p-multiselect-list-gap': 'var(--multiselect-list-gap)',
+      '--p-multiselect-list-header-padding':
+        'var(--multiselect-list-header-padding-top) var(--multiselect-list-header-padding-right) var(--multiselect-list-header-padding-bottom) var(--multiselect-list-header-padding-left)',
+      '--p-multiselect-option-padding': 'var(--multiselect-option-padding-y) var(--multiselect-option-padding-x)',
+      '--p-multiselect-option-border-radius': 'var(--multiselect-option-border-radius)',
+      '--p-multiselect-option-color': 'var(--multiselect-option-color)',
+      '--p-multiselect-option-focus-background': 'var(--multiselect-option-focus-background)',
+      '--p-multiselect-option-focus-color': 'var(--multiselect-option-focus-color)',
+      '--p-multiselect-option-selected-background': 'var(--multiselect-option-selected-background)',
+      '--p-multiselect-option-selected-color': 'var(--multiselect-option-selected-color)',
+      '--p-multiselect-option-selected-focus-background': 'var(--multiselect-option-selected-focus-background)',
+      '--p-multiselect-option-selected-focus-color': 'var(--multiselect-option-selected-focus-color)',
+      '--p-multiselect-option-group-padding': 'var(--list-option-group-padding, var(--form-field-sm-padding-y) var(--form-field-padding-x))',
+      '--p-multiselect-empty-message-padding': 'var(--multiselect-option-padding-y) var(--multiselect-option-padding-x)',
+    };
+  }
+
+  multiselectHostVars(size: FormInteractionSize = 'normal'): Record<string, string> {
+    return {
+      '--p-multiselect-background': 'var(--multiselect-background)',
+      '--p-multiselect-border-color': 'var(--multiselect-border-color)',
+      '--p-multiselect-border-radius': 'var(--multiselect-border-radius)',
+      '--p-multiselect-color': 'var(--multiselect-color)',
+      '--p-multiselect-padding-x': `var(${this.fieldPaddingXToken('multiselect', size)})`,
+      '--p-multiselect-padding-y': `var(${this.fieldPaddingYToken('multiselect', size)})`,
+      '--p-multiselect-placeholder-color': 'var(--multiselect-placeholder-color)',
+      '--p-multiselect-dropdown-color': 'var(--multiselect-dropdown-color)',
+      '--p-multiselect-dropdown-width': 'var(--multiselect-dropdown-width)',
+      '--p-multiselect-focus-border-color': 'var(--multiselect-focus-border-color)',
+      '--p-multiselect-hover-border-color': 'var(--multiselect-hover-border-color)',
+      '--p-multiselect-invalid-border-color': 'var(--multiselect-invalid-border-color)',
+      '--p-multiselect-shadow': 'var(--multiselect-shadow)',
+      '--p-multiselect-sm-font-size': 'var(--multiselect-sm-font-size)',
+      '--p-multiselect-sm-padding-x': 'var(--multiselect-sm-padding-x)',
+      '--p-multiselect-sm-padding-y': 'var(--multiselect-sm-padding-y)',
+      '--p-multiselect-lg-font-size': 'var(--multiselect-lg-font-size)',
+      '--p-multiselect-lg-padding-x': 'var(--multiselect-lg-padding-x)',
+      '--p-multiselect-lg-padding-y': 'var(--multiselect-lg-padding-y)',
+      '--p-multiselect-chip-border-radius': 'var(--multiselect-chip-border-radius)',
+      ...this.multiselectOverlayHostVars(),
+    };
+  }
+
+  multiselectFloatLabelHostVars(): Record<string, string> {
+    const sx = this.multiselectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, sx.size, 'multiselect');
+  }
+
+  multiselectIftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    return this.iftaLabelHostVars(size, 'multiselect');
+  }
+
+  multiselectFloatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    const sx = this.multiselectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, size, 'multiselect');
+  }
+
+  multiselectFloatLabelStatesHostVars(): Record<string, string> {
+    const sx = this.multiselectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, 'normal', 'multiselect');
+  }
+
+  multiselectFloatPlaceholderAttr(state: FormInputDemoState): string | null {
+    if (this.multiselectIsIftaLabel()) {
+      if (state === 'filled') {
+        return null;
+      }
+      return this.inputStatePlaceholder;
+    }
+    if (this.multiselectIsFloatLabel()) {
+      if (state === 'focus') {
+        return this.inputStatePlaceholder;
+      }
+      return null;
+    }
+    if (state === 'empty' || state === 'filled') {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  multiselectStateValue(state: FormInputDemoState): FormSelectDemoValue[] {
+    if (this.multiselectIsDefault()) {
+      if (
+        this.inputStateShowsPlaceholderOnly(
+          { kind: 'multiselect', title: 'MultiSelect', category: 'input' },
+          state,
+        )
+      ) {
+        return this.multiselectDemoEmptyValue;
+      }
+      if (state === 'readonly') {
+        return this.multiselectDemoFilledValue;
+      }
+      return this.multiselectDemoEmptyValue;
+    }
+    if (state === 'filled' || state === 'disabled') {
+      return this.multiselectDemoFilledValue;
+    }
+    return this.multiselectDemoEmptyValue;
+  }
+
+  patchListbox(patch: Partial<FormListboxInteractionState>): void {
+    this.listboxIx.update((prev) => {
+      const next = { ...prev, ...patch };
+      if (patch.variant !== undefined && patch.variant !== prev.variant) {
+        next.value = patch.variant === 'checkbox' ? [] : null;
+      }
+      return next;
+    });
+  }
+
+  listboxIsCheckbox(): boolean {
+    return this.listboxIx().variant === 'checkbox';
+  }
+
+  listboxInteractionCheckmark(): boolean {
+    return this.listboxIx().variant === 'checkmark';
+  }
+
+  listboxInteractionScopeClass(): Record<string, boolean> {
+    return {
+      'listbox-variant-checkmark': this.listboxInteractionCheckmark(),
+      'listbox-variant-group': this.listboxInteractionGroup(),
+      'listbox-variant-checkbox': this.listboxIsCheckbox(),
+    };
+  }
+
+  listboxInteractionGroup(): boolean {
+    return this.listboxIx().variant === 'group';
+  }
+
+  listboxIsBasic(): boolean {
+    return this.listboxIx().variant === 'basic';
+  }
+
+  listboxInteractionOptions(): typeof this.selectDemoOptions | FormSelectDemoGroup[] {
+    if (this.listboxInteractionGroup()) {
+      return this.selectDemoGroupedOptions;
+    }
+    return this.selectDemoOptions;
+  }
+
+  listboxCountryFlagClass(code: string): string {
+    return `flag flag-${code.toLowerCase()}`;
+  }
+
+  listboxOptionPaddingTokens(size: FormInteractionSize): { y: string; x: string } {
+    switch (size) {
+      case 'small':
+        return { y: '--form-field-sm-padding-y', x: '--form-field-sm-padding-x' };
+      case 'large':
+        return { y: '--form-field-lg-padding-y', x: '--form-field-lg-padding-x' };
+      default:
+        return { y: '--listbox-option-padding-y', x: '--listbox-option-padding-x' };
+    }
+  }
+
+  listboxHostVars(size: FormInteractionSize = 'normal'): Record<string, string> {
+    const pad = this.listboxOptionPaddingTokens(size);
+    const checkmark = this.listboxInteractionCheckmark();
+    return {
+      '--p-listbox-background': 'var(--listbox-background)',
+      '--p-listbox-border-color': 'var(--listbox-border-color)',
+      '--p-listbox-border-radius': 'var(--listbox-border-radius)',
+      '--p-listbox-color': 'var(--listbox-color)',
+      '--p-listbox-shadow': 'var(--listbox-shadow)',
+      '--p-listbox-list-padding': 'var(--listbox-list-padding-y) var(--listbox-list-padding-x)',
+      '--p-listbox-list-gap': 'var(--listbox-list-gap)',
+      '--p-listbox-list-header-padding':
+        'var(--listbox-list-header-padding-top) var(--listbox-list-header-padding-right) var(--listbox-list-header-padding-bottom) var(--listbox-list-header-padding-left)',
+      '--p-listbox-option-padding': `var(${pad.y}) var(${pad.x})`,
+      '--p-listbox-option-border-radius': 'var(--listbox-option-border-radius)',
+      '--p-listbox-option-color': 'var(--listbox-option-color)',
+      '--p-listbox-option-focus-background': 'var(--listbox-option-focus-background)',
+      '--p-listbox-option-focus-color': 'var(--listbox-option-focus-color)',
+      '--p-listbox-option-selected-background': checkmark
+        ? 'transparent'
+        : 'var(--listbox-option-selected-background)',
+      '--p-listbox-option-selected-color': checkmark
+        ? 'var(--listbox-option-color)'
+        : 'var(--listbox-option-selected-color)',
+      '--p-listbox-option-selected-focus-background': checkmark
+        ? 'var(--listbox-option-focus-background)'
+        : 'var(--listbox-option-selected-focus-background)',
+      '--p-listbox-option-selected-focus-color': checkmark
+        ? 'var(--listbox-option-focus-color)'
+        : 'var(--listbox-option-selected-focus-color)',
+      '--p-listbox-option-group-padding':
+        'var(--listbox-option-group-padding-y) var(--listbox-option-group-padding-x)',
+      '--p-listbox-checkmark-color': 'var(--listbox-checkmark-color)',
+      '--p-listbox-checkmark-gutter-start': 'var(--listbox-checkmark-gutter-start)',
+      '--p-listbox-checkmark-gutter-end': 'var(--listbox-checkmark-gutter-end)',
+      '--p-listbox-invalid-border-color': 'var(--listbox-invalid-border-color)',
+      '--p-listbox-disabled-background': 'var(--listbox-disabled-background)',
+      '--p-listbox-disabled-color': 'var(--listbox-disabled-color)',
+    };
+  }
+
+  listboxStateValue(state: FormInputDemoState): FormSelectDemoValue | null {
+    if (state === 'disabled' || state === 'invalid') {
+      return FORM_SELECT_STATE_FILLED_VALUE;
+    }
+    return null;
+  }
+
   patchCascadeSelect(patch: Partial<FormCascadeSelectInteractionState>): void {
     this.cascadeSelectIx.update((prev) => {
       const next = { ...prev, ...patch };
@@ -1954,6 +2390,15 @@ export class FormCatalogComponent {
       }
       return '--inputtext-font-size';
     }
+    if (field === 'multiselect') {
+      if (size === 'small') {
+        return '--multiselect-sm-font-size';
+      }
+      if (size === 'large') {
+        return '--multiselect-lg-font-size';
+      }
+      return '--multiselect-font-size';
+    }
     if (field === 'cascadeselect') {
       if (size === 'small') {
         return '--cascadeselect-sm-font-size';
@@ -1990,6 +2435,15 @@ export class FormCatalogComponent {
         return '--select-lg-padding-x';
       }
       return '--select-padding-x';
+    }
+    if (field === 'multiselect') {
+      if (size === 'small') {
+        return '--multiselect-sm-padding-x';
+      }
+      if (size === 'large') {
+        return '--multiselect-lg-padding-x';
+      }
+      return '--multiselect-padding-x';
     }
     if (field === 'cascadeselect') {
       if (size === 'small') {
@@ -2028,6 +2482,15 @@ export class FormCatalogComponent {
       }
       return '--select-padding-y';
     }
+    if (field === 'multiselect') {
+      if (size === 'small') {
+        return '--multiselect-sm-padding-y';
+      }
+      if (size === 'large') {
+        return '--multiselect-lg-padding-y';
+      }
+      return '--multiselect-padding-y';
+    }
     if (field === 'cascadeselect') {
       if (size === 'small') {
         return '--cascadeselect-sm-padding-y';
@@ -2056,16 +2519,40 @@ export class FormCatalogComponent {
     return '--iconfield-figma-size';
   }
 
-  private isDropdownField(field: FormFieldKind): field is 'select' | 'cascadeselect' {
-    return field === 'select' || field === 'cascadeselect';
+  private isDropdownField(field: FormFieldKind): field is 'select' | 'multiselect' | 'cascadeselect' {
+    return field === 'select' || field === 'multiselect' || field === 'cascadeselect';
   }
 
-  private fieldBackgroundCssVar(field: 'select' | 'cascadeselect' | 'textarea' | 'inputtext'): string {
+  private fieldFilledBackgroundCssVar(
+    field: 'select' | 'multiselect' | 'cascadeselect' | 'textarea' | 'inputtext',
+  ): string {
+    if (field === 'textarea') {
+      return 'var(--textarea-filled-background, var(--p-textarea-filled-background, var(--form-field-filled-background)))';
+    }
+    if (field === 'select') {
+      return 'var(--select-filled-background, var(--p-select-filled-background, var(--form-field-filled-background)))';
+    }
+    if (field === 'multiselect') {
+      return 'var(--multiselect-filled-background, var(--p-multiselect-filled-background, var(--form-field-filled-background)))';
+    }
+    if (field === 'cascadeselect') {
+      return 'var(--cascadeselect-filled-background, var(--p-cascadeselect-filled-background, var(--form-field-filled-background)))';
+    }
+    return 'var(--inputtext-filled-background, var(--p-inputtext-filled-background, var(--form-field-filled-background)))';
+  }
+
+  private fieldBackgroundCssVar(field: 'select' | 'multiselect' | 'cascadeselect' | 'textarea' | 'inputtext'): string {
+    if (this.formTheme(field) === 'filled') {
+      return this.fieldFilledBackgroundCssVar(field);
+    }
     if (field === 'textarea') {
       return 'var(--textarea-background, var(--p-textarea-background, var(--form-field-background)))';
     }
     if (field === 'select') {
       return 'var(--select-background, var(--p-select-background, var(--form-field-background)))';
+    }
+    if (field === 'multiselect') {
+      return 'var(--multiselect-background, var(--p-multiselect-background, var(--form-field-background)))';
     }
     if (field === 'cascadeselect') {
       return 'var(--cascadeselect-background, var(--p-cascadeselect-background, var(--form-field-background)))';
@@ -2073,8 +2560,8 @@ export class FormCatalogComponent {
     return 'var(--inputtext-background, var(--p-inputtext-background, var(--form-field-background)))';
   }
 
-  private fieldDropdownWidthCssVar(field: 'select' | 'cascadeselect'): string {
-    const prefix = field === 'select' ? 'select' : 'cascadeselect';
+  private fieldDropdownWidthCssVar(field: 'select' | 'multiselect' | 'cascadeselect'): string {
+    const prefix = field;
     return `var(--${prefix}-dropdown-width, var(--p-${prefix}-dropdown-width, var(--dimension-scale-x32, 32px)))`;
   }
 
@@ -2259,7 +2746,7 @@ export class FormCatalogComponent {
    */
   private iftaLabelInputtextHostVars(
     size: FormInteractionSize,
-    field: 'inputtext' | 'password' | 'select' | 'cascadeselect' = 'inputtext',
+    field: 'inputtext' | 'password' | 'select' | 'multiselect' | 'cascadeselect' = 'inputtext',
   ): Record<string, string> {
     const fieldVars = this.floatLabelFieldStyleVars(size, field);
     const paddingYToken = this.fieldPaddingYToken(field, size);
@@ -2274,7 +2761,7 @@ export class FormCatalogComponent {
       gap,
     );
 
-    return {
+    const vars: Record<string, string> = {
       ...fieldVars,
       '--catalog-iftalabel-top': labelTop,
       '--p-iftalabel-top': labelTop,
@@ -2285,7 +2772,7 @@ export class FormCatalogComponent {
       '--p-iftalabel-input-padding-top': paddingTop,
       '--catalog-floatlabel-in-input-padding-bottom': paddingBottom,
       '--p-floatlabel-in-input-padding-bottom': paddingBottom,
-      '--p-iftalabel-input-padding-bottom': 'var(--iftalabel-input-padding-bottom, var(--form-field-padding-y))',
+      '--p-iftalabel-input-padding-bottom': paddingY,
       '--catalog-floatlabel-in-input-min-height': minHeight,
       '--p-floatlabel-in-input-min-height': minHeight,
       '--p-iftalabel-input-min-height': minHeight,
@@ -2294,6 +2781,22 @@ export class FormCatalogComponent {
       '--p-iftalabel-font-weight': 'var(--floatlabel-active-font-weight)',
       '--p-iftalabel-position-x': fieldVars['--p-floatlabel-position-x'],
     };
+
+    if (size === 'small') {
+      vars['--p-floatlabel-in-input-min-height-sm'] = minHeight;
+      vars['--p-floatlabel-in-input-padding-top-sm'] = paddingTop;
+      vars['--p-floatlabel-in-input-padding-bottom-sm'] = paddingBottom;
+      vars['--p-iftalabel-input-min-height-sm'] = minHeight;
+      vars['--p-iftalabel-input-padding-top-sm'] = paddingTop;
+    } else if (size === 'large') {
+      vars['--p-floatlabel-in-input-min-height-lg'] = minHeight;
+      vars['--p-floatlabel-in-input-padding-top-lg'] = paddingTop;
+      vars['--p-floatlabel-in-input-padding-bottom-lg'] = paddingBottom;
+      vars['--p-iftalabel-input-min-height-lg'] = minHeight;
+      vars['--p-iftalabel-input-padding-top-lg'] = paddingTop;
+    }
+
+    return vars;
   }
 
   private iftaLabelHostVars(size: FormInteractionSize, fieldKind: FormFieldKind): Record<string, string> {
@@ -2305,7 +2808,7 @@ export class FormCatalogComponent {
     if (fieldKind === 'textarea') {
       return { ...this.iftaLabelTextareaHostVars(size), ...iconVars };
     }
-    if (fieldKind === 'select' || fieldKind === 'cascadeselect') {
+    if (fieldKind === 'select' || fieldKind === 'multiselect' || fieldKind === 'cascadeselect') {
       return { ...this.iftaLabelInputtextHostVars(size, fieldKind), ...iconVars };
     }
     return {
@@ -2467,6 +2970,9 @@ export class FormCatalogComponent {
     if (this.isSelectBlock(block)) {
       return this.selectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
+    if (this.isMultiselectBlock(block)) {
+      return this.multiselectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
+    }
     if (this.isCascadeSelectBlock(block)) {
       return this.cascadeSelectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
@@ -2522,6 +3028,7 @@ export class FormCatalogComponent {
   inputStateShowsPlaceholderOnly(block: FormBlockConfig, state: FormInputDemoState): boolean {
     const isDefaultField =
       (this.isSelectBlock(block) && this.selectIsDefault()) ||
+      (this.isMultiselectBlock(block) && this.multiselectIsDefault()) ||
       (this.isCascadeSelectBlock(block) && this.cascadeSelectIsDefault()) ||
       (this.isTextareaBlock(block) && this.textareaIsDefault()) ||
       (this.isInputTextBlock(block) && this.inputtextIsDefault()) ||
@@ -2558,6 +3065,7 @@ export class FormCatalogComponent {
       this.isInputTextBlock(block) ||
       this.isInputGroupBlock(block) ||
       this.isSelectBlock(block) ||
+      this.isListboxBlock(block) ||
       this.isCascadeSelectBlock(block)
     ) {
       if (this.isInputTextBlock(block) && this.inputtextIsFloatOverOrOn() && (state === 'disabled' || state === 'focus')) {
@@ -2619,6 +3127,7 @@ export class FormCatalogComponent {
       this.isInputTextBlock(block) ||
       this.isInputGroupBlock(block) ||
       this.isSelectBlock(block) ||
+      this.isListboxBlock(block) ||
       this.isPasswordBlock(block) ||
       this.isInputOtpBlock(block) ||
       this.isInputNumberBlock(block)

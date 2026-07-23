@@ -31,6 +31,18 @@
     "related_semantic": ["--form-field-*", "--form-field-float-label-*", "--list-*", "--overlay-select-*"],
     "watch_vars": ["--select-*", "--p-select-*", "--p-floatlabel-*", "--p-iftalabel-*"]
   },
+  "multiselect": {
+    "playground_anchor": "pg-multiselect",
+    "primeng_prefix": "multiselect",
+    "related_semantic": ["--form-field-*", "--form-field-float-label-*", "--list-*", "--overlay-select-*"],
+    "watch_vars": ["--multiselect-*", "--p-multiselect-*", "--p-floatlabel-*", "--p-iftalabel-*"]
+  },
+  "listbox": {
+    "playground_anchor": "pg-listbox",
+    "primeng_prefix": "listbox",
+    "related_semantic": ["--form-field-*", "--list-*", "--list-option-*"],
+    "watch_vars": ["--listbox-*", "--p-listbox-*"]
+  },
   "cascadeselect": {
     "playground_anchor": "pg-cascadeselect",
     "primeng_prefix": "cascadeselect",
@@ -174,5 +186,16 @@
     "playground_anchor": "pg-menu",
     "primeng_prefix": "menu",
     "watch_vars": ["--menu-*", "--p-menu-*"]
+  },
+  "tieredmenu": {
+    "playground_anchor": "pg-tieredmenu",
+    "primeng_prefix": "tieredmenu",
+    "watch_vars": ["--tieredmenu-*", "--p-tieredmenu-*"]
+  },
+  "galleria": {
+    "playground_anchor": "pg-galleria",
+    "primeng_prefix": "galleria",
+    "parity": "src/styles/primeng-galleria-parity.css",
+    "watch_vars": ["--galleria-*", "--p-galleria-*"]
   }
 }

@@ -1,0 +1,53 @@
+/* Paridad PrimeNG Galleria — tokens --p-galleria-* ← --galleria-* (mds-components + primeng-tokens). */
+
+.p-galleria {
+  overflow: hidden;
+  border-style: solid;
+  border-width: var(--galleria-border-width, var(--p-galleria-border-width, 1px));
+  border-color: var(--galleria-border-color, var(--p-galleria-border-color));
+  border-radius: var(--galleria-border-radius, var(--p-galleria-border-radius));
+}
+
+.p-galleria-thumbnails-content {
+  background: var(--galleria-thumbnails-content-background, var(--p-galleria-thumbnails-content-background));
+  padding: var(--galleria-thumbnails-content-padding, var(--p-galleria-thumbnails-content-padding, 1rem 0.25rem));
+}
+
+.p-galleria-thumbnail-item {
+  opacity: 0.5;
+}
+
+.p-galleria-thumbnail-item-current {
+  opacity: 1;
+}
+
+.p-galleria-thumbnail-item:hover {
+  opacity: 1;
+  transition: opacity var(--galleria-transition-duration, var(--p-galleria-transition-duration, 180ms));
+}
+
+.p-galleria-thumbnail img {
+  display: block;
+  width: 100%;
+}
+
+.p-galleria-item img {
+  display: block;
+  width: 100%;
+}
+
+.p-galleria-caption {
+  background: var(--galleria-caption-background, var(--p-galleria-caption-background));
+  color: var(--galleria-caption-color, var(--p-galleria-caption-color));
+  padding: var(--galleria-caption-padding, var(--p-galleria-caption-padding));
+}
+
+.p-galleria-nav-button {
+  background: var(--galleria-nav-button-background, var(--p-galleria-nav-button-background));
+  color: var(--galleria-nav-button-color, var(--p-galleria-nav-button-color));
+}
+
+.p-galleria-nav-button:not(.p-disabled):hover {
+  background: var(--galleria-nav-button-hover-background, var(--p-galleria-nav-button-hover-background));
+  color: var(--galleria-nav-button-hover-color, var(--p-galleria-nav-button-hover-color));
+}

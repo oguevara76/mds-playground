@@ -4,6 +4,7 @@ import { FormCatalogComponent } from './catalogs/form/form-catalog.component';
 import { DataCatalogComponent } from './catalogs/data/data-catalog.component';
 import { MessagesCatalogComponent } from './catalogs/messages/messages-catalog.component';
 import { MenuCatalogComponent } from './catalogs/menu/menu-catalog.component';
+import { MediaCatalogComponent } from './catalogs/media/media-catalog.component';
 import { MiscCatalogComponent } from './catalogs/misc/misc-catalog.component';
 import { OverlayCatalogComponent } from './catalogs/overlay/overlay-catalog.component';
 import { PanelCatalogComponent } from './catalogs/panel/panel-catalog.component';
@@ -28,6 +29,7 @@ export const routes: Routes = [
       { path: 'panel', component: PanelCatalogComponent },
       { path: 'menu', component: MenuCatalogComponent },
       { path: 'overlay', component: OverlayCatalogComponent },
+      { path: 'media', component: MediaCatalogComponent },
       { path: 'misc', component: MiscCatalogComponent },
     ],
   },

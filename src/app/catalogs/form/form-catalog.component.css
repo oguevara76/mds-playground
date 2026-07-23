@@ -1480,6 +1480,7 @@
 
 /* Theme — Outlined (default) / Filled (fondo alto contraste vía tokens MDS) */
 :host ::ng-deep .form-theme-filled .p-inputtext.p-variant-filled,
+:host ::ng-deep .form-theme-filled .p-inputnumber-input.p-variant-filled,
 :host ::ng-deep .form-theme-filled .p-textarea.p-variant-filled {
   background: var(
     --p-inputtext-filled-background,
@@ -2099,14 +2100,14 @@
 
 :host ::ng-deep .slider-showcase .slider-showcase-live.p-slider,
 :host ::ng-deep .slider-showcase .p-slider {
-  flex: 1 1 auto;
-  width: 100%;
-  min-width: 10rem;
   background: var(--p-slider-track-background, var(--slider-track-background));
   border-radius: var(--p-slider-track-border-radius, var(--slider-track-border-radius));
 }
 
 :host ::ng-deep .slider-showcase .p-slider.p-slider-horizontal {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 10rem;
   height: var(--p-slider-track-size, var(--slider-track-size));
 }
 
@@ -2118,8 +2119,13 @@
 }
 
 :host ::ng-deep .slider-showcase .catalog-input-states-row .p-slider-vertical {
+  flex: 0 0 auto;
+  display: block;
   width: var(--p-slider-track-size, var(--slider-track-size));
+  min-width: 0;
+  max-width: var(--p-slider-track-size, var(--slider-track-size));
   height: 8rem;
+  min-height: 8rem;
 }
 
 :host ::ng-deep .slider-showcase .p-slider-range {
@@ -2172,8 +2178,28 @@
   min-width: 8rem;
 }
 
+.slider-showcase .catalog-input-states-row {
+  align-items: flex-end;
+}
+
+.slider-showcase .catalog-input-state:has(.slider-showcase-demo--vertical) {
+  min-width: 5rem;
+  max-width: 5rem;
+}
+
 .slider-showcase .catalog-input-state .slider-showcase-demo--vertical {
+  width: auto;
   min-width: 0;
+  height: 8rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-showcase .catalog-input-state:has(.slider-showcase-demo--vertical) .catalog-button-state-preview {
+  width: auto;
+  min-height: 8rem;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Password — layout, icono toggle y estados (tokens --password-* → --p-password-*) */
@@ -2771,6 +2797,29 @@
   font-size: var(--select-lg-font-size, var(--form-field-lg-font-size));
 }
 
+:host ::ng-deep .form-theme-filled .select-showcase .p-select.p-variant-filled:not(.p-disabled) {
+  background: var(
+    --p-select-filled-background,
+    var(--select-filled-background, var(--form-field-filled-background))
+  );
+}
+
+:host ::ng-deep .form-theme-filled .select-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-select.p-variant-filled:not(.p-disabled),
+:host ::ng-deep .form-theme-filled .select-showcase .select-interaction-scope .p-select.p-variant-filled:enabled:hover:not(.p-disabled) {
+  background: var(
+    --p-select-filled-hover-background,
+    var(--select-filled-hover-background, var(--form-field-filled-hover-background))
+  );
+}
+
+:host ::ng-deep .form-theme-filled .select-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-select.p-variant-filled:not(.p-disabled),
+:host ::ng-deep .form-theme-filled .select-showcase .select-interaction-scope .p-select.p-variant-filled:enabled:focus:not(.p-disabled) {
+  background: var(
+    --p-select-filled-focus-background,
+    var(--select-filled-focus-background, var(--form-field-filled-focus-background))
+  );
+}
+
 :host ::ng-deep .select-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-select:not(.p-disabled),
 :host ::ng-deep .select-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-select:not(.p-disabled) {
   border-color: var(--p-select-hover-border-color, var(--select-hover-border-color));
@@ -2794,6 +2843,706 @@
 :host ::ng-deep .select-showcase .catalog-input-states-row .p-iftalabel.is-label-invalid label {
   color: var(--p-floatlabel-active-color, var(--p-floatlabel-color));
 }
+
+/* MultiSelect — Float Label / IftaLabel (paridad InputText / Password) */
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel > .p-multiselect,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel > .p-multiselect,
+:host ::ng-deep .multiselect-showcase .p-iftalabel > .p-multiselect,
+:host ::ng-deep .multiselect-showcase .p-floatlabel > .p-multiselect {
+  width: 100%;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-x, var(--floatlabel-position-x, var(--multiselect-padding-x, var(--form-field-padding-x))))
+  );
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-iftalabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-iftalabel-position-x, var(--iftalabel-position-x, var(--multiselect-padding-x, var(--form-field-padding-x))))
+  );
+  top: var(
+    --catalog-iftalabel-top,
+    var(--p-iftalabel-top, var(--catalog-floatlabel-in-active-top, var(--multiselect-padding-y, var(--form-field-padding-y))))
+  );
+  transform: translateY(0);
+  font-size: var(--p-iftalabel-font-size, var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size)));
+  font-weight: var(--p-iftalabel-font-weight, var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight)));
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-in label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-x, var(--floatlabel-position-x, var(--multiselect-padding-x, var(--form-field-padding-x))))
+  );
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Interaction Float In: label activo solo con valor, foco u overlay abierto */
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in.is-label-floated label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in:has(.p-multiselect.p-focus) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in:has(.p-multiselect:focus-within) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in:has(.p-multiselect.p-multiselect-open) label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in:not(.is-label-floated):not(:has(.p-multiselect.p-focus)):not(:has(.p-multiselect:focus-within)):not(:has(.p-multiselect.p-multiselect-open)) label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+}
+
+/* States / Sizes Float In: label activo por defecto (preview fill) */
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-in label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-in:not(.is-label-floated) label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-in.is-label-floated label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .form-showcase .multiselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel {
+  margin-top: var(--p-floatlabel-over-wrapper-padding-top, var(--floatlabel-over-wrapper-padding-top));
+}
+
+:host ::ng-deep .form-showcase .multiselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-on-wrapper-padding-top, var(--floatlabel-on-wrapper-padding-top, 7px));
+}
+
+:host ::ng-deep
+  .multiselect-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-input-interactive:has(.p-floatlabel-over)
+  .p-floatlabel,
+:host ::ng-deep
+  .multiselect-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-input-interactive:has(.p-floatlabel-on)
+  .p-floatlabel {
+  margin-top: 0;
+}
+
+/* MultiSelect Float: label position-x por tamaño (paridad InputText) */
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel:has(.p-multiselect-sm) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel:has(.p-multiselect-sm) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel:has(.p-multiselect-sm) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel:has(.p-multiselect-sm) label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-sm-x, var(--floatlabel-position-sm-x, var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x))))
+  );
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel:has(.p-multiselect-lg) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel:has(.p-multiselect-lg) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel:has(.p-multiselect-lg) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel:has(.p-multiselect-lg) label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-lg-x, var(--floatlabel-position-lg-x, var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x))))
+  );
+}
+
+/* Select Float Over/On: vacío en Interaction/States/Sizes — label centrado en el campo */
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-on:not(.is-label-floated) label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-weight: 400;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Select Interaction Over activo: label por encima del borde + máscara */
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-over:has(.p-multiselect:focus-within) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-over:has(.p-multiselect.p-focus) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-over.is-label-floated label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--multiselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  z-index: 1;
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-over:has(.p-multiselect.p-focus) label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--multiselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  z-index: 1;
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-on:has(.p-multiselect:focus-within) label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-on:has(.p-multiselect.p-focus) label {
+  top: 0;
+  transform: translateY(-50%);
+  padding: var(--p-floatlabel-on-active-padding, var(--floatlabel-on-active-padding-y, 0) var(--floatlabel-on-active-padding-x, 2px));
+  background: var(
+    --p-floatlabel-on-active-background,
+    var(--floatlabel-on-active-background, var(--multiselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in .p-multiselect,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel .p-multiselect,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-multiselect,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel .p-multiselect,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-in .p-multiselect,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-iftalabel .p-multiselect {
+  box-sizing: border-box;
+  position: relative;
+  display: flex !important;
+  align-items: stretch !important;
+  width: 100%;
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height, var(--p-iftalabel-input-min-height, 47px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height, var(--p-iftalabel-input-min-height, 47px))
+  ) !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in .p-multiselect.p-multiselect-display-chip,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel .p-multiselect.p-multiselect-display-chip,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-multiselect.p-multiselect-display-chip,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel .p-multiselect.p-multiselect-display-chip,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-in .p-multiselect.p-multiselect-display-chip,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-iftalabel .p-multiselect.p-multiselect-display-chip {
+  height: auto !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect .p-multiselect-label-container,
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect .p-multiselect-label-container {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect .p-multiselect-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  line-height: var(--inputtext-line-height, 1.25);
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-top,
+    var(--p-floatlabel-in-input-padding-top, var(--p-iftalabel-input-padding-top, var(--floatlabel-in-input-padding-top)))
+  );
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+  padding-inline-start: var(
+    --catalog-floatlabel-in-input-padding-x,
+    var(--multiselect-padding-x, var(--form-field-padding-x))
+  );
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      var(--catalog-floatlabel-in-input-padding-x, var(--multiselect-padding-x, var(--form-field-padding-x)))
+  );
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .multiselect-showcase .p-multiselect.p-multiselect-display-chip .p-multiselect-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start;
+  gap: var(--multiselect-figma-input-multiple-gap, var(--dimension-scale-x4));
+  white-space: normal;
+  text-overflow: unset;
+}
+
+/* Float In / IftaLabel + chips: chips bajo el label xs (no centrar en el padding-top) */
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect.p-multiselect-display-chip .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect.p-multiselect-display-chip .p-multiselect-label {
+  align-items: flex-start !important;
+  align-content: flex-start !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-multiselect.p-multiselect-display-chip .p-multiselect-label .p-multiselect-chip.p-chip {
+  padding-block: calc(var(--multiselect-padding-y, var(--form-field-padding-y)) / 2);
+}
+
+:host ::ng-deep .multiselect-showcase .p-multiselect.p-multiselect-display-chip.p-multiselect-sm .p-multiselect-label .p-multiselect-chip.p-chip {
+  padding-block: calc(var(--multiselect-sm-padding-y, var(--form-field-sm-padding-y)) / 2);
+  font-size: var(--multiselect-sm-font-size, var(--form-field-sm-font-size));
+}
+
+:host ::ng-deep .multiselect-showcase .p-multiselect.p-multiselect-display-chip.p-multiselect-lg .p-multiselect-label .p-multiselect-chip.p-chip {
+  padding-block: calc(var(--multiselect-lg-padding-y, var(--form-field-lg-padding-y)) / 2);
+  font-size: var(--multiselect-lg-font-size, var(--form-field-lg-font-size));
+}
+
+/*
+ * Default / Float Over / Float On + chips: contenedor padding/2 por tamaño.
+ * PrimeNG .p-multiselect-sm|lg aplica padding completo y pisa :has(.p-chip).
+ */
+:host ::ng-deep .multiselect-showcase .p-field .p-multiselect.p-multiselect-display-chip .p-multiselect-label:has(.p-chip),
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over .p-multiselect.p-multiselect-display-chip .p-multiselect-label:has(.p-chip),
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on .p-multiselect.p-multiselect-display-chip .p-multiselect-label:has(.p-chip) {
+  padding-block: calc(var(--multiselect-padding-y, var(--form-field-padding-y)) / 2) !important;
+  padding-inline-start: calc(var(--multiselect-padding-x, var(--form-field-padding-x)) / 2) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      calc(var(--multiselect-padding-x, var(--form-field-padding-x)) / 2)
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-field .p-multiselect.p-multiselect-display-chip.p-multiselect-sm .p-multiselect-label:has(.p-chip),
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over .p-multiselect.p-multiselect-display-chip.p-multiselect-sm .p-multiselect-label:has(.p-chip),
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on .p-multiselect.p-multiselect-display-chip.p-multiselect-sm .p-multiselect-label:has(.p-chip) {
+  padding-block: calc(var(--multiselect-sm-padding-y, var(--form-field-sm-padding-y)) / 2) !important;
+  padding-inline-start: calc(var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x)) / 2) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      calc(var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x)) / 2)
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-field .p-multiselect.p-multiselect-display-chip.p-multiselect-lg .p-multiselect-label:has(.p-chip),
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over .p-multiselect.p-multiselect-display-chip.p-multiselect-lg .p-multiselect-label:has(.p-chip),
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on .p-multiselect.p-multiselect-display-chip.p-multiselect-lg .p-multiselect-label:has(.p-chip) {
+  padding-block: calc(var(--multiselect-lg-padding-y, var(--form-field-lg-padding-y)) / 2) !important;
+  padding-inline-start: calc(var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x)) / 2) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      calc(var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x)) / 2)
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-multiselect .p-multiselect-chip-item {
+  display: inline-flex;
+  max-width: 100%;
+}
+
+/* Vacío Float In: valor/placeholder centrado (sin padding-top de label activo) */
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in:not(.is-label-floated) .p-multiselect .p-multiselect-label {
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+}
+
+/* Chevron: centrado vertical en el input (igual que icono derecho en InputText Float In) */
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect .p-multiselect-dropdown,
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect .p-multiselect-dropdown {
+  position: absolute !important;
+  top: 50% !important;
+  bottom: auto !important;
+  inset-inline-end: 0 !important;
+  inset-inline-start: auto !important;
+  width: var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  min-width: var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  height: var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  margin: 0 !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: auto !important;
+  flex: 0 0 auto !important;
+  color: var(--p-multiselect-dropdown-color, var(--multiselect-dropdown-color, var(--form-field-icon-color)));
+}
+
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect.p-multiselect-sm .p-multiselect-dropdown,
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect.p-multiselect-sm .p-multiselect-dropdown {
+  top: 50% !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect.p-multiselect-lg .p-multiselect-dropdown,
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect.p-multiselect-lg .p-multiselect-dropdown {
+  top: 50% !important;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in .p-multiselect.p-multiselect-sm,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel .p-multiselect.p-multiselect-sm,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-multiselect.p-multiselect-sm,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel .p-multiselect.p-multiselect-sm {
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px))
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in .p-multiselect.p-multiselect-display-chip.p-multiselect-sm,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel .p-multiselect.p-multiselect-display-chip.p-multiselect-sm,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-multiselect.p-multiselect-display-chip.p-multiselect-sm,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel .p-multiselect.p-multiselect-display-chip.p-multiselect-sm {
+  height: auto !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px))
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in .p-multiselect.p-multiselect-display-chip.p-multiselect-lg,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel .p-multiselect.p-multiselect-display-chip.p-multiselect-lg,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-multiselect.p-multiselect-display-chip.p-multiselect-lg,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel .p-multiselect.p-multiselect-display-chip.p-multiselect-lg {
+  height: auto !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px))
+  ) !important;
+}
+
+/* PrimeNG .p-multiselect-sm/lg: Float In vacío — valor centrado (IftaLabel siempre label arriba) */
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in:not(.is-label-floated):not(:has(.p-multiselect.p-focus)):not(:has(.p-multiselect:focus-within)):not(:has(.p-multiselect.p-multiselect-open)) .p-multiselect.p-multiselect-sm .p-multiselect-label {
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom-sm, var(--multiselect-sm-padding-y, var(--form-field-sm-padding-y)))
+  ) !important;
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom-sm, var(--multiselect-sm-padding-y, var(--form-field-sm-padding-y)))
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in:not(.is-label-floated):not(:has(.p-multiselect.p-focus)):not(:has(.p-multiselect:focus-within)):not(:has(.p-multiselect.p-multiselect-open)) .p-multiselect.p-multiselect-lg .p-multiselect-label {
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom-lg, var(--multiselect-lg-padding-y, var(--form-field-lg-padding-y)))
+  ) !important;
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom-lg, var(--multiselect-lg-padding-y, var(--form-field-lg-padding-y)))
+  ) !important;
+}
+
+/* PrimeNG .p-multiselect-sm/lg + Float In / IftaLabel activo (anula :has(.p-chip) padding/2) */
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in:is(.is-label-floated, :has(.p-multiselect.p-focus), :has(.p-multiselect:focus-within), :has(.p-multiselect.p-multiselect-open)) .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-in .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-iftalabel .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect.p-multiselect-display-chip.p-multiselect-sm .p-multiselect-label:has(.p-chip, .p-multiselect-chip-item),
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect.p-multiselect-display-chip.p-multiselect-sm .p-multiselect-label:has(.p-chip, .p-multiselect-chip-item) {
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-top,
+    var(
+      --p-floatlabel-in-input-padding-top-sm,
+      var(--p-iftalabel-input-padding-top-sm, var(--p-floatlabel-in-input-padding-top, var(--floatlabel-in-input-padding-top)))
+    )
+  ) !important;
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(
+      --p-floatlabel-in-input-padding-bottom-sm,
+      var(--p-iftalabel-input-padding-bottom, var(--multiselect-sm-padding-y, var(--form-field-sm-padding-y)))
+    )
+  ) !important;
+  padding-inline-start: var(
+    --catalog-floatlabel-in-input-padding-x,
+    var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x))
+  ) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      var(--catalog-floatlabel-in-input-padding-x, var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x)))
+  ) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--multiselect-sm-font-size, var(--form-field-sm-font-size)))
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in .p-multiselect.p-multiselect-lg,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel .p-multiselect.p-multiselect-lg,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-multiselect.p-multiselect-lg,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel .p-multiselect.p-multiselect-lg {
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px))
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-in:is(.is-label-floated, :has(.p-multiselect.p-focus), :has(.p-multiselect:focus-within), :has(.p-multiselect.p-multiselect-open)) .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-iftalabel .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-iftalabel .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-in .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-iftalabel .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect.p-multiselect-display-chip.p-multiselect-lg .p-multiselect-label:has(.p-chip, .p-multiselect-chip-item),
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect.p-multiselect-display-chip.p-multiselect-lg .p-multiselect-label:has(.p-chip, .p-multiselect-chip-item) {
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-top,
+    var(
+      --p-floatlabel-in-input-padding-top-lg,
+      var(--p-iftalabel-input-padding-top-lg, var(--p-floatlabel-in-input-padding-top, var(--floatlabel-in-input-padding-top)))
+    )
+  ) !important;
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(
+      --p-floatlabel-in-input-padding-bottom-lg,
+      var(--p-iftalabel-input-padding-bottom, var(--multiselect-lg-padding-y, var(--form-field-lg-padding-y)))
+    )
+  ) !important;
+  padding-inline-start: var(
+    --catalog-floatlabel-in-input-padding-x,
+    var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x))
+  ) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      var(--catalog-floatlabel-in-input-padding-x, var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x)))
+  ) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--multiselect-lg-font-size, var(--form-field-lg-font-size)))
+  ) !important;
+}
+
+/* Float Over/On + sm/lg: padding del valor alineado con tokens host (PrimeNG pisa .p-multiselect-sm .p-multiselect-label) */
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-on .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-over .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-on .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-over .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-on .p-multiselect.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-over .p-multiselect.p-multiselect-sm .p-multiselect-label {
+  padding-block: var(--multiselect-sm-padding-y, var(--form-field-sm-padding-y)) !important;
+  padding-inline-start: var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x)) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x))
+  ) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--multiselect-sm-font-size, var(--form-field-sm-font-size)))
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-on .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-over .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-on .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-over .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-on .p-multiselect.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-over .p-multiselect.p-multiselect-lg .p-multiselect-label {
+  padding-block: var(--multiselect-lg-padding-y, var(--form-field-lg-padding-y)) !important;
+  padding-inline-start: var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x)) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x))
+  ) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--multiselect-lg-font-size, var(--form-field-lg-font-size)))
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on .p-multiselect.p-multiselect-display-chip.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over .p-multiselect.p-multiselect-display-chip.p-multiselect-sm .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on .p-multiselect.p-multiselect-display-chip.p-multiselect-lg .p-multiselect-label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over .p-multiselect.p-multiselect-display-chip.p-multiselect-lg .p-multiselect-label {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: var(--multiselect-figma-input-multiple-gap, var(--dimension-scale-x4)) !important;
+  white-space: normal !important;
+}
+
+/* Float In / IftaLabel + chips normal: anular PrimeNG :has(.p-chip) padding/2 */
+:host ::ng-deep .multiselect-showcase .p-floatlabel-in .p-multiselect.p-multiselect-display-chip:not(.p-multiselect-sm):not(.p-multiselect-lg) .p-multiselect-label:has(.p-chip, .p-multiselect-chip-item),
+:host ::ng-deep .multiselect-showcase .p-iftalabel .p-multiselect.p-multiselect-display-chip:not(.p-multiselect-sm):not(.p-multiselect-lg) .p-multiselect-label:has(.p-chip, .p-multiselect-chip-item) {
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-top,
+    var(
+      --p-floatlabel-in-input-padding-top,
+      var(--p-iftalabel-input-padding-top, var(--floatlabel-in-input-padding-top))
+    )
+  ) !important;
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(
+      --p-floatlabel-in-input-padding-bottom,
+      var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y))
+    )
+  ) !important;
+  padding-inline-start: var(
+    --catalog-floatlabel-in-input-padding-x,
+    var(--multiselect-padding-x, var(--form-field-padding-x))
+  ) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      var(--catalog-floatlabel-in-input-padding-x, var(--multiselect-padding-x, var(--form-field-padding-x)))
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on .p-multiselect.p-multiselect-sm .p-multiselect-label:has(.p-chip),
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over .p-multiselect.p-multiselect-sm .p-multiselect-label:has(.p-chip) {
+  padding-block: calc(var(--multiselect-sm-padding-y, var(--form-field-sm-padding-y)) / 2) !important;
+  padding-inline-start: calc(var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x)) / 2) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      calc(var(--multiselect-sm-padding-x, var(--form-field-sm-padding-x)) / 2)
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on .p-multiselect.p-multiselect-lg .p-multiselect-label:has(.p-chip),
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over .p-multiselect.p-multiselect-lg .p-multiselect-label:has(.p-chip) {
+  padding-block: calc(var(--multiselect-lg-padding-y, var(--form-field-lg-padding-y)) / 2) !important;
+  padding-inline-start: calc(var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x)) / 2) !important;
+  padding-inline-end: calc(
+    var(--p-multiselect-dropdown-width, var(--multiselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      calc(var(--multiselect-lg-padding-x, var(--form-field-lg-padding-x)) / 2)
+  ) !important;
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-field:has(.p-multiselect-sm) > .p-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-field:has(.p-multiselect-sm) > .p-label {
+  font-size: var(--multiselect-sm-font-size, var(--form-field-sm-font-size));
+}
+
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-field:has(.p-multiselect-lg) > .p-label,
+:host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-field:has(.p-multiselect-lg) > .p-label {
+  font-size: var(--multiselect-lg-font-size, var(--form-field-lg-font-size));
+}
+
+:host ::ng-deep .form-theme-filled .multiselect-showcase .p-multiselect.p-variant-filled:not(.p-disabled) {
+  background: var(
+    --p-multiselect-filled-background,
+    var(--multiselect-filled-background, var(--form-field-filled-background))
+  );
+}
+
+:host ::ng-deep .form-theme-filled .multiselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-multiselect.p-variant-filled:not(.p-disabled),
+:host ::ng-deep .form-theme-filled .multiselect-showcase .multiselect-interaction-scope .p-multiselect.p-variant-filled:enabled:hover:not(.p-disabled) {
+  background: var(
+    --p-multiselect-filled-hover-background,
+    var(--multiselect-filled-hover-background, var(--form-field-filled-hover-background))
+  );
+}
+
+:host ::ng-deep .form-theme-filled .multiselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-multiselect.p-variant-filled:not(.p-disabled),
+:host ::ng-deep .form-theme-filled .multiselect-showcase .multiselect-interaction-scope .p-multiselect.p-variant-filled:enabled:focus:not(.p-disabled) {
+  background: var(
+    --p-multiselect-filled-focus-background,
+    var(--multiselect-filled-focus-background, var(--form-field-filled-focus-background))
+  );
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-multiselect:not(.p-disabled),
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-multiselect:not(.p-disabled) {
+  border-color: var(--p-multiselect-hover-border-color, var(--multiselect-hover-border-color));
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-multiselect:not(.p-disabled) {
+  border-color: var(--p-multiselect-focus-border-color, var(--multiselect-focus-border-color));
+  box-shadow: var(--p-multiselect-focus-ring-shadow, var(--multiselect-focus-ring-shadow));
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-multiselect.p-invalid {
+  border-color: var(--p-multiselect-invalid-border-color, var(--multiselect-invalid-border-color));
+}
+
+.form-showcase .catalog-block-section:has(.multiselect-interaction-scope) .catalog-block-body {
+  overflow: visible;
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel:has(.p-invalid) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel.is-label-floated:has(.p-invalid) label,
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-iftalabel.is-label-invalid label {
+  color: var(--p-floatlabel-active-color, var(--p-floatlabel-color));
+}
+
+/* Chips internos: border-radius MDS (no token del componente Chip) */
+:host ::ng-deep .multiselect-showcase .p-multiselect .p-multiselect-chip.p-chip {
+  border-radius: var(--multiselect-chip-border-radius, var(--p-multiselect-chip-border-radius, var(--dimension-radius-x6))) !important;
+}
+
 /* CascadeSelect — Float Label / IftaLabel (paridad InputText / Password) */
 :host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel > .p-cascadeselect,
 :host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel > .p-cascadeselect,
@@ -3148,7 +3897,7 @@
   color: var(--p-cascadeselect-disabled-color, var(--cascadeselect-disabled-color));
 }
 
-:host ::ng-deep .form-theme-filled .cascadeselect-showcase .catalog-input-states-row .p-cascadeselect.p-variant-filled:not(.p-disabled) {
+:host ::ng-deep .form-theme-filled .cascadeselect-showcase .p-cascadeselect.p-variant-filled:not(.p-disabled) {
   background: var(
     --p-cascadeselect-filled-background,
     var(--cascadeselect-filled-background, var(--form-field-filled-background))

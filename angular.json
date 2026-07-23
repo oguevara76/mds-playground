@@ -58,6 +58,7 @@
               "src/styles/catalog-layout.css",
               "src/styles/primeng-card-parity.css",
               "src/styles/primeng-panel-parity.css",
+              "src/styles/primeng-galleria-parity.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -162,6 +163,7 @@
               "src/styles/catalog-layout.css",
               "src/styles/primeng-card-parity.css",
               "src/styles/primeng-panel-parity.css",
+              "src/styles/primeng-galleria-parity.css",
               "src/styles.css"
             ],
             "scripts": []

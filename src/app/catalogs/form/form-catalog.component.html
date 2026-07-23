@@ -12,6 +12,11 @@
       [class.slider-showcase]="isSliderBlock(block)"
       [class.textarea-showcase]="isTextareaBlock(block)"
       [class.select-showcase]="isSelectBlock(block)"
+      [class.multiselect-showcase]="isMultiselectBlock(block)"
+      [class.listbox-showcase]="isListboxBlock(block)"
+      [class.listbox-variant-checkmark]="isListboxBlock(block) && listboxInteractionCheckmark()"
+      [class.listbox-variant-group]="isListboxBlock(block) && listboxInteractionGroup()"
+      [class.listbox-variant-checkbox]="isListboxBlock(block) && listboxIsCheckbox()"
       [class.cascadeselect-showcase]="isCascadeSelectBlock(block)"
       [class.selectbutton-showcase]="isSelectButtonBlock(block)"
       [class.togglebutton-showcase]="isToggleButtonBlock(block)"
@@ -496,6 +501,21 @@
                 </div>
                 <ng-container catalogPreviewConfig>
                   <div class="button-config-size-field">
+                  <span class="input-config-label">Theme</span>
+                  <div class="button-config-select-wrap">
+                  <p-select
+                  [options]="themeSelectOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="formTheme('select')"
+                  (ngModelChange)="patchFormTheme('select', $event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Theme Select"
+                  />
+                  </div>
+                  </div>
+                  <div class="button-config-size-field">
                   <span class="input-config-label">Variant</span>
                   <div class="button-config-select-wrap">
                   <p-select
@@ -568,6 +588,335 @@
                   </div>
                 </ng-container>
 
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
+              </mds-catalog-preview-frame>
+            }
+            @case ('multiselect') {
+              <ng-template #multiselectInteractionField>
+                <p-multiselect
+                  inputId="ms-live"
+                  [options]="multiselectInteractionOptions()"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="multiselectIx().value"
+                  (ngModelChange)="patchMultiselect({ value: $event })"
+                  [size]="multiselectPrimeSize(multiselectIx().size)"
+                  [variant]="formThemePrimeVariant('multiselect')"
+                  [style]="multiselectHostVars(multiselectIx().size)"
+                  [placeholder]="multiselectInteractionPlaceholder()"
+                  [display]="multiselectIx().display"
+                  [filter]="multiselectIx().showOverlayFilter"
+                  [filterPlaceHolder]="selectOverlayFilterPlaceholder"
+                  [group]="multiselectInteractionGroup()"
+                  [panelStyleClass]="multiselectInteractionOverlayPanelClass()"
+                  [fluid]="true"
+                  appendTo="body"
+                  (onFocus)="setMultiselectFloatIxFocused(true)"
+                  (onBlur)="setMultiselectFloatIxFocused(false)"
+                  (onPanelShow)="setMultiselectFloatOverlayOpen(true)"
+                  (onPanelHide)="setMultiselectFloatOverlayOpen(false)"
+                  ariaLabel="MultiSelect interactivo"
+                >
+                  <ng-template pTemplate="group" let-optionGroup>
+                    <span class="catalog-select-option-group">
+                      @if (optionGroup.emoji) {
+                        <span class="catalog-select-option-group-emoji" aria-hidden="true">{{ optionGroup.emoji }}</span>
+                        <span class="catalog-select-option-group-label">{{ selectGroupCountryLabel(optionGroup) }}</span>
+                      } @else {
+                        <span class="catalog-select-option-group-label">{{ optionGroup.label }}</span>
+                      }
+                    </span>
+                  </ng-template>
+                </p-multiselect>
+              </ng-template>
+              <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                [showExpand]="true"
+                [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+                [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+                configAriaLabel="Configurar MultiSelect"
+              >
+                <div
+                  catalogPreviewDemo
+                  class="catalog-showcase-interactive catalog-input-interactive multiselect-interaction-scope"
+                  [ngClass]="multiselectInteractionScopeClass()"
+                >
+                  @if (multiselectIsDefault()) {
+                    <div class="p-field form-input-interaction-field">
+                      <label class="p-label" for="ms-live">Label</label>
+                      <ng-container *ngTemplateOutlet="multiselectInteractionField" />
+                    </div>
+                  } @else if (multiselectIsIftaLabel()) {
+                    <div class="form-input-interaction-control">
+                      <span class="p-iftalabel" [style]="multiselectFloatLabelHostVars()">
+                        <ng-container *ngTemplateOutlet="multiselectInteractionField" />
+                        <label for="ms-live">Label</label>
+                      </span>
+                    </div>
+                  } @else {
+                    <div class="form-input-interaction-control">
+                      <p-floatlabel
+                        [variant]="multiselectFloatPosition()"
+                        [class.is-label-floated]="multiselectInteractionLabelFloated()"
+                        [style]="multiselectFloatLabelHostVars()"
+                        (focusin)="setMultiselectFloatIxFocused(true)"
+                        (focusout)="setMultiselectFloatIxFocused(false)"
+                      >
+                        <ng-container *ngTemplateOutlet="multiselectInteractionField" />
+                        <label for="ms-live">Label</label>
+                      </p-floatlabel>
+                    </div>
+                  }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Theme</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="themeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="formTheme('multiselect')"
+                        (ngModelChange)="patchFormTheme('multiselect', $event)"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Theme MultiSelect"
+                      />
+                    </div>
+                  </div>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="multiselectVariantSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="multiselectIx().variant"
+                        (ngModelChange)="patchMultiselect({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant MultiSelect"
+                      />
+                    </div>
+                  </div>
+                  @if (multiselectIsFloatLabel()) {
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">Float variant</span>
+                      <div class="button-config-select-wrap">
+                        <p-select
+                          [options]="inputtextFloatPositionSelectOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          [ngModel]="multiselectIx().floatPosition"
+                          (ngModelChange)="patchMultiselect({ floatPosition: $event })"
+                          size="small"
+                          appendTo="body"
+                          ariaLabel="Float variant MultiSelect"
+                        />
+                      </div>
+                    </div>
+                  }
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Display</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="multiselectDisplayOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="multiselectIx().display"
+                        (ngModelChange)="patchMultiselect({ display: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Display MultiSelect"
+                      />
+                    </div>
+                  </div>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">List options</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="multiselectOverlayOptionVariantOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="multiselectIx().overlayOptionVariant"
+                        (ngModelChange)="patchMultiselect({ overlayOptionVariant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variante de opciones del overlay MultiSelect"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-config-row">
+                    <span class="input-config-label">Filter</span>
+                    <p-toggleswitch
+                      [ngModel]="multiselectIx().showOverlayFilter"
+                      (ngModelChange)="patchMultiselect({ showOverlayFilter: $event })"
+                    />
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="multiselectIx().size"
+                        (ngModelChange)="patchMultiselect({ size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size MultiSelect"
+                      />
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
+              </mds-catalog-preview-frame>
+            }
+            @case ('listbox') {
+              <ng-template #listboxInteractionField>
+                @if (listboxIsBasic()) {
+                  <p-listbox
+                    [options]="listboxTemplateCountries"
+                    optionLabel="name"
+                    [ngModel]="listboxIx().value"
+                    (ngModelChange)="patchListbox({ value: $event })"
+                    [filter]="listboxIx().filter"
+                    filterBy="name"
+                    [filterPlaceHolder]="selectOverlayFilterPlaceholder"
+                    [style]="listboxHostVars(listboxIx().size)"
+                    [scrollHeight]="listboxScrollHeight"
+                    [fluid]="true"
+                    ariaLabel="Listbox interactivo"
+                  >
+                    <ng-template pTemplate="item" let-country>
+                      <div class="catalog-listbox-template-item">
+                        <img
+                          [src]="listboxFlagPlaceholderUrl"
+                          [class]="listboxCountryFlagClass(country.code)"
+                          width="18"
+                          height="12"
+                          alt=""
+                          aria-hidden="true"
+                        />
+                        <span>{{ country.name }}</span>
+                      </div>
+                    </ng-template>
+                  </p-listbox>
+                } @else {
+                  <p-listbox
+                    [options]="listboxInteractionOptions()"
+                    optionLabel="label"
+                    optionValue="value"
+                    [optionGroupLabel]="listboxInteractionGroup() ? 'label' : undefined"
+                    [optionGroupChildren]="listboxInteractionGroup() ? 'items' : undefined"
+                    [group]="listboxInteractionGroup()"
+                    [ngModel]="listboxIx().value"
+                    (ngModelChange)="patchListbox({ value: $event })"
+                    [multiple]="listboxIsCheckbox()"
+                    [checkbox]="listboxIsCheckbox()"
+                    [checkmark]="listboxInteractionCheckmark()"
+                    [highlightOnSelect]="!listboxInteractionCheckmark()"
+                    [filter]="listboxIx().filter"
+                    filterBy="label"
+                    [filterPlaceHolder]="selectOverlayFilterPlaceholder"
+                    [style]="listboxHostVars(listboxIx().size)"
+                    [scrollHeight]="listboxScrollHeight"
+                    [fluid]="true"
+                    ariaLabel="Listbox interactivo"
+                  >
+                    @if (listboxInteractionGroup()) {
+                      <ng-template pTemplate="group" let-optionGroup>
+                        <span class="catalog-select-option-group">
+                          @if (optionGroup.emoji) {
+                            <span class="catalog-select-option-group-emoji" aria-hidden="true">{{ optionGroup.emoji }}</span>
+                            <span class="catalog-select-option-group-label">{{ selectGroupCountryLabel(optionGroup) }}</span>
+                          } @else {
+                            <span class="catalog-select-option-group-label">{{ optionGroup.label }}</span>
+                          }
+                        </span>
+                      </ng-template>
+                    }
+                  </p-listbox>
+                }
+              </ng-template>
+              <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                [showExpand]="true"
+                [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+                [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+                configAriaLabel="Configurar Listbox"
+              >
+                <div
+                  catalogPreviewDemo
+                  class="catalog-showcase-interactive catalog-input-interactive listbox-interaction-scope"
+                  [ngClass]="listboxInteractionScopeClass()"
+                >
+                  <div class="p-field form-input-interaction-field listbox-interaction-field">
+                    <label class="p-label">Label</label>
+                    <ng-container *ngTemplateOutlet="listboxInteractionField" />
+                  </div>
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="listboxVariantSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="listboxIx().variant"
+                        (ngModelChange)="patchListbox({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant Listbox"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-config-row">
+                    <span class="input-config-label">Filter</span>
+                    <p-toggleswitch
+                      [ngModel]="listboxIx().filter"
+                      (ngModelChange)="patchListbox({ filter: $event })"
+                    />
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="listboxIx().size"
+                        (ngModelChange)="patchListbox({ size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size Listbox"
+                      />
+                    </div>
+                  </div>
+                </ng-container>
                 <ng-container catalogPreviewDetails>
                   <mds-catalog-info-block title="States" icon="list">
                     <ng-container *ngTemplateOutlet="formCatalogStates" />
@@ -1573,6 +1922,21 @@
                 </div>
                 <ng-container catalogPreviewConfig>
                   <div class="button-config-size-field">
+                    <span class="input-config-label">Theme</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="themeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="formTheme('inputnumber')"
+                        (ngModelChange)="patchFormTheme('inputnumber', $event)"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Theme InputNumber"
+                      />
+                    </div>
+                  </div>
+                  <div class="button-config-size-field">
                     <span class="input-config-label">Type</span>
                     <div class="button-config-select-wrap">
                       <p-select
@@ -1599,21 +1963,6 @@
                         size="small"
                         appendTo="body"
                         ariaLabel="Variants InputNumber"
-                      />
-                    </div>
-                  </div>
-                  <div class="button-config-size-field">
-                    <span class="input-config-label">Theme</span>
-                    <div class="button-config-select-wrap">
-                      <p-select
-                        [options]="themeSelectOptions"
-                        optionLabel="label"
-                        optionValue="value"
-                        [ngModel]="formTheme('inputnumber')"
-                        (ngModelChange)="patchFormTheme('inputnumber', $event)"
-                        size="small"
-                        appendTo="body"
-                        ariaLabel="Theme InputNumber"
                       />
                     </div>
                   </div>
@@ -2639,6 +2988,149 @@
                     </div>
                   }
                 </div>
+              } @else if (isMultiselectBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (multiselectIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label">Label</label>
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-multiselect
+                                [options]="selectDemoOptions"
+                                optionLabel="label"
+                                optionValue="value"
+                                [ngModel]="multiselectStateValue(st.key)"
+                                [size]="multiselectPrimeSize('normal')"
+                                [variant]="formThemePrimeVariant('multiselect')"
+                                [style]="multiselectHostVars('normal')"
+                                [display]="multiselectIx().display"
+                                [placeholder]="inputStatePlaceholder"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key) || inputStateReadonly(st.key)"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                                [attr.aria-label]="st.caption"
+                              />
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else if (multiselectIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <span
+                                class="p-iftalabel"
+                                [class.is-label-invalid]="inputStateInvalid(st.key)"
+                                [style]="multiselectFloatLabelStatesHostVars()"
+                              >
+                                <p-multiselect
+                                  [options]="selectDemoOptions"
+                                  optionLabel="label"
+                                  optionValue="value"
+                                  [ngModel]="multiselectStateValue(st.key)"
+                                  [size]="multiselectPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('multiselect')"
+                                  [style]="multiselectHostVars('normal')"
+                                  [display]="multiselectIx().display"
+                                  [placeholder]="multiselectFloatPlaceholderAttr(st.key) ?? ''"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </span>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-floatlabel
+                                [variant]="multiselectFloatPosition()"
+                                [class.is-label-floated]="multiselectFloatStateLabelFloated(st.key)"
+                                [style]="multiselectFloatLabelStatesHostVars()"
+                              >
+                                <p-multiselect
+                                  [options]="selectDemoOptions"
+                                  optionLabel="label"
+                                  optionValue="value"
+                                  [ngModel]="multiselectStateValue(st.key)"
+                                  [size]="multiselectPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('multiselect')"
+                                  [style]="multiselectHostVars('normal')"
+                                  [display]="multiselectIx().display"
+                                  [placeholder]="multiselectFloatPlaceholderAttr(st.key) ?? ''"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </p-floatlabel>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="st.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isListboxBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        <div class="p-field catalog-input-interactive">
+                          <label class="p-label">Label</label>
+                          <div [ngClass]="inputDemoWrap(st.key)">
+                            <p-listbox
+                              [options]="selectDemoOptions"
+                              optionLabel="label"
+                              optionValue="value"
+                              [ngModel]="listboxStateValue(st.key)"
+                              [checkmark]="listboxInteractionCheckmark()"
+                              [highlightOnSelect]="!listboxInteractionCheckmark()"
+                              [filter]="true"
+                              filterBy="label"
+                              [filterPlaceHolder]="selectOverlayFilterPlaceholder"
+                              [style]="listboxHostVars('normal')"
+                              [scrollHeight]="listboxScrollHeight"
+                              [invalid]="inputStateInvalid(st.key)"
+                              [disabled]="inputStateDisabled(st.key)"
+                              [fluid]="true"
+                              tabindex="-1"
+                              [attr.aria-label]="st.caption"
+                            />
+                          </div>
+                          @if (inputStateShowErrorMessage(block, st.key)) {
+                            <small class="p-error">{{ inputStateErrorMessage }}</small>
+                          } @else if (inputStateShowHint(block, st.key)) {
+                            <small class="p-hint">{{ inputStateHint }}</small>
+                          }
+                        </div>
+                      </div>
+                      <mds-catalog-state-tag [label]="st.caption" />
+                    </div>
+                  }
+                </div>
               } @else if (isCascadeSelectBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
                   @for (st of inputStates(block); track st.key) {
@@ -3521,6 +4013,111 @@
                         }
                       </div>
                       <mds-catalog-state-tag [label]="sz.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isMultiselectBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (multiselectIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label" [for]="'ms-sz-' + sz.key">Label</label>
+                            <p-multiselect
+                              [inputId]="'ms-sz-' + sz.key"
+                              [options]="selectDemoOptions"
+                              optionLabel="label"
+                              optionValue="value"
+                              [ngModel]="multiselectDemoEmptyValue"
+                              [size]="multiselectPrimeSize(sz.key)"
+                              [variant]="formThemePrimeVariant('multiselect')"
+                              [style]="multiselectHostVars(sz.key)"
+                              [display]="multiselectIx().display"
+                              [placeholder]="inputStatePlaceholder"
+                              [fluid]="true"
+                              appendTo="body"
+                              tabindex="-1"
+                            />
+                          </div>
+                        } @else if (multiselectIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <span class="p-iftalabel" [style]="multiselectIftaLabelHostVarsForSize(sz.key)">
+                              <p-multiselect
+                                [inputId]="'ms-sz-' + sz.key"
+                                [options]="selectDemoOptions"
+                                optionLabel="label"
+                                optionValue="value"
+                                [ngModel]="multiselectDemoEmptyValue"
+                                [size]="multiselectPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('multiselect')"
+                                [style]="multiselectHostVars(sz.key)"
+                                [display]="multiselectIx().display"
+                                [placeholder]="inputStatePlaceholder"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                              />
+                              <label [for]="'ms-sz-' + sz.key">Label</label>
+                            </span>
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <p-floatlabel
+                              [variant]="multiselectFloatPosition()"
+                              [class.is-label-floated]="multiselectFloatSizeLabelFloated()"
+                              [style]="multiselectFloatLabelHostVarsForSize(sz.key)"
+                            >
+                              <p-multiselect
+                                [inputId]="'ms-sz-' + sz.key"
+                                [options]="selectDemoOptions"
+                                optionLabel="label"
+                                optionValue="value"
+                                [ngModel]="multiselectDemoEmptyValue"
+                                [size]="multiselectPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('multiselect')"
+                                [style]="multiselectHostVars(sz.key)"
+                                [display]="multiselectIx().display"
+                                [placeholder]="inputStatePlaceholder"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                              />
+                              <label [for]="'ms-sz-' + sz.key">Label</label>
+                            </p-floatlabel>
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="sz.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isListboxBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        <div class="p-field catalog-input-interactive">
+                          <label class="p-label">Label</label>
+                          <p-listbox
+                            [options]="selectDemoOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="null"
+                            [checkmark]="listboxInteractionCheckmark()"
+                            [highlightOnSelect]="!listboxInteractionCheckmark()"
+                            [filter]="true"
+                            filterBy="label"
+                            [filterPlaceHolder]="selectOverlayFilterPlaceholder"
+                            [style]="listboxHostVars(sz.key)"
+                            [scrollHeight]="listboxScrollHeight"
+                            [fluid]="true"
+                            tabindex="-1"
+                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
+                          />
+                        </div>
+                      </div>
+                      <mds-catalog-state-tag [label]="choiceSizeDisplayLabel(sz.key)" />
                     </div>
                   }
                 </div>

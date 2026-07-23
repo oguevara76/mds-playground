@@ -113,6 +113,93 @@
     </section>
   </div>
 
+  <div class="catalog-preview tieredmenu-showcase">
+    <section id="pg-tieredmenu" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'TieredMenu' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showExpand]="false"
+          configAriaLabel="Configurar TieredMenu"
+        >
+          <div catalogPreviewDemo class="tieredmenu-catalog-demo-area catalog-showcase-interactive">
+            @if (tieredMenuIsPopup()) {
+              @if (tieredMenuUsesMenuButton()) {
+                <p-button
+                  type="button"
+                  [icon]="tieredMenuMenuButtonIcon"
+                  severity="secondary"
+                  (onClick)="toggleTieredMenuPopup($event)"
+                  ariaLabel="Abrir menú tiered popup"
+                />
+              } @else {
+                <p-button
+                  type="button"
+                  [label]="tieredMenuPopupTriggerLabel"
+                  [icon]="tieredMenuPopupTriggerIcon"
+                  (onClick)="toggleTieredMenuPopup($event)"
+                  ariaLabel="Abrir menú tiered popup"
+                />
+              }
+              <p-tieredMenu
+                #tieredMenuPopup
+                [model]="tieredMenuModel()"
+                [popup]="true"
+                appendTo="body"
+                styleClass="tieredmenu-catalog-live"
+              />
+            } @else {
+              <p-tieredMenu
+                [model]="tieredMenuModel()"
+                styleClass="tieredmenu-catalog-live"
+                ariaLabel="Menú tiered básico"
+              />
+            }
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Variant</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="tieredMenuVariantOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="tieredMenuIx().variant"
+                  (ngModelChange)="patchTieredMenuIx({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant TieredMenu"
+                />
+              </div>
+            </div>
+            @if (tieredMenuIsPopup()) {
+              <p-divider styleClass="button-config-divider" />
+              <div class="button-config-size-field">
+                <span class="input-config-label">Button style</span>
+                <div class="button-config-select-wrap">
+                  <p-select
+                    [options]="tieredMenuButtonStyleOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="tieredMenuIx().buttonStyle"
+                    (ngModelChange)="patchTieredMenuIx({ buttonStyle: $event })"
+                    size="small"
+                    appendTo="body"
+                    ariaLabel="Button style TieredMenu popup"
+                  />
+                </div>
+              </div>
+            }
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
   <div class="catalog-preview breadcrumb-showcase">
     <section id="pg-breadcrumb" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">

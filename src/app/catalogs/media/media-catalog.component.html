@@ -1,0 +1,125 @@
+<div class="cards-grid form-catalog-stack">
+  <div class="catalog-preview galleria-showcase">
+    <section
+      id="pg-galleria"
+      class="preview-section preview-section--flush catalog-block-section"
+      tabindex="-1"
+    >
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Galleria' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Galleria"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive galleria-catalog-live-shell">
+              <p-galleria
+                class="galleria-catalog-live"
+                [class.galleria-catalog-caption-off]="!galleriaIx.showCaption"
+                [value]="images"
+                [activeIndex]="activeIndex"
+                (activeIndexChange)="onGalleriaActiveIndexChange($event)"
+                [numVisible]="numVisible"
+                [containerStyle]="containerStyle"
+                [showThumbnails]="galleriaFlags.showThumbnails"
+                [showIndicators]="galleriaFlags.showIndicators"
+                [showItemNavigators]="galleriaIx.showNavigators"
+                [showThumbnailNavigators]="galleriaFlags.showThumbnails"
+                [indicatorsPosition]="galleriaIx.indicatorsPosition"
+                [thumbnailsPosition]="galleriaIx.thumbnailsPosition"
+                [verticalThumbnailViewPortHeight]="verticalThumbnailViewPortHeight"
+                [circular]="true"
+                ariaLabel="Galleria interactiva del catálogo"
+              >
+                <ng-template pTemplate="item" let-item>
+                  <img [src]="item.itemImageSrc" [alt]="item.alt" [style.width]="'100%'" />
+                </ng-template>
+                <ng-template pTemplate="thumbnail" let-item>
+                  <img [src]="item.thumbnailImageSrc" [alt]="item.alt" [style.width]="'100%'" />
+                </ng-template>
+                <ng-template pTemplate="caption">
+                  <div class="galleria-catalog-caption">
+                    <h4 class="galleria-catalog-caption-title">{{ activeCaption.title }}</h4>
+                    <p class="galleria-catalog-caption-description">{{ activeCaption.description }}</p>
+                  </div>
+                </ng-template>
+              </p-galleria>
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Variant</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="variantOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="galleriaIx.variant"
+                  (ngModelChange)="patchGalleriaIx({ variant: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant"
+                />
+              </div>
+            </div>
+            @if (galleriaIx.variant === 'indicators' || galleriaIx.variant === 'thumbnails') {
+              <p-divider styleClass="button-config-divider" />
+            }
+            @if (galleriaIx.variant === 'indicators') {
+              <div class="button-config-size-field">
+                <span class="input-config-label">Position</span>
+                <div class="button-config-select-wrap">
+                  <p-select
+                    [options]="positionOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="galleriaIx.indicatorsPosition"
+                    (ngModelChange)="patchGalleriaIx({ indicatorsPosition: $event })"
+                    size="small"
+                    appendTo="body"
+                    ariaLabel="Indicators position"
+                  />
+                </div>
+              </div>
+            }
+            @if (galleriaIx.variant === 'thumbnails') {
+              <div class="button-config-size-field">
+                <span class="input-config-label">Position</span>
+                <div class="button-config-select-wrap">
+                  <p-select
+                    [options]="positionOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="galleriaIx.thumbnailsPosition"
+                    (ngModelChange)="patchGalleriaIx({ thumbnailsPosition: $event })"
+                    size="small"
+                    appendTo="body"
+                    ariaLabel="Thumbnails position"
+                  />
+                </div>
+              </div>
+            }
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Navigators</span>
+              <p-toggleswitch
+                [ngModel]="galleriaIx.showNavigators"
+                (ngModelChange)="patchGalleriaIx({ showNavigators: $event })"
+              />
+            </div>
+            <div class="input-config-row">
+              <span class="input-config-label">Caption</span>
+              <p-toggleswitch
+                [ngModel]="galleriaIx.showCaption"
+                (ngModelChange)="patchGalleriaIx({ showCaption: $event })"
+              />
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+</div>

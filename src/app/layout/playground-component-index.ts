@@ -1,6 +1,7 @@
 import { BUTTON_BLOCKS, BUTTON_TEXT_VARIANT_SPECS, BUTTON_VARIANT_SPECS } from '../catalogs/button/button-catalog.config';
 import {
   FORM_BLOCKS,
+  FORM_LISTBOX_VARIANT_SELECT_OPTIONS,
   FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS,
   FORM_SIZE_OPTIONS,
   type FormBlockKind,
@@ -28,6 +29,7 @@ import {
 } from '../catalogs/panel/panel-catalog.config';
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS, MENU_CATALOG_EXAMPLE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
+import { GALLERIA_CATALOG_VARIANT_OPTIONS } from '../catalogs/media/media-catalog.config';
 import { MDS_VARS_CATALOG } from '../theme/mds-vars-catalog.generated';
 
 export type PlaygroundCatalogRoute =
@@ -38,6 +40,7 @@ export type PlaygroundCatalogRoute =
   | 'panel'
   | 'menu'
   | 'overlay'
+  | 'media'
   | 'misc';
 
 export interface PlaygroundComponentEntry {
@@ -66,6 +69,8 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-inputgroup': 'inputgroup',
   'pg-inputnumber': 'inputnumber',
   'pg-select': 'select',
+  'pg-multiselect': 'multiselect',
+  'pg-listbox': 'listbox',
   'pg-cascadeselect': 'cascadeselect',
   'pg-password': 'password',
   'pg-inputotp': 'inputotp',
@@ -85,12 +90,14 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-toolbar': 'toolbar',
   'pg-breadcrumb': 'breadcrumb',
   'pg-menu': 'menu',
+  'pg-tieredmenu': 'tieredmenu',
   'pg-tooltip': 'tooltip',
   'pg-dialog': 'dialog',
   'pg-confirmdialog': 'confirmdialog',
   'pg-confirmpopup': 'confirmpopup',
   'pg-drawer': 'drawer',
   'pg-popover': 'popover',
+  'pg-galleria': 'galleria',
   'pg-tag': 'tag',
   'pg-chip': 'chip',
   'pg-badge': 'badge',
@@ -120,6 +127,8 @@ const FORM_VARIANT_COUNTS: Record<string, number> = {
   inputgroup: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputnumber: 6,
   select: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
+  multiselect: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
+  listbox: FORM_LISTBOX_VARIANT_SELECT_OPTIONS.length,
   cascadeselect: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   password: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputotp: 6,
@@ -259,6 +268,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       variantCount: MENU_CATALOG_EXAMPLE_DEMOS.length,
     },
     {
+      id: 'pg-tieredmenu',
+      name: 'TieredMenu',
+      route: 'menu',
+      sectionLabel: 'Menu',
+      keywords: ['p-tieredmenu', 'tiered menu', 'submenu', 'navigation', 'popup'],
+      variantCount: 0,
+    },
+    {
       id: 'pg-tooltip',
       name: 'Tooltip',
       route: 'overlay',
@@ -305,6 +322,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Overlay',
       keywords: ['p-popover', 'overlay', 'popup', 'floating'],
       variantCount: 2,
+    },
+    {
+      id: 'pg-galleria',
+      name: 'Galleria',
+      route: 'media',
+      sectionLabel: 'Media',
+      keywords: ['p-galleria', 'galleria', 'gallery', 'galería', 'imágenes', 'images'],
+      variantCount: GALLERIA_CATALOG_VARIANT_OPTIONS.length,
     },
     {
       id: 'pg-tag',

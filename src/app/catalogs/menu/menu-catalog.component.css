@@ -30,6 +30,17 @@
   width: min(100%, 18rem);
 }
 
+:host.menu-catalog-page .tieredmenu-catalog-demo-area {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+:host.menu-catalog-page ::ng-deep .tieredmenu-catalog-live.p-tieredmenu {
+  width: min(100%, 18rem);
+}
+
 :host.menu-catalog-page .breadcrumb-interaction-row {
   display: flex;
   align-items: flex-start;
