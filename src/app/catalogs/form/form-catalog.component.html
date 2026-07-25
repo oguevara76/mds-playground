@@ -18,6 +18,7 @@
       [class.listbox-variant-group]="isListboxBlock(block) && listboxInteractionGroup()"
       [class.listbox-variant-checkbox]="isListboxBlock(block) && listboxIsCheckbox()"
       [class.cascadeselect-showcase]="isCascadeSelectBlock(block)"
+      [class.datepicker-showcase]="isDatepickerBlock(block)"
       [class.selectbutton-showcase]="isSelectButtonBlock(block)"
       [class.togglebutton-showcase]="isToggleButtonBlock(block)"
       [style.--slider-catalog-demo-height]="isSliderBlock(block) ? sliderDemoHeight : null"
@@ -1054,6 +1055,178 @@
                         [fluid]="true"
                         size="small"
                         ariaLabel="Size CascadeSelect"
+                      />
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
+              </mds-catalog-preview-frame>
+            }
+            @case ('datepicker') {
+              <ng-template #datepickerInteractionField>
+                @for (mountKey of [datepickerOverlayMountKey()]; track mountKey) {
+                  <p-datepicker
+                    inputId="dp-live"
+                    [ngModel]="datepickerIx().value"
+                    (ngModelChange)="patchDatepicker({ value: $event })"
+                    [size]="datepickerPrimeSize(datepickerIx().size)"
+                    [variant]="formThemePrimeVariant('datepicker')"
+                    [style]="datepickerHostVars(datepickerIx().size)"
+                    [panelStyle]="datepickerPanelHostVars()"
+                    [placeholder]="datepickerInteractionPlaceholder()"
+                    [selectionMode]="datepickerSelectionMode()"
+                    [view]="datepickerView()"
+                    [showTime]="datepickerShowTime()"
+                    [hideOnDateTimeSelect]="datepickerHideOnDateTimeSelect()"
+                    [numberOfMonths]="datepickerNumberOfMonths()"
+                    [dateFormat]="datepickerDateFormat()"
+                    [readonlyInput]="datepickerReadonlyInput()"
+                    hourFormat="24"
+                    [showIcon]="datepickerIx().showIcon"
+                    iconDisplay="input"
+                    [fluid]="true"
+                    appendTo="body"
+                    (onFocus)="setDatepickerFloatIxFocused(true)"
+                    (onBlur)="setDatepickerFloatIxFocused(false)"
+                    (onShow)="setDatepickerFloatOverlayOpen(true)"
+                    (onClose)="setDatepickerFloatOverlayOpen(false)"
+                    ariaLabel="DatePicker interactivo"
+                  />
+                }
+              </ng-template>
+              <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                [showExpand]="true"
+                [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+                [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+                configAriaLabel="Configurar DatePicker"
+              >
+                <div
+                  catalogPreviewDemo
+                  class="catalog-showcase-interactive catalog-input-interactive datepicker-interaction-scope"
+                  [ngClass]="datepickerInteractionScopeClass()"
+                >
+                  @if (datepickerIsDefault()) {
+                    <div class="p-field form-input-interaction-field">
+                      <label class="p-label" for="dp-live">Label</label>
+                      <ng-container *ngTemplateOutlet="datepickerInteractionField" />
+                    </div>
+                  } @else if (datepickerIsIftaLabel()) {
+                    <div class="form-input-interaction-control">
+                      <span class="p-iftalabel" [style]="datepickerFloatLabelHostVars()">
+                        <ng-container *ngTemplateOutlet="datepickerInteractionField" />
+                        <label for="dp-live">Label</label>
+                      </span>
+                    </div>
+                  } @else {
+                    <div class="form-input-interaction-control">
+                      <p-floatlabel
+                        [variant]="datepickerFloatPosition()"
+                        [class.is-label-floated]="datepickerInteractionLabelFloated()"
+                        [style]="datepickerFloatLabelHostVars()"
+                        (focusin)="setDatepickerFloatIxFocused(true)"
+                        (focusout)="setDatepickerFloatIxFocused(false)"
+                      >
+                        <ng-container *ngTemplateOutlet="datepickerInteractionField" />
+                        <label for="dp-live">Label</label>
+                      </p-floatlabel>
+                    </div>
+                  }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Theme</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="themeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="formTheme('datepicker')"
+                        (ngModelChange)="patchFormTheme('datepicker', $event)"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Theme DatePicker"
+                      />
+                    </div>
+                  </div>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="datepickerVariantSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="datepickerIx().variant"
+                        (ngModelChange)="patchDatepicker({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant DatePicker"
+                      />
+                    </div>
+                  </div>
+                  @if (datepickerIsFloatLabel()) {
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">Float variant</span>
+                      <div class="button-config-select-wrap">
+                        <p-select
+                          [options]="inputtextFloatPositionSelectOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          [ngModel]="datepickerIx().floatPosition"
+                          (ngModelChange)="patchDatepicker({ floatPosition: $event })"
+                          size="small"
+                          appendTo="body"
+                          ariaLabel="Float variant DatePicker"
+                        />
+                      </div>
+                    </div>
+                  }
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Overlay info</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="datepickerOverlayInfoOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="datepickerIx().overlayInfo"
+                        (ngModelChange)="patchDatepicker({ overlayInfo: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Overlay info DatePicker"
+                      />
+                    </div>
+                  </div>
+                  <div class="input-config-row">
+                    <span class="input-config-label">Calendar icon</span>
+                    <p-toggleswitch
+                      [ngModel]="datepickerIx().showIcon"
+                      (ngModelChange)="patchDatepicker({ showIcon: $event })"
+                      ariaLabel="Mostrar icono de calendario DatePicker"
+                    />
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="datepickerIx().size"
+                        (ngModelChange)="patchDatepicker({ size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size DatePicker"
                       />
                     </div>
                   </div>
@@ -3241,6 +3414,140 @@
                     </div>
                   }
                 </div>
+              } @else if (isDatepickerBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (datepickerIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label">Label</label>
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              @for (mountKey of [datepickerOverlayMountKey()]; track mountKey) {
+                                <p-datepicker
+                                  [ngModel]="datepickerStateValue(st.key)"
+                                  [size]="datepickerPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('datepicker')"
+                                  [style]="datepickerHostVars('normal')"
+                                  [panelStyle]="datepickerPanelHostVars()"
+                                  [placeholder]="inputStatePlaceholder"
+                                  [showIcon]="datepickerIx().showIcon"
+                                  iconDisplay="input"
+                                  [selectionMode]="datepickerSelectionMode()"
+                                  [view]="datepickerView()"
+                                  [showTime]="datepickerShowTime()"
+                                  [hideOnDateTimeSelect]="datepickerHideOnDateTimeSelect()"
+                                  [numberOfMonths]="datepickerNumberOfMonths()"
+                                  [dateFormat]="datepickerDateFormat()"
+                                  [readonlyInput]="datepickerStateReadonlyInput(st.key)"
+                                  hourFormat="24"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                              }
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else if (datepickerIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <span
+                                class="p-iftalabel"
+                                [class.is-label-invalid]="inputStateInvalid(st.key)"
+                                [style]="datepickerFloatLabelStatesHostVars()"
+                              >
+                                @for (mountKey of [datepickerOverlayMountKey()]; track mountKey) {
+                                  <p-datepicker
+                                    [ngModel]="datepickerStateValue(st.key)"
+                                    [size]="datepickerPrimeSize('normal')"
+                                    [variant]="formThemePrimeVariant('datepicker')"
+                                    [style]="datepickerHostVars('normal')"
+                                    [panelStyle]="datepickerPanelHostVars()"
+                                    [placeholder]="datepickerFloatPlaceholderAttr(st.key) ?? ''"
+                                    [showIcon]="datepickerIx().showIcon"
+                                    iconDisplay="input"
+                                    [selectionMode]="datepickerSelectionMode()"
+                                    [view]="datepickerView()"
+                                    [showTime]="datepickerShowTime()"
+                                    [hideOnDateTimeSelect]="datepickerHideOnDateTimeSelect()"
+                                    [numberOfMonths]="datepickerNumberOfMonths()"
+                                    [dateFormat]="datepickerDateFormat()"
+                                    [readonlyInput]="datepickerStateReadonlyInput(st.key)"
+                                    hourFormat="24"
+                                    [invalid]="inputStateInvalid(st.key)"
+                                    [disabled]="inputStateDisabled(st.key)"
+                                    [fluid]="true"
+                                    appendTo="body"
+                                    tabindex="-1"
+                                    [attr.aria-label]="st.caption"
+                                  />
+                                }
+                                <label>Label</label>
+                              </span>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-floatlabel
+                                [variant]="datepickerFloatPosition()"
+                                [class.is-label-floated]="datepickerFloatStateLabelFloated(st.key)"
+                                [style]="datepickerFloatLabelStatesHostVars()"
+                              >
+                                @for (mountKey of [datepickerOverlayMountKey()]; track mountKey) {
+                                  <p-datepicker
+                                    [ngModel]="datepickerStateValue(st.key)"
+                                    [size]="datepickerPrimeSize('normal')"
+                                    [variant]="formThemePrimeVariant('datepicker')"
+                                    [style]="datepickerHostVars('normal')"
+                                    [panelStyle]="datepickerPanelHostVars()"
+                                    [placeholder]="datepickerFloatPlaceholderAttr(st.key) ?? ''"
+                                    [showIcon]="datepickerIx().showIcon"
+                                    iconDisplay="input"
+                                    [selectionMode]="datepickerSelectionMode()"
+                                    [view]="datepickerView()"
+                                    [showTime]="datepickerShowTime()"
+                                    [hideOnDateTimeSelect]="datepickerHideOnDateTimeSelect()"
+                                    [numberOfMonths]="datepickerNumberOfMonths()"
+                                    [dateFormat]="datepickerDateFormat()"
+                                    [readonlyInput]="datepickerStateReadonlyInput(st.key)"
+                                    hourFormat="24"
+                                    [invalid]="inputStateInvalid(st.key)"
+                                    [disabled]="inputStateDisabled(st.key)"
+                                    [fluid]="true"
+                                    appendTo="body"
+                                    tabindex="-1"
+                                    [attr.aria-label]="st.caption"
+                                  />
+                                }
+                                <label>Label</label>
+                              </p-floatlabel>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="st.caption" />
+                    </div>
+                  }
+                </div>
               } @else if (isTextareaBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
                   @for (st of inputStates(block); track st.key) {
@@ -4192,6 +4499,109 @@
                                 tabindex="-1"
                               />
                               <label [for]="'csel-sz-' + sz.key">Label</label>
+                            </p-floatlabel>
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="sz.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isDatepickerBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (datepickerIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label" [for]="'dp-sz-' + sz.key">Label</label>
+                            @for (mountKey of [datepickerOverlayMountKey()]; track mountKey) {
+                              <p-datepicker
+                                [inputId]="'dp-sz-' + sz.key"
+                                [ngModel]="null"
+                                [size]="datepickerPrimeSize(sz.key)"
+                                [variant]="formThemePrimeVariant('datepicker')"
+                                [style]="datepickerHostVars(sz.key)"
+                                [panelStyle]="datepickerPanelHostVars()"
+                                [placeholder]="inputStatePlaceholder"
+                                [showIcon]="datepickerIx().showIcon"
+                                iconDisplay="input"
+                                [selectionMode]="datepickerSelectionMode()"
+                                [view]="datepickerView()"
+                                [showTime]="datepickerShowTime()"
+                                [hideOnDateTimeSelect]="datepickerHideOnDateTimeSelect()"
+                                [numberOfMonths]="datepickerNumberOfMonths()"
+                                [dateFormat]="datepickerDateFormat()"
+                                [readonlyInput]="datepickerReadonlyInput()"
+                                hourFormat="24"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                              />
+                            }
+                          </div>
+                        } @else if (datepickerIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <span class="p-iftalabel" [style]="datepickerIftaLabelHostVarsForSize(sz.key)">
+                              @for (mountKey of [datepickerOverlayMountKey()]; track mountKey) {
+                                <p-datepicker
+                                  [inputId]="'dp-sz-' + sz.key"
+                                  [ngModel]="null"
+                                  [size]="datepickerPrimeSize(sz.key)"
+                                  [variant]="formThemePrimeVariant('datepicker')"
+                                  [style]="datepickerHostVars(sz.key)"
+                                  [panelStyle]="datepickerPanelHostVars()"
+                                  [placeholder]="inputStatePlaceholder"
+                                  [showIcon]="datepickerIx().showIcon"
+                                  iconDisplay="input"
+                                  [selectionMode]="datepickerSelectionMode()"
+                                  [view]="datepickerView()"
+                                  [showTime]="datepickerShowTime()"
+                                  [hideOnDateTimeSelect]="datepickerHideOnDateTimeSelect()"
+                                  [numberOfMonths]="datepickerNumberOfMonths()"
+                                  [dateFormat]="datepickerDateFormat()"
+                                  [readonlyInput]="datepickerReadonlyInput()"
+                                  hourFormat="24"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                />
+                              }
+                              <label [for]="'dp-sz-' + sz.key">Label</label>
+                            </span>
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <p-floatlabel
+                              [variant]="datepickerFloatPosition()"
+                              [class.is-label-floated]="datepickerFloatSizeLabelFloated()"
+                              [style]="datepickerFloatLabelHostVarsForSize(sz.key)"
+                            >
+                              @for (mountKey of [datepickerOverlayMountKey()]; track mountKey) {
+                                <p-datepicker
+                                  [inputId]="'dp-sz-' + sz.key"
+                                  [ngModel]="null"
+                                  [size]="datepickerPrimeSize(sz.key)"
+                                  [variant]="formThemePrimeVariant('datepicker')"
+                                  [style]="datepickerHostVars(sz.key)"
+                                  [panelStyle]="datepickerPanelHostVars()"
+                                  [placeholder]="inputStatePlaceholder"
+                                  [showIcon]="datepickerIx().showIcon"
+                                  iconDisplay="input"
+                                  [selectionMode]="datepickerSelectionMode()"
+                                  [view]="datepickerView()"
+                                  [showTime]="datepickerShowTime()"
+                                  [hideOnDateTimeSelect]="datepickerHideOnDateTimeSelect()"
+                                  [numberOfMonths]="datepickerNumberOfMonths()"
+                                  [dateFormat]="datepickerDateFormat()"
+                                  [readonlyInput]="datepickerReadonlyInput()"
+                                  hourFormat="24"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                />
+                              }
+                              <label [for]="'dp-sz-' + sz.key">Label</label>
                             </p-floatlabel>
                           </div>
                         }

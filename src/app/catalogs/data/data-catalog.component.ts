@@ -1,11 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TreeNode } from 'primeng/api';
 import { Checkbox } from 'primeng/checkbox';
 import { Divider } from 'primeng/divider';
 import { OrderList } from 'primeng/orderlist';
 import { Paginator, type PaginatorState } from 'primeng/paginator';
 import { Select } from 'primeng/select';
 import { ToggleSwitch } from 'primeng/toggleswitch';
+import { Tree } from 'primeng/tree';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
 import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
@@ -16,10 +18,14 @@ import {
   PAGINATOR_CATALOG_ROWS_OPTIONS,
   PAGINATOR_CATALOG_STATE_DEMOS,
   PAGINATOR_CATALOG_TOTAL,
+  TREE_CATALOG_NODES,
+  TREE_CATALOG_SELECTION_MODE_OPTIONS,
   type OrderlistCatalogExample,
   type OrderlistCatalogItem,
   type OrderlistInteractionState,
   type PaginatorCatalogStateKey,
+  type TreeCatalogSelectionMode,
+  type TreeInteractionState,
 } from './data-catalog.config';
 
 @Component({
@@ -37,6 +43,7 @@ import {
     Paginator,
     Select,
     ToggleSwitch,
+    Tree,
   ],
   templateUrl: './data-catalog.component.html',
   styleUrl: './data-catalog.component.css',
@@ -51,6 +58,9 @@ export class DataCatalogComponent {
   readonly orderlistExampleOptions = ORDERLIST_CATALOG_EXAMPLE_OPTIONS;
   readonly orderlistScrollHeight = '15rem';
 
+  readonly treeSelectionModeOptions = TREE_CATALOG_SELECTION_MODE_OPTIONS;
+  readonly treeScrollHeight = '15rem';
+
   readonly first = signal(0);
   readonly rows = signal(10);
 
@@ -59,6 +69,14 @@ export class DataCatalogComponent {
 
   orderlistIx: OrderlistInteractionState = {
     example: 'basic',
+    filter: false,
+  };
+
+  treeNodes: TreeNode[] = this.cloneTreeNodes();
+  treeSelection: TreeNode | TreeNode[] | null = null;
+
+  treeIx: TreeInteractionState = {
+    selectionMode: 'single',
     filter: false,
   };
 
@@ -100,5 +118,26 @@ export class DataCatalogComponent {
   onOrderlistExampleChange(example: OrderlistCatalogExample): void {
     this.patchOrderlistIx({ example });
     this.resetOrderlistItems();
+  }
+
+  treeSelectionMode(): 'single' | 'multiple' | 'checkbox' | undefined {
+    return this.treeIx.selectionMode === 'none' ? undefined : this.treeIx.selectionMode;
+  }
+
+  patchTreeIx(patch: Partial<TreeInteractionState>): void {
+    if (patch.selectionMode !== undefined && patch.selectionMode !== this.treeIx.selectionMode) {
+      this.treeSelection =
+        patch.selectionMode === 'multiple' || patch.selectionMode === 'checkbox' ? [] : null;
+      this.treeNodes = this.cloneTreeNodes();
+    }
+    Object.assign(this.treeIx, patch);
+  }
+
+  onTreeSelectionModeChange(selectionMode: TreeCatalogSelectionMode): void {
+    this.patchTreeIx({ selectionMode });
+  }
+
+  private cloneTreeNodes(): TreeNode[] {
+    return structuredClone(TREE_CATALOG_NODES) as TreeNode[];
   }
 }

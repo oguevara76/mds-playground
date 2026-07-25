@@ -183,4 +183,61 @@
       </div>
     </section>
   </div>
+
+  <div class="catalog-preview tree-showcase">
+    <section id="pg-tree" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Tree' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Tree"
+        >
+          <div catalogPreviewDemo class="tree-catalog-live-shell catalog-showcase-interactive">
+            <p-tree
+              class="tree-catalog-live"
+              [value]="treeNodes"
+              [selectionMode]="treeSelectionMode()"
+              [(selection)]="treeSelection"
+              [filter]="treeIx.filter"
+              filterBy="label"
+              filterPlaceholder="Filter nodes"
+              [scrollHeight]="treeScrollHeight"
+              ariaLabel="Tree interactivo del catálogo"
+            />
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Selection</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="treeSelectionModeOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="treeIx.selectionMode"
+                  (ngModelChange)="onTreeSelectionModeChange($event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Selection mode Tree"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Filter</span>
+              <p-toggleswitch
+                [ngModel]="treeIx.filter"
+                (ngModelChange)="patchTreeIx({ filter: $event })"
+                ariaLabel="Filtrar Tree"
+              />
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
 </div>

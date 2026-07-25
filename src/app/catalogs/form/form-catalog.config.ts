@@ -11,6 +11,7 @@ export type FormBlockKind =
   | 'multiselect'
   | 'listbox'
   | 'cascadeselect'
+  | 'datepicker'
   | 'password'
   | 'inputotp'
   | 'rating'
@@ -266,6 +267,38 @@ export const FORM_CASCADESELECT_DEMO_OPTIONS: FormCascadeSelectCountry[] = [
 export type FormCascadeSelectDemoValue = FormCascadeSelectCity['code'];
 
 export const FORM_CASCADESELECT_STATE_FILLED_VALUE: FormCascadeSelectDemoValue = 'A-SY';
+
+/** Fecha de demostración en estados Fill / Readonly (DatePicker). */
+export const FORM_DATEPICKER_STATE_FILLED_VALUE = new Date(2024, 5, 15);
+
+/** Rango demo en overlay Range (PrimeNG selectionMode="range"). */
+export const FORM_DATEPICKER_RANGE_DEMO_VALUE: Date[] = [
+  new Date(2024, 5, 10),
+  new Date(2024, 5, 20),
+];
+
+/** Modo del overlay del calendario (paridad docs PrimeNG DatePicker). */
+export type FormDatepickerOverlayInfo =
+  | 'default'
+  | 'range'
+  | 'time'
+  | 'month'
+  | 'year'
+  | 'multiple-month';
+
+export const FORM_DATEPICKER_OVERLAY_INFO_OPTIONS: {
+  label: string;
+  value: FormDatepickerOverlayInfo;
+}[] = [
+  { label: 'Default', value: 'default' },
+  { label: 'Range', value: 'range' },
+  { label: 'Time', value: 'time' },
+  { label: 'Month', value: 'month' },
+  { label: 'Year', value: 'year' },
+  { label: 'Multiple month', value: 'multiple-month' },
+];
+
+export const FORM_DATEPICKER_VARIANT_SELECT_OPTIONS = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
 
 export const FORM_CASCADESELECT_OPTION_GROUP_CHILDREN = ['states', 'cities'] as const;
 
@@ -577,6 +610,7 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'multiselect', title: 'MultiSelect', category: 'input' },
   { kind: 'listbox', title: 'Listbox', category: 'input' },
   { kind: 'cascadeselect', title: 'CascadeSelect', category: 'input' },
+  { kind: 'datepicker', title: 'DatePicker', category: 'input' },
   { kind: 'password', title: 'Password', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },
   { kind: 'rating', title: 'Rating', category: 'input' },

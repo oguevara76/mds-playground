@@ -6,7 +6,7 @@ import {
   FORM_SIZE_OPTIONS,
   type FormBlockKind,
 } from '../catalogs/form/form-catalog.config';
-import { PAGINATOR_CATALOG_STATE_DEMOS, ORDERLIST_CATALOG_EXAMPLE_OPTIONS } from '../catalogs/data/data-catalog.config';
+import { PAGINATOR_CATALOG_STATE_DEMOS, ORDERLIST_CATALOG_EXAMPLE_OPTIONS, TREE_CATALOG_SELECTION_MODE_OPTIONS } from '../catalogs/data/data-catalog.config';
 import {
   AVATAR_CATALOG_VARIANT_OPTIONS,
   AVATAR_GROUP_CATALOG_COUNT_OPTIONS,
@@ -72,6 +72,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-multiselect': 'multiselect',
   'pg-listbox': 'listbox',
   'pg-cascadeselect': 'cascadeselect',
+  'pg-datepicker': 'datepicker',
   'pg-password': 'password',
   'pg-inputotp': 'inputotp',
   'pg-rating': 'rating',
@@ -81,6 +82,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-toast': 'toast',
   'pg-paginator': 'paginator',
   'pg-orderlist': 'orderlist',
+  'pg-tree': 'tree',
   'pg-divider': 'divider',
   'pg-panel': 'panel',
   'pg-card': 'card',
@@ -130,6 +132,7 @@ const FORM_VARIANT_COUNTS: Record<string, number> = {
   multiselect: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   listbox: FORM_LISTBOX_VARIANT_SELECT_OPTIONS.length,
   cascadeselect: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
+  datepicker: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   password: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputotp: 6,
   rating: 4,
@@ -194,6 +197,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Data',
       keywords: ['p-orderlist', 'orderlist', 'order list', 'reordenar', 'lista'],
       variantCount: ORDERLIST_CATALOG_EXAMPLE_OPTIONS.length,
+    },
+    {
+      id: 'pg-tree',
+      name: 'Tree',
+      route: 'data',
+      sectionLabel: 'Data',
+      keywords: ['p-tree', 'tree', 'árbol', 'jerarquía', 'hierarchical'],
+      variantCount: TREE_CATALOG_SELECTION_MODE_OPTIONS.length,
     },
     {
       id: 'pg-panel',

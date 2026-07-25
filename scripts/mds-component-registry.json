@@ -49,6 +49,12 @@
     "related_semantic": ["--form-field-*", "--form-field-float-label-*", "--list-*", "--overlay-select-*"],
     "watch_vars": ["--cascadeselect-*", "--p-cascadeselect-*", "--p-floatlabel-*", "--p-iftalabel-*"]
   },
+  "datepicker": {
+    "playground_anchor": "pg-datepicker",
+    "primeng_prefix": "datepicker",
+    "related_semantic": ["--form-field-*", "--form-field-float-label-*"],
+    "watch_vars": ["--datepicker-*", "--p-datepicker-*", "--p-floatlabel-*", "--p-iftalabel-*", "--inputtext-*", "--p-inputtext-*"]
+  },
   "password": {
     "playground_anchor": "pg-password",
     "primeng_prefix": "password",
@@ -197,5 +203,10 @@
     "primeng_prefix": "galleria",
     "parity": "src/styles/primeng-galleria-parity.css",
     "watch_vars": ["--galleria-*", "--p-galleria-*"]
+  },
+  "tree": {
+    "playground_anchor": "pg-tree",
+    "primeng_prefix": "tree",
+    "watch_vars": ["--tree-*", "--p-tree-*"]
   }
 }

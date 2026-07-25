@@ -7,6 +7,7 @@ import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-p
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { FormsModule } from '@angular/forms';
 import { CascadeSelect } from 'primeng/cascadeselect';
+import { DatePicker } from 'primeng/datepicker';
 import { Checkbox } from 'primeng/checkbox';
 import { Divider } from 'primeng/divider';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -81,6 +82,11 @@ import {
   FORM_CASCADESELECT_DEMO_OPTIONS,
   FORM_CASCADESELECT_OPTION_GROUP_CHILDREN,
   FORM_CASCADESELECT_STATE_FILLED_VALUE,
+  FORM_DATEPICKER_STATE_FILLED_VALUE,
+  FORM_DATEPICKER_RANGE_DEMO_VALUE,
+  FORM_DATEPICKER_OVERLAY_INFO_OPTIONS,
+  FORM_DATEPICKER_VARIANT_SELECT_OPTIONS,
+  type FormDatepickerOverlayInfo,
   FORM_MULTISELECT_DISPLAY_OPTIONS,
   FORM_MULTISELECT_OVERLAY_OPTION_VARIANT_OPTIONS,
   FORM_MULTISELECT_STATE_FILLED_VALUE,
@@ -155,6 +161,16 @@ export interface FormCascadeSelectInteractionState {
   floatPosition: FormInputFloatVariant;
   size: FormInteractionSize;
   value: FormCascadeSelectDemoValue | null;
+}
+
+export interface FormDatepickerInteractionState {
+  variant: FormInputTextVariant;
+  floatPosition: FormInputFloatVariant;
+  size: FormInteractionSize;
+  overlayInfo: FormDatepickerOverlayInfo;
+  /** Icono de calendario dentro del input (PrimeNG showIcon). */
+  showIcon: boolean;
+  value: Date | Date[] | null;
 }
 
 export interface FormInputNumberInteractionState {
@@ -327,6 +343,17 @@ function defaultCascadeSelectInteraction(): FormCascadeSelectInteractionState {
   };
 }
 
+function defaultDatepickerInteraction(): FormDatepickerInteractionState {
+  return {
+    variant: 'default',
+    floatPosition: 'over',
+    size: 'normal',
+    overlayInfo: 'default',
+    showIcon: true,
+    value: null,
+  };
+}
+
 function defaultInputNumberInteraction(): FormInputNumberInteractionState {
   const formatVariant: FormInputNumberFormatVariant = 'numerals';
   return {
@@ -405,6 +432,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
     CascadeSelect,
+    DatePicker,
     Button,
     Checkbox,
     Divider,
@@ -475,6 +503,8 @@ export class FormCatalogComponent {
   readonly inputgroupCityOptions: FormInputGroupCityOption[] = FORM_INPUTGROUP_CITY_OPTIONS;
   readonly inputgroupExampleSelectOptions = FORM_INPUTGROUP_EXAMPLE_OPTIONS;
   readonly inputtextVariantSelectOptions = FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS;
+  readonly datepickerVariantSelectOptions = FORM_DATEPICKER_VARIANT_SELECT_OPTIONS;
+  readonly datepickerOverlayInfoOptions = FORM_DATEPICKER_OVERLAY_INFO_OPTIONS;
   readonly inputtextFloatPositionSelectOptions = FORM_INPUTTEXT_FLOAT_POSITION_SELECT_OPTIONS;
   readonly textareaVariantSelectOptions = FORM_TEXTAREA_VARIANT_SELECT_OPTIONS;
   readonly textareaFloatPositionSelectOptions = FORM_TEXTAREA_FLOAT_POSITION_SELECT_OPTIONS;
@@ -496,6 +526,7 @@ export class FormCatalogComponent {
     multiselect: 'outlined',
     listbox: 'outlined',
     cascadeselect: 'outlined',
+    datepicker: 'outlined',
     password: 'outlined',
     inputotp: 'outlined',
     rating: 'outlined',
@@ -519,6 +550,7 @@ export class FormCatalogComponent {
   readonly multiselectIx = signal<FormMultiselectInteractionState>(defaultMultiselectInteraction());
   readonly listboxIx = signal<FormListboxInteractionState>(defaultListboxInteraction());
   readonly cascadeSelectIx = signal<FormCascadeSelectInteractionState>(defaultCascadeSelectInteraction());
+  readonly datepickerIx = signal<FormDatepickerInteractionState>(defaultDatepickerInteraction());
   readonly passwordIx = signal<FormPasswordInteractionState>(defaultPasswordInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
   readonly ratingIx = signal<FormRatingInteractionState>(defaultRatingInteraction());
@@ -541,6 +573,15 @@ export class FormCatalogComponent {
 
   /** CascadeSelect Float Label: overlay abierto mantiene label/placeholder activos. */
   private readonly cascadeSelectFloatOverlayOpen = signal(false);
+
+  /** Float Label interactivo (DatePicker). */
+  private readonly datepickerFloatIxFocused = signal(false);
+
+  /** DatePicker Float Label: overlay abierto mantiene label/placeholder activos. */
+  private readonly datepickerFloatOverlayOpen = signal(false);
+
+  /** Fuerza remount del p-datepicker al cambiar overlay (view, range, time…). */
+  readonly datepickerOverlayMountKey = signal(0);
 
   /** Float Label interactivo: placeholder solo mientras el campo tiene foco. */
   private readonly floatIxFocused = signal(false);
@@ -615,6 +656,10 @@ export class FormCatalogComponent {
 
   isCascadeSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'cascadeselect' } {
     return block.kind === 'cascadeselect';
+  }
+
+  isDatepickerBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'datepicker' } {
+    return block.kind === 'datepicker';
   }
 
   isPasswordBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'password' } {
@@ -1931,6 +1976,387 @@ export class FormCatalogComponent {
     return null;
   }
 
+  patchDatepicker(patch: Partial<FormDatepickerInteractionState>): void {
+    const prevOverlay = this.datepickerIx().overlayInfo;
+    const prevVariant = this.datepickerIx().variant;
+    this.datepickerIx.update((prev) => {
+      if (patch.value !== undefined && this.datepickerValuesEqual(prev.value, patch.value)) {
+        return prev;
+      }
+      const next = { ...prev, ...patch };
+      if (patch.variant !== undefined && patch.variant !== prev.variant) {
+        next.value = null;
+      }
+      if (patch.overlayInfo !== undefined && patch.overlayInfo !== prev.overlayInfo) {
+        next.value = null;
+      }
+      return next;
+    });
+    if (patch.overlayInfo !== undefined && patch.overlayInfo !== prevOverlay) {
+      this.datepickerOverlayMountKey.update((key) => key + 1);
+      this.datepickerFloatIxFocused.set(false);
+      this.datepickerFloatOverlayOpen.set(false);
+    } else if (patch.variant !== undefined && patch.variant !== prevVariant) {
+      this.datepickerFloatIxFocused.set(false);
+      this.datepickerFloatOverlayOpen.set(false);
+    }
+  }
+
+  private datepickerValuesEqual(
+    left: Date | Date[] | null,
+    right: Date | Date[] | null,
+  ): boolean {
+    if (left === right) {
+      return true;
+    }
+    if (left == null || right == null) {
+      return false;
+    }
+    if (Array.isArray(left) && Array.isArray(right)) {
+      if (left.length !== right.length) {
+        return false;
+      }
+      return left.every((date, index) => {
+        const other = right[index];
+        if (date == null && other == null) {
+          return true;
+        }
+        if (date == null || other == null) {
+          return false;
+        }
+        return date.getTime() === other.getTime();
+      });
+    }
+    if (!Array.isArray(left) && !Array.isArray(right)) {
+      return left.getTime() === right.getTime();
+    }
+    return false;
+  }
+
+  datepickerSelectionMode(): 'single' | 'range' {
+    return this.datepickerIx().overlayInfo === 'range' ? 'range' : 'single';
+  }
+
+  datepickerView(): 'date' | 'month' | 'year' {
+    const info = this.datepickerIx().overlayInfo;
+    if (info === 'month') {
+      return 'month';
+    }
+    if (info === 'year') {
+      return 'year';
+    }
+    return 'date';
+  }
+
+  datepickerShowTime(): boolean {
+    return this.datepickerIx().overlayInfo === 'time';
+  }
+
+  /** Mantener overlay abierto tras elegir día para permitir ajustar la hora (PrimeNG showTime). */
+  datepickerHideOnDateTimeSelect(): boolean {
+    return !this.datepickerShowTime();
+  }
+
+  datepickerNumberOfMonths(): number {
+    return this.datepickerIx().overlayInfo === 'multiple-month' ? 2 : 1;
+  }
+
+  datepickerDateFormat(): string {
+    switch (this.datepickerIx().overlayInfo) {
+      case 'month':
+        return 'mm/yy';
+      case 'year':
+        return 'yy';
+      default:
+        return 'dd/mm/yy';
+    }
+  }
+
+  /** Month/Year picker: input de solo lectura (docs PrimeNG). */
+  datepickerReadonlyInput(): boolean {
+    const info = this.datepickerIx().overlayInfo;
+    return info === 'month' || info === 'year';
+  }
+
+  /** Preview estático Default: readonly del catálogo o month/year overlay. */
+  datepickerStateReadonlyInput(state: FormInputDemoState): boolean {
+    return this.datepickerReadonlyInput() || state === 'readonly';
+  }
+
+  datepickerHasValue(): boolean {
+    const value = this.datepickerIx().value;
+    if (Array.isArray(value)) {
+      return value.length > 0;
+    }
+    return value != null;
+  }
+
+  private datepickerFilledDemoValue(): Date | Date[] {
+    return this.datepickerIx().overlayInfo === 'range'
+      ? FORM_DATEPICKER_RANGE_DEMO_VALUE
+      : FORM_DATEPICKER_STATE_FILLED_VALUE;
+  }
+
+  datepickerIsDefault(): boolean {
+    return this.datepickerIx().variant === 'default';
+  }
+
+  datepickerIsFloatLabel(): boolean {
+    return this.datepickerIx().variant === 'floatlabel';
+  }
+
+  datepickerIsIftaLabel(): boolean {
+    return this.datepickerIx().variant === 'iftalabel';
+  }
+
+  datepickerFloatPosition(): FormInputFloatVariant {
+    return this.datepickerIx().floatPosition;
+  }
+
+  datepickerIsFloatIn(): boolean {
+    return this.datepickerIsFloatLabel() && this.datepickerFloatPosition() === 'in';
+  }
+
+  datepickerIsFloatOverOrOn(): boolean {
+    return (
+      this.datepickerIsFloatLabel() &&
+      (this.datepickerFloatPosition() === 'over' || this.datepickerFloatPosition() === 'on')
+    );
+  }
+
+  datepickerInteractionLabelFloated(): boolean {
+    if (!this.datepickerIsFloatLabel()) {
+      return false;
+    }
+    return (
+      this.datepickerHasValue() ||
+      this.datepickerFloatIxFocused() ||
+      this.datepickerFloatOverlayOpen()
+    );
+  }
+
+  datepickerFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    if (this.datepickerFloatPosition() === 'in') {
+      return state === 'filled' || state === 'focus' || state === 'disabled';
+    }
+    if (this.datepickerIsFloatOverOrOn() && state === 'disabled') {
+      return true;
+    }
+    return state === 'focus' || state === 'filled';
+  }
+
+  datepickerFloatSizeLabelFloated(): boolean {
+    if (!this.datepickerIsFloatLabel()) {
+      return false;
+    }
+    return true;
+  }
+
+  setDatepickerFloatIxFocused(focused: boolean): void {
+    if (!this.datepickerIsFloatLabel()) {
+      return;
+    }
+    if (!focused && this.datepickerFloatOverlayOpen()) {
+      return;
+    }
+    if (this.datepickerFloatIxFocused() === focused) {
+      return;
+    }
+    this.datepickerFloatIxFocused.set(focused);
+  }
+
+  setDatepickerFloatOverlayOpen(open: boolean): void {
+    if (!this.datepickerIsFloatLabel()) {
+      return;
+    }
+    if (this.datepickerFloatOverlayOpen() === open) {
+      return;
+    }
+    this.datepickerFloatOverlayOpen.set(open);
+    if (open) {
+      this.datepickerFloatIxFocused.set(true);
+    } else if (!this.datepickerHasValue()) {
+      this.datepickerFloatIxFocused.set(false);
+    }
+  }
+
+  datepickerFloatInteractionPlaceholder(): string | null {
+    if (this.datepickerIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    if (!this.datepickerFloatIxFocused() && !this.datepickerFloatOverlayOpen()) {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  datepickerInteractionPlaceholder(): string {
+    if (this.datepickerIsDefault() || this.datepickerIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    return this.datepickerFloatInteractionPlaceholder() ?? '';
+  }
+
+  datepickerInteractionScopeClass(): Record<string, boolean> {
+    const sx = this.datepickerIx();
+    return {
+      'catalog-input-interactive--float-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
+      'catalog-input-interactive--float-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
+      'catalog-input-interactive--float-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+    };
+  }
+
+  datepickerPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return size === 'small' ? 'small' : size === 'large' ? 'large' : undefined;
+  }
+
+  /** Cache de estilos inline para evitar re-init del DatePicker en cada CD. */
+  private datepickerPanelHostVarsCache: Record<string, string> | null = null;
+  private readonly datepickerHostVarsCache: Partial<Record<FormInteractionSize, Record<string, string>>> =
+    {};
+  private datepickerStateValueCacheOverlay: FormDatepickerOverlayInfo | null = null;
+  private datepickerStateValueCacheVariant: FormInputTextVariant | null = null;
+  private readonly datepickerStateValueCache = new Map<FormInputDemoState, Date | Date[] | null>();
+
+  datepickerPanelHostVars(): Record<string, string> {
+    if (this.datepickerPanelHostVarsCache) {
+      return this.datepickerPanelHostVarsCache;
+    }
+    this.datepickerPanelHostVarsCache = {
+      '--p-datepicker-panel-background': 'var(--datepicker-panel-background)',
+      '--p-datepicker-panel-border-color': 'var(--datepicker-panel-border-color)',
+      '--p-datepicker-panel-border-radius': 'var(--datepicker-panel-border-radius)',
+      '--p-datepicker-panel-color': 'var(--datepicker-panel-color)',
+      '--p-datepicker-panel-padding': 'var(--datepicker-panel-padding)',
+      '--p-datepicker-panel-shadow': 'var(--datepicker-panel-shadow)',
+      '--p-datepicker-header-background': 'var(--datepicker-header-background)',
+      '--p-datepicker-header-border-color': 'var(--datepicker-header-border-color)',
+      '--p-datepicker-header-color': 'var(--datepicker-header-color)',
+      '--p-datepicker-date-selected-background': 'var(--datepicker-date-selected-background)',
+      '--p-datepicker-date-selected-color': 'var(--datepicker-date-selected-color)',
+      '--p-datepicker-date-hover-background': 'var(--datepicker-date-hover-background)',
+      '--p-datepicker-date-hover-color': 'var(--datepicker-date-hover-color)',
+      '--p-datepicker-today-background': 'var(--datepicker-today-background)',
+      '--p-datepicker-today-color': 'var(--datepicker-today-color)',
+    };
+    return this.datepickerPanelHostVarsCache;
+  }
+
+  datepickerHostVars(size: FormInteractionSize = 'normal'): Record<string, string> {
+    const cached = this.datepickerHostVarsCache[size];
+    if (cached) {
+      return cached;
+    }
+    const dropdownWidth =
+      size === 'small'
+        ? 'var(--datepicker-dropdown-sm-width)'
+        : size === 'large'
+          ? 'var(--datepicker-dropdown-lg-width)'
+          : 'var(--datepicker-dropdown-width)';
+    const vars = {
+      '--p-inputtext-padding-x': `var(${this.fieldPaddingXToken('inputtext', size)})`,
+      '--p-inputtext-padding-y': `var(${this.fieldPaddingYToken('inputtext', size)})`,
+      '--p-inputtext-border-color': 'var(--inputtext-border-color)',
+      '--p-inputtext-background': 'var(--inputtext-background)',
+      '--p-inputtext-color': 'var(--inputtext-color)',
+      '--p-inputtext-placeholder-color': 'var(--inputtext-placeholder-color)',
+      '--p-inputtext-focus-border-color': 'var(--inputtext-focus-border-color)',
+      '--p-inputtext-hover-border-color': 'var(--inputtext-hover-border-color)',
+      '--p-inputtext-invalid-border-color': 'var(--inputtext-invalid-border-color)',
+      '--p-inputtext-disabled-background': 'var(--inputtext-disabled-background)',
+      '--p-inputtext-disabled-color': 'var(--inputtext-disabled-color)',
+      '--p-inputtext-shadow': 'var(--inputtext-shadow)',
+      '--p-inputtext-filled-background': 'var(--inputtext-filled-background)',
+      '--p-inputtext-filled-hover-background': 'var(--inputtext-filled-hover-background)',
+      '--p-inputtext-filled-focus-background': 'var(--inputtext-filled-focus-background)',
+      '--p-datepicker-dropdown-width': dropdownWidth,
+      '--p-datepicker-dropdown-color': 'var(--datepicker-dropdown-color)',
+      '--p-datepicker-input-icon-color': 'var(--datepicker-input-icon-color)',
+      ...this.datepickerPanelHostVars(),
+    };
+    this.datepickerHostVarsCache[size] = vars;
+    return vars;
+  }
+
+  datepickerFloatLabelHostVars(): Record<string, string> {
+    const sx = this.datepickerIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, sx.size, 'inputtext');
+  }
+
+  datepickerIftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    return this.iftaLabelInputtextHostVars(size, 'inputtext');
+  }
+
+  datepickerFloatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    const sx = this.datepickerIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, size, 'inputtext');
+  }
+
+  datepickerFloatLabelStatesHostVars(): Record<string, string> {
+    const sx = this.datepickerIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, 'normal', 'inputtext');
+  }
+
+  datepickerFloatPlaceholderAttr(state: FormInputDemoState): string | null {
+    if (this.datepickerIsIftaLabel()) {
+      if (state === 'filled') {
+        return null;
+      }
+      return this.inputStatePlaceholder;
+    }
+    if (this.datepickerIsFloatLabel()) {
+      if (state === 'focus') {
+        return this.inputStatePlaceholder;
+      }
+      return null;
+    }
+    if (state === 'empty' || state === 'filled') {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  datepickerStateValue(state: FormInputDemoState): Date | Date[] | null {
+    const overlay = this.datepickerIx().overlayInfo;
+    const variant = this.datepickerIx().variant;
+    if (
+      this.datepickerStateValueCacheOverlay !== overlay ||
+      this.datepickerStateValueCacheVariant !== variant
+    ) {
+      this.datepickerStateValueCache.clear();
+      this.datepickerStateValueCacheOverlay = overlay;
+      this.datepickerStateValueCacheVariant = variant;
+    }
+    const cached = this.datepickerStateValueCache.get(state);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const filled = this.datepickerFilledDemoValue();
+    let value: Date | Date[] | null;
+    if (this.datepickerIsDefault()) {
+      if (
+        this.inputStateShowsPlaceholderOnly(
+          { kind: 'datepicker', title: 'DatePicker', category: 'input' },
+          state,
+        )
+      ) {
+        value = null;
+      } else if (state === 'readonly') {
+        value = filled;
+      } else {
+        value = null;
+      }
+    } else if (state === 'filled' || state === 'disabled') {
+      value = filled;
+    } else {
+      value = null;
+    }
+
+    this.datepickerStateValueCache.set(state, value);
+    return value;
+  }
+
   patchPassword(patch: Partial<FormPasswordInteractionState>): void {
     this.passwordIx.update((prev) => ({ ...prev, ...patch }));
   }
@@ -2976,6 +3402,9 @@ export class FormCatalogComponent {
     if (this.isCascadeSelectBlock(block)) {
       return this.cascadeSelectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
+    if (this.isDatepickerBlock(block)) {
+      return this.datepickerIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
+    }
     if (this.isTextareaBlock(block)) {
       return this.textareaIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
@@ -3030,6 +3459,7 @@ export class FormCatalogComponent {
       (this.isSelectBlock(block) && this.selectIsDefault()) ||
       (this.isMultiselectBlock(block) && this.multiselectIsDefault()) ||
       (this.isCascadeSelectBlock(block) && this.cascadeSelectIsDefault()) ||
+      (this.isDatepickerBlock(block) && this.datepickerIsDefault()) ||
       (this.isTextareaBlock(block) && this.textareaIsDefault()) ||
       (this.isInputTextBlock(block) && this.inputtextIsDefault()) ||
       (this.isInputGroupBlock(block) && this.inputgroupIsDefault());
@@ -3066,7 +3496,8 @@ export class FormCatalogComponent {
       this.isInputGroupBlock(block) ||
       this.isSelectBlock(block) ||
       this.isListboxBlock(block) ||
-      this.isCascadeSelectBlock(block)
+      this.isCascadeSelectBlock(block) ||
+      this.isDatepickerBlock(block)
     ) {
       if (this.isInputTextBlock(block) && this.inputtextIsFloatOverOrOn() && (state === 'disabled' || state === 'focus')) {
         return false;
@@ -3128,6 +3559,8 @@ export class FormCatalogComponent {
       this.isInputGroupBlock(block) ||
       this.isSelectBlock(block) ||
       this.isListboxBlock(block) ||
+      this.isCascadeSelectBlock(block) ||
+      this.isDatepickerBlock(block) ||
       this.isPasswordBlock(block) ||
       this.isInputOtpBlock(block) ||
       this.isInputNumberBlock(block)

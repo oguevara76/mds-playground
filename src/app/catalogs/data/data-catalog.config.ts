@@ -55,3 +55,74 @@ export interface OrderlistInteractionState {
   example: OrderlistCatalogExample;
   filter: boolean;
 }
+
+export type TreeCatalogSelectionMode = 'none' | 'single' | 'multiple' | 'checkbox';
+
+export const TREE_CATALOG_SELECTION_MODE_OPTIONS: {
+  label: string;
+  value: TreeCatalogSelectionMode;
+}[] = [
+  { label: 'None', value: 'none' },
+  { label: 'Single', value: 'single' },
+  { label: 'Multiple', value: 'multiple' },
+  { label: 'Checkbox', value: 'checkbox' },
+];
+
+/** Árbol demo (PrimeNG Tree — selection modes + filter). */
+export const TREE_CATALOG_NODES = [
+  {
+    label: 'Documents',
+    data: 'Documents',
+    icon: 'pi pi-folder',
+    expanded: true,
+    children: [
+      {
+        label: 'Work',
+        data: 'Work',
+        icon: 'pi pi-folder',
+        expanded: true,
+        children: [
+          { label: 'Expenses.doc', icon: 'pi pi-file', data: 'Expenses.doc' },
+          { label: 'Resume.doc', icon: 'pi pi-file', data: 'Resume.doc' },
+        ],
+      },
+      {
+        label: 'Home',
+        data: 'Home',
+        icon: 'pi pi-folder',
+        children: [{ label: 'Invoices.txt', icon: 'pi pi-file', data: 'Invoices.txt' }],
+      },
+    ],
+  },
+  {
+    label: 'Pictures',
+    data: 'Pictures',
+    icon: 'pi pi-folder',
+    children: [
+      { label: 'barcelona.jpg', icon: 'pi pi-image', data: 'barcelona.jpg' },
+      { label: 'logo.jpg', icon: 'pi pi-image', data: 'logo.jpg' },
+      { label: 'prime.jpg', icon: 'pi pi-image', data: 'prime.jpg' },
+    ],
+  },
+  {
+    label: 'Movies',
+    data: 'Movies',
+    icon: 'pi pi-folder',
+    children: [
+      {
+        label: 'Al Pacino',
+        data: 'Pacino Movies',
+        icon: 'pi pi-folder',
+        children: [
+          { label: 'Scarface', icon: 'pi pi-video', data: 'Scarface' },
+          { label: 'Serpico', icon: 'pi pi-video', data: 'Serpico' },
+        ],
+      },
+    ],
+  },
+];
+
+export interface TreeInteractionState {
+  selectionMode: TreeCatalogSelectionMode;
+  filter: boolean;
+}
