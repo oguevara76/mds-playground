@@ -3254,3 +3254,18 @@ app-playground-sidebar {
   text-align: center;
   font-style: italic;
 }
+
+/* Catálogos pesados: oculta overlays appendTo=body mientras carga el loader de sección */
+html.catalog-section-booting .p-datepicker-panel,
+html.catalog-section-booting .p-select-overlay,
+html.catalog-section-booting .p-multiselect-overlay,
+html.catalog-section-booting .p-cascadeselect-overlay,
+html.catalog-section-booting .p-treeselect-overlay,
+html.catalog-section-booting .p-popover,
+html.catalog-section-booting .p-password-overlay,
+html.catalog-section-booting .p-datepicker,
+html.catalog-section-booting [data-pc-section='overlay'] {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

@@ -1,5 +1,7 @@
 import { NgClass } from '@angular/common';
-import { afterNextRender, Component, inject, Injector, signal } from '@angular/core';
+import { afterNextRender, Component, DestroyRef, inject, Injector, signal } from '@angular/core';
+import { createCatalogSectionBoot } from '../../components/ui/catalog-section-loader/catalog-section-boot';
+import { CatalogSectionLoaderComponent } from '../../components/ui/catalog-section-loader/catalog-section-loader.component';
 import { FormsModule } from '@angular/forms';
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
 import { Avatar } from 'primeng/avatar';
@@ -82,13 +84,18 @@ import {
 @Component({
   selector: 'app-panel-catalog',
   standalone: true,
-  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Avatar, Button, Card, IconField, InputIcon, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleButton, ToggleSwitch, FormsModule, NgClass, Divider, Select, Panel, Stepper, StepList, Step, StepPanels, StepPanel, StepItem, Toolbar],
+  imports: [CatalogBlockHeadTitlePipe, CatalogInfoBlockComponent, CatalogPreviewFrameComponent, CatalogSectionLoaderComponent, CatalogStateTagComponent, Accordion, AccordionPanel, AccordionHeader, AccordionContent, Avatar, Button, Card, IconField, InputIcon, InputText, Password, Tag, Tabs, TabList, Tab, TabPanels, TabPanel, ToggleButton, ToggleSwitch, FormsModule, NgClass, Divider, Select, Panel, Stepper, StepList, Step, StepPanels, StepPanel, StepItem, Toolbar],
   templateUrl: './panel-catalog.component.html',
   styleUrl: './panel-catalog.component.css',
   host: { class: 'panel-catalog-page' },
 })
 export class PanelCatalogComponent {
   private readonly injector = inject(Injector);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly sectionBoot = createCatalogSectionBoot(this.injector, this.destroyRef);
+
+  readonly sectionContentMounted = this.sectionBoot.contentMounted;
+  readonly sectionReady = this.sectionBoot.ready;
 
   // ─── Panel (p-panel) ───────────────────────────────────────────────────────
 

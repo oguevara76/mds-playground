@@ -1,3 +1,7 @@
+@if (!sectionReady()) {
+  <mds-catalog-section-loader label="Cargando Form…" ariaLabel="Cargando sección Form" />
+}
+@if (sectionContentMounted()) {
 <div class="cards-grid form-catalog-stack">
   <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
   @for (block of blocks; track block.kind) {
@@ -5191,3 +5195,4 @@
     </div>
   }
 </div>
+}

@@ -1,10 +1,12 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, DestroyRef, inject, Injector, signal } from '@angular/core';
 import { formPlaygroundAnchorId } from '../../layout/playground-component-index';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
 import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
+import { createCatalogSectionBoot } from '../../components/ui/catalog-section-loader/catalog-section-boot';
+import { CatalogSectionLoaderComponent } from '../../components/ui/catalog-section-loader/catalog-section-loader.component';
 import { FormsModule } from '@angular/forms';
 import { CascadeSelect } from 'primeng/cascadeselect';
 import { TreeNode } from 'primeng/api';
@@ -458,6 +460,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     CatalogBlockHeadTitlePipe,
     CatalogInfoBlockComponent,
     CatalogPreviewFrameComponent,
+    CatalogSectionLoaderComponent,
     CatalogStateTagComponent,
     CascadeSelect,
     TreeSelect,
@@ -494,6 +497,14 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
   styleUrl: './form-catalog.component.css',
 })
 export class FormCatalogComponent {
+  private readonly injector = inject(Injector);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly sectionBoot = createCatalogSectionBoot(this.injector, this.destroyRef);
+
+  /** Loader de pantalla hasta que el catálogo Form (muy pesado) pinta por completo. */
+  readonly sectionContentMounted = this.sectionBoot.contentMounted;
+  readonly sectionReady = this.sectionBoot.ready;
+
   readonly formAnchorId = formPlaygroundAnchorId;
   readonly blocks = FORM_BLOCKS;
   readonly radioOptions = FORM_RADIO_OPTIONS;

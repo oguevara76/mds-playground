@@ -1,3 +1,7 @@
+@if (!sectionReady()) {
+  <mds-catalog-section-loader label="Cargando Panel…" ariaLabel="Cargando sección Panel" />
+}
+@if (sectionContentMounted()) {
 <div class="cards-grid form-catalog-stack">
   <!-- ─── Panel ─────────────────────────────────────────────────────────────── -->
   <div class="catalog-preview panel-variant-block" [style.--panel-catalog-demo-height]="panelDemoHeight">
@@ -1149,3 +1153,4 @@
     </section>
   </div>
 </div>
+}
