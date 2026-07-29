@@ -32,11 +32,19 @@
   min-width: 0;
 }
 
-.catalog-preview-frame__stage ::ng-deep [catalogPreviewDemo].catalog-input-interactive {
+.catalog-preview-frame__stage ::ng-deep [catalogPreviewDemo].catalog-input-interactive:not(.inputgroup-interaction-scope) {
   align-items: center;
   justify-content: center;
   width: 100%;
   max-width: 320px;
+}
+
+.catalog-preview-frame__stage ::ng-deep [catalogPreviewDemo].inputgroup-catalog-demo-area {
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  max-width: min(100%, 40rem);
+  flex-wrap: nowrap;
 }
 
 .catalog-preview-frame__stage ::ng-deep [catalogPreviewDemo].catalog-showcase-interactive:not(.catalog-input-interactive) {

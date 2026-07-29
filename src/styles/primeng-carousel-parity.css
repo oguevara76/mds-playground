@@ -1,0 +1,71 @@
+/* Paridad PrimeNG Carousel — tokens --p-carousel-* ← --carousel-* (mds-components + primeng-tokens). */
+
+.p-carousel {
+  --carousel-item-gap: var(--p-carousel-content-gap, var(--carousel-content-gap, 16px));
+}
+
+/* Separación nav ↔ viewport (vertical: flechas arriba/abajo de la card). */
+.p-carousel-content {
+  gap: var(--carousel-item-gap);
+}
+
+/*
+ * Separación entre items: padding en el slot PrimeNG (.p-carousel-item).
+ * El viewport tiene overflow:hidden y recorta márgenes externos de la card;
+ * el padding queda dentro del flex item y sí genera gutter visible.
+ */
+.p-carousel-item {
+  box-sizing: border-box;
+}
+
+.p-carousel-horizontal .p-carousel-item {
+  padding-inline: calc(var(--carousel-item-gap) / 2);
+  min-width: 0;
+}
+
+.p-carousel-vertical .p-carousel-item {
+  padding-block: calc(var(--carousel-item-gap) / 2);
+}
+
+.p-carousel-item .carousel-catalog-product {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.p-carousel-indicator-list {
+  padding: var(--carousel-indicator-list-padding, var(--p-carousel-indicator-list-padding));
+  gap: var(--carousel-indicator-list-gap, var(--p-carousel-indicator-list-gap));
+}
+
+.p-carousel-indicator-button {
+  background: var(--carousel-indicator-background, var(--p-carousel-indicator-background));
+  width: var(--carousel-indicator-width, var(--p-carousel-indicator-width));
+  height: var(--carousel-indicator-height, var(--p-carousel-indicator-height));
+  border-radius: var(--carousel-indicator-border-radius, var(--p-carousel-indicator-border-radius));
+}
+
+.p-carousel-indicator-button:hover {
+  background: var(--carousel-indicator-hover-background, var(--p-carousel-indicator-hover-background));
+}
+
+.p-carousel-indicator-active .p-carousel-indicator-button {
+  background: var(--carousel-indicator-active-background, var(--p-carousel-indicator-active-background));
+}
+
+.p-carousel-indicator-button:focus-visible {
+  box-shadow: var(--carousel-indicator-focus-ring-shadow, var(--p-carousel-indicator-focus-ring-shadow));
+  outline: var(--carousel-indicator-focus-ring-width, var(--p-carousel-indicator-focus-ring-width))
+    solid
+    var(--carousel-indicator-focus-ring-color, var(--p-carousel-indicator-focus-ring-color));
+  outline-offset: var(--carousel-indicator-focus-ring-offset, var(--p-carousel-indicator-focus-ring-offset));
+}
+
+.p-carousel-vertical .p-carousel-viewport {
+  width: 100%;
+}
+
+.p-carousel-vertical .p-carousel-item-list {
+  height: 100%;
+}

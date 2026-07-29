@@ -6,7 +6,7 @@ import {
   FORM_SIZE_OPTIONS,
   type FormBlockKind,
 } from '../catalogs/form/form-catalog.config';
-import { PAGINATOR_CATALOG_STATE_DEMOS, ORDERLIST_CATALOG_EXAMPLE_OPTIONS, TREE_CATALOG_SELECTION_MODE_OPTIONS } from '../catalogs/data/data-catalog.config';
+import { PAGINATOR_CATALOG_STATE_DEMOS, ORDERLIST_CATALOG_EXAMPLE_OPTIONS, TIMELINE_CATALOG_VARIANT_OPTIONS, TREE_CATALOG_SELECTION_MODE_OPTIONS } from '../catalogs/data/data-catalog.config';
 import {
   AVATAR_CATALOG_VARIANT_OPTIONS,
   AVATAR_GROUP_CATALOG_COUNT_OPTIONS,
@@ -29,7 +29,7 @@ import {
 } from '../catalogs/panel/panel-catalog.config';
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS, MENU_CATALOG_EXAMPLE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
-import { GALLERIA_CATALOG_VARIANT_OPTIONS } from '../catalogs/media/media-catalog.config';
+import { GALLERIA_CATALOG_VARIANT_OPTIONS, CAROUSEL_CATALOG_ORIENTATION_OPTIONS } from '../catalogs/media/media-catalog.config';
 import { MDS_VARS_CATALOG } from '../theme/mds-vars-catalog.generated';
 
 export type PlaygroundCatalogRoute =
@@ -72,6 +72,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-multiselect': 'multiselect',
   'pg-listbox': 'listbox',
   'pg-cascadeselect': 'cascadeselect',
+  'pg-treeselect': 'treeselect',
   'pg-datepicker': 'datepicker',
   'pg-password': 'password',
   'pg-inputotp': 'inputotp',
@@ -83,6 +84,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-paginator': 'paginator',
   'pg-orderlist': 'orderlist',
   'pg-tree': 'tree',
+  'pg-timeline': 'timeline',
   'pg-divider': 'divider',
   'pg-panel': 'panel',
   'pg-card': 'card',
@@ -100,6 +102,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-drawer': 'drawer',
   'pg-popover': 'popover',
   'pg-galleria': 'galleria',
+  'pg-carousel': 'carousel',
   'pg-tag': 'tag',
   'pg-chip': 'chip',
   'pg-badge': 'badge',
@@ -132,6 +135,7 @@ const FORM_VARIANT_COUNTS: Record<string, number> = {
   multiselect: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   listbox: FORM_LISTBOX_VARIANT_SELECT_OPTIONS.length,
   cascadeselect: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
+  treeselect: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   datepicker: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   password: FORM_INPUTTEXT_VARIANT_SELECT_OPTIONS.length,
   inputotp: 6,
@@ -205,6 +209,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Data',
       keywords: ['p-tree', 'tree', 'árbol', 'jerarquía', 'hierarchical'],
       variantCount: TREE_CATALOG_SELECTION_MODE_OPTIONS.length,
+    },
+    {
+      id: 'pg-timeline',
+      name: 'Timeline',
+      route: 'data',
+      sectionLabel: 'Data',
+      keywords: ['p-timeline', 'timeline', 'cronología', 'eventos', 'historial'],
+      variantCount: TIMELINE_CATALOG_VARIANT_OPTIONS.length,
     },
     {
       id: 'pg-panel',
@@ -341,6 +353,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Media',
       keywords: ['p-galleria', 'galleria', 'gallery', 'galería', 'imágenes', 'images'],
       variantCount: GALLERIA_CATALOG_VARIANT_OPTIONS.length,
+    },
+    {
+      id: 'pg-carousel',
+      name: 'Carousel',
+      route: 'media',
+      sectionLabel: 'Media',
+      keywords: ['p-carousel', 'carousel', 'slider', 'carrusel', 'deslizador'],
+      variantCount: CAROUSEL_CATALOG_ORIENTATION_OPTIONS.length,
     },
     {
       id: 'pg-tag',

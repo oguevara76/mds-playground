@@ -11,6 +11,7 @@ export type FormBlockKind =
   | 'multiselect'
   | 'listbox'
   | 'cascadeselect'
+  | 'treeselect'
   | 'datepicker'
   | 'password'
   | 'inputotp'
@@ -267,6 +268,64 @@ export const FORM_CASCADESELECT_DEMO_OPTIONS: FormCascadeSelectCountry[] = [
 export type FormCascadeSelectDemoValue = FormCascadeSelectCity['code'];
 
 export const FORM_CASCADESELECT_STATE_FILLED_VALUE: FormCascadeSelectDemoValue = 'A-SY';
+
+/** Árbol demo (PrimeNG TreeSelect — single / checkbox). */
+export const FORM_TREESELECT_DEMO_NODES = [
+  {
+    key: '0',
+    label: 'Documents',
+    data: 'Documents',
+    icon: 'pi pi-folder',
+    expanded: true,
+    children: [
+      {
+        key: '0-0',
+        label: 'Work',
+        data: 'Work',
+        icon: 'pi pi-folder',
+        expanded: true,
+        children: [
+          { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-file', data: 'Expenses.doc' },
+          { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-file', data: 'Resume.doc' },
+        ],
+      },
+      {
+        key: '0-1',
+        label: 'Home',
+        data: 'Home',
+        icon: 'pi pi-folder',
+        children: [{ key: '0-1-0', label: 'Invoices.txt', icon: 'pi pi-file', data: 'Invoices.txt' }],
+      },
+    ],
+  },
+  {
+    key: '1',
+    label: 'Pictures',
+    data: 'Pictures',
+    icon: 'pi pi-folder',
+    children: [
+      { key: '1-0', label: 'barcelona.jpg', icon: 'pi pi-image', data: 'barcelona.jpg' },
+      { key: '1-1', label: 'logo.jpg', icon: 'pi pi-image', data: 'logo.jpg' },
+    ],
+  },
+] as const;
+
+export type FormTreeSelectDemoValue = (typeof FORM_TREESELECT_DEMO_NODES)[number]['key'] | string;
+
+export type FormTreeSelectTreeOption = 'default' | 'checkbox';
+
+export type FormTreeSelectCheckboxValue = Record<string, { checked: boolean; partialChecked: boolean }>;
+
+export const FORM_TREESELECT_TREE_OPTION_OPTIONS: { label: string; value: FormTreeSelectTreeOption }[] = [
+  { label: 'Default', value: 'default' },
+  { label: 'Checkbox', value: 'checkbox' },
+];
+
+export const FORM_TREESELECT_STATE_FILLED_VALUE: FormTreeSelectDemoValue = '0-0';
+
+export const FORM_TREESELECT_CHECKBOX_STATE_FILLED_VALUE: FormTreeSelectCheckboxValue = {
+  '0-0': { checked: true, partialChecked: false },
+};
 
 /** Fecha de demostración en estados Fill / Readonly (DatePicker). */
 export const FORM_DATEPICKER_STATE_FILLED_VALUE = new Date(2024, 5, 15);
@@ -610,6 +669,7 @@ export const FORM_BLOCKS: FormBlockConfig[] = [
   { kind: 'multiselect', title: 'MultiSelect', category: 'input' },
   { kind: 'listbox', title: 'Listbox', category: 'input' },
   { kind: 'cascadeselect', title: 'CascadeSelect', category: 'input' },
+  { kind: 'treeselect', title: 'TreeSelect', category: 'input' },
   { kind: 'datepicker', title: 'DatePicker', category: 'input' },
   { kind: 'password', title: 'Password', category: 'input' },
   { kind: 'inputotp', title: 'InputOtp', category: 'input' },

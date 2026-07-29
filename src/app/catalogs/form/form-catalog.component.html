@@ -18,6 +18,7 @@
       [class.listbox-variant-group]="isListboxBlock(block) && listboxInteractionGroup()"
       [class.listbox-variant-checkbox]="isListboxBlock(block) && listboxIsCheckbox()"
       [class.cascadeselect-showcase]="isCascadeSelectBlock(block)"
+      [class.treeselect-showcase]="isTreeSelectBlock(block)"
       [class.datepicker-showcase]="isDatepickerBlock(block)"
       [class.selectbutton-showcase]="isSelectButtonBlock(block)"
       [class.togglebutton-showcase]="isToggleButtonBlock(block)"
@@ -1071,6 +1072,160 @@
                 </ng-container>
               </mds-catalog-preview-frame>
             }
+            @case ('treeselect') {
+              <ng-template #treeSelectInteractionField>
+                <p-treeselect
+                  inputId="tsel-live"
+                  [options]="treeSelectDemoNodes"
+                  [ngModel]="treeSelectIx().value"
+                  (ngModelChange)="patchTreeSelect({ value: $event })"
+                  [size]="treeSelectPrimeSize(treeSelectIx().size)"
+                  [variant]="formThemePrimeVariant('treeselect')"
+                  [style]="treeSelectHostVars(treeSelectIx().size)"
+                  [placeholder]="treeSelectInteractionPlaceholder()"
+                  [selectionMode]="treeSelectSelectionMode()"
+                  [fluid]="true"
+                  appendTo="body"
+                  (onFocus)="setTreeSelectFloatIxFocused(true)"
+                  (onBlur)="setTreeSelectFloatIxFocused(false)"
+                  (onShow)="setTreeSelectFloatOverlayOpen(true)"
+                  (onHide)="setTreeSelectFloatOverlayOpen(false)"
+                  ariaLabel="TreeSelect interactivo"
+                />
+              </ng-template>
+              <mds-catalog-preview-frame
+                class="btn-section catalog-preview-section"
+                [showExpand]="true"
+                [expandAriaLabel]="'Expandir estados y tamaños de ' + block.title"
+                [collapseAriaLabel]="'Contraer estados y tamaños de ' + block.title"
+                configAriaLabel="Configurar TreeSelect"
+              >
+                <div
+                  catalogPreviewDemo
+                  class="catalog-showcase-interactive catalog-input-interactive treeselect-interaction-scope"
+                  [ngClass]="treeSelectInteractionScopeClass()"
+                >
+                  @if (treeSelectIsDefault()) {
+                    <div class="p-field form-input-interaction-field">
+                      <label class="p-label" for="tsel-live">Label</label>
+                      <ng-container *ngTemplateOutlet="treeSelectInteractionField" />
+                    </div>
+                  } @else if (treeSelectIsIftaLabel()) {
+                    <div class="form-input-interaction-control">
+                      <span class="p-iftalabel" [style]="treeSelectFloatLabelHostVars()">
+                        <ng-container *ngTemplateOutlet="treeSelectInteractionField" />
+                        <label for="tsel-live">Label</label>
+                      </span>
+                    </div>
+                  } @else {
+                    <div class="form-input-interaction-control">
+                      <p-floatlabel
+                        [variant]="treeSelectFloatPosition()"
+                        [class.is-label-floated]="treeSelectInteractionLabelFloated()"
+                        [style]="treeSelectFloatLabelHostVars()"
+                        (focusin)="setTreeSelectFloatIxFocused(true)"
+                        (focusout)="setTreeSelectFloatIxFocused(false)"
+                      >
+                        <ng-container *ngTemplateOutlet="treeSelectInteractionField" />
+                        <label for="tsel-live">Label</label>
+                      </p-floatlabel>
+                    </div>
+                  }
+                </div>
+                <ng-container catalogPreviewConfig>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Theme</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="themeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="formTheme('treeselect')"
+                        (ngModelChange)="patchFormTheme('treeselect', $event)"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Theme TreeSelect"
+                      />
+                    </div>
+                  </div>
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Variant</span>
+                    <div class="button-config-select-wrap">
+                      <p-select
+                        [options]="inputtextVariantSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="treeSelectIx().variant"
+                        (ngModelChange)="patchTreeSelect({ variant: $event })"
+                        size="small"
+                        appendTo="body"
+                        ariaLabel="Variant TreeSelect"
+                      />
+                    </div>
+                  </div>
+                  @if (treeSelectIsFloatLabel()) {
+                    <div class="button-config-size-field">
+                      <span class="input-config-label">Float variant</span>
+                      <div class="button-config-select-wrap">
+                        <p-select
+                          [options]="inputtextFloatPositionSelectOptions"
+                          optionLabel="label"
+                          optionValue="value"
+                          [ngModel]="treeSelectIx().floatPosition"
+                          (ngModelChange)="patchTreeSelect({ floatPosition: $event })"
+                          size="small"
+                          appendTo="body"
+                          ariaLabel="Float variant TreeSelect"
+                        />
+                      </div>
+                    </div>
+                  }
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Tree option</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="treeSelectTreeOptionOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="treeSelectIx().treeOption"
+                        (ngModelChange)="patchTreeSelect({ treeOption: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Tree option TreeSelect"
+                      />
+                    </div>
+                  </div>
+                  <p-divider styleClass="button-config-divider" />
+                  <div class="button-config-size-field">
+                    <span class="input-config-label">Size</span>
+                    <div class="button-config-size-toggle-wrap">
+                      <p-selectbutton
+                        [options]="sizeSelectOptions"
+                        optionLabel="label"
+                        optionValue="value"
+                        [ngModel]="treeSelectIx().size"
+                        (ngModelChange)="patchTreeSelect({ size: $event })"
+                        [allowEmpty]="false"
+                        [fluid]="true"
+                        size="small"
+                        ariaLabel="Size TreeSelect"
+                      />
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container catalogPreviewDetails>
+                  <mds-catalog-info-block title="States" icon="list">
+                    <ng-container *ngTemplateOutlet="formCatalogStates" />
+                  </mds-catalog-info-block>
+                  @if (showFormSizesSection(block.kind)) {
+                    <mds-catalog-info-block title="Sizes" icon="arrows-v">
+                      <ng-container *ngTemplateOutlet="formCatalogSizes" />
+                    </mds-catalog-info-block>
+                  }
+                </ng-container>
+              </mds-catalog-preview-frame>
+            }
             @case ('datepicker') {
               <ng-template #datepickerInteractionField>
                 @for (mountKey of [datepickerOverlayMountKey()]; track mountKey) {
@@ -1684,7 +1839,7 @@
               >
                 <div
                   catalogPreviewDemo
-                  class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope inputgroup-interaction-scope"
+                  class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope inputgroup-interaction-scope inputgroup-catalog-demo-area"
                   [ngClass]="inputgroupPreviewDemoClass()"
                 >
                   @if (inputgroupIsDefault()) {
@@ -2194,6 +2349,7 @@
                   autocomplete="off"
                   [ngModel]="passwordIx().value"
                   (ngModelChange)="patchPassword({ value: $event })"
+                  [attr.placeholder]="passwordInteractionPlaceholder() || null"
                   [toggleMask]="passwordIx().toggleMask"
                   [feedback]="passwordIx().feedback"
                   [showClear]="passwordIx().showClear"
@@ -2246,7 +2402,7 @@
                 configAriaLabel="Configurar Password"
               >
                 <div catalogPreviewDemo
-                class="catalog-showcase-interactive catalog-input-interactive input-interaction-scope password-interaction-scope"
+                class="catalog-showcase-interactive catalog-input-interactive password-interaction-scope"
                 [ngClass]="passwordInteractionScopeClass()"
                 >
                 @if (passwordIsDefault()) {
@@ -3078,7 +3234,7 @@
                                 [style]="selectHostVars('normal')"
                                 [placeholder]="inputStatePlaceholder"
                                 [invalid]="inputStateInvalid(st.key)"
-                                [disabled]="inputStateDisabled(st.key) || inputStateReadonly(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
                                 [fluid]="true"
                                 appendTo="body"
                                 tabindex="-1"
@@ -3109,6 +3265,7 @@
                                   [style]="selectHostVars('normal')"
                                   [placeholder]="selectFloatPlaceholderAttr(st.key) ?? ''"
                                   [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
                                   [fluid]="true"
                                   appendTo="body"
                                   tabindex="-1"
@@ -3141,6 +3298,7 @@
                                   [style]="selectHostVars('normal')"
                                   [placeholder]="selectFloatPlaceholderAttr(st.key) ?? ''"
                                   [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
                                   [fluid]="true"
                                   appendTo="body"
                                   tabindex="-1"
@@ -3181,7 +3339,7 @@
                                 [display]="multiselectIx().display"
                                 [placeholder]="inputStatePlaceholder"
                                 [invalid]="inputStateInvalid(st.key)"
-                                [disabled]="inputStateDisabled(st.key) || inputStateReadonly(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
                                 [fluid]="true"
                                 appendTo="body"
                                 tabindex="-1"
@@ -3213,6 +3371,7 @@
                                   [display]="multiselectIx().display"
                                   [placeholder]="multiselectFloatPlaceholderAttr(st.key) ?? ''"
                                   [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
                                   [fluid]="true"
                                   appendTo="body"
                                   tabindex="-1"
@@ -3246,6 +3405,119 @@
                                   [display]="multiselectIx().display"
                                   [placeholder]="multiselectFloatPlaceholderAttr(st.key) ?? ''"
                                   [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [class.p-focus]="st.key === 'focus'"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </p-floatlabel>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="st.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isCascadeSelectBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
+                  @for (st of inputStates(block); track st.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (cascadeSelectIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label">Label</label>
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-cascadeselect
+                                [options]="cascadeSelectPrimeOptions"
+                                optionLabel="cname"
+                                optionGroupLabel="name"
+                                [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                                optionValue="code"
+                                [ngModel]="cascadeSelectStateValue(st.key)"
+                                [size]="cascadeSelectPrimeSize('normal')"
+                                [variant]="formThemePrimeVariant('cascadeselect')"
+                                [style]="cascadeSelectHostVars('normal')"
+                                [placeholder]="inputStatePlaceholder"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                                [attr.aria-label]="st.caption"
+                              />
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else if (cascadeSelectIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <span
+                                class="p-iftalabel"
+                                [class.is-label-invalid]="inputStateInvalid(st.key)"
+                                [style]="cascadeSelectIftaLabelHostVarsForSize('normal')"
+                              >
+                                <p-cascadeselect
+                                  [options]="cascadeSelectPrimeOptions"
+                                  optionLabel="cname"
+                                  optionGroupLabel="name"
+                                  [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                                  optionValue="code"
+                                  [ngModel]="cascadeSelectStateValue(st.key)"
+                                  [size]="cascadeSelectPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('cascadeselect')"
+                                  [style]="cascadeSelectHostVars('normal')"
+                                  [placeholder]="cascadeSelectFloatPlaceholderAttr(st.key) ?? ''"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [fluid]="true"
+                                  appendTo="body"
+                                  tabindex="-1"
+                                  [attr.aria-label]="st.caption"
+                                />
+                                <label>Label</label>
+                              </span>
+                            </div>
+                            @if (inputStateShowErrorMessage(block, st.key)) {
+                              <small class="p-error">{{ inputStateErrorMessage }}</small>
+                            } @else if (inputStateShowHint(block, st.key)) {
+                              <small class="p-hint">{{ inputStateHint }}</small>
+                            }
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <div [ngClass]="inputDemoWrap(st.key)">
+                              <p-floatlabel
+                                [variant]="cascadeSelectFloatPosition()"
+                                [class.is-label-floated]="cascadeSelectFloatStateLabelFloated(st.key)"
+                                [style]="cascadeSelectFloatLabelStatesHostVars()"
+                              >
+                                <p-cascadeselect
+                                  [options]="cascadeSelectPrimeOptions"
+                                  optionLabel="cname"
+                                  optionGroupLabel="name"
+                                  [optionGroupChildren]="cascadeSelectOptionGroupChildren"
+                                  optionValue="code"
+                                  [ngModel]="cascadeSelectStateValue(st.key)"
+                                  [size]="cascadeSelectPrimeSize('normal')"
+                                  [variant]="formThemePrimeVariant('cascadeselect')"
+                                  [style]="cascadeSelectHostVars('normal')"
+                                  [placeholder]="cascadeSelectFloatPlaceholderAttr(st.key) ?? ''"
+                                  [invalid]="inputStateInvalid(st.key)"
+                                  [disabled]="inputStateDisabled(st.key)"
+                                  [class.p-focus]="st.key === 'focus'"
                                   [fluid]="true"
                                   appendTo="body"
                                   tabindex="-1"
@@ -3304,26 +3576,23 @@
                     </div>
                   }
                 </div>
-              } @else if (isCascadeSelectBlock(block)) {
+              } @else if (isTreeSelectBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-demo-wide is-static-preview">
                   @for (st of inputStates(block); track st.key) {
                     <div class="catalog-button-state catalog-input-state">
                       <div class="catalog-button-state-preview">
-                        @if (cascadeSelectIsDefault()) {
+                        @if (treeSelectIsDefault()) {
                           <div class="p-field catalog-input-interactive">
                             <label class="p-label">Label</label>
                             <div [ngClass]="inputDemoWrap(st.key)">
-                              <p-cascadeselect
-                                [options]="cascadeSelectPrimeOptions"
-                                optionLabel="cname"
-                                optionGroupLabel="name"
-                                [optionGroupChildren]="cascadeSelectOptionGroupChildren"
-                                optionValue="code"
-                                [ngModel]="cascadeSelectStateValue(st.key)"
-                                [size]="cascadeSelectPrimeSize('normal')"
-                                [variant]="formThemePrimeVariant('cascadeselect')"
-                                [style]="cascadeSelectHostVars('normal')"
+                              <p-treeselect
+                                [options]="treeSelectDemoNodes"
+                                [ngModel]="treeSelectStateValue(st.key)"
+                                [size]="treeSelectPrimeSize('normal')"
+                                [variant]="formThemePrimeVariant('treeselect')"
+                                [style]="treeSelectHostVars('normal')"
                                 [placeholder]="inputStatePlaceholder"
+                                [selectionMode]="treeSelectSelectionMode()"
                                 [invalid]="inputStateInvalid(st.key)"
                                 [disabled]="inputStateDisabled(st.key)"
                                 [fluid]="true"
@@ -3338,32 +3607,29 @@
                               <small class="p-hint">{{ inputStateHint }}</small>
                             }
                           </div>
-                        } @else if (cascadeSelectIsIftaLabel()) {
+                        } @else if (treeSelectIsIftaLabel()) {
                           <div class="catalog-input-interactive">
                             <div [ngClass]="inputDemoWrap(st.key)">
                               <span
                                 class="p-iftalabel"
                                 [class.is-label-invalid]="inputStateInvalid(st.key)"
-                                [style]="cascadeSelectFloatLabelStatesHostVars()"
+                                [style]="treeSelectFloatLabelStatesHostVars()"
                               >
-                                <p-cascadeselect
-                                  [options]="cascadeSelectPrimeOptions"
-                                  optionLabel="cname"
-                                  optionGroupLabel="name"
-                                  [optionGroupChildren]="cascadeSelectOptionGroupChildren"
-                                  optionValue="code"
-                                  [ngModel]="cascadeSelectStateValue(st.key)"
-                                  [size]="cascadeSelectPrimeSize('normal')"
-                                  [variant]="formThemePrimeVariant('cascadeselect')"
-                                  [style]="cascadeSelectHostVars('normal')"
-                                  [placeholder]="cascadeSelectFloatPlaceholderAttr(st.key) ?? ''"
-                                  [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [fluid]="true"
-                                  appendTo="body"
-                                  tabindex="-1"
-                                  [attr.aria-label]="st.caption"
-                                />
+                                <p-treeselect
+                                [options]="treeSelectDemoNodes"
+                                [ngModel]="treeSelectStateValue(st.key)"
+                                [size]="treeSelectPrimeSize('normal')"
+                                [variant]="formThemePrimeVariant('treeselect')"
+                                [style]="treeSelectHostVars('normal')"
+                                [placeholder]="treeSelectFloatPlaceholderAttr(st.key) ?? ''"
+                                [selectionMode]="treeSelectSelectionMode()"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                                [attr.aria-label]="st.caption"
+                              />
                                 <label>Label</label>
                               </span>
                             </div>
@@ -3377,28 +3643,25 @@
                           <div class="catalog-input-interactive">
                             <div [ngClass]="inputDemoWrap(st.key)">
                               <p-floatlabel
-                                [variant]="cascadeSelectFloatPosition()"
-                                [class.is-label-floated]="cascadeSelectFloatStateLabelFloated(st.key)"
-                                [style]="cascadeSelectFloatLabelStatesHostVars()"
+                                [variant]="treeSelectFloatPosition()"
+                                [class.is-label-floated]="treeSelectFloatStateLabelFloated(st.key)"
+                                [style]="treeSelectFloatLabelStatesHostVars()"
                               >
-                                <p-cascadeselect
-                                  [options]="cascadeSelectPrimeOptions"
-                                  optionLabel="cname"
-                                  optionGroupLabel="name"
-                                  [optionGroupChildren]="cascadeSelectOptionGroupChildren"
-                                  optionValue="code"
-                                  [ngModel]="cascadeSelectStateValue(st.key)"
-                                  [size]="cascadeSelectPrimeSize('normal')"
-                                  [variant]="formThemePrimeVariant('cascadeselect')"
-                                  [style]="cascadeSelectHostVars('normal')"
-                                  [placeholder]="cascadeSelectFloatPlaceholderAttr(st.key) ?? ''"
-                                  [invalid]="inputStateInvalid(st.key)"
-                                  [disabled]="inputStateDisabled(st.key)"
-                                  [fluid]="true"
-                                  appendTo="body"
-                                  tabindex="-1"
-                                  [attr.aria-label]="st.caption"
-                                />
+                                <p-treeselect
+                                [options]="treeSelectDemoNodes"
+                                [ngModel]="treeSelectStateValue(st.key)"
+                                [size]="treeSelectPrimeSize('normal')"
+                                [variant]="formThemePrimeVariant('treeselect')"
+                                [style]="treeSelectHostVars('normal')"
+                                [placeholder]="treeSelectFloatPlaceholderAttr(st.key) ?? ''"
+                                [selectionMode]="treeSelectSelectionMode()"
+                                [invalid]="inputStateInvalid(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
+                                [fluid]="true"
+                                appendTo="body"
+                                tabindex="-1"
+                                [attr.aria-label]="st.caption"
+                              />
                                 <label>Label</label>
                               </p-floatlabel>
                             </div>
@@ -3527,6 +3790,7 @@
                                     hourFormat="24"
                                     [invalid]="inputStateInvalid(st.key)"
                                     [disabled]="inputStateDisabled(st.key)"
+                                    [class.p-focus]="st.key === 'focus'"
                                     [fluid]="true"
                                     appendTo="body"
                                     tabindex="-1"
@@ -3869,6 +4133,7 @@
                               @if (st.key === 'readonly') {
                                 <p-password
                                   [ngModel]="inputStateReadonlyValue"
+                                  [placeholder]="inputStatePlaceholder"
                                   [toggleMask]="passwordIx().toggleMask"
                                   [feedback]="false"
                                   [size]="passwordPrimeSize('normal')"
@@ -3881,6 +4146,7 @@
                               } @else {
                                 <p-password
                                   [ngModel]="inputStateValue(st.key, block)"
+                                  [placeholder]="inputStatePlaceholder"
                                   [invalid]="inputStateInvalid(st.key)"
                                   [disabled]="inputStateDisabled(st.key)"
                                   [toggleMask]="passwordIx().toggleMask"
@@ -3911,6 +4177,7 @@
                               >
                                 <p-password
                                   [ngModel]="inputStateValue(st.key, block)"
+                                  [attr.placeholder]="passwordFloatPlaceholderAttr(st.key)"
                                   [invalid]="inputStateInvalid(st.key)"
                                   [disabled]="inputStateDisabled(st.key)"
                                   [toggleMask]="passwordIx().toggleMask"
@@ -3942,6 +4209,7 @@
                               >
                                 <p-password
                                   [ngModel]="inputStateValue(st.key, block)"
+                                  [attr.placeholder]="passwordFloatPlaceholderAttr(st.key)"
                                   [invalid]="inputStateInvalid(st.key)"
                                   [disabled]="inputStateDisabled(st.key)"
                                   [toggleMask]="passwordIx().toggleMask"
@@ -3988,6 +4256,7 @@
                                 [style]="inputNumberHostVars()"
                                 [ngModel]="inputNumberStateValue(st.key)"
                                 [fluid]="true"
+                                [readonly]="true"
                                 [tabindex]="-1"
                                 [attr.aria-label]="st.caption"
                               />
@@ -4002,7 +4271,7 @@
                                 [style]="inputNumberHostVars()"
                                 [ngModel]="inputNumberStateValue(st.key)"
                                 [invalid]="inputStateInvalid(st.key)"
-                                [disabled]="inputStateDisabled(st.key) || inputStateReadonly(st.key)"
+                                [disabled]="inputStateDisabled(st.key)"
                                 [fluid]="true"
                                 [tabindex]="-1"
                                 [attr.aria-label]="st.caption"
@@ -4399,35 +4668,6 @@
                     </div>
                   }
                 </div>
-              } @else if (isListboxBlock(block)) {
-                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
-                  @for (sz of sizeOptions; track sz.key) {
-                    <div class="catalog-button-state catalog-input-state">
-                      <div class="catalog-button-state-preview">
-                        <div class="p-field catalog-input-interactive">
-                          <label class="p-label">Label</label>
-                          <p-listbox
-                            [options]="selectDemoOptions"
-                            optionLabel="label"
-                            optionValue="value"
-                            [ngModel]="null"
-                            [checkmark]="listboxInteractionCheckmark()"
-                            [highlightOnSelect]="!listboxInteractionCheckmark()"
-                            [filter]="true"
-                            filterBy="label"
-                            [filterPlaceHolder]="selectOverlayFilterPlaceholder"
-                            [style]="listboxHostVars(sz.key)"
-                            [scrollHeight]="listboxScrollHeight"
-                            [fluid]="true"
-                            tabindex="-1"
-                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
-                          />
-                        </div>
-                      </div>
-                      <mds-catalog-state-tag [label]="choiceSizeDisplayLabel(sz.key)" />
-                    </div>
-                  }
-                </div>
               } @else if (isCascadeSelectBlock(block)) {
                 <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
                   @for (sz of sizeOptions; track sz.key) {
@@ -4499,6 +4739,105 @@
                                 tabindex="-1"
                               />
                               <label [for]="'csel-sz-' + sz.key">Label</label>
+                            </p-floatlabel>
+                          </div>
+                        }
+                      </div>
+                      <mds-catalog-state-tag [label]="sz.caption" />
+                    </div>
+                  }
+                </div>
+              } @else if (isListboxBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        <div class="p-field catalog-input-interactive">
+                          <label class="p-label">Label</label>
+                          <p-listbox
+                            [options]="selectDemoOptions"
+                            optionLabel="label"
+                            optionValue="value"
+                            [ngModel]="null"
+                            [checkmark]="listboxInteractionCheckmark()"
+                            [highlightOnSelect]="!listboxInteractionCheckmark()"
+                            [filter]="true"
+                            filterBy="label"
+                            [filterPlaceHolder]="selectOverlayFilterPlaceholder"
+                            [style]="listboxHostVars(sz.key)"
+                            [scrollHeight]="listboxScrollHeight"
+                            [fluid]="true"
+                            tabindex="-1"
+                            [attr.aria-label]="choiceSizeDisplayLabel(sz.key)"
+                          />
+                        </div>
+                      </div>
+                      <mds-catalog-state-tag [label]="choiceSizeDisplayLabel(sz.key)" />
+                    </div>
+                  }
+                </div>
+              } @else if (isTreeSelectBlock(block)) {
+                <div class="catalog-button-states-row catalog-input-states-row catalog-input-sizes-row catalog-input-demo-wide is-static-preview">
+                  @for (sz of sizeOptions; track sz.key) {
+                    <div class="catalog-button-state catalog-input-state">
+                      <div class="catalog-button-state-preview">
+                        @if (treeSelectIsDefault()) {
+                          <div class="p-field catalog-input-interactive">
+                            <label class="p-label" [for]="'tsel-sz-' + sz.key">Label</label>
+                            <p-treeselect
+                              [inputId]="'tsel-sz-' + sz.key"
+                              [options]="treeSelectDemoNodes"
+                              [ngModel]="null"
+                              [size]="treeSelectPrimeSize(sz.key)"
+                              [variant]="formThemePrimeVariant('treeselect')"
+                              [style]="treeSelectHostVars(sz.key)"
+                              [placeholder]="inputStatePlaceholder"
+                              [selectionMode]="treeSelectSelectionMode()"
+                              [fluid]="true"
+                              appendTo="body"
+                              tabindex="-1"
+                            />
+                          </div>
+                        } @else if (treeSelectIsIftaLabel()) {
+                          <div class="catalog-input-interactive">
+                            <span class="p-iftalabel" [style]="treeSelectIftaLabelHostVarsForSize(sz.key)">
+                              <p-treeselect
+                              [inputId]="'tsel-sz-' + sz.key"
+                              [options]="treeSelectDemoNodes"
+                              [ngModel]="null"
+                              [size]="treeSelectPrimeSize(sz.key)"
+                              [variant]="formThemePrimeVariant('treeselect')"
+                              [style]="treeSelectHostVars(sz.key)"
+                              [placeholder]="inputStatePlaceholder"
+                              [selectionMode]="treeSelectSelectionMode()"
+                              [fluid]="true"
+                              appendTo="body"
+                              tabindex="-1"
+                            />
+                              <label [for]="'tsel-sz-' + sz.key">Label</label>
+                            </span>
+                          </div>
+                        } @else {
+                          <div class="catalog-input-interactive">
+                            <p-floatlabel
+                              [variant]="treeSelectFloatPosition()"
+                              [class.is-label-floated]="treeSelectFloatSizeLabelFloated()"
+                              [style]="treeSelectFloatLabelHostVarsForSize(sz.key)"
+                            >
+                              <p-treeselect
+                              [inputId]="'tsel-sz-' + sz.key"
+                              [options]="treeSelectDemoNodes"
+                              [ngModel]="null"
+                              [size]="treeSelectPrimeSize(sz.key)"
+                              [variant]="formThemePrimeVariant('treeselect')"
+                              [style]="treeSelectHostVars(sz.key)"
+                              [placeholder]="inputStatePlaceholder"
+                              [selectionMode]="treeSelectSelectionMode()"
+                              [fluid]="true"
+                              appendTo="body"
+                              tabindex="-1"
+                            />
+                              <label [for]="'tsel-sz-' + sz.key">Label</label>
                             </p-floatlabel>
                           </div>
                         }
@@ -4739,6 +5078,7 @@
                             <label class="p-label" [for]="'pw-sz-' + sz.key">Label</label>
                             <p-password
                               [inputId]="'pw-sz-' + sz.key"
+                              [placeholder]="inputStatePlaceholder"
                               [toggleMask]="true"
                               [feedback]="false"
                               [size]="passwordPrimeSize(sz.key)"
@@ -4754,6 +5094,7 @@
                             <span class="p-iftalabel" [style]="passwordIftaLabelHostVarsForSize(sz.key)">
                               <p-password
                                 [inputId]="'pw-sz-' + sz.key"
+                                [placeholder]="inputStatePlaceholder"
                                 [toggleMask]="true"
                                 [feedback]="false"
                                 [size]="passwordPrimeSize(sz.key)"
@@ -4775,6 +5116,7 @@
                             >
                               <p-password
                                 [inputId]="'pw-sz-' + sz.key"
+                                [placeholder]="inputStatePlaceholder"
                                 [toggleMask]="true"
                                 [feedback]="false"
                                 [size]="passwordPrimeSize(sz.key)"

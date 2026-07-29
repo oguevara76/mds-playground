@@ -8,6 +8,8 @@ Tras el tema inyectado por @primeuix, Angular reaplica todas las variables --p-*
 desde los tokens MDS (--button-*, --form-field-*, --primary-*, etc.) que viven
 en el core + en los CSS subidos por el usuario.
 """
+from __future__ import annotations
+
 import re
 from pathlib import Path
 
@@ -64,6 +66,29 @@ def first_var_name(value: str):
     return m.group(1).strip() if m else None
 
 
+def split_top_level_values(value: str) -> list[str]:
+    """Parte valores CSS multi-token (p.ej. padding y x) respetando paréntesis."""
+    parts: list[str] = []
+    depth = 0
+    current: list[str] = []
+    for ch in value.strip():
+        if ch == "(":
+            depth += 1
+            current.append(ch)
+        elif ch == ")":
+            depth = max(0, depth - 1)
+            current.append(ch)
+        elif ch.isspace() and depth == 0:
+            if current:
+                parts.append("".join(current))
+                current = []
+        else:
+            current.append(ch)
+    if current:
+        parts.append("".join(current))
+    return parts
+
+
 def is_mds_token(name: str) -> bool:
     return not name.startswith("--p-")
 
@@ -74,6 +99,9 @@ def resolve_mds_var(name: str, decls: dict[str, str], cache, depth: int = 0):
     if depth > 12:
         cache[name] = None
         return None
+    if is_mds_token(name):
+        cache[name] = name
+        return name
     val = decls.get(name)
     if not val:
         cache[name] = None
@@ -90,15 +118,32 @@ def resolve_mds_var(name: str, decls: dict[str, str], cache, depth: int = 0):
     return resolved
 
 
+def bridge_value(value: str, decls: dict[str, str], cache) -> str | None:
+    """Resuelve cada componente top-level a var(--mds-*), preservando shorthands."""
+    parts = split_top_level_values(value)
+    if not parts:
+        return None
+    bridged: list[str] = []
+    for part in parts:
+        tok = first_var_name(part)
+        if not tok:
+            return None
+        mds = resolve_mds_var(tok, decls, cache)
+        if not mds:
+            return None
+        bridged.append(f"var({mds})")
+    return " ".join(bridged)
+
+
 def bridge_declarations(decls: dict[str, str]) -> list[tuple[str, str]]:
     cache: dict[str, str | None] = {}
     out: list[tuple[str, str]] = []
     for name, value in decls.items():
         if not (name.startswith("--p-") or name in SHELL_VARS):
             continue
-        mds = resolve_mds_var(name, decls, cache)
-        if mds:
-            out.append((name, f"var({mds})"))
+        bridged = bridge_value(value, decls, cache)
+        if bridged:
+            out.append((name, bridged))
     return sorted(out, key=lambda x: x[0])
 
 

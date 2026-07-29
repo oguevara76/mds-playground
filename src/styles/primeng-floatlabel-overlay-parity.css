@@ -1,0 +1,97 @@
+/**
+ * Paridad Float Label Over/On para overlays (MultiSelect, CascadeSelect, DatePicker, Password).
+ * Carga al final de angular.json para ganar al theme runtime de PrimeNG
+ * (:has(.p-inputwrapper-filled|focus) que flota el label aunque el catálogo diga vacío).
+ *
+ * Contrato: .is-label-floated en p-floatlabel es la fuente de verdad del catálogo.
+ * Nota: .form-showcase y .*-showcase viven en el mismo nodo (form-catalog host del bloque).
+ */
+
+/* Contenedor: anular max-width: 320px de styles/components.css */
+.form-showcase.multiselect-showcase .p-floatlabel,
+.form-showcase.cascadeselect-showcase .p-floatlabel,
+.form-showcase.datepicker-showcase .p-floatlabel,
+.form-showcase.password-showcase .p-floatlabel,
+.form-showcase.multiselect-showcase .p-iftalabel,
+.form-showcase.cascadeselect-showcase .p-iftalabel,
+.form-showcase.datepicker-showcase .p-iftalabel,
+.form-showcase.password-showcase .p-iftalabel {
+  max-width: 100%;
+}
+
+/* Vacío Over/On: label centrado dentro del campo */
+.form-showcase.multiselect-showcase .p-floatlabel-over:not(.is-label-floated) label,
+.form-showcase.multiselect-showcase .p-floatlabel-on:not(.is-label-floated) label,
+.form-showcase.cascadeselect-showcase .p-floatlabel-over:not(.is-label-floated) label,
+.form-showcase.cascadeselect-showcase .p-floatlabel-on:not(.is-label-floated) label,
+.form-showcase.datepicker-showcase .p-floatlabel-over:not(.is-label-floated) label,
+.form-showcase.datepicker-showcase .p-floatlabel-on:not(.is-label-floated) label,
+.form-showcase.password-showcase .p-floatlabel-over:not(.is-label-floated) label,
+.form-showcase.password-showcase .p-floatlabel-on:not(.is-label-floated) label,
+/* Anular heurísticas PrimeNG cuando el catálogo dice vacío */
+.form-showcase.multiselect-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+.form-showcase.multiselect-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+.form-showcase.multiselect-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+.form-showcase.multiselect-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+.form-showcase.cascadeselect-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+.form-showcase.cascadeselect-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+.form-showcase.cascadeselect-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+.form-showcase.cascadeselect-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+.form-showcase.datepicker-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+.form-showcase.datepicker-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+.form-showcase.datepicker-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+.form-showcase.datepicker-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+.form-showcase.password-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+.form-showcase.password-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+.form-showcase.password-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+.form-showcase.password-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-focus) label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  ) !important;
+  font-weight: 400 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+/* Activo Over: solo con .is-label-floated */
+.form-showcase.multiselect-showcase .p-floatlabel-over.is-label-floated label,
+.form-showcase.cascadeselect-showcase .p-floatlabel-over.is-label-floated label,
+.form-showcase.datepicker-showcase .p-floatlabel-over.is-label-floated label,
+.form-showcase.password-showcase .p-floatlabel-over.is-label-floated label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px) !important;
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--form-field-background))
+  ) !important;
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm))) !important;
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size)) !important;
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight)) !important;
+  z-index: 1;
+}
+
+/* Activo On: solo con .is-label-floated */
+.form-showcase.multiselect-showcase .p-floatlabel-on.is-label-floated label,
+.form-showcase.cascadeselect-showcase .p-floatlabel-on.is-label-floated label,
+.form-showcase.datepicker-showcase .p-floatlabel-on.is-label-floated label,
+.form-showcase.password-showcase .p-floatlabel-on.is-label-floated label {
+  top: 0 !important;
+  transform: translateY(-50%) !important;
+  padding: var(
+    --p-floatlabel-on-active-padding,
+    var(--floatlabel-on-active-padding-y, 0) var(--floatlabel-on-active-padding-x, 2px)
+  ) !important;
+  background: var(
+    --p-floatlabel-on-active-background,
+    var(--floatlabel-on-active-background, var(--form-field-background))
+  ) !important;
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm))) !important;
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size)) !important;
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight)) !important;
+  z-index: 1;
+}

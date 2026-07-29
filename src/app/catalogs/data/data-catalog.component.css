@@ -95,3 +95,176 @@
 :host.data-catalog-page .tree-catalog-live {
   width: min(100%, 28rem);
 }
+
+:host.data-catalog-page .timeline-catalog-live-shell {
+  max-width: 100%;
+  width: min(100%, 28rem);
+}
+
+:host.data-catalog-page .timeline-catalog-live-shell--horizontal {
+  width: min(100%, 52rem);
+  overflow-x: auto;
+}
+
+:host.data-catalog-page .timeline-catalog-live-shell--template {
+  width: min(100%, 72rem);
+}
+
+:host.data-catalog-page .timeline-catalog-live--template.p-timeline-vertical .p-timeline-event-content,
+:host.data-catalog-page .timeline-catalog-live--template.p-timeline-vertical .p-timeline-event-opposite {
+  min-width: 0;
+}
+
+:host.data-catalog-page .timeline-catalog-live--horizontal {
+  width: 100%;
+  min-width: 40rem;
+}
+
+/*
+ * Horizontal: PrimeNG reparte flex en opposite/content vacíos y el último evento
+ * usa flex:0 — el marker del último bullet queda desalineado respecto al conector.
+ */
+:host.data-catalog-page .timeline-catalog-live--horizontal.p-timeline-horizontal .p-timeline-event {
+  flex: 1 1 0;
+  min-width: 7.5rem;
+}
+
+:host.data-catalog-page .timeline-catalog-live--horizontal.p-timeline-horizontal .p-timeline-event-content {
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+:host.data-catalog-page
+  .timeline-catalog-live--horizontal.p-timeline-horizontal
+  .timeline-catalog-default-content {
+  min-height: 0;
+  width: 100%;
+}
+
+:host.data-catalog-page
+  .timeline-catalog-live--horizontal.p-timeline-horizontal
+  .timeline-catalog-default-title,
+:host.data-catalog-page
+  .timeline-catalog-live--horizontal.p-timeline-horizontal
+  .timeline-catalog-default-date {
+  white-space: nowrap;
+}
+
+:host.data-catalog-page .timeline-catalog-live--horizontal.p-timeline-horizontal .p-timeline-event:last-child {
+  flex: 1 1 0;
+  min-width: 7.5rem;
+}
+
+:host.data-catalog-page .timeline-catalog-live--horizontal.p-timeline-horizontal .p-timeline-event-opposite {
+  flex: 0 0 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+:host.data-catalog-page .timeline-catalog-live--horizontal.p-timeline-horizontal .p-timeline-event-separator {
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+:host.data-catalog-page .timeline-catalog-live--horizontal.p-timeline-horizontal .p-timeline-event-marker {
+  align-self: center;
+}
+
+:host.data-catalog-page
+  .timeline-catalog-live--horizontal.p-timeline-horizontal
+  .p-timeline-event:last-child
+  .p-timeline-event-separator::after {
+  content: '';
+  flex: 1 1 auto;
+  width: 0;
+  min-width: 0;
+  height: var(--p-timeline-event-connector-size, var(--timeline-event-connector-size, 2px));
+  visibility: hidden;
+  pointer-events: none;
+}
+
+:host.data-catalog-page .timeline-catalog-default-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dimension-scale-x4, 4px);
+  min-height: 2.75rem;
+}
+
+:host.data-catalog-page .timeline-catalog-marker--custom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: var(--dimension-scale-x28, 28px);
+  height: var(--dimension-scale-x28, 28px);
+  border-width: var(--p-timeline-event-marker-border-width, var(--timeline-event-marker-border-width, 2px));
+  border-style: solid;
+  border-color: transparent;
+  border-radius: var(
+    --p-timeline-event-marker-border-radius,
+    var(--timeline-event-marker-border-radius, var(--border-radius-pill, 999px))
+  );
+  color: #fff;
+  font-size: var(--dimension-scale-x14, 14px);
+  line-height: 1;
+  box-shadow: var(
+    --p-timeline-event-marker-content-inset-shadow,
+    var(--timeline-event-marker-content-inset-shadow, none)
+  );
+}
+
+:host.data-catalog-page .timeline-catalog-marker--custom.timeline-catalog-marker--default-theme {
+  background: var(
+    --p-timeline-event-marker-content-background,
+    var(--timeline-event-marker-content-background, var(--primary-color))
+  );
+  border-color: var(
+    --p-timeline-event-marker-content-background,
+    var(--timeline-event-marker-content-background, var(--primary-color))
+  );
+  color: var(--p-primary-color-text, #fff);
+  box-shadow: var(
+    --p-timeline-event-marker-content-inset-shadow,
+    var(--timeline-event-marker-content-inset-shadow, none)
+  );
+}
+
+:host.data-catalog-page .timeline-catalog-marker--custom i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dimension-scale-x14, 14px);
+  height: var(--dimension-scale-x14, 14px);
+  font-size: inherit;
+  line-height: 1;
+}
+
+:host.data-catalog-page .timeline-catalog-template-card {
+  width: 100%;
+  min-width: 28rem;
+  max-width: 34rem;
+}
+
+:host.data-catalog-page .timeline-catalog-template-image {
+  display: block;
+  width: 100%;
+  margin-bottom: var(--dimension-scale-x8, 8px);
+  border-radius: var(--content-border-radius, 6px);
+}
+
+:host.data-catalog-page .timeline-catalog-template-body {
+  margin: 0 0 var(--dimension-scale-x8, 8px);
+  line-height: 1.5;
+}
+
+:host.data-catalog-page .timeline-catalog-default-title {
+  font-weight: 600;
+}
+
+:host.data-catalog-page .timeline-catalog-default-date {
+  color: var(--p-text-muted-color, var(--text-muted-color));
+  font-size: 0.875rem;
+}

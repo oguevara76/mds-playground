@@ -7,6 +7,8 @@ import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-p
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import { FormsModule } from '@angular/forms';
 import { CascadeSelect } from 'primeng/cascadeselect';
+import { TreeNode } from 'primeng/api';
+import { TreeSelect } from 'primeng/treeselect';
 import { DatePicker } from 'primeng/datepicker';
 import { Checkbox } from 'primeng/checkbox';
 import { Divider } from 'primeng/divider';
@@ -82,6 +84,11 @@ import {
   FORM_CASCADESELECT_DEMO_OPTIONS,
   FORM_CASCADESELECT_OPTION_GROUP_CHILDREN,
   FORM_CASCADESELECT_STATE_FILLED_VALUE,
+  FORM_TREESELECT_DEMO_NODES,
+  FORM_TREESELECT_STATE_FILLED_VALUE,
+  FORM_TREESELECT_CHECKBOX_STATE_FILLED_VALUE,
+  FORM_TREESELECT_TREE_OPTION_OPTIONS,
+  type FormTreeSelectTreeOption,
   FORM_DATEPICKER_STATE_FILLED_VALUE,
   FORM_DATEPICKER_RANGE_DEMO_VALUE,
   FORM_DATEPICKER_OVERLAY_INFO_OPTIONS,
@@ -99,6 +106,7 @@ import {
   FORM_SELECT_VARIANT_SELECT_OPTIONS,
   type FormCascadeSelectDemoValue,
   type FormCascadeSelectCountry,
+  type FormTreeSelectCheckboxValue,
   type FormMultiselectDisplay,
   type FormMultiselectOverlayOptionVariant,
   type FormSelectOverlayOptionVariant,
@@ -161,6 +169,16 @@ export interface FormCascadeSelectInteractionState {
   floatPosition: FormInputFloatVariant;
   size: FormInteractionSize;
   value: FormCascadeSelectDemoValue | null;
+}
+
+export type FormTreeSelectInteractionValue = TreeNode | FormTreeSelectCheckboxValue | null;
+
+export interface FormTreeSelectInteractionState {
+  variant: FormInputTextVariant;
+  floatPosition: FormInputFloatVariant;
+  size: FormInteractionSize;
+  treeOption: FormTreeSelectTreeOption;
+  value: FormTreeSelectInteractionValue;
 }
 
 export interface FormDatepickerInteractionState {
@@ -261,7 +279,7 @@ interface FormSelectButtonInteractionState {
 }
 
 /** Campo al que aplican los tokens MDS de float label / ifta (input vs textarea vs password vs select). */
-type FormFieldKind = 'inputtext' | 'textarea' | 'password' | 'select' | 'multiselect' | 'cascadeselect' | 'listbox';
+type FormFieldKind = 'inputtext' | 'textarea' | 'password' | 'select' | 'multiselect' | 'cascadeselect' | 'treeselect' | 'listbox';
 
 type PasswordStrengthLevel = 'none' | 'weak' | 'medium' | 'strong';
 
@@ -339,6 +357,16 @@ function defaultCascadeSelectInteraction(): FormCascadeSelectInteractionState {
     variant: 'default',
     floatPosition: 'over',
     size: 'normal',
+    value: null,
+  };
+}
+
+function defaultTreeSelectInteraction(): FormTreeSelectInteractionState {
+  return {
+    variant: 'default',
+    floatPosition: 'over',
+    size: 'normal',
+    treeOption: 'default',
     value: null,
   };
 }
@@ -432,6 +460,7 @@ function defaultSelectButtonInteraction(): FormSelectButtonInteractionState {
     CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
     CascadeSelect,
+    TreeSelect,
     DatePicker,
     Button,
     Checkbox,
@@ -497,6 +526,10 @@ export class FormCatalogComponent {
   /** Opciones anidadas expuestas a PrimeNG (tipado del componente limitado a string). */
   readonly cascadeSelectPrimeOptions = FORM_CASCADESELECT_DEMO_OPTIONS as any;
   readonly cascadeSelectOptionGroupChildren = [...FORM_CASCADESELECT_OPTION_GROUP_CHILDREN];
+  readonly treeSelectDemoNodes: TreeNode[] = structuredClone(
+    FORM_TREESELECT_DEMO_NODES,
+  ) as unknown as TreeNode[];
+  readonly treeSelectTreeOptionOptions = FORM_TREESELECT_TREE_OPTION_OPTIONS;
   readonly selectDemoGroupedOptions = FORM_SELECT_DEMO_GROUPED_OPTIONS;
   readonly selectOverlayOptionVariantOptions = FORM_SELECT_OVERLAY_OPTION_VARIANT_OPTIONS;
   readonly selectOverlayFilterPlaceholder = FORM_SELECT_OVERLAY_FILTER_PLACEHOLDER;
@@ -526,6 +559,7 @@ export class FormCatalogComponent {
     multiselect: 'outlined',
     listbox: 'outlined',
     cascadeselect: 'outlined',
+    treeselect: 'outlined',
     datepicker: 'outlined',
     password: 'outlined',
     inputotp: 'outlined',
@@ -550,6 +584,7 @@ export class FormCatalogComponent {
   readonly multiselectIx = signal<FormMultiselectInteractionState>(defaultMultiselectInteraction());
   readonly listboxIx = signal<FormListboxInteractionState>(defaultListboxInteraction());
   readonly cascadeSelectIx = signal<FormCascadeSelectInteractionState>(defaultCascadeSelectInteraction());
+  readonly treeSelectIx = signal<FormTreeSelectInteractionState>(defaultTreeSelectInteraction());
   readonly datepickerIx = signal<FormDatepickerInteractionState>(defaultDatepickerInteraction());
   readonly passwordIx = signal<FormPasswordInteractionState>(defaultPasswordInteraction());
   readonly inputotpIx = signal<FormInputOtpInteractionState>(defaultInputOtpInteraction());
@@ -573,6 +608,12 @@ export class FormCatalogComponent {
 
   /** CascadeSelect Float Label: overlay abierto mantiene label/placeholder activos. */
   private readonly cascadeSelectFloatOverlayOpen = signal(false);
+
+  /** Float Label interactivo (TreeSelect). */
+  private readonly treeSelectFloatIxFocused = signal(false);
+
+  /** TreeSelect Float Label: overlay abierto mantiene label/placeholder activos. */
+  private readonly treeSelectFloatOverlayOpen = signal(false);
 
   /** Float Label interactivo (DatePicker). */
   private readonly datepickerFloatIxFocused = signal(false);
@@ -656,6 +697,10 @@ export class FormCatalogComponent {
 
   isCascadeSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'cascadeselect' } {
     return block.kind === 'cascadeselect';
+  }
+
+  isTreeSelectBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'treeselect' } {
+    return block.kind === 'treeselect';
   }
 
   isDatepickerBlock(block: FormBlockConfig): block is FormBlockConfig & { kind: 'datepicker' } {
@@ -1860,9 +1905,12 @@ export class FormCatalogComponent {
   cascadeSelectInteractionScopeClass(): Record<string, boolean> {
     const sx = this.cascadeSelectIx();
     return {
-      'catalog-input-interactive--float-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
-      'catalog-input-interactive--float-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
-      'catalog-input-interactive--float-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+      'input-variant-block': true,
+      'form-input-interaction--stacked': sx.variant === 'floatlabel' || sx.variant === 'iftalabel',
+      'floatlabel-variant-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
+      'floatlabel-variant-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
+      'floatlabel-variant-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+      'iftalabel-variant': sx.variant === 'iftalabel',
     };
   }
 
@@ -1974,6 +2022,255 @@ export class FormCatalogComponent {
       return FORM_CASCADESELECT_STATE_FILLED_VALUE;
     }
     return null;
+  }
+
+  patchTreeSelect(patch: Partial<FormTreeSelectInteractionState>): void {
+    this.treeSelectIx.update((prev) => {
+      const next = { ...prev, ...patch };
+      if (patch.variant !== undefined && patch.variant !== prev.variant) {
+        next.value = null;
+      }
+      if (patch.treeOption !== undefined && patch.treeOption !== prev.treeOption) {
+        next.value = null;
+      }
+      return next;
+    });
+    if (patch.variant !== undefined || patch.treeOption !== undefined) {
+      this.treeSelectFloatIxFocused.set(false);
+      this.treeSelectFloatOverlayOpen.set(false);
+    }
+  }
+
+  treeSelectIsDefault(): boolean {
+    return this.treeSelectIx().variant === 'default';
+  }
+
+  treeSelectIsFloatLabel(): boolean {
+    return this.treeSelectIx().variant === 'floatlabel';
+  }
+
+  treeSelectIsIftaLabel(): boolean {
+    return this.treeSelectIx().variant === 'iftalabel';
+  }
+
+  treeSelectFloatPosition(): FormInputFloatVariant {
+    return this.treeSelectIx().floatPosition;
+  }
+
+  treeSelectIsFloatIn(): boolean {
+    return this.treeSelectIsFloatLabel() && this.treeSelectFloatPosition() === 'in';
+  }
+
+  treeSelectIsFloatOverOrOn(): boolean {
+    return (
+      this.treeSelectIsFloatLabel() &&
+      (this.treeSelectFloatPosition() === 'over' || this.treeSelectFloatPosition() === 'on')
+    );
+  }
+
+  treeSelectInteractionLabelFloated(): boolean {
+    if (!this.treeSelectIsFloatLabel()) {
+      return false;
+    }
+    return (
+      !!this.treeSelectIx().value ||
+      this.treeSelectFloatIxFocused() ||
+      this.treeSelectFloatOverlayOpen()
+    );
+  }
+
+  treeSelectFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    if (this.treeSelectFloatPosition() === 'in') {
+      return state === 'filled' || state === 'focus' || state === 'disabled';
+    }
+    if (this.treeSelectIsFloatOverOrOn() && state === 'disabled') {
+      return true;
+    }
+    return state === 'focus' || state === 'filled';
+  }
+
+  /** Sizes: Over/On elevan label; In siempre arriba (igual que Select, Textarea, Password). */
+  treeSelectFloatSizeLabelFloated(): boolean {
+    if (!this.treeSelectIsFloatLabel()) {
+      return false;
+    }
+    return true;
+  }
+
+  setTreeSelectFloatIxFocused(focused: boolean): void {
+    if (!this.treeSelectIsFloatLabel()) {
+      return;
+    }
+    if (!focused && this.treeSelectFloatOverlayOpen()) {
+      return;
+    }
+    this.treeSelectFloatIxFocused.set(focused);
+  }
+
+  setTreeSelectFloatOverlayOpen(open: boolean): void {
+    if (!this.treeSelectIsFloatLabel()) {
+      return;
+    }
+    this.treeSelectFloatOverlayOpen.set(open);
+    if (open) {
+      this.treeSelectFloatIxFocused.set(true);
+    } else if (!this.treeSelectIx().value) {
+      this.treeSelectFloatIxFocused.set(false);
+    }
+  }
+
+  treeSelectFloatInteractionPlaceholder(): string | null {
+    if (this.treeSelectIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    if (!this.treeSelectFloatIxFocused() && !this.treeSelectFloatOverlayOpen()) {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  treeSelectInteractionPlaceholder(): string {
+    if (this.treeSelectIsDefault() || this.treeSelectIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    return this.treeSelectFloatInteractionPlaceholder() ?? '';
+  }
+
+  treeSelectInteractionScopeClass(): Record<string, boolean> {
+    const sx = this.treeSelectIx();
+    return {
+      'catalog-input-interactive--float-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
+      'catalog-input-interactive--float-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
+      'catalog-input-interactive--float-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+    };
+  }
+
+  treeSelectPrimeSize(size: FormInteractionSize): 'small' | 'large' | undefined {
+    return size === 'small' ? 'small' : size === 'large' ? 'large' : undefined;
+  }
+
+  private treeSelectOverlayHostVars(): Record<string, string> {
+    return {
+      '--p-treeselect-overlay-background': 'var(--treeselect-overlay-background)',
+      '--p-treeselect-overlay-border-color': 'var(--treeselect-overlay-border-color)',
+      '--p-treeselect-overlay-border-radius': 'var(--treeselect-overlay-border-radius)',
+      '--p-treeselect-overlay-color': 'var(--treeselect-overlay-color)',
+      '--p-treeselect-overlay-shadow': 'var(--treeselect-overlay-shadow)',
+    };
+  }
+
+  treeSelectHostVars(size: FormInteractionSize = 'normal'): Record<string, string> {
+    return {
+      '--p-treeselect-background': 'var(--treeselect-background)',
+      '--p-treeselect-border-color': 'var(--treeselect-border-color)',
+      '--p-treeselect-border-radius': 'var(--treeselect-border-radius)',
+      '--p-treeselect-color': 'var(--treeselect-color)',
+      '--p-treeselect-padding-x': `var(${this.fieldPaddingXToken('treeselect', size)})`,
+      '--p-treeselect-padding-y': `var(${this.fieldPaddingYToken('treeselect', size)})`,
+      '--p-treeselect-placeholder-color': 'var(--treeselect-placeholder-color)',
+      '--p-treeselect-dropdown-color': 'var(--treeselect-dropdown-color)',
+      '--p-treeselect-dropdown-width': 'var(--treeselect-dropdown-width)',
+      '--p-treeselect-focus-border-color': 'var(--treeselect-focus-border-color)',
+      '--p-treeselect-hover-border-color': 'var(--treeselect-hover-border-color)',
+      '--p-treeselect-invalid-border-color': 'var(--treeselect-invalid-border-color)',
+      '--p-treeselect-shadow': 'var(--treeselect-shadow)',
+      '--p-treeselect-sm-font-size': 'var(--treeselect-sm-font-size)',
+      '--p-treeselect-sm-padding-x': 'var(--treeselect-sm-padding-x)',
+      '--p-treeselect-sm-padding-y': 'var(--treeselect-sm-padding-y)',
+      '--p-treeselect-lg-font-size': 'var(--treeselect-lg-font-size)',
+      '--p-treeselect-lg-padding-x': 'var(--treeselect-lg-padding-x)',
+      '--p-treeselect-lg-padding-y': 'var(--treeselect-lg-padding-y)',
+      ...this.treeSelectOverlayHostVars(),
+    };
+  }
+
+  treeSelectFloatLabelHostVars(): Record<string, string> {
+    const sx = this.treeSelectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, sx.size, 'treeselect');
+  }
+
+  treeSelectIftaLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    return this.iftaLabelHostVars(size, 'treeselect');
+  }
+
+  treeSelectFloatLabelHostVarsForSize(size: FormInteractionSize): Record<string, string> {
+    const sx = this.treeSelectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, size, 'treeselect');
+  }
+
+  treeSelectFloatLabelStatesHostVars(): Record<string, string> {
+    const sx = this.treeSelectIx();
+    return this.floatLabelHostVarsForVariant(sx.variant, sx.floatPosition, 'normal', 'treeselect');
+  }
+
+  treeSelectFloatPlaceholderAttr(state: FormInputDemoState): string | null {
+    if (this.treeSelectIsIftaLabel()) {
+      if (state === 'filled') {
+        return null;
+      }
+      return this.inputStatePlaceholder;
+    }
+    if (this.treeSelectIsFloatLabel()) {
+      if (state === 'focus') {
+        return this.inputStatePlaceholder;
+      }
+      return null;
+    }
+    if (state === 'empty' || state === 'filled') {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  treeSelectStateValue(state: FormInputDemoState): FormTreeSelectInteractionValue {
+    if (this.treeSelectIsDefault()) {
+      if (
+        this.inputStateShowsPlaceholderOnly(
+          { kind: 'treeselect', title: 'TreeSelect', category: 'input' },
+          state,
+        )
+      ) {
+        return null;
+      }
+      if (state === 'readonly') {
+        return this.treeSelectFilledValueForState();
+      }
+      return null;
+    }
+    if (state === 'filled' || state === 'disabled') {
+      return this.treeSelectFilledValueForState();
+    }
+    return null;
+  }
+
+  treeSelectSelectionMode(): 'single' | 'checkbox' {
+    return this.treeSelectIx().treeOption === 'checkbox' ? 'checkbox' : 'single';
+  }
+
+  private treeSelectFilledValueForState(): FormTreeSelectInteractionValue {
+    if (this.treeSelectIx().treeOption === 'checkbox') {
+      return FORM_TREESELECT_CHECKBOX_STATE_FILLED_VALUE;
+    }
+    return this.treeSelectDemoNodeByKey(FORM_TREESELECT_STATE_FILLED_VALUE);
+  }
+
+  /** PrimeNG TreeSelect (single) espera TreeNode en ngModel, no la clave del nodo. */
+  private treeSelectDemoNodeByKey(key: string): TreeNode | null {
+    const walk = (nodes: TreeNode[]): TreeNode | null => {
+      for (const node of nodes) {
+        if (node.key === key) {
+          return node;
+        }
+        if (node.children?.length) {
+          const found = walk(node.children);
+          if (found) {
+            return found;
+          }
+        }
+      }
+      return null;
+    };
+    return walk(this.treeSelectDemoNodes);
   }
 
   patchDatepicker(patch: Partial<FormDatepickerInteractionState>): void {
@@ -2200,9 +2497,12 @@ export class FormCatalogComponent {
   datepickerInteractionScopeClass(): Record<string, boolean> {
     const sx = this.datepickerIx();
     return {
-      'catalog-input-interactive--float-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
-      'catalog-input-interactive--float-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
-      'catalog-input-interactive--float-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+      'input-variant-block': true,
+      'form-input-interaction--stacked': sx.variant === 'floatlabel' || sx.variant === 'iftalabel',
+      'floatlabel-variant-over': sx.variant === 'floatlabel' && sx.floatPosition === 'over',
+      'floatlabel-variant-on': sx.variant === 'floatlabel' && sx.floatPosition === 'on',
+      'floatlabel-variant-in': sx.variant === 'floatlabel' && sx.floatPosition === 'in',
+      'iftalabel-variant': sx.variant === 'iftalabel',
     };
   }
 
@@ -2381,10 +2681,15 @@ export class FormCatalogComponent {
     return this.passwordIsFloatLabel() && this.passwordFloatPosition() === 'in';
   }
 
+  passwordIsFloatOverOrOn(): boolean {
+    return (
+      this.passwordIsFloatLabel() &&
+      (this.passwordFloatPosition() === 'over' || this.passwordFloatPosition() === 'on')
+    );
+  }
+
+  /** Float Label: label arriba con valor o foco (Over/On/In). */
   passwordInteractionLabelFloated(): boolean {
-    if (this.passwordIsFloatIn()) {
-      return true;
-    }
     if (!this.passwordIsFloatLabel()) {
       return false;
     }
@@ -2392,10 +2697,14 @@ export class FormCatalogComponent {
   }
 
   passwordFloatStateLabelFloated(state: FormInputDemoState): boolean {
+    // Invalid lleva valor enmascarado: el label debe quedar arriba (no centrado encima de ****).
     if (this.passwordFloatPosition() === 'in') {
+      return state === 'filled' || state === 'focus' || state === 'disabled' || state === 'invalid';
+    }
+    if (this.passwordIsFloatOverOrOn() && state === 'disabled') {
       return true;
     }
-    return this.inputFloatFilled(state);
+    return state === 'focus' || state === 'filled' || state === 'invalid';
   }
 
   passwordFloatSizeLabelFloated(): boolean {
@@ -2410,6 +2719,45 @@ export class FormCatalogComponent {
       return;
     }
     this.passwordFloatIxFocused.set(focused);
+  }
+
+  /** Float Label estático: placeholder solo en Focus (label arriba); si el label está dentro, sin placeholder. */
+  passwordFloatPlaceholderAttr(state: FormInputDemoState): string | null {
+    if (this.passwordIsIftaLabel()) {
+      if (state === 'filled') {
+        return null;
+      }
+      return this.inputStatePlaceholder;
+    }
+    if (this.passwordIsFloatLabel()) {
+      if (state === 'focus') {
+        return this.inputStatePlaceholder;
+      }
+      return null;
+    }
+    if (state === 'empty' || state === 'filled') {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  /** Float Label interactivo: placeholder solo con foco. */
+  passwordFloatInteractionPlaceholder(): string | null {
+    if (this.passwordIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    if (!this.passwordFloatIxFocused()) {
+      return null;
+    }
+    return this.inputStatePlaceholder;
+  }
+
+  /** Placeholder en Interaction: Default e IftaLabel siempre; Float Label solo con foco. */
+  passwordInteractionPlaceholder(): string {
+    if (this.passwordIsDefault() || this.passwordIsIftaLabel()) {
+      return this.inputStatePlaceholder;
+    }
+    return this.passwordFloatInteractionPlaceholder() ?? '';
   }
 
   passwordInteractionScopeClass(): Record<string, boolean> {
@@ -2834,6 +3182,15 @@ export class FormCatalogComponent {
       }
       return '--inputtext-font-size';
     }
+    if (field === 'treeselect') {
+      if (size === 'small') {
+        return '--treeselect-sm-font-size';
+      }
+      if (size === 'large') {
+        return '--treeselect-lg-font-size';
+      }
+      return '--treeselect-font-size';
+    }
     if (size === 'small') {
       return '--inputtext-sm-font-size';
     }
@@ -2879,6 +3236,15 @@ export class FormCatalogComponent {
         return '--cascadeselect-lg-padding-x';
       }
       return '--cascadeselect-padding-x';
+    }
+    if (field === 'treeselect') {
+      if (size === 'small') {
+        return '--treeselect-sm-padding-x';
+      }
+      if (size === 'large') {
+        return '--treeselect-lg-padding-x';
+      }
+      return '--treeselect-padding-x';
     }
     if (size === 'small') {
       return '--inputtext-sm-padding-x';
@@ -2926,6 +3292,15 @@ export class FormCatalogComponent {
       }
       return '--cascadeselect-padding-y';
     }
+    if (field === 'treeselect') {
+      if (size === 'small') {
+        return '--treeselect-sm-padding-y';
+      }
+      if (size === 'large') {
+        return '--treeselect-lg-padding-y';
+      }
+      return '--treeselect-padding-y';
+    }
     if (size === 'small') {
       return '--inputtext-sm-padding-y';
     }
@@ -2945,12 +3320,12 @@ export class FormCatalogComponent {
     return '--iconfield-figma-size';
   }
 
-  private isDropdownField(field: FormFieldKind): field is 'select' | 'multiselect' | 'cascadeselect' {
-    return field === 'select' || field === 'multiselect' || field === 'cascadeselect';
+  private isDropdownField(field: FormFieldKind): field is 'select' | 'multiselect' | 'cascadeselect' | 'treeselect' {
+    return field === 'select' || field === 'multiselect' || field === 'cascadeselect' || field === 'treeselect';
   }
 
   private fieldFilledBackgroundCssVar(
-    field: 'select' | 'multiselect' | 'cascadeselect' | 'textarea' | 'inputtext',
+    field: 'select' | 'multiselect' | 'cascadeselect' | 'treeselect' | 'textarea' | 'inputtext',
   ): string {
     if (field === 'textarea') {
       return 'var(--textarea-filled-background, var(--p-textarea-filled-background, var(--form-field-filled-background)))';
@@ -2964,10 +3339,13 @@ export class FormCatalogComponent {
     if (field === 'cascadeselect') {
       return 'var(--cascadeselect-filled-background, var(--p-cascadeselect-filled-background, var(--form-field-filled-background)))';
     }
+    if (field === 'treeselect') {
+      return 'var(--treeselect-filled-background, var(--p-treeselect-filled-background, var(--form-field-filled-background)))';
+    }
     return 'var(--inputtext-filled-background, var(--p-inputtext-filled-background, var(--form-field-filled-background)))';
   }
 
-  private fieldBackgroundCssVar(field: 'select' | 'multiselect' | 'cascadeselect' | 'textarea' | 'inputtext'): string {
+  private fieldBackgroundCssVar(field: 'select' | 'multiselect' | 'cascadeselect' | 'treeselect' | 'textarea' | 'inputtext'): string {
     if (this.formTheme(field) === 'filled') {
       return this.fieldFilledBackgroundCssVar(field);
     }
@@ -2983,10 +3361,13 @@ export class FormCatalogComponent {
     if (field === 'cascadeselect') {
       return 'var(--cascadeselect-background, var(--p-cascadeselect-background, var(--form-field-background)))';
     }
+    if (field === 'treeselect') {
+      return 'var(--treeselect-background, var(--p-treeselect-background, var(--form-field-background)))';
+    }
     return 'var(--inputtext-background, var(--p-inputtext-background, var(--form-field-background)))';
   }
 
-  private fieldDropdownWidthCssVar(field: 'select' | 'multiselect' | 'cascadeselect'): string {
+  private fieldDropdownWidthCssVar(field: 'select' | 'multiselect' | 'cascadeselect' | 'treeselect'): string {
     const prefix = field;
     return `var(--${prefix}-dropdown-width, var(--p-${prefix}-dropdown-width, var(--dimension-scale-x32, 32px)))`;
   }
@@ -3172,7 +3553,7 @@ export class FormCatalogComponent {
    */
   private iftaLabelInputtextHostVars(
     size: FormInteractionSize,
-    field: 'inputtext' | 'password' | 'select' | 'multiselect' | 'cascadeselect' = 'inputtext',
+    field: 'inputtext' | 'password' | 'select' | 'multiselect' | 'cascadeselect' | 'treeselect' = 'inputtext',
   ): Record<string, string> {
     const fieldVars = this.floatLabelFieldStyleVars(size, field);
     const paddingYToken = this.fieldPaddingYToken(field, size);
@@ -3234,7 +3615,7 @@ export class FormCatalogComponent {
     if (fieldKind === 'textarea') {
       return { ...this.iftaLabelTextareaHostVars(size), ...iconVars };
     }
-    if (fieldKind === 'select' || fieldKind === 'multiselect' || fieldKind === 'cascadeselect') {
+    if (fieldKind === 'select' || fieldKind === 'multiselect' || fieldKind === 'cascadeselect' || fieldKind === 'treeselect') {
       return { ...this.iftaLabelInputtextHostVars(size, fieldKind), ...iconVars };
     }
     return {
@@ -3402,6 +3783,9 @@ export class FormCatalogComponent {
     if (this.isCascadeSelectBlock(block)) {
       return this.cascadeSelectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
+    if (this.isTreeSelectBlock(block)) {
+      return this.treeSelectIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
+    }
     if (this.isDatepickerBlock(block)) {
       return this.datepickerIsDefault() ? this.inputDefaultStates : this.inputFloatStates;
     }
@@ -3459,6 +3843,7 @@ export class FormCatalogComponent {
       (this.isSelectBlock(block) && this.selectIsDefault()) ||
       (this.isMultiselectBlock(block) && this.multiselectIsDefault()) ||
       (this.isCascadeSelectBlock(block) && this.cascadeSelectIsDefault()) ||
+      (this.isTreeSelectBlock(block) && this.treeSelectIsDefault()) ||
       (this.isDatepickerBlock(block) && this.datepickerIsDefault()) ||
       (this.isTextareaBlock(block) && this.textareaIsDefault()) ||
       (this.isInputTextBlock(block) && this.inputtextIsDefault()) ||
@@ -3560,6 +3945,7 @@ export class FormCatalogComponent {
       this.isSelectBlock(block) ||
       this.isListboxBlock(block) ||
       this.isCascadeSelectBlock(block) ||
+      this.isTreeSelectBlock(block) ||
       this.isDatepickerBlock(block) ||
       this.isPasswordBlock(block) ||
       this.isInputOtpBlock(block) ||

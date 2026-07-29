@@ -240,4 +240,167 @@
       </div>
     </section>
   </div>
+
+  <div class="catalog-preview timeline-showcase">
+    <section id="pg-timeline" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Timeline' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Timeline"
+        >
+          <div
+            catalogPreviewDemo
+            class="timeline-catalog-live-shell catalog-showcase-interactive"
+            [class.timeline-catalog-live-shell--horizontal]="timelineIsBasic() && timelineIx().layout === 'horizontal'"
+            [class.timeline-catalog-live-shell--template]="timelineIsTemplate()"
+          >
+            @if (timelineIsTemplate()) {
+              <p-timeline
+                class="timeline-catalog-live timeline-catalog-live--template"
+                [value]="timelineEvents"
+                layout="vertical"
+                align="alternate"
+                ariaLabel="Timeline interactivo del catálogo"
+              >
+                <ng-template pTemplate="content" let-event>
+                  <p-card class="timeline-catalog-template-card" [header]="event.status" [subheader]="event.date">
+                    @if (event.image) {
+                      <img
+                        [src]="event.image"
+                        [alt]="event.status"
+                        class="timeline-catalog-template-image"
+                      />
+                    }
+                    <p class="timeline-catalog-template-body">{{ timelineTemplateBody }}</p>
+                    <p-button label="Read more" [text]="true" size="small" tabindex="-1" />
+                  </p-card>
+                </ng-template>
+                <ng-template pTemplate="marker" let-event>
+                  <span
+                    class="timeline-catalog-marker timeline-catalog-marker--custom"
+                    [style.backgroundColor]="event.color"
+                  >
+                    <i [class]="event.icon"></i>
+                  </span>
+                </ng-template>
+              </p-timeline>
+            } @else if (timelineBasicUsesIconBullet()) {
+              <p-timeline
+                class="timeline-catalog-live"
+                [class.timeline-catalog-live--horizontal]="timelineIx().layout === 'horizontal'"
+                [value]="timelineEvents"
+                [layout]="timelineIx().layout"
+                [align]="timelineIx().align"
+                ariaLabel="Timeline interactivo del catálogo"
+              >
+                <ng-template pTemplate="content" let-event>
+                  <div class="timeline-catalog-default-content">
+                    <div class="timeline-catalog-default-title">{{ event.status }}</div>
+                    <div class="timeline-catalog-default-date">{{ event.date }}</div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="marker" let-event>
+                  <span
+                    class="timeline-catalog-marker timeline-catalog-marker--custom timeline-catalog-marker--default-theme"
+                  >
+                    <i [class]="event.icon"></i>
+                  </span>
+                </ng-template>
+              </p-timeline>
+            } @else {
+              <p-timeline
+                class="timeline-catalog-live"
+                [class.timeline-catalog-live--horizontal]="timelineIx().layout === 'horizontal'"
+                [value]="timelineEvents"
+                [layout]="timelineIx().layout"
+                [align]="timelineIx().align"
+                ariaLabel="Timeline interactivo del catálogo"
+              >
+                <ng-template pTemplate="content" let-event>
+                  <div class="timeline-catalog-default-content">
+                    <div class="timeline-catalog-default-title">{{ event.status }}</div>
+                    <div class="timeline-catalog-default-date">{{ event.date }}</div>
+                  </div>
+                </ng-template>
+              </p-timeline>
+            }
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Variant</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="timelineVariantOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="timelineIx().variant"
+                  (ngModelChange)="onTimelineVariantChange($event)"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Variant Timeline"
+                />
+              </div>
+            </div>
+            @if (timelineIsBasic()) {
+              <p-divider styleClass="button-config-divider" />
+              <div class="button-config-size-field">
+                <span class="input-config-label">Layout</span>
+                <div class="button-config-size-toggle-wrap">
+                  <p-selectbutton
+                    [options]="timelineLayoutOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="timelineIx().layout"
+                    (ngModelChange)="onTimelineLayoutChange($event)"
+                    [allowEmpty]="false"
+                    [fluid]="true"
+                    size="small"
+                    ariaLabel="Layout Timeline"
+                  />
+                </div>
+              </div>
+              <p-divider styleClass="button-config-divider" />
+              <div class="button-config-size-field">
+                <span class="input-config-label">Align</span>
+                <div class="button-config-select-wrap">
+                  <p-select
+                    [options]="timelineAlignOptions()"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="timelineIx().align"
+                    (ngModelChange)="patchTimelineIx({ align: $event })"
+                    size="small"
+                    appendTo="body"
+                    ariaLabel="Align Timeline"
+                  />
+                </div>
+              </div>
+              <p-divider styleClass="button-config-divider" />
+              <div class="button-config-size-field">
+                <span class="input-config-label">Bullet type</span>
+                <div class="button-config-select-wrap">
+                  <p-select
+                    [options]="timelineBulletTypeOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    [ngModel]="timelineIx().bulletType"
+                    (ngModelChange)="patchTimelineIx({ bulletType: $event })"
+                    size="small"
+                    appendTo="body"
+                    ariaLabel="Bullet type Timeline"
+                  />
+                </div>
+              </div>
+            }
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
 </div>

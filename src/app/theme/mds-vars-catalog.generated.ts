@@ -1080,7 +1080,7 @@ export const MDS_VARS_CATALOG = {
     { name: "--card-subtitle-color", value: "var(--text-muted-color)" },
     { name: "--card-title-font-size", value: "18px" },
     { name: "--card-title-font-weight", value: "500" },
-    { name: "--carousel-content-gap", value: "var(--dimension-scale-x4)" },
+    { name: "--carousel-content-gap", value: "var(--dimension-scale-x16)" },
     { name: "--carousel-figma-item-tag-background", value: "rgba(0, 0, 0, 0)" },
     { name: "--carousel-indicator-active-background", value: "var(--primary-color)" },
     { name: "--carousel-indicator-background", value: "var(--surface-context-base)" },

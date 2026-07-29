@@ -1,11 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TreeNode } from 'primeng/api';
+import { PrimeTemplate, TreeNode } from 'primeng/api';
+import { Card } from 'primeng/card';
 import { Checkbox } from 'primeng/checkbox';
+import { Button } from 'primeng/button';
 import { Divider } from 'primeng/divider';
 import { OrderList } from 'primeng/orderlist';
 import { Paginator, type PaginatorState } from 'primeng/paginator';
 import { Select } from 'primeng/select';
+import { SelectButton } from 'primeng/selectbutton';
+import { Timeline } from 'primeng/timeline';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { Tree } from 'primeng/tree';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
@@ -18,12 +22,23 @@ import {
   PAGINATOR_CATALOG_ROWS_OPTIONS,
   PAGINATOR_CATALOG_STATE_DEMOS,
   PAGINATOR_CATALOG_TOTAL,
+  TIMELINE_CATALOG_EVENTS,
+  TIMELINE_CATALOG_TEMPLATE_BODY,
+  TIMELINE_CATALOG_BULLET_TYPE_OPTIONS,
+  TIMELINE_CATALOG_HORIZONTAL_ALIGN_OPTIONS,
+  TIMELINE_CATALOG_LAYOUT_OPTIONS,
+  TIMELINE_CATALOG_VARIANT_OPTIONS,
+  TIMELINE_CATALOG_VERTICAL_ALIGN_OPTIONS,
   TREE_CATALOG_NODES,
   TREE_CATALOG_SELECTION_MODE_OPTIONS,
   type OrderlistCatalogExample,
   type OrderlistCatalogItem,
   type OrderlistInteractionState,
   type PaginatorCatalogStateKey,
+  type TimelineCatalogAlign,
+  type TimelineCatalogLayout,
+  type TimelineCatalogVariant,
+  type TimelineInteractionState,
   type TreeCatalogSelectionMode,
   type TreeInteractionState,
 } from './data-catalog.config';
@@ -36,12 +51,17 @@ import {
     CatalogInfoBlockComponent,
     CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
+    Card,
     Checkbox,
+    Button,
     Divider,
     FormsModule,
     OrderList,
     Paginator,
+    PrimeTemplate,
     Select,
+    SelectButton,
+    Timeline,
     ToggleSwitch,
     Tree,
   ],
@@ -61,6 +81,12 @@ export class DataCatalogComponent {
   readonly treeSelectionModeOptions = TREE_CATALOG_SELECTION_MODE_OPTIONS;
   readonly treeScrollHeight = '15rem';
 
+  readonly timelineEvents = TIMELINE_CATALOG_EVENTS;
+  readonly timelineTemplateBody = TIMELINE_CATALOG_TEMPLATE_BODY;
+  readonly timelineVariantOptions = TIMELINE_CATALOG_VARIANT_OPTIONS;
+  readonly timelineLayoutOptions = TIMELINE_CATALOG_LAYOUT_OPTIONS;
+  readonly timelineBulletTypeOptions = TIMELINE_CATALOG_BULLET_TYPE_OPTIONS;
+
   readonly first = signal(0);
   readonly rows = signal(10);
 
@@ -79,6 +105,13 @@ export class DataCatalogComponent {
     selectionMode: 'single',
     filter: false,
   };
+
+  readonly timelineIx = signal<TimelineInteractionState>({
+    variant: 'basic',
+    layout: 'vertical',
+    align: 'left',
+    bulletType: 'default',
+  });
 
   onPageChange(event: PaginatorState): void {
     const nextRows = event.rows ?? this.rows();
@@ -135,6 +168,50 @@ export class DataCatalogComponent {
 
   onTreeSelectionModeChange(selectionMode: TreeCatalogSelectionMode): void {
     this.patchTreeIx({ selectionMode });
+  }
+
+  timelineIsBasic(): boolean {
+    return this.timelineIx().variant === 'basic';
+  }
+
+  timelineIsTemplate(): boolean {
+    return this.timelineIx().variant === 'template';
+  }
+
+  timelineBasicUsesIconBullet(): boolean {
+    return this.timelineIsBasic() && this.timelineIx().bulletType === 'icon';
+  }
+
+  timelineDisplayLayout(): TimelineCatalogLayout {
+    return this.timelineIsTemplate() ? 'vertical' : this.timelineIx().layout;
+  }
+
+  timelineDisplayAlign(): TimelineCatalogAlign {
+    return this.timelineIsTemplate() ? 'alternate' : this.timelineIx().align;
+  }
+
+  timelineAlignOptions(): { label: string; value: TimelineCatalogAlign }[] {
+    return this.timelineIx().layout === 'horizontal'
+      ? TIMELINE_CATALOG_HORIZONTAL_ALIGN_OPTIONS
+      : TIMELINE_CATALOG_VERTICAL_ALIGN_OPTIONS;
+  }
+
+  patchTimelineIx(patch: Partial<TimelineInteractionState>): void {
+    this.timelineIx.update((current) => {
+      const next = { ...current, ...patch };
+      if (patch.layout !== undefined && patch.layout !== current.layout) {
+        next.align = patch.layout === 'horizontal' ? 'top' : 'left';
+      }
+      return next;
+    });
+  }
+
+  onTimelineVariantChange(variant: TimelineCatalogVariant): void {
+    this.patchTimelineIx({ variant });
+  }
+
+  onTimelineLayoutChange(layout: TimelineCatalogLayout): void {
+    this.patchTimelineIx({ layout });
   }
 
   private cloneTreeNodes(): TreeNode[] {

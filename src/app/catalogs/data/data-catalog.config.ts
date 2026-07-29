@@ -126,3 +126,116 @@ export interface TreeInteractionState {
   selectionMode: TreeCatalogSelectionMode;
   filter: boolean;
 }
+
+export type TimelineCatalogVariant = 'basic' | 'template';
+
+export type TimelineCatalogLayout = 'vertical' | 'horizontal';
+
+export type TimelineCatalogVerticalAlign = 'left' | 'right' | 'alternate';
+
+export type TimelineCatalogHorizontalAlign = 'top' | 'bottom';
+
+export type TimelineCatalogAlign = TimelineCatalogVerticalAlign | TimelineCatalogHorizontalAlign;
+
+export type TimelineCatalogBulletType = 'default' | 'icon';
+
+export interface TimelineCatalogEvent {
+  status: string;
+  date: string;
+  icon: string;
+  color?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+/** Cuerpo demo del showcase Template (PrimeNG Timeline — Custom). */
+export const TIMELINE_CATALOG_TEMPLATE_BODY =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+
+const TIMELINE_CDN = 'https://primefaces.org/cdn/primeng/images/product';
+
+/** Eventos demo (PrimeNG Timeline — Basic / Template). */
+export const TIMELINE_CATALOG_EVENTS: TimelineCatalogEvent[] = [
+  {
+    status: 'Ordered',
+    date: '15/10/2020 10:30',
+    icon: 'pi pi-shopping-cart',
+    color: '#9C27B0',
+    title: 'Order placed',
+    description: 'Your order #1234 has been placed successfully.',
+    image: `${TIMELINE_CDN}/bamboo-watch.jpg`,
+  },
+  {
+    status: 'Processing',
+    date: '15/10/2020 14:00',
+    icon: 'pi pi-cog',
+    color: '#673AB7',
+    title: 'Processing',
+    description: 'We are preparing your items for shipment.',
+  },
+  {
+    status: 'Shipped',
+    date: '15/10/2020 16:15',
+    icon: 'pi pi-truck',
+    color: '#FF9800',
+    title: 'Shipped',
+    description: 'Your package has left our warehouse.',
+  },
+  {
+    status: 'Delivered',
+    date: '16/10/2020 10:00',
+    icon: 'pi pi-check',
+    color: '#607D8B',
+    title: 'Delivered',
+    description: 'Order delivered to the customer.',
+  },
+];
+
+export const TIMELINE_CATALOG_VARIANT_OPTIONS: {
+  label: string;
+  value: TimelineCatalogVariant;
+}[] = [
+  { label: 'Basic', value: 'basic' },
+  { label: 'Template', value: 'template' },
+];
+
+export const TIMELINE_CATALOG_LAYOUT_OPTIONS: {
+  label: string;
+  value: TimelineCatalogLayout;
+}[] = [
+  { label: 'Vertical', value: 'vertical' },
+  { label: 'Horizontal', value: 'horizontal' },
+];
+
+export const TIMELINE_CATALOG_VERTICAL_ALIGN_OPTIONS: {
+  label: string;
+  value: TimelineCatalogVerticalAlign;
+}[] = [
+  { label: 'Left', value: 'left' },
+  { label: 'Right', value: 'right' },
+  { label: 'Serrated', value: 'alternate' },
+];
+
+export const TIMELINE_CATALOG_HORIZONTAL_ALIGN_OPTIONS: {
+  label: string;
+  value: TimelineCatalogHorizontalAlign;
+}[] = [
+  { label: 'Top', value: 'top' },
+  { label: 'Bottom', value: 'bottom' },
+];
+
+export const TIMELINE_CATALOG_BULLET_TYPE_OPTIONS: {
+  label: string;
+  value: TimelineCatalogBulletType;
+}[] = [
+  { label: 'Default', value: 'default' },
+  { label: 'Icon', value: 'icon' },
+];
+
+export interface TimelineInteractionState {
+  variant: TimelineCatalogVariant;
+  layout: TimelineCatalogLayout;
+  align: TimelineCatalogAlign;
+  bulletType: TimelineCatalogBulletType;
+}

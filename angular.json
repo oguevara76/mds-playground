@@ -59,7 +59,9 @@
               "src/styles/primeng-card-parity.css",
               "src/styles/primeng-panel-parity.css",
               "src/styles/primeng-galleria-parity.css",
-              "src/styles.css"
+              "src/styles/primeng-carousel-parity.css",
+              "src/styles.css",
+              "src/styles/primeng-floatlabel-overlay-parity.css"
             ],
             "scripts": []
           },
@@ -164,7 +166,9 @@
               "src/styles/primeng-card-parity.css",
               "src/styles/primeng-panel-parity.css",
               "src/styles/primeng-galleria-parity.css",
-              "src/styles.css"
+              "src/styles/primeng-carousel-parity.css",
+              "src/styles.css",
+              "src/styles/primeng-floatlabel-overlay-parity.css"
             ],
             "scripts": []
           }

@@ -367,6 +367,7 @@
 .catalog-preview-frame .catalog-preview-frame__stage .divider-catalog-demo-area,
 .catalog-preview-frame .catalog-preview-frame__stage .accordion-catalog-demo-area,
 .catalog-preview-frame .catalog-preview-frame__stage .slider-catalog-demo-area,
+.catalog-preview-frame .catalog-preview-frame__stage .inputgroup-catalog-demo-area,
 .catalog-preview-frame .catalog-preview-frame__stage .paginator-catalog-live-shell {
   flex: 0 1 auto;
   width: 100%;
@@ -381,11 +382,46 @@
   justify-content: center;
 }
 
-.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo].catalog-input-interactive,
+.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo].catalog-input-interactive:not(.inputgroup-interaction-scope),
 .catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo] .form-input-interaction-field,
 .catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo] .form-input-interaction-control {
   width: 100%;
   max-width: 320px;
+}
+
+.catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo].inputgroup-catalog-demo-area {
+  width: 100%;
+  max-width: min(100%, 40rem);
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.inputgroup-showcase .inputgroup-examples-pair {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: var(--dimension-scale-x16, 1rem);
+  width: 100%;
+  min-width: 0;
+}
+
+.inputgroup-showcase .inputgroup-examples-pair > p-inputgroup,
+.inputgroup-showcase .inputgroup-examples-pair > .p-inputgroup {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  .inputgroup-showcase .inputgroup-examples-pair {
+    flex-direction: column;
+  }
+
+  .catalog-preview-frame .catalog-preview-frame__stage [catalogPreviewDemo].inputgroup-catalog-demo-area {
+    max-width: 320px;
+  }
 }
 
 .button-config-aside {
@@ -709,5 +745,8 @@ mds-catalog-state-tag .catalog-state-tag {
 
 .p-menu.menu-catalog-live .mds-menu-toggle-child .mds-menu-catalog-item-link,
 .p-menu.menu-catalog-static .mds-menu-toggle-child .mds-menu-catalog-item-link {
-  padding-inline-start: calc(var(--p-menu-item-padding, 12px) + 1.25rem);
+  /* --p-menu-item-padding es shorthand (y x); no sirve dentro de calc() */
+  padding-inline-start: calc(
+    var(--p-menu-item-padding-x, var(--menu-item-padding-x, var(--dimension-scale-x12, 12px))) + 1.25rem
+  );
 }

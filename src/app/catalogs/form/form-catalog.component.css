@@ -215,6 +215,12 @@
   max-width: 280px;
 }
 
+/* MultiSelect chip (Readonly / Fill): caben 2 chips en fila */
+.form-showcase.multiselect-showcase .catalog-input-state.catalog-button-state {
+  min-width: 240px;
+  max-width: 320px;
+}
+
 .form-showcase .catalog-input-state .catalog-button-state-preview {
   width: 100%;
   align-items: stretch;
@@ -239,10 +245,10 @@
 
 .form-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
-  .catalog-button-state-preview:has(.p-floatlabel-over),
+  .catalog-button-state-preview:has(.p-floatlabel-over.is-label-floated),
 .form-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
-  .catalog-button-state-preview:has(.p-floatlabel-on) {
+  .catalog-button-state-preview:has(.p-floatlabel-on.is-label-floated) {
   padding-top: var(--catalog-floatlabel-headroom);
 }
 
@@ -263,22 +269,22 @@
 
 .textarea-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
-  .catalog-button-state-preview:has(.p-floatlabel-over),
+  .catalog-button-state-preview:has(.p-floatlabel-over.is-label-floated),
 .textarea-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
-  .catalog-button-state-preview:has(.p-floatlabel-on),
+  .catalog-button-state-preview:has(.p-floatlabel-on.is-label-floated),
 .cascadeselect-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
-  .catalog-button-state-preview:has(.p-floatlabel-over),
+  .catalog-button-state-preview:has(.p-floatlabel-over.is-label-floated),
 .cascadeselect-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
-  .catalog-button-state-preview:has(.p-floatlabel-on),
+  .catalog-button-state-preview:has(.p-floatlabel-on.is-label-floated),
 .datepicker-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
-  .catalog-button-state-preview:has(.p-floatlabel-over),
+  .catalog-button-state-preview:has(.p-floatlabel-over.is-label-floated),
 .datepicker-showcase
   .catalog-input-states-row:not(.catalog-input-sizes-row)
-  .catalog-button-state-preview:has(.p-floatlabel-on) {
+  .catalog-button-state-preview:has(.p-floatlabel-on.is-label-floated) {
   padding-top: var(--catalog-floatlabel-headroom);
 }
 
@@ -1009,6 +1015,7 @@
 }
 
 :host ::ng-deep .form-showcase .input-interaction-scope .p-iftalabel label,
+:host ::ng-deep .form-showcase .password-interaction-scope .p-iftalabel label,
 :host ::ng-deep .catalog-input-states-row:not(.catalog-input-sizes-row) .p-iftalabel label,
 :host ::ng-deep .catalog-input-sizes-row .p-iftalabel label {
   inset-inline-start: var(
@@ -1114,6 +1121,7 @@
 
 /* IftaLabel: label fijo en padding-y; valor debajo (--iftalabel-input-padding-top) */
 :host ::ng-deep .form-showcase .input-interaction-scope .p-iftalabel label,
+:host ::ng-deep .form-showcase .password-interaction-scope .p-iftalabel label,
 :host ::ng-deep .catalog-input-states-row:not(.catalog-input-sizes-row) .p-iftalabel label,
 :host ::ng-deep .catalog-input-sizes-row .p-iftalabel label {
   top: var(--catalog-iftalabel-top, var(--p-iftalabel-top, var(--iftalabel-top)));
@@ -1213,9 +1221,9 @@
 }
 
 /* Interaction Over activo: label por encima del borde + máscara (PrimeNG dt over.active.top sin fallback MDS) */
-:host ::ng-deep .form-showcase .input-interaction-scope .p-floatlabel-over:has(input:focus) label,
-:host ::ng-deep .form-showcase .input-interaction-scope .p-floatlabel-over:has(input.p-filled) label,
-:host ::ng-deep .form-showcase .input-interaction-scope .p-floatlabel-over:has(input[placeholder]) label {
+:host ::ng-deep .form-showcase .inputtext-showcase .input-interaction-scope .p-floatlabel-over:has(input:focus) label,
+:host ::ng-deep .form-showcase .inputtext-showcase .input-interaction-scope .p-floatlabel-over:has(input.p-filled) label,
+:host ::ng-deep .form-showcase .inputtext-showcase .input-interaction-scope .p-floatlabel-over:has(input[placeholder]) label {
   top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top));
   transform: translateY(0);
   padding: 0 var(--floatlabel-on-active-padding-x, 2px);
@@ -1226,9 +1234,9 @@
 }
 
 /* Interaction On activo: misma tipografía xs que Over; label sobre el borde superior */
-:host ::ng-deep .form-showcase .input-interaction-scope .p-floatlabel-on:has(input:focus) label,
-:host ::ng-deep .form-showcase .input-interaction-scope .p-floatlabel-on:has(input.p-filled) label,
-:host ::ng-deep .form-showcase .input-interaction-scope .p-floatlabel-on:has(input[placeholder]) label {
+:host ::ng-deep .form-showcase .inputtext-showcase .input-interaction-scope .p-floatlabel-on:has(input:focus) label,
+:host ::ng-deep .form-showcase .inputtext-showcase .input-interaction-scope .p-floatlabel-on:has(input.p-filled) label,
+:host ::ng-deep .form-showcase .inputtext-showcase .input-interaction-scope .p-floatlabel-on:has(input[placeholder]) label {
   top: 0;
   transform: translateY(-50%);
   padding: var(--p-floatlabel-on-active-padding, var(--floatlabel-on-active-padding-y, 0) var(--floatlabel-on-active-padding-x, 2px));
@@ -2456,9 +2464,181 @@
   font-size: var(--catalog-floatlabel-infield-font-size, var(--p-floatlabel-infield-font-size, var(--p-inputtext-font-size)));
 }
 
+/* Password IftaLabel: label fijo dentro del campo (paridad InputText / Select) */
+:host ::ng-deep .password-showcase .password-interaction-scope .p-iftalabel label,
+:host ::ng-deep .password-showcase .catalog-input-sizes-row .p-iftalabel label,
+:host ::ng-deep .password-showcase .catalog-input-states-row .p-iftalabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-iftalabel-position-x, var(--iftalabel-position-x, var(--p-inputtext-padding-x, var(--form-field-padding-x))))
+  );
+  top: var(
+    --catalog-iftalabel-top,
+    var(--p-iftalabel-top, var(--catalog-floatlabel-in-active-top, var(--iftalabel-top, var(--form-field-padding-y))))
+  );
+  transform: none;
+  font-size: var(--p-iftalabel-font-size, var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size)));
+  font-weight: var(--p-iftalabel-font-weight, var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight)));
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+}
+
+/* Password Float In: label activo dentro del campo */
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-in.is-label-floated label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-in:has(.p-password-input:focus) label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-in:has(.p-password.p-focus) label,
+:host ::ng-deep .password-showcase .catalog-input-states-row .p-floatlabel-in.is-label-floated label,
+:host ::ng-deep .password-showcase .catalog-input-sizes-row .p-floatlabel-in.is-label-floated label {
+  top: var(
+    --catalog-floatlabel-in-active-top,
+    var(--catalog-floatlabel-position-y, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)))
+  );
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+}
+
+/* Password Float In vacío (Interaction): label centrado + padding simétrico */
+:host ::ng-deep
+  .password-showcase
+  .password-interaction-scope
+  .p-floatlabel-in:not(.is-label-floated):not(:has(.p-password-input:focus)):not(:has(.p-password.p-focus))
+  .p-password
+  .p-password-input {
+  padding-block: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-inputtext-padding-y, var(--form-field-padding-y)))
+  );
+}
+
+:host ::ng-deep
+  .password-showcase
+  .password-interaction-scope
+  .p-floatlabel-in:not(.is-label-floated):not(:has(.p-password-input:focus)):not(:has(.p-password.p-focus))
+  label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--p-inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+}
+
+/* Password Float In vacío en States: label centrado */
+:host ::ng-deep .password-showcase .catalog-input-states-row .p-floatlabel-in:not(.is-label-floated) label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--p-inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+}
+
 :host ::ng-deep .password-showcase .p-floatlabel .p-password,
 :host ::ng-deep .password-interaction-scope .p-floatlabel .p-password {
   width: 100%;
+}
+
+/* Password Float Over/On — paridad Select */
+:host ::ng-deep .form-showcase .password-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
+:host ::ng-deep .form-showcase .password-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel,
+:host ::ng-deep .password-showcase .catalog-input-sizes-row .catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
+:host ::ng-deep .password-showcase .catalog-input-sizes-row .catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-over-wrapper-padding-top, var(--floatlabel-over-wrapper-padding-top));
+}
+
+:host ::ng-deep
+  .password-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-input-interactive:has(.p-floatlabel-over)
+  .p-floatlabel,
+:host ::ng-deep
+  .password-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-input-interactive:has(.p-floatlabel-on)
+  .p-floatlabel {
+  margin-top: 0;
+}
+
+:host ::ng-deep .form-showcase .password-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-on-wrapper-padding-top, var(--floatlabel-on-wrapper-padding-top, 7px));
+}
+
+:host ::ng-deep .password-showcase .catalog-input-states-row .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .password-showcase .catalog-input-sizes-row .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .password-showcase .catalog-input-states-row .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .password-showcase .catalog-input-sizes-row .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .password-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+:host ::ng-deep .password-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+:host ::ng-deep .password-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+:host ::ng-deep .password-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-focus) label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-over:has(.p-password-input:focus) label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-over:has(.p-password.p-focus) label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-over.is-label-floated label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--form-field-background))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  z-index: 1;
+}
+
+:host ::ng-deep .password-showcase .catalog-input-states-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .password-showcase .catalog-input-sizes-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .password-showcase .catalog-input-states-row .p-floatlabel-over:has(.p-password.p-focus) label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--form-field-background))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  z-index: 1;
+}
+
+:host ::ng-deep .password-showcase .catalog-input-states-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .password-showcase .catalog-input-sizes-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-on:has(.p-password-input:focus) label,
+:host ::ng-deep .password-showcase .password-interaction-scope .p-floatlabel-on:has(.p-password.p-focus) label {
+  top: 0;
+  transform: translateY(-50%);
+  padding: var(--p-floatlabel-on-active-padding, var(--floatlabel-on-active-padding-y, 0) var(--floatlabel-on-active-padding-x, 2px));
+  background: var(
+    --p-floatlabel-on-active-background,
+    var(--floatlabel-on-active-background, var(--form-field-background))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
 }
 
 :host ::ng-deep .catalog-input-states-row .p-floatlabel:has(.p-invalid) label,
@@ -2842,6 +3022,26 @@
   border-color: var(--p-select-invalid-border-color, var(--select-invalid-border-color));
 }
 
+:host ::ng-deep .select-showcase .is-static-preview .p-select {
+  pointer-events: none;
+  cursor: default;
+}
+
+:host ::ng-deep .select-showcase .catalog-input-states-row .p-select:not(.p-disabled) {
+  background: var(--p-select-background, var(--select-background, var(--form-field-background)));
+  color: var(--p-select-color, var(--select-color, var(--form-field-color)));
+}
+
+:host ::ng-deep .select-showcase .catalog-input-states-row .p-select.p-disabled {
+  background: var(--p-select-disabled-background, var(--select-disabled-background, var(--form-field-disabled-background)));
+  color: var(--p-select-disabled-color, var(--select-disabled-color, var(--form-field-disabled-color)));
+  opacity: 1;
+}
+
+:host ::ng-deep .select-showcase .catalog-input-states-row .p-select.p-disabled .p-select-label {
+  color: var(--p-select-disabled-color, var(--select-disabled-color, var(--form-field-disabled-color)));
+}
+
 .form-showcase .catalog-block-section:has(.select-interaction-scope) .catalog-block-body {
   overflow: visible;
 }
@@ -3000,9 +3200,17 @@
 :host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-over:not(.is-label-floated) label,
 :host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-floatlabel-on:not(.is-label-floated) label,
 :host ::ng-deep .multiselect-showcase .catalog-input-sizes-row .p-floatlabel-on:not(.is-label-floated) label,
-:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-on:not(.is-label-floated) label {
+:host ::ng-deep .multiselect-showcase .multiselect-interaction-scope .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+:host ::ng-deep .multiselect-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-focus) label {
   top: 50% !important;
   transform: translateY(-50%) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
   font-weight: 400;
   padding: 0;
   background: transparent;
@@ -3134,12 +3342,22 @@
 
 :host ::ng-deep .multiselect-showcase .p-multiselect.p-multiselect-display-chip .p-multiselect-label {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   align-content: flex-start;
   gap: var(--multiselect-figma-input-multiple-gap, var(--dimension-scale-x4));
   white-space: normal;
   text-overflow: unset;
+}
+
+/*
+ * STATE: columnas estrechas (~160px) — con wrap los 2 chips (Readonly / Fill) se apilan.
+ * Mantener fila como PrimeNG; el overflow lo recorta .p-multiselect-label-container.
+ */
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-multiselect.p-multiselect-display-chip .p-multiselect-label {
+  flex-wrap: nowrap !important;
+  flex-direction: row !important;
 }
 
 /* Float In / IftaLabel + chips: chips bajo el label xs (no centrar en el padding-top) */
@@ -3202,7 +3420,14 @@
 
 :host ::ng-deep .multiselect-showcase .p-multiselect .p-multiselect-chip-item {
   display: inline-flex;
+  flex: 0 1 auto;
+  width: auto;
   max-width: 100%;
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-multiselect .p-multiselect-chip-item {
+  flex: 0 0 auto;
+  max-width: none;
 }
 
 /* Vacío Float In: valor/placeholder centrado (sin padding-top de label activo) */
@@ -3536,6 +3761,26 @@
   border-color: var(--p-multiselect-invalid-border-color, var(--multiselect-invalid-border-color));
 }
 
+:host ::ng-deep .multiselect-showcase .is-static-preview .p-multiselect {
+  pointer-events: none;
+  cursor: default;
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-multiselect:not(.p-disabled) {
+  background: var(--p-multiselect-background, var(--multiselect-background, var(--form-field-background)));
+  color: var(--p-multiselect-color, var(--multiselect-color, var(--form-field-color)));
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-multiselect.p-disabled {
+  background: var(--p-multiselect-disabled-background, var(--multiselect-disabled-background, var(--form-field-disabled-background)));
+  color: var(--p-multiselect-disabled-color, var(--multiselect-disabled-color, var(--form-field-disabled-color)));
+  opacity: 1;
+}
+
+:host ::ng-deep .multiselect-showcase .catalog-input-states-row .p-multiselect.p-disabled .p-multiselect-label {
+  color: var(--p-multiselect-disabled-color, var(--multiselect-disabled-color, var(--form-field-disabled-color)));
+}
+
 .form-showcase .catalog-block-section:has(.multiselect-interaction-scope) .catalog-block-body {
   overflow: visible;
 }
@@ -3552,6 +3797,27 @@
 }
 
 /* CascadeSelect — Float Label / IftaLabel (paridad InputText / Password) */
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel,
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel {
+  max-width: 100%;
+}
+
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-input-demo-wrap .p-iftalabel,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-iftalabel {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+:host ::ng-deep .cascadeselect-showcase .p-iftalabel label {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  transform: none;
+}
+
 :host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel > .p-cascadeselect,
 :host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel > .p-cascadeselect,
 :host ::ng-deep .cascadeselect-showcase .p-iftalabel > .p-cascadeselect,
@@ -3581,12 +3847,29 @@
     --catalog-iftalabel-top,
     var(--p-iftalabel-top, var(--catalog-floatlabel-in-active-top, var(--cascadeselect-padding-y, var(--form-field-padding-y))))
   );
-  transform: translateY(0);
+  transform: none;
   font-size: var(--p-iftalabel-font-size, var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size)));
   font-weight: var(--p-iftalabel-font-weight, var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight)));
   line-height: 1;
   padding: 0;
   background: transparent;
+}
+
+/* IftaLabel: position-x del label por tamaño (paridad MultiSelect) */
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel:has(.p-cascadeselect-sm) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-iftalabel:has(.p-cascadeselect-sm) label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-sm-x, var(--floatlabel-position-sm-x, var(--cascadeselect-sm-padding-x, var(--form-field-sm-padding-x))))
+  );
+}
+
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-iftalabel:has(.p-cascadeselect-lg) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-iftalabel:has(.p-cascadeselect-lg) label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-lg-x, var(--floatlabel-position-lg-x, var(--cascadeselect-lg-padding-x, var(--form-field-lg-padding-x))))
+  );
 }
 
 :host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-in label,
@@ -3623,30 +3906,24 @@
   font-weight: 400;
 }
 
-/* States / Sizes Float In: label activo por defecto (preview fill) */
-:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in label,
-:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-in label {
+/* States / Sizes Float In: label activo solo cuando el preview lo indica */
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in.is-label-floated label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-in.is-label-floated label {
   top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
   transform: translateY(0);
   font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
   font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
 }
 
-:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in:not(.is-label-floated) label {
-  top: 50%;
-  transform: translateY(-50%);
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-in:not(.is-label-floated) label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
   font-size: var(
     --catalog-floatlabel-infield-font-size,
     var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
   );
   font-weight: 400;
-}
-
-:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-in.is-label-floated label {
-  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
-  transform: translateY(0);
-  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
-  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
 }
 
 :host ::ng-deep .form-showcase .cascadeselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
@@ -3673,15 +3950,27 @@
   margin-top: var(--p-floatlabel-on-wrapper-padding-top, var(--floatlabel-on-wrapper-padding-top, 7px));
 }
 
-/* Select Float Over/On: vacío en Interaction/States/Sizes — label centrado en el campo */
+/* CascadeSelect Float Over/On: vacío en Interaction/States/Sizes — label centrado en el campo */
 :host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-over:not(.is-label-floated) label,
 :host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-over:not(.is-label-floated) label,
 :host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-over:not(.is-label-floated) label,
 :host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-on:not(.is-label-floated) label,
 :host ::ng-deep .cascadeselect-showcase .catalog-input-sizes-row .p-floatlabel-on:not(.is-label-floated) label,
-:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-on:not(.is-label-floated) label {
+:host ::ng-deep .cascadeselect-showcase .cascadeselect-interaction-scope .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-over:not(.is-label-floated):has(.p-cascadeselect) label,
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-floatlabel-on:not(.is-label-floated):has(.p-cascadeselect) label,
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+:host ::ng-deep .cascadeselect-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-focus) label {
   top: 50% !important;
   transform: translateY(-50%) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
   font-weight: 400;
   padding: 0;
   background: transparent;
@@ -3895,6 +4184,11 @@
   cursor: default;
 }
 
+:host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-cascadeselect:not(.p-disabled) {
+  background: var(--p-cascadeselect-background, var(--cascadeselect-background, var(--form-field-background)));
+  color: var(--p-cascadeselect-color, var(--cascadeselect-color, var(--form-field-color)));
+}
+
 :host ::ng-deep .cascadeselect-showcase .catalog-input-states-row .p-cascadeselect.p-disabled {
   background: var(--p-cascadeselect-disabled-background, var(--cascadeselect-disabled-background));
   color: var(--p-cascadeselect-disabled-color, var(--cascadeselect-disabled-color));
@@ -4067,11 +4361,20 @@
 }
 
 .inputgroup-showcase .inputgroup-examples-pair {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
   gap: var(--dimension-scale-x16, 1rem);
-  align-items: start;
   width: 100%;
+  min-width: 0;
+}
+
+.inputgroup-showcase .inputgroup-examples-pair > p-inputgroup,
+.inputgroup-showcase .inputgroup-examples-pair > .p-inputgroup {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
 }
 
 .form-showcase.inputgroup-showcase .catalog-input-states-row {
@@ -4196,7 +4499,7 @@
 
 @media (max-width: 768px) {
   .inputgroup-showcase .inputgroup-examples-pair {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 
   .inputgroup-showcase .catalog-input-states-row {
@@ -4209,6 +4512,674 @@
     grid-template-columns: 1fr;
   }
 }
+/* TreeSelect — Float Label / IftaLabel (paridad InputText / Password) */
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-iftalabel > .p-treeselect,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel > .p-treeselect,
+:host ::ng-deep .treeselect-showcase .p-iftalabel > .p-treeselect,
+:host ::ng-deep .treeselect-showcase .p-floatlabel > .p-treeselect {
+  width: 100%;
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-x, var(--floatlabel-position-x, var(--treeselect-padding-x, var(--form-field-padding-x))))
+  );
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-iftalabel label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-iftalabel label,
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-iftalabel label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-iftalabel-position-x, var(--iftalabel-position-x, var(--treeselect-padding-x, var(--form-field-padding-x))))
+  );
+  top: var(
+    --catalog-iftalabel-top,
+    var(--p-iftalabel-top, var(--catalog-floatlabel-in-active-top, var(--treeselect-padding-y, var(--form-field-padding-y))))
+  );
+  transform: translateY(0);
+  font-size: var(--p-iftalabel-font-size, var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size)));
+  font-weight: var(--p-iftalabel-font-weight, var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight)));
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in label,
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-in label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-in label {
+  inset-inline-start: var(
+    --catalog-floatlabel-position-x,
+    var(--p-floatlabel-position-x, var(--floatlabel-position-x, var(--treeselect-padding-x, var(--form-field-padding-x))))
+  );
+  line-height: 1;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Interaction Float In: label activo solo con valor, foco u overlay abierto */
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in.is-label-floated label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in:has(.p-treeselect.p-focus) label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in:has(.p-treeselect:focus-within) label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in:has(.p-treeselect.p-treeselect-open) label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in:not(.is-label-floated):not(:has(.p-treeselect.p-focus)):not(:has(.p-treeselect:focus-within)):not(:has(.p-treeselect.p-treeselect-open)) label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+}
+
+/* States / Sizes Float In: label activo por defecto (preview fill) */
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-in label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-in label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-in:not(.is-label-floated) label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  font-weight: 400;
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-in.is-label-floated label {
+  top: var(--catalog-floatlabel-in-active-top, var(--p-floatlabel-in-active-top, var(--floatlabel-in-active-top)));
+  transform: translateY(0);
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .form-showcase .treeselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
+:host ::ng-deep .form-showcase .treeselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .catalog-input-interactive:has(.p-floatlabel-over) .p-floatlabel,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-over-wrapper-padding-top, var(--floatlabel-over-wrapper-padding-top));
+}
+
+:host ::ng-deep
+  .treeselect-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-input-interactive:has(.p-floatlabel-over)
+  .p-floatlabel,
+:host ::ng-deep
+  .treeselect-showcase
+  .catalog-input-states-row:not(.catalog-input-sizes-row)
+  .catalog-input-interactive:has(.p-floatlabel-on)
+  .p-floatlabel {
+  margin-top: 0;
+}
+
+:host ::ng-deep .form-showcase .treeselect-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on) .p-floatlabel {
+  margin-top: var(--p-floatlabel-on-wrapper-padding-top, var(--floatlabel-on-wrapper-padding-top, 7px));
+}
+
+/* Select Float Over/On: vacío en Interaction/States/Sizes — label centrado en el campo */
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-over:not(.is-label-floated) label,
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-on:not(.is-label-floated) label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-weight: 400;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Select Interaction Over activo: label por encima del borde + máscara */
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-over:has(.p-treeselect:focus-within) label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-over:has(.p-treeselect.p-focus) label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-over.is-label-floated label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--treeselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  z-index: 1;
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-over.is-label-floated label,
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-over:has(.p-treeselect.p-focus) label {
+  top: var(--p-floatlabel-over-active-top, var(--floatlabel-over-active-top)) !important;
+  transform: translateY(0) !important;
+  padding: 0 var(--floatlabel-on-active-padding-x, 2px);
+  background: var(
+    --p-floatlabel-over-active-background,
+    var(--floatlabel-over-active-background, var(--treeselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+  z-index: 1;
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-on.is-label-floated label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-on:has(.p-treeselect:focus-within) label,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-on:has(.p-treeselect.p-focus) label {
+  top: 0;
+  transform: translateY(-50%);
+  padding: var(--p-floatlabel-on-active-padding, var(--floatlabel-on-active-padding-y, 0) var(--floatlabel-on-active-padding-x, 2px));
+  background: var(
+    --p-floatlabel-on-active-background,
+    var(--floatlabel-on-active-background, var(--treeselect-background, var(--form-field-background)))
+  );
+  border-radius: var(--p-floatlabel-on-border-radius, var(--floatlabel-on-border-radius, var(--border-radius-sm)));
+  font-size: var(--p-floatlabel-active-font-size, var(--floatlabel-active-font-size));
+  font-weight: var(--p-floatlabel-active-font-weight, var(--floatlabel-active-font-weight));
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in .p-treeselect,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-iftalabel .p-treeselect,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-treeselect,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-iftalabel .p-treeselect,
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel-in .p-treeselect,
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-iftalabel .p-treeselect {
+  box-sizing: border-box;
+  position: relative;
+  display: flex !important;
+  align-items: stretch !important;
+  width: 100%;
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height, var(--p-iftalabel-input-min-height, 47px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height, var(--p-iftalabel-input-min-height, 47px))
+  ) !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+:host ::ng-deep .treeselect-showcase .p-floatlabel-in .p-treeselect .p-treeselect-label,
+:host ::ng-deep .treeselect-showcase .p-iftalabel .p-treeselect .p-treeselect-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  line-height: var(--inputtext-line-height, 1.25);
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-top,
+    var(--p-floatlabel-in-input-padding-top, var(--p-iftalabel-input-padding-top, var(--floatlabel-in-input-padding-top)))
+  );
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+  padding-inline-start: var(
+    --catalog-floatlabel-in-input-padding-x,
+    var(--treeselect-padding-x, var(--form-field-padding-x))
+  );
+  padding-inline-end: calc(
+    var(--p-treeselect-dropdown-width, var(--treeselect-dropdown-width, var(--dimension-scale-x32, 32px))) +
+      var(--catalog-floatlabel-in-input-padding-x, var(--treeselect-padding-x, var(--form-field-padding-x)))
+  );
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Vacío Float In: valor/placeholder centrado (sin padding-top de label activo) */
+:host ::ng-deep .treeselect-showcase .p-floatlabel-in:not(.is-label-floated) .p-treeselect .p-treeselect-label {
+  padding-block-start: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+  padding-block-end: var(
+    --catalog-floatlabel-in-input-padding-bottom,
+    var(--p-floatlabel-in-input-padding-bottom, var(--p-iftalabel-input-padding-bottom, var(--form-field-padding-y)))
+  );
+}
+
+/* Chevron: centrado vertical en el input (igual que icono derecho en InputText Float In) */
+:host ::ng-deep .treeselect-showcase .p-floatlabel-in .p-treeselect .p-treeselect-dropdown,
+:host ::ng-deep .treeselect-showcase .p-iftalabel .p-treeselect .p-treeselect-dropdown {
+  position: absolute !important;
+  top: 50% !important;
+  bottom: auto !important;
+  inset-inline-end: 0 !important;
+  inset-inline-start: auto !important;
+  width: var(--p-treeselect-dropdown-width, var(--treeselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  min-width: var(--p-treeselect-dropdown-width, var(--treeselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  height: var(--p-treeselect-dropdown-width, var(--treeselect-dropdown-width, var(--dimension-scale-x32, 32px))) !important;
+  margin: 0 !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: auto !important;
+  flex: 0 0 auto !important;
+  color: var(--p-treeselect-dropdown-color, var(--treeselect-dropdown-color, var(--form-field-icon-color)));
+}
+
+:host ::ng-deep .treeselect-showcase .p-floatlabel-in .p-treeselect.p-treeselect-sm .p-treeselect-dropdown,
+:host ::ng-deep .treeselect-showcase .p-iftalabel .p-treeselect.p-treeselect-sm .p-treeselect-dropdown {
+  top: 50% !important;
+}
+
+:host ::ng-deep .treeselect-showcase .p-floatlabel-in .p-treeselect.p-treeselect-lg .p-treeselect-dropdown,
+:host ::ng-deep .treeselect-showcase .p-iftalabel .p-treeselect.p-treeselect-lg .p-treeselect-dropdown {
+  top: 50% !important;
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in .p-treeselect.p-treeselect-sm,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-iftalabel .p-treeselect.p-treeselect-sm,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-treeselect.p-treeselect-sm,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-iftalabel .p-treeselect.p-treeselect-sm {
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-sm, var(--iftalabel-input-min-height-sm, 45px))
+  ) !important;
+}
+
+:host ::ng-deep .treeselect-showcase .p-floatlabel-in .p-treeselect.p-treeselect-sm .p-treeselect-label,
+:host ::ng-deep .treeselect-showcase .p-iftalabel .p-treeselect.p-treeselect-sm .p-treeselect-label {
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--treeselect-sm-font-size, var(--form-field-sm-font-size)))
+  );
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-floatlabel-in .p-treeselect.p-treeselect-lg,
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-iftalabel .p-treeselect.p-treeselect-lg,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-floatlabel-in .p-treeselect.p-treeselect-lg,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-iftalabel .p-treeselect.p-treeselect-lg {
+  height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px))
+  ) !important;
+  min-height: var(
+    --catalog-floatlabel-in-input-min-height,
+    var(--p-floatlabel-in-input-min-height-lg, var(--iftalabel-input-min-height-lg, 49px))
+  ) !important;
+}
+
+:host ::ng-deep .treeselect-showcase .p-floatlabel-in .p-treeselect.p-treeselect-lg .p-treeselect-label,
+:host ::ng-deep .treeselect-showcase .p-iftalabel .p-treeselect.p-treeselect-lg .p-treeselect-label {
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--treeselect-lg-font-size, var(--form-field-lg-font-size)))
+  );
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-field:has(.p-treeselect-sm) > .p-label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-field:has(.p-treeselect-sm) > .p-label {
+  font-size: var(--treeselect-sm-font-size, var(--form-field-sm-font-size));
+}
+
+:host ::ng-deep .treeselect-showcase .treeselect-interaction-scope .p-field:has(.p-treeselect-lg) > .p-label,
+:host ::ng-deep .treeselect-showcase .catalog-input-sizes-row .p-field:has(.p-treeselect-lg) > .p-label {
+  font-size: var(--treeselect-lg-font-size, var(--form-field-lg-font-size));
+}
+
+:host ::ng-deep .treeselect-showcase .is-static-preview .p-treeselect {
+  pointer-events: none;
+  cursor: default;
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-treeselect.p-disabled {
+  background: var(--p-treeselect-disabled-background, var(--treeselect-disabled-background));
+  color: var(--p-treeselect-disabled-color, var(--treeselect-disabled-color));
+  opacity: 1;
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-treeselect.p-disabled .p-treeselect-label {
+  color: var(--p-treeselect-disabled-color, var(--treeselect-disabled-color));
+}
+
+:host ::ng-deep .form-theme-filled .treeselect-showcase .p-treeselect.p-variant-filled:not(.p-disabled) {
+  background: var(
+    --p-treeselect-filled-background,
+    var(--treeselect-filled-background, var(--form-field-filled-background))
+  );
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--hover .p-treeselect:not(.p-disabled),
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-treeselect:not(.p-disabled) {
+  border-color: var(--p-treeselect-hover-border-color, var(--treeselect-hover-border-color));
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-input-demo-wrap.p-input-demo--focus .p-treeselect:not(.p-disabled) {
+  border-color: var(--p-treeselect-focus-border-color, var(--treeselect-focus-border-color));
+  box-shadow: var(--p-treeselect-focus-ring-shadow, var(--treeselect-focus-ring-shadow));
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-treeselect.p-invalid {
+  border-color: var(--p-treeselect-invalid-border-color, var(--treeselect-invalid-border-color));
+}
+
+.form-showcase .catalog-block-section:has(.treeselect-interaction-scope) .catalog-block-body {
+  overflow: visible;
+}
+
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel:has(.p-invalid) label,
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-floatlabel.is-label-floated:has(.p-invalid) label,
+:host ::ng-deep .treeselect-showcase .catalog-input-states-row .p-iftalabel.is-label-invalid label {
+  color: var(--p-floatlabel-active-color, var(--p-floatlabel-color));
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--p-inputgroup-addon-background, var(--inputgroup-addon-background, var(--form-field-background)));
+  color: var(--p-inputgroup-addon-color, var(--inputgroup-addon-color, var(--form-field-icon-color)));
+  padding: var(--p-inputgroup-addon-padding, var(--inputgroup-addon-padding, var(--dimension-scale-x8)));
+  min-width: var(--p-inputgroup-addon-min-width, var(--inputgroup-addon-min-width, var(--dimension-scale-x32)));
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button) {
+  padding: 0;
+  overflow: hidden;
+  min-width: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button:not(.p-button-icon-only)) {
+  min-width: auto;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button) .p-button {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-width: var(--p-inputgroup-addon-min-width, var(--inputgroup-addon-min-width, var(--dimension-scale-x32)));
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroupaddon:has(.p-button:not(.p-button-icon-only)) .p-button {
+  min-width: auto;
+  width: auto;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-hidden-file-input {
+  display: none;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > * + * {
+  margin-inline-start: var(--p-inputgroup-gap, var(--inputgroup-gap, -1px));
+}
+
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo] {
+  width: 100%;
+  max-width: 640px;
+}
+
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo].catalog-input-interactive {
+  max-width: 640px;
+}
+
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .p-field,
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .form-input-interaction-control {
+  width: 100%;
+}
+
+:host ::ng-deep .inputgroup-showcase .catalog-preview-frame__stage [catalogPreviewDemo] .p-inputgroup,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-inputtext,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-inputnumber-input,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > .p-inputnumber {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  align-self: stretch;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > p-inputnumber .p-inputnumber-input,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > .p-inputnumber .p-inputnumber-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Float/Ifta en InputGroup: fill ancho del segmento (preview 640px fijo intacto) */
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > .p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup > .p-iftalabel,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin-top: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel > .p-inputtext,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel > p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel > .p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-floatlabel .p-inputnumber-input,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel > .p-inputtext,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel > p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel > .p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .p-inputgroup .p-iftalabel .p-inputnumber-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep
+  .inputgroup-showcase
+  .inputgroup-interaction-scope.catalog-input-interactive:has(.p-floatlabel-over)
+  .p-inputgroup
+  > .p-floatlabel,
+:host ::ng-deep
+  .inputgroup-showcase
+  .inputgroup-interaction-scope.catalog-input-interactive:has(.p-floatlabel-on)
+  .p-inputgroup
+  > .p-floatlabel {
+  margin-top: 0;
+}
+
+.inputgroup-showcase .inputgroup-examples-pair {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: var(--dimension-scale-x16, 1rem);
+  width: 100%;
+  min-width: 0;
+}
+
+.inputgroup-showcase .inputgroup-examples-pair > p-inputgroup,
+.inputgroup-showcase .inputgroup-examples-pair > .p-inputgroup {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+}
+
+.form-showcase.inputgroup-showcase .catalog-input-states-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 280px));
+  row-gap: var(--dimension-scale-x20, 1.25rem);
+  column-gap: 40px;
+  justify-content: start;
+  align-items: flex-end;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.form-showcase.inputgroup-showcase .catalog-input-states-row .catalog-input-state.catalog-button-state {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.form-showcase.inputgroup-showcase .catalog-input-states-row .catalog-button-state-preview {
+  width: 100%;
+  margin-inline: 0;
+}
+
+.form-showcase.inputgroup-showcase .catalog-input-states-row .catalog-input-interactive,
+.form-showcase.inputgroup-showcase .catalog-input-states-row .p-field {
+  width: 100%;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup {
+  width: 100%;
+  min-width: 0;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-inputtext,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iconfield {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup > .p-floatlabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup > p-floatlabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup > .p-iftalabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-floatlabel,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iftalabel {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-floatlabel > .p-inputtext,
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-iftalabel > .p-inputtext {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+:host ::ng-deep .form-showcase.inputgroup-showcase .catalog-input-states-row .p-inputgroup .p-inputtext:disabled {
+  background: var(
+    --p-inputtext-disabled-background,
+    var(--inputtext-disabled-background, var(--form-field-disabled-background))
+  );
+  color: var(
+    --p-inputtext-disabled-color,
+    var(--inputtext-disabled-color, var(--form-field-disabled-color))
+  );
+  opacity: 1;
+}
+
+:host ::ng-deep
+  .inputgroup-showcase
+  .form-theme-filled
+  .catalog-input-states-row
+  .p-inputgroup
+  .p-inputtext.p-variant-filled:disabled {
+  background: var(
+    --p-inputtext-disabled-background,
+    var(--inputtext-disabled-background, var(--form-field-disabled-background))
+  );
+}
+
+.inputgroup-showcase .inputgroup-examples-wide {
+  width: 100%;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup,
+:host ::ng-deep .inputgroup-showcase .catalog-showcase-interactive .p-inputgroup {
+  width: 100%;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-inputtext,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup .p-select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > .p-inputnumber,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > .p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > p-floatlabel,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > .p-iftalabel {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+}
+
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > p-inputnumber .p-inputnumber-input,
+:host ::ng-deep .inputgroup-showcase .inputgroup-examples-pair .p-inputgroup > .p-inputnumber .p-inputnumber-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .inputgroup-showcase .inputgroup-examples-pair {
+    flex-direction: column;
+  }
+
+  .inputgroup-showcase .catalog-input-states-row {
+    grid-template-columns: repeat(2, minmax(240px, 280px));
+  }
+}
+
+@media (max-width: 480px) {
+  .inputgroup-showcase .catalog-input-states-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* DatePicker — Float Label / IftaLabel (paridad InputText / Password) */
 :host ::ng-deep .datepicker-showcase .datepicker-interaction-scope .p-iftalabel > .p-datepicker,
 :host ::ng-deep .datepicker-showcase .datepicker-interaction-scope .p-floatlabel > .p-datepicker,
@@ -4337,9 +5308,17 @@
 :host ::ng-deep .datepicker-showcase .datepicker-interaction-scope .p-floatlabel-over:not(.is-label-floated) label,
 :host ::ng-deep .datepicker-showcase .catalog-input-states-row .p-floatlabel-on:not(.is-label-floated) label,
 :host ::ng-deep .datepicker-showcase .catalog-input-sizes-row .p-floatlabel-on:not(.is-label-floated) label,
-:host ::ng-deep .datepicker-showcase .datepicker-interaction-scope .p-floatlabel-on:not(.is-label-floated) label {
+:host ::ng-deep .datepicker-showcase .datepicker-interaction-scope .p-floatlabel-on:not(.is-label-floated) label,
+:host ::ng-deep .datepicker-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+:host ::ng-deep .datepicker-showcase .p-floatlabel-over:not(.is-label-floated):has(.p-inputwrapper-focus) label,
+:host ::ng-deep .datepicker-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-filled) label,
+:host ::ng-deep .datepicker-showcase .p-floatlabel-on:not(.is-label-floated):has(.p-inputwrapper-focus) label {
   top: 50% !important;
   transform: translateY(-50%) !important;
+  font-size: var(
+    --catalog-floatlabel-infield-font-size,
+    var(--p-floatlabel-infield-font-size, var(--inputtext-font-size, var(--form-field-font-size)))
+  );
   font-weight: 400;
   padding: 0;
   background: transparent;

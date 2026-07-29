@@ -320,38 +320,32 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
 }
 
 .p-multiselect-overlay .p-multiselect-list {
-  padding: var(--list-padding, var(--p-multiselect-list-padding, var(--dimension-scale-x4, 4px))) !important;
+  /* y/x explícitos: el checkbox del option = list-padding-x + option-padding-x */
+  padding: var(--multiselect-list-padding-y, var(--list-padding-y, var(--dimension-scale-x4, 4px)))
+    var(--multiselect-list-padding-x, var(--list-padding-x, var(--dimension-scale-x4, 4px))) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--multiselect-list-gap, var(--list-gap, var(--p-multiselect-list-gap, var(--dimension-scale-x2, 2px)))) !important;
 }
 
 .p-multiselect-overlay .p-multiselect-header {
   padding-block: var(
-    --list-header-padding-block,
-    var(
-      --p-multiselect-list-header-padding-top,
-      var(--list-header-padding-top, var(--form-field-padding-y, var(--dimension-scale-x8)))
-    )
+    --multiselect-list-header-padding-top,
+    var(--list-header-padding-top, var(--form-field-padding-y, var(--dimension-scale-x8)))
   )
   var(
-    --list-header-padding-block-end,
-    var(
-      --p-multiselect-list-header-padding-bottom,
-      var(--list-header-padding-bottom, var(--form-field-padding-y, var(--dimension-scale-x8)))
-    )
+    --multiselect-list-header-padding-bottom,
+    var(--list-header-padding-bottom, var(--form-field-padding-y, var(--dimension-scale-x8)))
   ) !important;
+  /* Misma suma que el option: alinea el checkbox del header con los de la lista */
   padding-inline-start: calc(
-    var(--list-padding-x, var(--dimension-scale-x4, 4px)) +
-      var(--list-option-padding-x, var(--form-field-padding-x, var(--dimension-scale-x12, 12px)))
+    var(--multiselect-list-padding-x, var(--list-padding-x, var(--dimension-scale-x4, 4px))) +
+      var(--multiselect-option-padding-x, var(--list-option-padding-x, var(--form-field-padding-x, var(--dimension-scale-x12, 12px))))
   ) !important;
   padding-inline-end: var(
-    --list-header-padding-right,
-    var(--p-multiselect-list-header-padding-right, var(--form-field-padding-x, var(--dimension-scale-x12)))
+    --multiselect-list-header-padding-right,
+    var(--list-header-padding-right, var(--form-field-padding-x, var(--dimension-scale-x12)))
   ) !important;
-}
-
-.p-multiselect-overlay .p-multiselect-list {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: var(--multiselect-list-gap, var(--list-gap, var(--p-multiselect-list-gap, var(--dimension-scale-x2, 2px)))) !important;
 }
 
 .p-multiselect-overlay .p-multiselect-option {
@@ -359,15 +353,10 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
   align-items: center !important;
   gap: var(
     --multiselect-option-gap,
-    var(--p-multiselect-option-gap, var(--list-option-gap, var(--dimension-scale-x8, 8px)))
+    var(--p-multiselect-option-gap, var(--dimension-scale-x8, 8px))
   ) !important;
-  padding: var(
-    --multiselect-option-padding,
-    var(
-      --p-multiselect-option-padding,
-      var(--list-option-padding, var(--form-field-sm-padding-y, var(--dimension-scale-x6)) var(--form-field-padding-x, var(--dimension-scale-x12)))
-    )
-  ) !important;
+  padding: var(--multiselect-option-padding-y, var(--list-option-padding-y, var(--form-field-sm-padding-y, var(--dimension-scale-x6))))
+    var(--multiselect-option-padding-x, var(--list-option-padding-x, var(--form-field-padding-x, var(--dimension-scale-x12)))) !important;
   border-radius: var(
     --multiselect-option-border-radius,
     var(--p-multiselect-option-border-radius, var(--list-option-border-radius))

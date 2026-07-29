@@ -122,4 +122,131 @@
       </div>
     </section>
   </div>
+
+  <div class="catalog-preview carousel-showcase">
+    <section
+      id="pg-carousel"
+      class="preview-section preview-section--flush catalog-block-section"
+      tabindex="-1"
+    >
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'Carousel' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar Carousel"
+        >
+          <div catalogPreviewDemo class="catalog-showcase-interactive carousel-catalog-live-shell">
+            <ng-template #carouselProductCard let-product>
+              <div class="carousel-catalog-product">
+                <div class="carousel-catalog-product-media">
+                  <img
+                    class="carousel-catalog-product-image"
+                    [src]="product.image"
+                    [alt]="product.alt"
+                  />
+                  <span
+                    [class]="'carousel-catalog-product-badge ' + carouselStockBadgeClass(product.inventoryStatus)"
+                  >
+                    {{ product.inventoryStatus }}
+                  </span>
+                </div>
+                <div class="carousel-catalog-product-title">{{ product.name }}</div>
+                <div class="carousel-catalog-product-footer">
+                  <span class="carousel-catalog-product-price">{{ formatCarouselPrice(product) }}</span>
+                  <div class="carousel-catalog-product-actions">
+                    <p-button
+                      type="button"
+                      icon="pi pi-heart"
+                      severity="secondary"
+                      [outlined]="true"
+                      size="small"
+                      ariaLabel="Add to favorites"
+                    />
+                    <p-button
+                      type="button"
+                      icon="pi pi-shopping-cart"
+                      size="small"
+                      ariaLabel="Add to cart"
+                    />
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+
+            @if (carouselIx.orientation === 'horizontal') {
+              <p-carousel
+                class="carousel-catalog-live carousel-catalog-live--horizontal"
+                [value]="carouselProducts"
+                [numVisible]="carouselHorizontalNumVisible"
+                [numScroll]="1"
+                orientation="horizontal"
+                [circular]="true"
+                [showIndicators]="carouselIx.showIndicators"
+                [showNavigators]="carouselIx.showNavigators"
+                ariaLabel="Carousel interactivo del catálogo"
+              >
+                <ng-template pTemplate="item" let-product>
+                  <ng-container *ngTemplateOutlet="carouselProductCard; context: { $implicit: product }" />
+                </ng-template>
+              </p-carousel>
+            } @else {
+              <p-carousel
+                class="carousel-catalog-live carousel-catalog-live--vertical"
+                [value]="carouselProducts"
+                [numVisible]="carouselVerticalNumVisible"
+                [numScroll]="1"
+                orientation="vertical"
+                [verticalViewPortHeight]="carouselVerticalViewPortHeight"
+                [circular]="false"
+                [showIndicators]="carouselIx.showIndicators"
+                [showNavigators]="carouselIx.showNavigators"
+                ariaLabel="Carousel interactivo del catálogo vertical"
+              >
+                <ng-template pTemplate="item" let-product>
+                  <ng-container *ngTemplateOutlet="carouselProductCard; context: { $implicit: product }" />
+                </ng-template>
+              </p-carousel>
+            }
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Orientation</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="carouselOrientationOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="carouselIx.orientation"
+                  (ngModelChange)="patchCarouselIx({ orientation: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Orientation"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Navigators</span>
+              <p-toggleswitch
+                [ngModel]="carouselIx.showNavigators"
+                (ngModelChange)="patchCarouselIx({ showNavigators: $event })"
+              />
+            </div>
+            <div class="input-config-row">
+              <span class="input-config-label">Indicators</span>
+              <p-toggleswitch
+                [ngModel]="carouselIx.showIndicators"
+                (ngModelChange)="patchCarouselIx({ showIndicators: $event })"
+              />
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
 </div>

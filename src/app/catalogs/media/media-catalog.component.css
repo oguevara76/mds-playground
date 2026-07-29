@@ -32,3 +32,145 @@
   color: var(--galleria-caption-color, var(--p-galleria-caption-color));
   opacity: 0.92;
 }
+
+:host.media-catalog-page .carousel-catalog-live-shell {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+:host.media-catalog-page .carousel-catalog-live {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  flex: 0 1 960px;
+}
+
+:host.media-catalog-page .carousel-catalog-live--vertical {
+  max-width: 300px;
+  flex-basis: 300px;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-live--vertical .carousel-catalog-product {
+  min-height: 0;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-live--vertical .carousel-catalog-product-media {
+  flex: 1 1 auto;
+  min-height: 11rem;
+  position: relative;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-live--vertical .carousel-catalog-product-image {
+  width: 100%;
+  height: 100%;
+  min-height: 11rem;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-live--vertical .carousel-catalog-product-title {
+  flex-shrink: 0;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-live--vertical .carousel-catalog-product-footer {
+  flex-shrink: 0;
+}
+
+:host.media-catalog-page ::ng-deep .p-carousel-horizontal .p-carousel-item {
+  box-sizing: border-box;
+  padding-inline: calc(var(--carousel-content-gap, var(--p-carousel-content-gap, 16px)) / 2);
+}
+
+:host.media-catalog-page ::ng-deep .p-carousel-vertical .p-carousel-item {
+  box-sizing: border-box;
+  padding-block: calc(var(--carousel-content-gap, var(--p-carousel-content-gap, 16px)) / 2);
+}
+
+:host.media-catalog-page ::ng-deep .p-carousel-item .carousel-catalog-product {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dimension-scale-x16);
+  height: 100%;
+  padding: var(--dimension-scale-x16);
+  border: 1px solid var(--content-border-color);
+  border-radius: var(--content-border-radius);
+  background: var(--content-background);
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-media {
+  position: relative;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-image {
+  display: block;
+  width: 100%;
+  border-radius: var(--content-border-radius);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-badge {
+  position: absolute;
+  top: var(--dimension-scale-x4);
+  left: var(--dimension-scale-x4);
+  padding: var(--dimension-scale-x4) var(--dimension-scale-x8);
+  border-radius: var(--content-border-radius);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: var(--carousel-figma-item-tag-background, var(--p-carousel-figma-item-tag-background));
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-badge--instock {
+  background: var(--badge-success-background, var(--p-badge-success-background));
+  color: var(--badge-success-color, var(--p-badge-success-color));
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-badge--lowstock {
+  background: var(--badge-warn-background, var(--p-badge-warn-background));
+  color: var(--badge-warn-color, var(--p-badge-warn-color));
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-badge--outofstock {
+  background: var(--badge-danger-background, var(--p-badge-danger-background));
+  color: var(--badge-danger-color, var(--p-badge-danger-color));
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-title {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--content-color);
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dimension-scale-x12);
+  margin-top: auto;
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--content-color);
+}
+
+:host.media-catalog-page ::ng-deep .carousel-catalog-product-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--dimension-scale-x8);
+  flex-shrink: 0;
+}

@@ -49,6 +49,12 @@
     "related_semantic": ["--form-field-*", "--form-field-float-label-*", "--list-*", "--overlay-select-*"],
     "watch_vars": ["--cascadeselect-*", "--p-cascadeselect-*", "--p-floatlabel-*", "--p-iftalabel-*"]
   },
+  "treeselect": {
+    "playground_anchor": "pg-treeselect",
+    "primeng_prefix": "treeselect",
+    "related_semantic": ["--form-field-*", "--form-field-float-label-*", "--tree-*", "--overlay-select-*"],
+    "watch_vars": ["--treeselect-*", "--p-treeselect-*", "--p-floatlabel-*", "--p-iftalabel-*", "--tree-*", "--p-tree-*"]
+  },
   "datepicker": {
     "playground_anchor": "pg-datepicker",
     "primeng_prefix": "datepicker",
@@ -204,9 +210,20 @@
     "parity": "src/styles/primeng-galleria-parity.css",
     "watch_vars": ["--galleria-*", "--p-galleria-*"]
   },
+  "carousel": {
+    "playground_anchor": "pg-carousel",
+    "primeng_prefix": "carousel",
+    "parity": "src/styles/primeng-carousel-parity.css",
+    "watch_vars": ["--carousel-*", "--p-carousel-*"]
+  },
   "tree": {
     "playground_anchor": "pg-tree",
     "primeng_prefix": "tree",
     "watch_vars": ["--tree-*", "--p-tree-*"]
+  },
+  "timeline": {
+    "playground_anchor": "pg-timeline",
+    "primeng_prefix": "timeline",
+    "watch_vars": ["--timeline-*", "--p-timeline-*"]
   }
 }
