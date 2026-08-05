@@ -1,3 +1,15 @@
 {
-  "items": []
+  "items": [
+    {
+      "id": "mds-header-alias-namespace",
+      "component": "mds-header",
+      "var": "--mds-header-*",
+      "category": "alias",
+      "action": "pending",
+      "suggested_value": "",
+      "notes": "Alias temporal en src/app/custom/mds-header/mds-header.tokens.scss apuntando a --header-indra-*. Renombrar namespace en core tras próxima subida CSS MDS.",
+      "created_at": "2026-08-05T12:00:00+00:00",
+      "resolved_at": null
+    }
+  ]
 }

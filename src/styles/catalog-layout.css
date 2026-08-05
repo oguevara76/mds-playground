@@ -503,6 +503,17 @@
   box-sizing: border-box;
 }
 
+/* Reactive Forms envuelven el contenido: replicar stack del popover en el wrapper interno */
+.button-config-popover-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 /* Popovers CONFIGURAR: ancho uniforme (referencia Chip, #pg-chip) */
 :root {
   --playground-config-popover-body-width: 220px;

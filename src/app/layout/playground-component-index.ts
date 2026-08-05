@@ -30,6 +30,7 @@ import {
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS, MENU_CATALOG_EXAMPLE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
 import { GALLERIA_CATALOG_VARIANT_OPTIONS, CAROUSEL_CATALOG_ORIENTATION_OPTIONS } from '../catalogs/media/media-catalog.config';
+import { MDS_HEADER_CATALOG_VARIANT_OPTIONS } from '../catalogs/custom/custom-catalog.config';
 import { MDS_VARS_CATALOG } from '../theme/mds-vars-catalog.generated';
 
 export type PlaygroundCatalogRoute =
@@ -41,7 +42,8 @@ export type PlaygroundCatalogRoute =
   | 'menu'
   | 'overlay'
   | 'media'
-  | 'misc';
+  | 'misc'
+  | 'custom';
 
 export interface PlaygroundComponentEntry {
   /** ID del ancla en el DOM (`#pg-…`). */
@@ -109,6 +111,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-avatar': 'avatar',
   'pg-avatargroup': 'avatar',
   'pg-progressbar': 'progressbar',
+  'pg-mds-header': 'header-indra',
 };
 
 function countComponentVariables(anchorId: string): number {
@@ -409,6 +412,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Misc',
       keywords: ['p-progressbar', 'progress', 'bar', 'loading'],
       variantCount: PROGRESSBAR_CATALOG_EXAMPLE_OPTIONS.length,
+    },
+    {
+      id: 'pg-mds-header',
+      name: 'MDS Header',
+      route: 'custom',
+      sectionLabel: 'Custom',
+      keywords: ['mds-header', 'header', 'app header', 'custom', 'navigation'],
+      variantCount: MDS_HEADER_CATALOG_VARIANT_OPTIONS.length,
     },
   ];
 

@@ -1,0 +1,27 @@
+// Alias temporal: namespace Figma mds-header → vars core header-indra.
+// Pendiente: renombrar en core tras próxima subida CSS MDS (ver mds-component-pending.json).
+:host {
+  --mds-header-background: var(--header-indra-background);
+  --mds-header-color: var(--header-indra-color);
+  --mds-header-padding-x: var(--header-indra-padding-x);
+  --mds-header-padding-y: var(--header-indra-padding-y);
+  --mds-header-gap-sm: var(--header-indra-gap-sm);
+  --mds-header-gap-md: var(--header-indra-gap-md);
+  --mds-header-gap-lg: var(--header-indra-gap-lg);
+  --mds-header-font-size-sm: var(--header-indra-font-size-sm);
+  --mds-header-font-size-md: var(--header-indra-font-size-md);
+  --mds-header-font-size-lg: var(--header-indra-font-size-lg);
+  --mds-header-font-weight-regular: var(--header-indra-font-weight-regular);
+  --mds-header-font-weight-medium: var(--header-indra-font-weight-medium);
+  --mds-header-font-weight-bold: var(--header-indra-font-weight-bold);
+  --mds-header-timezone-background: var(--surface-context-minimal);
+  --mds-header-timezone-selected-background: var(--surface-context-base);
+  --mds-header-timezone-padding: var(--header-indra-timezone-padding);
+  --mds-header-timezone-border-radius: var(--header-indra-timezone-border-radius);
+  --mds-header-external-comm-background: var(--surface-context-subtle);
+  --mds-header-notifications-size: 44px;
+  --mds-header-chip-min-height: calc(
+    var(--mds-header-timezone-padding) * 2 + var(--mds-header-font-size-lg) * 1.1 +
+      var(--mds-header-font-size-sm) * 1.2
+  );
+}

@@ -1,0 +1,42 @@
+:host.custom-catalog-page .mds-header-showcase {
+  --catalog-preview-frame-padding-y: 24px;
+}
+
+:host.custom-catalog-page .mds-header-showcase ::ng-deep .catalog-preview-frame__stage {
+  min-height: var(--mds-header-catalog-demo-height, 56px);
+}
+
+:host.custom-catalog-page .mds-header-catalog-demo-area {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: var(--mds-header-catalog-demo-height, 56px);
+}
+
+:host.custom-catalog-page .mds-header-catalog-live {
+  width: 100%;
+}
+
+:host.custom-catalog-page .mds-header-catalog-brand-logo {
+  display: block;
+  height: 32px;
+  width: auto;
+}
+
+:host.custom-catalog-page .mds-header-catalog-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--header-indra-gap-md, var(--dimension-scale-x12, 12px));
+}
+
+:host.custom-catalog-page .mds-header-catalog-nav-link {
+  color: inherit;
+  font-size: var(--header-indra-font-size-md, var(--dimension-scale-x14, 14px));
+  font-weight: var(--header-indra-font-weight-medium, 500);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+:host.custom-catalog-page .mds-header-catalog-nav-link:hover {
+  color: var(--primary-600, var(--p-primary-600));
+}

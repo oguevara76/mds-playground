@@ -8,6 +8,7 @@ import { MediaCatalogComponent } from './catalogs/media/media-catalog.component'
 import { MiscCatalogComponent } from './catalogs/misc/misc-catalog.component';
 import { OverlayCatalogComponent } from './catalogs/overlay/overlay-catalog.component';
 import { PanelCatalogComponent } from './catalogs/panel/panel-catalog.component';
+import { CustomCatalogComponent } from './catalogs/custom/custom-catalog.component';
 import { PreviewShowcaseComponent } from './catalogs/preview/preview-showcase.component';
 import { AppShellComponent } from './layout/app-shell.component';
 export const routes: Routes = [
@@ -31,6 +32,7 @@ export const routes: Routes = [
       { path: 'overlay', component: OverlayCatalogComponent },
       { path: 'media', component: MediaCatalogComponent },
       { path: 'misc', component: MiscCatalogComponent },
+      { path: 'custom', component: CustomCatalogComponent },
     ],
   },
   { path: '**', redirectTo: 'preview' },

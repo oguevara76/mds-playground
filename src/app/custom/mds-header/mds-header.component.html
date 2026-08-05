@@ -1,0 +1,111 @@
+<div class="mds-header__root">
+  <div class="mds-header__zone mds-header__zone--brand">
+    @if (isDefaultVariant()) {
+      <div class="mds-header__brand">
+        @if (brandLogoUrl()) {
+          <img
+            class="mds-header__brand-logo"
+            [src]="brandLogoUrl()"
+            alt=""
+            aria-hidden="true"
+          />
+        } @else {
+          <span class="mds-header__brand-pictogram" aria-hidden="true">
+            <i [class]="brandIcon()"></i>
+          </span>
+        }
+        <span class="mds-header__brand-name">{{ productName() }}</span>
+      </div>
+    } @else {
+      <ng-content select="[headerBrand]" />
+    }
+  </div>
+
+  <div class="mds-header__zone mds-header__zone--location">
+    @if (isDefaultVariant()) {
+      @if (showLocation()) {
+        <div class="mds-header__location">
+          <div class="mds-header__region">
+            <i class="pi pi-map-marker mds-header__region-icon" aria-hidden="true"></i>
+            <div class="mds-header__region-text">
+              <span class="mds-header__region-code">{{ locationCode() }}</span>
+              <span class="mds-header__region-place">{{ locationPlace() }}</span>
+            </div>
+          </div>
+
+          <div class="mds-header__timezones" aria-label="Timezones">
+            <i class="pi pi-clock mds-header__timezones-icon" aria-hidden="true"></i>
+            @for (tz of timezones(); track $index) {
+              <div class="mds-header__timezone" [class.is-selected]="tz.selected">
+                <span class="mds-header__timezone-label">{{ tz.timezone }}</span>
+                <div class="mds-header__timezone-values">
+                  <span class="mds-header__timezone-time">{{ tz.time }}</span>
+                  <span class="mds-header__timezone-date">{{ tz.date }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    } @else {
+      <ng-content select="[headerCustom]" />
+    }
+  </div>
+
+  <div class="mds-header__zone mds-header__zone--profile">
+    @if (isDefaultVariant() && showExternalComm()) {
+      <div class="mds-header__external-comm">
+        <span class="mds-header__external-comm-label">{{ externalCommLabel() }}</span>
+        <div class="mds-header__external-comm-badges">
+          @for (badge of externalCommBadges(); track badge.value + badge.severity) {
+            <p-badge
+              [value]="badge.value"
+              [severity]="badge.severity"
+              badgeSize="large"
+            />
+          }
+        </div>
+      </div>
+    }
+
+    <div class="mds-header__profile-actions">
+      @if (showNotifications()) {
+        <div class="mds-header__notifications">
+          <p-overlayBadge
+            [value]="notificationsCount()"
+            badgeSize="small"
+            styleClass="mds-header-notifications-badge p-badge-circle"
+          >
+            <i class="pi pi-bell mds-header__notifications-icon" aria-hidden="true"></i>
+          </p-overlayBadge>
+        </div>
+      }
+
+      <button
+        type="button"
+        class="mds-header__profile"
+        (click)="toggleProfileMenu($event)"
+        [attr.aria-expanded]="showProfileOverlay()"
+        aria-haspopup="menu"
+        [attr.aria-label]="userName() + ', ' + userRole()"
+      >
+        <p-avatar [image]="avatarSrc()" shape="circle" [attr.aria-hidden]="true" />
+        <span class="mds-header__profile-text">
+          <span class="mds-header__profile-name">{{ userName() }}</span>
+          <span class="mds-header__profile-role">{{ userRole() }}</span>
+        </span>
+        <i class="pi pi-chevron-down mds-header__profile-chevron" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    @if (showProfileOverlay()) {
+      <p-tieredMenu
+        #profileMenu
+        [model]="profileMenuModel()"
+        [popup]="true"
+        appendTo="body"
+        styleClass="mds-header-profile-menu"
+      />
+    }
+  </div>
+</div>
