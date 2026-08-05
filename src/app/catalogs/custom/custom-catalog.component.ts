@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormArray,
@@ -13,6 +13,9 @@ import { Divider } from 'primeng/divider';
 import { InputText } from 'primeng/inputtext';
 import { SelectButton } from 'primeng/selectbutton';
 import { CatalogBlockHeadTitlePipe } from '../../components/catalog/catalog-block-head-title.pipe';
+import { CatalogCodeCopyButtonComponent } from '../../components/catalog/catalog-code-copy-button/catalog-code-copy-button.component';
+import { CatalogCodeSnippetComponent } from '../../components/catalog/catalog-code-snippet/catalog-code-snippet.component';
+import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info-block/catalog-info-block.component';
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { MdsHeaderComponent } from '../../custom/mds-header/mds-header.component';
 import type { MdsHeaderTimezonePair } from '../../custom/mds-header/mds-header.types';
@@ -22,6 +25,7 @@ import {
   MDS_HEADER_CATALOG_EXTERNAL_COMM_BADGES,
   MDS_HEADER_CATALOG_TIMEZONES,
   MDS_HEADER_CATALOG_VARIANT_OPTIONS,
+  buildMdsHeaderUsageCode,
   type MdsHeaderCatalogNavItem,
   type MdsHeaderCatalogState,
   type MdsHeaderCatalogVariant,
@@ -50,6 +54,9 @@ interface MdsHeaderConfigForm {
   standalone: true,
   imports: [
     CatalogBlockHeadTitlePipe,
+    CatalogCodeCopyButtonComponent,
+    CatalogCodeSnippetComponent,
+    CatalogInfoBlockComponent,
     CatalogPreviewFrameComponent,
     MdsHeaderComponent,
     ReactiveFormsModule,
@@ -80,6 +87,8 @@ export class CustomCatalogComponent {
     ...MDS_HEADER_CATALOG_DEFAULT_STATE,
     navItems: MDS_HEADER_CATALOG_DEFAULT_STATE.navItems.map((item) => ({ ...item })),
   });
+
+  readonly usageCode = computed(() => buildMdsHeaderUsageCode(this.liveState()));
 
   constructor() {
     this.configForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {

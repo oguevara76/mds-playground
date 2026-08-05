@@ -8,7 +8,9 @@
       <div class="catalog-block-body">
         <mds-catalog-preview-frame
           class="btn-section catalog-preview-section"
+          [showCode]="true"
           configAriaLabel="Configurar MDS Header"
+          codeAriaLabel="Mostrar código de uso de MDS Header"
         >
           <div catalogPreviewDemo class="mds-header-catalog-demo-area catalog-showcase-interactive">
             @if (liveState(); as state) {
@@ -141,6 +143,20 @@
                 <input pInputText formControlName="userRole" aria-label="Profile secondary text" />
               </div>
             </div>
+          </ng-container>
+
+          <ng-container catalogPreviewCode>
+            <mds-catalog-info-block title="Code" icon="code">
+              <mds-catalog-code-copy-button
+                catalogInfoBlockActions
+                [code]="usageCode()"
+              />
+              <mds-catalog-code-snippet
+                [code]="usageCode()"
+                [hideToolbar]="true"
+                ariaLabel="Código de uso de mds-header"
+              />
+            </mds-catalog-info-block>
           </ng-container>
         </mds-catalog-preview-frame>
       </div>

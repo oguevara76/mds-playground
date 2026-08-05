@@ -7,7 +7,21 @@
 }
 
 .catalog-info-block__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: var(--catalog-info-block-title-gap, 20px);
+}
+
+.catalog-info-block__actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.catalog-info-block__actions:empty {
+  display: none;
 }
 
 .catalog-info-block__title {

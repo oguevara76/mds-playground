@@ -1,0 +1,16 @@
+<button
+  type="button"
+  class="catalog-code-snippet-panel__copy"
+  (click)="copyCode()"
+  [attr.aria-label]="copyAriaLabel()"
+  [pTooltip]="copyTooltip()"
+  tooltipPosition="top"
+  appendTo="body"
+>
+  <i
+    class="pi"
+    [class.pi-copy]="!copied()"
+    [class.pi-check]="copied()"
+    aria-hidden="true"
+  ></i>
+</button>

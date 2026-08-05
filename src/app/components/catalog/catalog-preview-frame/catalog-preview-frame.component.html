@@ -7,59 +7,61 @@
     <span class="catalog-preview-frame__badge">{{ label() }}</span>
 
     <div class="catalog-preview-frame__toolbar" role="toolbar" [attr.aria-label]="label() + ' actions'">
-      @if (showCode()) {
-        <span
-          class="catalog-preview-frame__action-wrap"
-          [pTooltip]="codeTooltip"
-          tooltipPosition="top"
-          appendTo="body"
-        >
+      <div class="catalog-preview-frame__toolbar-options">
+        @if (showConfig()) {
           <button
             type="button"
-            class="catalog-preview-frame__action catalog-preview-frame__action--code"
-            disabled
-            tabindex="-1"
-            [attr.aria-label]="codeAriaLabel()"
+            class="catalog-preview-frame__action catalog-preview-frame__action--config"
+            (click)="toggleConfig($event)"
+            aria-haspopup="dialog"
+            [attr.aria-expanded]="configPopoverVisible()"
+            [attr.aria-label]="configAriaLabel()"
+            [pTooltip]="configTooltip"
+            tooltipPosition="top"
+            appendTo="body"
           >
-            <i class="pi pi-code" aria-hidden="true"></i>
+            <i class="pi pi-cog" aria-hidden="true"></i>
           </button>
-        </span>
-      }
+        }
 
-      @if (showConfig()) {
+        @if (showExpand()) {
+          <button
+            type="button"
+            class="catalog-preview-frame__action catalog-preview-frame__action--expand"
+            (click)="toggleExpand()"
+            [attr.aria-expanded]="expanded()"
+            [attr.aria-label]="expanded() ? collapseAriaLabel() : expandAriaLabel()"
+            [pTooltip]="expanded() ? collapseTooltip : expandTooltip"
+            tooltipPosition="top"
+            appendTo="body"
+          >
+            @if (expanded()) {
+              <i class="pi pi-window-minimize" aria-hidden="true"></i>
+            } @else {
+              <i class="pi pi-expand" aria-hidden="true"></i>
+            }
+          </button>
+        }
+      </div>
+
+      <span
+        class="catalog-preview-frame__action-wrap"
+        [pTooltip]="codeTooltipLabel()"
+        tooltipPosition="top"
+        appendTo="body"
+      >
         <button
           type="button"
-          class="catalog-preview-frame__action catalog-preview-frame__action--config"
-          (click)="toggleConfig($event)"
-          aria-haspopup="dialog"
-          [attr.aria-expanded]="configPopoverVisible()"
-          [attr.aria-label]="configAriaLabel()"
-          [pTooltip]="configTooltip"
-          tooltipPosition="top"
-          appendTo="body"
+          class="catalog-preview-frame__action catalog-preview-frame__action--code"
+          (click)="toggleCode()"
+          [disabled]="!showCode()"
+          [attr.aria-expanded]="showCode() && codeExpanded()"
+          [attr.aria-disabled]="!showCode()"
+          [attr.aria-label]="codeAriaLabel()"
         >
-          <i class="pi pi-cog" aria-hidden="true"></i>
+          <i class="pi pi-code" aria-hidden="true"></i>
         </button>
-      }
-
-      @if (showExpand()) {
-        <button
-          type="button"
-          class="catalog-preview-frame__action catalog-preview-frame__action--expand"
-          (click)="toggleExpand()"
-          [attr.aria-expanded]="expanded()"
-          [attr.aria-label]="expanded() ? collapseAriaLabel() : expandAriaLabel()"
-          [pTooltip]="expanded() ? collapseTooltip : expandTooltip"
-          tooltipPosition="top"
-          appendTo="body"
-        >
-          @if (expanded()) {
-            <i class="pi pi-window-minimize" aria-hidden="true"></i>
-          } @else {
-            <i class="pi pi-expand" aria-hidden="true"></i>
-          }
-        </button>
-      }
+      </span>
     </div>
   </footer>
 
@@ -76,6 +78,12 @@
     </p-popover>
   }
 </div>
+
+@if (showCode() && codeExpanded()) {
+  <div class="catalog-preview-code">
+    <ng-content select="[catalogPreviewCode]" />
+  </div>
+}
 
 @if (showExpand() && expanded()) {
   <div class="catalog-preview-details">

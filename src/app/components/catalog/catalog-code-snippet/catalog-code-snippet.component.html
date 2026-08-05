@@ -1,0 +1,11 @@
+<div class="catalog-code-snippet-panel">
+  @if (!hideToolbar()) {
+    <div class="catalog-code-snippet-panel__toolbar">
+      <mds-catalog-code-copy-button [code]="code()" />
+    </div>
+  }
+
+  <div class="catalog-code-snippet-panel__scroll">
+    <pre class="catalog-code-snippet" [attr.aria-label]="ariaLabel()"><code>{{ code() }}</code></pre>
+  </div>
+</div>

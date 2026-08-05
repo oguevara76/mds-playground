@@ -69,3 +69,55 @@ export const MDS_HEADER_CATALOG_TIMEZONES = [
     selected: true,
   },
 ] as const;
+
+function escapeAttr(value: string): string {
+  return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+/** Snippet de uso para desarrolladores según el estado del showcase. */
+export function buildMdsHeaderUsageCode(state: MdsHeaderCatalogState): string {
+  const lines: string[] = [
+    "import { MdsHeaderComponent } from './custom/mds-header/mds-header.component';",
+    "import type { MdsHeaderBadge, MdsHeaderTimezonePair } from './custom/mds-header/mds-header.types';",
+    '',
+    '// En el @Component imports: [MdsHeaderComponent]',
+    '// timezones y externalCommBadges: arrays tipados en el host',
+    '',
+  ];
+
+  if (state.variant === 'custom') {
+    lines.push('<mds-header');
+    lines.push('  variant="custom"');
+    lines.push(`  [showNotifications]="${state.showNotifications}"`);
+    lines.push(`  userName="${escapeAttr(state.userName)}"`);
+    lines.push(`  userRole="${escapeAttr(state.userRole)}"`);
+    lines.push(`  [showProfileOverlay]="${state.showProfileOverlay}"`);
+    lines.push('>');
+    lines.push(`  <img headerBrand src="${escapeAttr(state.customLogoUrl)}" alt="Brand" />`);
+    lines.push('  <nav headerCustom aria-label="Navigation">');
+    for (const item of state.navItems) {
+      const href = escapeAttr(item.link ?? '#');
+      lines.push(`    <a href="${href}">${item.label}</a>`);
+    }
+    lines.push('  </nav>');
+    lines.push('</mds-header>');
+    return lines.join('\n');
+  }
+
+  lines.push('<mds-header');
+  lines.push('  variant="default"');
+  lines.push(`  productName="${escapeAttr(state.productName)}"`);
+  lines.push(`  [showLocation]="${state.showLocation}"`);
+  lines.push('  [timezones]="timezones"');
+  lines.push(`  [showExternalComm]="${state.showExternalComm}"`);
+  if (state.showExternalComm) {
+    lines.push('  [externalCommBadges]="externalCommBadges"');
+  }
+  lines.push(`  [showNotifications]="${state.showNotifications}"`);
+  lines.push(`  userName="${escapeAttr(state.userName)}"`);
+  lines.push(`  userRole="${escapeAttr(state.userRole)}"`);
+  lines.push(`  [showProfileOverlay]="${state.showProfileOverlay}"`);
+  lines.push('/>');
+
+  return lines.join('\n');
+}

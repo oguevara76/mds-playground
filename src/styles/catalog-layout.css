@@ -535,6 +535,89 @@
   box-sizing: border-box;
 }
 
+/* Área CODE inline (panel bajo preview, estilo propiedades) */
+.catalog-preview-code .catalog-info-block__head {
+  margin-bottom: 8px;
+}
+
+.catalog-preview-code .catalog-code-snippet-panel {
+  max-height: min(360px, 50vh);
+}
+
+.catalog-code-snippet-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.catalog-code-snippet-panel__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.catalog-code-snippet-panel__copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--catalog-preview-frame-action-color, var(--p-surface-500, var(--surface-500)));
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.catalog-code-snippet-panel__copy:hover {
+  background: var(--catalog-preview-frame-action-hover-bg, var(--p-surface-100, var(--surface-100)));
+  color: var(--catalog-preview-frame-action-hover-color, var(--p-surface-700, var(--surface-700)));
+}
+
+.catalog-code-snippet-panel__copy:focus-visible {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 2px;
+}
+
+.catalog-code-snippet-panel__copy .pi {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.catalog-code-snippet-panel__scroll {
+  overflow: auto;
+  min-height: 0;
+  flex: 1 1 auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.catalog-code-snippet {
+  margin: 0;
+  padding: 12px;
+  border-radius: var(--content-border-radius, var(--p-content-border-radius));
+  background: var(--surface-context-subtle, var(--p-surface-100));
+  border: 1px solid var(--content-border-color, var(--p-content-border-color));
+  box-sizing: border-box;
+}
+
+.catalog-code-snippet code {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre;
+  color: var(--text-color, var(--p-content-color));
+}
+
 .p-popover.button-config-popover .p-select-label {
   overflow: hidden;
   text-overflow: ellipsis;
