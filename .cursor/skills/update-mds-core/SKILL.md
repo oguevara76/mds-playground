@@ -96,12 +96,27 @@ python3 scripts/mds-core-apply.py --staging .mds-core-staging/ --plan .mds-core-
 ```
 
 Solo toca: `styles/mds-*.css` y (si aprobado) `styles/primeng-tokens.css`.
-**Nunca** modificar overrides, parity ni catálogos automáticamente.
+
+### Paso 3.5 — Remediación automática (obligatorio)
+
+Tras apply, **siempre** ejecutar remediación para que Carousel, Galleria, Stepper y demás
+componentes con showcase sigan funcionando sin revisión manual:
+
+```bash
+pnpm run mds:remediate --apply
+```
+
+Qué hace (solo cambios acotados):
+- Puente: congela vars MDS eliminadas (`BRIDGE_FROZEN_WHEN_MDS_REMOVED`) y sincroniza fallbacks conocidos (`BRIDGE_STALE_FALLBACKS`)
+- Parity/overrides: parches fijos para Galleria, Stepper
+- Catálogos: quita redefiniciones locales que enmascaran tokens del core (p.ej. carousel gap)
+- Core: elimina vars legacy que ya no están en el export
+
+Si el diff no eliminó vars → dry-run con 0 fixes (OK).
 
 ### Paso 4 — Regenerar
 
 ```bash
-# Si se añadieron entradas al puente:
 pnpm run regen:primeng-dark
 
 pnpm run regen:mds
@@ -118,20 +133,12 @@ python3 scripts/mds-core-qa.py --format markdown
 
 Si FAIL → ofrecer restaurar backup y abortar.
 
-### Paso 6 — Checklist visual + cierre
+### Paso 6 — Cierre
 
-Entregar checklist al usuario:
+Si `mds:qa` es **PASS**, no pedir revisión visual manual de Carousel/Galleria/Stepper
+(ya remediados). Solo mencionar checklist manual si QA falla.
 
-| Componente | Ruta | Revisar |
-|------------|------|---------|
-| ToggleSwitch | `/form#pg-toggleswitch` | handle off/on/hover/checked/disabled |
-| InputText default | `/form#pg-inputtext` | borde, focus, invalid |
-| InputText FloatLabel | variant floatlabel | over/on/in |
-| InputText IftaLabel | variant iftalabel | label fija, altura |
-| Button Contrast | `/button` | primary/contrast/outlined |
-| WATCH tokens | sidebar inspector | primary-color, btn-fill-bg, font |
-
-Revisar en **light y dark**. Mostrar `git diff --stat`.
+Mostrar `git diff --stat` y resumen de fixes de remediación.
 
 ## Scripts npm
 
@@ -139,6 +146,7 @@ Revisar en **light y dark**. Mostrar `git diff --stat`.
 pnpm run mds:preflight
 pnpm run mds:diff
 pnpm run mds:apply
+pnpm run mds:remediate --apply
 pnpm run mds:qa
 ```
 

@@ -3,7 +3,7 @@ export const MDS_STEPPER_OVERRIDE_STYLE_ID = 'mds-stepper-overrides';
 
 export const STEPPER_MDS_OVERRIDE_CSS = `
 .p-stepitem .p-steppanel-content {
-  margin-inline-start: var(--p-stepper-steppanel-indent) !important;
+  margin-inline-start: var(--p-stepper-steppanel-indent, var(--dimension-scale-x16, 1rem)) !important;
 }
 
 .p-stepper.stepper-catalog-live--template p-step-list.p-steplist,

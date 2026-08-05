@@ -9,8 +9,20 @@
 }
 
 .p-galleria-thumbnails-content {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
   background: var(--galleria-thumbnails-content-background, var(--p-galleria-thumbnails-content-background));
-  padding: var(--galleria-thumbnails-content-padding, var(--p-galleria-thumbnails-content-padding, 1rem 0.25rem));
+  padding-top: var(--galleria-thumbnails-content-padding-y, var(--p-galleria-thumbnails-content-padding-y, var(--dimension-scale-x14)));
+  padding-bottom: var(--galleria-thumbnails-content-padding-y, var(--p-galleria-thumbnails-content-padding-y, var(--dimension-scale-x14)));
+  padding-left: var(--galleria-thumbnails-content-padding-x, var(--p-galleria-thumbnails-content-padding-x, var(--dimension-scale-x4)));
+  padding-right: var(--galleria-thumbnails-content-padding-x, var(--p-galleria-thumbnails-content-padding-x, var(--dimension-scale-x4)));
+}
+
+.p-galleria-thumbnails-left .p-galleria-thumbnails-content,
+.p-galleria-thumbnails-right .p-galleria-thumbnails-content {
+  flex-direction: column;
+  justify-content: center;
 }
 
 .p-galleria-thumbnail-item {

@@ -16,6 +16,7 @@
     "mds:preflight": "python3 scripts/mds-core-preflight.py --staging .mds-core-staging",
     "mds:diff": "python3 scripts/mds-core-diff.py --staging .mds-core-staging --format markdown",
     "mds:apply": "python3 scripts/mds-core-apply.py --staging .mds-core-staging",
+    "mds:remediate": "python3 scripts/mds-core-remediate.py --staging .mds-core-staging",
     "mds:qa": "python3 scripts/mds-core-qa.py --format markdown",
     "mds:component-analyze": "python3 scripts/mds-component-analyze.py",
     "mds:component-qa": "python3 scripts/mds-component-qa.py",

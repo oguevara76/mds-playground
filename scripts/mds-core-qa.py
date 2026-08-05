@@ -11,15 +11,25 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from mds_core_lib import (
     ROOT,
+    BRIDGE_FROZEN_WHEN_MDS_REMOVED,
     collect_var_refs_from_text,
+    find_catalog_token_masks,
     load_core_vars,
     load_registry,
     merged_catalog,
+    remediate_bridge_tokens,
     resolve_var_exists,
     var_matches_pattern,
 )
 
 THEME_DIR = ROOT / "src" / "app" / "theme"
+
+# Refs MDS opcionales en parity (var(--mds, var(--p-*, fallback))).
+PARITY_OPTIONAL_DEPRECATED_REFS = frozenset({"--galleria-transition-duration"})
+
+DEPRECATED_MDS_VARS = frozenset(
+    p_name.replace("--p-", "--", 1) for p_name in BRIDGE_FROZEN_WHEN_MDS_REMOVED
+) - PARITY_OPTIONAL_DEPRECATED_REFS
 
 
 def check_file_refs(path: Path, catalog: dict[str, str], label: str) -> list[dict]:
@@ -74,6 +84,26 @@ def check_fragile_watch_vars(catalog: dict[str, str], registry: dict) -> dict[st
     return results
 
 
+def check_bridge_remediation(catalog: dict[str, str]) -> list[dict]:
+    """Puente pendiente de remediar tras eliminar vars del core."""
+    _, fixes = remediate_bridge_tokens(catalog)
+    return [{"p_var": k, "new_value": v} for k, v in fixes.items()]
+
+
+def check_parity_deprecated_refs(catalog: dict[str, str]) -> list[dict]:
+    """Referencias a vars MDS deprecadas aún presentes en parity (deben usar --p-*)."""
+    failures = []
+    styles_dir = ROOT / "src" / "styles"
+    for f in styles_dir.glob("primeng-*-parity.css"):
+        text = f.read_text(encoding="utf-8")
+        for ref in collect_var_refs_from_text(text):
+            if ref in DEPRECATED_MDS_VARS and ref not in catalog:
+                failures.append(
+                    {"var": ref, "referenced_in": f.name, "file": str(f.relative_to(ROOT))}
+                )
+    return failures
+
+
 def run_qa() -> dict:
     slots = load_core_vars()
     catalog = merged_catalog(slots)
@@ -81,28 +111,49 @@ def run_qa() -> dict:
 
     broken_core = check_broken_refs_in_core(slots)
     fragile = check_fragile_watch_vars(catalog, registry)
+    bridge_pending = check_bridge_remediation(catalog)
+    parity_deprecated = check_parity_deprecated_refs(catalog)
+    catalog_masks = find_catalog_token_masks(catalog)
 
     override_warns = []
     for f in THEME_DIR.glob("*-mds-overrides.ts"):
         override_warns.extend(check_file_refs(f, catalog, f.name))
 
     fragile_fail = any(v["status"] == "FAIL" for v in fragile.values())
-    critical_fail = bool(broken_core) or fragile_fail
+    critical_fail = bool(broken_core) or fragile_fail or bool(bridge_pending) or bool(parity_deprecated)
+
+    post_update_components = [
+        {"component": "Carousel", "route": "/media#pg-carousel", "auto": "puente + parity"},
+        {"component": "Galleria", "route": "/media#pg-galleria", "auto": "puente + parity"},
+        {"component": "Stepper", "route": "/panel#pg-stepper", "auto": "puente + parity + override"},
+        {"component": "ToggleSwitch", "route": "/form#pg-toggleswitch", "auto": "watch_vars registry"},
+        {"component": "InputText", "route": "/form#pg-inputtext", "auto": "watch_vars registry"},
+        {"component": "Button", "route": "/button#pg-button", "auto": "watch_vars registry"},
+    ]
 
     return {
         "ok": not critical_fail,
         "checks": {
             "broken_refs_core": {"count": len(broken_core), "items": broken_core[:20], "severity": "FAIL"},
+            "bridge_remediation_pending": {
+                "count": len(bridge_pending),
+                "items": bridge_pending[:10],
+                "severity": "FAIL",
+            },
+            "parity_deprecated_refs": {
+                "count": len(parity_deprecated),
+                "items": parity_deprecated[:10],
+                "severity": "FAIL",
+            },
+            "catalog_token_masks": {"count": len(catalog_masks), "items": catalog_masks[:10], "severity": "WARN"},
             "fragile_components": fragile,
             "override_refs_warn": {"count": len(override_warns), "items": override_warns[:10], "severity": "WARN"},
         },
+        "post_update_components": post_update_components,
         "visual_checklist": [
-            {"component": "ToggleSwitch", "route": "/form#pg-toggleswitch", "checks": "handle off/on/hover/checked/disabled"},
-            {"component": "InputText default", "route": "/form#pg-inputtext", "checks": "borde, focus, invalid"},
-            {"component": "InputText FloatLabel", "route": "/form#pg-inputtext", "checks": "variant floatlabel over/on/in"},
-            {"component": "InputText IftaLabel", "route": "/form#pg-inputtext", "checks": "variant iftalabel"},
-            {"component": "Button Contrast", "route": "/button", "checks": "primary/contrast/outlined"},
-            {"component": "WATCH tokens", "route": "sidebar inspector", "checks": "primary-color, btn-fill-bg, font"},
+            item
+            for item in post_update_components
+            if item["component"] in {"ToggleSwitch", "InputText", "Button"}
         ],
     }
 
@@ -126,10 +177,16 @@ def format_markdown(report: dict) -> str:
             lines.append(f"- **{key}**: {status}")
             for item in data.get("items", [])[:5]:
                 lines.append(f"  - {item}")
-    lines.append("\n## Checklist visual manual\n")
-    for item in report.get("visual_checklist", []):
-        lines.append(f"- **{item['component']}** (`{item['route']}`): {item['checks']}")
-    lines.append("\n_Revisar en light y dark._")
+    lines.append("\n## Componentes post-update (auto-validados)\n")
+    for item in report.get("post_update_components", []):
+        lines.append(f"- **{item['component']}** (`{item['route']}`): {item['auto']}")
+
+    if report.get("visual_checklist"):
+        lines.append("\n## Checklist visual manual (solo si QA FAIL)\n")
+        for item in report.get("visual_checklist", []):
+            checks = item.get("checks") or item.get("auto", "")
+            lines.append(f"- **{item['component']}** (`{item['route']}`): {checks}")
+    lines.append("\n_Ejecutar `pnpm run mds:remediate --apply` antes del QA si el diff eliminó vars._")
     return "\n".join(lines)
 
 

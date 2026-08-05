@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PrimeTemplate } from 'primeng/api';
 import { Button } from 'primeng/button';
@@ -52,6 +52,8 @@ import {
   host: { class: 'media-catalog-page' },
 })
 export class MediaCatalogComponent {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   readonly images = [...GALLERIA_CATALOG_IMAGES];
   readonly variantOptions = GALLERIA_CATALOG_VARIANT_OPTIONS;
   readonly positionOptions = GALLERIA_CATALOG_POSITION_OPTIONS;
@@ -82,8 +84,9 @@ export class MediaCatalogComponent {
     return this.images[this.activeIndex] ?? this.images[0];
   }
 
-  onGalleriaActiveIndexChange(index: number): void {
-    this.activeIndex = index;
+  onGalleriaActiveIndexChange(): void {
+    // PrimeNG Galleria (OnPush) no siempre repinta el slot del ítem al cambiar activeIndex.
+    this.cdr.detectChanges();
   }
 
   patchGalleriaIx(patch: Partial<GalleriaInteractionState>): void {

@@ -102,9 +102,9 @@
 }
 
 .p-step-active .p-step-number {
-  background: var(--p-stepper-step-number-active-background);
-  border-color: var(--p-stepper-step-number-active-border-color);
-  color: var(--p-stepper-step-number-active-color);
+  background: var(--p-stepper-step-number-active-background, var(--stepper-step-number-active-background, var(--primary-color)));
+  border-color: var(--p-stepper-step-number-active-border-color, var(--stepper-step-number-active-border-color, var(--primary-color)));
+  color: var(--p-stepper-step-number-active-color, var(--stepper-step-number-active-color, var(--surface-context-fixed-light)));
 }
 
 .p-step-active .p-step-title {
@@ -129,7 +129,10 @@
 }
 
 .p-steppanels {
-  padding: var(--p-stepper-steppanels-padding);
+  padding-top: var(--stepper-steppanels-padding-top, var(--dimension-scale-x12));
+  padding-right: var(--stepper-steppanels-padding-right, var(--dimension-scale-x8));
+  padding-bottom: var(--stepper-steppanels-padding-bottom, var(--dimension-scale-x16));
+  padding-left: var(--stepper-steppanels-padding-left, var(--dimension-scale-x8));
 }
 
 .p-steppanel {
@@ -158,8 +161,8 @@
 
 .p-stepitem .p-steppanel-content {
   width: 100%;
-  padding: var(--p-stepper-steppanel-padding);
-  margin-inline-start: var(--p-stepper-steppanel-indent);
+  padding: var(--p-stepper-steppanel-padding, var(--stepper-steppanel-padding, var(--dimension-scale-x0)));
+  margin-inline-start: var(--p-stepper-steppanel-indent, var(--dimension-scale-x16, 1rem));
 }
 
 .p-stepitem .p-steppanel {
@@ -169,11 +172,20 @@
 
 .p-stepitem .p-stepper-separator {
   flex: 0 0 auto;
-  width: var(--p-stepper-separator-size);
+  width: var(--p-stepper-separator-size, var(--stepper-separator-size, var(--dimension-scale-x2)));
   height: auto;
-  margin: var(--p-stepper-separator-margin);
+  margin: var(
+    --p-stepper-separator-margin,
+    var(
+      --stepper-separator-margin,
+      0 0 0 calc(
+          var(--stepper-step-padding, var(--dimension-scale-x8)) + var(--stepper-step-number-size, var(--dimension-scale-x28)) / 2 -
+            var(--stepper-separator-size, var(--dimension-scale-x2)) / 2
+        )
+    )
+  );
   position: relative;
-  left: calc(-1 * var(--p-stepper-separator-size));
+  left: calc(-1 * var(--p-stepper-separator-size, var(--stepper-separator-size, var(--dimension-scale-x2))));
 }
 
 .p-stepitem:has(~ .p-stepitem-active) .p-stepper-separator {
@@ -181,5 +193,5 @@
 }
 
 .p-stepitem:last-of-type .p-steppanel {
-  padding-inline-start: calc(var(--p-stepper-step-padding) + var(--p-stepper-step-number-size));
+  padding-inline-start: var(--p-stepper-step-number-size, var(--stepper-step-number-size, var(--dimension-scale-x28)));
 }

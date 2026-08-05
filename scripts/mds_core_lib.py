@@ -462,8 +462,175 @@ def scan_playground_refs() -> dict[str, set[str]]:
     for f in styles_dir.glob("primeng-*-parity.css"):
         refs["parity"] |= collect_var_refs_from_text(f.read_text(encoding="utf-8"))
 
-    form_catalog = ROOT / "src" / "app" / "catalogs" / "form" / "form-catalog.component.ts"
-    if form_catalog.is_file():
-        refs["catalogs"] |= collect_var_refs_from_text(form_catalog.read_text(encoding="utf-8"))
+    catalogs_dir = ROOT / "src" / "app" / "catalogs"
+    if catalogs_dir.is_dir():
+        for f in catalogs_dir.rglob("*-catalog.component.css"):
+            refs["catalogs"] |= collect_var_refs_from_text(f.read_text(encoding="utf-8"))
 
     return refs
+
+
+# Puente: vars MDS eliminadas del export → valor congelado (sin leer var MDS).
+# No incluir shorthands/aliases que se mantienen en core a propósito (galleria/stepper).
+BRIDGE_FROZEN_WHEN_MDS_REMOVED: dict[str, str | None] = {
+    "--p-galleria-close-button-focus-ring-style": "var(--p-focus-ring-style, solid)",
+    "--p-galleria-indicator-button-focus-ring-style": "var(--p-focus-ring-style, solid)",
+    "--p-galleria-nav-button-focus-ring-style": "var(--p-focus-ring-style, solid)",
+    "--p-galleria-thumbnail-nav-button-focus-ring-style": "var(--p-focus-ring-style, solid)",
+    "--p-galleria-transition-duration": "var(--p-transition-duration, 180ms)",
+    "--p-stepper-transition-duration": "var(--p-transition-duration, 0.2s)",
+}
+
+# Fallbacks del puente desincronizados con el core (solo casos conocidos).
+# Carousel showcase en /media usa override local x16; el puente debe reflejar core x4.
+BRIDGE_STALE_FALLBACKS: dict[str, str] = {
+    "--p-carousel-content-gap": "var(--carousel-content-gap, var(--dimension-scale-x4))",
+}
+
+# Aliases legacy en core que el bridge/parity siguen necesitando aunque Figma las elimine.
+CORE_LEGACY_BRIDGE_ALIASES: frozenset[str] = frozenset(
+    {
+        "--galleria-thumbnails-content-padding",
+        "--stepper-separator-margin",
+        "--stepper-steppanel-indent",
+        "--stepper-steppanels-padding",
+    }
+)
+
+# Overrides intencionales en catálogos (showcase ≠ core).
+CATALOG_INTENTIONAL_MASKS: frozenset[tuple[str, str]] = frozenset(
+    {
+        ("--carousel-content-gap", "src/app/catalogs/media/media-catalog.component.css"),
+        ("--galleria-thumbnails-content-padding", "src/app/catalogs/media/media-catalog.component.css"),
+        ("--galleria-thumbnails-content-padding-x", "src/app/catalogs/media/media-catalog.component.css"),
+        ("--galleria-thumbnails-content-padding-y", "src/app/catalogs/media/media-catalog.component.css"),
+    }
+)
+
+
+def split_var_fallback(value: str) -> tuple[str | None, str | None]:
+    """Primer var(--name, fallback) de un valor CSS."""
+    m = re.match(r"var\(\s*(--[^,\s)]+)\s*,\s*(.+)\)\s*$", (value or "").strip())
+    if not m:
+        return None, None
+    return m.group(1).strip(), m.group(2).strip()
+
+
+def resolve_token_value(name: str, catalog: dict[str, str], depth: int = 0) -> str | None:
+    """Resuelve un token MDS a valor terminal (literal o var primitiva)."""
+    if depth > 12 or name not in catalog:
+        return None
+    val = catalog[name].strip()
+    ref = extract_var_ref(val)
+    if not ref:
+        return val
+    return resolve_token_value(ref, catalog, depth + 1) or val
+
+
+def update_bridge_declaration(css: str, p_name: str, new_value: str | None) -> tuple[str, bool]:
+    """Actualiza o elimina una declaración --p-* en todo primeng-tokens.css."""
+    pattern = re.compile(
+        rf"^[ \t]*{re.escape(p_name)}:\s*[^;]+;\n?",
+        re.MULTILINE,
+    )
+    if new_value is None:
+        updated, n = pattern.subn("", css)
+        return updated, n > 0
+    replacement = f"  {p_name}: {new_value};\n"
+    if pattern.search(css):
+        updated, n = pattern.subn(replacement, css)
+        return updated, n > 0
+    return css, False
+
+
+def remediate_bridge_tokens(catalog: dict[str, str]) -> tuple[list[dict], dict[str, str | None]]:
+    """Calcula fixes de puente: vars MDS ausentes y fallbacks obsoletos conocidos."""
+    bridge = read_bridge_vars()
+    fixes: dict[str, str | None] = {}
+    report: list[dict] = []
+
+    for p_name, frozen in BRIDGE_FROZEN_WHEN_MDS_REMOVED.items():
+        if p_name not in bridge:
+            continue
+        mds_var = p_name.replace("--p-", "--", 1)
+        if mds_var not in catalog and bridge[p_name] != frozen:
+            fixes[p_name] = frozen
+            report.append(
+                {
+                    "kind": "frozen_removed_mds",
+                    "p_var": p_name,
+                    "mds_var": mds_var,
+                    "new_value": frozen,
+                }
+            )
+
+    for p_name, new_value in BRIDGE_STALE_FALLBACKS.items():
+        if p_name in bridge and bridge[p_name] != new_value:
+            fixes[p_name] = new_value
+            report.append(
+                {
+                    "kind": "stale_fallback",
+                    "p_var": p_name,
+                    "new_value": new_value,
+                }
+            )
+
+    return report, fixes
+
+
+def apply_bridge_fixes(fixes: dict[str, str | None]) -> int:
+    path = STYLES / "primeng-tokens.css"
+    if not path.is_file() or not fixes:
+        return 0
+    css = path.read_text(encoding="utf-8")
+    applied = 0
+    for p_name, new_value in fixes.items():
+        css, changed = update_bridge_declaration(css, p_name, new_value)
+        if changed:
+            applied += 1
+    path.write_text(css, encoding="utf-8")
+    return applied
+
+
+def find_core_legacy_vars(export_components: dict[str, str] | None) -> list[str]:
+    """Vars en core components que ya no están en el export (excluye aliases de bridge)."""
+    if not export_components:
+        return []
+    core = load_core_vars().get("components", {})
+    legacy = sorted(set(core) - set(export_components))
+    return [name for name in legacy if name not in CORE_LEGACY_BRIDGE_ALIASES]
+
+
+def find_catalog_token_masks(catalog: dict[str, str]) -> list[dict]:
+    """Detecta redefiniciones locales de tokens MDS con valor distinto al core."""
+    masks: list[dict] = []
+    catalogs_dir = ROOT / "src" / "app" / "catalogs"
+    if not catalogs_dir.is_dir():
+        return masks
+    decl_re = re.compile(r"(--[\w-]+)\s*:\s*([^;}\n]+);")
+    for css_path in catalogs_dir.rglob("*-catalog.component.css"):
+        rel = str(css_path.relative_to(ROOT))
+        for m in decl_re.finditer(css_path.read_text(encoding="utf-8")):
+            name, val = m.group(1).strip(), m.group(2).strip()
+            if name.startswith("--p-"):
+                continue
+            if name not in catalog:
+                continue
+            core_val = catalog[name].strip()
+            if val.strip() == core_val.strip():
+                continue
+            core_res = resolve_token_value(name, catalog)
+            local_ref = extract_var_ref(val)
+            local_res = resolve_token_value(local_ref, catalog) if local_ref else val.strip()
+            if core_res and local_res and core_res != local_res:
+                if (name, rel) in CATALOG_INTENTIONAL_MASKS:
+                    continue
+                masks.append(
+                    {
+                        "var": name,
+                        "file": rel,
+                        "core": core_val,
+                        "local": val,
+                    }
+                )
+    return masks

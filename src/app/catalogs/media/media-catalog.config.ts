@@ -90,7 +90,7 @@ export const GALLERIA_CATALOG_IMAGES: readonly GalleriaCatalogImage[] = [
 
 export const GALLERIA_CATALOG_NUM_VISIBLE = 5;
 export const GALLERIA_CATALOG_CONTAINER_STYLE: Readonly<Record<string, string>> = { 'max-width': '640px' };
-export const GALLERIA_CATALOG_VERTICAL_THUMBNAIL_HEIGHT = '14rem';
+export const GALLERIA_CATALOG_VERTICAL_THUMBNAIL_HEIGHT = '300px';
 
 export type CarouselCatalogOrientation = 'horizontal' | 'vertical';
 

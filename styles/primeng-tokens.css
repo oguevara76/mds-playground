@@ -1431,12 +1431,12 @@ html[data-theme="light"] {
   --p-stepper-separator-margin: var(
     --stepper-separator-margin,
     0 0 0 calc(
-        var(--stepper-step-padding, var(--dimension-scale-x8, 8px)) + var(--stepper-separator-margin-left, var(--dimension-scale-x14, 14px)) +
+        var(--stepper-step-padding, var(--dimension-scale-x8, 8px)) + var(--stepper-step-number-size, var(--dimension-scale-x28, 28px)) / 2 -
           var(--stepper-separator-size, var(--dimension-scale-x2, 2px)) / 2
       )
   );
   --p-stepper-separator-size: var(--stepper-separator-size, var(--dimension-scale-x2));
-  --p-stepper-transition-duration: var(--stepper-transition-duration, var(--p-transition-duration, 0.2s));
+  --p-stepper-transition-duration: var(--p-transition-duration, 0.2s);
   --p-stepper-step-gap: var(--stepper-step-gap, var(--dimension-scale-x14));
   --p-stepper-step-header-border-radius: var(--stepper-step-header-border-radius, var(--content-border-radius));
   --p-stepper-step-header-focus-ring-color: var(--stepper-step-header-focus-ring-color, var(--focus-ring-color));
@@ -1445,8 +1445,8 @@ html[data-theme="light"] {
   --p-stepper-step-header-focus-ring-width: var(--stepper-step-header-focus-ring-width, var(--focus-ring-width));
   --p-stepper-step-header-gap: var(--stepper-step-header-gap, var(--dimension-scale-x8));
   --p-stepper-step-header-padding: var(--stepper-step-header-padding, var(--dimension-scale-x0));
-  --p-stepper-step-number-active-background: var(--stepper-step-number-active-background, var(--surface-context-fixed-primary-default));
-  --p-stepper-step-number-active-border-color: var(--stepper-step-number-active-border-color, var(--content-border-color));
+  --p-stepper-step-number-active-background: var(--stepper-step-number-active-background, var(--primary-color));
+  --p-stepper-step-number-active-border-color: var(--stepper-step-number-active-border-color, var(--primary-color));
   --p-stepper-step-number-active-color: var(--stepper-step-number-active-color, var(--surface-context-fixed-light));
   --p-stepper-step-number-background: var(--stepper-step-number-background, var(--content-background));
   --p-stepper-step-number-border-color: var(--stepper-step-number-border-color, var(--content-border-color));
@@ -1729,7 +1729,7 @@ html[data-theme="light"] {
   --p-accordion-header-toggle-icon-hover-color: var(--accordion-header-toggle-icon-hover-color, var(--text-color));
   --p-accordion-panel-border-color: var(--accordion-panel-border-color, var(--content-border-color));
   --p-accordion-panel-border-width: var(--accordion-panel-border-width, 0 0 1px 0);
-  --p-carousel-content-gap: var(--carousel-content-gap, var(--dimension-scale-x16));
+  --p-carousel-content-gap: var(--carousel-content-gap, var(--dimension-scale-x4));
   --p-carousel-figma-item-tag-background: var(--carousel-figma-item-tag-background, rgba(0, 0, 0, 0));
   --p-carousel-indicator-active-background: var(--carousel-indicator-active-background, var(--primary-color));
   --p-carousel-indicator-background: var(--carousel-indicator-background, var(--surface-context-base));
@@ -1802,12 +1802,14 @@ html[data-theme="light"] {
   --p-galleria-thumbnail-nav-button-icon-size: var(--galleria-thumbnail-nav-button-icon-size, 14px);
   --p-galleria-thumbnail-nav-button-size: var(--galleria-thumbnail-nav-button-size, var(--dimension-scale-x28));
   --p-galleria-thumbnails-content-background: var(--galleria-thumbnails-content-background, var(--content-background));
-  --p-galleria-thumbnails-content-padding: var(--galleria-thumbnails-content-padding, var(--dimension-scale-x14) var(--dimension-scale-x4));
-  --p-galleria-transition-duration: var(--galleria-transition-duration, var(--p-transition-duration, 180ms));
-  --p-galleria-nav-button-focus-ring-style: var(--galleria-nav-button-focus-ring-style, var(--p-focus-ring-style, solid));
-  --p-galleria-thumbnail-nav-button-focus-ring-style: var(--galleria-thumbnail-nav-button-focus-ring-style, var(--p-focus-ring-style, solid));
-  --p-galleria-indicator-button-focus-ring-style: var(--galleria-indicator-button-focus-ring-style, var(--p-focus-ring-style, solid));
-  --p-galleria-close-button-focus-ring-style: var(--galleria-close-button-focus-ring-style, var(--p-focus-ring-style, solid));
+  --p-galleria-thumbnails-content-padding-x: var(--galleria-thumbnails-content-padding-x, var(--dimension-scale-x4));
+  --p-galleria-thumbnails-content-padding-y: var(--galleria-thumbnails-content-padding-y, var(--dimension-scale-x14));
+  --p-galleria-thumbnails-content-padding: var(--galleria-thumbnails-content-padding, var(--p-galleria-thumbnails-content-padding-y) var(--p-galleria-thumbnails-content-padding-x));
+  --p-galleria-transition-duration: var(--p-transition-duration, 180ms);
+  --p-galleria-nav-button-focus-ring-style: var(--p-focus-ring-style, solid);
+  --p-galleria-thumbnail-nav-button-focus-ring-style: var(--p-focus-ring-style, solid);
+  --p-galleria-indicator-button-focus-ring-style: var(--p-focus-ring-style, solid);
+  --p-galleria-close-button-focus-ring-style: var(--p-focus-ring-style, solid);
   --p-datepicker-buttonbar-border-color: var(--datepicker-buttonbar-border-color, var(--content-border-color));
   --p-datepicker-buttonbar-padding-bottom: var(--datepicker-buttonbar-padding-bottom, var(--dimension-scale-x0));
   --p-datepicker-buttonbar-padding-left: var(--datepicker-buttonbar-padding-left, var(--dimension-scale-x0));
@@ -1903,8 +1905,6 @@ html[data-theme="light"] {
   --p-datepicker-year-view-margin-left: var(--datepicker-year-view-margin-left, var(--dimension-scale-x0));
   --p-datepicker-year-view-margin-right: var(--datepicker-year-view-margin-right, var(--dimension-scale-x0));
   --p-datepicker-year-view-margin-top: var(--datepicker-year-view-margin-top, var(--dimension-scale-x8));
-  --p-galleria-thumbnails-content-padding-x: var(--galleria-thumbnails-content-padding-x, var(--dimension-scale-x4));
-  --p-galleria-thumbnails-content-padding-y: var(--galleria-thumbnails-content-padding-y, var(--dimension-scale-x14));
   --p-menu-item-padding-x: var(--menu-item-padding-x, var(--dimension-scale-x12));
   --p-menu-item-padding-y: var(--menu-item-padding-y, var(--dimension-scale-x8));
   --p-menu-list-padding-x: var(--menu-list-padding-x, var(--dimension-scale-x4));
@@ -3107,12 +3107,12 @@ html[data-theme="dark"] {
                               --p-stepper-separator-margin: var(
     --stepper-separator-margin,
     0 0 0 calc(
-        var(--stepper-step-padding, var(--dimension-scale-x8, 8px)) + var(--stepper-separator-margin-left, var(--dimension-scale-x14, 14px)) +
+        var(--stepper-step-padding, var(--dimension-scale-x8, 8px)) + var(--stepper-step-number-size, var(--dimension-scale-x28, 28px)) / 2 -
           var(--stepper-separator-size, var(--dimension-scale-x2, 2px)) / 2
       )
   );
                               --p-stepper-separator-size: var(--stepper-separator-size, var(--dimension-scale-x2));
-                              --p-stepper-transition-duration: var(--stepper-transition-duration, var(--p-transition-duration, 0.2s));
+  --p-stepper-transition-duration: var(--p-transition-duration, 0.2s);
                               --p-stepper-step-gap: var(--stepper-step-gap, var(--dimension-scale-x14));
                               --p-stepper-step-header-border-radius: var(--stepper-step-header-border-radius, var(--content-border-radius));
                               --p-stepper-step-header-focus-ring-color: var(--stepper-step-header-focus-ring-color, var(--focus-ring-color));
@@ -3121,9 +3121,9 @@ html[data-theme="dark"] {
                               --p-stepper-step-header-focus-ring-width: var(--stepper-step-header-focus-ring-width, var(--focus-ring-width));
                               --p-stepper-step-header-gap: var(--stepper-step-header-gap, var(--dimension-scale-x8));
                               --p-stepper-step-header-padding: var(--stepper-step-header-padding, var(--dimension-scale-x0));
-                              --p-stepper-step-number-active-background: var(--stepper-step-number-active-background, var(--surface-context-fixed-primary-default));
-                              --p-stepper-step-number-active-border-color: var(--stepper-step-number-active-border-color, var(--content-border-color));
-                              --p-stepper-step-number-active-color: var(--stepper-step-number-active-color, var(--surface-context-fixed-light));
+  --p-stepper-step-number-active-background: var(--stepper-step-number-active-background, var(--primary-color));
+  --p-stepper-step-number-active-border-color: var(--stepper-step-number-active-border-color, var(--primary-color));
+  --p-stepper-step-number-active-color: var(--stepper-step-number-active-color, var(--surface-context-fixed-light));
                               --p-stepper-step-number-background: var(--stepper-step-number-background, var(--content-background));
                               --p-stepper-step-number-border-color: var(--stepper-step-number-border-color, var(--content-border-color));
                               --p-stepper-step-number-border-radius: var(--stepper-step-number-border-radius, var(--dimension-scale-x14));
@@ -3300,12 +3300,14 @@ html[data-theme="dark"] {
                   --p-galleria-thumbnail-nav-button-icon-size: var(--galleria-thumbnail-nav-button-icon-size, 14px);
                   --p-galleria-thumbnail-nav-button-size: var(--galleria-thumbnail-nav-button-size, var(--dimension-scale-x28));
                   --p-galleria-thumbnails-content-background: var(--galleria-thumbnails-content-background, var(--content-background));
-                --p-galleria-thumbnails-content-padding: var(--galleria-thumbnails-content-padding, var(--dimension-scale-x14) var(--dimension-scale-x4));
-                --p-galleria-transition-duration: var(--galleria-transition-duration, var(--p-transition-duration, 180ms));
-                --p-galleria-nav-button-focus-ring-style: var(--galleria-nav-button-focus-ring-style, var(--p-focus-ring-style, solid));
-                --p-galleria-thumbnail-nav-button-focus-ring-style: var(--galleria-thumbnail-nav-button-focus-ring-style, var(--p-focus-ring-style, solid));
-                --p-galleria-indicator-button-focus-ring-style: var(--galleria-indicator-button-focus-ring-style, var(--p-focus-ring-style, solid));
-                --p-galleria-close-button-focus-ring-style: var(--galleria-close-button-focus-ring-style, var(--p-focus-ring-style, solid));
+                --p-galleria-thumbnails-content-padding-x: var(--galleria-thumbnails-content-padding-x, var(--dimension-scale-x4));
+                --p-galleria-thumbnails-content-padding-y: var(--galleria-thumbnails-content-padding-y, var(--dimension-scale-x14));
+                --p-galleria-thumbnails-content-padding: var(--galleria-thumbnails-content-padding, var(--p-galleria-thumbnails-content-padding-y) var(--p-galleria-thumbnails-content-padding-x));
+  --p-galleria-transition-duration: var(--p-transition-duration, 180ms);
+  --p-galleria-nav-button-focus-ring-style: var(--p-focus-ring-style, solid);
+  --p-galleria-thumbnail-nav-button-focus-ring-style: var(--p-focus-ring-style, solid);
+  --p-galleria-indicator-button-focus-ring-style: var(--p-focus-ring-style, solid);
+  --p-galleria-close-button-focus-ring-style: var(--p-focus-ring-style, solid);
               --p-datepicker-buttonbar-border-color: var(--datepicker-buttonbar-border-color, var(--content-border-color));
               --p-datepicker-buttonbar-padding-bottom: var(--datepicker-buttonbar-padding-bottom, var(--dimension-scale-x0));
               --p-datepicker-buttonbar-padding-left: var(--datepicker-buttonbar-padding-left, var(--dimension-scale-x0));
@@ -3433,8 +3435,6 @@ html[data-theme="dark"] {
             --p-tree-node-toggle-button-selected-hover-color: var(--tree-node-toggle-button-selected-hover-color, var(--primary-color));
             --p-tree-node-toggle-button-size: var(--tree-node-toggle-button-size, var(--dimension-scale-x24));
             --p-tree-padding: var(--tree-padding, var(--dimension-scale-x14));
-          --p-galleria-thumbnails-content-padding-x: var(--galleria-thumbnails-content-padding-x, var(--dimension-scale-x4));
-          --p-galleria-thumbnails-content-padding-y: var(--galleria-thumbnails-content-padding-y, var(--dimension-scale-x14));
           --p-menu-item-padding-x: var(--menu-item-padding-x, var(--dimension-scale-x12));
           --p-menu-item-padding-y: var(--menu-item-padding-y, var(--dimension-scale-x8));
           --p-menu-list-padding-x: var(--menu-list-padding-x, var(--dimension-scale-x4));
@@ -3443,7 +3443,7 @@ html[data-theme="dark"] {
           --p-menu-submenu-label-padding-y: var(--menu-submenu-label-padding-y, var(--dimension-scale-x8));
           --p-tree-node-padding-x: var(--tree-node-padding-x, var(--dimension-scale-x8));
           --p-tree-node-padding-y: var(--tree-node-padding-y, var(--dimension-scale-x4));
-        --p-carousel-content-gap: var(--carousel-content-gap, var(--dimension-scale-x16));
+        --p-carousel-content-gap: var(--carousel-content-gap, var(--dimension-scale-x4));
         --p-carousel-figma-item-tag-background: var(--carousel-figma-item-tag-background, rgba(0, 0, 0, 0));
         --p-carousel-indicator-active-background: var(--carousel-indicator-active-background, var(--primary-color));
         --p-carousel-indicator-background: var(--carousel-indicator-background, var(--surface-context-base));

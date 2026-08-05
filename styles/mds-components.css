@@ -362,7 +362,7 @@ html:root {
   --card-subtitle-color: var(--text-muted-color);
   --card-title-font-size: 18px;
   --card-title-font-weight: 500;
-  --carousel-content-gap: var(--dimension-scale-x16);
+  --carousel-content-gap: var(--dimension-scale-x4);
   --carousel-figma-item-tag-background: rgba(0, 0, 0, 0);
   --carousel-indicator-active-background: var(--primary-color);
   --carousel-indicator-background: var(--surface-context-base);
@@ -901,6 +901,16 @@ html:root {
   --floatlabel-position-sm-x: var(--form-field-sm-position-x);
   --floatlabel-position-x: var(--form-field-position-x);
   --focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  --footer-indra-background: var(--surface-context-minimal);
+  --footer-indra-border-color: var(--surface-context-base);
+  --footer-indra-color: var(--text-color);
+  --footer-indra-gap-lg: var(--dimension-scale-x12);
+  --footer-indra-gap-md: var(--dimension-scale-x8);
+  --footer-indra-gap-sm: var(--dimension-scale-x4);
+  --footer-indra-item-gap: var(--dimension-scale-x4);
+  --footer-indra-label-font-size: var(--dimension-scale-x12);
+  --footer-indra-padding-x: var(--dimension-scale-x16);
+  --footer-indra-padding-y: var(--dimension-scale-x4);
   --form-field-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --form-field-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
   --galleria-border-color: var(--content-border-color);
@@ -915,7 +925,6 @@ html:root {
   --galleria-close-button-focus-ring-color: var(--focus-ring-color);
   --galleria-close-button-focus-ring-offset: var(--focus-ring-offset);
   --galleria-close-button-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  --galleria-close-button-focus-ring-style: solid;
   --galleria-close-button-focus-ring-width: var(--focus-ring-width);
   --galleria-close-button-gutter: var(--dimension-scale-x8);
   --galleria-close-button-hover-background: rgba(255, 255, 255, 0.2);
@@ -928,7 +937,6 @@ html:root {
   --galleria-indicator-button-focus-ring-color: var(--focus-ring-color);
   --galleria-indicator-button-focus-ring-offset: var(--focus-ring-offset);
   --galleria-indicator-button-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  --galleria-indicator-button-focus-ring-style: solid;
   --galleria-indicator-button-focus-ring-width: var(--focus-ring-width);
   --galleria-indicator-button-height: var(--dimension-scale-x14);
   --galleria-indicator-button-hover-background: var(--surface-context-medium);
@@ -944,7 +952,6 @@ html:root {
   --galleria-nav-button-focus-ring-color: var(--focus-ring-color);
   --galleria-nav-button-focus-ring-offset: var(--focus-ring-offset);
   --galleria-nav-button-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  --galleria-nav-button-focus-ring-style: solid;
   --galleria-nav-button-focus-ring-width: var(--focus-ring-width);
   --galleria-nav-button-gutter: var(--dimension-scale-x8);
   --galleria-nav-button-hover-background: rgba(255, 255, 255, 0.2);
@@ -958,7 +965,6 @@ html:root {
   --galleria-thumbnail-nav-button-focus-ring-color: var(--focus-ring-color);
   --galleria-thumbnail-nav-button-focus-ring-offset: var(--focus-ring-offset);
   --galleria-thumbnail-nav-button-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  --galleria-thumbnail-nav-button-focus-ring-style: solid;
   --galleria-thumbnail-nav-button-focus-ring-width: var(--focus-ring-width);
   --galleria-thumbnail-nav-button-gutter: var(--dimension-scale-x8);
   --galleria-thumbnail-nav-button-hover-background: var(--surface-context-subtle);
@@ -966,10 +972,26 @@ html:root {
   --galleria-thumbnail-nav-button-icon-size: 14px;
   --galleria-thumbnail-nav-button-size: var(--dimension-scale-x28);
   --galleria-thumbnails-content-background: var(--content-background);
-  --galleria-thumbnails-content-padding: var(--dimension-scale-x14) var(--dimension-scale-x4);
   --galleria-thumbnails-content-padding-x: var(--dimension-scale-x4);
   --galleria-thumbnails-content-padding-y: var(--dimension-scale-x14);
-  --galleria-transition-duration: 180ms;
+  --galleria-thumbnails-content-padding: var(--galleria-thumbnails-content-padding-y) var(--galleria-thumbnails-content-padding-x);
+  --header-indra-background: var(--surface-context-minimal);
+  --header-indra-color: var(--text-color);
+  --header-indra-font-size-lg: var(--dimension-scale-x18);
+  --header-indra-font-size-md: var(--dimension-scale-x14);
+  --header-indra-font-size-sm: var(--dimension-scale-x12);
+  --header-indra-font-weight-bold: 700;
+  --header-indra-font-weight-medium: 500;
+  --header-indra-font-weight-regular: 400;
+  --header-indra-gap-lg: var(--dimension-scale-x16);
+  --header-indra-gap-md: var(--dimension-scale-x12);
+  --header-indra-gap-sm: var(--dimension-scale-x8);
+  --header-indra-padding-x: var(--dimension-scale-x16);
+  --header-indra-padding-y: var(--dimension-scale-x8);
+  --header-indra-timezone-background: var(--surface-context-minimal);
+  --header-indra-timezone-border-radius: var(--dimension-radius-x4);
+  --header-indra-timezone-padding: var(--dimension-scale-x4);
+  --header-indra-timezone-selected-background: var(--surface-context-base);
   --iconfield-figma-lg-icon-size: var(--inputtext-lg-font-size);
   --iconfield-figma-size: var(--inputtext-font-size);
   --iconfield-figma-sm-icon-size: var(--inputtext-sm-font-size);
@@ -1655,6 +1677,9 @@ html:root {
   --stepper-separator-margin-left: var(--dimension-scale-x14);
   --stepper-separator-margin-right: var(--dimension-scale-x0);
   --stepper-separator-margin-top: var(--dimension-scale-x0);
+  --stepper-separator-margin: 0 0 0 calc(
+    var(--stepper-step-padding) + var(--stepper-step-number-size) / 2 - var(--stepper-separator-size) / 2
+  );
   --stepper-separator-size: var(--dimension-scale-x2);
   --stepper-step-gap: var(--dimension-scale-x14);
   --stepper-step-header-border-radius: var(--content-border-radius);
@@ -1664,8 +1689,8 @@ html:root {
   --stepper-step-header-focus-ring-width: var(--focus-ring-width);
   --stepper-step-header-gap: var(--dimension-scale-x8);
   --stepper-step-header-padding: var(--dimension-scale-x0);
-  --stepper-step-number-active-background: var(--surface-context-fixed-primary-default);
-  --stepper-step-number-active-border-color: var(--content-border-color);
+  --stepper-step-number-active-background: var(--primary-color);
+  --stepper-step-number-active-border-color: var(--primary-color);
   --stepper-step-number-active-color: var(--surface-context-fixed-light);
   --stepper-step-number-background: var(--content-background);
   --stepper-step-number-border-color: var(--content-border-color);
@@ -1687,7 +1712,8 @@ html:root {
   --stepper-steppanels-padding-left: var(--dimension-scale-x8);
   --stepper-steppanels-padding-right: var(--dimension-scale-x8);
   --stepper-steppanels-padding-top: var(--dimension-scale-x12);
-  --stepper-transition-duration: var(--form-field-transition-duration, 0.2s);
+  --stepper-steppanels-padding: var(--stepper-steppanels-padding-top) var(--stepper-steppanels-padding-right)
+    var(--stepper-steppanels-padding-bottom) var(--stepper-steppanels-padding-left);
   --tabs-active-bar-background: var(--primary-color);
   --tabs-active-bar-bottom: -1px;
   --tabs-active-bar-height: 1px;

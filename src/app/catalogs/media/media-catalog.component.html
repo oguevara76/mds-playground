@@ -20,8 +20,8 @@
                 class="galleria-catalog-live"
                 [class.galleria-catalog-caption-off]="!galleriaIx.showCaption"
                 [value]="images"
-                [activeIndex]="activeIndex"
-                (activeIndexChange)="onGalleriaActiveIndexChange($event)"
+                [(activeIndex)]="activeIndex"
+                (activeIndexChange)="onGalleriaActiveIndexChange()"
                 [numVisible]="numVisible"
                 [containerStyle]="containerStyle"
                 [showThumbnails]="galleriaFlags.showThumbnails"
@@ -34,8 +34,12 @@
                 [circular]="true"
                 ariaLabel="Galleria interactiva del catálogo"
               >
-                <ng-template pTemplate="item" let-item>
-                  <img [src]="item.itemImageSrc" [alt]="item.alt" [style.width]="'100%'" />
+                <ng-template pTemplate="item">
+                  <img
+                    [src]="activeCaption.itemImageSrc"
+                    [alt]="activeCaption.alt"
+                    [style.width]="'100%'"
+                  />
                 </ng-template>
                 <ng-template pTemplate="thumbnail" let-item>
                   <img [src]="item.thumbnailImageSrc" [alt]="item.alt" [style.width]="'100%'" />
