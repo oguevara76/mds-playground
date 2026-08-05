@@ -205,14 +205,40 @@ def extract_block(css: str, selector: str) -> str:
     return ""
 
 
+def parse_var_declarations(inner: str) -> dict[str, str]:
+    """Parsea --* incluyendo valores multilínea (calc, shorthands partidos)."""
+    seen: dict[str, str] = {}
+    i = 0
+    while i < len(inner):
+        m = re.match(r"\s*(--[\w-]+)\s*:\s*", inner[i:])
+        if not m:
+            i += 1
+            continue
+        name = m.group(1).strip()
+        val_start = i + m.end()
+        j = val_start
+        paren = 0
+        while j < len(inner):
+            ch = inner[j]
+            if ch == "(":
+                paren += 1
+            elif ch == ")":
+                paren = max(0, paren - 1)
+            elif ch == ";" and paren == 0:
+                break
+            j += 1
+        if j >= len(inner):
+            break
+        seen[name] = inner[val_start:j].strip()
+        i = j + 1
+    return seen
+
+
 def parse_vars_from_css(css: str, selector: str | None = None) -> dict[str, str]:
     inner = extract_block(css, selector) if selector else css
     if not inner and selector:
         return {}
-    seen: dict[str, str] = {}
-    for m in VAR_DECL_RE.finditer(inner):
-        seen[m.group(1).strip()] = m.group(2).strip()
-    return seen
+    return parse_var_declarations(inner)
 
 
 def parse_metadata(css: str) -> dict[str, str]:
@@ -506,6 +532,55 @@ CATALOG_INTENTIONAL_MASKS: frozenset[tuple[str, str]] = frozenset(
         ("--galleria-thumbnails-content-padding-y", "src/app/catalogs/media/media-catalog.component.css"),
     }
 )
+
+# Capas del playground que el flujo de update core NO debe modificar.
+PROTECTED_UPDATE_PATHS: tuple[str, ...] = (
+    "src/app/theme/*-mds-overrides.ts",
+    "src/styles/primeng-*-parity.css",
+    "src/app/catalogs/",
+)
+
+
+def is_protected_update_path(path: str) -> bool:
+    """True si la ruta pertenece a parity, overrides o catálogos."""
+    p = path.replace("\\", "/")
+    if p.startswith("src/app/catalogs/"):
+        return True
+    if p.endswith("-mds-overrides.ts") and p.startswith("src/app/theme/"):
+        return True
+    if "/primeng-" in p and p.endswith("-parity.css") and p.startswith("src/styles/"):
+        return True
+    return False
+
+
+def is_core_mds_path(path: str) -> bool:
+    p = path.replace("\\", "/")
+    return p.startswith("styles/mds-") or p == "styles/primeng-tokens.css"
+
+
+def protected_violations_in_update(changed: list[str]) -> list[str]:
+    """Falla si el diff mezcla core MDS con capas protegidas."""
+    protected = [p for p in changed if is_protected_update_path(p)]
+    core_changed = any(is_core_mds_path(p) for p in changed)
+    if protected and core_changed:
+        return sorted(protected)
+    return []
+
+
+def preserve_legacy_aliases(final: dict[str, str], core: dict[str, str], slot: Slot) -> list[str]:
+    """Reinyecta aliases de componente eliminados por Figma pero necesarios en runtime."""
+    if slot != "components":
+        return []
+    preserved: list[str] = []
+    for name in sorted(CORE_LEGACY_BRIDGE_ALIASES):
+        if name in core and name not in final:
+            final[name] = core[name]
+            preserved.append(name)
+    return preserved
+
+
+def is_legacy_alias(name: str) -> bool:
+    return name in CORE_LEGACY_BRIDGE_ALIASES
 
 
 def split_var_fallback(value: str) -> tuple[str | None, str | None]:

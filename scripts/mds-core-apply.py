@@ -21,8 +21,10 @@ from mds_core_lib import (
     comp_prefix_from_var,
     diff_maps,
     insert_bridge_entries,
+    is_legacy_alias,
     load_core_vars,
     load_export_vars,
+    preserve_legacy_aliases,
     var_matches_pattern,
 )
 
@@ -96,7 +98,7 @@ def compute_final_vars(
     export: dict[str, str],
     slot: Slot,
     plan: dict,
-) -> dict[str, str]:
+) -> tuple[dict[str, str], list[str]]:
     diff = diff_maps(core, export)
     coll_plan = plan.get("collections", {}).get(slot, {})
     mode = coll_plan.get("mode", "none")
@@ -105,11 +107,14 @@ def compute_final_vars(
     sem_prefixes = plan.get("semantic_prefixes", [])
 
     final = deepcopy(core)
+    preserved_legacy: list[str] = []
 
     if mode == "all":
         final = deepcopy(export)
     elif mode == "removed_only":
         for name in diff.removed:
+            if is_legacy_alias(name):
+                continue
             if should_include_var(name, slot, mode, diff, exclude, comp_prefixes, sem_prefixes):
                 final.pop(name, None)
     else:
@@ -122,8 +127,12 @@ def compute_final_vars(
             pass
         else:
             for name in diff.removed:
+                if is_legacy_alias(name):
+                    continue
                 if should_include_var(name, slot, "removed_only", diff, exclude, comp_prefixes, sem_prefixes):
                     final.pop(name, None)
+
+    preserved_legacy = preserve_legacy_aliases(final, core, slot)
 
     for ex in exclude:
         for name in list(final.keys()):
@@ -133,7 +142,7 @@ def compute_final_vars(
                 else:
                     final.pop(name, None)
 
-    return final
+    return final, preserved_legacy
 
 
 def run_apply(staging_dir: Path, plan: dict, skip_backup: bool = False) -> dict:
@@ -143,6 +152,7 @@ def run_apply(staging_dir: Path, plan: dict, skip_backup: bool = False) -> dict:
 
     core = load_core_vars()
     applied: dict[str, int] = {}
+    preserved_legacy: dict[str, list[str]] = {}
 
     if not skip_backup:
         backup_script = ROOT / "scripts" / "create-backup.sh"
@@ -150,7 +160,9 @@ def run_apply(staging_dir: Path, plan: dict, skip_backup: bool = False) -> dict:
             subprocess.run(["bash", str(backup_script)], cwd=ROOT, check=False)
 
     for slot, filename in CORE_DEST_FILES.items():
-        final = compute_final_vars(core[slot], export[slot], slot, plan)
+        final, preserved = compute_final_vars(core[slot], export[slot], slot, plan)
+        if preserved:
+            preserved_legacy[slot] = preserved
         dest = STYLES / filename
         apply_vars_to_core_file(
             dest,
@@ -167,6 +179,7 @@ def run_apply(staging_dir: Path, plan: dict, skip_backup: bool = False) -> dict:
     return {
         "ok": True,
         "applied": applied,
+        "preserved_legacy_aliases": preserved_legacy,
         "bridge_entries_added": bridge_added,
     }
 
@@ -204,7 +217,8 @@ def main() -> int:
         core = load_core_vars()
         preview = {}
         for slot in CORE_DEST_FILES:
-            preview[slot] = len(compute_final_vars(core[slot], export[slot], slot, plan))
+            final, _ = compute_final_vars(core[slot], export[slot], slot, plan)
+            preview[slot] = len(final)
         print(json.dumps({"ok": True, "dry_run": True, "var_counts": preview}, indent=2))
         return 0
 

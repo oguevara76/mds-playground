@@ -203,8 +203,13 @@ pnpm run backup             # Punto de control ZIP del repo
 pnpm run mds:preflight
 pnpm run mds:diff
 pnpm run mds:apply
+pnpm run mds:remediate --apply
+pnpm run regen:mds
 pnpm run mds:qa
+pnpm run mds:guard
 ```
+
+El update **no modifica** parity, overrides ni catálogos. Ver skill `update-mds-core`.
 
 ### Pipeline incorporación de componente
 

@@ -1,23 +1,52 @@
-# Deprecaciones core MDS — cerradas (2026-08-05)
+# Deprecaciones core MDS — pipeline post-update
 
-> Fases 1–3 ejecutadas vía `scripts/mds-core-remediate.py`.
+## Flujo correcto (sin tocar componentes)
 
-## Resumen
+```bash
+pnpm run mds:preflight
+pnpm run mds:diff
+pnpm run mds:apply          # solo styles/mds-*.css
+pnpm run mds:remediate --apply   # solo styles/primeng-tokens.css
+pnpm run regen:mds
+pnpm run mds:qa
+pnpm run mds:guard
+```
+
+## Qué hace cada capa
+
+| Paso | Archivos | Alcance |
+|------|----------|---------|
+| **apply** | `styles/mds-*.css` | Sync con export Figma; preserva aliases runtime |
+| **remediate** | `styles/primeng-tokens.css` | Congela vars eliminadas; fallbacks conocidos |
+| **regen:mds** | `*.generated.ts` | Catálogo + puente runtime |
+| **NO tocar** | parity, overrides, catálogos | Correcciones visuales del playground |
+
+## Vars MDS eliminadas por Figma → puente congelado
 
 | Var MDS eliminada | Tratamiento en puente |
 |-------------------|----------------------|
 | `--galleria-*-focus-ring-style` (×4) | `--p-*` → `var(--p-focus-ring-style, solid)` |
-| `--galleria-thumbnails-content-padding` | Eliminada del puente; usar `-x`/`-y` |
 | `--galleria-transition-duration` | `--p-*` → `var(--p-transition-duration, 180ms)` |
 | `--stepper-transition-duration` | `--p-*` → `var(--p-transition-duration, 0.2s)` |
-| `--stepper-steppanel-indent` | `--p-*` → `var(--dimension-scale-x16, 1rem)` |
 
-Parity/overrides actualizados: `primeng-galleria-parity.css`, `primeng-stepper-parity.css`, `stepper-mds-overrides.ts`.
+## Aliases runtime preservados en core (aunque Figma los elimine)
 
-## Próximos updates core
+Definidos en `CORE_LEGACY_BRIDGE_ALIASES` (`scripts/mds_core_lib.py`):
 
-1. `mds:apply`
-2. **`mds:remediate -- --apply`** (obligatorio)
-3. `regen:primeng-dark` + `regen:mds` + `mds:qa`
+- `--galleria-thumbnails-content-padding`
+- `--stepper-separator-margin`
+- `--stepper-steppanel-indent`
+- `--stepper-steppanels-padding`
 
-Si Figma elimina nuevas vars, añadirlas a `BRIDGE_FROZEN_WHEN_MDS_REMOVED` en `scripts/mds_core_lib.py`.
+## Overrides intencionales en catálogos (no son errores)
+
+- `/media` carousel: `--carousel-content-gap: x16` (core = x4)
+- `/media` galleria: padding thumbnails compuesto en host
+
+Registrados en `CATALOG_INTENTIONAL_MASKS`.
+
+## Próximos updates
+
+1. Si Figma elimina una var referenciada en parity → añadir a `BRIDGE_FROZEN_WHEN_MDS_REMOVED` o `CORE_LEGACY_BRIDGE_ALIASES`
+2. **No** parchear parity/catálogos durante el update
+3. `regen:primeng-dark` solo tras entradas **nuevas** aprobadas en el puente light

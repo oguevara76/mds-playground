@@ -70,8 +70,9 @@ La nomenclatura CTR/Tol (`ctr--tol--light`, etc.) puede aparecer **dentro** del 
 3. Diff y resumen: `pnpm run mds:diff`
 4. Decidir alcance (todo / solo modificadas / por colección / por componente / con exclusiones)
 5. Apply: `pnpm run mds:apply -- --plan .mds-core-staging/plan.json`
-6. Regenerar: `pnpm run regen:primeng-dark` (si hubo bridge nuevo) + `pnpm run regen:mds` + `pnpm run build`
-7. QA: `pnpm run mds:qa` + checklist visual en catálogos (ToggleSwitch, InputText, Button…)
+6. Remediación puente: `pnpm run mds:remediate --apply`
+7. Regenerar: `pnpm run regen:mds` + `pnpm run build` (`regen:primeng-dark` solo si hubo bridge **nuevo** aprobado)
+8. QA: `pnpm run mds:qa` + `pnpm run mds:guard`
 
 ### Import rápido (todo de golpe)
 

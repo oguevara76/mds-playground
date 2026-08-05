@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from mds_core_lib import (
     STAGING_DEFAULT,
     SLOT_LABELS,
+    CORE_LEGACY_BRIDGE_ALIASES,
     comp_label,
     comp_prefix_from_var,
     diff_maps,
@@ -50,6 +51,7 @@ def build_impact(diff_by_slot: dict, playground_refs: dict) -> dict:
         "changed_ref_chain": [],
         "new_without_bridge": [],
         "new_component_info": [],
+        "legacy_aliases_preserved": [],
     }
     bridge = read_bridge_vars()
     registry = load_registry()
@@ -98,6 +100,16 @@ def build_impact(diff_by_slot: dict, playground_refs: dict) -> dict:
                     impact["new_without_bridge"].append(item)
                 else:
                     impact["new_component_info"].append(item)
+
+    for name in sorted(CORE_LEGACY_BRIDGE_ALIASES):
+        if name in all_removed:
+            impact["legacy_aliases_preserved"].append(
+                {
+                    "var": name,
+                    "slot": all_removed[name],
+                    "action": "se conservará en core (alias runtime)",
+                }
+            )
 
     return impact
 
@@ -170,6 +182,15 @@ def format_markdown(report: dict) -> str:
             lines.append("")
 
     impact = report.get("impact", {})
+    if impact.get("legacy_aliases_preserved"):
+        lines.append("## Aliases runtime preservados (Figma los eliminó)\n")
+        lines.append(
+            "_El apply **no** los borrará del core; el puente y parity siguen usándolos._\n"
+        )
+        for item in impact["legacy_aliases_preserved"]:
+            lines.append(f"- `{item['var']}` ({item['slot']})")
+        lines.append("")
+
     if impact.get("removed_referenced"):
         lines.append("## Impacto: variables eliminadas referenciadas en playground\n")
         for item in impact["removed_referenced"]:

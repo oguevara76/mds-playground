@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -12,11 +13,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from mds_core_lib import (
     ROOT,
     BRIDGE_FROZEN_WHEN_MDS_REMOVED,
+    CORE_LEGACY_BRIDGE_ALIASES,
     collect_var_refs_from_text,
     find_catalog_token_masks,
     load_core_vars,
     load_registry,
     merged_catalog,
+    protected_violations_in_update,
     remediate_bridge_tokens,
     resolve_var_exists,
     var_matches_pattern,
@@ -90,6 +93,37 @@ def check_bridge_remediation(catalog: dict[str, str]) -> list[dict]:
     return [{"p_var": k, "new_value": v} for k, v in fixes.items()]
 
 
+def check_core_legacy_aliases(catalog: dict[str, str]) -> list[dict]:
+    """Aliases runtime que deben seguir en core aunque Figma los elimine."""
+    missing = []
+    for name in sorted(CORE_LEGACY_BRIDGE_ALIASES):
+        if name not in catalog:
+            missing.append({"var": name})
+    return missing
+
+
+def check_protected_layers_touched() -> list[str]:
+    proc = subprocess.run(
+        ["git", "diff", "--name-only", "HEAD"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    staged = subprocess.run(
+        ["git", "diff", "--cached", "--name-only", "HEAD"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if proc.returncode != 0 and staged.returncode != 0:
+        return []
+    paths = {p.strip() for p in proc.stdout.splitlines() if p.strip()}
+    paths |= {p.strip() for p in staged.stdout.splitlines() if p.strip()}
+    return protected_violations_in_update(sorted(paths))
+
+
 def check_parity_deprecated_refs(catalog: dict[str, str]) -> list[dict]:
     """Referencias a vars MDS deprecadas aún presentes en parity (deben usar --p-*)."""
     failures = []
@@ -114,18 +148,27 @@ def run_qa() -> dict:
     bridge_pending = check_bridge_remediation(catalog)
     parity_deprecated = check_parity_deprecated_refs(catalog)
     catalog_masks = find_catalog_token_masks(catalog)
+    missing_legacy = check_core_legacy_aliases(catalog)
+    protected_touched = check_protected_layers_touched()
 
     override_warns = []
     for f in THEME_DIR.glob("*-mds-overrides.ts"):
         override_warns.extend(check_file_refs(f, catalog, f.name))
 
     fragile_fail = any(v["status"] == "FAIL" for v in fragile.values())
-    critical_fail = bool(broken_core) or fragile_fail or bool(bridge_pending) or bool(parity_deprecated)
+    critical_fail = (
+        bool(broken_core)
+        or fragile_fail
+        or bool(bridge_pending)
+        or bool(parity_deprecated)
+        or bool(missing_legacy)
+        or bool(protected_touched)
+    )
 
     post_update_components = [
-        {"component": "Carousel", "route": "/media#pg-carousel", "auto": "puente + parity"},
-        {"component": "Galleria", "route": "/media#pg-galleria", "auto": "puente + parity"},
-        {"component": "Stepper", "route": "/panel#pg-stepper", "auto": "puente + parity + override"},
+        {"component": "Carousel", "route": "/media#pg-carousel", "auto": "core + puente (parity/catálogo intactos)"},
+        {"component": "Galleria", "route": "/media#pg-galleria", "auto": "core + puente (parity/catálogo intactos)"},
+        {"component": "Stepper", "route": "/panel#pg-stepper", "auto": "core + puente (parity intacto)"},
         {"component": "ToggleSwitch", "route": "/form#pg-toggleswitch", "auto": "watch_vars registry"},
         {"component": "InputText", "route": "/form#pg-inputtext", "auto": "watch_vars registry"},
         {"component": "Button", "route": "/button#pg-button", "auto": "watch_vars registry"},
@@ -146,6 +189,16 @@ def run_qa() -> dict:
                 "severity": "FAIL",
             },
             "catalog_token_masks": {"count": len(catalog_masks), "items": catalog_masks[:10], "severity": "WARN"},
+            "core_legacy_aliases": {
+                "count": len(missing_legacy),
+                "items": missing_legacy[:10],
+                "severity": "FAIL",
+            },
+            "protected_layers_touched": {
+                "count": len(protected_touched),
+                "items": protected_touched[:10],
+                "severity": "FAIL",
+            },
             "fragile_components": fragile,
             "override_refs_warn": {"count": len(override_warns), "items": override_warns[:10], "severity": "WARN"},
         },
@@ -187,6 +240,7 @@ def format_markdown(report: dict) -> str:
             checks = item.get("checks") or item.get("auto", "")
             lines.append(f"- **{item['component']}** (`{item['route']}`): {checks}")
     lines.append("\n_Ejecutar `pnpm run mds:remediate --apply` antes del QA si el diff eliminó vars._")
+    lines.append("_Capas protegidas (parity, overrides, catálogos) no deben aparecer en el diff del update._")
     return "\n".join(lines)
 
 

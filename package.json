@@ -18,6 +18,7 @@
     "mds:apply": "python3 scripts/mds-core-apply.py --staging .mds-core-staging",
     "mds:remediate": "python3 scripts/mds-core-remediate.py --staging .mds-core-staging",
     "mds:qa": "python3 scripts/mds-core-qa.py --format markdown",
+    "mds:guard": "python3 scripts/mds-core-guard.py --format markdown",
     "mds:component-analyze": "python3 scripts/mds-component-analyze.py",
     "mds:component-qa": "python3 scripts/mds-component-qa.py",
     "mds:component-pending": "python3 scripts/mds-component-pending.py",

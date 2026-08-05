@@ -23,21 +23,34 @@ description: >-
 - Los exports pueden traer `data-theme` y metadatos con prefijos de producto/proyecto (`core--mobility--light`, `ctr--tol--dark`, etc.). El pipeline **ignora** esos prefijos en silencio y solo usa el modo light/dark. No preguntar al usuario ni añadir mapeos por producto.
 - Padding de Tag/Tooltip: el export Figma trae solo ejes (`--tag-padding-x/y`, `--tooltip-padding-x/y`). No se sintetizan shorthands en apply.
 
-## Flujo obligatorio (7 pasos)
+## Arquitectura de capas (leer antes de actuar)
+
+El update core **solo** sincroniza la fuente de verdad del design system. Las correcciones visuales del playground viven en capas separadas que **no se tocan** en este flujo:
+
+| Capa | Rutas | Rol |
+|------|-------|-----|
+| **Core MDS** | `styles/mds-*.css` | Tokens del export Figma |
+| **Puente PrimeNG** | `styles/primeng-tokens.css` | `--p-*` ← `--component-*` (+ remediación acotada) |
+| **Parity** | `src/styles/primeng-*-parity.css` | Layout/comportamiento PrimeNG |
+| **Overrides** | `src/app/theme/*-mds-overrides.ts` | Ajustes puntuales por componente |
+| **Catálogos** | `src/app/catalogs/**` | Showcases interactivos (pueden override local, p.ej. carousel gap x16) |
+
+**Error a evitar:** mezclar capas durante el update (p.ej. parchear parity o quitar overrides de catálogo “para alinear con Figma”). Eso rompe showcases ya corregidos.
+
+**Aliases runtime:** Figma a veces elimina shorthands que el puente/parity siguen necesitando (`--galleria-thumbnails-content-padding`, `--stepper-separator-margin`, …). El apply **los preserva** automáticamente (`CORE_LEGACY_BRIDGE_ALIASES` en `scripts/mds_core_lib.py`).
+
+## Flujo obligatorio (8 pasos)
 
 ### Paso 0 — Pre-validación + backup
 
 ```bash
-# Copiar adjuntos del chat a staging
 mkdir -p .mds-core-staging
 # (copiar los 4 ficheros con nombres del contrato)
 
 python3 scripts/mds-core-preflight.py --staging .mds-core-staging/
 ```
 
-Si falla → abortar y listar errores. No continuar.
-
-Opcional antes de apply: `pnpm backup`
+Si falla → abortar. Opcional: `pnpm backup`
 
 ### Paso 1 — Diff
 
@@ -46,99 +59,74 @@ python3 scripts/mds-core-diff.py --staging .mds-core-staging/ --format markdown
 ```
 
 Presentar al usuario:
-- Resumen por colección (primitivos, sem-light, sem-dark, componentes)
-- Subgrupos de componentes por prefijo (ToggleSwitch, InputText…)
-- Renombrados detectados
-- Impacto en playground (vars eliminadas referenciadas, cadenas var() cambiadas)
-- **Puente PrimeNG sugerido** para vars nuevas de componente con showcase
+- Resumen por colección
+- Subgrupos de componentes por prefijo
+- **Aliases runtime preservados** (Figma los eliminó pero el apply los conservará)
+- Impacto: vars eliminadas referenciadas en playground
+- Puente PrimeNG sugerido (solo vars **nuevas** con showcase)
 
 ### Paso 2 — Decisión del usuario
 
-Usar `AskQuestion` con estas opciones:
+Usar `AskQuestion` con opciones de alcance (A–B8). Si hay bridge sugerido → pedir cuáles aprueba. **No escribir** entradas `--p-*` sin OK.
 
-| Opción | Modo |
-|--------|------|
-| A | Aplicar todo |
-| B1 | Solo modificadas (`changed_only`) |
-| B2 | Solo nuevas (`added_only`) |
-| B3 | Solo eliminar deprecadas (`removed_only`) |
-| B4 | Por colección |
-| B5 | Combinación custom |
-| B6 | Solo un prefijo de componente |
-| B7 | Todo excepto lista de exclusión |
-| B8 | Solo subgrupo semántico (`--form-field-*`) |
+Construir `.mds-core-staging/plan.json` (ver plantilla en commits anteriores del repo).
 
-Si hay bridge sugerido → pedir cuáles aprueba explícitamente. **No escribir** entradas `--p-*` sin OK.
+Correcciones intencionales del playground que **no** vienen en Figma → añadir a `exclude_vars` del plan (p.ej. colores stepper activos).
 
-Construir `.mds-core-staging/plan.json`:
-
-```json
-{
-  "collections": {
-    "primitives": { "mode": "all" },
-    "semantic-light": { "mode": "changed_only" },
-    "semantic-dark": { "mode": "changed_only" },
-    "components": { "mode": "add_and_changed", "exclude_removed": true }
-  },
-  "component_prefixes": [],
-  "semantic_prefixes": [],
-  "exclude_vars": ["--toggleswitch-handle-background"],
-  "bridge_entries": [
-    { "approved": true, "name": "--p-foo-bar", "value": "var(--foo-bar, ...)" }
-  ]
-}
-```
-
-### Paso 3 — Apply
+### Paso 3 — Apply (solo core)
 
 ```bash
 python3 scripts/mds-core-apply.py --staging .mds-core-staging/ --plan .mds-core-staging/plan.json
 ```
 
-Solo toca: `styles/mds-*.css` y (si aprobado) `styles/primeng-tokens.css`.
+**Solo escribe:** `styles/mds-*.css` y (si aprobado en plan) entradas nuevas en `styles/primeng-tokens.css`.
 
-### Paso 3.5 — Remediación automática (obligatorio)
+**Preserva** aliases runtime eliminados por Figma. Reporta `preserved_legacy_aliases` en la salida JSON.
 
-Tras apply, **siempre** ejecutar remediación para que Carousel, Galleria, Stepper y demás
-componentes con showcase sigan funcionando sin revisión manual:
+### Paso 3.5 — Remediación del puente (obligatorio)
 
 ```bash
 pnpm run mds:remediate --apply
 ```
 
-Qué hace (solo cambios acotados):
-- Puente: congela vars MDS eliminadas (`BRIDGE_FROZEN_WHEN_MDS_REMOVED`) y sincroniza fallbacks conocidos (`BRIDGE_STALE_FALLBACKS`)
-- Parity/overrides: parches fijos para Galleria, Stepper
-- Catálogos: quita redefiniciones locales que enmascaran tokens del core (p.ej. carousel gap)
-- Core: elimina vars legacy que ya no están en el export
+**Solo toca `styles/primeng-tokens.css`:**
+
+- Congela vars MDS eliminadas (`BRIDGE_FROZEN_WHEN_MDS_REMOVED`)
+- Sincroniza fallbacks obsoletos conocidos (`BRIDGE_STALE_FALLBACKS`, p.ej. carousel gap x4 en puente)
+
+**No toca:** parity, overrides, catálogos, ni purga vars del core.
 
 Si el diff no eliminó vars → dry-run con 0 fixes (OK).
 
 ### Paso 4 — Regenerar
 
 ```bash
-pnpm run regen:primeng-dark
-
 pnpm run regen:mds
 pnpm run build
 ```
 
-Preguntar si ejecutar `pnpm run regen:ejemplos`.
+- **`regen:primeng-dark`** — solo si el usuario aprobó entradas **nuevas** en el puente light (no ejecutar por defecto).
+- **`regen:ejemplos`** — preguntar al usuario.
 
-### Paso 5 — QA estático
+### Paso 5 — QA + guardia
 
 ```bash
-python3 scripts/mds-core-qa.py --format markdown
+pnpm run mds:remediate --apply   # idempotente si ya se ejecutó
+pnpm run mds:qa
+pnpm run mds:guard
 ```
 
-Si FAIL → ofrecer restaurar backup y abortar.
+`mds:guard` falla si el diff mezcla cambios en core MDS **y** capas protegidas (parity/overrides/catálogos) en la misma sesión.
+
+Si FAIL → ofrecer restaurar backup. **No parchear parity/catálogos para “arreglar” el update.**
 
 ### Paso 6 — Cierre
 
-Si `mds:qa` es **PASS**, no pedir revisión visual manual de Carousel/Galleria/Stepper
-(ya remediados). Solo mencionar checklist manual si QA falla.
+Si `mds:qa` y `mds:guard` son **PASS**:
 
-Mostrar `git diff --stat` y resumen de fixes de remediación.
+- No pedir revisión visual de Carousel/Galleria/Stepper salvo que el usuario lo pida
+- Mostrar `git diff --stat` limitado a `styles/` y `src/app/theme/*.generated.ts`
+- Confirmar que **no** hay cambios en `src/styles/primeng-*-parity.css` ni `src/app/catalogs/**`
 
 ## Scripts npm
 
@@ -148,14 +136,22 @@ pnpm run mds:diff
 pnpm run mds:apply
 pnpm run mds:remediate --apply
 pnpm run mds:qa
+pnpm run mds:guard
 ```
 
-## Archivos protegidos (no modificar en flujo estándar)
+## Archivos protegidos — NO MODIFICAR en update core
 
 - `src/app/theme/*-mds-overrides.ts`
 - `src/styles/primeng-*-parity.css`
 - `src/app/catalogs/**`
-- Capas de upload runtime del usuario
+
+Si una var eliminada por Figma rompe un showcase → arreglar en **puente** (remediate) o añadir alias a `CORE_LEGACY_BRIDGE_ALIASES`, **nunca** reescribir parity/catálogo en caliente.
+
+## Añadir alias runtime nuevo
+
+1. Añadir `--nombre-var` a `CORE_LEGACY_BRIDGE_ALIASES` en `scripts/mds_core_lib.py`
+2. Si el puente debe dejar de leerla → añadir a `BRIDGE_FROZEN_WHEN_MDS_REMOVED`
+3. Si un catálogo override es intencional → `CATALOG_INTENTIONAL_MASKS`
 
 ## Componente nuevo (sin showcase)
 
