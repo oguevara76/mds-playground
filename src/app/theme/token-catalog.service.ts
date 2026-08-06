@@ -17,6 +17,7 @@ import type {
 } from './token-catalog.types';
 import {
   buildTokenMapsFromSections,
+  COMP_LABEL_SEARCH_ALIASES,
   detectPrimaryPaletteReplacement,
   groupByComponent,
   groupByPalette,
@@ -140,10 +141,14 @@ export class TokenCatalogService {
     const scored = labels
       .map((label) => {
         const n = label.toLowerCase();
+        const aliases = COMP_LABEL_SEARCH_ALIASES[label] ?? [];
         let score = 0;
         if (n === q) score = 100;
         else if (n.startsWith(q)) score = 80;
         else if (n.includes(q)) score = 40;
+        else if (aliases.some((a) => a === q)) score = 90;
+        else if (aliases.some((a) => a.startsWith(q))) score = 70;
+        else if (aliases.some((a) => a.includes(q))) score = 35;
         return { label, score };
       })
       .filter((row) => row.score > 0)

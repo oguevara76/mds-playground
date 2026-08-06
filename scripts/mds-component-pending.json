@@ -7,9 +7,9 @@
       "category": "alias",
       "action": "pending",
       "suggested_value": "",
-      "notes": "Alias temporal en src/app/custom/mds-header/mds-header.tokens.scss apuntando a --header-indra-*. Renombrar namespace en core tras próxima subida CSS MDS.",
+      "notes": "Alias temporal en src/app/custom/mds-header/mds-header.tokens.scss apuntando a --header-indra-*. Renombrar namespace en core tras próxima subida CSS MDS. Resuelto: core usa --mds-header-*; aliases temporales eliminados.",
       "created_at": "2026-08-05T12:00:00+00:00",
-      "resolved_at": null
+      "resolved_at": "2026-08-06T14:50:08.824434+00:00"
     },
     {
       "id": "mds-footer-alias-namespace",
@@ -18,9 +18,9 @@
       "category": "alias",
       "action": "pending",
       "suggested_value": "",
-      "notes": "Alias temporal en src/app/custom/mds-footer/mds-footer.tokens.scss apuntando a --footer-indra-*. Renombrar namespace en core tras próxima subida CSS MDS.",
+      "notes": "Alias temporal en src/app/custom/mds-footer/mds-footer.tokens.scss apuntando a --footer-indra-*. Renombrar namespace en core tras próxima subida CSS MDS. Resuelto: core usa --mds-footer-*; aliases temporales eliminados.",
       "created_at": "2026-08-06T09:30:00+00:00",
-      "resolved_at": null
+      "resolved_at": "2026-08-06T14:50:08.885088+00:00"
     }
   ]
 }

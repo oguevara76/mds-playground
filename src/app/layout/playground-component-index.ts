@@ -110,8 +110,8 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-avatar': 'avatar',
   'pg-avatargroup': 'avatar',
   'pg-progressbar': 'progressbar',
-  'pg-mds-header': 'header-indra',
-  'pg-mds-footer': 'footer-indra',
+  'pg-mds-header': 'mds-header',
+  'pg-mds-footer': 'mds-footer',
 };
 
 function countComponentVariables(anchorId: string): number {

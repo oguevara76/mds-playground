@@ -114,11 +114,32 @@ export function resolveVarChain(
   return null;
 }
 
+/**
+ * Prefijos de componente con guiones. `compLabel` usa el primer segmento `\w+` por
+ * defecto; estos deben coincidir con `TOKEN_PREFIXES` / `PLAYGROUND_COMP_TOKEN_LABELS`.
+ */
+const HYPHENATED_COMP_PREFIXES = ['mds-header', 'mds-footer'] as const;
+
+/** Alias de búsqueda → label `compLabel` (namespace CSS: mds-header / mds-footer). */
+export const COMP_LABEL_SEARCH_ALIASES: Record<string, string[]> = {
+  'Mds-header': ['mds-header', 'mds header', 'header', 'header indra', 'header-indra', 'mdsheader'],
+  'Mds-footer': ['mds-footer', 'mds footer', 'footer', 'footer indra', 'footer-indra', 'mdsfooter'],
+};
+
+function capitalizePrefix(prefix: string): string {
+  return prefix.charAt(0).toUpperCase() + prefix.slice(1);
+}
+
 export function compLabel(name: string): string {
   const n = name.startsWith('--p-') ? name.slice(4) : name.slice(2);
+  for (const prefix of HYPHENATED_COMP_PREFIXES) {
+    if (n === prefix || n.startsWith(`${prefix}-`)) {
+      return capitalizePrefix(prefix);
+    }
+  }
   const m = n.match(/^([\w]+)/);
   if (!m) return 'Otros';
-  return m[1][0].toUpperCase() + m[1].slice(1);
+  return capitalizePrefix(m[1]);
 }
 
 export function groupByPalette(vars: MdsVarEntry[]): { label: string; tokens: CatalogToken[] }[] {

@@ -1,12 +1,2 @@
-// Alias temporal: namespace Figma mds-footer → vars core footer-indra.
-// Pendiente: renombrar en core tras próxima subida CSS MDS (ver mds-component-pending.json).
-:host {
-  --mds-footer-background: var(--footer-indra-background);
-  --mds-footer-color: var(--footer-indra-color);
-  --mds-footer-border-color: var(--footer-indra-border-color);
-  --mds-footer-padding-x: var(--footer-indra-padding-x);
-  --mds-footer-padding-y: var(--footer-indra-padding-y);
-  --mds-footer-gap-md: var(--footer-indra-gap-md);
-  --mds-footer-item-gap: var(--footer-indra-item-gap);
-  --mds-footer-label-font-size: var(--footer-indra-label-font-size);
-}
+// Las vars --mds-footer-* viven en styles/mds-components.css (core MDS).
+// Sin aliases locales.

@@ -901,16 +901,6 @@ html:root {
   --floatlabel-position-sm-x: var(--form-field-sm-position-x);
   --floatlabel-position-x: var(--form-field-position-x);
   --focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  --footer-indra-background: var(--surface-context-minimal);
-  --footer-indra-border-color: var(--surface-context-base);
-  --footer-indra-color: var(--text-color);
-  --footer-indra-gap-lg: var(--dimension-scale-x12);
-  --footer-indra-gap-md: var(--dimension-scale-x8);
-  --footer-indra-gap-sm: var(--dimension-scale-x4);
-  --footer-indra-item-gap: var(--dimension-scale-x4);
-  --footer-indra-label-font-size: var(--dimension-scale-x12);
-  --footer-indra-padding-x: var(--dimension-scale-x16);
-  --footer-indra-padding-y: var(--dimension-scale-x4);
   --form-field-focus-ring-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   --form-field-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
   --galleria-border-color: var(--content-border-color);
@@ -972,26 +962,9 @@ html:root {
   --galleria-thumbnail-nav-button-icon-size: 14px;
   --galleria-thumbnail-nav-button-size: var(--dimension-scale-x28);
   --galleria-thumbnails-content-background: var(--content-background);
+  --galleria-thumbnails-content-padding: var(--galleria-thumbnails-content-padding-y) var(--galleria-thumbnails-content-padding-x);
   --galleria-thumbnails-content-padding-x: var(--dimension-scale-x4);
   --galleria-thumbnails-content-padding-y: var(--dimension-scale-x14);
-  --galleria-thumbnails-content-padding: var(--galleria-thumbnails-content-padding-y) var(--galleria-thumbnails-content-padding-x);
-  --header-indra-background: var(--surface-context-minimal);
-  --header-indra-color: var(--text-color);
-  --header-indra-font-size-lg: var(--dimension-scale-x18);
-  --header-indra-font-size-md: var(--dimension-scale-x14);
-  --header-indra-font-size-sm: var(--dimension-scale-x12);
-  --header-indra-font-weight-bold: 700;
-  --header-indra-font-weight-medium: 500;
-  --header-indra-font-weight-regular: 400;
-  --header-indra-gap-lg: var(--dimension-scale-x16);
-  --header-indra-gap-md: var(--dimension-scale-x12);
-  --header-indra-gap-sm: var(--dimension-scale-x8);
-  --header-indra-padding-x: var(--dimension-scale-x16);
-  --header-indra-padding-y: var(--dimension-scale-x8);
-  --header-indra-timezone-background: var(--surface-context-minimal);
-  --header-indra-timezone-border-radius: var(--dimension-radius-x4);
-  --header-indra-timezone-padding: var(--dimension-scale-x4);
-  --header-indra-timezone-selected-background: var(--surface-context-base);
   --iconfield-figma-lg-icon-size: var(--inputtext-lg-font-size);
   --iconfield-figma-size: var(--inputtext-font-size);
   --iconfield-figma-sm-icon-size: var(--inputtext-sm-font-size);
@@ -1144,6 +1117,33 @@ html:root {
   --listbox-option-selected-focus-color: var(--list-option-selected-focus-color);
   --listbox-option-striped-background: var(--surface-context-minimal);
   --listbox-shadow: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
+  --mds-footer-background: var(--surface-context-minimal);
+  --mds-footer-border-color: var(--surface-context-base);
+  --mds-footer-color: var(--text-color);
+  --mds-footer-gap-lg: var(--dimension-scale-x12);
+  --mds-footer-gap-md: var(--dimension-scale-x8);
+  --mds-footer-gap-sm: var(--dimension-scale-x4);
+  --mds-footer-item-gap: var(--dimension-scale-x4);
+  --mds-footer-label-font-size: var(--dimension-scale-x12);
+  --mds-footer-padding-x: var(--dimension-scale-x16);
+  --mds-footer-padding-y: var(--dimension-scale-x4);
+  --mds-header-background: var(--surface-context-minimal);
+  --mds-header-color: var(--text-color);
+  --mds-header-font-size-lg: var(--dimension-scale-x18);
+  --mds-header-font-size-md: var(--dimension-scale-x14);
+  --mds-header-font-size-sm: var(--dimension-scale-x12);
+  --mds-header-font-weight-bold: 700;
+  --mds-header-font-weight-medium: 500;
+  --mds-header-font-weight-regular: 400;
+  --mds-header-gap-lg: var(--dimension-scale-x16);
+  --mds-header-gap-md: var(--dimension-scale-x12);
+  --mds-header-gap-sm: var(--dimension-scale-x8);
+  --mds-header-padding-x: var(--dimension-scale-x16);
+  --mds-header-padding-y: var(--dimension-scale-x8);
+  --mds-header-timezone-background: var(--surface-context-minimal);
+  --mds-header-timezone-border-radius: var(--dimension-radius-x4);
+  --mds-header-timezone-padding: var(--dimension-scale-x4);
+  --mds-header-timezone-selected-background: var(--surface-context-base);
   --megamenu-background: var(--content-background);
   --megamenu-base-item-border-radius: var(--content-border-radius);
   --megamenu-border-color: var(--content-border-color);
@@ -1673,13 +1673,13 @@ html:root {
   --splitter-handle-size: var(--dimension-scale-x24);
   --stepper-separator-active-background: var(--primary-color);
   --stepper-separator-background: var(--content-border-color);
+  --stepper-separator-margin: 0 0 0 calc(
+    var(--stepper-step-padding) + var(--stepper-step-number-size) / 2 - var(--stepper-separator-size) / 2
+  );
   --stepper-separator-margin-bottom: var(--dimension-scale-x0);
   --stepper-separator-margin-left: var(--dimension-scale-x14);
   --stepper-separator-margin-right: var(--dimension-scale-x0);
   --stepper-separator-margin-top: var(--dimension-scale-x0);
-  --stepper-separator-margin: 0 0 0 calc(
-    var(--stepper-step-padding) + var(--stepper-step-number-size) / 2 - var(--stepper-separator-size) / 2
-  );
   --stepper-separator-size: var(--dimension-scale-x2);
   --stepper-step-gap: var(--dimension-scale-x14);
   --stepper-step-header-border-radius: var(--content-border-radius);
@@ -1708,12 +1708,12 @@ html:root {
   --stepper-steppanel-color: var(--content-color);
   --stepper-steppanel-indent: var(--dimension-scale-x16);
   --stepper-steppanel-padding: var(--dimension-scale-x0);
+  --stepper-steppanels-padding: var(--stepper-steppanels-padding-top) var(--stepper-steppanels-padding-right)
+    var(--stepper-steppanels-padding-bottom) var(--stepper-steppanels-padding-left);
   --stepper-steppanels-padding-bottom: var(--dimension-scale-x16);
   --stepper-steppanels-padding-left: var(--dimension-scale-x8);
   --stepper-steppanels-padding-right: var(--dimension-scale-x8);
   --stepper-steppanels-padding-top: var(--dimension-scale-x12);
-  --stepper-steppanels-padding: var(--stepper-steppanels-padding-top) var(--stepper-steppanels-padding-right)
-    var(--stepper-steppanels-padding-bottom) var(--stepper-steppanels-padding-left);
   --tabs-active-bar-background: var(--primary-color);
   --tabs-active-bar-bottom: -1px;
   --tabs-active-bar-height: 1px;
