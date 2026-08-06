@@ -1,5 +1,9 @@
-# Publica el playground Angular en la raíz del sitio Pages
-# Requiere: Settings → Pages → Source: GitHub Actions
+# Publica el playground Angular vía rama gh-pages (push git).
+# Evita la cola de actions/deploy-pages (deployment_queued / locks).
+#
+# Una sola vez tras el primer deploy exitoso de este workflow:
+# Settings → Pages → Build and deployment → Source: Deploy from a branch
+# Branch: gh-pages / folder: / (root)
 
 name: Deploy GitHub Pages
 
@@ -9,18 +13,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# No cancelar runs en curso: cancelar un deploy-pages a medias deja la cola
-# de GitHub Pages bloqueada (deployment_queued / timeout).
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -50,22 +50,11 @@ jobs:
           cp -r dist/playground/browser/* _site/
           cp _site/index.html _site/404.html
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v5
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: _site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: Wandalen/wretry.action@v3.8.0
-        with:
-          action: actions/deploy-pages@v5
-          attempt_limit: 3
-          attempt_delay: 30000
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: 'deploy: update GitHub Pages site'
