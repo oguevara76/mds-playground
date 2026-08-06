@@ -12,7 +12,6 @@ import { TieredMenu } from 'primeng/tieredmenu';
 import type {
   MdsHeaderBadge,
   MdsHeaderTimezonePair,
-  MdsHeaderVariant,
 } from './mds-header.types';
 
 @Component({
@@ -24,8 +23,6 @@ import type {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MdsHeaderComponent {
-  readonly variant = input<MdsHeaderVariant>('default');
-
   readonly productName = input('Product Name');
   readonly brandLogoUrl = input('indra-isotype.png');
 
@@ -71,10 +68,6 @@ export class MdsHeaderComponent {
   readonly profileMenuModel = input<MenuItem[]>(DEFAULT_PROFILE_MENU);
 
   @ViewChild('profileMenu') profileMenu?: TieredMenu;
-
-  isDefaultVariant(): boolean {
-    return this.variant() === 'default';
-  }
 
   toggleProfileMenu(event: Event): void {
     if (!this.showProfileOverlay()) {

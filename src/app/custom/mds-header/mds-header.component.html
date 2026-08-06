@@ -1,59 +1,51 @@
 <div class="mds-header__root">
   <div class="mds-header__zone mds-header__zone--brand">
-    @if (isDefaultVariant()) {
-      <div class="mds-header__brand">
-        @if (brandLogoUrl()) {
-          <img
-            class="mds-header__brand-logo"
-            [src]="brandLogoUrl()"
-            alt=""
-            aria-hidden="true"
-          />
-        } @else {
-          <span class="mds-header__brand-pictogram" aria-hidden="true">
-            <i [class]="brandIcon()"></i>
-          </span>
-        }
-        <span class="mds-header__brand-name">{{ productName() }}</span>
-      </div>
-    } @else {
-      <ng-content select="[headerBrand]" />
-    }
+    <div class="mds-header__brand">
+      @if (brandLogoUrl()) {
+        <img
+          class="mds-header__brand-logo"
+          [src]="brandLogoUrl()"
+          alt=""
+          aria-hidden="true"
+        />
+      } @else {
+        <span class="mds-header__brand-pictogram" aria-hidden="true">
+          <i [class]="brandIcon()"></i>
+        </span>
+      }
+      <span class="mds-header__brand-name">{{ productName() }}</span>
+    </div>
   </div>
 
   <div class="mds-header__zone mds-header__zone--location">
-    @if (isDefaultVariant()) {
-      @if (showLocation()) {
-        <div class="mds-header__location">
-          <div class="mds-header__region">
-            <i class="pi pi-map-marker mds-header__region-icon" aria-hidden="true"></i>
-            <div class="mds-header__region-text">
-              <span class="mds-header__region-code">{{ locationCode() }}</span>
-              <span class="mds-header__region-place">{{ locationPlace() }}</span>
-            </div>
-          </div>
-
-          <div class="mds-header__timezones" aria-label="Timezones">
-            <i class="pi pi-clock mds-header__timezones-icon" aria-hidden="true"></i>
-            @for (tz of timezones(); track $index) {
-              <div class="mds-header__timezone" [class.is-selected]="tz.selected">
-                <span class="mds-header__timezone-label">{{ tz.timezone }}</span>
-                <div class="mds-header__timezone-values">
-                  <span class="mds-header__timezone-time">{{ tz.time }}</span>
-                  <span class="mds-header__timezone-date">{{ tz.date }}</span>
-                </div>
-              </div>
-            }
+    @if (showLocation()) {
+      <div class="mds-header__location">
+        <div class="mds-header__region">
+          <i class="pi pi-map-marker mds-header__region-icon" aria-hidden="true"></i>
+          <div class="mds-header__region-text">
+            <span class="mds-header__region-code">{{ locationCode() }}</span>
+            <span class="mds-header__region-place">{{ locationPlace() }}</span>
           </div>
         </div>
-      }
-    } @else {
-      <ng-content select="[headerCustom]" />
+
+        <div class="mds-header__timezones" aria-label="Timezones">
+          <i class="pi pi-clock mds-header__timezones-icon" aria-hidden="true"></i>
+          @for (tz of timezones(); track $index) {
+            <div class="mds-header__timezone" [class.is-selected]="tz.selected">
+              <span class="mds-header__timezone-label">{{ tz.timezone }}</span>
+              <div class="mds-header__timezone-values">
+                <span class="mds-header__timezone-time">{{ tz.time }}</span>
+                <span class="mds-header__timezone-date">{{ tz.date }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
     }
   </div>
 
   <div class="mds-header__zone mds-header__zone--profile">
-    @if (isDefaultVariant() && showExternalComm()) {
+    @if (showExternalComm()) {
       <div class="mds-header__external-comm">
         <span class="mds-header__external-comm-label">{{ externalCommLabel() }}</span>
         <div class="mds-header__external-comm-badges">

@@ -30,7 +30,6 @@ import {
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS, MENU_CATALOG_EXAMPLE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
 import { GALLERIA_CATALOG_VARIANT_OPTIONS, CAROUSEL_CATALOG_ORIENTATION_OPTIONS } from '../catalogs/media/media-catalog.config';
-import { MDS_HEADER_CATALOG_VARIANT_OPTIONS } from '../catalogs/custom/custom-catalog.config';
 import { MDS_VARS_CATALOG } from '../theme/mds-vars-catalog.generated';
 
 export type PlaygroundCatalogRoute =
@@ -112,6 +111,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-avatargroup': 'avatar',
   'pg-progressbar': 'progressbar',
   'pg-mds-header': 'header-indra',
+  'pg-mds-footer': 'footer-indra',
 };
 
 function countComponentVariables(anchorId: string): number {
@@ -419,7 +419,15 @@ function buildIndex(): PlaygroundComponentEntry[] {
       route: 'custom',
       sectionLabel: 'Custom',
       keywords: ['mds-header', 'header', 'app header', 'custom', 'navigation'],
-      variantCount: MDS_HEADER_CATALOG_VARIANT_OPTIONS.length,
+      variantCount: 1,
+    },
+    {
+      id: 'pg-mds-footer',
+      name: 'MDS Footer',
+      route: 'custom',
+      sectionLabel: 'Custom',
+      keywords: ['mds-footer', 'footer', 'app footer', 'custom'],
+      variantCount: 1,
     },
   ];
 

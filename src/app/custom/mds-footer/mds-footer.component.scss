@@ -1,0 +1,111 @@
+:host {
+  display: block;
+}
+
+.mds-footer__root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--mds-footer-background);
+  color: var(--mds-footer-color);
+  padding: var(--mds-footer-padding-y) var(--mds-footer-padding-x);
+  border-top: 1px solid var(--mds-footer-border-color);
+  font-size: var(--mds-footer-label-font-size);
+  min-width: 0;
+}
+
+.mds-footer__content {
+  display: flex;
+  align-items: center;
+  gap: var(--mds-footer-gap-md);
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.mds-footer__copyright {
+  display: flex;
+  align-items: center;
+  gap: var(--mds-footer-gap-md);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.mds-footer__product-version,
+.mds-footer__copyright-text {
+  line-height: 1.2;
+}
+
+.mds-footer__item {
+  display: flex;
+  align-items: center;
+  gap: var(--mds-footer-item-gap);
+  flex-shrink: 0;
+}
+
+.mds-footer__slot-links {
+  display: flex;
+  align-items: center;
+  gap: var(--mds-footer-gap-md);
+  min-width: 0;
+}
+
+.mds-footer__logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+.mds-footer__logo-image {
+  display: block;
+  height: 9px;
+  width: auto;
+  max-width: 84px;
+  object-fit: contain;
+}
+
+.mds-footer__logo-fallback {
+  font-size: var(--mds-footer-label-font-size);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--mds-footer-color);
+}
+
+:host ::ng-deep .mds-footer__divider.p-divider.p-divider-vertical {
+  margin: 0;
+  padding: 0;
+  align-self: stretch;
+}
+
+:host ::ng-deep .mds-footer__divider.p-divider.p-divider-vertical::before {
+  border-inline-start-color: var(--divider-border-color, var(--p-divider-border-color));
+}
+
+.mds-footer__link {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--button-sm-padding-x, var(--p-button-sm-padding-x));
+  padding-block: var(--button-sm-padding-y, var(--p-button-sm-padding-y));
+  border-radius: var(--button-border-radius, var(--p-button-border-radius));
+  color: var(--button-text-primary-color, var(--p-button-text-primary-color));
+  font-size: var(--button-sm-font-size, var(--p-button-sm-font-size));
+  font-weight: var(--button-label-font-weight, var(--p-button-label-font-weight, 500));
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.mds-footer__link:hover {
+  background: var(
+    --button-text-primary-hover-background,
+    var(--p-button-text-primary-hover-background)
+  );
+}
+
+.mds-footer__link:focus-visible {
+  outline: 2px solid var(--primary-600, var(--p-primary-600));
+  outline-offset: 2px;
+}
