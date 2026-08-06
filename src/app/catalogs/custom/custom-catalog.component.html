@@ -16,7 +16,6 @@
             @if (liveState(); as state) {
               <mds-header
                 class="mds-header-catalog-live"
-                [variant]="state.variant"
                 [productName]="state.productName"
                 [showLocation]="state.showLocation"
                 [timezones]="timezones"
@@ -26,100 +25,28 @@
                 [userName]="state.userName"
                 [userRole]="state.userRole"
                 [showProfileOverlay]="state.showProfileOverlay"
-              >
-                @if (state.variant === 'custom') {
-                  <img
-                    headerBrand
-                    class="mds-header-catalog-brand-logo"
-                    [src]="state.customLogoUrl"
-                    alt="Brand"
-                  />
-                }
-                @if (state.variant === 'custom') {
-                  <nav headerCustom class="mds-header-catalog-nav" aria-label="Custom navigation">
-                    @for (item of state.navItems; track trackNavItem($index, item)) {
-                      <a class="mds-header-catalog-nav-link" [href]="item.link ?? '#'">{{ item.label }}</a>
-                    }
-                  </nav>
-                }
-              </mds-header>
+              />
             }
           </div>
 
           <ng-container catalogPreviewConfig>
             <div [formGroup]="configForm" class="button-config-popover-stack">
               <div class="button-config-size-field">
-                <span class="input-config-label">Variant</span>
-                <div class="button-config-size-toggle-wrap">
-                  <p-selectbutton
-                    formControlName="variant"
-                    [options]="variantOptions"
-                    optionLabel="label"
-                    optionValue="value"
-                    [allowEmpty]="false"
-                    [fluid]="true"
-                    size="small"
-                    ariaLabel="Variant"
-                  />
-                </div>
+                <span class="input-config-label">Product name</span>
+                <input pInputText formControlName="productName" aria-label="Product name" />
               </div>
 
               <p-divider styleClass="button-config-divider" />
 
-              @if (configForm.controls.variant.value === 'default') {
-                <div class="button-config-size-field">
-                  <span class="input-config-label">Brand — product name</span>
-                  <input pInputText formControlName="productName" aria-label="Product name" />
-                </div>
+              <div class="input-config-row">
+                <span class="input-config-label">Location</span>
+                <p-toggleswitch formControlName="showLocation" ariaLabel="Location" />
+              </div>
 
-                <p-divider styleClass="button-config-divider" />
-
-                <div class="input-config-row">
-                  <span class="input-config-label">Location</span>
-                  <p-toggleswitch formControlName="showLocation" ariaLabel="Location" />
-                </div>
-              } @else {
-                <div class="button-config-size-field">
-                  <span class="input-config-label">Logo URL</span>
-                  <input pInputText formControlName="customLogoUrl" placeholder="URL del logo" aria-label="Logo URL" />
-                </div>
-
-                <p-divider styleClass="button-config-divider" />
-
-                <div class="mds-header-nav-builder" formArrayName="navItems">
-                  <span class="input-config-label">Nav items</span>
-                  @for (item of navItemsArray.controls; track $index; let i = $index) {
-                    <div class="mds-header-nav-builder-row" [formGroupName]="i">
-                      <input pInputText formControlName="label" placeholder="Label" aria-label="Nav label" />
-                      <input pInputText formControlName="link" placeholder="Link (opcional)" aria-label="Nav link" />
-                      <p-button
-                        type="button"
-                        icon="pi pi-trash"
-                        [text]="true"
-                        severity="secondary"
-                        (onClick)="removeNavItem(i)"
-                        [disabled]="navItemsArray.length <= 1"
-                        ariaLabel="Eliminar item"
-                      />
-                    </div>
-                  }
-                  <p-button
-                    type="button"
-                    label="+ Añadir item"
-                    [text]="true"
-                    (onClick)="addNavItem()"
-                  />
-                </div>
-
-                <p-divider styleClass="button-config-divider" />
-              }
-
-              @if (configForm.controls.variant.value === 'default') {
-                <div class="input-config-row">
-                  <span class="input-config-label">External communication</span>
-                  <p-toggleswitch formControlName="showExternalComm" ariaLabel="External communication" />
-                </div>
-              }
+              <div class="input-config-row">
+                <span class="input-config-label">External communication</span>
+                <p-toggleswitch formControlName="showExternalComm" ariaLabel="External communication" />
+              </div>
 
               <div class="input-config-row">
                 <span class="input-config-label">Notifications</span>
@@ -155,6 +82,41 @@
                 [code]="usageCode()"
                 [hideToolbar]="true"
                 ariaLabel="Código de uso de mds-header"
+              />
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
+  <div class="catalog-preview mds-footer-showcase" [style.--mds-footer-catalog-demo-height]="footerDemoHeight">
+    <section id="pg-mds-footer" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'MDS Footer' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          [showConfig]="false"
+          [showCode]="true"
+          codeAriaLabel="Mostrar código de uso de MDS Footer"
+        >
+          <div catalogPreviewDemo class="mds-footer-catalog-demo-area catalog-showcase-interactive">
+            <mds-footer class="mds-footer-catalog-live" />
+          </div>
+
+          <ng-container catalogPreviewCode>
+            <mds-catalog-info-block title="Code" icon="code">
+              <mds-catalog-code-copy-button
+                catalogInfoBlockActions
+                [code]="footerUsageCode"
+              />
+              <mds-catalog-code-snippet
+                [code]="footerUsageCode"
+                [hideToolbar]="true"
+                ariaLabel="Código de uso de mds-footer"
               />
             </mds-catalog-info-block>
           </ng-container>

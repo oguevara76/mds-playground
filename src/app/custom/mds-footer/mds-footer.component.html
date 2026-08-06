@@ -1,0 +1,49 @@
+<div class="mds-footer__root">
+  <div class="mds-footer__content">
+    <div class="mds-footer__copyright">
+      <span class="mds-footer__product-version">{{ productVersion() }}</span>
+      <p-divider layout="vertical" styleClass="mds-footer__divider" ariaLabel="Separador" />
+      <span class="mds-footer__copyright-text">{{ copyrightText() }}</span>
+    </div>
+
+    @if (showCompanyLink()) {
+      <div class="mds-footer__item">
+        <p-divider layout="vertical" styleClass="mds-footer__divider" ariaLabel="Separador" />
+        <a
+          class="mds-footer__link"
+          [href]="companyLinkHref()"
+          target="_blank"
+          rel="noopener noreferrer"
+        >{{ companyLinkLabel() }}</a>
+      </div>
+    }
+
+    @if (links().length) {
+      <div class="mds-footer__slot-links">
+        @for (link of links(); track link.label + link.href) {
+          <div class="mds-footer__item">
+            <p-divider layout="vertical" styleClass="mds-footer__divider" ariaLabel="Separador" />
+            <a
+              class="mds-footer__link"
+              [href]="link.href"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ link.label }}</a>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="mds-footer__logo">
+    @if (logoSrc()) {
+      <img
+        class="mds-footer__logo-image"
+        [src]="logoSrc()"
+        alt="Indra"
+      />
+    } @else {
+      <span class="mds-footer__logo-fallback" aria-hidden="true">INDRA</span>
+    }
+  </div>
+</div>

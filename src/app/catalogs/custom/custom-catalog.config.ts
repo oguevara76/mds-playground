@@ -1,12 +1,4 @@
-export type MdsHeaderCatalogVariant = 'default' | 'custom';
-
-export interface MdsHeaderCatalogNavItem {
-  label: string;
-  link?: string;
-}
-
 export interface MdsHeaderCatalogState {
-  variant: MdsHeaderCatalogVariant;
   productName: string;
   showLocation: boolean;
   showExternalComm: boolean;
@@ -14,29 +6,12 @@ export interface MdsHeaderCatalogState {
   userName: string;
   userRole: string;
   showProfileOverlay: boolean;
-  customLogoUrl: string;
-  navItems: MdsHeaderCatalogNavItem[];
 }
 
 export const MDS_HEADER_CATALOG_DEMO_HEIGHT = '56px';
-
-export const MDS_HEADER_CATALOG_VARIANT_OPTIONS: {
-  label: string;
-  value: MdsHeaderCatalogVariant;
-}[] = [
-  { label: 'Default', value: 'default' },
-  { label: 'Custom', value: 'custom' },
-];
-
-export const MDS_HEADER_CATALOG_DEFAULT_NAV_ITEMS: MdsHeaderCatalogNavItem[] = [
-  { label: 'Products', link: '#' },
-  { label: 'Solutions', link: '#' },
-  { label: 'Resources', link: '#' },
-  { label: 'Pricing', link: '#' },
-];
+export const MDS_FOOTER_CATALOG_DEMO_HEIGHT = '31px';
 
 export const MDS_HEADER_CATALOG_DEFAULT_STATE: MdsHeaderCatalogState = {
-  variant: 'default',
   productName: 'Product Name',
   showLocation: true,
   showExternalComm: true,
@@ -44,8 +19,6 @@ export const MDS_HEADER_CATALOG_DEFAULT_STATE: MdsHeaderCatalogState = {
   userName: 'Estefania Gómez Campos',
   userRole: 'Role profile',
   showProfileOverlay: true,
-  customLogoUrl: 'brand-logo.svg',
-  navItems: [...MDS_HEADER_CATALOG_DEFAULT_NAV_ITEMS],
 };
 
 export const MDS_HEADER_CATALOG_EXTERNAL_COMM_BADGES = [
@@ -83,41 +56,44 @@ export function buildMdsHeaderUsageCode(state: MdsHeaderCatalogState): string {
     '// En el @Component imports: [MdsHeaderComponent]',
     '// timezones y externalCommBadges: arrays tipados en el host',
     '',
+    '<mds-header',
+    `  productName="${escapeAttr(state.productName)}"`,
+    `  [showLocation]="${state.showLocation}"`,
+    '  [timezones]="timezones"',
+    `  [showExternalComm]="${state.showExternalComm}"`,
   ];
 
-  if (state.variant === 'custom') {
-    lines.push('<mds-header');
-    lines.push('  variant="custom"');
-    lines.push(`  [showNotifications]="${state.showNotifications}"`);
-    lines.push(`  userName="${escapeAttr(state.userName)}"`);
-    lines.push(`  userRole="${escapeAttr(state.userRole)}"`);
-    lines.push(`  [showProfileOverlay]="${state.showProfileOverlay}"`);
-    lines.push('>');
-    lines.push(`  <img headerBrand src="${escapeAttr(state.customLogoUrl)}" alt="Brand" />`);
-    lines.push('  <nav headerCustom aria-label="Navigation">');
-    for (const item of state.navItems) {
-      const href = escapeAttr(item.link ?? '#');
-      lines.push(`    <a href="${href}">${item.label}</a>`);
-    }
-    lines.push('  </nav>');
-    lines.push('</mds-header>');
-    return lines.join('\n');
-  }
-
-  lines.push('<mds-header');
-  lines.push('  variant="default"');
-  lines.push(`  productName="${escapeAttr(state.productName)}"`);
-  lines.push(`  [showLocation]="${state.showLocation}"`);
-  lines.push('  [timezones]="timezones"');
-  lines.push(`  [showExternalComm]="${state.showExternalComm}"`);
   if (state.showExternalComm) {
     lines.push('  [externalCommBadges]="externalCommBadges"');
   }
+
   lines.push(`  [showNotifications]="${state.showNotifications}"`);
   lines.push(`  userName="${escapeAttr(state.userName)}"`);
   lines.push(`  userRole="${escapeAttr(state.userRole)}"`);
   lines.push(`  [showProfileOverlay]="${state.showProfileOverlay}"`);
   lines.push('/>');
+
+  return lines.join('\n');
+}
+
+/** Snippet de uso estático (footer sin configurador en el showcase). */
+export function buildMdsFooterUsageCode(): string {
+  const lines: string[] = [
+    "import { MdsFooterComponent } from './custom/mds-footer/mds-footer.component';",
+    "import type { MdsFooterLink } from './custom/mds-footer/mds-footer.types';",
+    '',
+    '// En el @Component imports: [MdsFooterComponent]',
+    '// links: array tipado en el host',
+    '',
+    '<mds-footer',
+    '  productVersion="A-CDM V 1.0.0"',
+    '  copyrightText="© Copyright 2026"',
+    '  companyLinkLabel="www.indracompany.com"',
+    '  companyLinkHref="https://www.indracompany.com"',
+    '  [links]="links"',
+    '  logoSrc="indra-logo.png"',
+    '/>',
+  ];
 
   return lines.join('\n');
 }

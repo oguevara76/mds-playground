@@ -60,26 +60,6 @@ export const OVERLAY_MDS_OVERRIDE_CSS = `
   color: var(--p-surface-400);
 }
 
-.p-popover.button-config-popover .mds-header-nav-builder {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-.p-popover.button-config-popover .mds-header-nav-builder-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 8px;
-  align-items: center;
-}
-
-.p-popover.button-config-popover .mds-header-nav-builder-row .p-inputtext {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
 .p-popover .button-config-size-toggle-wrap,
 .p-popover .button-config-select-wrap {
   width: 100%;
