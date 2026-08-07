@@ -230,5 +230,10 @@
     "playground_anchor": "pg-timeline",
     "primeng_prefix": "timeline",
     "watch_vars": ["--timeline-*", "--p-timeline-*"]
+  },
+  "datatable": {
+    "playground_anchor": "pg-datatable",
+    "primeng_prefix": "datatable",
+    "watch_vars": ["--datatable-*", "--p-datatable-*"]
   }
 }

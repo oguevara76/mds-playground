@@ -6,7 +6,14 @@ import {
   FORM_SIZE_OPTIONS,
   type FormBlockKind,
 } from '../catalogs/form/form-catalog.config';
-import { PAGINATOR_CATALOG_STATE_DEMOS, ORDERLIST_CATALOG_EXAMPLE_OPTIONS, TIMELINE_CATALOG_VARIANT_OPTIONS, TREE_CATALOG_SELECTION_MODE_OPTIONS } from '../catalogs/data/data-catalog.config';
+import {
+  DATATABLE_CATALOG_HEADER_CELL_OPTIONS,
+  DATATABLE_CATALOG_STATE_DEMOS,
+  ORDERLIST_CATALOG_EXAMPLE_OPTIONS,
+  PAGINATOR_CATALOG_STATE_DEMOS,
+  TIMELINE_CATALOG_VARIANT_OPTIONS,
+  TREE_CATALOG_SELECTION_MODE_OPTIONS,
+} from '../catalogs/data/data-catalog.config';
 import {
   AVATAR_CATALOG_VARIANT_OPTIONS,
   AVATAR_GROUP_CATALOG_COUNT_OPTIONS,
@@ -85,6 +92,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-message': 'message',
   'pg-toast': 'toast',
   'pg-paginator': 'paginator',
+  'pg-datatable': 'datatable',
   'pg-orderlist': 'orderlist',
   'pg-tree': 'tree',
   'pg-timeline': 'timeline',
@@ -199,6 +207,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Data',
       keywords: ['p-paginator', 'pagination', 'paginación'],
       variantCount: PAGINATOR_CATALOG_STATE_DEMOS.length,
+    },
+    {
+      id: 'pg-datatable',
+      name: 'DataTable',
+      route: 'data',
+      sectionLabel: 'Data',
+      keywords: ['p-table', 'datatable', 'data table', 'tabla', 'table'],
+      variantCount: DATATABLE_CATALOG_HEADER_CELL_OPTIONS.length + DATATABLE_CATALOG_STATE_DEMOS.length,
     },
     {
       id: 'pg-orderlist',

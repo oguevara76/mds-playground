@@ -1,14 +1,18 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PrimeTemplate, TreeNode } from 'primeng/api';
+import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Checkbox } from 'primeng/checkbox';
-import { Button } from 'primeng/button';
 import { Divider } from 'primeng/divider';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputText } from 'primeng/inputtext';
 import { OrderList } from 'primeng/orderlist';
 import { Paginator, type PaginatorState } from 'primeng/paginator';
 import { Select } from 'primeng/select';
 import { SelectButton } from 'primeng/selectbutton';
+import { Table, TableModule } from 'primeng/table';
 import { Timeline } from 'primeng/timeline';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { Tree } from 'primeng/tree';
@@ -17,6 +21,12 @@ import { CatalogInfoBlockComponent } from '../../components/catalog/catalog-info
 import { CatalogPreviewFrameComponent } from '../../components/catalog/catalog-preview-frame/catalog-preview-frame.component';
 import { CatalogStateTagComponent } from '../../components/catalog/catalog-state-tag/catalog-state-tag.component';
 import {
+  DATATABLE_CATALOG_HEADER_CELL_OPTIONS,
+  DATATABLE_CATALOG_PRODUCTS,
+  DATATABLE_CATALOG_ROWS_OPTIONS,
+  DATATABLE_CATALOG_SIZE_OPTIONS,
+  DATATABLE_CATALOG_SIZE_SELECT_OPTIONS,
+  DATATABLE_CATALOG_STATE_DEMOS,
   ORDERLIST_CATALOG_EXAMPLE_OPTIONS,
   ORDERLIST_CATALOG_ITEMS,
   PAGINATOR_CATALOG_ROWS_OPTIONS,
@@ -31,6 +41,10 @@ import {
   TIMELINE_CATALOG_VERTICAL_ALIGN_OPTIONS,
   TREE_CATALOG_NODES,
   TREE_CATALOG_SELECTION_MODE_OPTIONS,
+  type DatatableCatalogHeaderCell,
+  type DatatableCatalogRow,
+  type DatatableCatalogSize,
+  type DatatableInteractionState,
   type OrderlistCatalogExample,
   type OrderlistCatalogItem,
   type OrderlistInteractionState,
@@ -51,16 +65,20 @@ import {
     CatalogInfoBlockComponent,
     CatalogPreviewFrameComponent,
     CatalogStateTagComponent,
+    Button,
     Card,
     Checkbox,
-    Button,
     Divider,
     FormsModule,
+    IconField,
+    InputIcon,
+    InputText,
     OrderList,
     Paginator,
     PrimeTemplate,
     Select,
     SelectButton,
+    TableModule,
     Timeline,
     ToggleSwitch,
     Tree,
@@ -87,6 +105,29 @@ export class DataCatalogComponent {
   readonly timelineLayoutOptions = TIMELINE_CATALOG_LAYOUT_OPTIONS;
   readonly timelineBulletTypeOptions = TIMELINE_CATALOG_BULLET_TYPE_OPTIONS;
 
+  readonly datatableHeaderCellOptions = DATATABLE_CATALOG_HEADER_CELL_OPTIONS;
+  readonly datatableSizeSelectOptions = DATATABLE_CATALOG_SIZE_SELECT_OPTIONS;
+  readonly datatableSizeOptions = DATATABLE_CATALOG_SIZE_OPTIONS;
+  readonly datatableStateDemos = DATATABLE_CATALOG_STATE_DEMOS;
+  readonly datatableRowsPerPageOptions = [...DATATABLE_CATALOG_ROWS_OPTIONS];
+  readonly datatableGlobalFilterFields = ['name', 'category', 'price', 'status'];
+  readonly datatableColumns: {
+    field: keyof DatatableCatalogRow & string;
+    label: string;
+    width: string;
+  }[] = [
+    { field: 'name', label: 'Name', width: '16rem' },
+    { field: 'category', label: 'Category', width: '14rem' },
+    { field: 'price', label: 'Price', width: '9rem' },
+    { field: 'status', label: 'Status', width: '10rem' },
+  ];
+  readonly datatableCheckboxColWidth = '3.5rem';
+  readonly datatableTableStyle = {
+    'min-width': '56rem',
+    width: '100%',
+    'table-layout': 'fixed',
+  };
+
   readonly first = signal(0);
   readonly rows = signal(10);
 
@@ -112,6 +153,22 @@ export class DataCatalogComponent {
     align: 'left',
     bulletType: 'default',
   });
+
+  private readonly datatableTable = viewChild<Table>('datatableLive');
+
+  datatableProducts: DatatableCatalogRow[] = DATATABLE_CATALOG_PRODUCTS.map((row) => ({ ...row }));
+  datatableSelection: DatatableCatalogRow[] = [];
+  datatableSearch = '';
+
+  datatableIx: DatatableInteractionState = {
+    headerCaption: false,
+    paginator: true,
+    stripedRows: false,
+    editCells: false,
+    rowFilters: false,
+    headerCell: 'default',
+    size: 'normal',
+  };
 
   onPageChange(event: PaginatorState): void {
     const nextRows = event.rows ?? this.rows();
@@ -212,6 +269,38 @@ export class DataCatalogComponent {
 
   onTimelineLayoutChange(layout: TimelineCatalogLayout): void {
     this.patchTimelineIx({ layout });
+  }
+
+  patchDatatableIx(patch: Partial<DatatableInteractionState>): void {
+    Object.assign(this.datatableIx, patch);
+  }
+
+  datatablePrimeSize(size: DatatableCatalogSize = this.datatableIx.size): 'small' | 'large' | undefined {
+    if (size === 'small') return 'small';
+    if (size === 'large') return 'large';
+    return undefined;
+  }
+
+  datatableHasSort(mode: DatatableCatalogHeaderCell = this.datatableIx.headerCell): boolean {
+    return mode === 'sort' || mode === 'sort+filter';
+  }
+
+  datatableHasFilter(mode: DatatableCatalogHeaderCell = this.datatableIx.headerCell): boolean {
+    return mode === 'filter' || mode === 'sort+filter';
+  }
+
+  onDatatableGlobalFilter(value: string): void {
+    this.datatableSearch = value;
+    this.datatableTable()?.filterGlobal(value, 'contains');
+  }
+
+  clearDatatableFilters(): void {
+    this.datatableSearch = '';
+    this.datatableTable()?.clear();
+  }
+
+  datatablePreviewRows(count = 3): DatatableCatalogRow[] {
+    return this.datatableProducts.slice(0, count);
   }
 
   private cloneTreeNodes(): TreeNode[] {

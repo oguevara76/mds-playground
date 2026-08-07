@@ -239,3 +239,80 @@ export interface TimelineInteractionState {
   align: TimelineCatalogAlign;
   bulletType: TimelineCatalogBulletType;
 }
+
+export type DatatableCatalogSize = 'small' | 'normal' | 'large';
+
+export type DatatableCatalogHeaderCell = 'default' | 'sort' | 'filter' | 'sort+filter';
+
+export interface DatatableCatalogRow {
+  id: number;
+  name: string;
+  category: string;
+  price: string;
+  status: string;
+}
+
+export interface DatatableInteractionState {
+  headerCaption: boolean;
+  paginator: boolean;
+  stripedRows: boolean;
+  editCells: boolean;
+  rowFilters: boolean;
+  headerCell: DatatableCatalogHeaderCell;
+  size: DatatableCatalogSize;
+}
+
+export const DATATABLE_CATALOG_HEADER_CELL_OPTIONS: {
+  label: string;
+  value: DatatableCatalogHeaderCell;
+}[] = [
+  { label: 'Default', value: 'default' },
+  { label: 'Sort', value: 'sort' },
+  { label: 'Filter', value: 'filter' },
+  { label: 'Sort+Filter', value: 'sort+filter' },
+];
+
+export const DATATABLE_CATALOG_SIZE_OPTIONS: {
+  key: DatatableCatalogSize;
+  caption: string;
+  pSize?: 'small' | 'large';
+}[] = [
+  { key: 'small', caption: 'Small', pSize: 'small' },
+  { key: 'normal', caption: 'Normal' },
+  { key: 'large', caption: 'Large', pSize: 'large' },
+];
+
+export const DATATABLE_CATALOG_SIZE_SELECT_OPTIONS: {
+  label: string;
+  value: DatatableCatalogSize;
+}[] = DATATABLE_CATALOG_SIZE_OPTIONS.map((o) => ({ label: o.caption, value: o.key }));
+
+export const DATATABLE_CATALOG_ROWS_OPTIONS = [5, 10, 15] as const;
+
+/** Productos demo (PrimeNG Table — checkbox / filter / edit). */
+export const DATATABLE_CATALOG_PRODUCTS: DatatableCatalogRow[] = [
+  { id: 1, name: 'Bamboo Watch', category: 'Accessories', price: '$65', status: 'Stock' },
+  { id: 2, name: 'Black Watch', category: 'Accessories', price: '$72', status: 'Stock' },
+  { id: 3, name: 'Blue Band', category: 'Fitness', price: '$79', status: 'Low' },
+  { id: 4, name: 'Blue T-Shirt', category: 'Clothing', price: '$29', status: 'Stock' },
+  { id: 5, name: 'Bracelet', category: 'Accessories', price: '$15', status: 'Stock' },
+  { id: 6, name: 'Brown Purse', category: 'Accessories', price: '$120', status: 'Low' },
+  { id: 7, name: 'Chakra Bracelet', category: 'Accessories', price: '$32', status: 'Stock' },
+  { id: 8, name: 'Galaxy Earrings', category: 'Accessories', price: '$34', status: 'Stock' },
+  { id: 9, name: 'Game Controller', category: 'Electronics', price: '$99', status: 'Stock' },
+  { id: 10, name: 'Gaming Set', category: 'Electronics', price: '$299', status: 'Low' },
+  { id: 11, name: 'Gold Phone Case', category: 'Accessories', price: '$24', status: 'Stock' },
+  { id: 12, name: 'Green Earbuds', category: 'Electronics', price: '$89', status: 'Stock' },
+  { id: 13, name: 'Green T-Shirt', category: 'Clothing', price: '$49', status: 'Stock' },
+  { id: 14, name: 'Grey T-Shirt', category: 'Clothing', price: '$48', status: 'Low' },
+  { id: 15, name: 'Headphones', category: 'Electronics', price: '$175', status: 'Stock' },
+];
+
+export const DATATABLE_CATALOG_STATE_DEMOS: {
+  key: 'default' | 'striped' | 'selected';
+  caption: string;
+}[] = [
+  { key: 'default', caption: 'Default' },
+  { key: 'striped', caption: 'Striped' },
+  { key: 'selected', caption: 'Selected' },
+];

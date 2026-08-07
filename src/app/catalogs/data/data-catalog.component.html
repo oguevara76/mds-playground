@@ -107,6 +107,312 @@
     </section>
   </div>
 
+  <div class="catalog-preview datatable-showcase">
+    <section id="pg-datatable" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'DataTable' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar DataTable"
+          [showExpand]="true"
+          expandAriaLabel="Expandir variantes y tamaños de DataTable"
+          collapseAriaLabel="Contraer variantes y tamaños de DataTable"
+        >
+          <div catalogPreviewDemo class="datatable-catalog-live-shell catalog-showcase-interactive">
+            <div class="datatable-catalog-frame">
+              @if (datatableIx.headerCaption) {
+                <div class="datatable-catalog-caption-bar">
+                  <p-button
+                    type="button"
+                    label="Clear"
+                    icon="pi pi-filter-slash"
+                    severity="secondary"
+                    [outlined]="true"
+                    (onClick)="clearDatatableFilters()"
+                    ariaLabel="Clear filters"
+                  />
+                  <p-iconfield class="datatable-catalog-caption-search">
+                    <p-inputicon class="pi pi-search" />
+                    <input
+                      pInputText
+                      type="search"
+                      placeholder="Search"
+                      [ngModel]="datatableSearch"
+                      (ngModelChange)="onDatatableGlobalFilter($event)"
+                      aria-label="Buscar en DataTable"
+                    />
+                  </p-iconfield>
+                </div>
+              }
+
+              <p-table
+                #datatableLive
+                class="datatable-catalog-live"
+                [class.datatable-catalog-live--caption]="datatableIx.headerCaption"
+                [value]="datatableProducts"
+                dataKey="id"
+                [(selection)]="datatableSelection"
+                [paginator]="datatableIx.paginator"
+                [rows]="5"
+                [rowsPerPageOptions]="datatableRowsPerPageOptions"
+                paginatorDropdownAppendTo="body"
+                [stripedRows]="datatableIx.stripedRows"
+                [size]="datatablePrimeSize()"
+                [editMode]="'cell'"
+                [globalFilterFields]="datatableGlobalFilterFields"
+                [tableStyle]="datatableTableStyle"
+                ariaLabel="DataTable interactivo del catálogo"
+              >
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th [style.width]="datatableCheckboxColWidth" [style.min-width]="datatableCheckboxColWidth">
+                      <p-tableHeaderCheckbox />
+                    </th>
+                    @for (col of datatableColumns; track col.field) {
+                      @if (datatableHasSort()) {
+                        <th
+                          [pSortableColumn]="col.field"
+                          [style.width]="col.width"
+                          [style.min-width]="col.width"
+                        >
+                          <div class="datatable-catalog-header-cell">
+                            <span>{{ col.label }}</span>
+                            <p-sortIcon [field]="col.field" />
+                            @if (datatableHasFilter()) {
+                              <p-columnFilter type="text" [field]="col.field" display="menu" />
+                            }
+                          </div>
+                        </th>
+                      } @else {
+                        <th [style.width]="col.width" [style.min-width]="col.width">
+                          <div class="datatable-catalog-header-cell">
+                            <span>{{ col.label }}</span>
+                            @if (datatableHasFilter()) {
+                              <p-columnFilter type="text" [field]="col.field" display="menu" />
+                            }
+                          </div>
+                        </th>
+                      }
+                    }
+                  </tr>
+                  @if (datatableIx.rowFilters) {
+                    <tr class="datatable-catalog-filter-row">
+                      <th [style.width]="datatableCheckboxColWidth" [style.min-width]="datatableCheckboxColWidth"></th>
+                      @for (col of datatableColumns; track col.field) {
+                        <th [style.width]="col.width" [style.min-width]="col.width">
+                          <p-columnFilter
+                            type="text"
+                            [field]="col.field"
+                            display="row"
+                            [showMenu]="false"
+                            [placeholder]="'Filter ' + col.label"
+                            [ariaLabel]="'Filter ' + col.label"
+                          />
+                        </th>
+                      }
+                    </tr>
+                  }
+                </ng-template>
+
+                <ng-template pTemplate="body" let-row>
+                  <tr>
+                    <td [style.width]="datatableCheckboxColWidth" [style.min-width]="datatableCheckboxColWidth">
+                      <p-tableCheckbox [value]="row" />
+                    </td>
+                    @for (col of datatableColumns; track col.field) {
+                      @if (datatableIx.editCells) {
+                        <td
+                          [pEditableColumn]="row[col.field]"
+                          [pEditableColumnField]="col.field"
+                          [style.width]="col.width"
+                          [style.min-width]="col.width"
+                        >
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                              <input
+                                pInputText
+                                type="text"
+                                class="datatable-catalog-cell-input"
+                                [(ngModel)]="row[col.field]"
+                              />
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              <span class="datatable-catalog-cell-text">{{ row[col.field] }}</span>
+                            </ng-template>
+                          </p-cellEditor>
+                        </td>
+                      } @else {
+                        <td [style.width]="col.width" [style.min-width]="col.width">
+                          <span class="datatable-catalog-cell-text">{{ row[col.field] }}</span>
+                        </td>
+                      }
+                    }
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="input-config-row">
+              <span class="input-config-label">Header caption</span>
+              <p-toggleswitch
+                [ngModel]="datatableIx.headerCaption"
+                (ngModelChange)="patchDatatableIx({ headerCaption: $event })"
+                ariaLabel="Header caption DataTable"
+              />
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Paginator</span>
+              <p-toggleswitch
+                [ngModel]="datatableIx.paginator"
+                (ngModelChange)="patchDatatableIx({ paginator: $event })"
+                ariaLabel="Paginator DataTable"
+              />
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Striped rows</span>
+              <p-toggleswitch
+                [ngModel]="datatableIx.stripedRows"
+                (ngModelChange)="patchDatatableIx({ stripedRows: $event })"
+                ariaLabel="Striped rows DataTable"
+              />
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Edit cells</span>
+              <p-toggleswitch
+                [ngModel]="datatableIx.editCells"
+                (ngModelChange)="patchDatatableIx({ editCells: $event })"
+                ariaLabel="Edit cells DataTable"
+              />
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="input-config-row">
+              <span class="input-config-label">Row filters</span>
+              <p-toggleswitch
+                [ngModel]="datatableIx.rowFilters"
+                (ngModelChange)="patchDatatableIx({ rowFilters: $event })"
+                ariaLabel="Row filters DataTable"
+              />
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="button-config-size-field">
+              <span class="input-config-label">Header cell</span>
+              <div class="button-config-select-wrap">
+                <p-select
+                  [options]="datatableHeaderCellOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="datatableIx.headerCell"
+                  (ngModelChange)="patchDatatableIx({ headerCell: $event })"
+                  size="small"
+                  appendTo="body"
+                  ariaLabel="Header cell DataTable"
+                />
+              </div>
+            </div>
+            <p-divider styleClass="button-config-divider" />
+            <div class="button-config-size-field">
+              <span class="input-config-label">Size</span>
+              <p-selectbutton
+                [options]="datatableSizeSelectOptions"
+                optionLabel="label"
+                optionValue="value"
+                [ngModel]="datatableIx.size"
+                (ngModelChange)="patchDatatableIx({ size: $event })"
+                [allowEmpty]="false"
+                size="small"
+                ariaLabel="Size DataTable"
+              />
+            </div>
+          </ng-container>
+
+          <ng-container catalogPreviewDetails>
+            <mds-catalog-info-block title="Variants &amp; States" icon="objects-column">
+              <div
+                class="datatable-catalog-states-row is-static-preview"
+                aria-label="DataTable por estado de fila"
+              >
+                @for (state of datatableStateDemos; track state.key) {
+                  <div class="datatable-catalog-state">
+                    <div class="datatable-catalog-state-preview">
+                      <p-table
+                        [value]="datatablePreviewRows(3)"
+                        dataKey="id"
+                        [stripedRows]="state.key === 'striped'"
+                        [size]="'small'"
+                        [tableStyle]="{ 'min-width': '22rem' }"
+                        styleClass="datatable-catalog-state-table"
+                      >
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th style="width: 3rem"><p-tableHeaderCheckbox /></th>
+                            <th>Name</th>
+                            <th>Category</th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+                          <tr [class.p-datatable-row-selected]="state.key === 'selected' && rowIndex === 0">
+                            <td><p-tableCheckbox [value]="row" [disabled]="true" /></td>
+                            <td>{{ row.name }}</td>
+                            <td>{{ row.category }}</td>
+                          </tr>
+                        </ng-template>
+                      </p-table>
+                    </div>
+                    <mds-catalog-state-tag [label]="state.caption" />
+                  </div>
+                }
+              </div>
+            </mds-catalog-info-block>
+
+            <mds-catalog-info-block title="Sizes" icon="arrows-v">
+              <div
+                class="datatable-catalog-sizes-row is-static-preview"
+                aria-label="DataTable en tres tamaños"
+              >
+                @for (sz of datatableSizeOptions; track sz.key) {
+                  <div class="datatable-catalog-state">
+                    <div class="datatable-catalog-state-preview">
+                      <p-table
+                        [value]="datatablePreviewRows(2)"
+                        dataKey="id"
+                        [size]="datatablePrimeSize(sz.key)"
+                        [tableStyle]="{ 'min-width': '18rem' }"
+                        styleClass="datatable-catalog-state-table"
+                      >
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-row>
+                          <tr>
+                            <td>{{ row.name }}</td>
+                            <td>{{ row.price }}</td>
+                          </tr>
+                        </ng-template>
+                      </p-table>
+                    </div>
+                    <mds-catalog-state-tag [label]="sz.caption" />
+                  </div>
+                }
+              </div>
+            </mds-catalog-info-block>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+
   <div class="catalog-preview orderlist-showcase">
     <section id="pg-orderlist" class="preview-section preview-section--flush catalog-block-section" tabindex="-1">
       <header class="catalog-block-head">
