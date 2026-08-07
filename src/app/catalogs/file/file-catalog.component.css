@@ -1,0 +1,30 @@
+:host.file-catalog-page .fileupload-catalog-live-shell {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+:host.file-catalog-page .fileupload-catalog-live {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+:host.file-catalog-page .fileupload-catalog-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dimension-scale-x8, 8px);
+  padding: var(--dimension-scale-x24, 24px) var(--dimension-scale-x16, 16px);
+  color: var(--fileupload-color, var(--content-color));
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+:host.file-catalog-page .fileupload-catalog-empty-icon {
+  font-size: 1.5rem;
+  opacity: 0.72;
+}

@@ -1,0 +1,84 @@
+<div class="cards-grid form-catalog-stack">
+  <div class="catalog-preview fileupload-showcase">
+    <section
+      id="pg-fileupload"
+      class="preview-section preview-section--flush catalog-block-section"
+      tabindex="-1"
+    >
+      <header class="catalog-block-head">
+        <h3 class="section-title component-title-primary">{{ 'FileUpload' | catalogBlockHeadTitle }}</h3>
+      </header>
+
+      <div class="catalog-block-body">
+        <p class="btn-section-title" hidden aria-hidden="true">Preview</p>
+        <mds-catalog-preview-frame
+          class="btn-section catalog-preview-section"
+          configAriaLabel="Configurar FileUpload"
+        >
+          <div
+            catalogPreviewDemo
+            class="catalog-showcase-interactive fileupload-catalog-live-shell"
+            aria-label="FileUpload preview"
+          >
+            @if (fileuploadIx.mode === 'basic') {
+              <p-fileupload
+                class="fileupload-catalog-live"
+                mode="basic"
+                name="demo[]"
+                [chooseLabel]="chooseLabel"
+                chooseIcon="pi pi-upload"
+                [customUpload]="true"
+                [auto]="true"
+                [accept]="accept"
+                [maxFileSize]="maxFileSize"
+                (uploadHandler)="onCustomUpload($event)"
+                ariaLabel="FileUpload basic"
+              />
+            } @else {
+              <p-fileupload
+                class="fileupload-catalog-live"
+                mode="advanced"
+                name="demo[]"
+                [multiple]="true"
+                [customUpload]="true"
+                [chooseLabel]="chooseLabel"
+                [uploadLabel]="uploadLabel"
+                [cancelLabel]="cancelLabel"
+                [accept]="accept"
+                [maxFileSize]="maxFileSize"
+                (uploadHandler)="onCustomUpload($event)"
+                ariaLabel="FileUpload advanced"
+              >
+                <ng-template pTemplate="empty">
+                  <div class="fileupload-catalog-empty">
+                    <i class="pi pi-cloud-upload fileupload-catalog-empty-icon" aria-hidden="true"></i>
+                    <span>Drag and drop files to here to upload.</span>
+                  </div>
+                </ng-template>
+              </p-fileupload>
+            }
+          </div>
+
+          <ng-container catalogPreviewConfig>
+            <div class="button-config-size-field">
+              <span class="input-config-label">Variant</span>
+              <div class="button-config-size-toggle-wrap">
+                <p-selectbutton
+                  [options]="modeOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [ngModel]="fileuploadIx.mode"
+                  (ngModelChange)="patchFileuploadIx({ mode: $event })"
+                  [allowEmpty]="false"
+                  [fluid]="true"
+                  size="small"
+                  ariaLabel="Variant FileUpload"
+                />
+              </div>
+            </div>
+          </ng-container>
+        </mds-catalog-preview-frame>
+      </div>
+    </section>
+  </div>
+</div>

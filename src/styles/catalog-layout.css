@@ -71,7 +71,8 @@
 }
 
 /* Aire uniforme entre título del componente y primera subsección (Interaction, etc.) */
-.catalog-block-body > .btn-section:first-child {
+.catalog-block-body > .btn-section:first-child,
+.catalog-block-body > .btn-section-title + .btn-section {
   margin-top: 24px;
 }
 
@@ -88,7 +89,9 @@
   margin-bottom: var(--catalog-section-stack-gap, 32px);
 }
 
-.catalog-block-body > .catalog-preview-section:first-child {
+/* Incluye el caso con <p class="btn-section-title" hidden> delante del frame */
+.catalog-block-body > .catalog-preview-section:first-child,
+.catalog-block-body > .btn-section-title + .catalog-preview-section {
   margin-top: 14px;
 }
 

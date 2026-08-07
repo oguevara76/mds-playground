@@ -30,6 +30,7 @@ import {
 import { BREADCRUMB_CATALOG_DISPLAY_MODE_DEMOS, MENU_CATALOG_EXAMPLE_DEMOS } from '../catalogs/menu/menu-catalog.config';
 import { OVERLAY_CATALOG_TOOLTIP_POSITIONS, OVERLAY_CATALOG_DRAWER_POSITIONS } from '../catalogs/overlay/overlay-catalog.config';
 import { GALLERIA_CATALOG_VARIANT_OPTIONS, CAROUSEL_CATALOG_ORIENTATION_OPTIONS } from '../catalogs/media/media-catalog.config';
+import { FILEUPLOAD_CATALOG_MODE_OPTIONS } from '../catalogs/file/file-catalog.config';
 import { MDS_VARS_CATALOG } from '../theme/mds-vars-catalog.generated';
 
 export type PlaygroundCatalogRoute =
@@ -41,6 +42,7 @@ export type PlaygroundCatalogRoute =
   | 'menu'
   | 'overlay'
   | 'media'
+  | 'file'
   | 'misc'
   | 'custom';
 
@@ -104,6 +106,7 @@ const TOKEN_PREFIXES: Record<string, string> = {
   'pg-popover': 'popover',
   'pg-galleria': 'galleria',
   'pg-carousel': 'carousel',
+  'pg-fileupload': 'fileupload',
   'pg-tag': 'tag',
   'pg-chip': 'chip',
   'pg-badge': 'badge',
@@ -364,6 +367,14 @@ function buildIndex(): PlaygroundComponentEntry[] {
       sectionLabel: 'Media',
       keywords: ['p-carousel', 'carousel', 'slider', 'carrusel', 'deslizador'],
       variantCount: CAROUSEL_CATALOG_ORIENTATION_OPTIONS.length,
+    },
+    {
+      id: 'pg-fileupload',
+      name: 'FileUpload',
+      route: 'file',
+      sectionLabel: 'File',
+      keywords: ['p-fileupload', 'fileupload', 'upload', 'file', 'archivo', 'subida'],
+      variantCount: FILEUPLOAD_CATALOG_MODE_OPTIONS.length,
     },
     {
       id: 'pg-tag',

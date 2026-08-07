@@ -216,6 +216,11 @@
     "parity": "src/styles/primeng-carousel-parity.css",
     "watch_vars": ["--carousel-*", "--p-carousel-*"]
   },
+  "fileupload": {
+    "playground_anchor": "pg-fileupload",
+    "primeng_prefix": "fileupload",
+    "watch_vars": ["--fileupload-*", "--p-fileupload-*"]
+  },
   "tree": {
     "playground_anchor": "pg-tree",
     "primeng_prefix": "tree",

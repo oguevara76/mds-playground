@@ -5,6 +5,7 @@ import { DataCatalogComponent } from './catalogs/data/data-catalog.component';
 import { MessagesCatalogComponent } from './catalogs/messages/messages-catalog.component';
 import { MenuCatalogComponent } from './catalogs/menu/menu-catalog.component';
 import { MediaCatalogComponent } from './catalogs/media/media-catalog.component';
+import { FileCatalogComponent } from './catalogs/file/file-catalog.component';
 import { MiscCatalogComponent } from './catalogs/misc/misc-catalog.component';
 import { OverlayCatalogComponent } from './catalogs/overlay/overlay-catalog.component';
 import { PanelCatalogComponent } from './catalogs/panel/panel-catalog.component';
@@ -31,6 +32,7 @@ export const routes: Routes = [
       { path: 'menu', component: MenuCatalogComponent },
       { path: 'overlay', component: OverlayCatalogComponent },
       { path: 'media', component: MediaCatalogComponent },
+      { path: 'file', component: FileCatalogComponent },
       { path: 'misc', component: MiscCatalogComponent },
       { path: 'custom', component: CustomCatalogComponent },
     ],
