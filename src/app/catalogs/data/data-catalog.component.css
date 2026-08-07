@@ -291,10 +291,15 @@
   gap: var(--dimension-scale-x12, 12px);
   width: 100%;
   box-sizing: border-box;
-  background: transparent;
+  background: var(
+    --p-datatable-header-cell-background,
+    var(--datatable-header-cell-background, var(--content-background))
+  );
   color: var(--p-datatable-header-color, var(--datatable-header-color, var(--content-color)));
   padding-block: var(--p-datatable-header-padding-y, var(--datatable-header-padding-y, 12px));
   padding-inline: var(--p-datatable-header-padding-x, var(--datatable-header-padding-x, 14px));
+  border-top: 1px solid
+    var(--p-datatable-header-border-color, var(--datatable-header-border-color, var(--p-content-border)));
   border-bottom: var(--p-datatable-header-border-width, var(--datatable-header-border-width, 1px))
     solid var(--p-datatable-header-border-color, var(--datatable-header-border-color, var(--p-content-border)));
 }

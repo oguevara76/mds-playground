@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { ButtonCatalogComponent } from './catalogs/button/button-catalog.component';
 import { FormCatalogComponent } from './catalogs/form/form-catalog.component';
-import { DataCatalogComponent } from './catalogs/data/data-catalog.component';
 import { MessagesCatalogComponent } from './catalogs/messages/messages-catalog.component';
 import { MenuCatalogComponent } from './catalogs/menu/menu-catalog.component';
 import { MediaCatalogComponent } from './catalogs/media/media-catalog.component';
@@ -27,7 +26,11 @@ export const routes: Routes = [
       { path: 'button', component: ButtonCatalogComponent },
       { path: 'form', component: FormCatalogComponent },
       { path: 'messages', component: MessagesCatalogComponent },
-      { path: 'data', component: DataCatalogComponent },
+      {
+        path: 'data',
+        loadComponent: () =>
+          import('./catalogs/data/data-catalog.component').then((m) => m.DataCatalogComponent),
+      },
       { path: 'panel', component: PanelCatalogComponent },
       { path: 'menu', component: MenuCatalogComponent },
       { path: 'overlay', component: OverlayCatalogComponent },
