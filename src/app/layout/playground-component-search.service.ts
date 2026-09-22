@@ -6,6 +6,12 @@ import {
 } from './playground-component-index';
 
 const SCROLL_OFFSET_PX = 88;
+/**
+ * Tras un cambio de ruta el scrollport conserva el scroll anterior y PrimeNG
+ * sigue cambiando alturas. Recolocamos el ancla durante esta ventana.
+ */
+const ROUTE_SCROLL_MIN_MS = 180;
+const ROUTE_SCROLL_SETTLE_MS = 1000;
 /** Contenedor principal del bloque en catálogo (`.catalog-preview`). */
 export const PG_COMPONENT_FOCUS_CLASS = 'pg-component-focus';
 
@@ -15,6 +21,7 @@ export class PlaygroundComponentSearchService {
 
   private focusContainer: HTMLElement | null = null;
   private dismissListenerReady = false;
+  private scrollGeneration = 0;
 
   readonly all = PLAYGROUND_COMPONENT_INDEX;
 
@@ -32,11 +39,18 @@ export class PlaygroundComponentSearchService {
 
   goTo(entry: PlaygroundComponentEntry): void {
     const target = `/${entry.route}`;
-    const navigate = this.router.url.startsWith(target)
-      ? Promise.resolve(true)
-      : this.router.navigate([target]);
+    const sameRoute = this.router.url.startsWith(target);
+    const generation = ++this.scrollGeneration;
+    const navigate = sameRoute ? Promise.resolve(true) : this.router.navigate([target]);
 
-    void navigate.then(() => this.scrollAfterRender(entry.id));
+    void navigate.then((ok) => {
+      if (!ok || generation !== this.scrollGeneration) return;
+      if (sameRoute) {
+        this.scrollAfterRender(entry.id);
+        return;
+      }
+      this.scrollAfterRouteChange(entry.id, target, generation);
+    });
   }
 
   private scrollAfterRender(anchorId: string, attempt = 0): void {
@@ -50,16 +64,98 @@ export class PlaygroundComponentSearchService {
     }
   }
 
+  /**
+   * El ancla existe en cuanto acaba la navegación, pero `.preview-area` aún
+   * arrastra el scroll de la pantalla anterior y el bloque cambia de altura
+   * al pintar PrimeNG. Un único `scrollTo` suave en ese frame se descarta
+   * (el estilo de foco sí se queda). Aquí el scroll es inmediato y se repite
+   * hasta que la posición del ancla deja de moverse.
+   */
+  private scrollAfterRouteChange(anchorId: string, targetPath: string, generation: number): void {
+    const started = performance.now();
+    let lastTop = Number.NaN;
+    let stableFrames = 0;
+    const abort = new AbortController();
+    const container = this.previewArea();
+
+    const cancel = () => {
+      if (generation === this.scrollGeneration) this.scrollGeneration++;
+    };
+    container?.addEventListener('wheel', cancel, { passive: true, signal: abort.signal });
+    container?.addEventListener('touchmove', cancel, { passive: true, signal: abort.signal });
+    container?.addEventListener('pointerdown', cancel, { signal: abort.signal });
+
+    const stop = () => abort.abort();
+
+    const tick = () => {
+      if (generation !== this.scrollGeneration) {
+        stop();
+        return;
+      }
+
+      const path = this.router.url.split(/[?#]/)[0];
+      if (path !== targetPath && !path.startsWith(`${targetPath}/`)) {
+        stop();
+        return;
+      }
+
+      const el = document.getElementById(anchorId);
+      const box = this.previewArea();
+      const elapsed = performance.now() - started;
+
+      if (!el || !box || !box.contains(el) || el.getBoundingClientRect().height === 0) {
+        if (elapsed < ROUTE_SCROLL_SETTLE_MS) requestAnimationFrame(tick);
+        else stop();
+        return;
+      }
+
+      this.alignAnchor(el, box);
+      if (!this.focusContainer?.isConnected || !this.focusContainer.contains(el)) {
+        this.setFocusedComponent(anchorId);
+      }
+
+      const top = Math.round(el.getBoundingClientRect().top);
+      if (top === lastTop) stableFrames++;
+      else {
+        stableFrames = 0;
+        lastTop = top;
+      }
+
+      const settled = elapsed >= ROUTE_SCROLL_MIN_MS && stableFrames >= 2;
+      if (settled || elapsed > ROUTE_SCROLL_SETTLE_MS) {
+        stop();
+        return;
+      }
+
+      requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  }
+
   scrollToAnchor(anchorId: string): void {
     const el = document.getElementById(anchorId);
-    const container = document.querySelector<HTMLElement>('.preview-area');
-    if (!el || !container) return;
+    const container = this.previewArea();
+    if (!el || !container || !container.contains(el)) return;
 
-    const elTop = el.getBoundingClientRect().top;
-    const containerTop = container.getBoundingClientRect().top;
-    const nextTop = container.scrollTop + (elTop - containerTop) - SCROLL_OFFSET_PX;
-    container.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' });
+    container.scrollTo({ top: this.scrollTopFor(el, container), behavior: 'smooth' });
     this.setFocusedComponent(anchorId);
+  }
+
+  private alignAnchor(el: HTMLElement, container: HTMLElement): void {
+    const top = this.scrollTopFor(el, container);
+    if (Math.abs(container.scrollTop - top) < 2) return;
+    container.scrollTop = top;
+  }
+
+  private scrollTopFor(el: HTMLElement, container: HTMLElement): number {
+    const delta =
+      el.getBoundingClientRect().top - container.getBoundingClientRect().top - SCROLL_OFFSET_PX;
+    return Math.max(0, container.scrollTop + delta);
+  }
+
+  private previewArea(): HTMLElement | null {
+    return document.querySelector<HTMLElement>('.preview-area');
   }
 
   setFocusedComponent(anchorId: string): void {
