@@ -1142,6 +1142,7 @@ html:root {
   --mds-header-padding-y: var(--dimension-scale-x8);
   --mds-header-timezone-background: var(--surface-context-minimal);
   --mds-header-timezone-border-radius: var(--dimension-radius-x4);
+  --mds-header-timezone-gap: var(--dimension-scale-x2);
   --mds-header-timezone-padding: var(--dimension-scale-x4);
   --mds-header-timezone-selected-background: var(--surface-context-base);
   --megamenu-background: var(--content-background);
@@ -1689,8 +1690,8 @@ html:root {
   --stepper-step-header-focus-ring-width: var(--focus-ring-width);
   --stepper-step-header-gap: var(--dimension-scale-x8);
   --stepper-step-header-padding: var(--dimension-scale-x0);
-  --stepper-step-number-active-background: var(--primary-color);
-  --stepper-step-number-active-border-color: var(--primary-color);
+  --stepper-step-number-active-background: var(--surface-context-fixed-primary-default);
+  --stepper-step-number-active-border-color: var(--content-border-color);
   --stepper-step-number-active-color: var(--surface-context-fixed-light);
   --stepper-step-number-background: var(--content-background);
   --stepper-step-number-border-color: var(--content-border-color);

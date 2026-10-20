@@ -571,7 +571,7 @@ html:root {
   --datatable-footer-background: var(--content-background);
   --datatable-footer-border-color: var(--datatable-border-color);
   --datatable-footer-border-width: 1px;
-  --datatable-footer-cell-background: var(--content-background);
+  --datatable-footer-cell-background: var(--surface-context-minimal);
   --datatable-footer-cell-border-color: var(--datatable-border-color);
   --datatable-footer-cell-color: var(--content-color);
   --datatable-footer-cell-lg-padding-x: var(--dimension-scale-x18);
@@ -590,7 +590,7 @@ html:root {
   --datatable-header-background: var(--surface-context-subtle);
   --datatable-header-border-color: var(--datatable-border-color);
   --datatable-header-border-width: 1px;
-  --datatable-header-cell-background: var(--content-background);
+  --datatable-header-cell-background: var(--surface-context-subtle);
   --datatable-header-cell-border-color: var(--datatable-border-color);
   --datatable-header-cell-color: var(--content-color);
   --datatable-header-cell-focus-ring-color: var(--focus-ring-color);
@@ -632,7 +632,7 @@ html:root {
   --datatable-row-hover-color: var(--content-hover-color);
   --datatable-row-selected-background: var(--highlight-background);
   --datatable-row-selected-color: var(--highlight-color);
-  --datatable-row-striped-background: var(--surface-50);
+  --datatable-row-striped-background: var(--surface-context-soft);
   --datatable-row-toggle-button-border-radius: var(--dimension-radius-x12);
   --datatable-row-toggle-button-color: var(--text-muted-color);
   --datatable-row-toggle-button-focus-ring-color: var(--focus-ring-color);
@@ -1144,6 +1144,7 @@ html:root {
   --mds-header-padding-y: var(--dimension-scale-x8);
   --mds-header-timezone-background: var(--surface-context-minimal);
   --mds-header-timezone-border-radius: var(--dimension-radius-x4);
+  --mds-header-timezone-gap: var(--dimension-scale-x2);
   --mds-header-timezone-padding: var(--dimension-scale-x4);
   --mds-header-timezone-selected-background: var(--surface-context-base);
   --megamenu-background: var(--content-background);
@@ -1689,7 +1690,7 @@ html:root {
   --stepper-step-header-gap: var(--dimension-scale-x8);
   --stepper-step-header-padding: var(--dimension-scale-x0);
   --stepper-step-number-active-background: var(--primary-color);
-  --stepper-step-number-active-border-color: var(--primary-color);
+  --stepper-step-number-active-border-color: var(--content-border-color);
   --stepper-step-number-active-color: var(--rose-950);
   --stepper-step-number-background: var(--content-background);
   --stepper-step-number-border-color: var(--content-border-color);
