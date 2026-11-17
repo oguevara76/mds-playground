@@ -75,6 +75,7 @@ html[data-theme="light"] {
   --form-field-focus-ring-offset: var(--dimension-scale-x0);
   --form-field-focus-ring-width: var(--dimension-scale-x0);
   --form-field-font-size: var(--dimension-scale-x14);
+  --form-field-font-weight: var(--typography-font-weight);
   --form-field-gap-space: var(--dimension-scale-x8);
   --form-field-hover-border-color: var(--surface-600);
   --form-field-icon-color: var(--surface-400);
@@ -110,8 +111,11 @@ html[data-theme="light"] {
   --list-option-color: var(--text-color);
   --list-option-focus-background: var(--surface-100);
   --list-option-focus-color: var(--text-hover-color);
+  --list-option-font-size: var(--typography-font-size);
+  --list-option-font-weight: var(--typography-font-weight);
   --list-option-group-background: rgba(0, 0, 0, 0);
   --list-option-group-color: var(--text-muted-color);
+  --list-option-group-font-size: var(--typography-font-size);
   --list-option-group-font-weight: 600;
   --list-option-icon-color: var(--surface-400);
   --list-option-icon-focus-color: var(--surface-500);
@@ -121,6 +125,7 @@ html[data-theme="light"] {
   --list-option-selected-color: var(--highlight-color);
   --list-option-selected-focus-background: var(--highlight-focus-background);
   --list-option-selected-focus-color: var(--highlight-focus-color);
+  --list-option-selected-font-weight: var(--typography-font-weight);
   --list-padding-x: var(--dimension-scale-x4);
   --list-padding-y: var(--dimension-scale-x4);
   --mask-background: rgba(0, 0, 0, 0.4);
@@ -135,6 +140,8 @@ html[data-theme="light"] {
   --navigation-item-icon-active-color: var(--surface-500);
   --navigation-item-icon-color: var(--surface-400);
   --navigation-item-icon-focus-color: var(--surface-500);
+  --navigation-item-label-font-size: var(--typography-font-size);
+  --navigation-item-label-font-weight: var(--typography-font-weight);
   --navigation-item-padding-x: var(--dimension-scale-x12);
   --navigation-item-padding-y: var(--dimension-scale-x8);
   --navigation-list-gap: var(--dimension-scale-x2);
@@ -146,6 +153,7 @@ html[data-theme="light"] {
   --navigation-submenu-icon-size: var(--dimension-scale-x12);
   --navigation-submenu-label-background: rgba(0, 0, 0, 0);
   --navigation-submenu-label-color: var(--text-muted-color);
+  --navigation-submenu-label-font-size: var(--typography-font-size);
   --navigation-submenu-label-font-weight: 600;
   --opacity-neutral-black30: rgba(0, 0, 0, 0.3);
   --opacity-neutral-white20: rgba(255, 255, 255, 0.2);
@@ -198,13 +206,13 @@ html[data-theme="light"] {
   --surface-context-fixed-base: var(--surface-200);
   --surface-context-fixed-dark: var(--surface-700);
   --surface-context-fixed-feedback-danger-intense: var(--red-900);
-  --surface-context-fixed-feedback-danger-minimal: var(--red-100);
+  --surface-context-fixed-feedback-danger-minimal: var(--red-200);
   --surface-context-fixed-feedback-info-intense: var(--blue-800);
   --surface-context-fixed-feedback-info-minimal: var(--blue-100);
   --surface-context-fixed-feedback-success-intense: var(--green-900);
-  --surface-context-fixed-feedback-success-minimal: var(--green-100);
+  --surface-context-fixed-feedback-success-minimal: var(--green-200);
   --surface-context-fixed-feedback-warn-intense: var(--yellow-900);
-  --surface-context-fixed-feedback-warn-minimal: var(--yellow-100);
+  --surface-context-fixed-feedback-warn-minimal: var(--yellow-200);
   --surface-context-fixed-light: var(--surface-50);
   --surface-context-fixed-primary: var(--purple-600);
   --surface-context-fixed-primary-default: var(--teal-600);
@@ -225,4 +233,8 @@ html[data-theme="light"] {
   --text-hover-color: var(--surface-800);
   --text-hover-muted-color: var(--surface-600);
   --text-muted-color: var(--surface-500);
+  --typography-font-family: Inter;
+  --typography-font-size: var(--dimension-scale-x14);
+  --typography-font-weight: 400;
+  --typography-line-height: 1.5;
 }}
